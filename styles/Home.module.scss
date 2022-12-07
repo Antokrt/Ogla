@@ -1,0 +1,56 @@
+@import "styles/utils/var";
+.container{
+  width: 100%;
+}
+
+.hot{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  align-items: center;
+  background-image: url("/assets/blurry.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  .headerHot {
+    width: 1050px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h4,h5 {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    h5{
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      text-decoration: underline;
+font-size: 14px;
+      color: $purpleLight;
+      svg{
+        margin-left: 5px;
+        width: 14px;
+      }
+    }
+  }
+    .hotContainer{
+      display: flex;
+      justify-content: space-between;
+      width: 1050px;
+      margin-top: 50px;
+    }
+
+  .previewPostListContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-column-gap: 50px;
+    grid-row-gap: 0px;
+    width: 50%;
+    margin-top: 50px;
+  }
+}

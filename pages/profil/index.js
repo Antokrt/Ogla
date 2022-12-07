@@ -1,0 +1,266 @@
+import styles from "../../styles/Pages/ProfilPage.module.scss";
+import Header from "../../Component/Header";
+import scroll from "../../styles/utils/scrollbar.module.scss";
+import {
+    ArrowDownIcon,
+    CalendarIcon,
+    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon,
+    ChevronDoubleUpIcon, DocumentChartBarIcon, SparklesIcon, UserCircleIcon
+} from "@heroicons/react/24/outline";
+import {BookmarkIcon, ChatBubbleLeftRightIcon, ChatBubbleBottomCenterTextIcon} from "@heroicons/react/24/outline";
+import {AcademicCapIcon} from "@heroicons/react/24/solid";
+import {useEffect, useState} from "react";
+import {ArrowTrendingUpIcon, ChatBubbleLeftIcon, PencilIcon, StarIcon} from "@heroicons/react/20/solid";
+import Category from "../../json/category.json";
+import {Capitalize} from "../../utils/String";
+import {router} from "next/router";
+import Facebook from "../../Component/layouts/Icons/Social/facebook";
+import Instagram from "../../Component/layouts/Icons/Social/instagram";
+import Twitter from "../../Component/layouts/Icons/Social/twitter";
+
+
+const Profil = () => {
+    const [isCreator, setIsCreator] = useState(true);
+    const [activeLink, setActiveLink] = useState("profil");
+    const [hasChanged, setHasChanged] = useState(false);
+    const [wantToDelete,setWantToDelete] = useState(false);
+    const [profil, setProfil] = useState({
+        name: "Jimmy Fiak",
+        email: "jimmyfiak@gmail.com",
+        tendance: "horreur",
+        description: "Avec plus de 7 ans d'expérience en marketing direct dans des startups de l'industrie alimentaire, un producteur et une agence, j'apporte une perspective rationnelle en associant créativité des messages publicitaires et anaylse rigoureuse des résultats. Entrepreneur dans l'âme au fort esprit d'équipe reconnu pour son approche passionnée et ses idées novatrices."
+    })
+    const [newProfil, setNewProfil] = useState(profil);
+
+    useEffect(() => {
+        if (Object.is(profil.email, newProfil.email) === false) {
+            setHasChanged(true);
+        } else {
+            setHasChanged(false);
+        }
+    }, [newProfil])
+
+
+    return (
+        <div className={styles.container}>
+            <Header/>
+            <div className={styles.containerM}>
+                <div className={styles.containerLeft}>
+                    <div className={styles.firstCard}>
+                        <div className={styles.headerFirstCard}>
+                            <img src={"/assets/livre3.jpg"}/>
+                            <p>Jérome Fiak</p>
+                        </div>
+                        <div className={styles.listFirstCard}>
+                            <p className={styles.dateInscription}><AcademicCapIcon
+                                className={styles.commentarySvg}/> Inscrit le 17/02/22 </p>
+                            <p className={styles.likeNb}><ChevronDoubleUpIcon/> <span
+                                className={styles.nb}>+ 121</span>&nbsp;likes </p>
+                            <p className={styles.commentaryNb}><ChatBubbleLeftRightIcon/> <span className={styles.nb}>+ 378 </span> &nbsp;commentaires</p>
+                            <p onClick={() => setWantToDelete(!wantToDelete)} className={styles.deleteAccount}>Supprimer mon compte</p>
+                            {
+                                wantToDelete ?
+                                <div>
+                                    <label>Etes vous certain de vouloir nous quitter?</label>
+                                    <input type={"text"} placeholder={"Mot de passe"}/>
+                                    <button className={styles.deleteBtn}> Supprimer mon compte</button>
+                                </div>
+                                    :
+                                    <div>
+                                        <button className={styles.logOut}>Se déconnecter</button>
+                                    </div>
+                            }
+
+
+                        </div>
+
+                    </div>
+
+                    {
+                        isCreator ?
+                            <div className={styles.secondCard}>
+                                <div className={styles.fItemSecondCard}>
+                                    <StarIcon className={styles.svgStar}/>
+                                    <div className={styles.contentStar}>
+                                        <p className={styles.labelStar}>Livres</p>
+                                        <p className={styles.nbStar}>1</p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.sItemSecondCard}>
+                                    <PencilIcon className={styles.svgPenn}/>
+                                    <div className={styles.contentStar}>
+                                        <p className={styles.labelStar}>Chapitres</p>
+                                        <p className={styles.nbStar}>12</p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.sItemSecondCard}>
+                                    <ArrowTrendingUpIcon className={styles.svgPenn}/>
+                                    <div className={styles.contentStar}>
+                                        <p className={styles.labelStar}>Tendance</p>
+                                        <p className={styles.category}>Comédie</p>
+                                    </div>
+                                </div>
+
+                                <h6>Il faut savoir se lancer bravo et n'abandonnez pas !</h6>
+                            </div>
+                            :
+                            <div className={styles.secondCardBecameWriter}>
+                                <h5>Deviens écrivain</h5>
+                                <p>Rejoins une communauté de 243 écrivains et lance ta carrière</p>
+                                <button onClick={() => router.push("/devenir-auteur")}>C'est parti !</button>
+                            </div>
+                    }
+
+                </div>
+
+                <div className={styles.containerRight}>
+
+                    <div className={styles.thumbnail}>
+                        <UserCircleIcon/>
+                    </div>
+
+                    <div className={styles.headerContainerRight}>
+                        <p onClick={() => setActiveLink("profil")}
+                           className={activeLink === "profil" ? styles.activeLink : ""}>Profil</p>
+                        <p onClick={() => setActiveLink("writer")}
+                           className={activeLink === "writer" ? styles.activeLink : ""}>Écrivain</p>
+                    </div>
+
+                    {
+                        activeLink === "profil" &&
+                        <div>
+                            <div className={styles.subTitleType}>
+                                <h5 className={styles.typeActive}>Mon profil</h5>
+                                <p className={styles.subTitle}>Gérez votre profil OGLA</p>
+                            </div>
+                            <div className={styles.containerSide}>
+                                <div className={styles.picMain}>
+                                    <div className={styles.picContainer}>
+                                        <img src={"/assets/livre5.jpg"}/>
+                                        <div>
+                                            <button className={styles.btnBg}>Modifier</button>
+                                            <button>Supprimer</button>
+                                        </div>
+                                    </div>
+                                    <p>Votre photo doit valider les standards OGLA</p>
+                                </div>
+                                <div className={styles.infoMain}>
+                                    <form className={styles.formContainer}>
+                                        <div className={styles.form}>
+                                            <label>Pseudo</label>
+                                            <input disabled={true} type={"text"} value={"Jérome Fiak"}/>
+                                            <label>Email</label>
+                                            <input onChange={(event) => {
+                                                setNewProfil({...newProfil, email: event.target.value})
+                                            }} type={"email"} value={newProfil.email}/>
+                                            <label htmlFor={"genres"}>Genre favoris</label>
+                                            <div className={styles.selectCategory}>
+                                                <ArrowDownIcon/>
+                                                <select name="genres" id="pet-select">
+                                                    {
+                                                        Category.category.map((item) => {
+                                                            return (
+                                                                <option
+                                                                    value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                    <option value={"none"}>Pas de préférence</option>
+                                                </select>
+                                            </div>
+                                            <p className={styles.errMsg}>Voici un message d'erreur</p>
+                                            <button disabled={true}
+                                                    className={hasChanged === true ? styles.active : styles.disabled}>Modifier
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    {
+                        activeLink === "writer" &&
+                        <div className={styles.containerWriter}>
+                            <div className={styles.subTitleType}>
+                                <h5 className={styles.author}>{profil.name} <span>Inscrit le 17/02/2022 </span></h5>
+                            </div>
+                            <textarea className={scroll.scrollbar}>{newProfil.description}</textarea>
+                            <div className={styles.containerSocialStats}>
+                                <div className={styles.containerSt}>
+                                    <h5 className={styles.bestTitle}>Statistiques</h5>
+
+                                    <div className={styles.containerStats}>
+                                        <div className={styles.item}>
+                                            <div className={styles.lItem}>
+                                                <SparklesIcon/>
+                                                <div>
+                                                    <p className={styles.valueStats}>Le crime de Mr Cizlac</p>
+                                                    <p className={styles.labelStats}>Meilleur Livre</p>
+                                                </div>
+                                            </div>
+                                            <p className={styles.nbStats}><span>+120</span>j'aime(s)</p>
+                                        </div>
+
+                                        <div className={styles.item}>
+                                            <div className={styles.lItem}>
+                                                <StarIcon/>
+                                                <div>
+                                                    <p className={styles.valueStats}>Le crime de Mr Cizlac et la buche
+                                                        de normandie</p>
+                                                    <p className={styles.labelStats}>Meilleur chapitre</p>
+                                                </div>
+                                            </div>
+                                            <p className={styles.nbStats}><span>+820</span>j'aime(s)</p>
+                                        </div>
+
+                                        <div className={styles.item}>
+                                            <div className={styles.lItem}>
+                                                <ChatBubbleLeftIcon/>
+                                                <div>
+                                                    <p className={styles.valueStats}>Le crime de Mr Cizlac</p>
+                                                    <p className={styles.labelStats}>Le plus commenté</p>
+                                                </div>
+                                            </div>
+                                            <p className={styles.nbStats}><span>+12210</span>commentaire(s)</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div className={styles.containerSocial}>
+                                    <h5 className={styles.bestTitle}>Réseaux sociaux 1/3</h5>
+                                    <form>
+                                        <div className={styles.form}>
+                                            <label>Facebook <Facebook/></label>
+                                            <input type={"text"} value={""} placeholder={"Profil Facebook"}/>
+                                            <label>Instagram <Instagram/></label>
+                                            <input type={"text"} value={""} placeholder={"Profil Instagram"}/>
+                                            <label htmlFor={"genres"}>Twitter <Twitter/></label>
+                                            <input type={"text"} value={""} placeholder={"Profil Twitter"}/>
+
+
+                                            <p className={styles.errMsg}></p>
+                                            <button disabled={true}
+                                                    className={hasChanged === true ? styles.active : styles.disabled}>Modifier
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+export default Profil;

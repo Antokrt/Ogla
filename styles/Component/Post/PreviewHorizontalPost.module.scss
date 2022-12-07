@@ -1,0 +1,80 @@
+@import "styles/utils/var";
+
+.container{
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  width: 400px;
+  height: 100px;
+  padding: 10px 0px;
+  border-bottom: solid 1px rgba(28, 35, 43, 0.08);
+  margin-top: 10px;
+
+  .imgContainer{
+    width: 80px;
+    height: 100%;
+    img{
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .thumbnail{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+font-size: 10px;
+      font-family: "Potta One",sans-serif;
+      color: $purpleLight;
+    }
+  }
+
+  .rankContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    p{
+      font-weight: bold;
+      font-family: "Rubik";
+      font-size: 15px;
+    }
+  }
+
+  .contentContainer{
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    h5{
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: #1C232B;
+      font-family: "Montserrat", sans-serif;
+      font-size: 12px;
+    }
+    p{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 11px;
+      font-family: "Montserrat",sans-serif;
+      color: #1C232B;
+span{
+  text-decoration: underline;
+  margin-right: 10px;
+}
+      svg{
+        width: 12px;
+        margin-left: 2px;
+        color: $purpleLight;
+      }
+    }
+  }
+}

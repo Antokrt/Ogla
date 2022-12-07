@@ -1,0 +1,54 @@
+@import "../../utils/var";
+
+.container{
+  &:last-child{
+    display: none!important;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2%;
+  margin-bottom: 20px;
+
+  .book{
+    &:hover{
+      a,p{
+        color: $darkBrown;
+        transition: 0.1s;
+      }
+    }
+    opacity: 0.9;
+    cursor: pointer;
+display: flex;
+    flex-direction: column;
+    justify-content: center;
+margin-right: 100px;
+    img{
+      margin-bottom: 10px;
+      object-fit: contain;
+      height: 60px;
+      width: 60px;
+    }
+
+    a,p{
+      &:first-letter{
+        text-transform: uppercase;
+      }
+
+      transition: 0.1s;
+      text-align: center;
+      text-decoration: none;
+      color: $brown;
+      font-weight: bold;
+      font-family: "Lobster",sans-serif;
+    }
+  }
+
+}
+
+.active{
+ a,p{
+   color: $darkBrown!important;
+ }
+}
+

@@ -1,0 +1,111 @@
+@import "styles/utils/var";
+
+.container{
+  cursor: pointer;
+  display: flex;
+  width: 590px;
+  height: 245px;
+  margin-right: 5px;
+  margin-left: 5px;
+  box-shadow: $shadow;
+  border: solid 1px $border;
+  border-radius: 10px;
+  position: relative;
+  .imgContainer{
+    width: 185px;
+    height: 100%;
+    padding: 15px;
+    img{
+      box-shadow: $shadow;
+border-radius: 10px;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .sThumbnail{
+    position: absolute;
+    left: -6%;
+    top: -5%;
+    background-color: #57f6b3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    font-size: 9px;
+    font-family: "Montserrat",sans-serif;
+    font-weight: 700;
+    border-radius: 25px;
+    color: #1C232B;
+  }
+
+
+  .thumbnail{
+    border-top-right-radius:10px;
+    position: absolute;
+    right: 0;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+      font-family: "Rubik",sans-serif;
+      font-size: 10px;
+      color: $purpleLight;
+    }
+    svg{
+      margin-left: 5px;
+      color: $purpleLight;
+      width: 12px;
+      margin-top: -2px;
+    }
+  }
+
+  .contentContainer{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 10px;
+
+    h6{
+      font-size: 16px;
+      font-family: "Montserrat",sans-serif;
+      font-weight: 700;
+      color: #1C232B;
+    }
+
+    .header{
+      p{
+        font-size: 10px;
+        color: #54595F;
+        font-family: "Montserrat Alternates",sans-serif;
+
+        .category{
+          font-weight: bold;
+          color: $purpleLight;
+        }
+        .author{
+          font-weight: bold;
+        }
+      }
+      margin-bottom: 20px;
+    }
+
+    .description{
+      padding-right: 35px;
+      p{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 5;
+        display: -webkit-box;
+        font-style: italic;
+        -webkit-box-orient: vertical;
+        font-size: 11px;
+        color: rgba(28, 35, 43, 0.87);
+        font-family: "Montserrat", sans-serif;
+      }
+    }
+  }
+}

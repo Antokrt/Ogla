@@ -1,0 +1,26 @@
+@import "styles/utils/var";
+
+.container{
+  ::placeholder{
+    font-family: "Montserrat", sans-serif;
+    color: $brown;
+    font-weight: bold;
+  }
+  display: flex;
+  height: 60px;
+
+  input{
+
+    padding-left: 15px;
+    width: 100%;
+    background-color: #e9ebec;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Montserrat",sans-serif;
+    color: $brown;
+
+  }
+
+  input:focus{
+    outline: none !important;  }
+}

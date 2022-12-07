@@ -1,0 +1,23 @@
+{
+  "category": [
+    {
+      "name": "action"
+    },
+    {
+      "name": "drama"
+    },
+    {
+      "name": "fantaisie"
+    },
+    {
+      "name": "horreur"
+    },
+    {
+      "name": "sf"
+    }
+    ,
+    {
+      "name": "comédie"
+    }
+  ]
+}

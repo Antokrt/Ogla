@@ -1,0 +1,107 @@
+@import "styles/utils/var";
+
+.container{
+z-index: 1;
+  min-height: 100vh;
+  background-image: url("/assets/blurry.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.containerM{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+.searchContainer{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  form{
+    width: 500px;
+  }
+
+  input{
+    outline: none;
+    border-radius: 5px;
+    padding: 15px 15px;
+    background-color: $grey;
+    color: rgba(28, 35, 43, 0.65);
+    font-family: "Montserrat",sans-serif;
+    width: 100%;
+  }
+}
+
+.containerCardPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+  flex-direction: column;
+  margin-top: 40px;
+  width: 100%;
+  overflow: hidden;
+
+  .sortContainer {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    width: 60%;
+    margin-bottom: 30px;
+
+    h3 {
+      font-family: "Montserrat", sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      border-bottom: 2px solid rgba(84, 89, 95, 0.32);
+      padding-bottom: 10px;
+      margin-bottom: 0px;
+    }
+
+    div {
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      margin-top: 20px;
+
+      button {
+        cursor: pointer;
+        margin-right: 5px;
+        border-radius: 20px;
+        font-size: 11px;
+        padding: 10px 20px;
+        font-family: "Montserrat Alternates", sans-serif;
+        color: $purple;
+        transition: 0.1s;
+        font-weight: bold;
+      }
+
+      .activeBtn {
+        transition: 0.1s;
+        background-color: $purple !important;
+        color: $white !important;
+      }
+    }
+  }
+
+  .card {
+    display: grid;
+    justify-content: start;
+    justify-items: start;
+    align-items: start;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px 0px;
+    width: 60%;
+  }
+}
+
+.previewContainer{
+  margin-top: 50px;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}

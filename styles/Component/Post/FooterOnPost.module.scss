@@ -1,0 +1,94 @@
+@import "styles/utils/var";
+
+.container{
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  background-color: #1C232B;
+  padding: 10px 2%;
+  width: 100%;
+  height: 8vh;
+}
+
+.titleContainer{
+
+  display: flex;
+  align-items: center;
+  img{
+object-fit: cover;
+    width: 60px;
+    border-radius: 10px;
+    height: 50px;
+  }
+  div{
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+h7{
+  color: $white;
+  font-family: "Potta One",sans-serif;
+  font-size: 13px;
+}
+    p{
+font-size: 11px;
+      font-family: "Montserrat";
+      color: $white;
+    }
+  }
+}
+
+.likeContainer{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div{
+    margin: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  svg{
+    width: 40px;
+    height: 25px;
+    margin-bottom: 5px;
+    color: $grey;
+  }
+  p{
+    color: $grey;
+    font-size: 9px;
+    font-family: "Montserrat Alternates",sans-serif;
+  }
+
+}
+
+.commentAndListContainer{
+display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+
+
+  div{
+    margin-left: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  svg{
+    width: 40px;
+    height: 25px;
+    color: $grey;
+    margin-bottom: 5px;
+
+  }
+  p{
+    color: $grey;
+    font-size: 9px;
+    font-family: "Montserrat Alternates",sans-serif;
+  }
+}

@@ -1,37 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="" />
+    <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Category/New.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/MainSearchBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/CommentaryByUser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/HeaderOnChapter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPost.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPostList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Review.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/SMSeachBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Book.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Chapter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Like.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Signal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/facebook.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/instagram.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/twitter.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Sort.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/layouts/LogCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json/author.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json/category.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json/msg.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/json/post.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/Chapter/[id].js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/EntryChoice/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/Post/[id].js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/Post/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Author/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/services/Post/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/BannerOnPost.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Card.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryHeader.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Category/News.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/CommentaryByUser.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/SubCommentary.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/HeaderOnBook.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Review.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/SMSearchbar.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Layouts/LogCard.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Category.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/EntryChoice.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/utils/font.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/utils/icon.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/utils/keyframe.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/utils/scrollbar.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Date.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Size.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/String.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/ToogleSidebar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/context/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/hello.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2FwcF4RGCMPWEPdLaASRmtxabAb" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Dev",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/public/assets&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\public\assets" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
+      <recent name="C:\Dev\Ogla\pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.MainSearchBar.js">
+    <configuration name="Footer.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/Footer.js" working-dir="$PROJECT_DIR$/Component">
+      <method v="2" />
     </configuration>
+    <configuration name="MainSearchBar.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/MainSearchBar.js" working-dir="$PROJECT_DIR$/Component">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.MainSearchBar.js" />
+        <item itemvalue="Node.js.Footer.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -42,10 +167,66 @@
       <option name="presentableId" value="Default" />
       <updated>1665406480197</updated>
       <workItem from="1665406481591" duration="60000" />
+      <workItem from="1665406606424" duration="1710000" />
+      <workItem from="1665408336739" duration="51000" />
+      <workItem from="1665408480333" duration="10289000" />
+      <workItem from="1665582639194" duration="9288000" />
+      <workItem from="1665602721116" duration="7738000" />
+      <workItem from="1665670818763" duration="28921000" />
+      <workItem from="1665776498943" duration="5486000" />
+      <workItem from="1665915588145" duration="13252000" />
+      <workItem from="1666011190573" duration="18490000" />
+      <workItem from="1666169493324" duration="22206000" />
+      <workItem from="1666272291605" duration="13472000" />
+      <workItem from="1666343798490" duration="14911000" />
+      <workItem from="1666516797320" duration="88000" />
+      <workItem from="1666523436097" duration="8414000" />
+      <workItem from="1666542901297" duration="9000" />
+      <workItem from="1666617934561" duration="14043000" />
+      <workItem from="1666697464932" duration="14868000" />
+      <workItem from="1666778603753" duration="17829000" />
+      <workItem from="1666947172399" duration="16024000" />
+      <workItem from="1667249356691" duration="360000" />
+      <workItem from="1667250362151" duration="6000" />
+      <workItem from="1667299986206" duration="5172000" />
+      <workItem from="1667323316696" duration="4255000" />
+      <workItem from="1667403521006" duration="5974000" />
+      <workItem from="1667551884824" duration="24754000" />
+      <workItem from="1667595221613" duration="2007000" />
+      <workItem from="1667640525948" duration="7298000" />
+      <workItem from="1667826150762" duration="12776000" />
+      <workItem from="1667846600779" duration="12000" />
+      <workItem from="1667900317844" duration="16038000" />
+      <workItem from="1667987071224" duration="4384000" />
+      <workItem from="1667999538698" duration="13967000" />
+      <workItem from="1668033179571" duration="18000" />
+      <workItem from="1668033233137" duration="5000" />
+      <workItem from="1668090345565" duration="8174000" />
+      <workItem from="1668162665946" duration="11683000" />
+      <workItem from="1668267858981" duration="5985000" />
+      <workItem from="1668338180400" duration="10434000" />
+      <workItem from="1668420783791" duration="17764000" />
+      <workItem from="1668507399356" duration="15678000" />
+      <workItem from="1668534377441" duration="40000" />
+      <workItem from="1668547404162" duration="47000" />
+      <workItem from="1668603462129" duration="8956000" />
+      <workItem from="1668680285503" duration="18821000" />
+      <workItem from="1668787207277" duration="66000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

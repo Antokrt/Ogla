@@ -1,0 +1,96 @@
+@import "styles/utils/var";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  h5 {
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color: #1C232B;
+    letter-spacing: 1px;
+  }
+
+  .item{
+    display: flex;
+    margin-top: 10px;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    padding: 10px;
+    min-height: 200px;
+    height: auto;
+    .containerImg{
+      display:flex;
+      width: 40%;
+      height: 100%;
+      margin-right: 10px;
+      img{
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+
+    .containerContent{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 60%;
+      h6{
+        text-transform: uppercase;
+        -webkit-text-stroke-width: 1px;
+        stroke-width: 1px;
+        stroke: #1C232B;
+        color: #1C232B;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      .description{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 4;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        font-size: 12px;
+        font-weight: lighter;
+        color: rgba(28, 35, 43, 0.71);
+        font-style: italic;
+        font-family: "Rubik", sans-serif;
+      }
+
+      .statsContainer{
+        display: flex;
+        justify-content: space-between;
+
+        .authorChapter{
+          display: flex;
+          flex-direction: column;
+          .author{
+            font-size: 11px;
+            text-decoration: underline;
+            border-radius: 25px;
+            color: #1C232B;
+            font-family: "Montserrat", sans-serif;
+          }
+          .category{
+            font-family: "Potta One", sans-serif;
+            font-size: 10px;
+            color: #1C232B;
+          }
+        }
+
+        button{
+          cursor: pointer;
+          padding: 4px 12px;
+          border-radius: 25px;
+          font-family: "Potta One",sans-serif;
+          font-size: 10px;
+          background-color: $purpleLight;
+          color: white;
+
+        }
+      }
+    }
+  }
+}

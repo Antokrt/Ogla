@@ -1,0 +1,98 @@
+@import "../../styles/utils/var";
+
+.container{
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  background-image: url("/assets/red_blob.png");
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+  height: 220px;
+  width: 300px;
+
+  .thumbnail{
+    position: absolute;
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    right: -10%;
+    top: -5%;
+    border-radius: 25px;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #57f6b3;
+    font-family: "Potta One",sans-serif;
+    font-size: 10px;
+    color: rgba(28, 35, 43, 0.72);
+  }
+  h5{
+    text-align: left;
+    width: 100%;
+    font-family: "Potta One", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+  color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  svg{
+    width: 40px;
+  }
+
+
+
+  .statsContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    .item{
+      display: flex;
+flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .stats{
+        color: white;
+        font-family: "Poppins",sans-serif;
+        font-size: 20px;
+        letter-spacing: 2px;
+        font-weight: bold;
+      }
+
+      .label{
+        font-family: "Potta One",sans-serif;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 10px;
+      }
+    }
+  }
+
+  .why{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    button{
+      &:hover{
+        transform: scale(1.05);
+        transition: 0.2s ;
+      }
+      transition: 0.2s;
+      -webkit-font-smoothing: subpixel-antialiased;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+
+      font-weight: bold;
+      background-color: white;
+      color:$purpleLight;
+      font-family: "Montserrat Alternates",sans-serif;
+      width: 90%;
+      padding: 15px 5px;
+      font-size: 11px;
+      border-radius: 5px;
+    }
+  }
+}

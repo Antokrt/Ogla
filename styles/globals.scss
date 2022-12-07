@@ -1,0 +1,23 @@
+
+
+
+@import '../styles/utils/reset';
+@import '../styles/utils/font';
+@import '../styles/utils/keyframe.module';
+@import '../styles/utils/var';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "tailwindcss/base.css";
+@import "tailwindcss/components.css";
+@import "tailwindcss/utilities.css";
+
+#__next{
+  overflow-x: hidden!important;
+}
+
+body{
+  background-color: white;
+}

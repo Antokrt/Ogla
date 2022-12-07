@@ -1,0 +1,307 @@
+@import "styles/utils/var";
+
+.container{
+  background-image: url("/assets/blurry.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+overflow-y: hidden;
+}
+
+.sidebar{
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 76vh;
+  bottom: 8.2%;
+  right: 0px;
+  z-index: 6;
+  width: 400px;
+  box-shadow: 5px 2px 10px $darkBrown;
+}
+
+.containerC{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.imgContainer{
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  width: 300px;
+  height: 300px;
+  margin-right: 50px;
+  .img{
+    height: 90%;
+    img{
+      border-radius: 25px;
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
+  }
+}
+
+.btnContainer{
+  display: flex;
+  margin: 20px 0px;
+  .btnItem{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 20px;
+
+    svg{
+      height: 40px;
+      width: 40px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: $purple;
+      border-radius: 25px;
+      color: white;
+    }
+    p{
+      text-align: center;
+      color: rgba(28, 35, 43, 0.7);
+      font-weight: bold;
+      font-family: "Montserrat",sans-serif;
+      font-size: 10px;
+    }
+
+    .smText{
+      font-size: 10px;
+    }
+  }
+}
+
+.btnRead{
+width: 100%;
+  button{
+    width: 100%;
+    padding: 4%;
+    background-color: $purple;
+    color: white;
+    border-radius: 25px;
+    font-size: 13px;
+    font-family: "Potta One";
+  }
+}
+
+.chapterContainer{
+
+height: 80vh;
+  width: 700px;
+padding-right: 10px;
+  .infoContainer{
+    display: flex;
+    flex-direction: column;
+
+    justify-content: start;
+h4{
+  color: $darkBrown;
+  font-family: "Potta One",sans-serif;
+  font-size: 13px;
+  span{
+    cursor: pointer;
+  }
+}
+    h3{
+      margin-top: 10px;
+color: $darkBrown;
+      font-family: "Montserrat Alternates",sans-serif;
+      font-weight: bold;
+    }
+
+    .snippet{
+      margin: 10px 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 10;
+      display: -webkit-box;
+      font-style: italic;
+      -webkit-box-orient: vertical;
+      font-size: 13px;
+      color: rgba(28, 35, 43, 0.87);
+      font-family: "Montserrat",sans-serif;
+    }
+
+    .btnFilter{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      button{
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        color: rgba(28, 35, 43, 0.84);
+        font-family: "Montserrat Alternates",sans-serif;
+        font-weight: bolder;
+        svg{
+          width: 15px;
+          color: $darkBrown;
+          margin-left: 10px;
+        }
+      }
+      div{
+        display: flex;
+        justify-content: center;
+        align-items:  center;
+        p{
+          margin-right: 10px;
+          font-family: "Montserrat",sans-serif;
+          font-size: 10px;
+        }
+      }
+      p{
+        display: flex;
+        font-size: 14px;
+        align-items: center;
+        justify-content: center;
+        color: $purple;
+        font-family: "Montserrat Alternates",sans-serif;
+        font-weight: bolder;
+      }
+    }
+  }
+
+  .contentChapterList{
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background:transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: $grey;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $grey;
+    }
+    overflow-y: auto!important;
+    margin-top: 20px;
+    display: block;
+    height: 600px;
+    padding-right: 20px;
+    flex-direction: column;
+    padding-bottom: 200px;
+
+    .chapter{
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+      border-bottom: solid 1px $grey;
+cursor: pointer;
+      .headerChapter{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        h6{
+          font-family: "Montserrat Alternates",sans-serif;
+          color: $darkBrown;
+          font-size: 13px;
+          font-weight: bold;
+        }
+        h7{
+          font-family: "Poppins",sans-serif;
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.68);
+        }
+      }
+
+      .likeChapter{
+        width: 20px;
+        display: flex;
+        justify-content: center;
+align-items: center;
+        flex-direction: column;
+        p{
+          margin-top: 5px;
+          text-align: center;
+          color: rgba(28, 35, 43, 0.7);
+          font-weight: bold;
+          font-family: "Montserrat", sans-serif;
+          font-size: 10px;
+        }
+
+      }
+    }
+  }
+}
+
+
+.cursor{
+    cursor: pointer;
+}
+
+
+
+.slideInRight {
+  -webkit-animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.slideOut {
+  -webkit-animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both;
+  animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both
+}
+
+
+@-webkit-keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+  }
+}

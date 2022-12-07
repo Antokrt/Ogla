@@ -1,0 +1,230 @@
+@import "styles/utils/var.scss";
+
+.container {
+  background-image: url("/assets/blurry.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  scroll-behavior: smooth;
+}
+
+.sidebar{
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 76vh;
+  bottom: 8.2%;
+  right: -10px;
+  z-index: 6;
+  width: 400px;
+  box-shadow: 5px 2px 10px $darkBrown;
+}
+
+
+
+.containerC {
+  padding-bottom: 50px;
+}
+
+
+
+.bannerChapter {
+  height: 20vh;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+
+
+  .thumbnailContainer {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+
+
+    p {
+      border-radius: 25px;
+      font-size: 13px;
+      font-family: "Montserrat Alternates", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $purple;
+      color: $white;
+      height: 20px;
+      font-weight: bold;
+      padding: 2%;
+
+      svg {
+        width: 15px;
+        margin-left: 5px;
+      }
+    }
+  }
+
+  h3 {
+    &:first-letter {
+      font-size: 40px;
+    }
+
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 25px;
+    color: $darkBrown;
+    font-family: "Potta One", sans-serif;
+  }
+
+  h5 {
+    font-size: 16px;
+    color: white;
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+}
+
+.contentChapter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  padding-bottom: 70px;
+
+  .headerContent {
+    width: 50%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  h6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 40px;
+      margin-bottom: 5px;
+      color: $grey;
+    }
+
+    font-weight: bold;
+    color: $purple;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-style: italic;
+  }
+
+  h5 {
+    font-family: "Potta One", sans-serif;
+    color: $darkBrown;
+    opacity: 0.9;
+    font-style: italic;
+    font-size: 20px;
+    border-bottom: solid 2px $grey;
+  }
+
+  p {
+    &:first-letter {
+      font-size: 30px;
+    }
+
+    text-align: justify;
+    width: 50%;
+    font-family: "Montserrat", sans-serif;
+    color: $darkBrown;
+    line-height: 30px;
+  }
+}
+
+
+.fixedActive {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.fixedInitial {
+  position: relative !important;
+}
+
+.mTopActive {
+  margin-top: 27vh !important;
+}
+
+.mTopDisable {
+  margin-top: 0;
+}
+
+.mSide {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.slideInRight {
+  -webkit-animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.slideOut {
+  -webkit-animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both;
+  animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both
+}
+
+
+@-webkit-keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+  }
+}
+
+

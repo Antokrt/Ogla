@@ -1,0 +1,152 @@
+@import "styles/utils/var";
+
+.container{
+  min-height: auto;
+  height: auto;
+  width: 100%;
+}
+
+.socialLinks{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 200px;
+  background-color: $purple;
+
+  h5{
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    font-family: "Potta One",sans-serif;
+  }
+  .social{
+    margin-top: 30px;
+  .icon{
+    color: white;
+    font-size: 30px;
+    margin: 0px 20px;
+  }
+  }
+}
+
+.linkFooter{
+  padding: 50px;
+  background-color: #1C232B;
+  height: auto;
+  display: flex;
+  align-items: start;
+justify-content: center;
+
+  .planContainer{
+    display: flex;
+  }
+  .plan{
+width: auto;
+margin: 0px 30px;
+    ul {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      li{
+
+        margin: 10px 0px;
+        font-size: 11px;
+        font-family: "Poppins",sans-serif;
+        color: #7A7A7A;
+        width: 100%;
+
+        a{
+          color: #7A7A7A;
+text-decoration: none;
+        }
+      }
+    }
+
+    h6{
+      text-align: left;
+      white-space: nowrap;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+margin-bottom: 20px;
+      font-family: "Montserrat Alternates",sans-serif;
+    }
+  }
+
+  .text{
+    h6{
+      text-align: left;
+      color: white;
+      font-size: 16px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      font-family: "Montserrat Alternates",sans-serif;
+    }
+    width: auto;
+    margin: 0px 70px;
+    p{
+      width: 260px;
+      font-family: "Montserrat Alternates",sans-serif;
+      font-size: 11px;
+      line-height: 20px;
+      font-style: italic;
+color: $purple;
+    }
+  }
+}
+
+.activeNav{
+  color: white!important;
+}
+
+@media screen and (max-width: 650px){
+  .plan{
+    width: 50%!important;
+  }
+
+  .text{
+    width: 100% !important;
+    margin: 0!important;
+  }
+
+  .linkFooter{
+flex-direction: column!important;
+    padding: 50px 20px;
+  }
+
+  .planContainer{
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+
+  .text{
+    h6{
+      font-size: 1.5rem!important;
+    }
+    p{
+      width: 100% !important;
+    }
+  }
+}
+
+@media screen and (max-width: 300px){
+  .planContainer{
+    flex-direction: column!important;
+
+    .plan{
+      width: 100% !important;
+      margin: 20px 0px;
+      h6{
+        text-align: center;
+      }
+    }
+  }
+
+  .text{
+    h6{
+      font-size: 20px!important;
+    }
+  }
+}
