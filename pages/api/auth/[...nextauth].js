@@ -1,27 +1,19 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from "axios";
-import Error from "next/error";
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 
 export default NextAuth({
-    providers:[
+    providers: [
         CredentialsProvider({
-            id:'login',
-           name:'login',
-            credentials:{
-                pseudo:{
-                    label:'pseudo',
-                    type:'pseudo',
-                    placeholder:'joey'
-                },
-                password:{label:'Password', type:'password'},
-            },
-            async authorize(credentials,req) {
+            id: 'login',
+            name: 'login',
+            async authorize(credentials, req) {
                 const payload = {
-                    pseudo:credentials.pseudo,
-                    password:credentials.password
+                    pseudo: credentials.pseudo,
+                    password: credentials.password
                 }
+
                 console.log(payload)
                 const res = await fetch('http://localhost:3008/auth/login/',{
                     method:'POST',
@@ -34,8 +26,8 @@ export default NextAuth({
 
                 const user = await res.json();
                 console.log(user)
-                if (!res.ok) {
-                    throw new Error(user);
+                if (!res.ok && user) {
+                    throw new Error(user.message)
                 }
 
                 // If no error and we have user data, return it
@@ -43,45 +35,43 @@ export default NextAuth({
                     return user;
                 }
                 // Return null if user data could not be retrieved
-                return null;
-            }
+                return null;            }
 
         }),
         CredentialsProvider({
-            id:'register',
-            async authorize(credentials){
-                try{
+            id: 'register',
+            async authorize(credentials) {
+                try {
                     const registerObject = {
-                        "pseudo":"josé10",
-                        "password":"azerty",
-                        "email":"josé2@gmail.com",
-                        "is_author":true
+                        "pseudo": "josé10",
+                        "password": "azerty",
+                        "email": "josé2@gmail.com",
+                        "is_author": true
                     }
-                  return await axios.post('http://localhost:3008/user/register',registerObject);
-                }
-                catch (e) {
+                    return await axios.post('http://localhost:3008/user/register', registerObject);
+                } catch (e) {
                     throw new Error("jerjej")
                 }
             }
         })
     ],
 
-    pages:{
-        signIn:'/auth?login'
+    pages: {
+        signIn: '/auth?login'
     },
 
-    callbacks:{
-        async signIn({user}){
-if(user) return true;
-return false;
+    callbacks: {
+        async signIn({user}) {
+            if (user) return true;
+            return 'false';
         },
-        async session({session,token}){
+        async session({session}) {
             session.user.isLoggedIn = true;
             return session;
         },
-        async jwt({token,user}){
+        async jwt({token, user}) {
             return token;
         }
     },
-    secret:'code'
+    secret: 'code'
 })

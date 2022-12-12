@@ -22,16 +22,16 @@ const Login = ({register}) => {
         e.preventDefault();
         const formData = new FormData(formRef.current);
         if(!formData.get('pseudo') || !formData.get('password')) return alert('Data missing in form');
-
         const response = await signIn('login',{
             pseudo:formData.get('pseudo'),
             password:formData.get('password'),
             redirect:false
-        }).then((res) => console.log(res))
-            .catch((err) => console.log(err))
-
-
-
+        })
+            .then((res) => {
+                if(res.status === 401){
+                    console.log(res)
+                }
+            })
     }
 
     const loginLink = () => {
