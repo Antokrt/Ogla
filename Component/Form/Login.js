@@ -28,8 +28,16 @@ const Login = ({register}) => {
             redirect:false
         })
             .then((res) => {
+                console.log(res)
                 if(res.status === 401){
-                    console.log(res)
+                    switch (res.error){
+                        case 'Impossible to find the user' :{
+                            setSubmitErr(prevState => ({
+                                   msg:'Identifiant ou mot de passe incorrect!',
+                                    show:true
+                            }))
+                        }
+                    }
                 }
             })
     }

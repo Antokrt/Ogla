@@ -2,8 +2,8 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 import {ArrowDownIcon} from "@heroicons/react/24/outline";
 import Category from "../../json/category.json";
 import {Capitalize} from "../../utils/String";
-import scrollbar from "../../styles/utils/scrollbar.module.scss";
 import {useState} from "react";
+
 
 const Register = ({login}) => {
 
@@ -22,10 +22,7 @@ const Register = ({login}) => {
             show:false
         },
         pseudo:{
-            msg:[
-                "Ce pseudo est déja pris",
-                "Votre pseudo doit contenir au moins 5 caractères"
-            ],
+            msg:'Votre pseudo doit contenir plus de 3 caractères',
             show:false
         },
     });
@@ -33,6 +30,13 @@ const Register = ({login}) => {
         msg:"Erreur lors de l'envoi du formulaire",
         show:false
     })
+
+    const [email , setEmail] = useState('');
+    const [pseudo , setPseudo] = useState('');
+    const [password , setPassword] = useState('');
+    const [confPassword , setConfPassword] = useState('');
+    const [genres , setGenres] = useState('');
+
 
     const loginLink = () => {
         return (
@@ -53,15 +57,15 @@ const Register = ({login}) => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
 
-                <label htmlFor={"fName"}>Email</label>
+                <label htmlFor={"email"}>Email</label>
                 {errItem.email.show &&  errMsgItem(errItem.email.msg)}
-                <input type={"email"} name={"email"} placeholder={"Email"}></input>
+                <input type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} name={"email"} placeholder={"Email"}/>
                 <label htmlFor={"password"}>Mot de passe</label>
                 {errItem.password.show &&  errMsgItem(errItem.password.msg)}
-                <input type={"password"} name={"password"} placeholder={"Mot de passe"}/>
+                <input onChange={(e) => setPassword(e.target.value) } type={"password"} name={"password"} value={password} placeholder={"Mot de passe"}/>
                 <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
                 {errItem.confirmPassWord.show &&  errMsgItem(errItem.confirmPassWord.msg)}
-                <input type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
+                <input onChange={(e) => setConfPassword(e.target.value)} value={confPassword} type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
                        name={"confirmPassword"}/>
                 {loginLink()}
             </div>
@@ -72,8 +76,8 @@ const Register = ({login}) => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
                 <label htmlFor={"pseudo"}>Pseudo</label>
-                {errItem.pseudo.show &&  errMsgItem(errItem.pseudo.msg[0])}
-                <input type={"text"} name={"pseudo"} placeholder={"Pseudo"}/>
+                {errItem.pseudo.show &&  errMsgItem(errItem.pseudo.msg)}
+                <input type={"text"} value={pseudo} onChange={(e)=> setPseudo(e.target.value)} name={"pseudo"} placeholder={"Pseudo"}/>
                 <label htmlFor={"genres"}>Genre favoris</label>
                 <div className={styles.selectCategory}>
                     <ArrowDownIcon/>
@@ -81,6 +85,7 @@ const Register = ({login}) => {
                         {
                             Category.category.map((item) => {
                                 return (
+                                    // eslint-disable-next-line react/jsx-key
                                     <option value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
                                 )
                             })
@@ -111,6 +116,48 @@ const Register = ({login}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        const object = { a: 1, b: 2, c: 3 };
+        const formData = {
+            pseudo:pseudo.toString(),
+            email:email.toString(),
+            password:password.toString(),
+            confPassword:confPassword.toString(),
+        }
+        const keys = Object.keys(formData);
+        for (const key of keys) {
+            const val = formData[key];
+            if(val === ''){
+                setSubmitErr(prevState => ({
+                    show: true,
+                    msg: "Tous les champs n'ont pas été remplis correctement!"
+                }))
+            }
+            else{
+                switch (key){
+                    case 'pseudo':
+                        if(val.length < 3){
+                            setErrItem(prevState => ({
+                                ...prevState,
+                                pseudo:{
+                                    show:true,
+                                    msg: 'Votre pseudo doit contenir plus de 3 caractères'
+                                }
+                            }))
+                        }
+
+                        if(val.length < 50){
+                            setErrItem(prevState => ({
+                                ...prevState,
+                                pseudo:{
+                                    show:true,
+                                    msg: 'Votre pseudo doit contenir moins de 15 caractères'
+                                }
+                            }))
+                        }
+                }
+            }
+
+        }
     }
 
     const btn = () => {
@@ -119,7 +166,7 @@ const Register = ({login}) => {
                 {
                     stepActiveForm !== 1 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
-                        setSubmitErr(submitErr.show === false);
+                        setSubmitErr(submitErr.show === true);
                         setStepActiveForm(stepActiveForm - 1)
                     }}>Précédent</span>
                 }
