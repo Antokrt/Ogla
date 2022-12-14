@@ -2,49 +2,59 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 import {ArrowDownIcon} from "@heroicons/react/24/outline";
 import Category from "../../json/category.json";
 import {Capitalize} from "../../utils/String";
+import { useSession,signIn} from "next-auth/react";
+
+import {Formik, Field, Form, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 import {useState} from "react";
+import {RegisterSchema} from "./Schema/RegisterSchema";
+import {RegisterService} from "../../service/User/register";
 
 
 const Register = ({login}) => {
 
-    const [stepActiveForm, setStepActiveForm] = useState(1);
-    const [errItem,setErrItem] = useState({
-        email:{
-            msg:"Veuillez rentrer une adresse mail valide",
-            show:false
+    const [errItem, setErrItem] = useState({
+        email: {
+            msg: "Veuillez rentrer une adresse mail valide",
+            show: false
         },
-        password:{
-            msg:"5 caractères minimum 1 chiffre et un symbole",
-            show:false
+        password: {
+            msg: "5 caractères minimum 1 chiffre et un symbole",
+            show: false
         },
-        confirmPassWord:{
-            msg:"Les mots de passe ne correspondent pas",
-            show:false
+        confirmPassWord: {
+            msg: "Les mots de passe ne correspondent pas",
+            show: false
         },
-        pseudo:{
-            msg:'Votre pseudo doit contenir plus de 3 caractères',
-            show:false
+        pseudo: {
+            msg: 'Votre pseudo doit contenir plus de 3 caractères',
+            show: false
         },
     });
     const [submitErr, setSubmitErr] = useState({
-        msg:"Erreur lors de l'envoi du formulaire",
-        show:false
+        msg: "Erreur lors de l'envoi du formulaire",
+        show: false
     })
-
-    const [email , setEmail] = useState('');
-    const [pseudo , setPseudo] = useState('');
-    const [password , setPassword] = useState('');
-    const [confPassword , setConfPassword] = useState('');
-    const [genres , setGenres] = useState('');
+    const [email, setEmail] = useState('');
+    const [pseudo, setPseudo] = useState('');
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
+    const initialValues = {
+        email: "",
+        pseudo: "",
+        password: "",
+        confirmPassword: "",
+    };
 
 
     const loginLink = () => {
         return (
             <div className={styles.conditions}>
-                        <p onClick={login}>Déjà <span>inscrit</span>?</p>
+                <p onClick={login}>Déjà <span>inscrit</span>?</p>
             </div>
         )
     }
+
 
     const errMsgItem = (err) => {
         return (
@@ -52,184 +62,147 @@ const Register = ({login}) => {
         )
     }
 
-
-    const firstStepForm = () => {
-        return (
-            <div className={styles.selectItem + " " + "fadeIn"}>
-
-                <label htmlFor={"email"}>Email</label>
-                {errItem.email.show &&  errMsgItem(errItem.email.msg)}
-                <input type={"email"} value={email} onChange={(e) => setEmail(e.target.value)} name={"email"} placeholder={"Email"}/>
-                <label htmlFor={"password"}>Mot de passe</label>
-                {errItem.password.show &&  errMsgItem(errItem.password.msg)}
-                <input onChange={(e) => setPassword(e.target.value) } type={"password"} name={"password"} value={password} placeholder={"Mot de passe"}/>
-                <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
-                {errItem.confirmPassWord.show &&  errMsgItem(errItem.confirmPassWord.msg)}
-                <input onChange={(e) => setConfPassword(e.target.value)} value={confPassword} type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
-                       name={"confirmPassword"}/>
-                {loginLink()}
-            </div>
-        )
-    }
-
-    const secondStepForm = () => {
-        return (
-            <div className={styles.selectItem + " " + "fadeIn"}>
-                <label htmlFor={"pseudo"}>Pseudo</label>
-                {errItem.pseudo.show &&  errMsgItem(errItem.pseudo.msg)}
-                <input type={"text"} value={pseudo} onChange={(e)=> setPseudo(e.target.value)} name={"pseudo"} placeholder={"Pseudo"}/>
-                <label htmlFor={"genres"}>Genre favoris</label>
-                <div className={styles.selectCategory}>
-                    <ArrowDownIcon/>
-                    <select name="genres" id="pet-select">
-                        {
-                            Category.category.map((item) => {
-                                return (
-                                    // eslint-disable-next-line react/jsx-key
-                                    <option value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
-                                )
-                            })
-                        }
-                        <option value={"none"}>Pas de préférence</option>
-                    </select>
-                </div>
-                {loginLink()}
-            </div>
-        )
-    }
-
-    const displayForm = (param) => {
-        switch (param) {
-            case 0 :
-                return firstStepForm();
-            case 1 :
-                return firstStepForm();
-            case 2 :
-                return secondStepForm();
-            case 3:
-                return thirdStepForm();
-
-            default:
-                return <p className={styles.err}>Erreur Formulaire</p>
-        }
-    }
-
-    const onSubmit = (e) => {
-        e.preventDefault()
-        const object = { a: 1, b: 2, c: 3 };
+    const submit = (values) => {
         const formData = {
-            pseudo:pseudo.toString(),
-            email:email.toString(),
-            password:password.toString(),
-            confPassword:confPassword.toString(),
+            email : values.email,
+            pseudo:values.pseudo,
+            password:values.password,
+            is_author:false
         }
-        const keys = Object.keys(formData);
-        for (const key of keys) {
-            const val = formData[key];
-            if(val === ''){
-                setSubmitErr(prevState => ({
-                    show: true,
-                    msg: "Tous les champs n'ont pas été remplis correctement!"
-                }))
-            }
-            else{
-                switch (key){
-                    case 'pseudo':
-                        if(val.length < 3){
-                            setErrItem(prevState => ({
-                                ...prevState,
-                                pseudo:{
-                                    show:true,
-                                    msg: 'Votre pseudo doit contenir plus de 3 caractères'
-                                }
-                            }))
-                        }
+            RegisterService(formData)
+                .then((res) => {
+                    signIn({
+                        pseudo:formData.pseudo,
+                        password:formData.password,
+                        redirect:false
+                    })
+                        .then((res) => console.log(res))
+                        .catch((err) => console.log(err))
+                })
+                .catch((err) => {
+                    let errMsg = err.response.data.message;
+                    console.log(errMsg)
+                    switch (errMsg){
+                        case"email && pseudo already exists":
+                            setSubmitErr({
+                                msg: 'Email et pseudo déjà existant',
+                                show: true
+                            })
+                            break;
 
-                        if(val.length < 50){
-                            setErrItem(prevState => ({
-                                ...prevState,
-                                pseudo:{
-                                    show:true,
-                                    msg: 'Votre pseudo doit contenir moins de 15 caractères'
-                                }
-                            }))
-                        }
-                }
-            }
+                        case "email already exists":
+                            setSubmitErr({
+                                msg: 'Email déjà existant',
+                                show: true
+                            })
+                            break;
 
-        }
-    }
+                        case "pseudo already exists":
+                            setSubmitErr({
+                                msg: 'Email déjà existant',
+                                show: true
+                            })
+                            break;
 
-    const btn = () => {
-        return (
-            <div className={styles.stepBtnContainer}>
-                {
-                    stepActiveForm !== 1 &&
-                    <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
-                        setSubmitErr(submitErr.show === true);
-                        setStepActiveForm(stepActiveForm - 1)
-                    }}>Précédent</span>
-                }
-
-
-                <button type={'submit'} className={styles.stepBtn}>S'inscrire</button>
-
-            </div>
-        )
-    }
-
-    const nextPreviousBtn = () => {
-        return (
-            <div className={styles.stepBtnContainer}>
-                {
-                    stepActiveForm !== 1 &&
-                    <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
-                        setStepActiveForm(stepActiveForm - 1)
-                    }}>Précédent</span>
-                }
-
-
-                <span className={styles.stepBtn} onClick={() => {
-
-                    if (stepActiveForm !== 3) {
-                        setStepActiveForm(stepActiveForm + 1)
+                        default:
+                            setSubmitErr({
+                                msg: "Erreur lors de l'envoi du formulaire",
+                                show: true
+                            })
                     }
-                }}>Suivant</span>
-
-
-            </div>
-        )
+                })
     }
+
 
     return (
         <div className={styles.formContainer}>
 
             <div className={styles.header}>
                 <h1>Rejoins nous !</h1>
-                <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous. Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre histoire parce que nous croyons au pouvoir des mots.
+                <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
+                    Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre
+                    histoire parce que nous croyons au pouvoir des mots.
                 </p>
             </div>
+            <div className={styles.form}>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={RegisterSchema}
+                    onSubmit={(values) => {
+                        submit(values)
+                    }}>
+                    {({resetForm}) => (
+                        <Form>
+                            <div className={styles.selectItem + " " + "fadeIn"}>
 
-            <form onSubmit={onSubmit} className={styles.form}>
-                {
-                    submitErr.show &&
-                    <p className={styles.submitErr}>{submitErr.msg}</p>
-                }
-                {
-                    displayForm(stepActiveForm)
-                }
+                                {/* EMAIL */}
+                                <label htmlFor={"email"}>Email <span>*</span></label>
+                                {email !== "" && errItem.email.show && !validateEmail(email) && errMsgItem(errItem.email.msg)}
+                                <p className={styles.errMsgItem}>
+                                    <ErrorMessage name={"email"}/>
+                                </p>
+                                <Field
+                                    id={'email'}
+                                    type={"email"}
+                                    name={"email"}
+                                    placeholder={"Email"}/>
+                                {/* EMAIL */}
 
-                {
-                    stepActiveForm !== 2 ?
-                        nextPreviousBtn()
-                        :
-                        btn()
-                }
+                                {/* PSEUDO */}
+                                <label htmlFor={"pseudo"}>Pseudo <span>*</span></label>
+                                <p className={styles.errMsgItem}>
+                                    <ErrorMessage name={"pseudo"}/>
+                                </p>
+                                <Field
+                                    type={"text"}
+                                    id={"pseudo"}
+                                    name={"pseudo"}
+                                    placeholder={"Pseudo"}/>
+                                {/* PSEUDO */}
+
+                                {/* PASSWORD */}
+                                <label htmlFor={"password"}>Mot de passe <span>*</span></label>
+                                <p className={styles.errMsgItem}>
+                                    <ErrorMessage name={"password"}/>
+                                </p>
+                                <Field
+                                    id={'password'}
+                                    type={"password"}
+                                    name={"password"}
+                                    placeholder={"Mot de passe"}/>
+                                {/* PASSWORD */}
+
+                                {/* CONFIRM PASSWORD */}
+                                <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe <span>*</span></label>
+                                <p className={styles.errMsgItem}>
+                                    <ErrorMessage name={"confirmPassword"}/>
+                                </p>
+                                <Field
+                                       id={"confirmPassword"}
+                                       type={"password"}
+                                       placeholder={"Confirmez votre mot de passe"}
+                                       name={"confirmPassword"}/>
+                                {/* CONFIRM PASSWORD */}
+
+                                {loginLink()}
+
+                            </div>
+                            {
+                                submitErr.show &&
+                                <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
+                            }
+                            <div className={styles.stepBtnContainer}>
+                                <button type={'submit'}  className={styles.stepBtn}>S'inscrire
+                                </button>
+                            </div>
+                        </Form>
+                    )}
 
 
+                </Formik>
+            </div>
 
 
-            </form>
         </div>
     )
 }
