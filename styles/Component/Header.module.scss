@@ -30,8 +30,17 @@
       position: relative;
       width: 37%;
     }
+    .accountContainer{
+      display: flex;
+      svg{
+        cursor: pointer;
+        width: 25px;
+        color: #1C232B;
+      }
+    }
 
     .account{
+      margin-right: 20px;
       cursor: pointer;
       flex-wrap: wrap;
       display: flex;
@@ -57,7 +66,7 @@
         padding: 15px 17px;
         width: 100%;
         font-size: 11px;
-        background-color: $purple;
+        background-color: $purpleLight;
 
       }
     }

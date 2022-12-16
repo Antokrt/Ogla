@@ -6,8 +6,14 @@ import {useRouter} from "next/router";
 import Category from "../json/category.json";
 import {LangueContext} from "../utils/context";
 import MainSearchBar from "./MainSearchBar";
-import {ArrowUpIcon, ChevronDoubleUpIcon, MagnifyingGlassIcon} from "@heroicons/react/24/outline";
+import {
+    ArrowLeftOnRectangleIcon,
+    ArrowUpIcon,
+    ChevronDoubleUpIcon,
+    MagnifyingGlassIcon
+} from "@heroicons/react/24/outline";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
+import {signOut, useSession} from "next-auth/react";
 
 
 export default function Header() {
@@ -16,6 +22,8 @@ export default function Header() {
     const [seeSearchBar, setSeeSearchBar] = useState(true);
     const [searchValue, setSearchValue] = useState("");
     const [login, setLogin] = useState(false);
+    const {data: session, status} = useSession();
+
 
 
     return (
@@ -34,16 +42,27 @@ export default function Header() {
                 </div>
 
                 {
-                    login ?
-                        <div className={styles.account}
-                        onClick={() =>{
-                        router.push("/profil")
-                        }}
-                        >
-                            <div>
-                                <p>A</p>
+                    status === 'authenticated' ?
+                        <div className={styles.accountContainer}>
+                            <div className={styles.account}
+                                 onClick={() =>{
+                                     router.push("/profil")
+                                 }}
+                            >
+                                <div>
+                                    <p>{session.user.pseudo[0].toUpperCase()}</p>
+                                </div>
                             </div>
+
+                            <ArrowLeftOnRectangleIcon
+                                onClick={() => {
+                                signOut()
+                                    .then(() => router.push('/'))
+                                }
+                                }
+                                title={'Se déconnecter'}/>
                         </div>
+
                         :
                         <div className={styles.login}>
                             <button onClick={() => router.push({

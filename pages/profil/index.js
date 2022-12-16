@@ -13,13 +13,15 @@ import {useEffect, useState} from "react";
 import {ArrowTrendingUpIcon, ChatBubbleLeftIcon, PencilIcon, StarIcon} from "@heroicons/react/20/solid";
 import Category from "../../json/category.json";
 import {Capitalize} from "../../utils/String";
-import {router} from "next/router";
 import Facebook from "../../Component/layouts/Icons/Social/facebook";
 import Instagram from "../../Component/layouts/Icons/Social/instagram";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 
 const Profil = () => {
+    const router = useRouter();
     const [isCreator, setIsCreator] = useState(true);
     const [activeLink, setActiveLink] = useState("profil");
     const [hasChanged, setHasChanged] = useState(false);
@@ -31,6 +33,14 @@ const Profil = () => {
         description: "Avec plus de 7 ans d'expérience en marketing direct dans des startups de l'industrie alimentaire, un producteur et une agence, j'apporte une perspective rationnelle en associant créativité des messages publicitaires et anaylse rigoureuse des résultats. Entrepreneur dans l'âme au fort esprit d'équipe reconnu pour son approche passionnée et ses idées novatrices."
     })
     const [newProfil, setNewProfil] = useState(profil);
+    const {data: session, status} = useSession();
+
+    useEffect(()=>{
+            if(!session){
+                // maybe go to login page
+                router.push('/')
+        }
+    },[router,session])
 
     useEffect(() => {
         if (Object.is(profil.email, newProfil.email) === false) {
@@ -40,6 +50,9 @@ const Profil = () => {
         }
     }, [newProfil])
 
+    const homePage = () => {
+       return  router.push('')
+    }
 
     return (
         <div className={styles.container}>
@@ -60,11 +73,11 @@ const Profil = () => {
                             <p onClick={() => setWantToDelete(!wantToDelete)} className={styles.deleteAccount}>Supprimer mon compte</p>
                             {
                                 wantToDelete ?
-                                <div>
-                                    <label>Etes vous certain de vouloir nous quitter?</label>
-                                    <input type={"text"} placeholder={"Mot de passe"}/>
-                                    <button className={styles.deleteBtn}> Supprimer mon compte</button>
-                                </div>
+                                    <div>
+                                        <label>Etes vous certain de vouloir nous quitter?</label>
+                                        <input type={"text"} placeholder={"Mot de passe"}/>
+                                        <button className={styles.deleteBtn}> Supprimer mon compte</button>
+                                    </div>
                                     :
                                     <div>
                                         <button className={styles.logOut}>Se déconnecter</button>
@@ -260,6 +273,9 @@ const Profil = () => {
             </div>
         </div>
     )
+
+
+
 }
 
 

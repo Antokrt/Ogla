@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from "axios";
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
-import {data} from "autoprefixer";
 export default NextAuth({
     providers: [
         CredentialsProvider({
@@ -53,8 +52,8 @@ export default NextAuth({
 
         async jwt({token,user}) {
             if(user){
-                token.access_token = user?.access_token
-                return token
+                token.access_token = user?.accessToken;
+                return token;
             }
             return token
 
@@ -68,9 +67,19 @@ export default NextAuth({
            await axios.get('http://localhost:3008/user/profil',config)
                 .then((res) => {
                     console.log(res.data)
+                    session.user.id = res.data._id;
+                    session.user.pseudo = res.data.pseudo;
+                    session.user.name = res.data.name;
+                    session.user.email = res.data.email;
+                    session.user.image = res.data.img;
+                    session.user.date_birth = res.data.date_birth;
+                    session.user.is_author = res.data.is_author;
+                    console.log(session)
                 })
-                .catch((err) => console.log('err.request.data'))
-                    session.user.access_token = token?.access_token;
+                .catch((err) => console.log(err.response.data))
+
+
+                    session.user.access_token = token?.accessToken;
                     return session;
 
         }
