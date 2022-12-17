@@ -22,12 +22,12 @@ export default function Home() {
 
             <div
 
-                style={{
+               /* style={{
                 position: "fixed",
                 top: 0,
                 zIndex: 2,
                 width: "100%"
-            }}>
+            }*/>
                 <Header></Header>
             </div>
             <Banner></Banner>

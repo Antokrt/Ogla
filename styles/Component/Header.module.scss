@@ -4,6 +4,83 @@
 .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  padding-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  height: 10vh;
+  z-index: 1;
+
+  .mainA{
+    display: flex;
+    h3{
+      margin-right: 100px;
+      font-family: 'Montserrat',sans-serif;
+      font-weight: bold;
+      font-size: 30px;
+    }
+    nav{
+      display: flex;
+      align-items: center;
+      ul{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        li{
+          font-weight: bold;
+          font-size: 14px;
+          font-family: 'Montserrat',sans-serif;
+        }
+      }
+    }
+
+  }
+
+  .mainLog{
+    .accountContainer{
+      display: flex;
+      svg{
+        cursor: pointer;
+        width: 25px;
+        color: #1C232B;
+      }
+    }
+    .account{
+      margin-right: 20px;
+      cursor: pointer;
+      flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $blue;
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      p{
+        color: white;
+        font-family:"Montserrat Alternates" ,sans-serif;
+        font-weight: bold;
+      }
+    }
+
+    .login{
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      padding-right: 20px;
+      background-color: #1C232B;
+      height: 50px;
+      button {
+        color: white;
+        font-weight: 500;
+        font-family: 'Montserrat',sans-serif;
+        font-size: 12px;
+      }
+    }
+  }
+ /* display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-between;
   height: 150px;
@@ -144,7 +221,7 @@ padding-left: 20px;
         padding-right: 20px;
       }
     }
-  }
+  }*/
 }
 
 .activeNav {

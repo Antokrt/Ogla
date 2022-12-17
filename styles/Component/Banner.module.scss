@@ -1,16 +1,164 @@
 @import "/styles/utils/var";
 .container {
   display: flex;
-  justify-content: center;
+  position: relative;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
-  margin-top: 150px;
-height: 60vh;
+height: 100vh;
+  margin-top: -10vh;
+  .absBlock{
+    z-index: -10;
+    position: absolute;
+    right: 0;
+    width: 50%;
+    background-color: rgba(255, 192, 203, 0.48);
+    height: 100%;
+  }
+  .mainA{
+    height: 100%;
+    width: 60%;
+  }
+
+  .mainB{
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    height: 100%;
+    width: 45%;
+    margin-top: 5%;
+    padding-right: 5%;
+    img{
+      width: 50%;
+      height: 80%;
+      object-fit: contain;
+      margin-right: 0%;
+    }
+
+    .bubbleContainer{
+      &::before{
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 24px solid #fff;
+        border-right: 12px solid transparent;
+        border-top: 12px solid #fff;
+        border-bottom: 20px solid transparent;
+        left: 0px;
+        bottom: -20px;
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 48%;
+      position: relative;
+      background-color: white;
+      min-height: 100px;
+      min-width: 70%;
+      padding: 20px;
+      gap: 10px;
+      border-radius: 5px;
+      .title{
+        display: flex;
+        gap: 10px;
+        font-family: 'Montserrat',sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #1C232B;
+        svg{
+         width: 15px;
+          color: #1C232B;
+        }
+      }
+
+      .listContainer{
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        gap: 15px;
+
+        .item{
+          display: flex;
+          height: 50px;
+
+          gap: 15px;
+          .header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 10px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            border: solid 2px rgba(0, 0, 0, 0.06);
+            width: 80px;
+            border-radius: 20px;
+            p{
+              font-weight: bold;
+              font-size: 16px;
+            }
+            img{
+              object-fit: cover;
+              width: 40px;
+              height: 100%;
+              clip-path: circle();
+            }
+          }
+
+          .bookContainer{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            h6{
+              font-family: 'Montserrat',sans-serif;
+              font-size: 15px;
+              font-weight: bold;
+            }
+            p{
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              font-family: 'Poppins',sans-serif;
+              font-size: 11px;
+              color: rgba(28, 35, 43, 0.73);
+              .category{
+                color: $purpleLight!important;
+              }
+              .author{
+              }
+              span{
+                display: flex;
+
+                svg{
+                  margin-left: 4px;
+                  color: $purpleLight;
+                  width: 14px;
+                }
+              }
+            }
+          }
+        }
+      }
+      button{
+        margin-top: 15px;
+        background-color:#1C232B;
+        padding: 10px 30px;
+        color: white;
+        font-family: "Poppins",sans-serif;
+        font-size: 12px;
+      }
+    }
+  }
+
+  /*
   background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/assets/diapo/image.png');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%;*/
 
-  h1{
+  /*h1{
     font-size: 3.5vh;
     font-family: "Montserrat",sans-serif;
     color: white;
@@ -125,6 +273,6 @@ height: 60vh;
       }
 
     }
-  }
+  }*/
 }
 

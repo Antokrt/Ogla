@@ -7,6 +7,12 @@ import Card from "./Card";
 import LogCard from "./layouts/LogCard";
 import {ChevronDoubleUpIcon} from "@heroicons/react/20/solid";
 import axios from "axios";
+import {
+    ArrowLongRightIcon,
+    ArrowRightCircleIcon, ArrowRightOnRectangleIcon, ArrowSmallRightIcon,
+    CursorArrowRaysIcon,
+    RocketLaunchIcon
+} from "@heroicons/react/24/outline";
 
 
 export default function Banner() {
@@ -32,7 +38,57 @@ export default function Banner() {
 
     return (
         <div className={styles.container}>
-            <h1>Cette semaine</h1>
+
+            <div className={styles.absBlock}>
+
+            </div>
+            <div className={styles.mainA}>
+
+            </div>
+            <div className={styles.mainB}>
+<img src={'assets/owl.png'}/>
+                <div className={styles.bubbleContainer}>
+                    <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
+                    <div className={styles.listContainer}>
+
+                        <div className={styles.item}>
+                            <div className={styles.header}>
+                                <p>1</p>
+                                <img src={'assets/profil-example.png'}/>
+                            </div>
+                            <div className={styles.bookContainer}>
+                                <h6>Meurtre à Bamako</h6>
+                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
+                            </div>
+                        </div>
+
+                        <div className={styles.item}>
+                            <div className={styles.header}>
+                                <p>2</p>
+                                <img src={'assets/profil-example.png'}/>
+                            </div>
+                            <div className={styles.bookContainer}>
+                                <h6>La poule aux oeufs d'ors</h6>
+                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
+                            </div>
+                        </div>
+
+                        <div className={styles.item}>
+                            <div className={styles.header}>
+                                <p>3</p>
+                                <img src={'assets/profil-example.png'}/>
+                            </div>
+                            <div className={styles.bookContainer}>
+                                <h6>Un village maléfique</h6>
+                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <button>Découvrir</button>
+
+                </div>
+            </div>
+   {/*         <h1>Cette semaine</h1>
 
             <div className={styles.cardContainer}>
 
@@ -64,7 +120,7 @@ export default function Banner() {
                     <button>Découvrir</button>
                 </div>
 
-            </div>
+            </div>*/}
 
          {/*       <SimpleImageSlider
                     width={width - useScrollbarSize().width}

@@ -28,7 +28,62 @@ export default function Header() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.mainA}>
+        <div className={styles.mainA}>
+                <h3>OGLA</h3>
+            <nav>
+                <ul>
+                    <li><Link href="/"><a
+                        className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
+                    <li><Link href=
+                                  {{
+                                      pathname: "/Category",
+                                  }}
+                    ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
+                    </li>
+                    <li><Link href="/devenir-auteur"><a
+                        className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
+                        écrivain</a></Link></li>
+                    <li><Link href="/"><a
+                        className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+
+            <div className={styles.mainLog}>
+                {
+                    status === 'authenticated' ?
+                        <div className={styles.accountContainer}>
+                            <div className={styles.account}
+                                 onClick={() =>{
+                                     router.push("/profil")
+                                 }}
+                            >
+                                <div>
+                                    <p>{session.user.pseudo[0].toUpperCase()}</p>
+                                </div>
+                            </div>
+
+                            <ArrowLeftOnRectangleIcon
+                                onClick={() => {
+                                    signOut()
+                                        .then(() => router.push('/'))
+                                }
+                                }
+                                title={'Se déconnecter'}/>
+                        </div>
+
+                        :
+                        <div className={styles.login}>
+                            <button onClick={() => router.push({
+                                pathname: "auth",
+                                query: "login"
+                            })}>Se connecter
+                            </button>
+                        </div>
+                }
+            </div>
+ {/*           <div className={styles.mainA}>
                 <div className={styles.logo}>
                     <img src={"/assets/logo.png"}/>
                 </div>
@@ -100,7 +155,7 @@ export default function Header() {
                     </nav>
                 </div>
 
-            }
+            }*/}
 
 
         </div>
