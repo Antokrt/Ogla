@@ -1,0 +1,41 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 50vh;
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+  height: auto;
+  width: 100%;
+  background-color: #1C232B;
+
+  .header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    h4{
+      color: white;
+      font-family: "Montserrat Alternates",sans-serif;
+      font-weight: bold;
+      font-size: 15px;
+    }
+    div{
+      display: flex;
+      gap: 30px;
+
+      svg{
+        cursor: pointer;
+        width: 20px;
+        color: white;
+      }
+    }
+  }
+
+  .listContainer{
+    display: flex;
+    gap: 25px;
+    margin-top: 40px;
+  }
+}

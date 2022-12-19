@@ -9,6 +9,7 @@ import SidebarPost from "../Component/Post/SidebarCommentary";
 import HotPost from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
+import CategoryHome from "../Component/CategoryHome";
 
 export default function Home() {
 
@@ -22,15 +23,16 @@ export default function Home() {
 
             <div
 
-               /* style={{
+               /** style={{
                 position: "fixed",
                 top: 0,
                 zIndex: 2,
                 width: "100%"
             }*/>
-                <Header></Header>
+                <Header/>
             </div>
-            <Banner></Banner>
+            <Banner/>
+<CategoryHome/>
             <div className={styles.hot}>
                 <div className={styles.headerHot}>
                     <h4>Populaires :</h4>

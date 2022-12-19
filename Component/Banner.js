@@ -1,18 +1,12 @@
 import styles from "../styles/Component/Banner.module.scss";
-import SimpleImageSlider from "react-simple-image-slider";
 import {useState, useEffect} from "react";
 import ScreenSize from "../utils/Size";
-import useScrollbarSize from "react-scrollbar-size";
-import Card from "./Card";
-import LogCard from "./layouts/LogCard";
-import {ChevronDoubleUpIcon} from "@heroicons/react/20/solid";
 import axios from "axios";
 import {
-    ArrowLongRightIcon,
-    ArrowRightCircleIcon, ArrowRightOnRectangleIcon, ArrowSmallRightIcon,
+    ChatBubbleLeftRightIcon,
     CursorArrowRaysIcon,
-    RocketLaunchIcon
 } from "@heroicons/react/24/outline";
+import {useRouter} from "next/router";
 
 
 export default function Banner() {
@@ -21,6 +15,8 @@ export default function Banner() {
         axios.get("http://localhost:3000/api/test")
             .then((res) => console.log(res.data))
     })
+
+    const router = useRouter();
 
     const [width, height] = ScreenSize();
     const slideImages = [
@@ -34,8 +30,6 @@ export default function Banner() {
         }
     ];
     const name = process.env.NEXT_PUBLIC_TEST;
-    console.log(name)
-
     return (
         <div className={styles.container}>
 
@@ -43,49 +37,55 @@ export default function Banner() {
 
             </div>
             <div className={styles.mainA}>
+                <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
+                <p className={styles.presentation}><span className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de lecture de <strong>livres</strong> <strong>d'histoires</strong> ou de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous croyons au pouvoir des <strong>mots</strong>.
 
+                </p>
+                <div className={styles.blockBtn}>
+                    <div className={styles.statsAuthor}>
+                        <p className={styles.nb}><span>Déjà</span> 56</p>
+                        <p className={styles.authorLabel}>auteurs</p>
+                    </div>
+                    <div className={styles.statsAuthor}>
+                        <p className={styles.nb}><span>Pour</span> 120</p>
+                        <p className={styles.authorLabel}>histoires</p>
+                    </div>
+
+                    <div className={styles.statsAuthor}>
+                        <p className={styles.nb}><span>Et</span> 406</p>
+                        <p className={styles.authorLabel}>chapitres</p>
+                    </div>
+
+                    <div className={styles.btnJoin}>
+                        <button onClick={() => router.push('/devenir-auteur')}>Deviens écrivain <ChatBubbleLeftRightIcon/></button>
+                    </div>
+                </div>
             </div>
             <div className={styles.mainB}>
-<img src={'assets/owl.png'}/>
-                <div className={styles.bubbleContainer}>
+<img className={styles.owl} src={'assets/owl.png'}/>
+                <div className={styles.bubbleContainer}
+                >
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
-                    <div className={styles.listContainer}>
+                    <div className={styles.textBg}>
+                        <p><span>#</span>1</p>
+                    </div>
 
+                    <div className={styles.listContainer}
+                    >
                         <div className={styles.item}>
-                            <div className={styles.header}>
-                                <p>1</p>
+                            <h5>Le village maudit</h5>
+                            <div className={styles.author}>
                                 <img src={'assets/profil-example.png'}/>
+                                <p>Huang Jienk</p>
                             </div>
-                            <div className={styles.bookContainer}>
-                                <h6>Meurtre à Bamako</h6>
-                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.item}>
-                            <div className={styles.header}>
-                                <p>2</p>
-                                <img src={'assets/profil-example.png'}/>
-                            </div>
-                            <div className={styles.bookContainer}>
-                                <h6>La poule aux oeufs d'ors</h6>
-                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
-                            </div>
-                        </div>
-
-                        <div className={styles.item}>
-                            <div className={styles.header}>
-                                <p>3</p>
-                                <img src={'assets/profil-example.png'}/>
-                            </div>
-                            <div className={styles.bookContainer}>
-                                <h6>Un village maléfique</h6>
-                                <p><span className={styles.author}>Jimmy fiak </span>| <span className={styles.category}>Action </span>| <span className={styles.likes}>2109 <ChevronDoubleUpIcon/></span></p>
+                            <p>Quelle n’est pas la surprise de Primabelle lorsqu’elle se réveille un jour coincée à l’intérieur d’un roman qu’elle avait commencé à écrire elle-même. Voilà qu’elle incarne une peintre méconnue qui finit, dans l’histoire, par être tuée par le personnage masculin principal, le prince Rainsis. Le monde qu’elle avait créé dans ce roman n’avait pas été tendre avec Rainsis. Non seulement son daltonisme lui empêche de discerner les couleurs, mais en plus, il est évité de tous à cause d’une prophétie affirmant que “celui qui est piégé dans un monde en noir et blanc remplira l’empire de sang”. Après avoir été témoin de la souffrance de Rainsis, Primabelle décide d’empêcher cette prophétie. Elle doit alors réussir à trouver l’âme sœur prédestinée de Rainsis. Le seul problème, c’est qu’elle ne connaît rien de ce personnage féminin, à part le fait qu’elle ait les cheveux noirs et les yeux de couleur pourpre. Primabelle parviendra-t-elle à aider Rainsis à voir le monde en couleurs et à trouver le bonheur ?
+                            </p>
+                            <div className={styles.stats}>
+                                <p><span className={styles.category}>Horreur</span> | <span className={styles.aut}>Huang Jienk</span>  | <span className={styles.nb}>205 chapitres</span></p>
                             </div>
                         </div>
                     </div>
                     <button>Découvrir</button>
-
                 </div>
             </div>
    {/*         <h1>Cette semaine</h1>
