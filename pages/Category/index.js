@@ -17,27 +17,16 @@ import Footer from "../../Component/Footer";
 
 export default function CategoryPage() {
 
-    let today = new Date().toLocaleDateString()
-
     const router = useRouter();
     const [filter, setFilter] = useState({
         list: ["Populaire", "Récent", "Plus de chapitres"],
         active: "Populaire"
     });
-    const [ranking, setRanking] = useState([1, 2, 3, 4, 5, 6]);
     const [post, setPost] = useState([]);
-    const [err, setErr] = useState({
-        code: 383,
-        description: "Erreur!!!"
-    });
     const {query: {cat}} = router;
 
 
     useEffect(() => {
-        setErr({
-            code: 321,
-            description: "Kakakaka"
-        })
         getData()
             .then((res) => {setPost(res)})
             .then((res) => console.log(res.title))

@@ -1,30 +1,16 @@
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import styles from "../styles/Component/Header.module.scss";
-import scrollbar from "../styles/utils/scrollbar.module.scss";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import Category from "../json/category.json";
-import {LangueContext} from "../utils/context";
-import MainSearchBar from "./MainSearchBar";
 import {
     ArrowLeftOnRectangleIcon,
-    ArrowUpIcon,
-    ChevronDoubleUpIcon,
-    MagnifyingGlassIcon
 } from "@heroicons/react/24/outline";
-import ResultSearchBar from "./SearchBar/ResultSearchBar";
 import {signOut, useSession} from "next-auth/react";
 
 
 export default function Header() {
     const router = useRouter();
-    const langueActive = useContext(LangueContext);
-    const [seeSearchBar, setSeeSearchBar] = useState(true);
-    const [searchValue, setSearchValue] = useState("");
-    const [login, setLogin] = useState(false);
     const {data: session, status} = useSession();
-
-
 
     return (
         <div className={styles.container}>
@@ -40,12 +26,23 @@ export default function Header() {
                                   }}
                     ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
                     </li>
-                    <li><Link href="/devenir-auteur"><a
-                        className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
-                        écrivain</a></Link></li>
-                    <li><Link href="/"><a
-                        className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link>
-                    </li>
+                    {
+                        session && session.user.is_author ?
+                            <>
+                                <li><Link href="/nouveau-livre"><a
+                                    className={router.pathname === "/nouveau-livre" ? styles.activeNav : ""}>Nouveau livre
+                                </a></Link></li>
+                                <li><Link href="/mes-livres"><a
+                                    className={router.pathname === "/mes-livres" ? styles.activeNav : ""}>Mes livres
+                                </a></Link></li>
+                            </>
+
+                            :
+                            <li><Link href="/devenir-auteur"><a
+                                className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
+                                écrivain</a></Link></li>
+                    }
+
                 </ul>
             </nav>
             </div>
@@ -74,11 +71,13 @@ export default function Header() {
                         </div>
 
                         :
-                        <div className={styles.login}>
-                            <button onClick={() => router.push({
-                                pathname: "auth",
+                        <div
+                            onClick={() => router.push({
+                                pathname: "/auth",
                                 query: "login"
-                            })}>Se connecter
+                            })}
+                            className={styles.login}>
+                            <button>Se connecter
                             </button>
                         </div>
                 }

@@ -50,16 +50,6 @@ const Login = ({register}) => {
     }
 
 
-    if (status === 'authenticated') {
-        return (
-            <div>
-                <p>Bienvenue {session.user.pseudo}</p>
-                <button onClick={() => {
-                    router.push('/')
-                }} className={styles.stepBtn}>Se déconnecter</button>
-            </div>
-        )
-    } else {
           return (
             <div className={styles.formContainer}>
 
@@ -93,8 +83,6 @@ const Login = ({register}) => {
                 </form>
             </div>
         )
-    }
-
 
 }
 

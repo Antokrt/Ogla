@@ -1,6 +1,5 @@
 import axios from "axios";
 export const RegisterService = (formData) => {
-    console.log('oeroeoe')
     return new Promise((resolve, reject) => {
         if(
             formData.hasOwnProperty('email') &&

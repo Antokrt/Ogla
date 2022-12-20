@@ -26,12 +26,9 @@ export default NextAuth({
                 if (!res.ok && user) {
                     throw new Error(user.message)
                 }
-
-                // If no error and we have user data, return it
                 if (res.ok && user) {
                     return user
                 }
-                // Return null if user data could not be retrieved
                 return null;            }
 
         }),
@@ -66,7 +63,6 @@ export default NextAuth({
             };
            await axios.get('http://localhost:3008/user/profil',config)
                 .then((res) => {
-                    console.log(res.data)
                     session.user.id = res.data._id;
                     session.user.pseudo = res.data.pseudo;
                     session.user.name = res.data.name;
@@ -74,7 +70,6 @@ export default NextAuth({
                     session.user.image = res.data.img;
                     session.user.date_birth = res.data.date_birth;
                     session.user.is_author = res.data.is_author;
-                    console.log(session)
                 })
                 .catch((err) => console.log(err.response.data))
 

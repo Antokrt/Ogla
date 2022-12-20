@@ -1,3 +1,4 @@
+@import "styles/utils/var";
 .container{
   display: flex;
   justify-content: center;
@@ -6,10 +7,10 @@
   min-height: 50vh;
   padding-top: 5%;
   padding-bottom: 5%;
-
+  box-shadow: 5px 5px 21px #1C232B;
   height: auto;
   width: 100%;
-  background-color: #1C232B;
+  background-color: #16191c;
 
   .header{
     width: 100%;

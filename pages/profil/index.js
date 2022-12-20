@@ -16,7 +16,7 @@ import {Capitalize} from "../../utils/String";
 import Facebook from "../../Component/layouts/Icons/Social/facebook";
 import Instagram from "../../Component/layouts/Icons/Social/instagram";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
-import {useSession} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 
 
@@ -80,7 +80,7 @@ const Profil = () => {
                                     </div>
                                     :
                                     <div>
-                                        <button className={styles.logOut}>Se déconnecter</button>
+                                        <button onClick={() => signOut()} className={styles.logOut}>Se déconnecter</button>
                                     </div>
                             }
 

@@ -10,7 +10,7 @@
   padding-left: 5%;
   padding-right: 5%;
   height: 10vh;
-  z-index: 1;
+  z-index: 20!important;
 
   .mainA{
     display: flex;
@@ -30,6 +30,7 @@
         gap: 30px;
         li{
           font-weight: bold;
+          z-index: 2;
           font-size: 14px;
           font-family: 'Montserrat',sans-serif;
         }
@@ -44,6 +45,7 @@
       svg{
         cursor: pointer;
         width: 25px;
+        z-index: 2;
         color: #1C232B;
       }
     }
@@ -54,10 +56,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: $blue;
+      background-color: $purpleLight;
       width: 50px;
       height: 50px;
       border-radius: 50px;
+      z-index: 2;
       p{
         color: white;
         font-family:"Montserrat Alternates" ,sans-serif;
@@ -72,11 +75,15 @@
       padding-right: 20px;
       background-color: #1C232B;
       height: 50px;
+      z-index: 200;
       button {
+        width: 100%;
+        height: 100%;
         color: white;
         font-weight: 500;
         font-family: 'Montserrat',sans-serif;
         font-size: 12px;
+        z-index: 2;
       }
     }
   }

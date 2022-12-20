@@ -1,35 +1,17 @@
 import styles from "../styles/Component/Banner.module.scss";
-import {useState, useEffect} from "react";
-import ScreenSize from "../utils/Size";
-import axios from "axios";
 import {
     ChatBubbleLeftRightIcon,
     CursorArrowRaysIcon,
 } from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/react";
+import {Capitalize} from "../utils/String";
 
 
 export default function Banner() {
-
-    useEffect(() => {
-        axios.get("http://localhost:3000/api/test")
-            .then((res) => console.log(res.data))
-    })
+    const {data: session, status} = useSession();
 
     const router = useRouter();
-
-    const [width, height] = ScreenSize();
-    const slideImages = [
-        {
-            url: '/assets/diapo/image.png'
-        },
-        {
-            url: '/assets/diapo/image2.png'
-        }, {
-            url: '/assets/diapo/image3.png'
-        }
-    ];
-    const name = process.env.NEXT_PUBLIC_TEST;
     return (
         <div className={styles.container}>
 
@@ -37,10 +19,29 @@ export default function Banner() {
 
             </div>
             <div className={styles.mainA}>
-                <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
-                <p className={styles.presentation}><span className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de lecture de <strong>livres</strong> <strong>d'histoires</strong> ou de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous croyons au pouvoir des <strong>mots</strong>.
 
-                </p>
+                {
+                    session ?
+                    <>
+                        <h1>Bienvenue <span><strong>{Capitalize(session.user.pseudo)}</strong></span></h1>
+                        <p className={styles.presentation}><span
+                            className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
+                            lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
+                            de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne
+                            ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
+                            croyons au pouvoir des <strong>mots</strong>.</p>
+                    </>
+                        :
+                        <>
+                            <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
+                            <p className={styles.presentation}><span
+                                className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
+                                lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
+                                de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne
+                                ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
+                                croyons au pouvoir des <strong>mots</strong>.</p>
+                        </>
+                }
                 <div className={styles.blockBtn}>
                     <div className={styles.statsAuthor}>
                         <p className={styles.nb}><span>Déjà</span> 56</p>
@@ -57,12 +58,19 @@ export default function Banner() {
                     </div>
 
                     <div className={styles.btnJoin}>
-                        <button onClick={() => router.push('/devenir-auteur')}>Deviens écrivain <ChatBubbleLeftRightIcon/></button>
+                        {
+                            session && session.user.is_author ?
+                                <button onClick={() => router.push('/devenir-auteur')}>Ecrire
+                                     <ChatBubbleLeftRightIcon/></button>
+                                :
+                                <button onClick={() => router.push('/devenir-auteur')}>Deviens
+                                    écrivain <ChatBubbleLeftRightIcon/></button>
+                        }
                     </div>
                 </div>
             </div>
             <div className={styles.mainB}>
-<img className={styles.owl} src={'assets/owl.png'}/>
+                <img className={styles.owl} src={'assets/owl.png'}/>
                 <div className={styles.bubbleContainer}
                 >
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
@@ -78,17 +86,29 @@ export default function Banner() {
                                 <img src={'assets/profil-example.png'}/>
                                 <p>Huang Jienk</p>
                             </div>
-                            <p>Quelle n’est pas la surprise de Primabelle lorsqu’elle se réveille un jour coincée à l’intérieur d’un roman qu’elle avait commencé à écrire elle-même. Voilà qu’elle incarne une peintre méconnue qui finit, dans l’histoire, par être tuée par le personnage masculin principal, le prince Rainsis. Le monde qu’elle avait créé dans ce roman n’avait pas été tendre avec Rainsis. Non seulement son daltonisme lui empêche de discerner les couleurs, mais en plus, il est évité de tous à cause d’une prophétie affirmant que “celui qui est piégé dans un monde en noir et blanc remplira l’empire de sang”. Après avoir été témoin de la souffrance de Rainsis, Primabelle décide d’empêcher cette prophétie. Elle doit alors réussir à trouver l’âme sœur prédestinée de Rainsis. Le seul problème, c’est qu’elle ne connaît rien de ce personnage féminin, à part le fait qu’elle ait les cheveux noirs et les yeux de couleur pourpre. Primabelle parviendra-t-elle à aider Rainsis à voir le monde en couleurs et à trouver le bonheur ?
+                            <p>Quelle n’est pas la surprise de Primabelle lorsqu’elle se réveille un jour coincée à
+                                l’intérieur d’un roman qu’elle avait commencé à écrire elle-même. Voilà qu’elle incarne
+                                une peintre méconnue qui finit, dans l’histoire, par être tuée par le personnage
+                                masculin principal, le prince Rainsis. Le monde qu’elle avait créé dans ce roman n’avait
+                                pas été tendre avec Rainsis. Non seulement son daltonisme lui empêche de discerner les
+                                couleurs, mais en plus, il est évité de tous à cause d’une prophétie affirmant que
+                                “celui qui est piégé dans un monde en noir et blanc remplira l’empire de sang”. Après
+                                avoir été témoin de la souffrance de Rainsis, Primabelle décide d’empêcher cette
+                                prophétie. Elle doit alors réussir à trouver l’âme sœur prédestinée de Rainsis. Le seul
+                                problème, c’est qu’elle ne connaît rien de ce personnage féminin, à part le fait qu’elle
+                                ait les cheveux noirs et les yeux de couleur pourpre. Primabelle parviendra-t-elle à
+                                aider Rainsis à voir le monde en couleurs et à trouver le bonheur ?
                             </p>
                             <div className={styles.stats}>
-                                <p><span className={styles.category}>Horreur</span> | <span className={styles.aut}>Huang Jienk</span>  | <span className={styles.nb}>205 chapitres</span></p>
+                                <p><span className={styles.category}>Horreur</span> | <span className={styles.aut}>Huang Jienk</span> | <span
+                                    className={styles.nb}>205 chapitres</span></p>
                             </div>
                         </div>
                     </div>
                     <button>Découvrir</button>
                 </div>
             </div>
-   {/*         <h1>Cette semaine</h1>
+            {/*         <h1>Cette semaine</h1>
 
             <div className={styles.cardContainer}>
 
@@ -122,7 +142,7 @@ export default function Banner() {
 
             </div>*/}
 
-         {/*       <SimpleImageSlider
+            {/*       <SimpleImageSlider
                     width={width - useScrollbarSize().width}
                     height={height / 1.2}
                     images={slideImages}
