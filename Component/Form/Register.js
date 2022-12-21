@@ -1,14 +1,12 @@
 import styles from "../../styles/Pages/Form/Login.module.scss";
-import {ArrowDownIcon} from "@heroicons/react/24/outline";
-import Category from "../../json/category.json";
-import {Capitalize} from "../../utils/String";
-import { useSession,signIn} from "next-auth/react";
+
 
 import {Formik, Field, Form, ErrorMessage} from 'formik';
-import * as Yup from 'yup';
 import {useState} from "react";
 import {RegisterSchema} from "./Schema/RegisterSchema";
-import {RegisterService} from "../../service/User/register";
+import {RegisterService} from "../../service/User/Register.service";
+import {router, useRouter} from "next/router";
+import {signIn} from "next-auth/react";
 
 
 const Register = ({login}) => {
@@ -36,15 +34,15 @@ const Register = ({login}) => {
         show: false
     })
     const [email, setEmail] = useState('');
-    const [pseudo, setPseudo] = useState('');
-    const [password, setPassword] = useState('');
-    const [confPassword, setConfPassword] = useState('');
     const initialValues = {
         email: "",
         pseudo: "",
         password: "",
         confirmPassword: "",
     };
+
+    const router = useRouter();
+
 
 
     const loginLink = () => {
@@ -62,30 +60,23 @@ const Register = ({login}) => {
         )
     }
 
-    const submit = (values) => {
+      const submit =  async (values) => {
         const formData = {
             email : values.email,
             pseudo:values.pseudo,
             password:values.password,
-            is_author:false
+            is_author:false,
+            redirect:false
         }
-            RegisterService(formData)
-                .then((res) => {
-                    signIn({
-                        pseudo:formData.pseudo,
-                        password:formData.password,
-                        redirect:false
-                    })
-                        .then((res) => console.log(res))
-                        .catch((err) => console.log(err))
-                })
-                .catch((err) => {
-                    let errMsg = err.response.data.message;
-                    console.log(errMsg)
+
+        const register = await signIn('signup',formData)
+            .then((res) => {
+                if(res.status === 401){
+                    let errMsg = res.error;
                     switch (errMsg){
                         case"email && pseudo already exists":
                             setSubmitErr({
-                                msg: 'Email et pseudo déjà existant',
+                                msg: 'Email ou pseudo déjà existant',
                                 show: true
                             })
                             break;
@@ -110,7 +101,51 @@ const Register = ({login}) => {
                                 show: true
                             })
                     }
-                })
+                }
+                else {
+                    setSubmitErr({
+                        msg:'Oups une erreur à eu lieu',
+                        show: true
+                    })
+                }
+            })
+            .catch((err) => setSubmitErr({
+                msg:'Oups une erreur à eu lieu',
+                show: true
+            }))
+
+            /*RegisterService(formData)
+                .catch((err) => {
+                    let errMsg = err.response.data.message;
+                    switch (errMsg){
+                        case"email && pseudo already exists":
+                            setSubmitErr({
+                                msg: 'Email ou pseudo déjà existant',
+                                show: true
+                            })
+                            break;
+
+                        case "email already exists":
+                            setSubmitErr({
+                                msg: 'Email déjà existant',
+                                show: true
+                            })
+                            break;
+
+                        case "pseudo already exists":
+                            setSubmitErr({
+                                msg: 'Email déjà existant',
+                                show: true
+                            })
+                            break;
+
+                        default:
+                            setSubmitErr({
+                                msg: "Erreur lors de l'envoi du formulaire",
+                                show: true
+                            })
+                    }
+                })*/
     }
 
 

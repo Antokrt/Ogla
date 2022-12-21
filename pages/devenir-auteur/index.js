@@ -6,21 +6,35 @@ import {ArrowDownIcon} from "@heroicons/react/24/outline";
 import {Capitalize} from "../../utils/String";
 
 import Category from "../../json/category.json";
-import {router} from "next/router";
+import {router, useRouter} from "next/router";
+import {useSession} from "next-auth/react";
 
 
 const DevenirAuteur = () => {
 
-
     const [stepActiveForm, setStepActiveForm] = useState(1);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
+    const {data: session, status} = useSession();
+    const router = useRouter();
+
+    /// SI L'UTILISATEUR EST CONNECTÉ \\\
+    const [userObject, setUserObject] = useState({});
+
+    useEffect(() => {
+        if (session && !session.user.is_author) {
+            setUserObject(session.user);
+        }
+        if (session && session.user.is_author) {
+            router.replace('/');
+        }
+    }, [])
 
     const loginLink = () => {
         return (
             <div className={styles.conditions}>
                 <p onClick={() => router.push({
-                    pathname:"/auth",
-                    query:"register"
+                    pathname: "/auth",
+                    query: "login"
                 })}>Déjà <span>écrivain</span>?</p>
             </div>
         )
@@ -29,10 +43,19 @@ const DevenirAuteur = () => {
     const firstStepForm = () => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
+                {
+                    session &&
+                    <>
+                        <label htmlFor={"email"}>Email</label>
+                        <input type={"email"} name={"email"} placeholder={"Email"} defaultValue={userObject.email}
+                               disabled={true}></input>
+                    </>
+                }
                 <label htmlFor={"sName"}>Nom</label>
                 <input type={"text"} name={"sName"} placeholder={"Nom"}/>
                 <label htmlFor={"fName"}>Prénom</label>
                 <input type={"text"} name={"fName"} placeholder={"Prénom"}></input>
+
                 <label htmlFor={"age"}>Date de naissance</label>
                 <input type={"date"} className={styles.date} name={"age"} min="1928-01-01" max="2022-07-12"/>
                 {loginLink()}
@@ -43,13 +66,19 @@ const DevenirAuteur = () => {
     const secondStepForm = () => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
-                <label htmlFor={"email"}>Email</label>
-                <input type={"email"} name={"email"} placeholder={"Email"}></input>
-                <label htmlFor={"password"}>Mot de passe</label>
-                <input type={"password"} name={"password"} placeholder={"Mot de passe"}/>
-                <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
-                <input type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
-                       name={"confirmPassword"}/>
+                {
+                    !session &&
+                    <>
+                        <label htmlFor={"email"}>Email</label>
+                        <input type={"email"} name={"email"} placeholder={"Email"}></input>
+                        <label htmlFor={"password"}>Mot de passe</label>
+                        <input type={"password"} name={"password"} placeholder={"Mot de passe"}/>
+                        <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
+                        <input type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
+                               name={"confirmPassword"}/>
+                    </>
+
+                }
 
                 {loginLink()}
             </div>
@@ -70,7 +99,8 @@ const DevenirAuteur = () => {
                         {
                             Category.category.map((item) => {
                                 return (
-                                    <option value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
+                                    <option key={item.name}
+                                            value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
                                 )
                             })
                         }
@@ -87,26 +117,43 @@ const DevenirAuteur = () => {
                     <label htmlFor={"confirmConditions"}>J'accepte les <span>conditions d'utilisations</span></label>
                 </div>
 
-                {loginLink()}
+                {
+
+                    loginLink()
+                }
 
             </div>
         )
     }
 
     const displayForm = (param) => {
-        switch (param) {
-            case 0 :
-                return firstStepForm();
-            case 1 :
-                return firstStepForm();
-            case 2 :
-                return secondStepForm();
-            case 3:
-                return thirdStepForm();
+        if(!session){
+            switch (param) {
+                case 0 :
+                    return firstStepForm();
+                case 1 :
+                    return firstStepForm();
+                case 2 :
+                    return secondStepForm();
+                case 3:
+                    return thirdStepForm();
 
-            default:
-                return <p className={styles.err}>Erreur Formulaire</p>
+                default:
+                    return <p className={styles.err}>Erreur Formulaire</p>
+            }
         }
+        else {
+            switch (param) {
+                case 1 :
+                    return firstStepForm();
+                case 2 :
+                    return thirdStepForm();
+
+                default:
+                    return <p className={styles.err}>Erreur Formulaire</p>
+            }
+        }
+
     }
 
     const onSubmit = (e) => {
@@ -136,16 +183,16 @@ const DevenirAuteur = () => {
                 {
                     stepActiveForm !== 1 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
-                            setStepActiveForm(stepActiveForm - 1)
+                        setStepActiveForm(stepActiveForm - 1)
                     }}>Précédent</span>
                 }
 
 
-         <span className={styles.stepBtn} onClick={() => {
-             if (stepActiveForm !== 3) {
-                 setStepActiveForm(stepActiveForm + 1)
-             }
-         }}>Suivant</span>
+                <span className={styles.stepBtn} onClick={() => {
+                    if (stepActiveForm !== 3) {
+                        setStepActiveForm(stepActiveForm + 1)
+                    }
+                }}>Suivant</span>
 
 
             </div>
@@ -164,7 +211,7 @@ const DevenirAuteur = () => {
 
                 <div className={styles.formContainer}>
                     <div className={styles.header}>
-                        <h1>Deviens écrivain</h1>
+                        <h1>Deviens écrivain </h1>
                         {
                             stepActiveForm !== 3 ?
                                 <p>{activeText}</p>
@@ -180,10 +227,20 @@ const DevenirAuteur = () => {
 
 
                         {
-                            stepActiveForm !== 3 ?
-                        nextPreviousBtn()
-                                :
-                                btn()
+                            stepActiveForm !== 3 && !session &&
+                            nextPreviousBtn()
+                        }
+                        {
+                            stepActiveForm !== 2 && session &&
+                            nextPreviousBtn()
+                        }
+                        {
+                            stepActiveForm === 3 && !session &&
+                            btn()
+                        }
+                        {
+                            stepActiveForm === 2 && session &&
+                            btn()
                         }
 
                     </form>

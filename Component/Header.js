@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {
     ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import {signOut, useSession} from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 
 
 export default function Header() {
@@ -49,7 +49,7 @@ export default function Header() {
 
             <div className={styles.mainLog}>
                 {
-                    status === 'authenticated' ?
+                    session ?
                         <div className={styles.accountContainer}>
                             <div className={styles.account}
                                  onClick={() =>{

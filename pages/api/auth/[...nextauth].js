@@ -29,13 +29,45 @@ export default NextAuth({
                 if (res.ok && user) {
                     return user
                 }
-                return null;            }
+                return null;
+            }
 
         }),
+        CredentialsProvider({
+            id:'signup',
+            async authorize (credentials,req){
+                const payload = {
+                    email: credentials.email,
+                    pseudo:credentials.pseudo,
+                    password:credentials.password,
+                    is_author:credentials.is_author
+                }
+
+                const res = await fetch('http://localhost:3008/user/register',{
+                    method:'POST',
+                    body:JSON.stringify(payload),
+                    headers:{
+                        'Content-Type':'application/json',
+                        tenant:credentials.tenantKey,
+                    }
+                })
+
+                const user = await res.json();
+
+                if (!res.ok && user) {
+                    console.log(user.message)
+                    throw new Error(user.message)
+                }
+                if (res.ok && user) {
+                    return user
+                }
+                return null;
+            }
+        })
     ],
 
     pages: {
-        signIn: '/auth?login'
+        signIn: '/auth?login',
     },
 
     callbacks: {
@@ -47,6 +79,10 @@ export default NextAuth({
             return false;
         },
 
+        async signUp({pseudo,password}) {
+            console.log('lele');
+        }
+,
         async jwt({token,user}) {
             if(user){
                 token.access_token = user?.accessToken;
