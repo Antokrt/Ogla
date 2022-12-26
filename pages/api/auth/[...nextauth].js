@@ -40,9 +40,8 @@ export default NextAuth({
                     email: credentials.email,
                     pseudo:credentials.pseudo,
                     password:credentials.password,
-                    is_author:credentials.is_author
+                    is_author:Boolean(credentials.is_author)
                 }
-
                 const res = await fetch('http://localhost:3008/user/register',{
                     method:'POST',
                     body:JSON.stringify(payload),
@@ -79,10 +78,7 @@ export default NextAuth({
             return false;
         },
 
-        async signUp({pseudo,password}) {
-            console.log('lele');
-        }
-,
+
         async jwt({token,user}) {
             if(user){
                 token.access_token = user?.accessToken;
@@ -101,7 +97,6 @@ export default NextAuth({
                 .then((res) => {
                     session.user.id = res.data._id;
                     session.user.pseudo = res.data.pseudo;
-                    session.user.name = res.data.name;
                     session.user.email = res.data.email;
                     session.user.image = res.data.img;
                     session.user.date_birth = res.data.date_birth;
@@ -118,3 +113,4 @@ export default NextAuth({
     },
     secret: 'code'
 })
+

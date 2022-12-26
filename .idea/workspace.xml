@@ -2,104 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Card.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Category/New.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/MainSearchBar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/CommentaryByUser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/HeaderOnChapter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPost.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPostList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Review.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/SMSeachBar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Book.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Chapter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Like.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Signal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/facebook.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/instagram.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Social/twitter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/Icons/Sort.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/layouts/LogCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/author.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/category.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/msg.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json/post.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/Chapter/[id].js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/EntryChoice/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/Post/[id].js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/Post/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/api/test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Author/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/Post/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/BannerOnPost.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Card.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryHeader.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Category/News.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/CommentaryByUser.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/SubCommentary.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/HeaderOnBook.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Review.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/SMSearchbar.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Layouts/LogCard.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/Category.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/EntryChoice.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/utils/font.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/utils/icon.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/utils/keyframe.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/utils/scrollbar.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/Date.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/Size.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/String.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/ToogleSidebar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/context/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/hello.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,21 +30,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/public/assets&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "javascript.nodejs.core.library.configured.version": "16.17.1",
+    "javascript.nodejs.core.library.typings.version": "16.11.66",
+    "last_opened_file_path": "C:/Dev/Ogla/Front",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Dev\Ogla\public\assets" />
@@ -212,6 +122,7 @@
       <workItem from="1668603462129" duration="8956000" />
       <workItem from="1668680285503" duration="18821000" />
       <workItem from="1668787207277" duration="66000" />
+      <workItem from="1672051487288" duration="16544000" />
     </task>
     <servers />
   </component>

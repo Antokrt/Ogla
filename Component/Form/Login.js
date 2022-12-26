@@ -46,7 +46,7 @@ const Login = ({register}) => {
                     }
                 }
             })
-            .then(() => router.push('/'))
+
     }
 
 

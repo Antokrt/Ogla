@@ -4,8 +4,7 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import {useState} from "react";
 import {RegisterSchema} from "./Schema/RegisterSchema";
-import {RegisterService} from "../../service/User/Register.service";
-import {router, useRouter} from "next/router";
+import { useRouter} from "next/router";
 import {signIn} from "next-auth/react";
 
 
@@ -68,9 +67,10 @@ const Register = ({login}) => {
             is_author:false,
             redirect:false
         }
-
         const register = await signIn('signup',formData)
             .then((res) => {
+                console.log(formData)
+                console.log(res.error)
                 if(res.status === 401){
                     let errMsg = res.error;
                     switch (errMsg){

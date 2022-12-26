@@ -89,6 +89,16 @@ min-height: 100vh;
       flex-direction: column;
       width: 60%;
 
+      .errMsgItem{
+        display: block;
+        text-align: left;
+        font-size: 10px;
+        font-family: "Poppins",sans-serif;
+        font-style: italic;
+        color: red;
+        margin-bottom: 5px;
+      }
+
       .date{
         font-family: "Montserrat",sans-serif;
       }
@@ -101,7 +111,11 @@ min-height: 100vh;
         font-family: "Montserrat",sans-serif;
       }
 
-      textarea{
+      .textareaForm{
+        &::placeholder{
+          white-space: normal;
+          font-size: 11px;
+        }
         &:focus{
           box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
           transition: 0.1s;
@@ -179,16 +193,16 @@ width: 100%;
 
       .stepBtn{
         &:hover{
-          background-color: $purpleLight!important;
+          background-color: #1C232B;
           transition: 0.1s;
         }
         transition: 0.1s;
         cursor: pointer;
         text-align: center;
         margin-top: 20px;
-        background-color: rgba(152, 68, 173, 0.8);
+        background-color: #303841;
         padding: 10px 20px;
-        width: 30%;
+        width: auto;
         border-radius: 5px;
         font-size: 12px;
         color: white;
@@ -205,6 +219,9 @@ width: 100%;
   margin-right: 20px;
 }
       button{
+        &:hover{
+          background-color: $purpleLight!important;
+        }
         width: 40% !important;
         background-color: $purpleLight!important;
       }
@@ -222,11 +239,12 @@ width: 100%;
         font-family: "Montserrat",sans-serif;
         text-decoration: underline;
         color: $darkBrown;
-        font-size: 13px;
+        font-size: 12px;
       }
       label{
         margin: 0!important;
         color: $darkBrown;
+        font-size: 11px;
         span{
           cursor: pointer;
           text-decoration: underline;

@@ -1,13 +1,10 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
-import scrollbar from "../../styles/utils/scrollbar.module.scss";
-
-import {useEffect, useState} from "react";
-import {ArrowDownIcon} from "@heroicons/react/24/outline";
-import {Capitalize} from "../../utils/String";
-
-import Category from "../../json/category.json";
+import {useEffect, useRef, useState} from "react";
+import {Formik, Field, Form, ErrorMessage, useField} from "formik";
 import {router, useRouter} from "next/router";
-import {useSession} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
+import {AuthorSchema} from "../../Component/Form/Schema/AuthorSchema";
+import axios from "axios";
 
 
 const DevenirAuteur = () => {
@@ -15,10 +12,27 @@ const DevenirAuteur = () => {
     const [stepActiveForm, setStepActiveForm] = useState(1);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
     const {data: session, status} = useSession();
+    const [seeErr, setSeeErr] = useState(false);
+    const [errMsg, setErrMsg] = useState('Champs incorrects ou manquants');
+
+    const ref = useRef(null);
+
     const router = useRouter();
+
 
     /// SI L'UTILISATEUR EST CONNECTÉ \\\
     const [userObject, setUserObject] = useState({});
+
+    const initialValues = {
+        firstName:"",
+        lastName:"",
+        age:"",
+        email: "",
+        pseudo: "",
+        password: "",
+        confirmPassword: "",
+        description:""
+    };
 
     useEffect(() => {
         if (session && !session.user.is_author) {
@@ -28,6 +42,10 @@ const DevenirAuteur = () => {
             router.replace('/');
         }
     }, [])
+
+    const getField = () => {
+        return ref.current.values
+    }
 
     const loginLink = () => {
         return (
@@ -51,14 +69,46 @@ const DevenirAuteur = () => {
                                disabled={true}></input>
                     </>
                 }
-                <label htmlFor={"sName"}>Nom</label>
-                <input type={"text"} name={"sName"} placeholder={"Nom"}/>
-                <label htmlFor={"fName"}>Prénom</label>
-                <input type={"text"} name={"fName"} placeholder={"Prénom"}></input>
 
+                {/* LAST-NAME */}
+                <label htmlFor={"lastName"}>Nom</label>
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"lastName"}/>
+                </p>
+                <Field
+                    id={'lastName'}
+                    type={"text"}
+                    name={"lastName"}
+                    placeholder={"Nom"}/>
+                {/* LAST-NAME */}
+
+
+                {/* FIRST-NAME */}
+                <label htmlFor={"firstName"}>Prénom</label>
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"firstName"}/>
+                </p>
+                <Field
+                    id={'firstName'}
+                    type={"text"}
+                    name={"firstName"}
+                    placeholder={"Nom"}/>
+                {/* FIRST-NAME */}
+
+                {/* AGE */}
                 <label htmlFor={"age"}>Date de naissance</label>
-                <input type={"date"} className={styles.date} name={"age"} min="1928-01-01" max="2022-07-12"/>
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"age"}/>
+                </p>
+                <Field
+                    id={'age'}
+                    type={"date"}
+                    name={"age"}
+                    placeholder={"Date de naissance"}/>
+                {/* AGE */}
+
                 {loginLink()}
+
             </div>
         )
     }
@@ -69,13 +119,44 @@ const DevenirAuteur = () => {
                 {
                     !session &&
                     <>
+                        {/* EMAIL */}
                         <label htmlFor={"email"}>Email</label>
-                        <input type={"email"} name={"email"} placeholder={"Email"}></input>
+                        <p className={styles.errMsgItem}>
+                            <ErrorMessage name={"email"}/>
+                        </p>
+                        <Field
+                            id={'email'}
+                            type={"email"}
+                            name={"email"}
+                            placeholder={"Votre adresse mail"}/>
+                        {/* EMAIL */}
+
+
+                        {/* PASSWORD */}
                         <label htmlFor={"password"}>Mot de passe</label>
-                        <input type={"password"} name={"password"} placeholder={"Mot de passe"}/>
+                        <p className={styles.errMsgItem}>
+                            <ErrorMessage name={"password"}/>
+                        </p>
+                        <Field
+                            id={'password'}
+                            type={"password"}
+                            name={"password"}
+                            placeholder={"Mot de passe"}/>
+                        {/* PASSWORD */}
+
+
+                        {/* CONFIRMATION PASSWORD */}
                         <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
-                        <input type={"password"} className={styles.date} placeholder={"Confirmez votre mot de passe"}
-                               name={"confirmPassword"}/>
+                        <p className={styles.errMsgItem}>
+                            <ErrorMessage name={"confirmPassword"}/>
+                        </p>
+                        <Field
+                            id={'confirmPassword'}
+                            type={"password"}
+                            name={"confirmPassword"}
+                            placeholder={"Mot de passe"}/>
+                        {/* CONFIRMATION PASSWORD */}
+
                     </>
 
                 }
@@ -88,11 +169,17 @@ const DevenirAuteur = () => {
     const thirdStepForm = () => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
-                <label htmlFor={"pseudo"}>Auteur</label>
-                <input type={"text"} name={"pseudo"} placeholder={"Nom d'auteur"}></input>
+                <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"pseudo"}/>
+                </p>
+                <Field
+                    id={'pseudo'}
+                    type={"text"}
+                    name={"pseudo"}
+                    placeholder={"Nom d'auteur"}/>
 
-
-                <label htmlFor={"genres"}>Genre favoris</label>
+                {/*<label htmlFor={"genres"}>Genre favoris</label>
                 <div className={styles.selectCategory}>
                     <ArrowDownIcon/>
                     <select name="genres" id="pet-select">
@@ -106,22 +193,34 @@ const DevenirAuteur = () => {
                         }
                         <option value={"none"}>Pas de préférence</option>
                     </select>
-                </div>
+                </div>*/}
                 <label htmlFor={"description"}>Une petite présentation</label>
-                <textarea className={scrollbar.scrollbar} name={"description"}
-                          placeholder={"Une petite présentation brève qui s'affichera sur votre profil..."}></textarea>
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"description"}/>
+                </p>
+                <Field
+                    id={'description'}
+                    type={"text"}
+                    name={"description"}
+                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous brève mais sympathique... "}
+                    className={styles.textareaForm}
+                />
 
 
                 <div className={styles.conditions}>
-                    <input type={"checkbox"} className={styles.date} name={"confirmConditions"}/>
-                    <label htmlFor={"confirmConditions"}>J'accepte les <span>conditions d'utilisations</span></label>
+                    <label htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA </strong>, j'accepte les <span>conditions d'utilisations</span></label>
                 </div>
+
 
                 {
 
                     loginLink()
                 }
 
+                {
+                    seeErr &&
+                    <p className={styles.errMsgItem}>{errMsg} </p>
+                }
             </div>
         )
     }
@@ -156,11 +255,25 @@ const DevenirAuteur = () => {
 
     }
 
-    const onSubmit = (e) => {
-        e.preventDefault()
+    const submit =  async (values) => {
+        const formData = {
+            ...values,
+            is_author:true,
+            redirect:false
+        }
+       const register = await signIn('signup',formData)
+            .then((res) => router.push('/'))
+            .catch((err) => {
+                if(err.response.status === 401){
+                    setErrMsg('Email ou pseudo déjà existant')
+                    setSeeErr(true);
+                }
+            });
+
     }
 
-    const btn = () => {
+        const btn = () => {
+
         return (
             <div className={styles.stepBtnContainer}>
                 {
@@ -171,7 +284,26 @@ const DevenirAuteur = () => {
                 }
 
 
-                <button type={'submit'} className={styles.stepBtn}>Envoyez</button>
+                <button
+                    onClick={() => {
+                        const data = getField();
+                        if(
+                            data.lastName === "" ||
+                            data.firstName === "" ||
+                            data.age === "" ||
+                            data.email === "" ||
+                            data.password === "" ||
+                            data.pseudo === "" ||
+                            data.description === ""
+                        ){
+                            setSeeErr(true)
+                        }
+                        else {
+                            setSeeErr(false);
+                        }
+                    }}
+                    type={'submit'}
+                    className={styles.stepBtn}>Envoyez</button>
 
             </div>
         )
@@ -220,30 +352,43 @@ const DevenirAuteur = () => {
                         }
                     </div>
 
-                    <form onSubmit={onSubmit} className={styles.form}>
-                        {
-                            displayForm(stepActiveForm)
-                        }
+                    <div className={styles.form}>
+                        <Formik
+                                innerRef={ref}
+                                initialValues={initialValues}
+                                validationSchema={AuthorSchema}
+                                onSubmit={(values,actions) => {
+                                    submit(values)
+                                }}
+                        >
+                            <Form>
+                                {
+                                    displayForm(stepActiveForm)
+                                }
 
 
-                        {
-                            stepActiveForm !== 3 && !session &&
-                            nextPreviousBtn()
-                        }
-                        {
-                            stepActiveForm !== 2 && session &&
-                            nextPreviousBtn()
-                        }
-                        {
-                            stepActiveForm === 3 && !session &&
-                            btn()
-                        }
-                        {
-                            stepActiveForm === 2 && session &&
-                            btn()
-                        }
+                                {
+                                    stepActiveForm !== 3 && !session &&
+                                    nextPreviousBtn()
+                                }
+                                {
+                                    stepActiveForm !== 2 && session &&
+                                    nextPreviousBtn()
+                                }
+                                {
+                                    stepActiveForm === 3 && !session &&
+                                    btn()
+                                }
+                                {
+                                    stepActiveForm === 2 && session &&
+                                    btn()
+                                }
+                            </Form>
 
-                    </form>
+
+                        </Formik>
+                    </div>
+
                 </div>
             </div>
 

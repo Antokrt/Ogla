@@ -1,12 +1,7 @@
 import styles from "../../styles/Pages/Form/Login.module.scss";
-import scrollbar from "../../styles/utils/scrollbar.module.scss";
 import {useEffect, useState} from "react";
-import {ArrowDownIcon} from "@heroicons/react/24/outline";
-import {Capitalize} from "../../utils/String";
-import Category from "../../json/category.json";
 import Register from "../../Component/Form/Register";
 import {useRouter} from "next/router";
-import {getData, getPostByUser} from "../../services/Post";
 import Login from "../../Component/Form/Login";
 import {useSession} from "next-auth/react";
 
