@@ -2,6 +2,34 @@ import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from "axios";
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
+
+
+async function refreshAccessToken(tokenObject) {
+    try {
+
+        const config = {
+            headers: { Authorization: `Bearer ${tokenObject}` }
+        };
+        const tokenResponse = await axios.post('http://localhost:3008/auth/refresh/',{
+            token: tokenObject.refreshToken
+        })
+
+        return {
+            ...tokenObject,
+            accessToken: tokenResponse.accessToken,
+            refreshToken: tokenResponse.refreshToken
+        }
+    } catch (error) {
+        console.log('tokenObject')
+
+        return {
+            ...tokenObject,
+            error: "RefreshAccessTokenError",
+        }
+    }
+}
+
+
 export default NextAuth({
     providers: [
         CredentialsProvider({
@@ -40,7 +68,7 @@ export default NextAuth({
                     email: credentials.email,
                     pseudo:credentials.pseudo,
                     password:credentials.password,
-                    is_author:Boolean(credentials.is_author)
+                    is_author: false
                 }
                 const res = await fetch('http://localhost:3008/user/register',{
                     method:'POST',
@@ -62,7 +90,33 @@ export default NextAuth({
                 }
                 return null;
             }
-        })
+        }),
+        CredentialsProvider({
+            id:'signupAuthor',
+            async authorize (credentials,req){
+                const payload = credentials;
+                payload.is_author = true;
+                const res = await fetch('http://localhost:3008/user/register',{
+                    method:'POST',
+                    body:JSON.stringify(payload),
+                    headers:{
+                        'Content-Type':'application/json',
+                        tenant:credentials.tenantKey,
+                    }
+                })
+
+                const user = await res.json();
+
+                if (!res.ok && user) {
+                    console.log(user.message)
+                    throw new Error(user.message)
+                }
+                if (res.ok && user) {
+                    return user
+                }
+                return null;
+            }
+        }),
     ],
 
     pages: {
@@ -80,16 +134,22 @@ export default NextAuth({
 
 
         async jwt({token,user}) {
-            if(user){
-                token.access_token = user?.accessToken;
-                return token;
+            if(user) {
+                token.accessToken = user?.accessToken;
+                token.refreshToken = user?.refreshToken;
             }
-            return token
 
+            const shouldRefreshTime = Math.round((token?.exp - 60 * 60 * 1000) - Date.now());
+
+            if (shouldRefreshTime < 0) {
+                return Promise.resolve(token)
+            }
+            token = refreshAccessToken(token);
+            return Promise.resolve(token);
         },
 
         async session({session,token,user}) {
-            const bearerToken = token?.access_token;
+            const bearerToken = token?.accessToken;
             const config = {
                 headers: { Authorization: `Bearer ${bearerToken}` }
             };
@@ -103,9 +163,7 @@ export default NextAuth({
                     session.user.is_author = res.data.is_author;
                 })
                 .catch((err) => console.log(err.response.data))
-
-
-                    session.user.access_token = token?.accessToken;
+                    session.user.accessToken = token?.accessToken;
                     return session;
 
         }

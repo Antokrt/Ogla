@@ -4,12 +4,24 @@ import {
     CursorArrowRaysIcon,
 } from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
-import {useSession} from "next-auth/react";
+import {getSession, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
+import {useEffect} from "react";
+import axios from "axios";
 
 
 export default function Banner() {
     const {data: session, status} = useSession();
+
+    useEffect(() => {
+        getSession()
+            .then((res) => console.log(res))
+    },[session])
+
+/*    useEffect(() => {
+        axios.get('http://localhost:3008/book/')
+            .then((res) => console.log(res))
+    },[session])*/
 
     const router = useRouter();
     return (

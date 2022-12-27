@@ -40,7 +40,30 @@ export const AuthorSchema = Yup.object().shape({
         .required(" ")
         .min(10, "10 caractères minimum")
         .max(500, "500 caractères maximum"),
+})
 
+export const AuthorSchemaLog = Yup.object().shape({
+    firstName: Yup.string()
+        .required(" ")
+        .min(5, "2 caractères minimum")
+        .max(15, "15 caractères maximum"),
 
+    lastName: Yup.string()
+        .required(" ")
+        .min(2, "2 caractères minimum")
+        .max(15, "15 caractères maximum"),
+
+    age: Yup.string()
+        .required(" "),
+
+    pseudo: Yup.string()
+        .required(" ")
+        .min(5, "5 caractères minimum")
+        .max(15, "15 caractères maximum"),
+
+    description: Yup.string()
+        .required(" ")
+        .min(10, "10 caractères minimum")
+        .max(500, "500 caractères maximum"),
 })
 

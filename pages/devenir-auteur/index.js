@@ -1,9 +1,10 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
 import {useEffect, useRef, useState} from "react";
-import {Formik, Field, Form, ErrorMessage, useField} from "formik";
+import {Formik, Field, Form, ErrorMessage, useFormikContext,} from "formik";
+
 import {router, useRouter} from "next/router";
 import {signIn, useSession} from "next-auth/react";
-import {AuthorSchema} from "../../Component/Form/Schema/AuthorSchema";
+import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
 
 
@@ -11,19 +12,17 @@ const DevenirAuteur = () => {
 
     const [stepActiveForm, setStepActiveForm] = useState(1);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
-    const {data: session, status} = useSession();
+    const { data: session } = useSession();
     const [seeErr, setSeeErr] = useState(false);
     const [errMsg, setErrMsg] = useState('Champs incorrects ou manquants');
-
+    const [formReady, setFormReady] = useState(false);
+    const [activeSchema,setActiveSchema] = useState(AuthorSchema);
     const ref = useRef(null);
-
     const router = useRouter();
-
 
     /// SI L'UTILISATEUR EST CONNECTÉ \\\
     const [userObject, setUserObject] = useState({});
-
-    const initialValues = {
+    const [initialValues, setInitialValues] = useState({
         firstName:"",
         lastName:"",
         age:"",
@@ -32,16 +31,25 @@ const DevenirAuteur = () => {
         password: "",
         confirmPassword: "",
         description:""
-    };
+    })
+
+
 
     useEffect(() => {
         if (session && !session.user.is_author) {
             setUserObject(session.user);
+            initialValues.email = userObject.email;
+            initialValues.pseudo = userObject.pseudo;
+            setActiveSchema(AuthorSchemaLog);
+           setFormReady(true);
         }
         if (session && session.user.is_author) {
             router.replace('/');
         }
-    }, [])
+        else{
+            setFormReady(true);
+        }
+    }, [session])
 
     const getField = () => {
         return ref.current.values
@@ -65,8 +73,16 @@ const DevenirAuteur = () => {
                     session &&
                     <>
                         <label htmlFor={"email"}>Email</label>
-                        <input type={"email"} name={"email"} placeholder={"Email"} defaultValue={userObject.email}
-                               disabled={true}></input>
+                        <p className={styles.errMsgItem}>
+                        </p>
+                        <input
+                            className={styles.disabledForm}
+                            disabled={true}
+                            id={'email'}
+                            type={"email"}
+                            name={"email"}
+                            value={session.user.email}
+                            placeholder={"Votre adresse mail"}/>
                     </>
                 }
 
@@ -107,7 +123,10 @@ const DevenirAuteur = () => {
                     placeholder={"Date de naissance"}/>
                 {/* AGE */}
 
-                {loginLink()}
+                {
+                    !session &&
+                    loginLink()
+                }
 
             </div>
         )
@@ -161,7 +180,10 @@ const DevenirAuteur = () => {
 
                 }
 
-                {loginLink()}
+                {
+                    !session &&
+                    loginLink()
+                }
             </div>
         )
     }
@@ -169,15 +191,36 @@ const DevenirAuteur = () => {
     const thirdStepForm = () => {
         return (
             <div className={styles.selectItem + " " + "fadeIn"}>
-                <label htmlFor={"pseudo"}>Nom d'auteur</label>
-                <p className={styles.errMsgItem}>
-                    <ErrorMessage name={"pseudo"}/>
-                </p>
-                <Field
-                    id={'pseudo'}
-                    type={"text"}
-                    name={"pseudo"}
-                    placeholder={"Nom d'auteur"}/>
+                {
+                    session ?
+                    <>
+                        <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                        <p className={styles.errMsgItem}>
+                            Votre nom d'auteur remplacera votre pseudo
+                        </p>
+                        <Field
+                            className={styles.pseudoChange}
+                            id={'pseudo'}
+                            type={"text"}
+                            name={"pseudo"}
+                            placeholder={userObject.pseudo}
+                        />
+                    </>
+                        :
+                        <>
+                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <p className={styles.errMsgItem}>
+                                <ErrorMessage name={"pseudo"}/>
+                            </p>
+                            <Field
+                                id={'pseudo'}
+                                type={"text"}
+                                name={"pseudo"}
+                                placeholder={"Pseudo"}
+                            />
+                        </>
+                }
+
 
                 {/*<label htmlFor={"genres"}>Genre favoris</label>
                 <div className={styles.selectCategory}>
@@ -213,7 +256,7 @@ const DevenirAuteur = () => {
 
 
                 {
-
+                    !session &&
                     loginLink()
                 }
 
@@ -256,20 +299,38 @@ const DevenirAuteur = () => {
     }
 
     const submit =  async (values) => {
-        const formData = {
-            ...values,
-            is_author:true,
-            redirect:false
-        }
-       const register = await signIn('signup',formData)
-            .then((res) => router.push('/'))
-            .catch((err) => {
-                if(err.response.status === 401){
-                    setErrMsg('Email ou pseudo déjà existant')
-                    setSeeErr(true);
-                }
-            });
 
+        if(session){
+            const formData = {
+                pseudo:values.pseudo,
+                firstName:values.firstName,
+                lastName:values.lastName,
+                description:values.description,
+                age:values.age
+            }
+
+            axios.put('http://localhost:3008/author/turn-author',formData)
+                .then((res) => console.log(res))
+                .catch((err) => console.log(err))
+        }
+        else{
+            const formData = {
+                ...values,
+                is_author:true,
+                redirect:false
+            }
+
+            const register = await signIn('signupAuthor',formData)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    if(err.response.status === 401){
+                        setErrMsg('Email ou pseudo déjà existant')
+                        setSeeErr(true);
+                    }
+                });
+        }
     }
 
         const btn = () => {
@@ -353,40 +414,44 @@ const DevenirAuteur = () => {
                     </div>
 
                     <div className={styles.form}>
-                        <Formik
-                                innerRef={ref}
-                                initialValues={initialValues}
-                                validationSchema={AuthorSchema}
-                                onSubmit={(values,actions) => {
-                                    submit(values)
-                                }}
+                        {
+                            formReady &&
+                            <Formik
+                            innerRef={ref}
+                            initialValues={initialValues}
+                            validationSchema={activeSchema}
+                            onSubmit={(values, actions) => {
+                                submit(values)
+                            }}
                         >
-                            <Form>
-                                {
-                                    displayForm(stepActiveForm)
-                                }
+                                {({setFieldValue}) =>
+
+                                    (
+                                    <Form>
+                                         {
+                                            displayForm(stepActiveForm)
+                                        }
 
 
-                                {
-                                    stepActiveForm !== 3 && !session &&
-                                    nextPreviousBtn()
-                                }
-                                {
-                                    stepActiveForm !== 2 && session &&
-                                    nextPreviousBtn()
-                                }
-                                {
-                                    stepActiveForm === 3 && !session &&
-                                    btn()
-                                }
-                                {
-                                    stepActiveForm === 2 && session &&
-                                    btn()
-                                }
-                            </Form>
-
-
-                        </Formik>
+                                        {
+                                            stepActiveForm !== 3 && !session &&
+                                            nextPreviousBtn()
+                                        }
+                                        {
+                                            stepActiveForm !== 2 && session &&
+                                            nextPreviousBtn()
+                                        }
+                                        {
+                                            stepActiveForm === 3 && !session &&
+                                            btn()
+                                        }
+                                        {
+                                            stepActiveForm === 2 && session &&
+                                            btn()
+                                        }
+                                    </Form>
+                                )}
+                        </Formik>}
                     </div>
 
                 </div>

@@ -2,7 +2,7 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 
 
 import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {RegisterSchema} from "./Schema/RegisterSchema";
 import { useRouter} from "next/router";
 import {signIn} from "next-auth/react";
@@ -67,6 +67,7 @@ const Register = ({login}) => {
             is_author:false,
             redirect:false
         }
+        console.log(formData)
         const register = await signIn('signup',formData)
             .then((res) => {
                 console.log(formData)

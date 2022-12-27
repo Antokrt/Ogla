@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +31,7 @@
     "WebServerToolWindowFactoryState": "false",
     "javascript.nodejs.core.library.configured.version": "16.17.1",
     "javascript.nodejs.core.library.typings.version": "16.11.66",
-    "last_opened_file_path": "C:/Dev/Ogla/Front",
+    "last_opened_file_path": "C:/Dev/Ogla",
     "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -122,7 +115,9 @@
       <workItem from="1668603462129" duration="8956000" />
       <workItem from="1668680285503" duration="18821000" />
       <workItem from="1668787207277" duration="66000" />
-      <workItem from="1672051487288" duration="16544000" />
+      <workItem from="1672051487288" duration="16606000" />
+      <workItem from="1672138204293" duration="23000" />
+      <workItem from="1672138231408" duration="7000" />
     </task>
     <servers />
   </component>
