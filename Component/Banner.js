@@ -8,15 +8,23 @@ import {getSession, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
 import {useEffect} from "react";
 import axios from "axios";
+import {getAllBooks} from "../service/Book/HomeService";
 
 
 export default function Banner() {
     const {data: session, status} = useSession();
 
     useEffect(() => {
-        getSession()
-            .then((res) => console.log(res))
+
     },[session])
+
+    const getBooks = () => {
+        const token = session.user.accessToken;
+        getAllBooks(token)
+            .then((res) => console.log(res))
+            .catch((err)=> console.log(err));
+    }
+
 
 /*    useEffect(() => {
         axios.get('http://localhost:3008/book/')
@@ -35,7 +43,8 @@ export default function Banner() {
                 {
                     session ?
                     <>
-                        <h1>Bienvenue <span><strong>{Capitalize(session.user.pseudo)}</strong></span></h1>
+                        <span className={styles.refre}>{session?.user.accessToken}</span>
+                        <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
                         <p className={styles.presentation}><span
                             className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
                             lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
@@ -82,8 +91,11 @@ export default function Banner() {
                 </div>
             </div>
             <div className={styles.mainB}>
-                <img className={styles.owl} src={'assets/owl.png'}/>
+                <img className={styles.owl}
+                     onClick={() => getBooks(session.user.accessToken)}
+                     src={'assets/owl.png'}/>
                 <div className={styles.bubbleContainer}
+                     onClick={() => checkToken()}
                 >
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
                     <div className={styles.textBg}>

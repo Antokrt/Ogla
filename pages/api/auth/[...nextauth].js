@@ -1,27 +1,25 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from "axios";
+import jwt from 'jsonwebtoken';
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
+
 
 
 async function refreshAccessToken(tokenObject) {
     try {
-
         const config = {
-            headers: { Authorization: `Bearer ${tokenObject}` }
+            headers: { Authorization: `Bearer ${tokenObject.refreshToken}` }
         };
-        const tokenResponse = await axios.post('http://localhost:3008/auth/refresh/',{
-            token: tokenObject.refreshToken
-        })
+
+        const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
 
         return {
             ...tokenObject,
-            accessToken: tokenResponse.accessToken,
-            refreshToken: tokenResponse.refreshToken
+            accessToken: tokenResponse.data.accessToken,
+            refreshToken: tokenResponse.data.refreshToken
         }
     } catch (error) {
-        console.log('tokenObject')
-
         return {
             ...tokenObject,
             error: "RefreshAccessTokenError",
@@ -29,6 +27,22 @@ async function refreshAccessToken(tokenObject) {
     }
 }
 
+async function getExpFromToken(token){
+    try {
+        const decoded = await jwt.decode(token,'code');
+        return decoded.exp;
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+function isExpire(token) {
+    if(!token){
+        return true;
+    }
+    return token < Date.now() / 1000;
+}
 
 export default NextAuth({
     providers: [
@@ -51,11 +65,12 @@ export default NextAuth({
                 })
 
                 const user = await res.json();
+
                 if (!res.ok && user) {
                     throw new Error(user.message)
                 }
                 if (res.ok && user) {
-                    return user
+                    return await user;
                 }
                 return null;
             }
@@ -82,7 +97,6 @@ export default NextAuth({
                 const user = await res.json();
 
                 if (!res.ok && user) {
-                    console.log(user.message)
                     throw new Error(user.message)
                 }
                 if (res.ok && user) {
@@ -94,8 +108,10 @@ export default NextAuth({
         CredentialsProvider({
             id:'signupAuthor',
             async authorize (credentials,req){
+
                 const payload = credentials;
                 payload.is_author = true;
+
                 const res = await fetch('http://localhost:3008/user/register',{
                     method:'POST',
                     body:JSON.stringify(payload),
@@ -108,7 +124,6 @@ export default NextAuth({
                 const user = await res.json();
 
                 if (!res.ok && user) {
-                    console.log(user.message)
                     throw new Error(user.message)
                 }
                 if (res.ok && user) {
@@ -126,25 +141,26 @@ export default NextAuth({
     callbacks: {
 
         async signIn({user}) {
-            if (user){
-                return user;
-            }
-            return false;
+            return !!user;
         },
 
 
         async jwt({token,user}) {
+
             if(user) {
                 token.accessToken = user?.accessToken;
                 token.refreshToken = user?.refreshToken;
             }
 
-            const shouldRefreshTime = Math.round((token?.exp - 60 * 60 * 1000) - Date.now());
+          const expAccessToken = await getExpFromToken(token.accessToken);
 
-            if (shouldRefreshTime < 0) {
+            let tokenHasExpire = isExpire(expAccessToken);
+
+            if (!tokenHasExpire) {
                 return Promise.resolve(token)
             }
-            token = refreshAccessToken(token);
+
+            token = await refreshAccessToken(token);
             return Promise.resolve(token);
         },
 
@@ -161,14 +177,19 @@ export default NextAuth({
                     session.user.image = res.data.img;
                     session.user.date_birth = res.data.date_birth;
                     session.user.is_author = res.data.is_author;
+                    session.user.accessToken = bearerToken;
                 })
-                .catch((err) => console.log(err.response.data))
-                    session.user.accessToken = token?.accessToken;
-                    return session;
+               .catch((err) => false);
+                         return session;
 
         }
 
     },
-    secret: 'code'
+    secret: 'code',
+    session:{
+        maxAge: 604800  // 7 jours
+    }
+
+
 })
 

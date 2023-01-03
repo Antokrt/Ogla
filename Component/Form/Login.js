@@ -32,7 +32,7 @@ const Login = ({register}) => {
         const response = await signIn('login', {
             pseudo: formData.get('pseudo'),
             password: formData.get('password'),
-            redirect: false
+            callbackUrl:'/'
         })
             .then((res) => {
                 if (res.status === 401) {
