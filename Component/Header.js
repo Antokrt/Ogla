@@ -29,12 +29,9 @@ export default function Header() {
                     {
                         session && session.user.is_author ?
                             <>
-                                <li><Link href="/nouveau-livre"><a
-                                    className={router.pathname === "/nouveau-livre" ? styles.activeNav : ""}>Nouveau livre
+                                <li><Link href="/dashboard?new"><a>Nouveau livre
                                 </a></Link></li>
-                                <li><Link href="/mes-livres"><a
-                                    className={router.pathname === "/mes-livres" ? styles.activeNav : ""}>Mes livres
-                                </a></Link></li>
+                                <li><Link href="/dashboard?books"><a>Mes livres</a></Link></li>
                             </>
 
                             :
@@ -58,7 +55,7 @@ export default function Header() {
                             >
                                 <div>
 
-                                    {/*<p>{session.user?.pseudo[0].toUpperCase()}</p>*/}
+                                    {<p>{session.user?.pseudo[0].toUpperCase()}</p>}
                                 </div>
                             </div>
 

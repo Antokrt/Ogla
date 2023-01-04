@@ -166,6 +166,9 @@ export default NextAuth({
 
         async session({session,token,user}) {
             const bearerToken = token?.accessToken;
+            if(token.error){
+                session.error = token.error;
+            }
             const config = {
                 headers: { Authorization: `Bearer ${bearerToken}` }
             };
@@ -177,10 +180,15 @@ export default NextAuth({
                     session.user.image = res.data.img;
                     session.user.date_birth = res.data.date_birth;
                     session.user.is_author = res.data.is_author;
+                    if(session.user.is_author){
+                        session.user.author = res.data.author;
+                    }
                     session.user.accessToken = bearerToken;
                 })
                .catch((err) => false);
-                         return session;
+            console.log(session);
+
+            return session;
 
         }
 

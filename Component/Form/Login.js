@@ -35,7 +35,7 @@ const Login = ({register}) => {
             callbackUrl:'/'
         })
             .then((res) => {
-                if (res.status === 401) {
+                if (res?.status === 401) {
                     switch (res.error) {
                         case 'Impossible to find the user' : {
                             setSubmitErr(prevState => ({

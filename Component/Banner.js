@@ -4,7 +4,7 @@ import {
     CursorArrowRaysIcon,
 } from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
-import {getSession, useSession} from "next-auth/react";
+import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
 import {useEffect} from "react";
 import axios from "axios";
@@ -12,24 +12,28 @@ import {getAllBooks} from "../service/Book/HomeService";
 
 
 export default function Banner() {
-    const {data: session, status} = useSession();
+    const {data: session} = useSession();
 
     useEffect(() => {
-
-    },[session])
+        if (session?.error === 'RefreshAccessTokenError') {
+            router.push({
+                pathname: "/auth",
+                query: "login"
+            })
+        }
+    }, [session])
 
     const getBooks = () => {
-        const token = session.user.accessToken;
-        getAllBooks(token)
+        getAllBooks()
             .then((res) => console.log(res))
-            .catch((err)=> console.log(err));
+            .catch((err) => console.log(err));
     }
 
 
-/*    useEffect(() => {
-        axios.get('http://localhost:3008/book/')
-            .then((res) => console.log(res))
-    },[session])*/
+    /*    useEffect(() => {
+            axios.get('http://localhost:3008/book/')
+                .then((res) => console.log(res))
+        },[session])*/
 
     const router = useRouter();
     return (
@@ -42,23 +46,25 @@ export default function Banner() {
 
                 {
                     session ?
-                    <>
-                        <span className={styles.refre}>{session?.user.accessToken}</span>
-                        <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
-                        <p className={styles.presentation}><span
-                            className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
-                            lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
-                            de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne
-                            ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
-                            croyons au pouvoir des <strong>mots</strong>.</p>
-                    </>
+                        <>
+                            <span className={styles.refre}>{session?.user.accessToken}</span>
+                            <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
+                            <p className={styles.presentation}><span
+                                className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
+                                lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
+                                de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que
+                                personne
+                                ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
+                                croyons au pouvoir des <strong>mots</strong>.</p>
+                        </>
                         :
                         <>
                             <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
                                 lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
-                                de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que personne
+                                de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que
+                                personne
                                 ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
                                 croyons au pouvoir des <strong>mots</strong>.</p>
                         </>
@@ -81,8 +87,8 @@ export default function Banner() {
                     <div className={styles.btnJoin}>
                         {
                             session && session.user.is_author ?
-                                <button onClick={() => router.push('/devenir-auteur')}>Ecrire
-                                     <ChatBubbleLeftRightIcon/></button>
+                                <button onClick={() => router.push('/dashboard')}>Ecrire
+                                    <ChatBubbleLeftRightIcon/></button>
                                 :
                                 <button onClick={() => router.push('/devenir-auteur')}>Deviens
                                     écrivain <ChatBubbleLeftRightIcon/></button>
@@ -92,11 +98,9 @@ export default function Banner() {
             </div>
             <div className={styles.mainB}>
                 <img className={styles.owl}
-                     onClick={() => getBooks(session.user.accessToken)}
+                     onClick={() => getBooks()}
                      src={'assets/owl.png'}/>
-                <div className={styles.bubbleContainer}
-                     onClick={() => checkToken()}
-                >
+                <div className={styles.bubbleContainer}>
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
                     <div className={styles.textBg}>
                         <p><span>#</span>1</p>

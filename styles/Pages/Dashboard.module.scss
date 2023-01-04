@@ -1,0 +1,23 @@
+.container{
+  width: 100%;
+}
+.containerMain{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.verticalMenuContainer{
+  height: 100%;
+  width: 15%;
+}
+
+.titleContainer{
+  padding-top: 2%;
+  width: 80%;
+  text-align: center;
+  h1{
+    font-size: 18px;
+    font-family: 'Montserrat Alternates',sans-serif;
+  }
+}

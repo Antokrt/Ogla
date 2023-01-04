@@ -25,7 +25,7 @@ const Auth = () => {
 
         }, [router.isReady]);
 
-        if(session){
+        if(session && !session?.error){
             router.replace('/')
         }
         else {
