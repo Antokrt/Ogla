@@ -14,34 +14,40 @@ export default function Header() {
 
     return (
         <div className={styles.container}>
-        <div className={styles.mainA}>
+            <div className={styles.mainA}>
                 <h3>OGLA</h3>
-            <nav>
-                <ul>
-                    <li><Link href="/"><a
-                        className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                    <li><Link href=
-                                  {{
-                                      pathname: "/Category",
-                                  }}
-                    ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
-                    </li>
-                    {
-                        session && session.user.is_author ?
-                            <>
-                                <li><Link href="/dashboard?new"><a>Nouveau livre
-                                </a></Link></li>
-                                <li><Link href="/dashboard?books"><a>Mes livres</a></Link></li>
-                            </>
+                <nav>
+                    <ul>
+                        <li><Link href="/"><a
+                            className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
+                        <li><Link href=
+                                      {{
+                                          pathname: "/Category",
+                                      }}
+                        ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
+                        </li>
+                        {
+                            session && session.user.is_author ?
+                                <>
+                                    <li onClick={() => {
+                                        localStorage.setItem('dashboard', 'new')
+                                    }
+                                    }><Link href="/dashboard?new"><a>Nouveau livre
+                                    </a></Link></li>
+                                    <li onClick={() => {
+                                        localStorage.setItem('dashboard', 'books')
+                                    }
+                                    }><Link href="/dashboard?books"><a>Mes livres</a></Link></li>
+                                </>
 
-                            :
-                            <li><Link href="/devenir-auteur"><a
-                                className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
-                                écrivain</a></Link></li>
-                    }
+                                :
+                                <li><Link href="/devenir-auteur"><a
+                                    className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
+                                    écrivain</a></Link></li>
+                        }
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
             </div>
 
             <div className={styles.mainLog}>
@@ -49,7 +55,7 @@ export default function Header() {
                     session ?
                         <div className={styles.accountContainer}>
                             <div className={styles.account}
-                                 onClick={() =>{
+                                 onClick={() => {
                                      router.push("/profil")
                                  }}
                             >
@@ -80,7 +86,7 @@ export default function Header() {
                         </div>
                 }
             </div>
- {/*           <div className={styles.mainA}>
+            {/*           <div className={styles.mainA}>
                 <div className={styles.logo}>
                     <img src={"/assets/logo.png"}/>
                 </div>

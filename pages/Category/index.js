@@ -29,8 +29,6 @@ export default function CategoryPage() {
     useEffect(() => {
         getData()
             .then((res) => {setPost(res)})
-            .then((res) => console.log(res.title))
-
             .catch((err) => console.log(err))
     }, [])
 

@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
@@ -46,6 +47,17 @@ function isExpire(token) {
 
 export default NextAuth({
     providers: [
+        GoogleProvider({
+           clientId: process.env.GOOGLE_CLIENT_ID,
+           clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+            authorization:{
+               params:{
+                   prompt:'consent',
+                   access_type:'offline',
+                   response_type:'code'
+               }
+            }
+        }),
         CredentialsProvider({
             id: 'login',
             name: 'login',
@@ -140,7 +152,8 @@ export default NextAuth({
 
     callbacks: {
 
-        async signIn({user}) {
+        async signIn({user,account, profile}) {
+
             return !!user;
         },
 
@@ -172,7 +185,8 @@ export default NextAuth({
             const config = {
                 headers: { Authorization: `Bearer ${bearerToken}` }
             };
-           await axios.get('http://localhost:3008/user/profil',config)
+
+            await axios.get('http://localhost:3008/user/profil',config)
                 .then((res) => {
                     session.user.id = res.data._id;
                     session.user.pseudo = res.data.pseudo;
@@ -186,7 +200,6 @@ export default NextAuth({
                     session.user.accessToken = bearerToken;
                 })
                .catch((err) => false);
-            console.log(session);
 
             return session;
 

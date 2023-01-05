@@ -15,6 +15,7 @@ export default function Banner() {
     const {data: session} = useSession();
 
     useEffect(() => {
+        console.log(process.env.NEXT_PUBLIC_SECRET)
         if (session?.error === 'RefreshAccessTokenError') {
             router.push({
                 pathname: "/auth",
@@ -47,6 +48,10 @@ export default function Banner() {
                 {
                     session ?
                         <>
+                            <button onClick={() => {
+                            signIn('google');
+                            }
+                            }>Se connecter avec Google</button>
                             <span className={styles.refre}>{session?.user.accessToken}</span>
                             <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
                             <p className={styles.presentation}><span

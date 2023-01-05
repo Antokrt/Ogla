@@ -1,5 +1,6 @@
 import styles from "../styles/Component/Menu/VerticalAuthorMenu.module.scss";
 import {
+    ArrowLeftOnRectangleIcon,
     BellAlertIcon,
     BookmarkSquareIcon,
     HomeIcon,
@@ -40,7 +41,8 @@ const router = useRouter();
                 <div className={styles.navContainer}>
                     <ul>
                         <li> <LifebuoyIcon/> Support  </li>
-                         </ul>
+                        <li> <ArrowLeftOnRectangleIcon/> Déconnexion  </li>
+                    </ul>
                 </div>
 
                 <div className={styles.profilContainer}>
