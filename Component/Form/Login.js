@@ -18,6 +18,10 @@ const Login = ({register}) => {
         show: false
     })
 
+    useEffect(() => {
+        console.log(session)
+    },[])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(formRef.current);

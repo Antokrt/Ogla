@@ -22,6 +22,7 @@ export default function Banner() {
                 query: "login"
             })
         }
+        console.log(session)
     }, [session])
 
     const getBooks = () => {
@@ -48,10 +49,6 @@ export default function Banner() {
                 {
                     session ?
                         <>
-                            <button onClick={() => {
-                            signIn('google');
-                            }
-                            }>Se connecter avec Google</button>
                             <span className={styles.refre}>{session?.user.accessToken}</span>
                             <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
                             <p className={styles.presentation}><span
@@ -63,7 +60,12 @@ export default function Banner() {
                                 croyons au pouvoir des <strong>mots</strong>.</p>
                         </>
                         :
+
                         <>
+                            <button onClick={() => {
+                                signIn('google');
+                            }
+                            }>Se connecter avec Google</button>
                             <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de

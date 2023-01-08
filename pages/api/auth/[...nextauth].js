@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GoogleProvider from 'next-auth/providers/google';
+import Google from "next-auth/providers/google";
 import axios from "axios";
 import jwt from 'jsonwebtoken';
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
@@ -47,17 +47,13 @@ function isExpire(token) {
 
 export default NextAuth({
     providers: [
-        GoogleProvider({
-           clientId: process.env.GOOGLE_CLIENT_ID,
-           clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-            authorization:{
-               params:{
-                   prompt:'consent',
-                   access_type:'offline',
-                   response_type:'code'
-               }
+        Google(
+            {
+                clientId: '1092772885175-pr1v5209i6c07o52utevpt9q0hp37g3d.apps.googleusercontent.com',
+                clientSecret:'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'
             }
-        }),
+        ),
+
         CredentialsProvider({
             id: 'login',
             name: 'login',
@@ -153,14 +149,34 @@ export default NextAuth({
     callbacks: {
 
         async signIn({user,account, profile}) {
-
-            return !!user;
+            if(account.provider === 'google' && profile){
+                const data = {
+                    user:account,
+                    profil:profile
+                }
+                const res = await fetch('http://localhost:3008/auth/google/redirect',{
+                    method:'POST',
+                    body: JSON.stringify(data),
+                    headers:{
+                        'Content-Type':'application/json',
+                    }
+                })
+                const response = await res.json();
+                user.accessToken = response.accessToken;
+                user.refreshToken = response.refreshToken;
+                if(res.ok && user){
+                    return user;
+                }
+            }
+            else {
+                return !!user;
+            }
         },
 
 
-        async jwt({token,user}) {
-
+        async jwt({token,user,account}) {
             if(user) {
+                console.log(user);
                 token.accessToken = user?.accessToken;
                 token.refreshToken = user?.refreshToken;
             }
