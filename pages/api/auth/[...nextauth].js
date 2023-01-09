@@ -75,8 +75,9 @@ export default NextAuth({
                 const user = await res.json();
 
                 if (!res.ok && user) {
-                    throw new Error(user.message)
+                    return null
                 }
+
                 if (res.ok && user) {
                     return await user;
                 }
@@ -176,7 +177,6 @@ export default NextAuth({
 
         async jwt({token,user,account}) {
             if(user) {
-                console.log(user);
                 token.accessToken = user?.accessToken;
                 token.refreshToken = user?.refreshToken;
             }
@@ -208,6 +208,7 @@ export default NextAuth({
                     session.user.pseudo = res.data.pseudo;
                     session.user.email = res.data.email;
                     session.user.image = res.data.img;
+                    session.user.provider = res.data.provider;
                     session.user.date_birth = res.data.date_birth;
                     session.user.is_author = res.data.is_author;
                     if(session.user.is_author){

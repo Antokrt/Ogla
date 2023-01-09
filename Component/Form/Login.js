@@ -36,18 +36,21 @@ const Login = ({register}) => {
         const response = await signIn('login', {
             pseudo: formData.get('pseudo'),
             password: formData.get('password'),
-            callbackUrl:'/'
+            callbackUrl:'/',
+            redirect:false
         })
             .then((res) => {
                 if (res?.status === 401) {
-                    switch (res.error) {
-                        case 'Impossible to find the user' : {
-                            setSubmitErr(prevState => ({
-                                msg: 'Identifiant ou mot de passe incorrect!',
-                                show: true
-                            }))
-                        }
-                    }
+                    setSubmitErr(prevState => ({
+                        msg: 'Identifiant ou mot de passe incorrect!',
+                        show: true
+                    }))
+                }
+                else {
+                    setSubmitErr(prevState => ({
+                        msg: 'Erreur lors de la connexion',
+                        show: true
+                    }))
                 }
             })
 
@@ -69,7 +72,7 @@ const Login = ({register}) => {
 
                     <div className={styles.selectItem + " " + "fadeIn"}>
                         <label htmlFor={"pseudo"}>Identifiant</label>
-                        <input value={'lecteur'} type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>
+                        <input value={'josé2'} type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>
                         <label htmlFor={"password"}>Mot de passe</label>
                         <input value={'azerty'} type={"password"} name={"password"} placeholder={"Mot de passe"}/>
                         <div className={styles.conditions}>

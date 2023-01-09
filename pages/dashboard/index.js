@@ -4,12 +4,28 @@ import VerticalAuthorMenu from "../../Component/Menu/VerticalAuthorMenu";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import Books from "../../Component/Dashboard/Books";
+import {useSession} from "next-auth/react";
+import { getToken } from 'next-auth/jwt';
 
-export default function DashboardAuthor() {
+import {getBooksByAuthor} from "../../service/Dashboard/BooksAuthorService";
+
+
+export async function getServerSideProps(context){
+    const res = await getBooksByAuthor();
+    const data = await res;
+
+    return {
+        props:{
+            books: JSON.stringify(data)
+        }
+    }
+}
+
+export default function DashboardAuthor({message,books}) {
 
     const router = useRouter();
-
     const [select, setSelect] = useState('');
+    const {data: session} = useSession();
 
     useEffect(() => {
         const local = localStorage.getItem('dashboard');
@@ -17,6 +33,10 @@ export default function DashboardAuthor() {
             setSelect(local);
         }
     }, [])
+
+    useEffect(() => {
+        console.log(JSON.parse(books))
+    },[message])
 
     useEffect(() => {
         if (select !== 'Accueil') {
@@ -60,7 +80,7 @@ export default function DashboardAuthor() {
             <div className={styles.containerMain}>
                 <div className={styles.verticalMenuContainer}>
                     <VerticalAuthorMenu setLink={setSelect}/>
-
+                    {message}
                 </div>
                 <div className={styles.containerData}>
                     {

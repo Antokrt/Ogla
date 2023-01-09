@@ -6,6 +6,7 @@ import {router, useRouter} from "next/router";
 import {signIn, useSession} from "next-auth/react";
 import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
+import {instance} from "../../service/config/Interceptor";
 
 
 const DevenirAuteur = () => {
@@ -309,8 +310,8 @@ const DevenirAuteur = () => {
                 age:values.age
             }
 
-            axios.put('http://localhost:3008/author/turn-author',formData)
-                .then((res) => console.log(res))
+            instance.put('http://localhost:3008/author/turn-author',formData)
+                .then((res) => router.push('/dashboard'))
                 .catch((err) => console.log(err))
         }
         else{
