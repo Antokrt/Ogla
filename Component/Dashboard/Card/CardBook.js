@@ -4,7 +4,6 @@ import styles from '../../../styles/Component/Dashboard/Card/CardBook.module.scs
 const CardBook = () => {
 return (
     <div className={styles.container}>
-
     </div>
 )
 }

@@ -1,5 +1,9 @@
 .container{
-  height: 200px;
-  width: 150px;
-  background-color: #54595F;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 400px;
+  width: 300px;
+  border-radius: 30px;
+  background-color: white;
 }

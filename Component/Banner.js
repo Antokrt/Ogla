@@ -9,18 +9,18 @@ import {Capitalize} from "../utils/String";
 import {useEffect} from "react";
 import axios from "axios";
 import {getAllBooks} from "../service/Book/HomeService";
+import {getBooksByAuthor} from "../service/Dashboard/BooksAuthorService";
+
+
+
 
 
 export default function Banner() {
     const {data: session} = useSession();
 
     useEffect(() => {
-        console.log(process.env.NEXT_PUBLIC_SECRET)
         if (session?.error === 'RefreshAccessTokenError') {
-            router.push({
-                pathname: "/auth",
-                query: "login"
-            })
+            signOut();
         }
         console.log(session)
     }, [session])

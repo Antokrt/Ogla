@@ -180,7 +180,6 @@ export default NextAuth({
                 token.accessToken = user?.accessToken;
                 token.refreshToken = user?.refreshToken;
             }
-
           const expAccessToken = await getExpFromToken(token.accessToken);
 
             let tokenHasExpire = isExpire(expAccessToken);
@@ -201,6 +200,8 @@ export default NextAuth({
             const config = {
                 headers: { Authorization: `Bearer ${bearerToken}` }
             };
+
+            console.log(token)
 
             await axios.get('http://localhost:3008/user/profil',config)
                 .then((res) => {

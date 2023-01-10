@@ -1,17 +1,38 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import Header from "../Component/Header";
 import Banner from "../Component/Banner";
 import Footer from "../Component/Footer";
-import LangueProvider from "../utils/context";
-import SidebarPost from "../Component/Post/SidebarCommentary";
 import HotPost from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
+import {getToken} from "next-auth/jwt";
+import {useEffect} from "react";
+import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 
-export default function Home() {
+export async function getServerSideProps({context, req, res}){
+    const config = await getConfigOfProtectedRoute(req);
+    const bookData = await fetch('http://localhost:3008/book/', config);
+    const bookErrData = bookData.ok ? false : bookData.status;
+    const json = await bookData.json();
+
+
+    return {
+        props:{
+            err: {
+                books:bookErrData
+            },
+            books:json
+        }
+    }
+}
+
+export default function Home({err,books}) {
+
+    useEffect(()=> {
+        console.log(books)
+    },[])
 
     return (
         <div className={styles.container}>

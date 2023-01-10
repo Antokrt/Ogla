@@ -8,20 +8,26 @@ import {useSession} from "next-auth/react";
 import { getToken } from 'next-auth/jwt';
 
 import {getBooksByAuthor} from "../../service/Dashboard/BooksAuthorService";
+import {getConfigOfProtectedRoute} from "../api/utils/Config";
 
 
-export async function getServerSideProps(context){
-    const res = await getBooksByAuthor();
-    const data = await res;
+export async function getServerSideProps({context, req}){
+    const config = await getConfigOfProtectedRoute(req);
+    const books = await fetch('http://localhost:3008/author/my-books',config);
+    const booksErrData = books.ok ? false : books.status;
+    const booksJson = await books.json()
 
     return {
         props:{
-            books: JSON.stringify(data)
+            err:{
+                books:booksErrData
+            },
+            books: booksJson,
         }
     }
 }
 
-export default function DashboardAuthor({message,books}) {
+export default function DashboardAuthor({books}) {
 
     const router = useRouter();
     const [select, setSelect] = useState('');
@@ -34,9 +40,6 @@ export default function DashboardAuthor({message,books}) {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(JSON.parse(books))
-    },[message])
 
     useEffect(() => {
         if (select !== 'Accueil') {
@@ -50,7 +53,7 @@ export default function DashboardAuthor({message,books}) {
 
     const displayBooks = () => {
         return (
-            <Books/>
+            <Books books={books} />
         )
     }
 
@@ -80,7 +83,6 @@ export default function DashboardAuthor({message,books}) {
             <div className={styles.containerMain}>
                 <div className={styles.verticalMenuContainer}>
                     <VerticalAuthorMenu setLink={setSelect}/>
-                    {message}
                 </div>
                 <div className={styles.containerData}>
                     {
