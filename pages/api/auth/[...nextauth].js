@@ -201,7 +201,6 @@ export default NextAuth({
                 headers: { Authorization: `Bearer ${bearerToken}` }
             };
 
-            console.log(token)
 
             await axios.get('http://localhost:3008/user/profil',config)
                 .then((res) => {

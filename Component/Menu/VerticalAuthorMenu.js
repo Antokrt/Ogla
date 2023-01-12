@@ -6,18 +6,17 @@ import {
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
-    PlusIcon
 } from "@heroicons/react/24/outline";
-import {BookOpenIcon} from "@heroicons/react/24/outline";
 import {useSession} from "next-auth/react";
-import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import {useEffect} from "react";
 
-
-export default function VerticalAuthorMenu({setLink}) {
+export default function VerticalAuthorMenu() {
 
     const {data: session} = useSession();
-const router = useRouter();
+    const router = useRouter();
+
+
     return (
         <div className={styles.container}>
             <div className={styles.fContainer}>
@@ -29,10 +28,10 @@ const router = useRouter();
 
                 <div className={styles.navContainer}>
                     <ul>
-                        <li onClick={() => setLink('Accueil')}> <HomeIcon/> Accueil  </li>
-                        <li onClick={() => setLink('books')}><BookmarkSquareIcon/>Livres</li>
-                        <li onClick={() => setLink('new')}><PlusCircleIcon/>Nouveau</li>
-                        <li onClick={() => setLink('notifications')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span>225</span></li>
+                        <li onClick={() => router.push('/dashboard')}> <HomeIcon/> Accueil  </li>
+                        <li onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon/>Livres</li>
+                        <li onClick={() => router.push('/dashboard/new')}><PlusCircleIcon/>Nouveau</li>
+                        <li onClick={() => router.push('/dashboard')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
                     </ul>
                 </div>
             </div>
@@ -47,7 +46,7 @@ const router = useRouter();
 
                 <div className={styles.profilContainer}>
 <div className={styles.profil}>
-    <img src={'assets/livre4.jpg'}/>
+    <img src={session?.user.image}/>
     <div className={styles.infos}>
         <p className={styles.name}>{session?.user.author.firstName} {session?.user.author.lastName}</p>
         <p className={styles.pseudo}>@{session?.user.pseudo}</p>

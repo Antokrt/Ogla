@@ -1,0 +1,31 @@
+@import "styles/utils/var";
+.container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px $border;
+  padding: 2% 2%;
+
+
+  .sBlock{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .addBtnHeader{
+      background-color: #1C232B;
+      color: white;
+      padding: 10px 20px;
+      font-size: 0.6vw;
+      font-family: 'Montserrat',sans-serif;
+    }
+    .search{
+      svg{
+        width: 20px;
+      }
+    }
+    img{
+      width: 50px;
+      border-radius: 50%;
+    }
+  }
+}

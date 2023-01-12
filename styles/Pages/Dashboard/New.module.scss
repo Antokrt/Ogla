@@ -1,0 +1,19 @@
+.container{
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.containerMain{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.verticalMenuContainer{
+  height: 100%;
+  width: 15%;
+}
+
+.containerData{
+  flex: 1;
+}
