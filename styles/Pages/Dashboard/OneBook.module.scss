@@ -1,12 +1,10 @@
+@import "styles/utils/var";
 .container{
-  width: 100%;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-.containerMain{
   display: flex;
   height: 100vh;
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .verticalMenuContainer{
@@ -14,8 +12,261 @@
   width: 15%;
 }
 
+
 .containerData{
   display: flex;
   flex-direction: column;
   flex: 1;
+  background-color: rgba(28, 35, 43, 0.03);
+
+  .containerTitle{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    h2{
+      text-align: center;
+      font-family: 'Montserrat Alternates',sans-serif;
+      font-weight: bold;
+      font-size: 1.2vw;
+    }
+    span{
+      background-color: #9844ad;
+      height: 3px;
+      width: 20%;
+    }
+  }
+
+}
+
+.menuContainer{
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  align-items: center;
+  height: 8vh;
+  p{
+    cursor: pointer;
+    font-size: 0.7vw;
+    font-family: 'Montserrat',sans-serif;
+    padding-bottom: 10px;
+    font-weight: bold;
+    color: rgba(28, 35, 43, 0.51);
+    border-bottom: 2px transparent solid;
+
+    transition: 0.1s;
+  }
+  .active{
+    transition: 0.1s;
+    color: #1C232B;
+    border-bottom: 2px #9844AD solid;
+
+  }
+}
+
+.containerOneBook{
+  display: flex;
+  flex: 1;
+  padding: 0% 2%;
+}
+
+.labelContainer{
+  display: flex;
+  justify-content: start;
+flex-direction: column;
+  gap: 20px;
+  align-items: start;
+  width: 50%;
+  padding-left: 4%;
+
+  .imgADescription{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .containerImg{
+      &:hover{
+        img{
+          filter: brightness(60%);
+          transition: 0.1s;
+        }
+      }
+      cursor: pointer;
+      position: relative;
+      height: 30vh;
+      width: 30%;
+      img{
+        transition: 0.1s;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        box-shadow: $shadow;
+        object-position: top;
+      }
+    }
+
+    .description{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 15px;
+      width: 70%;
+      padding-left: 2%;
+      .headerTextarea{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        h5{
+          padding-left: 2%;
+          text-align: left;
+          font-size: 0.8vw;
+          font-family: 'Montserrat Alternates',sans-serif;
+          color: rgba(28, 35, 43, 0.84);
+        }
+        button{
+          transition: 0.1s;
+          cursor: initial;
+          font-size: 0.6vw;
+          background-color: rgba(28, 35, 43, 0.32);
+          color: white;
+          font-family: 'Montserrat Alternates',sans-serif;
+          padding: 8px 15px;
+        }
+      }
+
+      textarea{
+        &::-webkit-scrollbar {
+          width: 1px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background:transparent;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          background: rgba(28, 35, 43, 0.24);
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: $grey;
+        }
+        padding: 2%;
+        font-size: 11px;
+        color: rgba(28, 35, 43, 0.87);
+        font-family: "Montserrat", sans-serif;
+        height: 100%;
+        width: 100%;
+        outline: none;
+        resize: none;
+        border-radius: 5px;
+        overflow-y: scroll;
+      }
+    }
+  }
+
+
+  .presentationContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .statsLabelContainer{
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: white;
+
+
+    .chapterNbLabel, .dateLabel{
+      display: flex;
+      gap: 5px;
+      flex-direction: column;
+      text-align: center;
+      p{
+        font-size: 0.9vw;
+        font-family: 'Open sans',sans-serif;
+        font-weight: bold;
+        color: rgba(28, 35, 43, 0.7);
+      }
+
+      .length{
+        color: #9844AD;
+      }
+      h6{
+        font-size: 0.7vw;
+        font-weight: bold;
+        color: rgba(28, 35, 43, 0.58);
+        font-family: 'Open sans',sans-serif;
+      }
+    }
+  }
+
+  h3{
+    font-size: 1.2vw;
+    font-family: 'Montserrat Alternates',sans-serif;
+    color:#1C232B;
+    font-weight: bold;
+  }
+}
+
+.contentContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vh;
+  background-color: white;
+  padding: 5%;
+
+
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 15px;
+    padding-bottom: 5px;
+  }
+  .category{
+    color: rgba(28, 35, 43, 0.68);
+    font-weight: bold;
+    font-family: 'Potta One',sans-serif;
+  }
+  .tag{
+    transform: rotate(90deg);
+  }
+  svg{
+    color: rgba(28, 35, 43, 0.58);
+    width: 0.8vw;
+  }
+  p{
+    font-size: calc(10px + 0.1vw);
+    font-family: "Open sans", sans-serif;
+    font-weight: bold;
+    color: rgba(28, 35, 43, 0.58);
+  }
+
+  .svgCommentary{
+    color: rgba(152, 68, 173, 0.89);
+  }
+
+  .delete{
+    cursor: pointer;
+    color: rgba(255, 0, 0, 0.69);
+    text-decoration: underline;
+  }
+}
+
+.potta{
+  color: rgba(28, 35, 43, 0.58);
+  font-family: 'Open sans',sans-serif;
+}
+
+.activeBtn{
+  transition: 0.1s;
+  cursor: pointer!important;
+  background-color: #1C232B!important;
 }

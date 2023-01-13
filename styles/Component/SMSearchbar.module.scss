@@ -3,8 +3,7 @@
 .container{
   ::placeholder{
     font-family: "Montserrat", sans-serif;
-    color: $brown;
-    font-weight: bold;
+    color: rgba(28, 35, 43, 0.34);
   }
   display: flex;
   height: 60px;
@@ -13,7 +12,8 @@
 
     padding-left: 15px;
     width: 100%;
-    background-color: #e9ebec;
+    background-color: rgba(233, 235, 236, 0.28);
+    border: solid 1px $border;
     border-radius: 8px;
     font-size: 14px;
     font-family: "Montserrat",sans-serif;
