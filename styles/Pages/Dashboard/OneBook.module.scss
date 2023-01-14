@@ -27,7 +27,7 @@
       text-align: center;
       font-family: 'Montserrat Alternates',sans-serif;
       font-weight: bold;
-      font-size: 1.2vw;
+      font-size: 1.1vw;
     }
     span{
       background-color: #9844ad;
@@ -67,6 +67,7 @@
   display: flex;
   flex: 1;
   padding: 0% 2%;
+  gap: 50px;
 }
 
 .labelContainer{
@@ -116,6 +117,24 @@ flex-direction: column;
         justify-content: space-between;
         align-items: center;
         width: 100%;
+        .btn{
+          display: flex;
+          gap: 10px;
+          .seeBtn{
+            background-color: #9844AD;
+          }
+          button{
+            box-shadow: $shadow;
+
+            transition: 0.1s;
+            cursor: initial;
+            font-size: 0.6vw;
+            background-color: rgba(28, 35, 43, 0.32);
+            color: white;
+            font-family: 'Montserrat Alternates',sans-serif;
+            padding: 8px 15px;
+          }
+        }
         h5{
           padding-left: 2%;
           text-align: left;
@@ -123,15 +142,7 @@ flex-direction: column;
           font-family: 'Montserrat Alternates',sans-serif;
           color: rgba(28, 35, 43, 0.84);
         }
-        button{
-          transition: 0.1s;
-          cursor: initial;
-          font-size: 0.6vw;
-          background-color: rgba(28, 35, 43, 0.32);
-          color: white;
-          font-family: 'Montserrat Alternates',sans-serif;
-          padding: 8px 15px;
-        }
+
       }
 
       textarea{
@@ -181,6 +192,11 @@ flex-direction: column;
     padding: 15px;
     background-color: white;
 
+    .dateLabel{
+      p{
+        color: #1C232B!important;
+      }
+    }
 
     .chapterNbLabel, .dateLabel{
       display: flex;
@@ -188,7 +204,7 @@ flex-direction: column;
       flex-direction: column;
       text-align: center;
       p{
-        font-size: 0.9vw;
+        font-size: 0.8vw;
         font-family: 'Open sans',sans-serif;
         font-weight: bold;
         color: rgba(28, 35, 43, 0.7);
@@ -258,6 +274,87 @@ flex-direction: column;
     color: rgba(255, 0, 0, 0.69);
     text-decoration: underline;
   }
+}
+
+.selectContainer{
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  width: 40%;
+  flex: 1;
+
+  h4{
+    padding-left: 3%;
+    text-align: left;
+    width: 100%;
+    font-size: 1.1vw;
+    color: #1C232B;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+.headerCommentary{
+  padding-left: 3%;
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  width: 100%;
+
+  .likesTotal{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    p{
+      font-family: 'Montserrat',sans-serif;
+    }
+    .totalLabel{
+      font-size: calc(11px + 0.2vw);
+      font-weight: bold;
+    }
+    .totalNb{
+      font-size: calc(12px + 0.5vw);
+      font-weight: bold;
+    }
+
+    .smLabel{
+      color: rgba(28, 35, 43, 0.76);
+      font-size: calc(11px + 0.02vw);
+    }
+  }
+}
+
+.commentaryContainer{
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background:transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(152, 68, 173, 0.17);
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: $grey;
+  }
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  overflow-x: hidden;
+  height: 100%;
+  width: 95%;
+  padding: 2%;
+  margin-top: 20px;
 }
 
 .potta{

@@ -1,0 +1,153 @@
+@import "../../../styles/utils/var";
+
+.container{
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  height: auto;
+  padding-right: 5%;
+  .containerImgAReview{
+    display: flex;
+    gap: 15px;
+    width: 30%;
+  }
+  .containerImg{
+    display: flex;
+    height: 80px;
+    width: 100px;
+    img{
+      clip-path: circle();
+      object-fit: cover;
+      object-position: top;
+      width:100%;
+      height: 100%;
+      box-shadow: $shadow;
+
+    }
+  }
+
+  .containerUser{
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 10px;
+    gap: 5px;
+    h6{
+      font-family: 'Montserrat',sans-serif;
+      font-size: 0.7vw;
+      font-weight: bold;
+    }
+    p{
+      font-family: 'Montserrat',sans-serif;
+      color: rgba(84, 89, 95, 0.88);
+      font-style: italic;
+      font-size: 0.7vw;
+    }
+  }
+
+  .contentContainer{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    gap: 15px;
+    .headerContent{
+      display: flex;
+      justify-content: space-between;
+      .date{
+        font-family: 'Montserrat',sans-serif;
+        font-size: 0.6vw;
+        color: rgba(28, 35, 43, 0.67);
+      }
+      .likes{
+        font-family: 'Montserrat Alternates',sans-serif;
+        font-size: 0.7vw;
+        color: rgba(28, 35, 43, 0.67);
+        span{
+          font-weight: bold;
+          color: rgba(152, 68, 173, 0.82);
+        }
+      }
+
+    }
+
+    .content{
+      font-family: 'Montserrat Alternates', sans-serif;
+      color: rgba(28, 35, 43, 0.84);
+      font-size: calc(11px + 0.003vw);
+      word-wrap: anywhere;
+    }
+
+    .seeMore{
+      cursor: pointer;
+      color: #9844AD;
+      font-size: 11px;
+      font-family: 'Montserrat Alternates',sans-serif;
+    }
+
+    textarea{
+      padding: 2%;
+      font-size: 11px;
+      color: rgba(28, 35, 43, 0.87);
+      font-family: "Montserrat", sans-serif;
+      height: 50px;
+      width: 100%;
+      outline: none;
+
+      resize: none;
+      border-radius: 5px;
+      overflow-y: scroll;
+    }
+
+    .btnContainer{
+      display: flex;
+      gap: 10px;
+
+      .likeBtn{
+        &:hover{
+          background-color: #9844AD;
+          transition: 0.1s;
+        }
+        box-shadow: $shadow;
+
+        transition: 0.1s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(28, 35, 43, 0.31);
+        padding: 5px 10px;
+        border-radius: 5px;
+        svg{
+          color: white;
+          width: 12px;
+        }
+      }
+
+      .answerBtn{
+        cursor: pointer;
+        transition: 0.1s;
+        font-size: 0.5vw;
+        background-color: rgba(28, 35, 43, 0.32);
+        color: white;
+        font-family: "Montserrat Alternates", sans-serif;
+        padding: 8px 15px;
+        box-shadow: $shadow;
+
+      }
+    }
+    }
+  }
+
+.cutCommentary{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.activeBtn{
+  transition: 0.1s;
+  cursor: pointer!important;
+  background-color: #1C232B!important;
+}

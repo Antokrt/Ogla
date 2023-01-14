@@ -11,6 +11,7 @@ import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 import {ArrowTrendingUpIcon, TagIcon} from "@heroicons/react/20/solid";
+import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
 
 
 export async function getServerSideProps({req,params}){
@@ -80,7 +81,7 @@ const OneBook = ({book, err}) => {
                         <>
                             <div className={styles.menuContainer}>
                                 <p onClick={() => setActive('chapter')} className={active === 'chapter' ? styles.active : ''}>Chapitres</p>
-                                <p onClick={() => setActive('commentary')} className={active === 'commentary' ? styles.active : ''}>Commentaires</p>
+                                <p onClick={() => setActive('commentary')} className={active === 'commentary' ? styles.active : ''}>Meilleurs commentaires</p>
                             </div>
 
                             <div className={styles.containerOneBook}>
@@ -96,9 +97,13 @@ const OneBook = ({book, err}) => {
                                         <div className={styles.description}>
                                             <div className={styles.headerTextarea}>
                                                 <h5>Résumé</h5>
-                                                <button
-                                                    className={newSummary !== book.summary && newSummary.length > 20 ? styles.activeBtn : ''}
-                                                >Modifier</button>
+                                                <div className={styles.btn}>
+                                                    <button className={styles.seeBtn}>Voir le livre</button>
+                                                    <button
+                                                        className={newSummary !== book.summary && newSummary.length > 20 ? styles.activeBtn : ''}
+                                                    >Modifier</button>
+                                                </div>
+
                                             </div>
                                             {
                                                 book.summary.length !== 0 ?
@@ -151,6 +156,37 @@ const OneBook = ({book, err}) => {
 
                                 </div>
                                 <div className={styles.selectContainer}>
+                                    <div className={styles.headerCommentary}>
+                                        <div className={styles.likesTotal}>
+                                            <p className={styles.totalLabel}>Total like(s)</p>
+                                            <p className={styles.totalNb}> 2128 </p>
+                                            <p className={styles.smLabel}>Total like depuis sa sortie (18/29/23)</p>
+                                        </div>
+                                        <div className={styles.likesTotal}>
+                                            <p className={styles.totalLabel}>Total commentaire(s)</p>
+                                            <p className={styles.totalNb}> 237 </p>
+                                            <p className={styles.smLabel}>Total de commentaires depuis sa sortie </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.commentaryContainer}>
+                                        <CommentaryDashboard
+                                            pseudo={'JoséBeauvais'}
+                                            img={'/assets/livre6.jpg'}
+                                            role={'Lecteur'}
+                                            date={'18/02/28'}
+                                            likes={2891}
+                                            content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                        />
+
+                                        <CommentaryDashboard
+                                            pseudo={'JoséBeauvais'}
+                                            img={'/assets/livre3.jpg'}
+                                            role={'Lecteur'}
+                                            date={'18/02/28'}
+                                            likes={2891}
+                                            content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </>

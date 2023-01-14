@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Component/Dashboard/CommentaryDashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Dashboard/CommentaryDashboard.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/SMSeachBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SMSeachBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBook.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Header.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/SMSearchbar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/SMSearchbar.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/var.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/var.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +138,10 @@
       <workItem from="1673427388514" duration="26759000" />
       <workItem from="1673518392231" duration="21027000" />
       <workItem from="1673603808588" duration="14551000" />
-      <workItem from="1673629552742" duration="3327000" />
+      <workItem from="1673629552742" duration="3396000" />
+      <workItem from="1673691764954" duration="7510000" />
+      <workItem from="1673704025778" duration="422000" />
+      <workItem from="1673705195467" duration="3842000" />
     </task>
     <servers />
   </component>
