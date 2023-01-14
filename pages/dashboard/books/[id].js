@@ -9,9 +9,11 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
-import {ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 import {ArrowTrendingUpIcon, TagIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
+import {PencilIcon} from "@heroicons/react/24/solid";
+import urlSlug from "url-slug";
+import Like from "../../../Component/layouts/Icons/Like";
 
 
 export async function getServerSideProps({req,params}){
@@ -156,37 +158,440 @@ const OneBook = ({book, err}) => {
 
                                 </div>
                                 <div className={styles.selectContainer}>
-                                    <div className={styles.headerCommentary}>
-                                        <div className={styles.likesTotal}>
-                                            <p className={styles.totalLabel}>Total like(s)</p>
-                                            <p className={styles.totalNb}> 2128 </p>
-                                            <p className={styles.smLabel}>Total like depuis sa sortie (18/29/23)</p>
-                                        </div>
-                                        <div className={styles.likesTotal}>
-                                            <p className={styles.totalLabel}>Total commentaire(s)</p>
-                                            <p className={styles.totalNb}> 237 </p>
-                                            <p className={styles.smLabel}>Total de commentaires depuis sa sortie </p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.commentaryContainer}>
-                                        <CommentaryDashboard
-                                            pseudo={'JoséBeauvais'}
-                                            img={'/assets/livre6.jpg'}
-                                            role={'Lecteur'}
-                                            date={'18/02/28'}
-                                            likes={2891}
-                                            content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
-                                        />
+                                    {
+                                        active === 'chapter' ?
+                                        <div className={styles.chapterContainer}>
+                                            <div className={styles.headerChapter}>
+                                                <h4>Chapitres ({book.chapter_list.length})</h4>
+                                            </div>
+                                            {
+                                                book.chapter_list.length === 10 ?
+                                                    <div className={styles.emptyContainer}>
+                                                        <h6>Oups !</h6>
+                                                        <p>C'est bien vide ici, écrivez votre prochain chapitre dès maintenant</p>
+                                                        <button onClick={() => router.push('/dashboard/new')}>Ecrire... <PencilIcon/></button>
+                                                    </div> :
 
-                                        <CommentaryDashboard
-                                            pseudo={'JoséBeauvais'}
-                                            img={'/assets/livre3.jpg'}
-                                            role={'Lecteur'}
-                                            date={'18/02/28'}
-                                            likes={2891}
-                                            content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
-                                        />
-                                    </div>
+
+                                                    <div className={styles.contentChapterList}>
+                                                                    <div className={styles.chapter}>
+                                                                        <div className={styles.headerChapter}>
+                                                                            <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                            <h7>12/02/23</h7>
+                                                                        </div>
+
+                                                                        <div className={styles.likeChapter}>
+                                                                            <Like/>
+                                                                            <p>38</p>
+
+                                                                        </div>
+                                                                    </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.chapter}>
+                                                            <div className={styles.headerChapter}>
+                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
+                                                                <h7>12/02/23</h7>
+                                                            </div>
+
+                                                            <div className={styles.likeChapter}>
+                                                                <Like/>
+                                                                <p>38</p>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            }
+                                        </div> :
+                                            <>
+                                                <div className={styles.headerCommentary}>
+                                                    <div className={styles.likesTotal}>
+                                                        <p className={styles.totalLabel}>Total like(s)</p>
+                                                        <p className={styles.totalNb}> 2128 </p>
+                                                        <p className={styles.smLabel}>Total like depuis sa sortie (18/29/23)</p>
+                                                    </div>
+                                                    <div className={styles.border}>
+
+                                                    </div>
+                                                    <div className={styles.likesTotal}>
+                                                        <p className={styles.totalLabel}>Total commentaire(s)</p>
+                                                        <p className={styles.totalNb}> 237 </p>
+                                                        <p className={styles.smLabel}>Total de commentaires depuis sa sortie </p>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.some}>
+                                                    <h7>Quelques commentaires :</h7>
+                                                </div>
+                                                <div className={styles.commentaryContainer}>
+                                                    <CommentaryDashboard
+                                                        pseudo={'JoséBeauvais'}
+                                                        img={'/assets/livre6.jpg'}
+                                                        role={'Lecteur'}
+                                                        date={'18/02/28'}
+                                                        likes={2891}
+                                                        content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                                    />
+
+                                                    <CommentaryDashboard
+                                                        pseudo={'JoséBeauvais'}
+                                                        img={'/assets/livre3.jpg'}
+                                                        role={'Lecteur'}
+                                                        date={'18/02/28'}
+                                                        likes={2891}
+                                                        content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                                    />
+                                                </div>
+                                            </>
+                                    }
+
+
                                 </div>
                             </div>
                         </>

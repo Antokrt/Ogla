@@ -37,7 +37,7 @@ export default function Header() {
                                     <li onClick={() => {
                                         localStorage.setItem('dashboard', 'books')
                                     }
-                                    }><Link href="/dashboard?books"><a>Mes livres</a></Link></li>
+                                    }><Link href="/dashboard/books"><a>Mes livres</a></Link></li>
                                 </>
 
                                 :
