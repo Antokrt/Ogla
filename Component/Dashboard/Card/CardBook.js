@@ -15,7 +15,7 @@ const router = useRouter();
         <div className={styles.thumbnail}>
             <FireIcon/>
         </div>
-        <img src={image}/>
+        <img src={'http://localhost:3008/public/book/' + image}/>
         <div className={styles.contentContainer}>
             <h6>{title}</h6>
             <div>

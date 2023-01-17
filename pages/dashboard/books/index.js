@@ -77,9 +77,10 @@ useEffect(() => {
                                     <div className={styles.list + ' ' + styles.scrollbar}>
                                        {
                                             books?.map((item, index) => {
+                                                console.log(item)
                                                 return (
                                                     <CardBook id={item._id}
-                                                              image={'/assets/livre6.jpg'}
+                                                              image={item.img}
                                                               title={item.title}
                                                               nbChapter={12}
                                                     />

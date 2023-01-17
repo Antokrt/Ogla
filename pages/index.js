@@ -11,7 +11,7 @@ import {getToken} from "next-auth/jwt";
 import {useEffect} from "react";
 import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 
-export async function getServerSideProps({context, req, res}){
+/*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
     const bookData = await fetch('http://localhost:3008/book/', config);
     const bookErrData = bookData.ok ? false : bookData.status;
@@ -26,13 +26,10 @@ export async function getServerSideProps({context, req, res}){
             books:json
         }
     }
-}
+}*/
 
 export default function Home({err,books}) {
 
-    useEffect(()=> {
-        console.log(books)
-    },[])
 
     return (
         <div className={styles.container}>

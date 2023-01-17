@@ -1,6 +1,6 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import { useEffect, useState} from "react";
-import {getOneBook} from "../../../service/Dashboard/BooksAuthorService";
+import {deleteBook, getOneBook} from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
@@ -94,7 +94,7 @@ const OneBook = ({book, err}) => {
                                     </div>
                                     <div className={styles.imgADescription}>
                                         <div className={styles.containerImg}>
-                                            <img src={'/assets/livre1.jpg'}/>
+                                            <img src={'http://localhost:3008/public/book/'+book.img}/>
                                         </div>
                                         <div className={styles.description}>
                                             <div className={styles.headerTextarea}>
@@ -151,7 +151,14 @@ const OneBook = ({book, err}) => {
                                                 <ArrowTrendingUpIcon/>
                                                 <p className={styles.last}>178 <br/>commentaires </p>
                                             </div>
-                                            <p className={styles.delete}>Supprimer le livre</p>
+                                            <p
+                                                onClick={() => {
+                                                    deleteBook(book._id)
+                                                        .then(() => router.push('/dashboard/books'))
+                                                        .catch((err) => console.log('err'))
+                                                }
+                                                }
+                                                className={styles.delete}>Supprimer le livre</p>
 
                                         </div>
                                     </div>
