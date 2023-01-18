@@ -32,7 +32,7 @@ export default function Header() {
                                     <li onClick={() => {
                                         localStorage.setItem('dashboard', 'new')
                                     }
-                                    }><Link href="/dashboard/new"><a>Nouveau livre
+                                    }><Link href="/dashboard/nouveau-livre"><a>Nouveau livre
                                     </a></Link></li>
                                     <li onClick={() => {
                                         localStorage.setItem('dashboard', 'books')

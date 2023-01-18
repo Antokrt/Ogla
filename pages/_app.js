@@ -1,4 +1,6 @@
 import '../styles/globals.scss';
+import '../styles/editor.css';
+
 import LangueProvider from "../utils/context";
 import {SessionProvider} from "next-auth/react";
 

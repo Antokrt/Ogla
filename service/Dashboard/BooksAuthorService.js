@@ -60,3 +60,32 @@ export const deleteBook = (id) => {
             .catch((err) => reject(err));
     })
 }
+
+export const updateSummary = (bookId, newSummary) => {
+    const data = { bookId, summary:newSummary }
+    return new Promise((resolve, reject) => {
+        instance.put('author/update-summary', data)
+            .then((res) => {
+                resolve(res);
+            })
+            .catch((err) => reject(err));
+    })
+}
+
+export const updatePicture = (file,bookId) => {
+    if(file){
+        return new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append('image',file);
+            formData.append('bookId', bookId);
+
+            instance.post('book/book-picture',formData)
+                .then((res) => resolve(res))
+                .catch((err) => reject(err));
+        })
+    }
+    else{
+        return null;
+    }
+
+}

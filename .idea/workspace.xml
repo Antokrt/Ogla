@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Dashboard/Form/Schema/NewBookSchema.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/editor.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/new/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/new/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/new/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/CommentaryDashboard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/CommentaryDashboard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,26 +36,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "javascript.nodejs.core.library.configured.version": "16.17.1",
+    "javascript.nodejs.core.library.typings.version": "16.11.66",
+    "last_opened_file_path": "C:/Dev/Ogla/Front/pages/dashboard/nouveau/livre",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau\livre" />
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau" />
       <recent name="C:\Dev\Ogla\Front\styles\Pages\Dashboard" />
       <recent name="C:\Dev\Ogla\Front\styles\Component\Dashboard\Pages" />
       <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
@@ -152,7 +155,8 @@
       <workItem from="1673705195467" duration="4011000" />
       <workItem from="1673735214951" duration="4548000" />
       <workItem from="1673864679177" duration="9549000" />
-      <workItem from="1673950068239" duration="21479000" />
+      <workItem from="1673950068239" duration="21692000" />
+      <workItem from="1674037867709" duration="20964000" />
     </task>
     <servers />
   </component>

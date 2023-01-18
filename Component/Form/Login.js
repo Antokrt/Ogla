@@ -72,7 +72,7 @@ const Login = ({register}) => {
 
                     <div className={styles.selectItem + " " + "fadeIn"}>
                         <label htmlFor={"pseudo"}>Identifiant</label>
-                        <input value={'josé2'} type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>
+                        <input type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>
                         <label htmlFor={"password"}>Mot de passe</label>
                         <input value={'azerty'} type={"password"} name={"password"} placeholder={"Mot de passe"}/>
                         <div className={styles.conditions}>

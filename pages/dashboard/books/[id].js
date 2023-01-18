@@ -1,6 +1,6 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
-import { useEffect, useState} from "react";
-import {deleteBook, getOneBook} from "../../../service/Dashboard/BooksAuthorService";
+import {useEffect, useRef, useState} from "react";
+import {deleteBook, getOneBook, updatePicture, updateSummary} from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
@@ -9,11 +9,13 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
-import {ArrowTrendingUpIcon, TagIcon} from "@heroicons/react/20/solid";
+import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
 import {PencilIcon} from "@heroicons/react/24/solid";
 import urlSlug from "url-slug";
 import Like from "../../../Component/layouts/Icons/Like";
+import {CheckIcon} from "@heroicons/react/24/outline";
+import chapter from "../../../Component/layouts/Icons/Chapter";
 
 
 export async function getServerSideProps({req,params}){
@@ -27,18 +29,53 @@ export async function getServerSideProps({req,params}){
             err:{
                 book:bookErrData
             },
-            book: booksJson,
+            bookData: booksJson,
         }
     }
 }
 
-const OneBook = ({book, err}) => {
+const OneBook = ({bookData, err}) => {
     const [loading,setLoading] = useState(true);
     const  {data:session} = useSession();
     const [active,setActive] = useState('chapter');
-
+    const [book,setBook] = useState(bookData);
+    const [errSummary, setErrSummary] = useState(false);
     const [newSummary,setNewSummary] = useState(book.summary);
+    const [seeChangeImgBtn , setSeeChangeImgBtn] = useState(false);
+    const imgRef = useRef();
+    const [file, setFile] = useState(true);
+    const [localImg, setLocalImg] = useState(null);
+    const [errImg, setErrImg] = useState(false);
+
+    const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const router = useRouter();
+
+    const handleFileSelect = (event) => {
+        if(event?.target.files && event.target.files[0]){
+            setFile(event.target.files[0]);
+            setLocalImg(URL.createObjectURL(event.target.files[0]));
+        }
+    }
+
+    const updatePic = () => {
+        if(file){
+            updatePicture(file,book._id)
+                .then((res) => {
+                    setBook((prevState) => ({
+                        ...prevState,
+                        img: res.data
+                    }))
+                })
+                .then(() => {
+                    setLocalImg(null);
+                    setFile(null);
+                    setErrImg(false);
+                })
+                .catch((err) => {
+                    setErrImg(true);
+                })
+        }
+    }
 
     useEffect(() => {
         if(router.isReady){
@@ -46,10 +83,27 @@ const OneBook = ({book, err}) => {
         }
     },[router.isReady])
 
-    useEffect(() => {
-        console.log(newSummary === book.summary)
-    },[newSummary])
+    const imgClick = () => {
+        imgRef.current.click();
+    }
 
+
+    const sumUpdate = () => {
+        if(newSummary !== book.summary && newSummary.length < 2000){
+            updateSummary(book._id, newSummary)
+                .then((res) => {
+                    setBook((prevState) => ({
+                        ...prevState,
+                        summary: res.summary
+                    }))
+                    setNewSummary(res.summary);
+                })
+                .catch((err) => setErrSummary(true));
+        }
+        else {
+            return null;
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -94,7 +148,53 @@ const OneBook = ({book, err}) => {
                                     </div>
                                     <div className={styles.imgADescription}>
                                         <div className={styles.containerImg}>
-                                            <img src={'http://localhost:3008/public/book/'+book.img}/>
+                                            {
+                                                localImg && file ?
+                                                <>
+                                                    <img src={localImg} className={styles.darkImg}/>
+
+                                                        <div className={styles.imgCheck}>
+                                                            <CheckCircleIcon
+                                                                onClick={() => updatePic()}
+                                                                className={styles.check}/>
+                                                            <XCircleIcon
+                                                                onClick={() => {
+                                                                setLocalImg(null);
+                                                                setFile(null);
+                                                                }
+                                                                }
+                                                                className={styles.off}/>
+                                                        </div>
+                                                </>
+                                                    :
+                                                    <>
+                                                        <img
+                                                            onClick={() => {
+                                                                imgClick();
+                                                            }}
+                                                            src={'http://localhost:3008/public/book/'+ book.img}/>
+                                                        {
+                                                            errImg &&
+                                                            <p className={styles.errMsgSummary + " " + styles.errImg}>Impossible de modifier l'image</p>
+                                                        }
+                                                        <input
+                                                            type={'file'}
+                                                            ref={imgRef}
+                                                            accept={"image/png , image/jpeg , image/jpg" }
+                                                            id={'file'}
+                                                            onChange={(e) => {
+                                                                const file = e.target.files[0];
+                                                                if(!file?.type.match(imageMimeType)){
+                                                                    return null;
+                                                                }
+                                                                handleFileSelect(e);
+                                                            }}
+                                                        />
+                                                    </>
+
+                                            }
+
+
                                         </div>
                                         <div className={styles.description}>
                                             <div className={styles.headerTextarea}>
@@ -102,21 +202,29 @@ const OneBook = ({book, err}) => {
                                                 <div className={styles.btn}>
                                                     <button className={styles.seeBtn}>Voir le livre</button>
                                                     <button
-                                                        className={newSummary !== book.summary && newSummary.length > 20 ? styles.activeBtn : ''}
+                                                        onClick={() => sumUpdate()}
+                                                        className={newSummary !== book.summary ? styles.activeBtn : ''}
                                                     >Modifier</button>
                                                 </div>
 
                                             </div>
                                             {
-                                                book.summary.length !== 0 ?
+                                                errSummary &&
+                                                <p className={styles.errMsgSummary}>Impossible de modifier le résumé</p>
+                                            }
+
+                                            {
+                                                book?.summary?.length !== 0 ?
                                                 <textarea onChange={(e) => setNewSummary(e.target.value)}>
                                                     {newSummary}
                                             </textarea>
+
                                                     :
                                                     <textarea
+                                                        placeholder={"Ajoutez un résumé pour donnez envie à vos lecteurs."}
                                                         onChange={(e) => setNewSummary(e.target.value)}
                                                     >
-                                                        Ajoutez un résumé pour donnez envie à vos lecteurs.
+
                                                     </textarea>
                                             }
 
@@ -142,6 +250,7 @@ const OneBook = ({book, err}) => {
                                             <div>
                                                 <TagIcon className={styles.tag}/>
                                                 <p className={styles.category}>{book.category}</p>
+                                                <p>{book._id}</p>
                                             </div>
                                             <div>
                                                 <BookOpenIcon/>
@@ -176,11 +285,14 @@ const OneBook = ({book, err}) => {
                                                     <div className={styles.emptyContainer}>
                                                         <h6>Oups !</h6>
                                                         <p>C'est bien vide ici, écrivez votre prochain chapitre dès maintenant</p>
-                                                        <button onClick={() => router.push('/dashboard/new')}>Ecrire... <PencilIcon/></button>
+                                                        <button onClick={() => router.push('/dashboard/nouveau-livre')}>Ecrire... <PencilIcon/></button>
                                                     </div> :
 
 
                                                     <div className={styles.contentChapterList}>
+                                                        <button className={styles.newChapter}
+                                                        onClick={() => router.push('/dashboard/nouveau-chapitre/'+ book._id)}
+                                                        >Nouveau chapitre </button>
                                                                     <div className={styles.chapter}>
                                                                         <div className={styles.headerChapter}>
                                                                             <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
