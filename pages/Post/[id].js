@@ -193,6 +193,7 @@ const Post = (props) => {
 
                     <div className={styles.contentChapterList}>
                         {
+                            chapterList &&
                             chapterList.map((item, index) => {
                                 return (
                                     <div

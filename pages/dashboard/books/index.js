@@ -12,8 +12,7 @@ export async function getServerSideProps({context, req}){
     const config = await getConfigOfProtectedRoute(req);
     const books = await fetch('http://localhost:3008/author/my-books',config);
     const booksErrData = books.ok ? false : books.status;
-    const booksJson = await books.json()
-
+    const booksJson = await books.json();
     return {
         props:{
             err:{
@@ -27,14 +26,10 @@ export async function getServerSideProps({context, req}){
 const Books = ({data}) => {
     const {data: session} = useSession();
     const [select,setSelect] = useState('');
-    const [books,setBooks] = useState()
+    const [books,setBooks] = useState([data])
 const router = useRouter();
 
-useEffect(() => {
-    if(router.isReady){
-        setBooks(data)
-    }
-})
+
 
     const hasNoBooks = () => {
         return (
@@ -72,12 +67,14 @@ useEffect(() => {
                 <div className={styles.containerData}>
 <HeaderDashboard/>
                                     <div className={styles.headerList}>
-                                        <h4>Mes livres <span>(1)</span> </h4>
+                                        <h4>Mes livres <span>({books[0].length})</span> </h4>
                                     </div>
                                     <div className={styles.list + ' ' + styles.scrollbar}>
+
                                        {
-                                            books?.map((item, index) => {
-                                                console.log(item)
+                                           books &&
+                                            books[0].map((item, index) => {
+                                                console.log('item')
                                                 return (
                                                     <CardBook id={item._id}
                                                               image={item.img}
@@ -89,7 +86,7 @@ useEffect(() => {
                                         }
                                     </div>
                         {
-                            books?.length === 0 &&
+                            books[0].length === 0 &&
                             hasNoBooks()
                         }
             </div>

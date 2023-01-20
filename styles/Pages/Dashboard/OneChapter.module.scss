@@ -1,4 +1,5 @@
 @import "styles/utils/var";
+
 .container{
   display: flex;
   width: 100%;
@@ -16,43 +17,17 @@
   width: 15%;
 }
 
-.errContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  background-color: white;
-}
-
 .containerData{
   display: flex;
   flex-direction: column;
   flex: 1;
   background-color: #e1e9ef;
-
 }
 
-
-
-.scrollbar{
-  &::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    background:transparent;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: rgba(152, 68, 173, 0.24);
-  }
-
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(152, 68, 173, 0.24);
-  }
+.errContainer{
+  display: flex;
+  flex: 1;
+  background-color: white;
 }
 
 .header{
@@ -103,11 +78,12 @@
   }
 
   .draft{
-    background-color: #1C232B;
+    background-color: rgba(28, 35, 43, 0.32);
   }
 
   button{
-    background-color: #9844AD;
+    transition: 0.1s;
+    background-color: rgba(28, 35, 43, 0.32);
     padding: 10px 35px;
     font-size: 11px;
     color: white;
@@ -122,7 +98,7 @@
   justify-content: space-between;
   align-items: center;
   flex: 1;
-padding-left: 2%;
+  padding-left: 2%;
   padding-bottom: 1%;
   background-color: white;
 
@@ -209,7 +185,7 @@ padding-left: 2%;
 
     .containerTextEditor{
       margin-top: 20px;
-display: flex;
+      display: flex;
       align-items: center;
       justify-content: start;
       gap: 20px;
@@ -309,13 +285,14 @@ display: flex;
   }
 
 
-
-}
-.ProseMirror p {
-  color: red!important;
 }
 
+.activeSaveBtn{
+  transition: 0.1s;
+  background-color: #1C232B!important;
+}
 
-.activeBtn{
-
+.activePublishBtn{
+  transition: 0.1s;
+  background-color: #9844AD!important;
 }

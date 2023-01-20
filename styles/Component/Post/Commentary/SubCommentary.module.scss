@@ -52,11 +52,11 @@
       }
 
       .commentary{
-        padding-right: 20px;
-        color: $darkBrown;
-        font-family: "Montserrat Alternates",sans-serif;
-        font-size: 12px;
-        word-break: break-word;
+padding-right: 20px;
+        font-family: "Montserrat Alternates", sans-serif;
+        color: rgba(28, 35, 43, 0.84);
+        font-size: calc(11px + 0.01vw);
+        word-wrap: anywhere;
 
       }
 

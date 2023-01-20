@@ -16,13 +16,20 @@ import urlSlug from "url-slug";
 import Like from "../../../Component/layouts/Icons/Like";
 import {CheckIcon} from "@heroicons/react/24/outline";
 import chapter from "../../../Component/layouts/Icons/Chapter";
+import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
 
 
 export async function getServerSideProps({req,params}){
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
     const book = await fetch('http://localhost:3008/author/book/'+ id,config);
+    const chapterList = await fetch('http://localhost:3008/chapter/dashboard/list/'+ id,config);
+    const chapterErrData = !chapterList.ok;
     const bookErrData = !book.ok;
+    let chapterJson = await chapterList.json();
+    if(chapterJson.statusCode === 404){
+        chapterJson = null;
+    }
     const booksJson = await book.json();
     return {
         props:{
@@ -30,15 +37,18 @@ export async function getServerSideProps({req,params}){
                 book:bookErrData
             },
             bookData: booksJson,
+            chapterListData:chapterJson
+
         }
     }
 }
 
-const OneBook = ({bookData, err}) => {
+const OneBook = ({bookData, chapterListData, err}) => {
     const [loading,setLoading] = useState(true);
     const  {data:session} = useSession();
     const [active,setActive] = useState('chapter');
     const [book,setBook] = useState(bookData);
+    const [chapterList, setChapterList] = useState([chapterListData]);
     const [errSummary, setErrSummary] = useState(false);
     const [newSummary,setNewSummary] = useState(book.summary);
     const [seeChangeImgBtn , setSeeChangeImgBtn] = useState(false);
@@ -293,378 +303,27 @@ const OneBook = ({bookData, err}) => {
                                                         <button className={styles.newChapter}
                                                         onClick={() => router.push('/dashboard/nouveau-chapitre/'+ book._id)}
                                                         >Nouveau chapitre </button>
-                                                                    <div className={styles.chapter}>
-                                                                        <div className={styles.headerChapter}>
-                                                                            <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                            <h7>12/02/23</h7>
-                                                                        </div>
 
-                                                                        <div className={styles.likeChapter}>
-                                                                            <Like/>
-                                                                            <p>38</p>
+                                                        {
+                                                            chapterList[0] ?
+                                                            chapterList[0]?.map((item,index) => {
+                                                                return (
+                                                                    <>
+                                                                        <CardChapter
+                                                                            id={item._id}
+                                                                            date={item.date}
+                                                                            title={item.title}
+                                                                            index={index + 1}
+                                                                            like={item.like}
+                                                                            publish={item.publish}
+                                                                        />
+                                                                    </>
 
-                                                                        </div>
-                                                                    </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
+                                                                )
+                                                            }) :
 
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div className={styles.chapter}>
-                                                            <div className={styles.headerChapter}>
-                                                                <h6><span>Chapitre 1</span><br/> La foret hantée et démoniaque</h6>
-                                                                <h7>12/02/23</h7>
-                                                            </div>
-
-                                                            <div className={styles.likeChapter}>
-                                                                <Like/>
-                                                                <p>38</p>
-
-                                                            </div>
-                                                        </div>
+                                                                <p>C'est vide ici</p>
+                                                        }
 
                                                     </div>
                                             }
