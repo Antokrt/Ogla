@@ -11,7 +11,7 @@ import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
-import {newChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import {newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
 import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronRightIcon, HomeIcon} from "@heroicons/react/24/outline";
 import DateNow from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
@@ -114,9 +114,30 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
             saveChapter(data)
                 .then((res) => {
-                    console.log(res.data)
                     chapterData.content = res.data.content;
                     chapterData.title= res.data.title;
+                    setTitle(chapterData.title);
+                    setContent(JSON.parse(chapterData.content));
+                    setHasChange(false);
+                })
+                .catch((err) => console.log(err))
+        }
+    }
+
+    const publish = () => {
+        if(hasChange || !chapterData.publish){
+            const data = {
+                id:chapterData._id,
+                title,
+                content: JSON.stringify(content),
+                text,
+            }
+
+            publishChapter(data)
+                .then((res) => {
+                    chapterData.content = res.data.content;
+                    chapterData.title= res.data.title;
+                    chapterData.publish = res.data.publish;
                     setTitle(chapterData.title);
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
@@ -189,8 +210,8 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
 
                                         <button
-                                            className={hasChange ? styles.activePublishBtn : ''}
-                                            onClick={() => sendData(true)}
+                                            className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                            onClick={() => publish(true)}
                                         >Publier</button>
 
 

@@ -25,3 +25,11 @@ export const saveChapter = (data) => {
             .catch((err) => reject(err));
     })
 }
+
+export const publishChapter = (data) => {
+    return new Promise((resolve, reject) => {
+        instance.put('chapter/publish/'+ data.id, data)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
+}

@@ -102,15 +102,9 @@ const NouveauChapitre = ({bookData,  err}) => {
             }
 
             newChapter(data)
-                .then((res) => console.log(res))
+                .then((res) => router.push('/dashboard/books/'+ book._id))
                 .catch((err) => console.log(err));
         }
-
-        else{
-            console.log('small')
-        }
-
-
 
     }
 
