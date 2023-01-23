@@ -6,28 +6,44 @@ import styles from "../../styles/Pages/BookPage.module.scss";
 import Header from "../../Component/Header";
 import CategoryHeader from "../../Component/Category/CategoryHeader";
 import {
-    ArrowDownIcon,
     ArrowsUpDownIcon,
-    BookOpenIcon, ChatBubbleBottomCenterTextIcon,
-    ChevronDoubleUpIcon,
+    ChatBubbleBottomCenterTextIcon,
     DocumentTextIcon
 } from "@heroicons/react/24/outline";
 import {HeartIcon} from "@heroicons/react/20/solid";
 import Book from "../../Component/layouts/Icons/Book";
 import Like from "../../Component/layouts/Icons/Like";
 import ToogleSidebar from "../../utils/ToogleSidebar";
-import Sort from "../../Component/layouts/Icons/Sort";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
 import SidebarChapter from "../../Component/Post/SidebarChapter";
-import FooterOnChapter from "../../Component/Post/FooterOnChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
 
 
-const Post = (props) => {
+export async function getServerSideProps({req,params}){
+    const id = params.id;
+    const book = await fetch('http://localhost:3008/book-render/one/'+ id);
+    const bookErrData = !book.ok;
+    let booksJson = await book.json();
+
+    if(booksJson.statusCode === 404){
+        booksJson = null;
+    }
+    return {
+        props:{
+            err:{
+                book:bookErrData
+            },
+            bookData: booksJson.book,
+            chapterData: booksJson.chapter,
+        }
+    }
+}
+
+
+const Post = ({bookData,chapterData,err}) => {
 
     const [post, setPost] = useState({});
     const router = useRouter();
-    const [slug, setSlug] = useState(router.query.id);
     const [chapterList, setChapterList] = useState([
         {
             title: "Chapitre 1 - Le commencement",
@@ -101,7 +117,6 @@ const Post = (props) => {
             date: "18/08/22"
         }
     ]);
-    const [sortDown, setSortDown] = useState(false);
     useEffect(() => {
         if (router.isReady) {
             getPost(router.query.id)
@@ -137,7 +152,7 @@ const Post = (props) => {
                 sidebarSelect === "List" &&
                 <div
                     className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                    <SidebarChapter select={sidebarSelect}/>
+                    <SidebarChapter title={bookData?.title} chapters={chapterData} select={sidebarSelect}/>
                 </div>
             }
 
@@ -146,17 +161,17 @@ const Post = (props) => {
 
                 <div className={styles.imgContainer}>
                     <div className={styles.img}>
-                        <img src={post?.img}/>
+                        <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
                     </div>
 
                     <div className={styles.btnContainer}>
                         <div className={styles.btnItem}>
                             <HeartIcon className={styles.cursor}/>
-                            <p>({post?.like})</p>
+                            <p>({bookData?.likes})</p>
                         </div>
                         <div className={styles.btnItem}>
                             <DocumentTextIcon/>
-                            <p>({chapterList.length})</p>
+                            <p>({chapterData?.length})</p>
 
                         </div>
 
@@ -178,14 +193,14 @@ const Post = (props) => {
 
                 <div className={styles.chapterContainer}>
                     <div className={styles.infoContainer}>
-                        <h4> {post?.category} | Par : <span onClick={() => {
-                            router.push("/auteur/" + post.author)
-                        }}>{post?.author}</span></h4>
-                        <h3>{post?.title}</h3>
-                        <p className={styles.snippet}> {post?.snippet}</p>
+                        <h4> {bookData?.category} | Par : <span onClick={() => {
+                            router.push("/auteur/" + bookData?.author_pseudo)
+                        }}>{bookData?.author_pseudo}</span></h4>
+                        <h3>{bookData?.title}</h3>
+                        <p className={styles.snippet}> {bookData?.summary}</p>
                         <div className={styles.btnFilter}>
                             <button>Trier <ArrowsUpDownIcon/></button>
-                            <div><p>({chapterList.length})</p>
+                            <div><p>({chapterData.length})</p>
                                 <Book/>
                             </div>
                         </div>
@@ -193,22 +208,29 @@ const Post = (props) => {
 
                     <div className={styles.contentChapterList}>
                         {
-                            chapterList &&
-                            chapterList.map((item, index) => {
+                            chapterData &&
+                            chapterData.map((item, index) => {
                                 return (
                                     <div
                                         onClick={() => {
-                                            router.push("/Chapter/" + urlSlug(item.title))
+                                            router.push({
+                                                pathname: "/chapitre/" + item._id,
+                                                query:{
+                                                    name:bookData.title,
+                                                    slug:item.title,
+                                                    i:index+ 1
+                                                },
+                                            })
                                         }}
                                         className={styles.chapter}>
                                         <div className={styles.headerChapter}>
                                             <h6>{item.title}</h6>
-                                            <h7>{item.date}</h7>
+                                            <h7>{item.date_creation}</h7>
                                         </div>
 
                                         <div className={styles.likeChapter}>
                                             <Like/>
-                                            <p>({item.like})</p>
+                                            <p>({item.likes})</p>
 
                                         </div>
                                     </div>
@@ -223,11 +245,11 @@ const Post = (props) => {
 
             </div>
             <FooterOnBook
-                title={post?.title}
-                like={post?.like}
-                nbCommentary={32}
-                author={post?.author}
-                nbChapter={chapterList?.length}
+                title={bookData?.title}
+                like={bookData?.likes}
+                nbCommentary={28}
+                author={bookData?.author_pseudo}
+                nbChapter={chapterData?.length}
                 openList={() => {
                     ToogleSidebar("List",sidebarSelect,setSidebarSelect);
                 }}

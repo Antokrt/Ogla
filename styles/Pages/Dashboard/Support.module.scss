@@ -1,0 +1,51 @@
+@import "styles/utils/var";
+.container{
+  display: flex;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+.containerMain{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.verticalMenuContainer{
+  height: 100%;
+  width: 15%;
+}
+
+.containerData{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.headerList{
+  padding: 2% 5%;
+  h4{
+    font-size: 1vw;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+    width: 50%;
+    padding-bottom: 1%;
+    color: #1C232B;
+    border-bottom: 2px rgba(28, 35, 43, 0.35) solid;
+  }
+}
+
+.supportContainer{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h3{
+    font-family: 'Montserrat',sans-serif;
+    font-size: 1vw;
+  }
+
+
+}

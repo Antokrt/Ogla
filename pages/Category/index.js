@@ -6,16 +6,36 @@ import styles from "../../styles/Pages/Category.module.scss";
 import React, {useEffect, useState} from "react";
 import FeaturedCategoryPostList from "../../Component/Post/FeaturedCategoryPostList";
 import CategoryHeader from "../../Component/Category/CategoryHeader";
-import {getData, test} from "../../services/Post";
-import {Capitalize} from "../../utils/String";
-
-import MainSearchBar from "../../Component/MainSearchBar";
+import {getData} from "../../services/Post";
 import NewFeatured from "../../Component/Category/New";
 import LogCard from "../../Component/layouts/LogCard";
 import DateNow from "../../utils/Date";
 import Footer from "../../Component/Footer";
 
-export default function CategoryPage() {
+export async function getServerSideProps({req}){
+    const params = {
+        max:5,
+        category:'all'
+    }
+    const popularBooks = await fetch('http://localhost:3008/book-render/popular/'+ params.max +'/'+ params.category);
+    const popularErrData = !popularBooks.ok;
+
+    let popularJson = await popularBooks.json();
+
+    if(popularJson.statusCode === 404){
+        popularJson = null;
+    }
+    return {
+        props:{
+            err:{
+                popularBooks:popularErrData
+            },
+            popularBooks: popularJson,
+        }
+    }
+}
+
+export default function CategoryPage({popularBooks}) {
 
     const router = useRouter();
     const [filter, setFilter] = useState({
@@ -55,20 +75,22 @@ export default function CategoryPage() {
 
                             <div className={styles.rankingGridContainer}>
                                 {
-                                    post
+                                    popularBooks
                                         .sort((a, b) => b.like - a.like)
                                         .map((item, index) => {
                                             return (
                                                 <FeaturedCategoryPostList
+                                                    id={item._id}
                                                     key={item}
                                                     rank={index + 1}
                                                     title={item.title}
-                                                    snippet={item.snippet}
+                                                    summary={item.summary}
                                                     like={item.like}
                                                     category={item.category}
-                                                    author={item.author}
+                                                    author={item.author_pseudo}
                                                     chapterNb={item.nbChapter}
                                                     img={item.img}
+                                                    slug={item.slug}
 
                                                 />
                                             )

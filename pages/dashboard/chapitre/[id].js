@@ -146,6 +146,8 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         }
     }
 
+
+
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>

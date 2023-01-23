@@ -1,13 +1,10 @@
 import styles from "../../styles/Component/Post/SidebarChapter.module.scss";
-import scroll from "../../styles/utils/scrollbar.module.scss";
 import {useEffect, useState} from "react";
-import {CheckBadgeIcon} from "@heroicons/react/20/solid";
 import { QueueListIcon} from "@heroicons/react/24/outline";
 import { BookOpenIcon, HeartIcon} from "@heroicons/react/24/solid";
-import Commentary from "./Commentary/Commentary";
-import {useRouter} from "next/router";
 
-const SidebarChapter = (props) => {
+
+const SidebarChapter = ({chapters, title}) => {
 
     const [menuCollapse, setMenuCollapse] = useState(false);
     const [typeFilter, setTypeFilter] = useState([
@@ -23,25 +20,27 @@ const SidebarChapter = (props) => {
         if (sizeCommentary > 200) {
             setTooLong(true);
         }
+        console.log(chapters[0])
     }, [])
 
     return (
         <div className={styles.container}>
 
             <div className={styles.headerComment}>
-                <p><QueueListIcon/>Chapitre 1 - Le commencement</p>
+                <p><QueueListIcon/>{title}</p>
                 <p onClick={() => router.push('/auteur/'+ 'Judy McLaren')}><span>Judy McLaren</span></p>
             </div>
 
             <div className={styles.titleSection}>
-                <h5>The Druid of Seoul Station </h5>
+                <h5>{title}</h5>
                 <div>
                     {typeFilter.map((item) => <p onClick={() => setSelectFilter(item)}
                                                  className={selectFilter === item ? styles.filterActive : ""}>{item}</p>)}
                 </div>
             </div>
+{/*
             <div className={styles.banner}>
-                <img src={"/assets/livre3.jpg"} alt={"Image de l'oeuvre"}/>
+                <img src={"/assets/livre2.jpg"} alt={"Image de l'oeuvre"}/>
                 <div className={styles.containerDescription}>
                     <p className={tooLong ? styles.cut : " "}>{descriptionPost}</p>
                     {
@@ -65,78 +64,32 @@ const SidebarChapter = (props) => {
 
 
             </div>
+*/}
             <div className={styles.chapterList}>
                 <div className={!tooLong ? styles.dNone :styles.statsChapter}>
                     <p className={styles.nbChapter}>
-                        120 <BookOpenIcon/>
+                        {chapters.length} <BookOpenIcon/>
                     </p>
                     <p className={styles.nbLikes}>
                         238<HeartIcon/>
                     </p>
                 </div>
-<div className={styles.item}>
-    <div className={styles.titleChapter}>
-        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-        <p className={styles.date}>18 septembre 2022</p>
-    </div>
+                {
+                    chapters.map((item,index) => {
+                        return (
+                            <div className={styles.item}>
+                                <div className={styles.titleChapter}>
+                                    <p className={styles.title}>Chapitre {index + 1} - {item.title}</p>
+                                    <p className={styles.date}>{item.date_creation}</p>
+                                </div>
 
-    <p className={styles.likes}> 120 <HeartIcon/></p>
-</div>
+                                <p className={styles.likes}> {item.likes} <HeartIcon/></p>
+                            </div>
+                        )
+                    })
+                }
 
-                <div className={styles.item}>
-                    <div className={styles.titleChapter}>
-                        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                        <p className={styles.date}>18 septembre 2022</p>
-                    </div>
-                </div>
 
-                <div className={styles.item}>
-                    <div className={styles.titleChapter}>
-                        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                        <p className={styles.date}>18 septembre 2022</p>
-                    </div>
-                </div>
-
-                <div className={styles.item}>
-                    <div className={styles.titleChapter}>
-                        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                        <p className={styles.date}>18 septembre 2022</p>
-                    </div>
-                </div>
-
-                <div className={styles.item}>
-                    <div className={styles.titleChapter}>
-                        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                        <p className={styles.date}>18 septembre 2022</p>
-                    </div>
-                </div>
-
-                <div className={styles.item}>
-                    <div className={styles.titleChapter}>
-                        <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                        <p className={styles.date}>18 septembre 2022</p>
-                    </div>
-                </div>      <div className={styles.item}>
-                <div className={styles.titleChapter}>
-                    <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                    <p className={styles.date}>18 septembre 2022</p>
-                </div>
-            </div>      <div className={styles.item}>
-                <div className={styles.titleChapter}>
-                    <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                    <p className={styles.date}>18 septembre 2022</p>
-                </div>
-            </div>      <div className={styles.item}>
-                <div className={styles.titleChapter}>
-                    <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                    <p className={styles.date}>18 septembre 2022</p>
-                </div>
-            </div>      <div className={styles.item}>
-                <div className={styles.titleChapter}>
-                    <p className={styles.title}>Chapitre 1 - Le commencement</p>
-                    <p className={styles.date}>18 septembre 2022</p>
-                </div>
-            </div>
             </div>
 
         </div>

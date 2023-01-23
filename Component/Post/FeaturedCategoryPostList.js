@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from "../../styles/Component/Post/FeaturedCategoryPostList.module.scss";
 import {useRouter} from "next/router";
 import { ArrowUpTrayIcon} from "@heroicons/react/24/outline";
@@ -8,8 +8,7 @@ import urlSlug from 'url-slug'
 import Chapter from "../layouts/Icons/Chapter";
 
 
-const FeaturedCategoryPostList = (props) => {
-    const { title, snippet, like, category, author, chapterNb ,img,rank} = props;
+const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_id,author_pseudo,chapterNb,img,rank}) => {
 
     const router = useRouter();
 
@@ -17,26 +16,27 @@ const FeaturedCategoryPostList = (props) => {
         router.push(
             {
                 pathname:link,
-                query:{cat:props.category}
+                query:{cat:category}
             }
 
         )
     }
 
+    useEffect(() => {
+    },[])
+
     return (
         <div className={styles.container}
-        onClick={() =>{
-router.push("/Post/"+ urlSlug(props.title,{
-    separator:"_",
-
-}))
-        }}
+       onClick={() => router.push({
+           pathname:'/livre/'+ id,
+           query:slug
+       })}
         >
             <div className={styles.image}>
                 <div className={styles.thumbnail}>
-                    <p> <ChevronDoubleUpIcon className={styles.icon}/> {like}</p>
+                    <p> <ChevronDoubleUpIcon className={styles.icon}/> {likes}</p>
                    </div>
-                <img src={props.img}/>
+                <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + img}/>
             </div>
 
             {
@@ -52,16 +52,16 @@ router.push("/Post/"+ urlSlug(props.title,{
 
 
             <div className={styles.content}>
-                <h5> {props.title}</h5>
-                <p className={styles.snippet}>{props.snippet}</p>
+                <h5> {title}</h5>
+                <p className={styles.snippet}>{summary}</p>
                 <div className={styles.stats}>
                     <div className={styles.authorBlock}>
                         {
                             router.pathname !== "/auteur/[id]" &&
-                            <p className={styles.author}> {props.author} </p>
+                            <p className={styles.author}> {author_pseudo} </p>
 
                         }
-                        <p className={styles.category}>{props.category}</p>
+                        <p className={styles.category}>{category}</p>
                         <p className={styles.date}>Dernier chapitre : 18 Septembre 2022</p>
                     </div>
                 </div>

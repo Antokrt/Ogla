@@ -43,8 +43,15 @@
     justify-content: center;
     width: 50%;
 
-
+.category{
+ span{
+   &:first-letter{
+     text-transform: uppercase!important;
+   }
+ }
+}
     p {
+
       border-radius: 25px;
       font-size: 13px;
       font-family: "Montserrat Alternates", sans-serif;
@@ -106,6 +113,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+
+    img{
+      width: 40px;
+      clip-path: circle();
+    }
 
     svg {
       width: 40px;
@@ -128,17 +141,21 @@
     border-bottom: solid 2px $grey;
   }
 
-  p {
-    &:first-letter {
-      font-size: 30px;
-    }
-
-    text-align: justify;
+  .textContainer{
     width: 50%;
-    font-family: "Montserrat", sans-serif;
-    color: $darkBrown;
-    line-height: 30px;
+    p {
+      &:first-letter {
+        font-size: 30px;
+      }
+
+      text-align: justify;
+      width: 100%;
+      font-family: "Montserrat", sans-serif;
+      color: $darkBrown;
+      line-height: 30px;
+    }
   }
+
 }
 
 

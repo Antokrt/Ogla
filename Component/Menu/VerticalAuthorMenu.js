@@ -39,7 +39,7 @@ export default function VerticalAuthorMenu() {
             <div className={styles.sContainer}>
                 <div className={styles.navContainer}>
                     <ul>
-                        <li> <LifebuoyIcon/> Support  </li>
+                        <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon/> Support  </li>
                         <li> <ArrowLeftOnRectangleIcon/> Déconnexion  </li>
                     </ul>
                 </div>

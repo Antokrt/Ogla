@@ -36,7 +36,7 @@ const New = () => {
         const form = {
             title: title,
             summary:summary,
-            category:category,
+            category:category.toLowerCase(),
             img:'none'
         }
         newBook(form, selectedFile)
