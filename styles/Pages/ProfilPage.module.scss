@@ -17,14 +17,14 @@
   margin-top: 40px;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   height: 70vh;
   width: 100%;
 
   .containerLeft {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     height: auto;
     width: 300px;
     margin-right: 5%;
@@ -44,7 +44,7 @@
 
       .headerFirstCard {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         padding-bottom: 10px;
         border-bottom: solid 1px $border;
@@ -156,7 +156,7 @@ margin-top: 10px;
     .secondCard {
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: flex-start;
       margin-top: 20px;
       margin-bottom: 20px;
       height: auto;
@@ -173,8 +173,8 @@ padding: 20px;
 
       .fItemSecondCard,.sItemSecondCard{
         display: flex;
-        justify-content: start;
-        align-items: start;
+        justify-content: flex-start;
+        align-items: flex-start;
         padding-top: 10px;
 
         .svgStar{
@@ -330,7 +330,7 @@ font-family: "Montserrat",sans-serif;
     .containerSide{
       display: flex;
       justify-content: space-between;
-      align-items: start;
+      align-items: flex-start;
       padding-top: 10px;
     }
     .picMain{
@@ -344,7 +344,7 @@ font-family: "Montserrat",sans-serif;
 
       .picContainer{
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         margin-top: 20px;
         margin-bottom: 20px;
@@ -358,7 +358,7 @@ font-family: "Montserrat",sans-serif;
           display: flex;
           justify-content: center;
           flex-direction: column;
-          align-items: start;
+          align-items: flex-start;
           padding-left: 30px;
           button{
             width: auto;

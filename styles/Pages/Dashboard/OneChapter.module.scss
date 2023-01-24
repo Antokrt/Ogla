@@ -106,8 +106,8 @@
   .containerText{
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding: 2% 4% 0%;
     flex: 1;
     position: relative;
@@ -187,7 +187,7 @@
       margin-top: 20px;
       display: flex;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
       gap: 20px;
       border-bottom: solid 1px $border;
       padding-bottom: 20px;

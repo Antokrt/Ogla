@@ -1,9 +1,9 @@
 import {instance} from "../config/Interceptor";
-import axios from "axios";
 
-export const getAllBooks = (token) => {
+export const VerifLikeService = (id,type) => {
+    const data = {id,type};
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:3008/book/')
+        instance.post('http://localhost:3008/like/verif',data)
             .then((res) => resolve(res))
             .catch((err) => reject(err));
     })

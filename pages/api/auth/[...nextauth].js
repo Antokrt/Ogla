@@ -215,6 +215,7 @@ export default NextAuth({
                         session.user.author = res.data.author;
                     }
                     session.user.accessToken = bearerToken;
+                    token.is_author = res.data.is_author
                 })
                .catch((err) => false);
 

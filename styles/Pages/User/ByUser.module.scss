@@ -287,7 +287,7 @@ font-family: "Montserrat",sans-serif;
 .containerS{
 display: flex;
   justify-content: start;
-  align-items: start;
+  align-items: flex-start;
   width: 65%;
   flex-direction: column;
   padding-bottom: 20px;
@@ -309,7 +309,7 @@ display: flex;
     div{
       display: flex;
       justify-content: start;
-      align-items: start;
+      align-items: flex-start;
       margin-top: 20px;
       button{
         font-size: 12px;

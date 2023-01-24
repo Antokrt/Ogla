@@ -2,20 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/livre/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/utils/Redirect.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/Like/LikeService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/Like/VerifLikeService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Category/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Category/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Chapter/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Post/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Post/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Book/HomeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Book/HomeService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Banner.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Banner.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/CommentaryNewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/CommentaryNewChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Footer.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Category.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Category.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +179,9 @@
       <workItem from="1674388391951" duration="61000" />
       <workItem from="1674388482939" duration="3482000" />
       <workItem from="1674393793746" duration="32000" />
-      <workItem from="1674467733979" duration="14278000" />
+      <workItem from="1674467733979" duration="14983000" />
+      <workItem from="1674517595093" duration="648000" />
+      <workItem from="1674557748411" duration="19321000" />
     </task>
     <servers />
   </component>

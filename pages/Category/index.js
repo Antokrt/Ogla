@@ -11,6 +11,7 @@ import NewFeatured from "../../Component/Category/New";
 import LogCard from "../../Component/layouts/LogCard";
 import DateNow from "../../utils/Date";
 import Footer from "../../Component/Footer";
+import {getSession} from "next-auth/react";
 
 export async function getServerSideProps({req}){
     const params = {

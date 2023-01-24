@@ -17,17 +17,34 @@ import ToogleSidebar from "../../utils/ToogleSidebar";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
 import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
+import {useSession} from "next-auth/react";
+import {VerifLikeService} from "../../service/Like/VerifLikeService";
+import {getToken} from "next-auth/jwt";
+import {getConfigOfProtectedRoute} from "../api/utils/Config";
+import {LikeBookService} from "../../service/Like/LikeService";
 
 
 export async function getServerSideProps({req,params}){
     const id = params.id;
+    const config = await getConfigOfProtectedRoute(req);
+    let like;
+    let likeErrData;
+    let hasLikeJson = 'disable';
+
     const book = await fetch('http://localhost:3008/book-render/one/'+ id);
     const bookErrData = !book.ok;
     let booksJson = await book.json();
-
     if(booksJson.statusCode === 404){
         booksJson = null;
     }
+
+    if(config){
+        like = await fetch('http://localhost:3008/like/verif/book/'+ booksJson?.book?._id,config);
+        likeErrData = !like.ok;
+        hasLikeJson = await like.json();
+    }
+
+
     return {
         props:{
             err:{
@@ -35,127 +52,80 @@ export async function getServerSideProps({req,params}){
             },
             bookData: booksJson.book,
             chapterData: booksJson.chapter,
+            hasLikeData:hasLikeJson
         }
     }
 }
 
 
-const Post = ({bookData,chapterData,err}) => {
+const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
-    const [post, setPost] = useState({});
     const router = useRouter();
-    const [chapterList, setChapterList] = useState([
-        {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        }, {
-            title: "Chapitre 1 - Le commencement",
-            like: 67,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 2 - Découverte macabre",
-            like: 107,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 3 - N'oublies pas ton manteau",
-            like: 11,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 4 - Pierre qui mousse...",
-            like: 89,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 5 - Une classé sur R6",
-            like: 27,
-            date: "18/08/22"
-        },
-        {
-            title: "Chapitre 6 - Un Zebu pas concentré",
-            like: 21,
-            date: "18/08/22"
-        }
-    ]);
-    useEffect(() => {
-        if (router.isReady) {
-            getPost(router.query.id)
-                .then((res) => setPost(res))
-                .catch((err) => console.log(err))
-        }
-    }, [router.isReady]);
-
-
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
+    const checkSide = () => {
+        switch (sidebarSelect){
+            case 'Commentary':
+                return (
+                    <div
+                        className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
+                        <SidebarCommentary select={sidebarSelect}/>
+                    </div>
+                )
+                break;
 
+            case 'None':
+                return (
+                    <div className={styles.slideOut + " " + styles.sidebar}>
+                    </div>
+                )
+                break;
 
+            case 'List':
+                return (
+                    <div
+                        className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
+                        <SidebarChapter title={bookData?.title} chapters={chapterData} select={sidebarSelect}/>
+                    </div>
+                )
+                break;
+
+            default:
+                return (
+                    <div className={styles.slideOut + " " + styles.sidebar}>
+                    </div>
+                )
+        }
+
+    }
+
+    const [likes,setLikes] = useState(bookData.likes);
+    const [hasLike, setHasLike] = useState(hasLikeData);
+    const {data: session} = useSession();
+
+    const likeBook = () => {
+        if(session){
+            LikeBookService(bookData._id)
+                .then((res) => setHasLike(!hasLike))
+                .then(() => {
+                    if(hasLike){
+                        setLikes(likes - 1);
+                    }
+                    else{
+                        setLikes(likes + 1);
+                    }
+                })
+                .catch((err) => console.log(err));
+        }
+    }
 
     return (
         <div className={styles.container}>
+
             <Header/>
 
             {
-                sidebarSelect === "Commentary" &&
-                <div
-                    className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                    <SidebarCommentary select={sidebarSelect}/>
-                </div>
+                checkSide()
             }
-
-            {
-                sidebarSelect === "None" &&
-                <div className={styles.slideOut + " " + styles.sidebar}>
-                </div>
-            }
-
-            {
-                sidebarSelect === "List" &&
-                <div
-                    className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                    <SidebarChapter title={bookData?.title} chapters={chapterData} select={sidebarSelect}/>
-                </div>
-            }
-
 
             <div className={styles.containerC}>
 
@@ -165,9 +135,11 @@ const Post = ({bookData,chapterData,err}) => {
                     </div>
 
                     <div className={styles.btnContainer}>
-                        <div className={styles.btnItem}>
+                        <div
+                            onClick={() => likeBook()}
+                            className={styles.btnItem}>
                             <HeartIcon className={styles.cursor}/>
-                            <p>({bookData?.likes})</p>
+                            <p>({likes})</p>
                         </div>
                         <div className={styles.btnItem}>
                             <DocumentTextIcon/>

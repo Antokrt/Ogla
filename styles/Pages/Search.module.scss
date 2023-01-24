@@ -48,7 +48,7 @@ z-index: 1;
 
   .sortContainer {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: column;
     width: 60%;
     margin-bottom: 30px;
@@ -64,8 +64,8 @@ z-index: 1;
 
     div {
       display: flex;
-      justify-content: start;
-      align-items: start;
+      justify-content: flex-start;
+      align-items: flex-start;
       margin-top: 20px;
 
       button {
@@ -90,9 +90,9 @@ z-index: 1;
 
   .card {
     display: grid;
-    justify-content: start;
+    justify-content: flex-start;
     justify-items: start;
-    align-items: start;
+    align-items: flex-start;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px 0px;
     width: 60%;

@@ -28,7 +28,7 @@ overflow-y: hidden;
 
 .imgContainer{
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
   width: 300px;
   height: 300px;
@@ -100,7 +100,7 @@ padding-right: 10px;
     display: flex;
     flex-direction: column;
 
-    justify-content: start;
+    justify-content: flex-start;
 h4{
   &:first-letter{
     text-transform: uppercase;

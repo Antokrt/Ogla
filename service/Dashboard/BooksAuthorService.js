@@ -4,7 +4,6 @@ export const getBooksByAuthor = (id) => {
     return new Promise((resolve, reject) => {
         instance.get('author/book/'+ id)
             .then((res) => {
-                console.log()
                 resolve(res);
             })
             .catch((err) => {
@@ -30,7 +29,6 @@ export const newBook = (data, file) => {
     return new Promise((resolve, reject) => {
         instance.post('book/new', data)
             .then((res) => {
-                console.log(file)
                 if(file){
                     const formData = new FormData();
                     formData.append('image', file);
@@ -53,7 +51,6 @@ export const deleteBook = (id) => {
     const data = {
         bookId: id
     }
-    console.log(data)
     return new Promise((resolve, reject) => {
         instance.post('book/delete', data)
             .then((res) => resolve(res))

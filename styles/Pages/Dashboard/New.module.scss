@@ -85,7 +85,7 @@
         }
         .completed{
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           align-items: center;
           gap: 5px;
           color: #88d788;
@@ -168,7 +168,7 @@
 
       .addFileContainer{
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         .labelFile{
           cursor: pointer;
