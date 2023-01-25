@@ -11,8 +11,14 @@ import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
-import {newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
-import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronRightIcon, HomeIcon} from "@heroicons/react/24/outline";
+import {deleteChapter, newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import {
+    ChevronDoubleLeftIcon,
+    ChevronDoubleRightIcon,
+    ChevronRightIcon,
+    HomeIcon,
+    TrashIcon
+} from "@heroicons/react/24/outline";
 import DateNow from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import scrollbar from "../../../styles/utils/scrollbar.module.scss";
@@ -103,7 +109,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         return editor.chain().focus().toggleItalic().run();
     }
 
-    const save = () => {
+    const saveThis = () => {
         if(hasChange){
             const data = {
                 id:chapterData._id,
@@ -124,7 +130,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         }
     }
 
-    const publish = () => {
+    const publishThis = () => {
         if(hasChange || !chapterData.publish){
             const data = {
                 id:chapterData._id,
@@ -146,19 +152,18 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         }
     }
 
-
-
+    const deleteThis = () => {
+        deleteChapter(chapterData._id)
+            .then((res) => router.push('/dashboard/books/'+ bookData._id))
+            .catch((err) => console.log(err));
+    }
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
                 <div className={styles.verticalMenuContainer}>
                     <VerticalAuthorMenu/>
                 </div>
-                {
-                    hasChange ?
-                        <p>true</p>:
-                        <p>false</p>
-                }
+
 
                 {
                     loading &&
@@ -199,12 +204,21 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                             </div>
                             <div className={styles.btnList}>
 
+                                <div
+                                    onClick={() => {
+                                        deleteThis()
+                                    }
+                                    }
+                                    className={styles.iconDiv}>
+                                    <TrashIcon/>
+                                </div>
+
                                 {
                                     !chapterData.publish &&
                                     <button
                                         className={hasChange ? styles.activeSaveBtn : ''}
                                         onClick={() => {
-                                        save()
+                                        saveThis()
                                         }
                                         }
                                     >Enregistrer</button>
@@ -213,7 +227,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
                                         <button
                                             className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
-                                            onClick={() => publish(true)}
+                                            onClick={() => publishThis(true)}
                                         >Publier</button>
 
 
@@ -233,7 +247,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 </div>
                                 <div className={styles.containerTitle}>
                                     <div className={styles.titleL}>
-                                        <p>Chapitre {book.chapter_list.length + 1 }</p>
+                                        <p>Chapitre {index}</p>
                                         <input
                                             onChange={(e) => setTitle(e.target.value)}
                                             name={"title"}

@@ -75,6 +75,28 @@
   .btnList{
     display: flex;
     gap: 10px;
+
+    .iconDiv{
+      &:hover{
+        background-color: #9844AD;
+        svg{
+          transition: 0.1s;
+        }
+      }
+      transition: 0.1s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0px 10px;
+      cursor: pointer;
+      background-color: rgba(28, 35, 43, 0.32);
+
+      svg{
+        color: white;
+        width: 15px;
+      }
+    }
+
   }
 
   .draft{

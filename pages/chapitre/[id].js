@@ -16,53 +16,53 @@ import ToogleSidebar from "../../utils/ToogleSidebar";
 import HeaderOnChapter from "../../Component/Post/HeaderOnChapter";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
+import {getConfigOfProtectedRoute} from "../api/utils/Config";
+import {GetOneChapterApi} from "../api/chapter";
+import {VerifLike, VerifLikeApi} from "../api/like";
+import {useSession} from "next-auth/react";
+import {LikeChapterService} from "../../service/Like/LikeService";
 
 export async function getServerSideProps({req,params,query}){
     const id = params.id;
-    const chapter = await fetch('http://localhost:3008/chapter-render/one/'+ id);
-    const chapterErrData = !chapter.ok;
-    let chapterJson = await chapter.json();
-
-    if(chapterJson.statusCode === 404){
-        chapterJson = null;
-    }
-
+    const data = await GetOneChapterApi(id);
+    const hasLike = await VerifLikeApi(req,'chapter',data.chapter._id);
     return {
         props:{
-            err:{
-                chapter:chapterErrData
-            },
-            chapterData: chapterJson.chapter,
-            bookData: chapterJson.book,
-            index:query.i,
-            author:chapterJson.author
+            err:data.err,
+            chapterData: data.chapter,
+            bookData: data.book,
+            index:parseInt(query.i),
+            authorData:data.author,
+            hasLikeData:hasLike
         }
     }
 }
 
-const Chapter = ({chapterData,bookData, author, err,index}) => {
+const Chapter = ({chapterData,bookData, authorData, err,index,hasLikeData}) => {
 
-    const router = useRouter();
     const headerFixed = useRef();
-    const fHeader = useRef();
     const [hasToBeFixed, setHasToBeFixed] = useState(false);
-    const [openSideBar, setOpenSidebar] = useState(false);
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
+    const [likes,setLikes] = useState(bookData?.likes);
+    const [hasLike, setHasLike] = useState(hasLikeData);
+    const {data: session} = useSession();
 
-    useLayoutEffect(() => {
-        console.log(author)
-        const divAnimate = headerFixed.current.getBoundingClientRect().top;
-        const onScroll = (div) => {
-            if (div < window.scrollY) {
-                setHasToBeFixed(true);
-            } else {
-                setHasToBeFixed(false);
-            }
-        };
+    const likeChapter = () => {
+        if(session){
+            LikeChapterService(chapterData._id)
+                .then((res) => setHasLike(!hasLike))
+                .then(() => {
+                    if(hasLike){
+                        setLikes(likes - 1);
+                    }
+                    else{
+                        setLikes(likes + 1);
+                    }
+                })
+                .catch((err) => console.log(err));
+        }
+    }
 
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
 
     const editorReadOnly = useEditor({
         extensions:[
@@ -108,11 +108,11 @@ const Chapter = ({chapterData,bookData, author, err,index}) => {
                     className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                     ref={headerFixed}
                 >
-                    <h3>Chapitre 1 - {bookData.title}</h3>
+                    <h3>Chapitre {index} - {bookData.title}</h3>
 
                     <div className={styles.thumbnailContainer}>
                         <p className={styles.category}><span>{bookData.category}</span><TagIcon/></p>
-                        <p className={styles.mSide}>{chapterData.likes} <HeartIcon/></p>
+                        <p className={styles.mSide}>{likes} <HeartIcon/></p>
                         <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const Chapter = ({chapterData,bookData, author, err,index}) => {
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
                         <h5>{chapterData.title}</h5>
-                        <h6><img src={author.img} />{bookData.author_pseudo}</h6>
+                        <h6><img src={authorData.img} />{authorData.pseudo}</h6>
                     </div>
                     <div className={styles.nextChapterContainer}>
 
@@ -138,6 +138,12 @@ const Chapter = ({chapterData,bookData, author, err,index}) => {
 
 
             <FooterOnChapter
+                likeChapter={() => likeChapter()}
+                title={chapterData?.title}
+                likes={likes}
+                index={index}
+                author={bookData?.author_pseudo}
+                nbChapter={bookData?.chapter_list.length}
                 openList={() => {
                     ToogleSidebar("List",sidebarSelect,setSidebarSelect);
                 }}
@@ -145,7 +151,7 @@ const Chapter = ({chapterData,bookData, author, err,index}) => {
                 openCommentary={() => {
                     ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
                 }}
-                img={"/assets/livre2.jpg"}/>
+                img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
         </div>
     )
 }

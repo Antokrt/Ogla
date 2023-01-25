@@ -22,36 +22,22 @@ import {VerifLikeService} from "../../service/Like/VerifLikeService";
 import {getToken} from "next-auth/jwt";
 import {getConfigOfProtectedRoute} from "../api/utils/Config";
 import {LikeBookService} from "../../service/Like/LikeService";
+import {VerifLike, VerifLikeApi} from "../api/like";
+import {GetOneBookApi} from "../api/book";
 
 
 export async function getServerSideProps({req,params}){
     const id = params.id;
-    const config = await getConfigOfProtectedRoute(req);
-    let like;
-    let likeErrData;
-    let hasLikeJson = 'disable';
-
-    const book = await fetch('http://localhost:3008/book-render/one/'+ id);
-    const bookErrData = !book.ok;
-    let booksJson = await book.json();
-    if(booksJson.statusCode === 404){
-        booksJson = null;
-    }
-
-    if(config){
-        like = await fetch('http://localhost:3008/like/verif/book/'+ booksJson?.book?._id,config);
-        likeErrData = !like.ok;
-        hasLikeJson = await like.json();
-    }
-
+    const data = await GetOneBookApi(id);
+    const hasLikeJson = await VerifLikeApi(req,'book',data.book._id);
 
     return {
         props:{
             err:{
-                book:bookErrData
+                book:data.err
             },
-            bookData: booksJson.book,
-            chapterData: booksJson.chapter,
+            bookData: data?.book,
+            chapterData: data?.chapter,
             hasLikeData:hasLikeJson
         }
     }
@@ -98,7 +84,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     }
 
-    const [likes,setLikes] = useState(bookData.likes);
+    const [likes,setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
 
@@ -172,7 +158,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                         <p className={styles.snippet}> {bookData?.summary}</p>
                         <div className={styles.btnFilter}>
                             <button>Trier <ArrowsUpDownIcon/></button>
-                            <div><p>({chapterData.length})</p>
+                            <div><p>({chapterData?.length})</p>
                                 <Book/>
                             </div>
                         </div>

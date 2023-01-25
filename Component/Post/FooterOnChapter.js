@@ -14,12 +14,16 @@ import {
 } from "@heroicons/react/24/outline";
 import {useState} from "react";
 import SidebarPost from "./SidebarCommentary";
+import {LikeBookService} from "../../service/Like/LikeService";
 
 
 
-const FooterOnChapter = ({openCommentary,openList,img}) => {
+const FooterOnChapter = ({openCommentary,openList,img, title, likes, nbCommentary, author, nbChapter, index, next,previous, likeChapter }) => {
 
     const [openSidebar,setOpenSidebar ] = useState(true);
+    const [hasLikeChapter, setHasLikeChapter] = useState('hasLike');
+
+
 
 
 
@@ -27,8 +31,8 @@ const FooterOnChapter = ({openCommentary,openList,img}) => {
         <div className={styles.titleContainer}>
             <img src={img}/>
             <div>
-                <h7>Chapitre 1 : Le commencement</h7>
-                <p>123 likes - 212 commentaires - Judy McLaren</p>
+                <h7>Chapitre {index} : {title}</h7>
+                <p>{likes} likes - {nbChapter} commentaires - {author}</p>
             </div>
 
 
@@ -36,18 +40,32 @@ const FooterOnChapter = ({openCommentary,openList,img}) => {
 
         <div className={styles.likeContainer}>
             <div>
-                <ChevronLeftIcon/>
-                <p>Précédent (Ch.5)</p>
+                {
+                    nbChapter > 1 && index !== 1 &&
+                        <>
+                            <ChevronLeftIcon/>
+                            <p>Précédent (Ch.{index - 1})</p>
+                        </>
+                }
             </div>
 
-            <div>
+            <div
+            onClick={() => {
+likeChapter()
+            }}
+            >
                 <HeartIcon/>
-                <p>J'aime (123)</p>
+                <p>J'aime ({likes})</p>
             </div>
 
             <div>
-                <ChevronRightIcon/>
-                <p>Suivant (Ch.7)</p>
+                {
+                    nbChapter > 1 &&
+                        <>
+                            <ChevronRightIcon/>
+                            <p>Suivant (Ch.{index})</p>
+                        </>
+                }
             </div>
         </div>
 
@@ -55,12 +73,12 @@ const FooterOnChapter = ({openCommentary,openList,img}) => {
 
             <div onClick={openCommentary}>
                 <ChatBubbleBottomCenterTextIcon/>
-                <p>Commentaires (219)</p>
+                <p>Commentaires ({nbCommentary})</p>
             </div>
 
             <div onClick={openList}>
                 <QueueListIcon/>
-                <p>Chapitres (56)</p>
+                <p>Chapitres ({nbChapter})</p>
             </div>
         </div>
 

@@ -13,22 +13,20 @@ export async function getServerSideProps({context, req}){
     const books = await fetch('http://localhost:3008/author/my-books',config);
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
+
+    console.log(booksJson)
     return {
         props:{
             err:{
                 books:booksErrData
             },
-            data: booksJson,
+            books: booksJson,
         }
     }
 }
 
-const Books = ({data}) => {
+const Books = ({books}) => {
     const {data: session} = useSession();
-    const [select,setSelect] = useState('');
-    const [books,setBooks] = useState([data])
-const router = useRouter();
-
 
 
     const hasNoBooks = () => {
@@ -67,14 +65,12 @@ const router = useRouter();
                 <div className={styles.containerData}>
 <HeaderDashboard/>
                                     <div className={styles.headerList}>
-                                        <h4>Mes livres <span>({books[0].length})</span> </h4>
+                                        <h4>Mes livres <span>({books?.length})</span> </h4>
                                     </div>
                                     <div className={styles.list + ' ' + styles.scrollbar}>
 
                                        {
-                                           books &&
-                                            books[0].map((item, index) => {
-                                                console.log('item')
+                                            books.map((item, index) => {
                                                 return (
                                                     <CardBook id={item._id}
                                                               image={item.img}
@@ -86,7 +82,7 @@ const router = useRouter();
                                         }
                                     </div>
                         {
-                            books[0].length === 0 &&
+                            books.length === 0 &&
                             hasNoBooks()
                         }
             </div>

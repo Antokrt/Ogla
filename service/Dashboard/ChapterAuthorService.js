@@ -33,3 +33,11 @@ export const publishChapter = (data) => {
             .catch((err) => reject(err));
     })
 }
+
+export const deleteChapter = (id) => {
+    return new Promise((resolve, reject)=> {
+        instance.delete('chapter/'+ id)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
+}
