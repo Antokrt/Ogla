@@ -24,6 +24,7 @@ import {getConfigOfProtectedRoute} from "../api/utils/Config";
 import {LikeBookService} from "../../service/Like/LikeService";
 import {VerifLike, VerifLikeApi} from "../api/like";
 import {GetOneBookApi} from "../api/book";
+import {GetCommentService} from "../../service/Comment/CommentService";
 
 
 export async function getServerSideProps({req,params}){
@@ -48,13 +49,23 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     const router = useRouter();
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
+    const [likes,setLikes] = useState(bookData?.likes);
+    const [hasLike, setHasLike] = useState(hasLikeData);
+    const {data: session} = useSession();
+    const [comments,setComments] = useState([]);
+
+
     const checkSide = () => {
         switch (sidebarSelect){
             case 'Commentary':
                 return (
                     <div
                         className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                        <SidebarCommentary select={sidebarSelect}/>
+                        <SidebarCommentary
+                            title={bookData.title}
+                            author={bookData.author_pseudo}
+                            comments={comments}
+                            select={sidebarSelect}/>
                     </div>
                 )
                 break;
@@ -84,9 +95,16 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     }
 
-    const [likes,setLikes] = useState(bookData?.likes);
-    const [hasLike, setHasLike] = useState(hasLikeData);
-    const {data: session} = useSession();
+
+    const getComment = () => {
+GetCommentService('book',bookData._id)
+    .then((res) => setComments(res))
+    .catch((err) => console.log(err))
+    }
+
+    useEffect(() => {
+       getComment();
+    },[])
 
     const likeBook = () => {
         if(session){
@@ -104,6 +122,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
         }
     }
 
+
     return (
         <div className={styles.container}>
 
@@ -119,7 +138,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     <div className={styles.img}>
                         <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
                     </div>
-
+                    {bookData._id}
                     <div className={styles.btnContainer}>
                         <div
                             onClick={() => likeBook()}
@@ -133,7 +152,9 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
                         </div>
 
-                        <div className={styles.btnItem}>
+                        <div
+                        onClick={() => getComment()}
+                            className={styles.btnItem}>
                             <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
                             <p>(32)</p>
 
@@ -205,6 +226,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
             <FooterOnBook
                 title={bookData?.title}
                 like={bookData?.likes}
+                img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
                 nbCommentary={28}
                 author={bookData?.author_pseudo}
                 nbChapter={chapterData?.length}
@@ -215,7 +237,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                 openCommentary={() => {
                     ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
                 }}
-                img={"/assets/livre2.jpg"}/>
+                />
         </div>
     )
 }

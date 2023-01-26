@@ -5,9 +5,9 @@ import {HeartIcon} from "@heroicons/react/24/solid";
 import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon} from "@heroicons/react/24/outline";
 import SubCommentary from "./SubCommentary";
 
-const Commentary = (props) => {
+const Commentary = ({pseudo,img,date,content,likes, answers}) => {
 
-    const [sizeCommentary, setSizeCommentary] = useState(props.commentary?.length);
+    const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(false);
     const [openSubCategory, setOpenSubCategory] = useState(false);
 
@@ -21,14 +21,15 @@ const Commentary = (props) => {
         <div className={styles.container}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
-                    <img src={"/assets/livre2.jpg"}/>
+                    <img referrerpolicy="no-referrer" src={img}/>
                 </div>
 
                 <div className={styles.contentCommentContainer}>
                     <div className={styles.authorDate}>
-                        <h8>Mireille Culotte <span>18 sept 22</span></h8>
+                        <h8>{pseudo} <span>{date}</span></h8>
                     </div>
-                    <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>{props.commentary}
+                    <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
+                        {content}
                     </p>
                     {
                         tooLong &&

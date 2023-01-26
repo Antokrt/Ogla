@@ -31,8 +31,6 @@ const toogleSidebar = (action,sidebarSelect,setSidebarSelect) => {
                 break;
         }
     }
-    else{
-        return console.log("Error Sidebar");
-    }
+    return null;
 }
 export default toogleSidebar;
