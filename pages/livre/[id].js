@@ -62,6 +62,8 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     <div
                         className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
                         <SidebarCommentary
+                            type={'book'}
+                            bookId={bookData._id}
                             title={bookData.title}
                             author={bookData.author_pseudo}
                             comments={comments}

@@ -6,9 +6,11 @@ import {BookOpenIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
 import Commentary from "./Commentary/Commentary";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/react";
+import {NewCommentaryService} from "../../service/Comment/CommentService";
 
 
-const SidebarCommentary = ({title,author,comments}) => {
+const SidebarCommentary = ({title,author,comments, bookId,type}) => {
     const router = useRouter();
     const [menuCollapse, setMenuCollapse] = useState(false);
     const [typeFilter,setTypeFilter] = useState([
@@ -16,8 +18,25 @@ const SidebarCommentary = ({title,author,comments}) => {
         "Récent(s)",
         "Ancien(s)",
     ]);
+    const [commentList, setCommentList] = useState(comments);
     const [selectFilter, setSelectFilter] = useState("Récent(s)");
+    const [newComment,setNewComment] = useState('');
+    const {data:session} = useSession();
 
+    const sendNewComment = () => {
+        NewCommentaryService(bookId,newComment,type)
+            .then((res) => {
+                setCommentList(oldArray =>[
+                    ...oldArray,
+                        res
+                ]);
+            })
+            .catch((err) => console.log(err));
+    }
+
+    useEffect(() => {
+        console.log()
+    },[])
 
     return(
 <div className={styles.container}>
@@ -34,7 +53,7 @@ const SidebarCommentary = ({title,author,comments}) => {
 
     <div className={styles.contentCommentaryContainer + " " + scroll.scrollbar}>
         {
-            comments.map((item,index) => {
+            commentList.map((item,index) => {
                 return (
                     <Commentary
                     content={item.content}
@@ -53,10 +72,35 @@ const SidebarCommentary = ({title,author,comments}) => {
 
     <div className={styles.commentaryContainer}>
         <div className={styles.formContainer}>
-            <textarea className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+            {
+                session ?
+                    <textarea
+                        value={newComment}
+                        onKeyDown={(e) => {
+                            if(e.key === 'Enter' && !e.shiftKey && newComment !== ""){
+                                e.preventDefault();
+                                sendNewComment();
+                            }
+                        }}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                    :
+                    <textarea
+                    className={scroll.scrollbar}
+                    type={"textarea"}
+                    placeholder={"Connexion requise..."}
+                    disabled={true}
+                    />
+            }
         </div>
 
-        <div className={styles.sendContainer}><PaperAirplaneIcon/>
+        <div
+            onClick={() => {
+                if(newComment !== ""){
+                    sendNewComment();
+                }
+            }}
+            className={newComment !== "" ? styles.active +" "+ styles.sendContainer : styles.sendContainer}><PaperAirplaneIcon/>
         </div>
     </div>
 </div>

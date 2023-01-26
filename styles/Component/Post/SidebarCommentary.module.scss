@@ -126,17 +126,26 @@
     }
 
     .sendContainer {
+
       display: flex;
       justify-content: center;
       align-items: center;
       height: 40px;
       width: 20%;
-      background-color: $purple;
+      background-color: #54595F;
       border-radius: 25px;
+      transition: 0.2s;
+      cursor: initial;
       svg{
         width: 17px;
         color: white;
       }
+    }
+
+    .active{
+      cursor: pointer;
+      transition: 0.2s;
+      background-color: #9844AD;
     }
   }
 }
@@ -147,4 +156,8 @@
 .filterActive{
   transition: 0.2s;
   font-weight: bold!important;
+}
+
+.active{
+  background-color: #9844AD!important;
 }

@@ -29,3 +29,20 @@ export const GetCommentService = (type,id) => {
             .catch((err) => reject('err'))
     })
 }
+
+export const NewCommentaryService = (target_id,content,type) => {
+return new Promise((resolve, reject) => {
+    const data = {target_id,content,type};
+    instance.post('comment/new',data)
+        .then((res) => {
+            GetAuthorProfilOfCommentService(res.data.userId)
+                .then((profil) => {
+                    res.data.pseudo = profil.data.pseudo;
+                    res.data.img = profil.data.img;
+                    resolve(res.data);
+                })
+                .catch((err) => reject(err))
+        })
+        .catch((err) => reject(err))
+} )
+}
