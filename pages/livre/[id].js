@@ -18,9 +18,7 @@ import SidebarCommentary from "../../Component/Post/SidebarCommentary";
 import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
 import {useSession} from "next-auth/react";
-import {VerifLikeService} from "../../service/Like/VerifLikeService";
-import {getToken} from "next-auth/jwt";
-import {getConfigOfProtectedRoute} from "../api/utils/Config";
+
 import {LikeBookService} from "../../service/Like/LikeService";
 import {VerifLike, VerifLikeApi} from "../api/like";
 import {GetOneBookApi} from "../api/book";
@@ -49,6 +47,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     const router = useRouter();
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
+    const [test, setTest] = useState('jeieie')
     const [likes,setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
@@ -58,18 +57,22 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     const checkSide = () => {
         switch (sidebarSelect){
             case 'Commentary':
-                return (
-                    <div
-                        className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                        <SidebarCommentary
-                            type={'book'}
-                            bookId={bookData._id}
-                            title={bookData.title}
-                            author={bookData.author_pseudo}
-                            comments={comments}
-                            select={sidebarSelect}/>
-                    </div>
-                )
+                if(comments.length !== 0) {
+                    return (
+                        <div
+                            className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
+                            <SidebarCommentary
+                                refresh={() => getComment()}
+                                type={'book'}
+                                bookId={bookData._id}
+                                title={bookData.title}
+                                author={bookData.author_pseudo}
+                                comments={comments}
+                                select={sidebarSelect}/>
+                        </div>
+                    )
+                }
+
                 break;
 
             case 'None':
@@ -98,15 +101,23 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     }
 
 
-    const getComment = () => {
+    const getComment =  () => {
 GetCommentService('book',bookData._id)
     .then((res) => setComments(res))
+    .then(() => console.log('comments'))
     .catch((err) => console.log(err))
     }
 
+
+
     useEffect(() => {
-       getComment();
-    },[])
+        if(comments.length === 0){
+            console.log("eooeoe")
+            getComment();
+        }
+    },[sidebarSelect])
+
+
 
     const likeBook = () => {
         if(session){

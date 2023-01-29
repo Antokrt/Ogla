@@ -2,14 +2,19 @@ import styles from "../../../styles/Component/Post/Commentary/Commentary.module.
 import scroll from "../../../styles/utils/scrollbar.module.scss";
 import {useEffect, useState} from "react";
 import {HeartIcon} from "@heroicons/react/24/solid";
-import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon} from "@heroicons/react/24/outline";
+import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon, TrashIcon} from "@heroicons/react/24/outline";
 import SubCommentary from "./SubCommentary";
+import {useSession} from "next-auth/react";
+import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
 
-const Commentary = ({pseudo,img,date,content,likes, answers}) => {
+const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment}) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(false);
+
+
     const [openSubCategory, setOpenSubCategory] = useState(false);
+    const {data: session } = useSession();
 
     useEffect(() => {
         if (sizeCommentary > 200) {
@@ -17,16 +22,24 @@ const Commentary = ({pseudo,img,date,content,likes, answers}) => {
         }
     }, [])
 
+
+
     return (
         <div className={styles.container}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
-                    <img referrerpolicy="no-referrer" src={img}/>
+                    <img referrerPolicy="no-referrer" src={img}/>
                 </div>
 
                 <div className={styles.contentCommentContainer}>
+                    {
+                        authorId === session.user.id &&
+                        <TrashIcon
+                            onClick={() => deleteComment()}
+                            className={styles.trash}/>
+                    }
                     <div className={styles.authorDate}>
-                        <h8>{pseudo} <span>{date}</span></h8>
+                        <h8>{pseudo}  <span>{date}</span></h8>
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}

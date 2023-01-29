@@ -3,9 +3,8 @@ export async function GetOneChapterApi(id){
     const chapterErrData = !chapter.ok;
     let chapterJson = await chapter.json();
 
-    if(chapterJson.statusCode === 404){
-        chapterJson = null;
-    }
+
+    console.log(chapterJson)
 
     return {
         chapter: chapterJson.chapter,

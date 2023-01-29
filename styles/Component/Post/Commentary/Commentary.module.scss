@@ -29,12 +29,26 @@ width: 50px;
     }
 
     .contentCommentContainer{
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: start;
       width: 100%;
 padding-left: 20px;
       padding-right: 10px;
+
+      .trash{
+        &:hover{
+          transition: 0.1s;
+          color: #9844AD;
+        }
+        transition: 0.1s;
+        cursor: pointer;
+        position: absolute;
+        right: 5%;
+        width: 18px;
+        color: rgba(28, 35, 43, 0.44);
+      }
       .authorDate{
         display: flex;
         justify-content: start;

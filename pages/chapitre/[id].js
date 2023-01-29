@@ -47,6 +47,10 @@ const Chapter = ({chapterData,bookData, authorData, err,index,hasLikeData}) => {
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
 
+
+    useEffect(()=> {
+       console.log(chapterData)
+    },[])
     const likeChapter = () => {
         if(session){
             LikeChapterService(chapterData._id)
@@ -121,7 +125,7 @@ const Chapter = ({chapterData,bookData, authorData, err,index,hasLikeData}) => {
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
                         <h5>{chapterData.title}</h5>
-                        <h6><img src={authorData.img} />{authorData.pseudo}</h6>
+                        <h6><img src={authorData.img} referrerPolicy={'no-referrer'} />{authorData.pseudo}</h6>
                     </div>
                     <div className={styles.nextChapterContainer}>
 

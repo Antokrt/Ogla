@@ -7,10 +7,10 @@ import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
 import Commentary from "./Commentary/Commentary";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
-import {NewCommentaryService} from "../../service/Comment/CommentService";
+import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
 
 
-const SidebarCommentary = ({title,author,comments, bookId,type}) => {
+const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
     const router = useRouter();
     const [menuCollapse, setMenuCollapse] = useState(false);
     const [typeFilter,setTypeFilter] = useState([
@@ -26,17 +26,24 @@ const SidebarCommentary = ({title,author,comments, bookId,type}) => {
     const sendNewComment = () => {
         NewCommentaryService(bookId,newComment,type)
             .then((res) => {
+                setNewComment('');
                 setCommentList(oldArray =>[
                     ...oldArray,
                         res
                 ]);
             })
+            .then(() => refresh())
             .catch((err) => console.log(err));
     }
 
-    useEffect(() => {
-        console.log()
-    },[])
+    const deleteComment = (id) => {
+        DeleteCommentaryService(id)
+            .then(()=> {setCommentList(commentList.filter(item => item._id !== id));})
+            .then((res) => refresh())
+            .catch((err) => console.log(err))
+    }
+
+
 
     return(
 <div className={styles.container}>
@@ -56,6 +63,8 @@ const SidebarCommentary = ({title,author,comments, bookId,type}) => {
             commentList.map((item,index) => {
                 return (
                     <Commentary
+                        deleteComment={() => deleteComment(item._id)}
+                        authorId={item.userId}
                     content={item.content}
                     likes={item.likes}
                     img={item.img}

@@ -12,7 +12,7 @@ import {
     HeartIcon,
     QueueListIcon
 } from "@heroicons/react/24/outline";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SidebarPost from "./SidebarCommentary";
 import {LikeBookService} from "../../service/Like/LikeService";
 
