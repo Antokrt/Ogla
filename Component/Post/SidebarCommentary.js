@@ -10,9 +10,8 @@ import {useSession} from "next-auth/react";
 import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
 
 
-const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
+const SidebarCommentary = ({title,author,comments, bookId,type, refresh, limit, page, createNewComment, deleteAComment}) => {
     const router = useRouter();
-    const [menuCollapse, setMenuCollapse] = useState(false);
     const [typeFilter,setTypeFilter] = useState([
         "Populaire(s)",
         "Récent(s)",
@@ -26,24 +25,22 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
     const sendNewComment = () => {
         NewCommentaryService(bookId,newComment,type)
             .then((res) => {
+                createNewComment(res)
                 setNewComment('');
-                setCommentList(oldArray =>[
-                    ...oldArray,
-                        res
-                ]);
             })
-            .then(() => refresh())
             .catch((err) => console.log(err));
     }
 
     const deleteComment = (id) => {
         DeleteCommentaryService(id)
-            .then(()=> {setCommentList(commentList.filter(item => item._id !== id));})
-            .then((res) => refresh())
-            .catch((err) => console.log(err))
+            .then(() => deleteAComment(id))
+            .catch((err) => console.log(err));
     }
 
 
+    useEffect(() => {
+       setCommentList(comments)
+    },[comments])
 
     return(
 <div className={styles.container}>
@@ -53,6 +50,8 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
     </div>
     <div className={styles.titleSection}>
         <h5>Commentaire(s) <span>({comments?.length})</span></h5>
+        <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
+
         <div>
     {typeFilter.map((item)=> <p onClick={() => setSelectFilter(item)} className={selectFilter === item ? styles.filterActive : ""}>{item}</p>)}
         </div>
@@ -63,6 +62,7 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
             commentList.map((item,index) => {
                 return (
                     <Commentary
+                        id={item._id}
                         deleteComment={() => deleteComment(item._id)}
                         authorId={item.userId}
                     content={item.content}
@@ -80,6 +80,11 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh}) => {
 
 
     <div className={styles.commentaryContainer}>
+        <button
+        onClick={() => {
+            refresh();
+        }}
+        >Voir plus ({limit})</button>
         <div className={styles.formContainer}>
             {
                 session ?

@@ -14,8 +14,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 15px;
-
-
     background-color: $purple;
 
     span{
@@ -96,6 +94,16 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    button{
+      position: absolute;
+      top: 0;
+      background-color: #9844AD;
+      color: white;
+      font-family: 'Montserrat Alternates',sans-serif;
+      padding: 10px;
+      font-size: 10px;
+      z-index: 2;
+    }
 
     .formContainer {
       display: flex;

@@ -7,7 +7,7 @@ import SubCommentary from "./SubCommentary";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
 
-const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment}) => {
+const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment,id}) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(false);
@@ -20,6 +20,7 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
         if (sizeCommentary > 200) {
             setTooLong(true);
         }
+        console.log(id)
     }, [])
 
 
@@ -35,11 +36,11 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                     {
                         authorId === session.user.id &&
                         <TrashIcon
-                            onClick={() => deleteComment()}
+                            onClick={() => deleteComment(id)}
                             className={styles.trash}/>
                     }
                     <div className={styles.authorDate}>
-                        <h8>{pseudo}  <span>{date}</span></h8>
+                        <h8>{pseudo}  <span>{id}</span></h8>
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}

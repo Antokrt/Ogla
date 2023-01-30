@@ -1,10 +1,8 @@
 import urlSlug, {revert} from "url-slug";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import {getPost} from "../../services/Post";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import Header from "../../Component/Header";
-import CategoryHeader from "../../Component/Category/CategoryHeader";
 import {
     ArrowsUpDownIcon,
     ChatBubbleBottomCenterTextIcon,
@@ -47,22 +45,34 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     const router = useRouter();
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
-    const [test, setTest] = useState('jeieie')
+    const [lastCommentId,setLastCommentId]= useState([]);
     const [likes,setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
     const [comments,setComments] = useState([]);
+    const [page,setPage] = useState(1);
+    const [size,setSize] = useState(1);
+
 
 
     const checkSide = () => {
         switch (sidebarSelect){
             case 'Commentary':
-                if(comments.length !== 0) {
+                if(comments.length === 0){
+                    getComment(page,1);
+                }
                     return (
                         <div
                             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
                             <SidebarCommentary
-                                refresh={() => getComment()}
+                                limit={size}
+                                page={page}
+                                refresh={() => {
+                                    getComment(page, 1);
+                                }}
+                                createNewComment={(res) => newComment(res)}
+                                deleteAComment={(id) => deleteComment(id)}
+                                seeMore = {() => getComment(page)}
                                 type={'book'}
                                 bookId={bookData._id}
                                 title={bookData.title}
@@ -71,8 +81,6 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                                 select={sidebarSelect}/>
                         </div>
                     )
-                }
-
                 break;
 
             case 'None':
@@ -97,27 +105,25 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     </div>
                 )
         }
-
     }
-
 
     const getComment =  () => {
-GetCommentService('book',bookData._id)
-    .then((res) => setComments(res))
-    .then(() => console.log('comments'))
+    GetCommentService('book',bookData._id, page, 1)
+    .then((res) => {
+        if(res.length !== 0){
+            setPage(page + 1);
+        }
+            res.forEach(element => {
+                if(!lastCommentId.includes(element._id)){
+                    setComments((prevState)=> ([
+                        ...prevState,
+                        element
+                    ]))
+                }
+            })
+    })
     .catch((err) => console.log(err))
     }
-
-
-
-    useEffect(() => {
-        if(comments.length === 0){
-            console.log("eooeoe")
-            getComment();
-        }
-    },[sidebarSelect])
-
-
 
     const likeBook = () => {
         if(session){
@@ -135,11 +141,27 @@ GetCommentService('book',bookData._id)
         }
     }
 
+    const newComment = (res) => {
+        setComments((prevState)=> [
+            ...prevState,
+            res
+        ])
+
+        setLastCommentId(prevState => [
+            ...prevState,
+            res._id
+        ])
+    }
+
+    const deleteComment = (id) => {
+        setComments((list) => list.filter((item) => item._id !== id))
+    }
 
     return (
         <div className={styles.container}>
 
             <Header/>
+
 
             {
                 checkSide()
@@ -150,6 +172,7 @@ GetCommentService('book',bookData._id)
                 <div className={styles.imgContainer}>
                     <div className={styles.img}>
                         <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
+
                     </div>
                     {bookData._id}
                     <div className={styles.btnContainer}>

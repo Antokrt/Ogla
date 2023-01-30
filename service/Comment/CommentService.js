@@ -8,10 +8,18 @@ export const GetAuthorProfilOfCommentService = (id) => {
     })
 }
 
-export const GetCommentService = (type,id) => {
+export const GetCommentService = (type,id, page,limit) => {
     return new Promise((resolve, reject) => {
-        instance.get('comment/by/'+ type + '/'+id)
-            .then((res) => resolve(res.data))
+        instance.get('comment/by/'+ type + '/'+id + '/'+ page + '/' +limit)
+            .then((res) => {
+                if(res.data.length === 0){
+                    console.log('empty data')
+                }
+                else{
+                    console.log(res.data)
+                }
+                resolve(res.data);
+            })
             .catch((err) => reject('err'))
     })
 }
@@ -27,7 +35,7 @@ return new Promise((resolve, reject) => {
 
 
 export const DeleteCommentaryService = (commentToDeleteId) => {
-    console.log('commentToDeleteId')
+    console.log(commentToDeleteId)
     return new Promise((resolve, reject) => {
         instance.delete('comment/delete/'+ commentToDeleteId)
             .then((res) => resolve(res.data))
