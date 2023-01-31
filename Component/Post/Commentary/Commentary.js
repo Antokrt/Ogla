@@ -6,24 +6,31 @@ import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon, TrashIcon} from "@heroicons
 import SubCommentary from "./SubCommentary";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
+import {LikeBookService, LikeService} from "../../../service/Like/LikeService";
 
-const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment,id}) => {
+const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment,id, hasLikeData, likeComment}) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(false);
-
-
     const [openSubCategory, setOpenSubCategory] = useState(false);
+    const [answersList,setAnswersList] = useState(answers);
+    const [hasLike,setHasLike] = useState(hasLikeData);
     const {data: session } = useSession();
+
+    useEffect(()=>{
+     setHasLike(hasLikeData);
+    },[hasLikeData])
+
+    useEffect(() => {
+        setAnswersList(answers);
+    },[answers])
+
 
     useEffect(() => {
         if (sizeCommentary > 200) {
             setTooLong(true);
         }
-        console.log(id)
     }, [])
-
-
 
     return (
         <div className={styles.container}>
@@ -32,19 +39,27 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                     <img referrerPolicy="no-referrer" src={img}/>
                 </div>
 
+
                 <div className={styles.contentCommentContainer}>
                     {
-                        authorId === session.user.id &&
+                        session && authorId === session.user.id &&
                         <TrashIcon
                             onClick={() => deleteComment(id)}
                             className={styles.trash}/>
                     }
+
                     <div className={styles.authorDate}>
-                        <h8>{pseudo}  <span>{id}</span></h8>
+                        <h8 is={'h8'}>{pseudo}  <span>{id}</span></h8>
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
+                        {
+                            hasLikeData ?
+                                <p>true</p> :
+                                <p>false</p>
+                        }
                     </p>
+
                     {
                         tooLong &&
                         <p
@@ -63,13 +78,23 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                     }
 
                     <div className={styles.likeCommentaryContainer}>
-                        <p className={styles.likeCount}><HeartIcon/> 123</p>
+                        <p className={styles.likeCount}><HeartIcon
+                        onClick={() => {
+                            if(session){
+                                likeComment(id);
+                            }
+                        }}/> {likes}</p>
                         <p className={styles.replyCount}> 29 réponses</p>
                     </div>
 
                     <div className={styles.replyContainer}>
                         <button className={styles.showReplyBtn}
-                                onClick={() => setOpenSubCategory(!openSubCategory)}>Voir les 30 réponses
+                                onClick={() => setOpenSubCategory(!openSubCategory)}>
+                            {
+                                answers?.length <= 0 ?
+                                <> Répondre</> :
+                                    <>lsalsa</>
+                            }
                             {
                                 openSubCategory &&
                                 <ArrowUpIcon/>
@@ -87,13 +112,18 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                                 <div className={styles.sendResponse}>
                                     <button>Envoyer</button>
                                 </div>
-                                <SubCommentary
-                                    subCommentary={"Je ne suis pas du tout d'accord avec toi! C'est ma vie ce roman"}/>
-                                <SubCommentary subCommentary={"Non ntm et signalé !"}/><SubCommentary
-                                subCommentary={"Je ne suis pas du tout d'accord avec toi! C'est ma vie ce roman"}/><SubCommentary
-                                subCommentary={"Je ne suis pas du tout d'accord avec toi! C'est ma vie ce roman"}/><SubCommentary
-                                subCommentary={"Je ne suis pas du tout d'accord avec toi! C'est ma vie ce roman"}/>
-                            </div>
+                                {
+                                    answersList?.map((item,index) => {
+                                        return (
+                                            <SubCommentary
+                                                img={item.img}
+                                                pseudo={item.pseudo}
+                                                date={item.date_creation}
+                                                likes={item.likes}
+                                                content={item.content}/>
+                                        )
+                                    })
+                                }                </div>
                         }
 
                     </div>

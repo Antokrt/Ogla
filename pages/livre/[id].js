@@ -46,14 +46,13 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     const router = useRouter();
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
     const [lastCommentId,setLastCommentId]= useState([]);
+    const [hasToScroll,setHasToScroll] = useState(false);
     const [likes,setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
     const [comments,setComments] = useState([]);
     const [page,setPage] = useState(1);
     const [size,setSize] = useState(1);
-
-
 
     const checkSide = () => {
         switch (sidebarSelect){
@@ -70,6 +69,8 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                                 refresh={() => {
                                     getComment(page, 1);
                                 }}
+                                scrollChange={hasToScroll}
+                                likeAComment={(id) => likeComment(id)}
                                 createNewComment={(res) => newComment(res)}
                                 deleteAComment={(id) => deleteComment(id)}
                                 seeMore = {() => getComment(page)}
@@ -108,7 +109,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     }
 
     const getComment =  () => {
-    GetCommentService('book',bookData._id, page, 1)
+    GetCommentService('book',bookData._id, page, 1, session)
     .then((res) => {
         if(res.length !== 0){
             setPage(page + 1);
@@ -121,8 +122,12 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     ]))
                 }
             })
+
     })
-    .catch((err) => console.log(err))
+        .then(() => {
+            setTimeout(() =>         setHasToScroll(!hasToScroll),50)
+        })
+        .catch((err) => console.log(err))
     }
 
     const likeBook = () => {
@@ -141,6 +146,22 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
         }
     }
 
+    const likeComment = (id) => {
+       const newArr = [...comments];
+       newArr.map((item) => {
+           if(item._id === id){
+              if(item.hasLike){
+                  item.likes = item.likes - 1;
+              }
+              else {
+                  item.likes += 1;
+              }
+              item.hasLike = !item.hasLike;
+           }
+       })
+        setComments(newArr);
+    }
+
     const newComment = (res) => {
         setComments((prevState)=> [
             ...prevState,
@@ -151,6 +172,8 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
             ...prevState,
             res._id
         ])
+
+        setTimeout(() =>         setHasToScroll(!hasToScroll),10)
     }
 
     const deleteComment = (id) => {

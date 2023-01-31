@@ -1,6 +1,6 @@
 import styles from "../../styles/Component/Post/SidebarCommentary.module.scss";
 import scroll from "../../styles/utils/scrollbar.module.scss";
-import {useEffect, useState} from "react";
+import {createRef, useEffect, useRef, useState} from "react";
 import {CheckBadgeIcon} from "@heroicons/react/20/solid";
 import {BookOpenIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
@@ -8,9 +8,22 @@ import Commentary from "./Commentary/Commentary";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
+import {LikeService} from "../../service/Like/LikeService";
 
 
-const SidebarCommentary = ({title,author,comments, bookId,type, refresh, limit, page, createNewComment, deleteAComment}) => {
+const SidebarCommentary = ({
+                               scrollChange,
+                               title,
+                               author,
+                               comments,
+                               bookId,type,
+                               refresh,
+                               limit,
+                               page,
+                               createNewComment,
+                               deleteAComment,
+                               likeAComment,
+                           }) => {
     const router = useRouter();
     const [typeFilter,setTypeFilter] = useState([
         "Populaire(s)",
@@ -20,12 +33,13 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh, limit, 
     const [commentList, setCommentList] = useState(comments);
     const [selectFilter, setSelectFilter] = useState("Récent(s)");
     const [newComment,setNewComment] = useState('');
+    const divRef = useRef(null);
     const {data:session} = useSession();
 
     const sendNewComment = () => {
         NewCommentaryService(bookId,newComment,type)
             .then((res) => {
-                createNewComment(res)
+                createNewComment(res);
                 setNewComment('');
             })
             .catch((err) => console.log(err));
@@ -37,10 +51,26 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh, limit, 
             .catch((err) => console.log(err));
     }
 
+    const likeComment = (id) => {
+        LikeService('comment', id)
+            .then(() => likeAComment(id))
+            .catch((err) => console.log(err));
+    }
+
 
     useEffect(() => {
-       setCommentList(comments)
+        setCommentList(comments);
     },[comments])
+
+    const scrollBottom = () => {
+        divRef.current.scrollTop = divRef.current.scrollHeight
+    }
+
+    useEffect(() => {
+        scrollBottom();
+    },[scrollChange])
+
+
 
     return(
 <div className={styles.container}>
@@ -53,24 +83,28 @@ const SidebarCommentary = ({title,author,comments, bookId,type, refresh, limit, 
         <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
 
         <div>
-    {typeFilter.map((item)=> <p onClick={() => setSelectFilter(item)} className={selectFilter === item ? styles.filterActive : ""}>{item}</p>)}
+    {typeFilter.map((item,index)=> <p key={item} onClick={() => setSelectFilter(item)} className={selectFilter === item ? styles.filterActive : ""}>{item}</p>)}
         </div>
     </div>
 
-    <div className={styles.contentCommentaryContainer + " " + scroll.scrollbar}>
+    <div
+    ref={divRef}
+        className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
         {
             commentList.map((item,index) => {
                 return (
                     <Commentary
                         id={item._id}
                         deleteComment={() => deleteComment(item._id)}
+                        likeComment = {() => likeComment(item._id)}
                         authorId={item.userId}
-                    content={item.content}
-                    likes={item.likes}
-                    img={item.img}
+                        hasLikeData={item.hasLike}
+                        content={item.content}
+                        likes={item.likes}
+                        img={item.img}
                     date={item.date_creation}
                     pseudo={item.pseudo}
-                    answers={21}
+                    answers={item.answers}
                     />
                 )
             })

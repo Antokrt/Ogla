@@ -15,3 +15,19 @@ export const LikeChapterService = (id) => {
             .catch((err) => reject(err));
     })
 }
+
+export const LikeService = (type,id) => {
+    return new Promise((resolve, reject) => {
+        instance.post('like/'+ type, {id})
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
+}
+
+export const VerifLikeService = (type,targetId) => {
+return new Promise((resolve, reject) => {
+    instance.get('like/verif/'+ type + '/'+ targetId)
+        .then((res) => resolve(res.data))
+        .catch((err) => reject(err));
+})
+}

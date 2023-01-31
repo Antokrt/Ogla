@@ -79,6 +79,7 @@
     display: block;
     overflow: auto;
     direction: ltr !important;
+    scroll-behavior: smooth;
   }
 
   .commentaryContainer {

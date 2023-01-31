@@ -1,23 +1,25 @@
 import styles from "../../../styles/Component/Post/Commentary/SubCommentary.module.scss";
 import {HeartIcon} from "@heroicons/react/24/solid";
-import {useState} from "react";
-const SubCommentary = (props) => {
+import {useEffect, useState} from "react";
+const SubCommentary = ({img, pseudo, date, content, likes}) => {
 
-    const [sizeCommentary,setSizeCommentary] = useState(props.subCommentary?.length);
+    const [sizeCommentary,setSizeCommentary] = useState(content.length);
     const [tooLong,setTooLong] = useState(false);
+
+
 
 return (
     <div className={styles.container}>
         <div className={styles.containerComment}>
             <div className={styles.imgContainer}>
-                <img src={"/assets/livre2.jpg"} alt={"Image Profil User"}/>
+                <img src={img} alt={"Image Profil User"}/>
             </div>
 
             <div className={styles.contentCommentContainer}>
                 <div className={styles.authorDate}>
-                    <h8>Mireille Culotte <span>18 sept 22</span></h8>
+                    <h8>{pseudo}<span>{date}</span></h8>
                 </div>
-                <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>{props.subCommentary}
+                <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>{content}
                 </p>
                 {
                     tooLong &&

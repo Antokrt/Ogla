@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/service/Answer/AnswerService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/Comment/CommentService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Comment/CommentService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Like/LikeService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Like/LikeService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +169,8 @@
       <workItem from="1674743482754" duration="3320000" />
       <workItem from="1674930341590" duration="2677000" />
       <workItem from="1674984905730" duration="8617000" />
-      <workItem from="1675069007009" duration="25086000" />
+      <workItem from="1675069007009" duration="25498000" />
+      <workItem from="1675158762197" duration="17179000" />
     </task>
     <servers />
   </component>

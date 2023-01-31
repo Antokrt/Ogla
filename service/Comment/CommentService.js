@@ -1,4 +1,6 @@
 import {instance} from "../config/Interceptor";
+import {VerifLikeService} from "../Like/LikeService";
+import {GetAnswerByComment} from "../Answer/AnswerService";
 
 export const GetAuthorProfilOfCommentService = (id) => {
     return new Promise((resolve, reject) => {
@@ -8,22 +10,32 @@ export const GetAuthorProfilOfCommentService = (id) => {
     })
 }
 
-export const GetCommentService = (type,id, page,limit) => {
+export const GetCommentService = (type,id, page,limit, isConnected) => {
     return new Promise((resolve, reject) => {
         instance.get('comment/by/'+ type + '/'+id + '/'+ page + '/' +limit)
             .then((res) => {
-                if(res.data.length === 0){
-                    console.log('empty data')
+                if (isConnected) {
+                    return Promise.all(res.data.map(async (comment) => {
+                        const hasLike = await VerifLikeService('comment', comment._id);
+                        comment.hasLike = hasLike;
+                        return comment;
+                    }));
                 }
-                else{
-                    console.log(res.data)
-                }
-                resolve(res.data);
+                return res.data;
             })
-            .catch((err) => reject('err'))
-    })
-}
-
+            .then((comments) => {
+                return Promise.all(comments.map(async (comment) => {
+                    const answers = await GetAnswerByComment(comment._id);
+                    comment.answers = answers.data;
+                    return comment;
+                }));
+            })
+            .then((comments) => {
+                resolve(comments);
+            })
+            .catch((err) => reject(err));
+    });
+};
 export const NewCommentaryService = (target_id,content,type) => {
 return new Promise((resolve, reject) => {
     const data = {target_id,content,type};
