@@ -1,12 +1,16 @@
 import styles from "../../../styles/Component/Post/Commentary/SubCommentary.module.scss";
 import {HeartIcon} from "@heroicons/react/24/solid";
 import {useEffect, useState} from "react";
-const SubCommentary = ({img, pseudo, date, content, likes}) => {
+import {useSession} from "next-auth/react";
+import {TrashIcon} from "@heroicons/react/24/outline";
+const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, hasLike, likeAnswer, id, authorId}) => {
 
     const [sizeCommentary,setSizeCommentary] = useState(content.length);
     const [tooLong,setTooLong] = useState(false);
+    const {data:session } = useSession();
 
-
+    useEffect(() => {
+    },[])
 
 return (
     <div className={styles.container}>
@@ -16,11 +20,26 @@ return (
             </div>
 
             <div className={styles.contentCommentContainer}>
+
+                {
+                    session && session.user.id === authorId &&
+                    <TrashIcon
+                        onClick={() => deleteAnswer(id)}
+                        className={styles.trash}/>
+                }
+
+
                 <div className={styles.authorDate}>
-                    <h8>{pseudo}<span>{date}</span></h8>
+                    <h8>{pseudo}<span>{id}</span></h8>
                 </div>
                 <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>{content}
                 </p>
+                {
+                    hasLike ?
+                        <p className={styles.commentary}>true</p> :
+                        <p className={styles.commentary}>false</p>
+                }
+
                 {
                     tooLong &&
                     <p
@@ -39,7 +58,7 @@ return (
                 }
 
                 <div className={styles.likeCommentaryContainer}>
-                    <p className={styles.likeCount}><HeartIcon/> 123</p>
+                    <p className={styles.likeCount}><HeartIcon/> {likes}</p>
                 </div>
 
             </div>

@@ -8,12 +8,30 @@ import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
 import {LikeBookService, LikeService} from "../../../service/Like/LikeService";
 
-const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteComment,id, hasLikeData, likeComment}) => {
+const Commentary = ({pseudo,
+                        img,
+                        date,
+                        content,
+                        likes,
+                        answers,
+                        authorId,
+                        deleteComment,
+                        id,
+                        hasLikeData,
+                        likeComment,
+                        likeAnswer,
+                        sendNewAnswer,
+                        deleteAanswer,
+                        answerPage,
+                    newAnswerPage
+                    }) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(false);
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList,setAnswersList] = useState(answers);
+    const [newAnswer, setNewAnswer] = useState('');
+    const [page,setPage] = useState(answerPage)
     const [hasLike,setHasLike] = useState(hasLikeData);
     const {data: session } = useSession();
 
@@ -24,6 +42,10 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
     useEffect(() => {
         setAnswersList(answers);
     },[answers])
+
+    useEffect(() => {
+        setPage(answerPage)
+    },[answerPage])
 
 
     useEffect(() => {
@@ -50,14 +72,11 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
 
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo}  <span>{id}</span></h8>
+
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
-                        {
-                            hasLikeData ?
-                                <p>true</p> :
-                                <p>false</p>
-                        }
+                        <p>Answer Page : {answerPage}</p>
                     </p>
 
                     {
@@ -108,14 +127,38 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                         {
                             openSubCategory &&
                             <div className={styles.containerSubCommentary}>
-                                <textarea className={scroll.scrollbar} placeholder={"Répondez à Mireille Culotte"}/>
+                                <textarea
+                                    onKeyDown={(e) => {
+                                        if(e.key === 'Enter' && !e.shiftKey && newAnswer !== ""){
+                                            const data ={
+                                                id,content:newAnswer
+                                            }
+                                            e.preventDefault();
+                                            sendNewAnswer(data);
+                                            setNewAnswer('');
+                                        }
+                                    }}
+                                    onChange={(e) => setNewAnswer(e.target.value)} value={newAnswer} className={scroll.scrollbar} placeholder={"Répondez à " + pseudo + "..."}/>
                                 <div className={styles.sendResponse}>
-                                    <button>Envoyer</button>
+                                    <button onClick={() => {
+                                        if(session && newAnswer !== ""){
+                                            const data ={
+                                                id,content:newAnswer
+                                            }
+                                            sendNewAnswer(data);
+                                            setNewAnswer('');
+                                        }
+                                    }
+                                    } className={newAnswer !== "" && styles.activeBtn} >Envoyer</button>
                                 </div>
                                 {
                                     answersList?.map((item,index) => {
                                         return (
                                             <SubCommentary
+                                                hasLike={item.hasLike}
+                                                deleteAnswer={() => deleteAanswer(item._id)}
+                                                id={item._id}
+                                                authorId={item.userId}
                                                 img={item.img}
                                                 pseudo={item.pseudo}
                                                 date={item.date_creation}
@@ -123,7 +166,10 @@ const Commentary = ({pseudo,img,date,content,likes, answers, authorId, deleteCom
                                                 content={item.content}/>
                                         )
                                     })
-                                }                </div>
+
+                                }
+                                <button onClick={() => newAnswerPage(id)}>Voir plus</button>
+                            </div>
                         }
 
                     </div>

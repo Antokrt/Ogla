@@ -1,13 +1,8 @@
-import urlSlug, {revert} from "url-slug";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import Header from "../../Component/Header";
-import {
-    ArrowsUpDownIcon,
-    ChatBubbleBottomCenterTextIcon,
-    DocumentTextIcon
-} from "@heroicons/react/24/outline";
+import {ArrowsUpDownIcon, ChatBubbleBottomCenterTextIcon, DocumentTextIcon} from "@heroicons/react/24/outline";
 import {HeartIcon} from "@heroicons/react/20/solid";
 import Book from "../../Component/layouts/Icons/Book";
 import Like from "../../Component/layouts/Icons/Like";
@@ -18,9 +13,10 @@ import FooterOnBook from "../../Component/Post/FooterOnBook";
 import {useSession} from "next-auth/react";
 
 import {LikeBookService} from "../../service/Like/LikeService";
-import {VerifLike, VerifLikeApi} from "../api/like";
+import {VerifLikeApi} from "../api/like";
 import {GetOneBookApi} from "../api/book";
 import {GetCommentService} from "../../service/Comment/CommentService";
+import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 
 
 export async function getServerSideProps({req,params}){
@@ -44,7 +40,7 @@ export async function getServerSideProps({req,params}){
 const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     const router = useRouter();
-    const [sidebarSelect, setSidebarSelect] = useState("Disable");
+    const [sidebarSelect, setSidebarSelect] = useState("/");
     const [lastCommentId,setLastCommentId]= useState([]);
     const [hasToScroll,setHasToScroll] = useState(false);
     const [likes,setLikes] = useState(bookData?.likes);
@@ -74,6 +70,9 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                                 createNewComment={(res) => newComment(res)}
                                 deleteAComment={(id) => deleteComment(id)}
                                 seeMore = {() => getComment(page)}
+                                sendANewAnswer={(data) => sendAnswer(data)}
+                                deleteAnswer={(id) => deleteAnswer(id)}
+                                newPageAnswer={(id) => loadMoreAnswer(id)}
                                 type={'book'}
                                 bookId={bookData._id}
                                 title={bookData.title}
@@ -102,8 +101,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
             default:
                 return (
-                    <div className={styles.slideOut + " " + styles.sidebar}>
-                    </div>
+                 <div></div>
                 )
         }
     }
@@ -122,10 +120,11 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     ]))
                 }
             })
-
     })
         .then(() => {
-            setTimeout(() =>         setHasToScroll(!hasToScroll),50)
+            if(comments.length !== 0){
+                setTimeout(() =>         setHasToScroll(!hasToScroll),50)
+            }
         })
         .catch((err) => console.log(err))
     }
@@ -173,11 +172,62 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
             res._id
         ])
 
+        setPage((page + 1));
+
         setTimeout(() =>         setHasToScroll(!hasToScroll),10)
     }
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
+        setPage(page - 1);
+    }
+
+    const sendAnswer = (data) => {
+        setComments(prevComments =>
+            prevComments.map(comment => {
+                if (comment._id === data.target_id) {
+                    return {
+                        ...comment,
+                        answers: comment.answers ? [...comment.answers, data] : [data],
+                        answersPage: comment.answersPage === 0 ? 1 : comment.answersPage + 1
+                    };
+                }
+                return comment;
+            })
+        );
+    };
+
+    const deleteAnswer = (id) => {
+        setComments(prevComments =>
+            prevComments.map(comment => {
+                if (comment.answers) {
+                    const updatedAnswers = comment.answers.filter(answer => answer._id !== id);
+                    if (comment.answers.find(answer => answer._id === id)) {
+                        return {
+                            ...comment,
+                            answers: updatedAnswers,
+                            answersPage: updatedAnswers.length === 0 ? 1 : comment.answersPage - 1
+                        };
+                    }
+                }
+                return comment;
+            })
+        );
+    };
+
+        const loadMoreAnswer = (id) => {
+            const newState = [...comments];
+            const target = newState.find(obj => obj._id === id);
+            if (target) {
+                GetAnswerByCommentService(id,target.answersPage,1, session)
+                    .then((res) => {
+                        if(res.data.length > 0){
+                            target.answersPage += 1;
+                            target.answers = [...target.answers, ...res.data];
+                        }
+                    })
+                    .then(() => setComments(newState))
+            }
     }
 
     return (

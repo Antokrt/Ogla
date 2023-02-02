@@ -31,6 +31,27 @@ const toogleSidebar = (action,sidebarSelect,setSidebarSelect) => {
                 break;
         }
     }
+
+
+    if(sidebarSelect === "/"){
+        switch (action){
+            case "Disable":
+                setSidebarSelect('Disable');
+                break;
+
+            case "None":
+                setSidebarSelect('None');
+                break;
+
+            case "List":
+                setSidebarSelect('List');
+                break;
+
+            case "Commentary":
+                setSidebarSelect("Commentary");
+                break;
+        }
+    }
     return null;
 }
 export default toogleSidebar;

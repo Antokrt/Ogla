@@ -60,14 +60,14 @@ export default function Home({err,books}) {
                     <HotPost className={styles.hotItem}
                              likes={234}
                              top={true}
-                             title={"La poule aux oeufs d'ors"} nbChapter={35} author={"Jimmy Fiak"}
+                             title={"Livre 1"} nbChapter={35} author={"JimmyS"}
                              img={"/assets/livre7.jpg"} category={"Action"}
                              description={"Fu Jiu appears to be a normal lad in high school on the surface. But in fact, she (Yes! She!) is the hacker, Z, a villain-terminator in the online world of an alternate world. Having reincarnated into the body of a woman and being forced to disguise herself as a young man, she reigns over the game world, fights for justice, and puts a spell on all the girls around with her innate charm. However, her flirting comes across as gay to the rich Almighty Qin and his inner circle. Over time, the Almighty Qin falls for him… her. Has he turned gay for him… her? Now, that's confusing!"}
                     />
                     <HotPost className={styles.hotItem}
                              likes={9784}
-                             title={"Un village maléfique"} nbChapter={205} author={"Huang Liok"}
-                             img={"/assets/livre2.jpg"} category={"Horreur"}
+                             title={"Livre 2"} nbChapter={205} author={"ThomasK"}
+                             img={"/assets/livre1.jpg"} category={"Horreur"}
                              description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
                                  "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
                                  "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}

@@ -6,24 +6,24 @@ import {CheckIcon, ChevronDoubleRightIcon, ChevronRightIcon} from "@heroicons/re
 const PreviewHorizontalPostList = ({title,type}) => {
     const [list, setList] = useState([
         {
-            title: "Pouliche liche moi la babine",
-            author: "Ursula Poulak",
+            title: "Livre 1",
+            author: "Lorem",
             like: 237,
             category: "Drama",
             nbChapter: 679,
             src: "/assets/livre2.jpg"
         },
         {
-            title: "C'est normal en Russie",
-            author: "Cindy la beauf",
+            title: "Livre 2",
+            author: "LauraB",
             like: 2137,
             category: "Comédie",
             nbChapter: 69,
             src: "/assets/livre1.jpg"
         },
         {
-            title: "Manges le mulet",
-            author: "Le violoneux Daniel",
+            title: "Livre 3",
+            author: "Lorem",
             like: 332,
             category: "Action",
             nbChapter: 12,

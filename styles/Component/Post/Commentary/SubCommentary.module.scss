@@ -24,7 +24,7 @@
         width: 100%;
         object-fit: cover;
         clip-path: circle();
-        height: 50px;
+        height: 35px;
       }
     }
 
@@ -131,4 +131,17 @@ padding-right: 20px;
   -webkit-line-clamp: 5;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+}
+
+.trash{
+  &:hover{
+    transition: 0.1s;
+    color: #9844AD;
+  }
+  transition: 0.1s;
+  cursor: pointer;
+  position: absolute;
+  right: 5%;
+  width: 12px;
+  color: rgba(28, 35, 43, 0.44);
 }

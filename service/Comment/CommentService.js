@@ -1,6 +1,6 @@
 import {instance} from "../config/Interceptor";
 import {VerifLikeService} from "../Like/LikeService";
-import {GetAnswerByComment} from "../Answer/AnswerService";
+import {GetAnswerByCommentService} from "../Answer/AnswerService";
 
 export const GetAuthorProfilOfCommentService = (id) => {
     return new Promise((resolve, reject) => {
@@ -10,23 +10,26 @@ export const GetAuthorProfilOfCommentService = (id) => {
     })
 }
 
-export const GetCommentService = (type,id, page,limit, isConnected) => {
+export const GetCommentService = (type,id, page,limit, isConnected, pageAnswer) => {
     return new Promise((resolve, reject) => {
         instance.get('comment/by/'+ type + '/'+id + '/'+ page + '/' +limit)
             .then((res) => {
-                if (isConnected) {
                     return Promise.all(res.data.map(async (comment) => {
-                        const hasLike = await VerifLikeService('comment', comment._id);
-                        comment.hasLike = hasLike;
+                        if(isConnected){
+                            const hasLike = await VerifLikeService('comment', comment._id);
+                            comment.hasLike = hasLike;
+                        }
+                        comment.answersPage = 1;
                         return comment;
                     }));
-                }
-                return res.data;
             })
             .then((comments) => {
                 return Promise.all(comments.map(async (comment) => {
-                    const answers = await GetAnswerByComment(comment._id);
+                    const answers = await GetAnswerByCommentService(comment._id,comment.answersPage,1, isConnected);
                     comment.answers = answers.data;
+                    if(answers.data.length !== 0){
+                        comment.answersPage = 2
+                    }
                     return comment;
                 }));
             })
@@ -47,7 +50,6 @@ return new Promise((resolve, reject) => {
 
 
 export const DeleteCommentaryService = (commentToDeleteId) => {
-    console.log(commentToDeleteId)
     return new Promise((resolve, reject) => {
         instance.delete('comment/delete/'+ commentToDeleteId)
             .then((res) => resolve(res.data))

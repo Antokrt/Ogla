@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
 import {LikeService} from "../../service/Like/LikeService";
+import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
 
 
 const SidebarCommentary = ({
@@ -23,6 +24,9 @@ const SidebarCommentary = ({
                                createNewComment,
                                deleteAComment,
                                likeAComment,
+                               sendANewAnswer,
+    deleteAnswer,
+    newPageAnswer
                            }) => {
     const router = useRouter();
     const [typeFilter,setTypeFilter] = useState([
@@ -39,6 +43,7 @@ const SidebarCommentary = ({
     const sendNewComment = () => {
         NewCommentaryService(bookId,newComment,type)
             .then((res) => {
+                res.answersPage = 1;
                 createNewComment(res);
                 setNewComment('');
             })
@@ -55,6 +60,18 @@ const SidebarCommentary = ({
         LikeService('comment', id)
             .then(() => likeAComment(id))
             .catch((err) => console.log(err));
+    }
+
+    const sendNewAnswer = (data) => {
+        NewAnswerService(data.id, data.content,session)
+            .then((res) => sendANewAnswer(res.data))
+            .catch((err) => console.log(err));
+    }
+
+    const deleteAanswer = (id) => {
+        DeleteAnswerService(id,session)
+            .then(() => deleteAnswer(id))
+            .catch((err) => console.log(err))
     }
 
 
@@ -96,7 +113,11 @@ const SidebarCommentary = ({
                     <Commentary
                         id={item._id}
                         deleteComment={() => deleteComment(item._id)}
+                        deleteAanswer={(id) => deleteAanswer(id)}
                         likeComment = {() => likeComment(item._id)}
+                        sendNewAnswer={(data) => sendNewAnswer(data)}
+                        answerPage={item.answersPage}
+                        newAnswerPage={() => newPageAnswer(item._id)}
                         authorId={item.userId}
                         hasLikeData={item.hasLike}
                         content={item.content}
