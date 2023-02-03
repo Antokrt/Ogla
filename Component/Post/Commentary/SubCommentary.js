@@ -5,7 +5,7 @@ import {useSession} from "next-auth/react";
 import {TrashIcon} from "@heroicons/react/24/outline";
 const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, hasLike, likeAnswer, id, authorId}) => {
 
-    const [sizeCommentary,setSizeCommentary] = useState(content.length);
+    const [sizeCommentary,setSizeCommentary] = useState(content?.length);
     const [tooLong,setTooLong] = useState(false);
     const {data:session } = useSession();
 
@@ -58,7 +58,13 @@ return (
                 }
 
                 <div className={styles.likeCommentaryContainer}>
-                    <p className={styles.likeCount}><HeartIcon/> {likes}</p>
+                    <p className={styles.likeCount}><HeartIcon
+                    onClick={() => {
+                        if(session){
+                            likeAnswer()
+                        }
+                    }}
+                    /> {likes}</p>
                 </div>
 
             </div>

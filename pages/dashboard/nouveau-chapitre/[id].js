@@ -19,7 +19,6 @@ import DateNow from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";
-import {data} from "autoprefixer";
 
 export async function getServerSideProps({req,params}){
     const id = params.id;

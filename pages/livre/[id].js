@@ -17,6 +17,13 @@ import {VerifLikeApi} from "../api/like";
 import {GetOneBookApi} from "../api/book";
 import {GetCommentService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
+import {
+    DeleteAnswerReduce,
+    LikeAnswerReduce,
+    LikeCommentReduce,
+    LikeCommentUtil,
+    SendAnswerReduce
+} from "../../utils/CommentaryUtils";
 
 
 export async function getServerSideProps({req,params}){
@@ -72,8 +79,10 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                                 seeMore = {() => getComment(page)}
                                 sendANewAnswer={(data) => sendAnswer(data)}
                                 deleteAnswer={(id) => deleteAnswer(id)}
+                                likeAnswer={(id) => likeAnswer(id)}
                                 newPageAnswer={(id) => loadMoreAnswer(id)}
                                 type={'book'}
+                                typeId={bookData._id}
                                 bookId={bookData._id}
                                 title={bookData.title}
                                 author={bookData.author_pseudo}
@@ -107,8 +116,10 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     }
 
     const getComment =  () => {
+
     GetCommentService('book',bookData._id, page, 1, session)
     .then((res) => {
+
         if(res.length !== 0){
             setPage(page + 1);
         }
@@ -146,19 +157,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     }
 
     const likeComment = (id) => {
-       const newArr = [...comments];
-       newArr.map((item) => {
-           if(item._id === id){
-              if(item.hasLike){
-                  item.likes = item.likes - 1;
-              }
-              else {
-                  item.likes += 1;
-              }
-              item.hasLike = !item.hasLike;
-           }
-       })
-        setComments(newArr);
+      setComments(LikeCommentReduce(id,comments));
     }
 
     const newComment = (res) => {
@@ -171,9 +170,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
             ...prevState,
             res._id
         ])
-
         setPage((page + 1));
-
         setTimeout(() =>         setHasToScroll(!hasToScroll),10)
     }
 
@@ -183,39 +180,18 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
     }
 
     const sendAnswer = (data) => {
-        setComments(prevComments =>
-            prevComments.map(comment => {
-                if (comment._id === data.target_id) {
-                    return {
-                        ...comment,
-                        answers: comment.answers ? [...comment.answers, data] : [data],
-                        answersPage: comment.answersPage === 0 ? 1 : comment.answersPage + 1
-                    };
-                }
-                return comment;
-            })
-        );
+        setComments(SendAnswerReduce(comments,data.target_id,data));
     };
 
     const deleteAnswer = (id) => {
-        setComments(prevComments =>
-            prevComments.map(comment => {
-                if (comment.answers) {
-                    const updatedAnswers = comment.answers.filter(answer => answer._id !== id);
-                    if (comment.answers.find(answer => answer._id === id)) {
-                        return {
-                            ...comment,
-                            answers: updatedAnswers,
-                            answersPage: updatedAnswers.length === 0 ? 1 : comment.answersPage - 1
-                        };
-                    }
-                }
-                return comment;
-            })
-        );
+       setComments(DeleteAnswerReduce(comments,id))
     };
 
-        const loadMoreAnswer = (id) => {
+    const likeAnswer = (replyId) => {
+        setComments(LikeAnswerReduce(comments,replyId));
+    }
+
+    const loadMoreAnswer = (id) => {
             const newState = [...comments];
             const target = newState.find(obj => obj._id === id);
             if (target) {
@@ -229,6 +205,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                     .then(() => setComments(newState))
             }
     }
+
 
     return (
         <div className={styles.container}>

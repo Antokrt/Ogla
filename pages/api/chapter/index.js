@@ -3,11 +3,9 @@ export async function GetOneChapterApi(id){
     const chapterErrData = !chapter.ok;
     let chapterJson = await chapter.json();
 
-
-    console.log(chapterJson)
-
     return {
         chapter: chapterJson.chapter,
+        chapterList: chapterJson.chapterList,
         author: chapterJson.author,
         book: chapterJson.book,
         err:chapterErrData

@@ -19,7 +19,7 @@ const Commentary = ({pseudo,
                         id,
                         hasLikeData,
                         likeComment,
-                        likeAnswer,
+                        likeAanswer,
                         sendNewAnswer,
                         deleteAanswer,
                         answerPage,
@@ -127,18 +127,28 @@ const Commentary = ({pseudo,
                         {
                             openSubCategory &&
                             <div className={styles.containerSubCommentary}>
-                                <textarea
-                                    onKeyDown={(e) => {
-                                        if(e.key === 'Enter' && !e.shiftKey && newAnswer !== ""){
-                                            const data ={
-                                                id,content:newAnswer
+                                {
+                                    session ?
+                                    <textarea
+                                        onKeyDown={(e) => {
+                                            if(e.key === 'Enter' && !e.shiftKey && newAnswer !== "" && session){
+                                                const data ={
+                                                    id,content:newAnswer
+                                                }
+                                                e.preventDefault();
+                                                sendNewAnswer(data);
+                                                setNewAnswer('');
                                             }
-                                            e.preventDefault();
-                                            sendNewAnswer(data);
-                                            setNewAnswer('');
-                                        }
-                                    }}
-                                    onChange={(e) => setNewAnswer(e.target.value)} value={newAnswer} className={scroll.scrollbar} placeholder={"Répondez à " + pseudo + "..."}/>
+                                        }}
+                                        onChange={(e) => {
+                                            if(session){
+                                                setNewAnswer(e.target.value);
+                                            }
+                                        }} value={newAnswer} className={scroll.scrollbar} placeholder={"Répondez à " + pseudo + "..."}/> :
+
+                                        <textarea disabled={true} className={scroll.scrollbar} placeholder={"Connectez vous pour répondre à " + pseudo+ '...'}/>
+                                }
+
                                 <div className={styles.sendResponse}>
                                     <button onClick={() => {
                                         if(session && newAnswer !== ""){
@@ -151,23 +161,28 @@ const Commentary = ({pseudo,
                                     }
                                     } className={newAnswer !== "" && styles.activeBtn} >Envoyer</button>
                                 </div>
-                                {
-                                    answersList?.map((item,index) => {
-                                        return (
-                                            <SubCommentary
-                                                hasLike={item.hasLike}
-                                                deleteAnswer={() => deleteAanswer(item._id)}
-                                                id={item._id}
-                                                authorId={item.userId}
-                                                img={item.img}
-                                                pseudo={item.pseudo}
-                                                date={item.date_creation}
-                                                likes={item.likes}
-                                                content={item.content}/>
-                                        )
-                                    })
+                                <div className={styles.listReply}>
+                                    {
+                                        answersList?.map((item,index) => {
+                                            return (
+                                                <SubCommentary
+                                                    hasLike={item.hasLike}
+                                                    deleteAnswer={() => deleteAanswer(item._id)}
+                                                    likeAnswer={() => likeAanswer(item._id)}
+                                                    id={item._id}
+                                                    authorId={item.userId}
+                                                    img={item.img}
+                                                    pseudo={item.pseudo}
+                                                    date={item.date_creation}
+                                                    likes={item.likes}
+                                                    content={item.content}/>
+                                            )
+                                        })
 
-                                }
+                                    }
+
+                                </div>
+
                                 <button onClick={() => newAnswerPage(id)}>Voir plus</button>
                             </div>
                         }

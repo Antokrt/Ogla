@@ -17,7 +17,8 @@ const SidebarCommentary = ({
                                title,
                                author,
                                comments,
-                               bookId,type,
+                               typeId,
+                               type,
                                refresh,
                                limit,
                                page,
@@ -26,7 +27,8 @@ const SidebarCommentary = ({
                                likeAComment,
                                sendANewAnswer,
     deleteAnswer,
-    newPageAnswer
+                               likeAnswer,
+                               newPageAnswer
                            }) => {
     const router = useRouter();
     const [typeFilter,setTypeFilter] = useState([
@@ -41,7 +43,7 @@ const SidebarCommentary = ({
     const {data:session} = useSession();
 
     const sendNewComment = () => {
-        NewCommentaryService(bookId,newComment,type)
+        NewCommentaryService(typeId,newComment,type)
             .then((res) => {
                 res.answersPage = 1;
                 createNewComment(res);
@@ -71,6 +73,12 @@ const SidebarCommentary = ({
     const deleteAanswer = (id) => {
         DeleteAnswerService(id,session)
             .then(() => deleteAnswer(id))
+            .catch((err) => console.log(err))
+    }
+
+    const likeAanswer = (id) => {
+        LikeService('answer',id)
+            .then((res) => likeAnswer(id))
             .catch((err) => console.log(err))
     }
 
@@ -114,6 +122,7 @@ const SidebarCommentary = ({
                         id={item._id}
                         deleteComment={() => deleteComment(item._id)}
                         deleteAanswer={(id) => deleteAanswer(id)}
+                        likeAanswer={(id) => likeAanswer(id)}
                         likeComment = {() => likeComment(item._id)}
                         sendNewAnswer={(data) => sendNewAnswer(data)}
                         answerPage={item.answersPage}
