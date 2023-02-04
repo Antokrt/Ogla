@@ -61,7 +61,10 @@ export default function Header() {
                             >
                                 <div>
 
-                                    {<p>{session.user?.pseudo[0].toUpperCase()}</p>}
+                                    {
+                                        session &&
+                                        <p>{session.user?.pseudo[0].toUpperCase()}</p>
+                                    }
                                 </div>
                             </div>
 

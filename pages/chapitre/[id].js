@@ -50,6 +50,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
     const [likes,setLikes] = useState(chapterData?.likes);
     const [hasToScroll,setHasToScroll] = useState(false);
     const [hasLike, setHasLike] = useState(hasLikeData);
+    const [nbCommentary, setNbCommentary] = useState(chapterData?.nbCommentary);
     const [lastCommentId,setLastCommentId]= useState([]);
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
     const {data: session} = useSession();
@@ -166,9 +167,6 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         setComments(LikeCommentReduce(id,comments));
     }
 
-
-
-
     const newComment = (res) => {
         setComments((prevState)=> [
             ...prevState,
@@ -181,6 +179,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         ])
 
         setPage((page + 1));
+        setNbCommentary(nbCommentary + 1);
 
         setTimeout(() =>         setHasToScroll(!hasToScroll),10)
     }
@@ -188,6 +187,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
         setPage(page - 1);
+        setNbCommentary(nbCommentary - 1);
     }
 
     const sendAnswer = (data) => {
@@ -273,10 +273,10 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 index={index}
                 author={bookData?.author_pseudo}
                 nbChapter={bookData?.chapter_list.length}
+                nbCommentary={nbCommentary}
                 openList={() => {
                     ToogleSidebar("List",sidebarSelect,setSidebarSelect);
                 }}
-
                 openCommentary={() => {
                     ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
                 }}

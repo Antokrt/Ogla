@@ -48,6 +48,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
     const router = useRouter();
     const [sidebarSelect, setSidebarSelect] = useState("/");
+    const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
     const [lastCommentId,setLastCommentId]= useState([]);
     const [hasToScroll,setHasToScroll] = useState(false);
     const [likes,setLikes] = useState(bookData?.likes);
@@ -171,12 +172,14 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
             res._id
         ])
         setPage((page + 1));
-        setTimeout(() =>         setHasToScroll(!hasToScroll),10)
+        setNbCommentary(nbCommentary + 1);
+        setTimeout(() =>         setHasToScroll(!hasToScroll),10);
     }
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
         setPage(page - 1);
+        setNbCommentary(nbCommentary - 1)
     }
 
     const sendAnswer = (data) => {
@@ -242,7 +245,7 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                         onClick={() => getComment()}
                             className={styles.btnItem}>
                             <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
-                            <p>(32)</p>
+                            <p>({nbCommentary})</p>
 
                         </div>
 
@@ -313,13 +316,12 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                 title={bookData?.title}
                 like={bookData?.likes}
                 img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
-                nbCommentary={28}
+                nbCommentary={nbCommentary}
                 author={bookData?.author_pseudo}
                 nbChapter={chapterData?.length}
                 openList={() => {
                     ToogleSidebar("List",sidebarSelect,setSidebarSelect);
                 }}
-
                 openCommentary={() => {
                     ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
                 }}
