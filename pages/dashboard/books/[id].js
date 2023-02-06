@@ -210,7 +210,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             <div className={styles.headerTextarea}>
                                                 <h5>Résumé</h5>
                                                 <div className={styles.btn}>
-                                                    <button className={styles.seeBtn}>Voir le livre</button>
+                                                    <button
+                                                        onClick={() => router.push({
+                                                            pathname:'/livre/'+ book._id,
+                                                            query:book.slug
+                                                        })}
+                                                        className={styles.seeBtn}>Voir le livre</button>
                                                     <button
                                                         onClick={() => sumUpdate()}
                                                         className={newSummary !== book.summary ? styles.activeBtn : ''}

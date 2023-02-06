@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const AuthorSchema = Yup.object().shape({
     firstName: Yup.string()
         .required(" ")
-        .min(5, "2 caractères minimum")
+        .min(2, "2 caractères minimum")
         .max(15, "15 caractères maximum"),
 
     lastName: Yup.string()
@@ -45,7 +45,7 @@ export const AuthorSchema = Yup.object().shape({
 export const AuthorSchemaLog = Yup.object().shape({
     firstName: Yup.string()
         .required(" ")
-        .min(5, "2 caractères minimum")
+        .min(2, "2 caractères minimum")
         .max(15, "15 caractères maximum"),
 
     lastName: Yup.string()

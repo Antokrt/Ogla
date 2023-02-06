@@ -10,6 +10,8 @@ import CategoryHome from "../Component/CategoryHome";
 import {getToken} from "next-auth/jwt";
 import {useEffect} from "react";
 import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
+import {useSession} from "next-auth/react";
+import axios from "axios";
 
 /*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
@@ -28,8 +30,22 @@ import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute
     }
 }*/
 
+export async function getServerSideProps({req}){
+    const token = await getToken({
+        req:req,
+        secret:'code'
+    });
+
+    return{
+        props:{
+            test:2
+        }
+    }
+}
+
 export default function Home({err,books}) {
 
+    const {data:session,update} = useSession();
 
     return (
         <div className={styles.container}>
@@ -40,7 +56,6 @@ export default function Home({err,books}) {
             </Head>
 
             <div
-
                /** style={{
                 position: "fixed",
                 top: 0,
@@ -49,6 +64,16 @@ export default function Home({err,books}) {
             }*/>
                 <Header/>
             </div>
+            <button style={{
+                zIndex:'211',
+                position:'absolute'
+            }}
+            onClick={ () => {
+                axios.get('/api/auth/session?update-author')
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err))
+            }}
+            >change</button>
             <Banner/>
 <CategoryHome/>
             <div className={styles.hot}>

@@ -109,7 +109,7 @@ const DevenirAuteur = () => {
                     id={'firstName'}
                     type={"text"}
                     name={"firstName"}
-                    placeholder={"Nom"}/>
+                    placeholder={"Prénom"}/>
                 {/* FIRST-NAME */}
 
                 {/* AGE */}
@@ -311,8 +311,12 @@ const DevenirAuteur = () => {
             }
 
             instance.put('http://localhost:3008/author/turn-author',formData)
-                .then((res) => router.push('/dashboard'))
-                .catch((err) => console.log(err))
+                .then(() => {
+                    axios.get('/api/auth/session?update-author')
+                        .then(() => router.push('/'))
+                        .then(() => router.reload());
+                })
+                .catch((err) => console.log(err.data))
         }
         else{
             const formData = {

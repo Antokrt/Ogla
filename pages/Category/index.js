@@ -11,7 +11,7 @@ import NewFeatured from "../../Component/Category/New";
 import LogCard from "../../Component/layouts/LogCard";
 import DateNow from "../../utils/Date";
 import Footer from "../../Component/Footer";
-import {getSession} from "next-auth/react";
+import {getSession, useSession} from "next-auth/react";
 
 export async function getServerSideProps({req}){
     const params = {
@@ -43,6 +43,7 @@ export default function CategoryPage({popularBooks}) {
         list: ["Populaire", "Récent", "Plus de chapitres"],
         active: "Populaire"
     });
+    const {data:session} = useSession();
     const [post, setPost] = useState([]);
     const {query: {cat}} = router;
 
@@ -51,6 +52,7 @@ export default function CategoryPage({popularBooks}) {
         getData()
             .then((res) => {setPost(res)})
             .catch((err) => console.log(err))
+console.log(session)
     }, [])
 
     return (

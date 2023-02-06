@@ -7,6 +7,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(async config => {
    const data = await getSession();
+   console.log(data.user.accessToken)
    if(data){
        const token = data.user.accessToken;
        if(token){

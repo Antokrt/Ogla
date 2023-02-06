@@ -70,8 +70,6 @@ const Register = ({login}) => {
         console.log(formData)
         const register = await signIn('signup',formData)
             .then((res) => {
-                console.log(formData)
-                console.log(res.error)
                 if(res.status === 401){
                     let errMsg = res.error;
                     switch (errMsg){
