@@ -1,6 +1,12 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import {useEffect, useRef, useState} from "react";
-import {deleteBook, getOneBook, updatePicture, updateSummary} from "../../../service/Dashboard/BooksAuthorService";
+import {
+    deleteBook, DeleteBookService,
+     UpdateBookPictureService, UpdateBookSummaryService,
+    updatePicture,
+    UpdatePictureService,
+    updateSummary
+} from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
@@ -69,7 +75,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
     const updatePic = () => {
         if(file){
-            updatePicture(file,book._id)
+            UpdateBookPictureService(file,book._id)
                 .then((res) => {
                     setBook((prevState) => ({
                         ...prevState,
@@ -91,7 +97,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
         if(router.isReady){
             setLoading(false);
         }
-    },[router.isReady])
+    },[router.isReady]);
 
     const imgClick = () => {
         imgRef.current.click();
@@ -100,7 +106,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
     const sumUpdate = () => {
         if(newSummary !== book.summary && newSummary.length < 2000){
-            updateSummary(book._id, newSummary)
+            UpdateBookSummaryService(book._id, newSummary)
                 .then((res) => {
                     setBook((prevState) => ({
                         ...prevState,
@@ -277,7 +283,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             </div>
                                             <p
                                                 onClick={() => {
-                                                    deleteBook(book._id)
+                                                    DeleteBookService(book._id)
                                                         .then(() => router.push('/dashboard/books'))
                                                         .catch((err) => console.log('err'))
                                                 }

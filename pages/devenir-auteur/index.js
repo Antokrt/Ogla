@@ -349,7 +349,6 @@ const DevenirAuteur = () => {
                     }}>Précédent</span>
                 }
 
-
                 <button
                     onClick={() => {
                         const data = getField();

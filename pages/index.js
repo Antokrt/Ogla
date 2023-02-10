@@ -30,22 +30,9 @@ import axios from "axios";
     }
 }*/
 
-export async function getServerSideProps({req}){
-    const token = await getToken({
-        req:req,
-        secret:'code'
-    });
 
-    return{
-        props:{
-            test:2
-        }
-    }
-}
 
 export default function Home({err,books}) {
-
-    const {data:session,update} = useSession();
 
     return (
         <div className={styles.container}>
@@ -64,16 +51,6 @@ export default function Home({err,books}) {
             }*/>
                 <Header/>
             </div>
-            <button style={{
-                zIndex:'211',
-                position:'absolute'
-            }}
-            onClick={ () => {
-                axios.get('/api/auth/session?update-author')
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err))
-            }}
-            >change</button>
             <Banner/>
 <CategoryHome/>
             <div className={styles.hot}>

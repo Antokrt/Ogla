@@ -6,7 +6,7 @@ import {useEffect, useRef, useState} from "react";
 import {ArrowDownIcon, CheckBadgeIcon} from "@heroicons/react/24/outline";
 import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
-import {newBook} from "../../../service/Dashboard/BooksAuthorService";
+import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
 
 
@@ -39,7 +39,7 @@ const New = () => {
             category:category.toLowerCase(),
             img:'none'
         }
-        newBook(form, selectedFile)
+        NewBookService(form, selectedFile)
             .then((res) => {
                 if(res.data._id){
                     router.push('/dashboard/books/'+ res.data._id);

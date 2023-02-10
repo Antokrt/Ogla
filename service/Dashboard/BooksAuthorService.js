@@ -1,31 +1,6 @@
 import {instance} from "../config/Interceptor";
 
-export const getBooksByAuthor = (id) => {
-    return new Promise((resolve, reject) => {
-        instance.get('author/book/'+ id)
-            .then((res) => {
-                resolve(res);
-            })
-            .catch((err) => {
-                reject(err);
-            })
-    })
-}
-
-export const getOneBook = (id) => {
-return new Promise((resolve, reject) => {
-    instance.get('author/book/'+ id)
-        .then((res) => {
-resolve(res);
-        })
-        .catch((err) => {
-            reject(err);
-        })
-})
-}
-
-export const newBook = (data, file) => {
-
+export const NewBookService = (data, file) => {
     return new Promise((resolve, reject) => {
         instance.post('book/new', data)
             .then((res) => {
@@ -47,7 +22,7 @@ export const newBook = (data, file) => {
 }
 
 
-export const deleteBook = (id) => {
+export const DeleteBookService = (id) => {
     const data = {
         bookId: id
     }
@@ -58,7 +33,7 @@ export const deleteBook = (id) => {
     })
 }
 
-export const updateSummary = (bookId, newSummary) => {
+export const UpdateBookSummaryService = (bookId, newSummary) => {
     const data = { bookId, summary:newSummary }
     return new Promise((resolve, reject) => {
         instance.put('author/update-summary', data)
@@ -69,7 +44,7 @@ export const updateSummary = (bookId, newSummary) => {
     })
 }
 
-export const updatePicture = (file,bookId) => {
+export const UpdateBookPictureService = (file,bookId) => {
     if(file){
         return new Promise((resolve, reject) => {
             const formData = new FormData();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from "../styles/Component/Header.module.scss";
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -10,7 +10,20 @@ import {signIn, signOut, useSession} from "next-auth/react";
 
 export default function Header() {
     const router = useRouter();
-    const {data: session, status} = useSession();
+    const {data: session} = useSession();
+
+    useEffect(() => {
+       console.log('session')
+    },[session])
+
+    const goToProfil = () => {
+            if(session.user.is_author){
+                router.push("/dashboard/profil")
+            }
+            else{
+                router.push('/profil')
+            }
+    }
 
     return (
         <div className={styles.container}>
@@ -54,19 +67,33 @@ export default function Header() {
                 {
                     session ?
                         <div className={styles.accountContainer}>
-                            <div className={styles.account}
-                                 onClick={() => {
-                                     router.push("/profil")
-                                 }}
-                            >
-                                <div>
+                            {
+                                session.user.image === '' ?
+                                    <div className={styles.account}
+                                         onClick={() => {
+                                             if(session.user.is_author){
+                                                 router.push("/dashboard/profil")
+                                             }
+                                             else{
+                                                 router.push('/profil')
+                                             }
 
-                                    {
-                                        session && session.user.pseudo &&
-                                        <p>{session.user.pseudo[0].toUpperCase()}</p>
-                                    }
-                                </div>
-                            </div>
+                                         }}
+                                    >
+
+                                        <div>
+                                            {
+                                                session && session.user.pseudo &&
+                                                <p>{session.user.pseudo[0].toUpperCase()}</p>
+                                            }
+                                        </div>
+                                    </div> :
+
+                                    <img
+                                        onClick={() => goToProfil()}
+                                        className={styles.imgProfil} src={session.user.image}/>
+                            }
+
 
                             <ArrowLeftOnRectangleIcon
                                 onClick={() => {

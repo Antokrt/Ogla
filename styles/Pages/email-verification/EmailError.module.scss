@@ -1,0 +1,36 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100vh;
+  width: 100%;
+
+  h1{
+    font-family: 'Montserrat',sans-serif;
+    color: #1C232B;
+    font-weight: bold;
+    font-size: 1.5vw;
+  }
+
+  p{
+    font-family: 'Montserrat',sans-serif;
+    font-size: 18px;
+    text-align: center;
+    color: #1C232B;
+    span{
+      font-weight: bold;
+    }
+  }
+
+  button{
+    background-color: #9844AD;
+    padding: 8px 20px;
+    font-family: 'Montserrat',sans-serif;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

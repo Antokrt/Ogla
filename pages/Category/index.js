@@ -9,7 +9,7 @@ import CategoryHeader from "../../Component/Category/CategoryHeader";
 import {getData} from "../../services/Post";
 import NewFeatured from "../../Component/Category/New";
 import LogCard from "../../Component/layouts/LogCard";
-import DateNow from "../../utils/Date";
+import {DateNow} from "../../utils/Date";
 import Footer from "../../Component/Footer";
 import {getSession, useSession} from "next-auth/react";
 

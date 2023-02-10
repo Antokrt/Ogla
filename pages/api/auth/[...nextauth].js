@@ -72,7 +72,8 @@ export default function (req,res){
                         params:{
                             prompt:'consent',
                             access_type:'offline',
-                            response_type:'code'
+                            response_type:'code',
+                            scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.login'
                         }
                     }
                 }
@@ -126,6 +127,8 @@ export default function (req,res){
                             tenant:credentials.tenantKey,
                         }
                     })
+
+
 
                     const user = await res.json();
 
@@ -191,23 +194,20 @@ export default function (req,res){
                     user.refreshToken = response.refreshToken;
                     if(res.ok && user){
                         const accessToken = user.accessToken;
-
                         const res = await getProfil(accessToken);
-
                         user.id = res.data._id;
                         user.pseudo = res.data.pseudo;
                         user.email = res.data.email;
                         user.image = res.data.img;
                         user.provider = res.data.provider;
                         user.date_birth = res.data.date_birth;
+                        user.verified = res.data.verified;
                         user.is_author = res.data.is_author;
                         if(user.is_author){
                             user.author = res.data.author;
                         }
                         user.accessToken = accessToken;
-
                         return user;
-
                     }
                 }
                 else {
@@ -219,6 +219,7 @@ export default function (req,res){
                     user.provider = res.data.provider;
                     user.date_birth = res.data.date_birth;
                     user.is_author = res.data.is_author;
+                    user.verified = res.data.verified;
                     if(user.is_author){
                         user.author = res.data.author;
                     }
@@ -238,7 +239,6 @@ export default function (req,res){
 
                 let tokenHasExpire = isExpire(expAccessToken);
 
-
                 if (!tokenHasExpire) {
                     return Promise.resolve(token)
                 }
@@ -251,7 +251,6 @@ export default function (req,res){
             },
 
             async session({session,token,user}) {
-                console.log('hey oh')
                 if(token.error){
                     session.error = token.error;
                 }
@@ -268,12 +267,18 @@ export default function (req,res){
                         session.user.is_author = true;
                         session.user.pseudo = authorJson.pseudo;
                         session.user.author = authorJson.author;
-
-                        return session;
                     }
+                    session.user.accessToken = token?.accessToken;
                     return session;
                 }
 
+                if(req.url === '/api/auth/session?update-picture'){
+                    const res = await getProfil(token?.accessToken);
+                    session.user.image = res.data.img;
+                    return session;
+                }
+
+                session.user.accessToken = token?.accessToken;
                 return session;
 
             }

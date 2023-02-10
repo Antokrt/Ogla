@@ -13,8 +13,6 @@ export async function getServerSideProps({context, req}){
     const books = await fetch('http://localhost:3008/author/my-books',config);
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
-
-    console.log(booksJson)
     return {
         props:{
             err:{
@@ -26,6 +24,7 @@ export async function getServerSideProps({context, req}){
 }
 
 const Books = ({books}) => {
+
     const {data: session} = useSession();
 
 

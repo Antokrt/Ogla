@@ -2,19 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/pages/dashboard/profil/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/email-verification/expire/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/email-verification/success/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/User/Account.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/User/Profil.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailError.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailSuccess.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/ImageUtils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/ReloadSession.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Banner.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Category/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Category/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/utils/Redirect.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/auth.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/config/Interceptor.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/config/Interceptor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Date.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Date.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +198,14 @@
       <workItem from="1675507952656" duration="1557000" />
       <workItem from="1675527500926" duration="1085000" />
       <workItem from="1675593000953" duration="2398000" />
-      <workItem from="1675672156239" duration="19191000" />
+      <workItem from="1675672156239" duration="19545000" />
+      <workItem from="1675767933659" duration="4074000" />
+      <workItem from="1675780171073" duration="5720000" />
+      <workItem from="1675851442356" duration="13033000" />
+      <workItem from="1675937266413" duration="3880000" />
+      <workItem from="1675951425790" duration="6820000" />
+      <workItem from="1675967839953" duration="4000" />
+      <workItem from="1676022454564" duration="8213000" />
     </task>
     <servers />
   </component>

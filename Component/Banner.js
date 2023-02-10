@@ -50,6 +50,8 @@ export default function Banner() {
                     session ?
                         <>
                             <span className={styles.refre}>{session?.user.accessToken}</span>
+                            <span className={styles.refre}>Userid : {session?.user.id}</span>
+
                             <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de

@@ -52,9 +52,10 @@
 
         img {
           clip-path: circle();
-          width: 70px;
+          width: 40px;
+          height: 40px;
           object-fit: cover;
-          margin-right: 5px;
+          margin-right: 15px;
         }
 
         p {
@@ -143,13 +144,28 @@ margin-top: 10px;
         box-shadow: $shadow;
       }
 
+      .wrongPassword{
+        margin-bottom: 10px;
+        color: red!important;
+        font-family: 'Poppins',sans-serif;
+        font-size: 10px!important;
+      }
+
       .deleteBtn{
+        transition: 0.1s;
+        cursor: initial;
         width: 70%;
-        background-color: red;
+        background-color: rgba(84, 89, 95, 0.42);
         font-size: 10px;
         color: white;
         font-family: "Montserrat",sans-serif;
         padding: 8px 5px;
+      }
+
+      .activeBtnDeleteAccount{
+        background-color: red!important;
+        transition: 0.1s;
+        cursor: pointer!important;
       }
     }
 
@@ -343,18 +359,46 @@ font-family: "Montserrat",sans-serif;
       }
 
       .picContainer{
+        position: relative;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         margin-top: 20px;
         margin-bottom: 20px;
         img{
+          cursor: pointer;
+          transition: 0.1s;
           height: 10vh;
           border-radius: 50%;
           object-fit: cover;
           width: 10vh;
         }
-        div{
+
+        .imgCheck{
+          position: absolute;
+          top: 92%;
+          left: 20%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 15px;
+          svg{
+            cursor: pointer;
+            width: 20px;
+            background-color: rgba(28, 35, 43, 0.47);
+            border-radius: 50%;
+          }
+
+          .check{
+            color: #82e882;
+          }
+          .off{
+            color: #e04444;
+          }
+        }
+        .btnModifyAndDelete{
           display: flex;
           justify-content: center;
           flex-direction: column;
@@ -376,8 +420,12 @@ font-family: "Montserrat",sans-serif;
             color: white;
           }
         }
+
+        input{
+          display: none;
+        }
       }
-      p{
+      .conditionImg{
         cursor: pointer;
         font-size: 11px;
         text-decoration: underline;
@@ -472,14 +520,7 @@ font-family: "Montserrat",sans-serif;
 
         }
 
-        .errMsg{
-          display: block;
-          text-align: left;
-          font-size: 10px;
-          font-family: "Poppins",sans-serif;
-          font-style: italic;
-          color: red;
-        }
+
 
         button{
           margin-top: 10px;
@@ -695,4 +736,15 @@ flex-direction: column;
   cursor: pointer;
   transition: 0.1s;
   background-color: $purpleLight;
+}
+
+.activeBtn{
+  transition: 0.1s;
+  cursor: pointer!important;
+  background-color: #1C232B!important;
+}
+
+.darkImg{
+  filter: brightness(50%);
+  transition: 0.1s;
 }
