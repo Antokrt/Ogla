@@ -16,7 +16,7 @@ export const FormatDateNb = (timestamp) => {
 }
 
 export const FormatDateStr = (timestamp) => {
-   const date = new Date(parseInt(timestamp));
+   const date = new Date(timestamp);
    const jour = date.getDate().toString().padStart(2, '0');
    const mois = date.getMonth();
    const annee = date.getFullYear();

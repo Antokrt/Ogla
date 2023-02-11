@@ -29,7 +29,7 @@ import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "..
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
 import {GetDefaultUserImg} from "../../utils/ImageUtils";
-import {DeleteAccountService} from "../../service/User/Account.service";
+import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 
 
@@ -60,10 +60,6 @@ const Profil = ({profilData}) => {
     const [file, setFile] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const imgRef = useRef();
-
-    useEffect(() => {
-        console.log(session)
-    },[])
 
     useEffect(() => {
         if (Object.is(profil.email, newProfil.email) === false) {
@@ -144,7 +140,11 @@ const Profil = ({profilData}) => {
         }
     }
 
-
+    const verifyEmail = () => {
+        VerifyEmailService()
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    }
     return (
         <div className={styles.container}>
             <Header/>
@@ -161,6 +161,21 @@ const Profil = ({profilData}) => {
                             <p className={styles.likeNb}><ChevronDoubleUpIcon/> <span
                                 className={styles.nb}>+ {profilData.stats.likes}</span>&nbsp;likes </p>
                             <p className={styles.commentaryNb}><ChatBubbleLeftRightIcon/> <span className={styles.nb}>+ {profilData.stats.comments} </span> &nbsp;commentaires</p>
+                            {
+                                profilData.verified ?
+                                    <p>Email vérifiée !</p> :
+                                    <>
+                                        <p>Email non vérifiée !</p>
+                                        <button
+                                        onClick={() => {
+                                            if(!session.user?.verified){
+                                                verifyEmail();
+                                            }
+                                        }
+                                        }
+                                        >Vérifiez mon email !</button>
+                                    </>
+                            }
                             <p onClick={() => {
                                 setWantToDelete(!wantToDelete);
                                 setWrongPasswordErr(false);

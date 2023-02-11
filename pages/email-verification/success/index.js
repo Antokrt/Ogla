@@ -2,10 +2,15 @@ import styles from '../../../styles/Pages/email-verification/EmailSuccess.module
 import {useRouter} from "next/router";
 import {useEffect} from "react";
 import {GetPrivateProfilApi, GetPublicProfilApi} from "../../api/user";
+import axios from "axios";
+import {instance} from "../../../service/config/Interceptor";
+import {ReloadSession} from "../../../utils/ReloadSession";
 
 export async function getServerSideProps({req, query}) {
+
     const userId = query.id;
     const profil = await GetPublicProfilApi(userId);
+
     return {
         props:{
             profilData: profil.profilJson,
@@ -17,11 +22,19 @@ const SuccessVerificationEmailPage = ({profilData}) => {
 
     const router = useRouter();
 
+    const updateSession = async () => {
+        const verifMail = instance.get('http://localhost:3000/api/auth/session?email-verified');
+    }
+
     useEffect(() =>  {
-        const timer = setTimeout(() => {
-            // router.replace('/')
-        },5000);
-        return () => clearTimeout(timer);
+
+        updateSession()
+            .then(() => {
+                const timer = setTimeout(() => {
+                    router.replace('/');
+                },5000);
+                return () => clearTimeout(timer);
+            })
     },[])
 
     return (

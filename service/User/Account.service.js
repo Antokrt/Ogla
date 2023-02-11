@@ -8,3 +8,11 @@ export const DeleteAccountService = (email, password) => {
             .catch((err) => reject(err));
     })
 }
+
+export const VerifyEmailService = () => {
+    return new Promise((resolve, reject) => {
+        instance.put('email/new-verification')
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
+}

@@ -33,3 +33,18 @@ export async function GetPublicProfilApi(id){
         err:profilErrData
     };
 }
+
+export async function VerifEmailApi(id){
+    const profil = await fetch('/api/auth/session?email-verified');
+    const profilErrData = !profil.ok;
+    let profilJson = await profil.json();
+
+    if(profilJson.statusCode){
+        profilJson = null;
+    }
+
+    return {
+        profilJson,
+        err:profilErrData
+    };
+}

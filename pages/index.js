@@ -12,6 +12,7 @@ import {useEffect} from "react";
 import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 import {useSession} from "next-auth/react";
 import axios from "axios";
+import {instance} from "../service/config/Interceptor";
 
 /*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
@@ -34,6 +35,11 @@ import axios from "axios";
 
 export default function Home({err,books}) {
 
+    const updateSession = async () => {
+        const verifMail = instance.get('http://localhost:3000/api/auth/session?email-verified').then((res)=> {
+        })
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -50,11 +56,16 @@ export default function Home({err,books}) {
                 width: "100%"
             }*/>
                 <Header/>
+
             </div>
             <Banner/>
+            <button style={{zIndex:'1000'}} onClick={() => updateSession()}>
+                azssas
+            </button>
 <CategoryHome/>
             <div className={styles.hot}>
                 <div className={styles.headerHot}>
+
                     <h4>Populaires :</h4>
                     <h5>Tout voir <ChevronDoubleRightIcon/></h5>
                 </div>

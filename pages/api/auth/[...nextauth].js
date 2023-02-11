@@ -258,6 +258,7 @@ export default function (req,res){
                 token.is_author = session.user.is_author
 
                 if(req.url === '/api/auth/session?update-author'){
+                    console.log('kekeke')
                     const config = await getConfigOfProtectedRoute(req);
                     const newAuthor = await fetch('http://localhost:3008/author/check',config);
                     const authorJson = await newAuthor.json();
@@ -272,9 +273,17 @@ export default function (req,res){
                     return session;
                 }
 
+
+
                 if(req.url === '/api/auth/session?update-picture'){
                     const res = await getProfil(token?.accessToken);
                     session.user.image = res.data.img;
+                    return session;
+                }
+
+                if(req.url === '/api/auth/session?email-verified'){
+                    const res = await getProfil(token?.accessToken);
+                    session.user.verified = res.data.verified;
                     return session;
                 }
 
