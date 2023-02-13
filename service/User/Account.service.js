@@ -16,3 +16,4 @@ export const VerifyEmailService = () => {
             .catch((err) => reject(err));
     })
 }
+

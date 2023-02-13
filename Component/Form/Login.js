@@ -8,7 +8,7 @@ import {useSession, signIn, signOut} from "next-auth/react";
 import {useEffect, useRef, useState} from "react";
 import {router} from "next/router";
 
-const Login = ({register}) => {
+const Login = ({register, forgotPassword}) => {
 
     const {data: session, status} = useSession();
     const formRef = useRef(null);
@@ -17,10 +17,6 @@ const Login = ({register}) => {
         msg: "",
         show: false
     })
-
-    useEffect(() => {
-        console.log(session)
-    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -76,7 +72,9 @@ const Login = ({register}) => {
                         <label htmlFor={"password"}>Mot de passe</label>
                         <input value={'azerty'} type={"password"} name={"password"} placeholder={"Mot de passe"}/>
                         <div className={styles.conditions}>
+                            <p onClick={forgotPassword}>Mot de passe oublié?</p>
                             <p onClick={register}>Pas encore <span>inscrit</span>?</p>
+
                         </div>
                     </div>
                     {

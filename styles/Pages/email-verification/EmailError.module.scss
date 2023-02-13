@@ -19,6 +19,12 @@
     font-size: 18px;
     text-align: center;
     color: #1C232B;
+    .retry{
+      color: #9844AD;
+      text-decoration: underline;
+      font-weight: initial!important;
+      cursor: pointer;
+    }
     span{
       font-weight: bold;
     }

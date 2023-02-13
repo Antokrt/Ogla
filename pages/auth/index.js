@@ -4,6 +4,7 @@ import Register from "../../Component/Form/Register";
 import {useRouter} from "next/router";
 import Login from "../../Component/Form/Login";
 import {useSession} from "next-auth/react";
+import ForgotPassword from "../../Component/Form/ForgotPassword";
 
 
 const Auth = () => {
@@ -15,7 +16,7 @@ const Auth = () => {
 
         useEffect(() => {
             if(router.isReady){
-                if(query === "login" || query === "register"){
+                if(query === "login" || query === "register" || query === 'forgotPassword'){
                     setChoice(query);
                 }
                 else{
@@ -40,17 +41,35 @@ const Auth = () => {
                         </div>
 
                         {
-                            choice === "register" ?
-                                <Register login={() => {
-                                    setChoice("login");
-                                    setQuery("login");
-                                }}/>
-                                :
+                            choice === "register" &&
+                            <Register login={() => {
+                                setChoice("login");
+                                setQuery("login");
+                            }}/>
+                        }
+                        {
+                            choice === "login" &&
                                 <Login register={() => {
                                     setChoice("register");
                                     setQuery("register");
+                                }}
+                                forgotPassword={() => {
+                                setChoice("forgotPassword");
+                                setQuery("forgotPassword")
+                                }
+                                }
+                                />
+                        }
 
-                                }}/>
+                        {
+                            choice === "forgotPassword" &&
+                            <ForgotPassword
+                            login={() => {
+                            setChoice("login");
+                            setQuery("login");
+                            }
+                            }
+                            />
                         }
 
 

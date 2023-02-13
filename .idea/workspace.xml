@@ -2,14 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Component/Form/ForgotPassword.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/Form/ResetPassword.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/reset-password/expire/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/reset-password/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/User/Password.service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/Form/ResetPassword.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/user/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/email-verification/success/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email-verification/success/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/User/Account.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/User/Account.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/Date.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Date.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/email-verification/EmailError.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailError.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,7 +191,8 @@
       <workItem from="1675951425790" duration="6820000" />
       <workItem from="1675967839953" duration="4000" />
       <workItem from="1676022454564" duration="8381000" />
-      <workItem from="1676109743828" duration="5947000" />
+      <workItem from="1676109743828" duration="6794000" />
+      <workItem from="1676281644216" duration="12473000" />
     </task>
     <servers />
   </component>
