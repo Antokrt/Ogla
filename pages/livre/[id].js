@@ -29,18 +29,26 @@ import {
 export async function getServerSideProps({req,params}){
     const id = params.id;
     const data = await GetOneBookApi(id);
-    const hasLikeJson = await VerifLikeApi(req,'book',data.book._id);
-
-    return {
-        props:{
-            err:{
-                book:data.err
-            },
-            bookData: data?.book,
-            chapterData: data?.chapter,
-            hasLikeData:hasLikeJson
+    if(!data.err){
+        const hasLikeJson = await VerifLikeApi(req,'book',data.book._id);
+        return {
+            props:{
+                err:false,
+                bookData: data?.book,
+                chapterData: data?.chapter,
+                hasLikeData:hasLikeJson
+            }
         }
     }
+    else{
+        return {
+            props: {
+                err:true
+            }
+        }
+    }
+
+
 }
 
 
@@ -215,117 +223,127 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
             <Header/>
 
-
             {
-                checkSide()
-            }
-
-            <div className={styles.containerC}>
-
-                <div className={styles.imgContainer}>
-                    <div className={styles.img}>
-                        <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
-
-                    </div>
-                    {bookData._id}
-                    <div className={styles.btnContainer}>
-                        <div
-                            onClick={() => likeBook()}
-                            className={styles.btnItem}>
-                            <HeartIcon className={styles.cursor}/>
-                            <p>({likes})</p>
-                        </div>
-                        <div className={styles.btnItem}>
-                            <DocumentTextIcon/>
-                            <p>({chapterData?.length})</p>
-
-                        </div>
-
-                        <div
-                        onClick={() => getComment()}
-                            className={styles.btnItem}>
-                            <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
-                            <p>({nbCommentary})</p>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div className={styles.btnRead}>
-                        <button>Lire le chapitre 1</button>
-                    </div>
-                </div>
-
-
-                <div className={styles.chapterContainer}>
-                    <div className={styles.infoContainer}>
-                        <h4> {bookData?.category} | Par : <span onClick={() => {
-                            router.push("/auteur/" + bookData?.author_pseudo)
-                        }}>{bookData?.author_pseudo}</span></h4>
-                        <h3>{bookData?.title}</h3>
-                        <p className={styles.snippet}> {bookData?.summary}</p>
-                        <div className={styles.btnFilter}>
-                            <button>Trier <ArrowsUpDownIcon/></button>
-                            <div><p>({chapterData?.length})</p>
-                                <Book/>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.contentChapterList}>
+                err ?
+                    <p>erreur</p> :
+                    <>
                         {
-                            chapterData &&
-                            chapterData.map((item, index) => {
-                                return (
-                                    <div
-                                        onClick={() => {
-                                            router.push({
-                                                pathname: "/chapitre/" + item._id,
-                                                query:{
-                                                    name:bookData.title,
-                                                    slug:item.title,
-                                                    i:index+ 1
-                                                },
-                                            })
-                                        }}
-                                        className={styles.chapter}>
-                                        <div className={styles.headerChapter}>
-                                            <h6>{item.title}</h6>
-                                            <h7>{item.date_creation}</h7>
-                                        </div>
-
-                                        <div className={styles.likeChapter}>
-                                            <Like/>
-                                            <p>({item.likes})</p>
-
-                                        </div>
-                                    </div>
-
-                                )
-                            })
+                            checkSide()
                         }
 
+                        <div className={styles.containerC}>
 
-                    </div>
-                </div>
+                            <div className={styles.imgContainer}>
+                                <div className={styles.img}>
+                                    <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
 
-            </div>
-            <FooterOnBook
-                title={bookData?.title}
-                like={bookData?.likes}
-                img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
-                nbCommentary={nbCommentary}
-                author={bookData?.author_pseudo}
-                nbChapter={chapterData?.length}
-                openList={() => {
-                    ToogleSidebar("List",sidebarSelect,setSidebarSelect);
-                }}
-                openCommentary={() => {
-                    ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
-                }}
-                />
+                                </div>
+                                {bookData._id}
+                                <div className={styles.btnContainer}>
+                                    <div
+                                        onClick={() => likeBook()}
+                                        className={styles.btnItem}>
+                                        <HeartIcon className={styles.cursor}/>
+                                        <p>({likes})</p>
+                                    </div>
+                                    <div className={styles.btnItem}>
+                                        <DocumentTextIcon/>
+                                        <p>({chapterData?.length})</p>
+
+                                    </div>
+
+                                    <div
+                                        onClick={() => getComment()}
+                                        className={styles.btnItem}>
+                                        <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
+                                        <p>({nbCommentary})</p>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <div className={styles.btnRead}>
+                                    <button>Lire le chapitre 1</button>
+                                </div>
+                            </div>
+
+
+                            <div className={styles.chapterContainer}>
+                                <div className={styles.infoContainer}>
+                                    <h4> {bookData?.category} | Par : <span onClick={() => {
+                                        router.push("/auteur/" + bookData?.author_pseudo)
+                                    }}>{bookData?.author_pseudo}</span></h4>
+                                    <h3>{bookData?.title}</h3>
+                                    <p className={styles.snippet}> {bookData?.summary}</p>
+                                    <div className={styles.btnFilter}>
+                                        <button>Trier <ArrowsUpDownIcon/></button>
+                                        <div><p>({chapterData?.length})</p>
+                                            <Book/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.contentChapterList}>
+                                    {
+                                        chapterData &&
+                                        chapterData.map((item, index) => {
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        router.push({
+                                                            pathname: "/chapitre/" + item._id,
+                                                            query:{
+                                                                name:bookData.title,
+                                                                slug:item.title,
+                                                                i:index+ 1
+                                                            },
+                                                        })
+                                                    }}
+                                                    className={styles.chapter}>
+                                                    <div className={styles.headerChapter}>
+                                                        <h6>{item.title}</h6>
+                                                        <h7>{item.date_creation}</h7>
+                                                    </div>
+
+                                                    <div className={styles.likeChapter}>
+                                                        <Like/>
+                                                        <p>({item.likes})</p>
+
+                                                    </div>
+                                                </div>
+
+                                            )
+                                        })
+                                    }
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <FooterOnBook
+                            title={bookData?.title}
+                            like={bookData?.likes}
+                            img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
+                            nbCommentary={nbCommentary}
+                            author={bookData?.author_pseudo}
+                            nbChapter={chapterData?.length}
+                            openList={() => {
+                                ToogleSidebar("List",sidebarSelect,setSidebarSelect);
+                            }}
+                            openCommentary={() => {
+                                ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
+                            }}
+                        />
+                    </>
+
+            }
+
+
+
+
         </div>
     )
 }

@@ -694,14 +694,7 @@ flex-direction: column;
 
 
 
-          .errMsg{
-            display: block;
-            text-align: left;
-            font-size: 10px;
-            font-family: "Poppins",sans-serif;
-            font-style: italic;
-            color: red;
-          }
+
 
           button{
             margin-top: 10px;
@@ -747,4 +740,13 @@ flex-direction: column;
 .darkImg{
   filter: brightness(50%);
   transition: 0.1s;
+}
+
+.errMsg{
+  display: block;
+  text-align: left;
+  font-size: 10px;
+  font-family: "Poppins",sans-serif;
+  font-style: italic;
+  color: red;
 }

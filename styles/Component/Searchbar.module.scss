@@ -2,9 +2,8 @@
 
 .container{
   ::placeholder{
-    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat Alternates", sans-serif;
     color: $brown;
-    font-weight: bold;
   }
   position: relative;
 display: flex;
@@ -14,8 +13,8 @@ height: 100%;
 
     padding-left: 15px;
     width: 100%;
-    background-color: #e9ebec;
-    border-radius: 8px;
+    background-color: white;
+    border-radius: 20px;
     font-size: 14px;
     font-family: "Montserrat",sans-serif;
     color: $dark;

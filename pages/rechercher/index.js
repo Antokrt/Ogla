@@ -2,22 +2,62 @@ import {useRouter} from "next/router";
 import React, {useEffect, useState} from "react";
 import styles from '../../styles/Pages/Search.module.scss';
 import Header from "../../Component/Header";
-import MainSearchBar from "../../Component/MainSearchBar";
 import PreviewPost from "../../Component/Post/PreviewPost";
 import Footer from "../../Component/Footer";
-import PreviewHorizontalPost from "../../Component/Post/PreviewHorizontalPost";
 import PreviewHorizontalPostList from "../../Component/Post/PreviewHorizontalPostList";
-const SearchPage = () => {
+import {SearchBookAPI} from "../api/search";
+import {SearchBookService} from "../../service/Search/SearchService";
+
+export async function getServerSideProps({req, query}) {
+
+    if(!query.search){
+        return {
+            props:{
+                err:true,
+                queryData:null,
+                data:null
+            }
+        }
+    }
+
+
+    const data = await SearchBookAPI(query.search);
+    return {
+        props:{
+            err:data.err,
+            queryData:query.search,
+            data:data.searchData
+        }
+    }
+}
+
+const SearchPage = ({queryData,data,err}) => {
     const router = useRouter();
-    const [searchValue,setSearchValue] = useState('');
+    const [query,setQuery] = useState(queryData);
+    const [searchData,setSearchData] = useState(data);
+    const [page,setPage] = useState(2);
+
     useEffect(() => {
         const params = router.query;
-        setSearchValue(params.search);
-    }, [router.query])
+        setQuery(params.search);
+    }, [router.query]);
+
+    const searchNewBooks = () => {
+SearchBookService(query,1)
+    .then((res) => {
+        setSearchData(res);
+    })
+    .catch((err) => console.log(err))
+    }
+
+
     const [filter, setFilter] = useState({
         list:["Populaire", "Récent", "Plus de chapitres"],
         active:"Populaire"
     });
+
+
+
 
 
     return (
@@ -25,18 +65,22 @@ const SearchPage = () => {
             <Header/>
 
             <div className={styles.searchContainer}>
-                <form>
-                    <input onChange={(e) => {
-                        setSearchValue(e.target.value);
-
-                    }} type={"text"} value={searchValue} placeholder={"Rechercher"} />
+                <form onSubmit={(event) => {
+                    event.preventDefault()
+                    searchNewBooks();
+                }}>
+                    <input
+                        onChange={(e) => {
+                        setQuery(e.target.value);
+                    }} type={"text"} value={query} placeholder={"Rechercher"} />
+                    <input type={'submit'} hidden={true}/>
                 </form>
             </div>
 
             <div className={styles.containerM}>
                 <div className={styles.containerCardPreview}>
                     <div className={styles.sortContainer}>
-                        <h3>Résultats pour "{searchValue}"</h3>
+                        <h3 onClick={() => searchNewBooks()}>Résultats pour "{query}"</h3>
                         <div>
                             {
                                 filter.list.map((item) => {
@@ -51,42 +95,22 @@ const SearchPage = () => {
                         </div>
                     </div>
                     <div className={styles.card}>
+                        {
+                            searchData && !err && searchData.length !== 0 &&
+                            searchData.map((item,index) => {
+                                return (
+                                    <PreviewPost title={item.title}
+                                                 snippet={item.summary}
+                                                 like={item.likes}
+                                                 category={item.category}
+                                                 author={item.author_pseudo}
+                                                 nbChapter={item.chapter_list.lenght}
+                                                 img={item.img}
+                                    />
+                                )
+                            })
+                        }
 
-                        <PreviewPost title={"Meurtre À KoalaLand"}
-                                     snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                         "\n"}
-                                     like={332}
-                                     category={"SF"}
-                                     author={"Jimmy MC"}
-                                     nbChapter={26}
-                                     img={"/assets/234083.jpg"}
-                        />
-
-                        <PreviewPost title={"Meurtre à KoalaLand"}
-                                     snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                         "\n"}
-                                     like={332}
-                                     category={"SF"}
-                                     author={"Jimmy MC"}
-                                     nbChapter={26}
-                                     img={"/assets/234083.jpg"}
-                        /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                        snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                            "\n"}
-                                        like={332}
-                                        category={"SF"}
-                                        author={"Jimmy MC"}
-                                        nbChapter={26}
-                                        img={"/assets/234083.jpg"}
-                    /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                    snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                        "\n"}
-                                    like={332}
-                                    category={"SF"}
-                                    author={"Jimmy MC"}
-                                    nbChapter={26}
-                                    img={"/assets/234083.jpg"}
-                    />
                     </div>
                 </div>
                 <div className={styles.previewContainer}>

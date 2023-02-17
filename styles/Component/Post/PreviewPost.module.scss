@@ -19,6 +19,9 @@
     height: 20px;
     padding: 5px 10px;
     p{
+      &:first-letter{
+        text-transform: uppercase;
+      }
       font-size: 10px;
       font-family: "Potta One",sans-serif;
       color: #1C232B;

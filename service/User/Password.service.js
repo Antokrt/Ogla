@@ -21,5 +21,14 @@ export const SendNewPasswordWhenForgot = (data) => {
     else{
       return null;
     }
+}
 
+export const ChangePasswordService = (email,password,newPassword) => {
+    const data = {email,password,newPassword};
+
+    return new Promise((resolve, reject) => {
+        instance.put('user/change-password',data)
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
 }

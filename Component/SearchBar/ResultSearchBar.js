@@ -1,71 +1,86 @@
 import styles from "../../styles/SearchBar/SearchBarResult.module.scss";
-import scrollbar from "../../styles/utils/scrollbar.module.scss";
-import {MagnifyingGlassIcon, TrashIcon} from "@heroicons/react/24/outline";
-import React from "react";
-import {router} from "next/router";
+import React, {useEffect, useState} from "react";
+import {TagIcon} from "@heroicons/react/24/solid";
+import {useRouter} from "next/router";
 
-const ResultSearchBar = ({destroy, search}) => {
+
+const ResultSearchBar = ({  destroy, query,data}) => {
+
+const router = useRouter();
+
+    const titleHeader = (type,number) => {
+        return (
+            <div className={styles.titleHeader}>
+                <h5>{type} ({number})</h5>
+            </div>
+        )
+    }
+
+
     return (
         <div className={styles.resultContainer}>
             {
-                search !== "undefined" ?
-                <div>
-                    <div className={styles.fixedContainer + " " + scrollbar.scrollbar}>
-                        <h8 className={styles.typeResult}>Livres (3)</h8>
+              data &&
+                <>
+                    {
+                        data?.books.length > 0 &&
+                        <>
+                            {titleHeader('Livre(s)' ,data.books.length)}
+                            {
+                                data.books.map((item,index) => {
+                                    return (
+                                        <div
+                                            onClick={() => {
+                                                router.push({
+                                                    pathname:'/livre/'+ item._id,
+                                                    query:item.slug                                        })
+                                            }}
+                                            className={styles.itemResult}>
+                                            <p className={styles.title}>{item.title}</p>
+                                            <div className={styles.subContainer}>
+                                                <p className={styles.authorPseudo}>{item.author_pseudo}</p>
+                                                <p className={styles.category}>{item.category}</p>
+                                                <p>{item.likes} likes</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </>
+                    }
 
-                        <div className={styles.itemResult}>
-                            <img src={"/assets/livre5.jpg"}/>
-                            <div className={styles.contentResult}>
-                                <h8>La belle et le bouffon</h8>
-                                <p className={styles.categoryResult}>Julio Caracas &nbsp; | &nbsp; 165 chapitres &nbsp; | &nbsp; <span>Comédie</span></p>
-                            </div>
-                        </div>
+                    {
+                        data?.authors.length > 0 &&
+                        <>
+                            {titleHeader('Auteur(s)' ,data?.authors.length)}
+                            {
+                                data?.authors.map((item,index) => {
+                                    return (
+                                        <div
+                                            onClick={() => {
+                                                router.push({
+                                                    pathname:'/auteur/'+ item._id,
+                                                })
+                                            }}
+                                            className={styles.itemResult}>
+                                            <p className={styles.title}>{item.pseudo}</p>
+                                            <div className={styles.subContainer}>
+                                                <p>{item.author.likes} likes</p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </>
+                    }
 
 
-                        <div className={styles.itemResult}>
-                            <img src={"/assets/livre5.jpg"}/>
-                            <div className={styles.contentResult}>
-                                <h8>La belle et le bouffon</h8>
-                                <p className={styles.categoryResult}>Julio Caracas | 165 chapitres | <span>Comédie</span></p>
-                            </div>
-                        </div>
 
-
-                        <div className={styles.itemResult}>
-                            <img src={"/assets/livre5.jpg"}/>
-                            <div className={styles.contentResult}>
-                                <h8>La belle et le bouffon</h8>
-                                <p className={styles.categoryResult}>Julio Caracas | 165 chapitres | <span>Comédie</span></p>
-                            </div>
-                        </div>
-
-
-                        <div className={styles.itemResult}>
-                            <img src={"/assets/livre5.jpg"}/>
-                            <div className={styles.contentResult}>
-                                <h8>La belle et le bouffon</h8>
-                                <p className={styles.categoryResult}>Julio Caracas | 165 chapitres | <span>Comédie</span></p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div className={styles.containerBtnSearch}>
-                        <p
-                            onClick={() => router.push({
-                                pathname: "/rechercher",
-                                query: {search: search}
-                            })}
-                            className={styles.searchP}>Chercher <MagnifyingGlassIcon/></p>
-                        <p onClick={() => {
-                            destroy()
-                        }}>Fermer</p>
-                    </div>
-                </div>
-                    :
+                </>
+                  /*  :
                     <div className={styles.errContainer}>
                         <h5><span>Oh non ! </span> <br/> La recherche ne donne rien...</h5>
-                    </div>
+                    </div>*/
             }
 
         </div>

@@ -31,6 +31,7 @@ import {ReloadSession} from "../../utils/ReloadSession";
 import {GetDefaultUserImg} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
+import {ChangePasswordService} from "../../service/User/Password.service";
 
 
 export async function getServerSideProps({req}) {
@@ -54,7 +55,13 @@ const Profil = ({profilData}) => {
     const [newProfil, setNewProfil] = useState(profil);
     const {data: session, status} = useSession();
     const [password,setPassword] = useState('');
+    const [oldPassword,setOldPassword] = useState('');
+    const [newPassword,setNewPassowrd] = useState('');
     const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
+    const [errMsgModifyPassword,setErrMsgModifyPassword] = useState({
+        msg:'',
+        show:false
+    })
     const [errMsgPassword, setErrMsgPassword] = useState('Mot de passe incorect');
     const [localImg, setLocalImg] = useState(null);
     const [file, setFile] = useState(false);
@@ -145,6 +152,27 @@ const Profil = ({profilData}) => {
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
     }
+
+    const changePassword = (e) => {
+        e.preventDefault();
+        if(oldPassword !== '' && newPassword !== '' && session){
+            ChangePasswordService(profilData.email, oldPassword,newPassword)
+                .then((res) => {
+                    setNewPassowrd('');
+                    setOldPassword('');
+                    setErrMsgModifyPassword({
+                        show: false
+                    })
+                })
+                .catch((err) => {
+                    setErrMsgModifyPassword({
+                        msg: 'Mot de passe incorrect',
+                        show: true
+                    })
+                });
+        }
+    }
+
     return (
         <div className={styles.container}>
             <Header/>
@@ -331,7 +359,14 @@ const Profil = ({profilData}) => {
                                             <input disabled={true} type={"text"} value={profilData.pseudo}/>
                                             <label>Email</label>
                                             <input disabled={true} type={"text"} value={profilData.email}/>
-                                       {/*     <label htmlFor={"genres"}>Genre favoris</label>
+                                            <label>Modifier votre mot de passe</label>
+                                            <input value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}  type={"password"} placeholder={'Ancien mot de passe'}/>
+                                            <input value={newPassword} onChange={(e) => setNewPassowrd(e.target.value)} type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                            {
+                                                errMsgModifyPassword.show &&
+                                                <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                            }
+                                            {/*     <label htmlFor={"genres"}>Genre favoris</label>
                                             <div className={styles.selectCategory}>
                                                 <ArrowDownIcon/>
                                                 <select name="genres" id="pet-select">
@@ -347,9 +382,9 @@ const Profil = ({profilData}) => {
                                                 </select>
                                             </div>*/}
 
-                                        {/*    <button disabled={true}
-                                                    className={hasChanged === true ? styles.active : styles.disabled}>Modifier
-                                            </button>*/}
+                                        {   <button onClick={(e) => changePassword(e)}
+                                                    className={oldPassword !== "" && newPassword !== "" ? styles.active : styles.disabled}>Modifier
+                                            </button>}
                                         </div>
                                     </form>
                                 </div>

@@ -10,7 +10,7 @@
   padding-left: 5%;
   padding-right: 5%;
   height: 10vh;
-  z-index: 20!important;
+  z-index: 1111!important;
 
   .mainA{
     display: flex;
@@ -41,6 +41,55 @@
   }
 
   .mainLog{
+    display: flex;
+    gap: 50px;
+    z-index: 2;
+    .containerSearchBarHeader{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 20vw;
+      gap: 230px;
+      z-index: 202;
+
+    }
+    .containerResultSearchBar{
+
+      position: absolute;
+      top: 8vh;
+      background-color: $grey;
+      width: 100%;
+      max-height: 50vh;
+      height: auto;
+
+      .containerBtnSearch{
+        display: flex;
+        justify-content: space-between;
+        border-top: solid 1px $grey;
+        background-color: white;
+        z-index: 2;
+        padding: 10px 15px;
+
+        p{
+          display: flex;
+          font-family: "Montserrat",sans-serif;
+          font-size: 11px;
+          cursor: pointer;
+          color: #1C232B;
+          svg{
+            margin-left: 4px;
+            color: rgba(84, 89, 95, 0.56);
+            width: 12px;
+          }
+          .trash{
+            margin-top: -2px;
+          }
+        }
+
+      }
+
+    }
     .accountContainer{
       display: flex;
       svg{

@@ -15,7 +15,7 @@ import {
 } from "@heroicons/react/24/outline";
 import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
-import DateNow from "../../../utils/Date";
+import {DateNow} from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";

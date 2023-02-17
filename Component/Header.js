@@ -1,20 +1,22 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "../styles/Component/Header.module.scss";
 import Link from "next/link";
-import {useRouter} from "next/router";
+import {router, useRouter} from "next/router";
 import {
-    ArrowLeftOnRectangleIcon,
+    ArrowLeftOnRectangleIcon, MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import {signIn, signOut, useSession} from "next-auth/react";
+import MainSearchBar from "./MainSearchBar";
+import ResultSearchBar from "./SearchBar/ResultSearchBar";
+import {SearchBarService} from "../service/Search/SearchService";
 
 
 export default function Header() {
     const router = useRouter();
     const {data: session} = useSession();
-
-    useEffect(() => {
-       console.log('session')
-    },[session])
+    const [searchValue,setSearchValue] = useState('');
+    const [data,setData] = useState();
+    const [query,setQuery] = useState('');
 
     const goToProfil = () => {
             if(session.user.is_author){
@@ -24,6 +26,20 @@ export default function Header() {
                 router.push('/profil')
             }
     }
+
+    const search = () => {
+        if(query.length > 0){
+            SearchBarService(query)
+                .then((res) => {
+                    setData(res);
+                })
+                .catch((err) => console.log(err));
+        }
+    }
+
+    useEffect(() => {
+         search();
+    },[query])
 
     return (
         <div className={styles.container}>
@@ -65,6 +81,48 @@ export default function Header() {
 
             <div className={styles.mainLog}>
                 {
+                    router.pathname !== '/rechercher' &&
+                    <div className={styles.containerSearchBarHeader}>
+                        <MainSearchBar
+                            data={(value) => setData(value)}
+                            query={(e) => {
+                                setQuery(e)
+                            }}
+                            search={query}
+                            submit={() => {setSearchValue("")}}
+                            height={50}
+                            width={100}/>
+
+                        {
+                            query !== "" && data &&
+                            <div className={styles.containerResultSearchBar}>
+                                <ResultSearchBar
+                                    searchBtn = {() => setSearchValue("")}
+                                    destroy={() => {
+                                        setSearchValue("")
+                                    }}
+                                    search={searchValue}
+                                    query={query}
+                                    data={data}
+                                />
+                                <div className={styles.containerBtnSearch}>
+                                    <p
+                                        onClick={() => router.push({
+                                            pathname: "/rechercher",
+                                            query: {search: query}
+                                        })}
+                                        className={styles.searchP}>Chercher <MagnifyingGlassIcon/></p>
+                                    <p onClick={() => {
+                                        setSearchValue('')
+                                    }}>Fermer</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+
+                {
                     session ?
                         <div className={styles.accountContainer}>
                             {
@@ -90,6 +148,7 @@ export default function Header() {
                                     </div> :
 
                                     <img
+                                        referrerPolicy="no-referrer"
                                         onClick={() => goToProfil()}
                                         className={styles.imgProfil} src={session.user.image}/>
                             }

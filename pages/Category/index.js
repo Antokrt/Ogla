@@ -52,7 +52,6 @@ export default function CategoryPage({popularBooks}) {
         getData()
             .then((res) => {setPost(res)})
             .catch((err) => console.log(err))
-console.log(session)
     }, [])
 
     return (

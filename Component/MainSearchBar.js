@@ -1,14 +1,11 @@
 import styles from "../styles/Component/Searchbar.module.scss";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {router} from "next/router";
+import { SearchBarService} from "../service/Search/SearchService";
 
-export default function MainSearchBar({change,submit,width,height}) {
+export default function MainSearchBar({data,submit,width,height,query,search}) {
 
-    const [value,setValue] = useState("");
 
-    const handleChange = (e) => {
-        setValue(e)
-    }
 
     return (
         <div style={{
@@ -18,25 +15,20 @@ export default function MainSearchBar({change,submit,width,height}) {
             <form className={styles.container} onSubmit={(e) => {
                 e.preventDefault();
                 e.target.reset();
-                setValue("");
-                if(value.length !== 0 && value !== "undefined") {
+                if(search.length !== 0 && search !== "undefined") {
                     router.push({
                         pathname: "/rechercher",
-                        query: {search: value}
+                        query: {search: search}
                     })
                     submit();
                     e.target.reset();
-                    setValue("");
-                    console.log("ok");
-                    console.log(value.length)
                 }
-                else{
-                }
+                return null;
             }}>
-                <input  onChange={(e) => {
-                    setValue(e.target.value)
-                    change(e);
-
+                <input
+                    autoComplete={'off'}
+                    onChange={(e) => {
+                    query(e.target.value);
                 }} type="text" name={"searchbar"} placeholder="Cherchez un livre"/>
             </form>
         </div>
