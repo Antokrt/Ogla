@@ -19,7 +19,7 @@ import {
     HomeIcon,
     TrashIcon
 } from "@heroicons/react/24/outline";
-import DateNow from "../../../utils/Date";
+import {DateNow} from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import scrollbar from "../../../styles/utils/scrollbar.module.scss";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";

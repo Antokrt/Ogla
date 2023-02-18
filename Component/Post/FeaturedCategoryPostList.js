@@ -6,9 +6,10 @@ import {ChevronDoubleUpIcon, ChevronUpIcon} from "@heroicons/react/20/solid";
 import {BookOpenIcon} from "@heroicons/react/24/outline";
 import urlSlug from 'url-slug'
 import Chapter from "../layouts/Icons/Chapter";
+import {Capitalize} from "../../utils/String";
 
 
-const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_id,author_pseudo,chapterNb,img,rank}) => {
+const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_pseudo,chapterNb,img,rank}) => {
 
     const router = useRouter();
 
@@ -22,9 +23,6 @@ const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_i
         )
     }
 
-    useEffect(() => {
-    },[])
-
     return (
         <div className={styles.container}
        onClick={() => router.push({
@@ -36,7 +34,7 @@ const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_i
                 <div className={styles.thumbnail}>
                     <p> <ChevronDoubleUpIcon className={styles.icon}/> {likes}</p>
                    </div>
-                <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + img}/>
+                <img src={img}/>
             </div>
 
             {
@@ -53,13 +51,12 @@ const FeaturedCategoryPostList = ({slug,id,title,summary,likes,category,author_i
 
             <div className={styles.content}>
                 <h5> {title}</h5>
-                <p className={styles.snippet}>{summary}</p>
+                <p className={styles.snippet}>{Capitalize(summary)}</p>
                 <div className={styles.stats}>
                     <div className={styles.authorBlock}>
                         {
                             router.pathname !== "/auteur/[id]" &&
                             <p className={styles.author}> {author_pseudo} </p>
-
                         }
                         <p className={styles.category}>{category}</p>
                         <p className={styles.date}>Dernier chapitre : 18 Septembre 2022</p>

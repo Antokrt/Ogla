@@ -107,6 +107,9 @@ color:$darkBrown ;
     }
 
     .snippet{
+      &:first-letter{
+        text-transform: uppercase!important;
+      }
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-line-clamp: 3;
@@ -143,6 +146,7 @@ color:$darkBrown ;
       font-family: "Montserrat",sans-serif;
     }
     .category{
+      text-transform: capitalize;
       font-family: 'Potta One',sans-serif;
       font-size: 10px;
       color: #1C232B;

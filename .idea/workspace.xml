@@ -2,24 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/api/search/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/Search/SearchService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/api/Author/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/Author/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Link.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/MainSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/MainSearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Category/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Category/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FeaturedCategoryPostList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/PreviewPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/PreviewPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/User/Password.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/User/Password.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Search/SearchService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Search/SearchService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Component/Header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FeaturedCategoryPostList.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewPost.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Date.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Date.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +204,8 @@
       <workItem from="1676369112787" duration="81000" />
       <workItem from="1676369202789" duration="5778000" />
       <workItem from="1676466234500" duration="3962000" />
-      <workItem from="1676549948376" duration="25731000" />
+      <workItem from="1676549948376" duration="25785000" />
+      <workItem from="1676715317693" duration="10509000" />
     </task>
     <servers />
   </component>

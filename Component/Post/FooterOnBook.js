@@ -17,7 +17,7 @@ import SidebarPost from "./SidebarCommentary";
 
 
 
-const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter}) => {
+const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook}) => {
 
     const [openSidebar,setOpenSidebar ] = useState(true);
     const [book,setBook] = useState();
@@ -30,14 +30,14 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
             <img src={img}/>
             <div>
                 <h7>{title}</h7>
-                <p>{like} likes - {nbCommentary} commentaires - {author}</p>
+                <p>{like} like(s) - {nbCommentary} commentaire(s) - {author}</p>
             </div>
 
 
         </div>
 
         <div className={styles.likeContainer}>
-            <div>
+            <div onClick={likeBook}>
                 <HeartIcon/>
                 <p>J'aime ({like})</p>
             </div>

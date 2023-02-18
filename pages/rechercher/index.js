@@ -7,6 +7,7 @@ import Footer from "../../Component/Footer";
 import PreviewHorizontalPostList from "../../Component/Post/PreviewHorizontalPostList";
 import {SearchBookAPI} from "../api/search";
 import {SearchBookService} from "../../service/Search/SearchService";
+import {MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 
 export async function getServerSideProps({req, query}) {
 
@@ -34,7 +35,9 @@ export async function getServerSideProps({req, query}) {
 const SearchPage = ({queryData,data,err}) => {
     const router = useRouter();
     const [query,setQuery] = useState(queryData);
+    const [activeQuery, setActiveQuery] = useState(queryData);
     const [searchData,setSearchData] = useState(data);
+    const [canLoadMore,setCanLoadMore] = useState(true);
     const [page,setPage] = useState(2);
 
     useEffect(() => {
@@ -43,11 +46,39 @@ const SearchPage = ({queryData,data,err}) => {
     }, [router.query]);
 
     const searchNewBooks = () => {
-SearchBookService(query,1)
-    .then((res) => {
-        setSearchData(res);
-    })
-    .catch((err) => console.log(err))
+        if(query !== '' && query !== activeQuery){
+            SearchBookService(query,1)
+                .then((res) => {
+                    setSearchData(res);
+                    setActiveQuery(query);
+                    setCanLoadMore(true);
+                })
+                .catch((err) => console.log(err))
+        }
+    }
+
+    const loadMoreBooks = () => {
+        console.log(page)
+        if(canLoadMore){
+            SearchBookService(activeQuery,page)
+                .then((res) => {
+                    if(res.length !== 0){
+                        setSearchData((prevState)=> [
+                            ...prevState,
+                            ...res
+                        ]);
+                        setPage(page + 1);
+                        setCanLoadMore(true);
+
+                    }
+                    else {
+                        setCanLoadMore(false);
+                    }
+                })
+                .catch(() => {
+                    setCanLoadMore(false);
+                })
+        }
     }
 
 
@@ -73,14 +104,14 @@ SearchBookService(query,1)
                         onChange={(e) => {
                         setQuery(e.target.value);
                     }} type={"text"} value={query} placeholder={"Rechercher"} />
-                    <input type={'submit'} hidden={true}/>
+                    <button type={'submit'}>Rechercher <MagnifyingGlassIcon/></button>
                 </form>
             </div>
 
             <div className={styles.containerM}>
                 <div className={styles.containerCardPreview}>
                     <div className={styles.sortContainer}>
-                        <h3 onClick={() => searchNewBooks()}>Résultats pour "{query}"</h3>
+                        <h3 onClick={() => searchNewBooks()}>Résultat pour {activeQuery}</h3>
                         <div>
                             {
                                 filter.list.map((item) => {
@@ -104,8 +135,10 @@ SearchBookService(query,1)
                                                  like={item.likes}
                                                  category={item.category}
                                                  author={item.author_pseudo}
-                                                 nbChapter={item.chapter_list.lenght}
+                                                 slug={item.slug}
+                                                 nbChapter={item.chapter_list.length}
                                                  img={item.img}
+                                                 id={item._id}
                                     />
                                 )
                             })
@@ -113,6 +146,7 @@ SearchBookService(query,1)
 
                     </div>
                 </div>
+                <p className={styles.seeMore} onClick={() => loadMoreBooks()}>Voir plus</p>
                 <div className={styles.previewContainer}>
                     <PreviewHorizontalPostList type={"category"} title={"Populaires cette semaine"}/>
                     <PreviewHorizontalPostList type={"category"} title={"Tendance"}/>

@@ -8,12 +8,12 @@ export const DateNow = () => {
 }
 
 export const FormatDateNb = (timestamp) => {
-   const date = new Date(parseInt(timestamp));
+   const date = new Date(timestamp);
    const jour = date.getDate().toString().padStart(2, '0');
    const mois = (date.getMonth() + 1).toString().padStart(2, '0');
    const annee = date.getFullYear();
    return `${jour}/${mois}/${annee}`;
-}
+};
 
 export const FormatDateStr = (timestamp) => {
    const date = new Date(timestamp);

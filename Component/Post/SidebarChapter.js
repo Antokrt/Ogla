@@ -25,7 +25,6 @@ const SidebarChapter = ({chapters, title}) => {
         if (sizeCommentary > 200) {
             setTooLong(true);
         }
-        console.log(chapters)
     }, [])
 
     useEffect(() => {

@@ -17,11 +17,10 @@ export const SearchBarService = (query) => {
 
 export const SearchBookService = (query,page) => {
     return new Promise((resolve, reject) => {
-        instance.get('search/books/4/'+page,{params:{
+        instance.get('search/books/1/'+page,{params:{
                 q:query
             }})
             .then((res) => {
-                console.log(res)
                 if(res.data.length === 0 ){
                     resolve(null);
                 }

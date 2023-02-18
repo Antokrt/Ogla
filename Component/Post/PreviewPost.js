@@ -8,10 +8,9 @@ import Like from "../layouts/Icons/Like";
 import IconChapter from "../layouts/Icons/Chapter";
 
 
-const PreviewPost = (props) => {
+const PreviewPost = ({title, snippet, like, category, author, nbChapter ,img, slug,id}) => {
 
 
-const { title, snippet, like, category, author, nbChapter ,img} = props;
 const router = useRouter();
 
 const goToCategory = (link,query) => {
@@ -25,37 +24,44 @@ const goToCategory = (link,query) => {
 }
 
 return (
-    <div className={styles.container}>
+    <div className={styles.container}
+    onClick={() => {
+router.push({
+    pathname:'/livre/'+ id,
+    query:slug
+})
+    }}
+    >
         <div className={styles.thumbnail}>
-<p>{props.category}</p>
+<p>{category}</p>
         </div>
 <div className={styles.image}>
-    <img src={props.img}/>
+    <img src={img}/>
 </div>
         <div className={styles.content}>
-            <h5>{props.title}</h5>
-            <p className={styles.snippet}>{props.snippet}</p>
+            <h5>{title}</h5>
+            <p className={styles.snippet}>{snippet}</p>
             <div className={styles.stats}>
 
                 <div>
                     {
                         router.pathname !== "/auteur/[id]" ?
-                        <p title={"Découvrez " + props.author} className={styles.author} style={{
+                        <p title={"Découvrez " + author} className={styles.author} style={{
                             cursor:"pointer"
                         }}
                         onClick={() => {
-                        router.push('/User/'+ props.author)
+                        router.push('/User/'+ author)
                         }
                         }
-                        >{props.author}</p>
+                        >{author}</p>
                         :
-                            <p className={styles.author}>{props.author}</p>
+                            <p className={styles.author}>{author}</p>
                     }
                 </div>
 
 
                 <div>
-                    <p className={styles.like}>{props.like} </p>
+                    <p className={styles.like}>{like} </p>
                     <ChevronDoubleUpIcon/>
                 </div>
 

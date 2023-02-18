@@ -236,7 +236,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                     className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                     ref={headerFixed}
                 >
-                    <h3>Chapitre {index} - {bookData.title}</h3>
+                    <h3>Chapitre {index} - {chapterData.title}</h3>
                     <p>{chapterData._id}</p>
 
                     <div className={styles.thumbnailContainer}>
@@ -249,7 +249,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 <div
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
-                        <h5>{chapterData.title}</h5>
+                        <h5>{bookData.title}</h5>
                         <h6><img src={authorData.img} referrerPolicy={'no-referrer'} />{authorData.pseudo}</h6>
                     </div>
                     <div className={styles.nextChapterContainer}>

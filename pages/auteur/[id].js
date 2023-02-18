@@ -1,27 +1,35 @@
 import styles from '../../styles/Pages/User/ByUser.module.scss';
 
-import urlSlug, {revert} from "url-slug";
 import {useRouter} from "next/router";
 import React, {useEffect, useState} from "react";
 import {getData, getPost, getPostByUser} from "../../services/Post";
 import Header from "../../Component/Header";
-import CategoryHeader from "../../Component/Category/CategoryHeader";
-import {
-    ArrowDownIcon,
-    ArrowsUpDownIcon,
-    ChatBubbleBottomCenterTextIcon, FireIcon,
-    StarIcon
-} from "@heroicons/react/24/outline";
-import CommentaryByUser from "../../Component/Post/Commentary/CommentaryByUser";
-import {BookOpenIcon} from "@heroicons/react/24/solid";
+import {FireIcon,} from "@heroicons/react/24/outline";
 import MainSearchBar from "../../Component/MainSearchBar";
 import FeaturedCategoryPostList from "../../Component/Post/FeaturedCategoryPostList";
 import PreviewPost from "../../Component/Post/PreviewPost";
 import Instagram from "../../Component/layouts/Icons/Social/instagram";
 import Facebook from "../../Component/layouts/Icons/Social/facebook";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
+import {GetAuthorProfilAPI} from "../api/Author";
+import {FormatDateNb} from "../../utils/Date";
 
-const ByUser = (props) => {
+
+export async function getServerSideProps({params}){
+    const pseudo = params.id;
+    const profil = await GetAuthorProfilAPI(pseudo);
+
+    console.log(profil)
+
+    return {
+        props:{
+            profilData: profil.profil,
+            err:profil.err
+        }
+    }
+}
+
+const AuthorProfil = ({profilData}) => {
 
     const [dataAuthor, setDataAuthor] = useState();
     const router = useRouter();
@@ -51,7 +59,7 @@ const ByUser = (props) => {
 
                 <div className={styles.imgContainer}>
                     <div className={styles.img}>
-                        <img src={dataAuthor?.img}/>
+                        <img referrerPolicy={'no-referrer'} src={profilData?.img}/>
                     </div>
 
                     <div className={styles.profil}>
@@ -60,6 +68,7 @@ const ByUser = (props) => {
                         <Twitter/>
                     </div>
 
+{/*
                     <div className={styles.listCommentary}>
                         <form className={styles.form}>
                             <input type={"text"} placeholder={"Laissez votre avis sur "+ dataAuthor?.name + "..."}/>
@@ -71,35 +80,38 @@ const ByUser = (props) => {
                             <CommentaryByUser commentary={"J'aime beaucoup cet auteur qui est très bon"}/>
                         </div>
                     </div>
+*/}
                 </div>
 
 
                <div className={styles.chapterContainer}>
                     <div className={styles.infoContainer}>
                         <div>
-                            <h3>{dataAuthor?.name}</h3>
-                            <p>Inscrit le : 17/08/2022 </p>
+                            <h3>{profilData?.pseudo}</h3>
+                            <p>Inscrit le : {FormatDateNb(profilData.author.became_author)} </p>
                         </div>
 
-                        <h6> Tendance : <span> {dataAuthor?.tendance}</span></h6>
+                        <h6> Tendance : <span> {profilData.trend}</span></h6>
 
-                        <p className={styles.snippet}> {dataAuthor?.description}</p>
+                        <p className={styles.snippet}> {dataAuthor?.description}assssssssssssss</p>
                     </div>
 
                     <h6 className={styles.topBook}>Tops livres <FireIcon/></h6>
 
                         <div className={styles.rankingGridContainer}>
                             {
-                                post
-                                    .sort((a,b)=> b.like - a.like)
+                                profilData.topBooks
+                                    .sort((a,b)=> b.likes - a.likes)
                                     .map((item,index)=>{
                                         return  (
                                             <FeaturedCategoryPostList
                                                 key={item}
+                                                id={item._id}
                                                 rank={index+1}
                                                 title={item.title}
-                                                snippet={item.snippet}
-                                                like={item.like}
+                                                summary={item.summary}
+                                                likes={item.likes}
+                                                slug={item.slug}
                                                 category={item.category}
                                                 author={item.author}
                                                 chapterNb={item.nbChapter}
@@ -132,58 +144,23 @@ const ByUser = (props) => {
                 </div>
 
                 <div className={styles.card}>
-
-                    <PreviewPost title={"Meurtre à KoalaLand"}
-                                 snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                     "\n"}
-                                 like={332}
-                                 category={"Action"}
-                                 author={"Jimmy MC"}
-                                 nbChapter={26}
-                                 img={"/assets/livre1.jpg"}
-                    /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                    snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                        "\n"}
-                                    like={332}
-                                    category={"Horreur"}
-                                    author={"Jimmy MC"}
-                                    nbChapter={26}
-                                    img={"/assets/livre2.jpg"}
-                /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                    "\n"}
-                                like={332}
-                                category={"Drama"}
-                                author={"Jimmy MC"}
-                                nbChapter={26}
-                                img={"/assets/234083.jpg"}
-                />
-
-                    <PreviewPost title={"Meurtre à KoalaLand"}
-                                 snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                     "\n"}
-                                 like={332}
-                                 category={"SF"}
-                                 author={"Jimmy MC"}
-                                 nbChapter={26}
-                                 img={"/assets/livre3.jpg"}
-                    /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                    snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                        "\n"}
-                                    like={332}
-                                    category={"SF"}
-                                    author={"Jimmy MC"}
-                                    nbChapter={26}
-                                    img={"/assets/livre4.jpg"}
-                /> <PreviewPost title={"Meurtre à KoalaLand"}
-                                snippet={"La princesse Lewellyn avait tout pour elle. Jusqu'au jour où sa mère s'est fait exécuter pour avoir tenté de maudire le prince héritier. Depuis, elle vit ses jours délaissée par les siens et harcelée par la reine douairière. Elle ne rêve plus que de pouvoir entrer à l'abbaye pour s'échapper du palais et vivre une vie chaste. Mais le dieu démon Asmodeus lui a infligé la malédiction de la luxure, la faisant plonger dans le désir. Parviendra-t-elle à cacher ses ébats de princesse lubrique et à se rappeler de l'homme qui a pris sa virginité ?\n" +
-                                    "\n"}
-                                like={332}
-                                category={"SF"}
-                                author={"Jimmy MC"}
-                                nbChapter={26}
-                                img={"/assets/livre6.jpg"}
-                />
+                    {
+                        profilData.bookList.map((item,index) => {
+                            return(
+                                <PreviewPost
+                                title={item.title}
+                                category={item.category}
+                                author={profilData.pseudo}
+                                snippet={item.summary}
+                                id={item._id}
+                                nbChapter={item.chapter_list.length}
+                                like={item.likes}
+                                img={item.img}
+                                slug={item.slug}
+                                />
+                            )
+                        })
+                    }
                 </div>
             </div>
 
@@ -193,5 +170,5 @@ const ByUser = (props) => {
     )
 }
 
-export default ByUser;
+export default AuthorProfil;
 

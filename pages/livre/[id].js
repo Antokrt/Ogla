@@ -241,7 +241,6 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
                                 {bookData._id}
                                 <div className={styles.btnContainer}>
                                     <div
-                                        onClick={() => likeBook()}
                                         className={styles.btnItem}>
                                         <HeartIcon className={styles.cursor}/>
                                         <p>({likes})</p>
@@ -324,8 +323,9 @@ const Post = ({bookData,chapterData,err, hasLikeData}) => {
 
                         </div>
                         <FooterOnBook
+                            likeBook={() => likeBook()}
                             title={bookData?.title}
-                            like={bookData?.likes}
+                            like={likes}
                             img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
                             nbCommentary={nbCommentary}
                             author={bookData?.author_pseudo}
