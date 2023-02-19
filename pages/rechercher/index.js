@@ -52,13 +52,13 @@ const SearchPage = ({queryData,data,err}) => {
                     setSearchData(res);
                     setActiveQuery(query);
                     setCanLoadMore(true);
+                    setPage(1);
                 })
                 .catch((err) => console.log(err))
         }
     }
 
     const loadMoreBooks = () => {
-        console.log(page)
         if(canLoadMore){
             SearchBookService(activeQuery,page)
                 .then((res) => {

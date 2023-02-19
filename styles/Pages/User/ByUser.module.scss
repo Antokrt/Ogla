@@ -338,6 +338,19 @@ display: flex;
   width: 100%;
 }
 
+.seeMore{
+  cursor: pointer;
+  color: #9844AD;
+  font-family: 'Montserrat';
+  font-size: 12px;
+}
+
+.activeBtn{
+  transition: 0.1s;
+  background-color: #635291 !important;
+  color: #fcfaf7 !important;
+}
+
 @media screen and (max-width: 1700px){
   .card{
     grid-template-columns: 1fr 1fr!important;
