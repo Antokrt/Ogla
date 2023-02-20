@@ -1,5 +1,5 @@
 export async function GetOneBookApi(id){
-    const book = await fetch('http://localhost:3008/book-render/one/'+ id);
+    const book = await fetch('http://localhost:3008/book-render/one/'+id+ '/order/'+ 1);
     const bookErrData = !book.ok;
     let booksJson = await book.json();
 

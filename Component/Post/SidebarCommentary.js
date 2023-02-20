@@ -26,24 +26,25 @@ const SidebarCommentary = ({
                                deleteAComment,
                                likeAComment,
                                sendANewAnswer,
-    deleteAnswer,
+                               deleteAnswer,
+                               changeFilter,
                                likeAnswer,
                                newPageAnswer
                            }) => {
     const router = useRouter();
-    const [typeFilter,setTypeFilter] = useState([
+    const [typeFilter, setTypeFilter] = useState([
         "Populaire(s)",
         "Récent(s)",
         "Ancien(s)",
     ]);
     const [commentList, setCommentList] = useState(comments);
     const [selectFilter, setSelectFilter] = useState("Récent(s)");
-    const [newComment,setNewComment] = useState('');
+    const [newComment, setNewComment] = useState('');
     const divRef = useRef(null);
-    const {data:session} = useSession();
+    const {data: session} = useSession();
 
     const sendNewComment = () => {
-        NewCommentaryService(typeId,newComment,type)
+        NewCommentaryService(typeId, newComment, type)
             .then((res) => {
                 res.answersPage = 1;
                 createNewComment(res);
@@ -65,19 +66,19 @@ const SidebarCommentary = ({
     }
 
     const sendNewAnswer = (data) => {
-        NewAnswerService(data.id, data.content,session)
+        NewAnswerService(data.id, data.content, session)
             .then((res) => sendANewAnswer(res.data))
             .catch((err) => console.log(err));
     }
 
     const deleteAanswer = (id) => {
-        DeleteAnswerService(id,session)
+        DeleteAnswerService(id, session)
             .then(() => deleteAnswer(id))
             .catch((err) => console.log(err))
     }
 
     const likeAanswer = (id) => {
-        LikeService('answer',id)
+        LikeService('answer', id)
             .then((res) => likeAnswer(id))
             .catch((err) => console.log(err))
     }
@@ -85,7 +86,7 @@ const SidebarCommentary = ({
 
     useEffect(() => {
         setCommentList(comments);
-    },[comments])
+    }, [comments])
 
     const scrollBottom = () => {
         divRef.current.scrollTop = divRef.current.scrollHeight
@@ -93,95 +94,98 @@ const SidebarCommentary = ({
 
     useEffect(() => {
         scrollBottom();
-    },[scrollChange])
+    }, [scrollChange])
 
 
+    return (
+        <div className={styles.container}>
+            <div className={styles.headerComment}>
+                <p><QueueListIcon/>{title}</p>
+                <p onClick={() => router.push("/auteur/" + "Judy McLaren")}><span>{author}</span></p>
+            </div>
+            <div className={styles.titleSection}>
+                <h5>Commentaire(s) <span>({comments?.length})</span></h5>
+                <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
 
-    return(
-<div className={styles.container}>
-    <div className={styles.headerComment}>
-        <p><QueueListIcon/>{title}</p>
-        <p onClick={() => router.push("/auteur/" + "Judy McLaren")}><span>{author}</span></p>
-    </div>
-    <div className={styles.titleSection}>
-        <h5>Commentaire(s) <span>({comments?.length})</span></h5>
-        <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
+                <div>
+                    <p onClick={() => setSelectFilter('popular')}
+                       className={selectFilter === 'popular' ? styles.filterActive : ""}>Populaire(s)</p>
+                    <p onClick={() => setSelectFilter('recent')}
+                       className={selectFilter === 'order' ? styles.filterActive : ""}>Récent(s)</p>
+                </div>
+            </div>
 
-        <div>
-    {typeFilter.map((item,index)=> <p key={item} onClick={() => setSelectFilter(item)} className={selectFilter === item ? styles.filterActive : ""}>{item}</p>)}
-        </div>
-    </div>
-
-    <div
-    ref={divRef}
-        className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
-        {
-            commentList.map((item,index) => {
-                return (
-                    <Commentary
-                        id={item._id}
-                        deleteComment={() => deleteComment(item._id)}
-                        deleteAanswer={(id) => deleteAanswer(id)}
-                        likeAanswer={(id) => likeAanswer(id)}
-                        likeComment = {() => likeComment(item._id)}
-                        sendNewAnswer={(data) => sendNewAnswer(data)}
-                        answerPage={item.answersPage}
-                        newAnswerPage={() => newPageAnswer(item._id)}
-                        authorId={item.userId}
-                        hasLikeData={item.hasLike}
-                        content={item.content}
-                        likes={item.likes}
-                        img={item.img}
-                    date={item.date_creation}
-                    pseudo={item.pseudo}
-                    answers={item.answers}
-                    />
-                )
-            })
-        }
-    </div>
-
-
-
-    <div className={styles.commentaryContainer}>
-        <button
-        onClick={() => {
-            refresh();
-        }}
-        >Voir plus ({limit})</button>
-        <div className={styles.formContainer}>
-            {
-                session ?
-                    <textarea
-                        value={newComment}
-                        onKeyDown={(e) => {
-                            if(e.key === 'Enter' && !e.shiftKey && newComment !== ""){
-                                e.preventDefault();
-                                sendNewComment();
-                            }
-                        }}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
-                    :
-                    <textarea
-                    className={scroll.scrollbar}
-                    type={"textarea"}
-                    placeholder={"Connexion requise..."}
-                    disabled={true}
-                    />
-            }
-        </div>
-
-        <div
-            onClick={() => {
-                if(newComment !== ""){
-                    sendNewComment();
+            <div
+                ref={divRef}
+                className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
+                {
+                    commentList.map((item, index) => {
+                        return (
+                            <Commentary
+                                id={item._id}
+                                deleteComment={() => deleteComment(item._id)}
+                                deleteAanswer={(id) => deleteAanswer(id)}
+                                likeAanswer={(id) => likeAanswer(id)}
+                                likeComment={() => likeComment(item._id)}
+                                sendNewAnswer={(data) => sendNewAnswer(data)}
+                                answerPage={item.answersPage}
+                                newAnswerPage={() => newPageAnswer(item._id)}
+                                authorId={item.userId}
+                                hasLikeData={item.hasLike}
+                                content={item.content}
+                                likes={item.likes}
+                                img={item.img}
+                                date={item.date_creation}
+                                pseudo={item.pseudo}
+                                answers={item.answers}
+                            />
+                        )
+                    })
                 }
-            }}
-            className={newComment !== "" ? styles.active +" "+ styles.sendContainer : styles.sendContainer}><PaperAirplaneIcon/>
+            </div>
+
+
+            <div className={styles.commentaryContainer}>
+                <button
+                    onClick={() => {
+                        refresh();
+                    }}
+                >Voir plus ({limit})
+                </button>
+                <div className={styles.formContainer}>
+                    {
+                        session ?
+                            <textarea
+                                value={newComment}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {
+                                        e.preventDefault();
+                                        sendNewComment();
+                                    }
+                                }}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                            :
+                            <textarea
+                                className={scroll.scrollbar}
+                                type={"textarea"}
+                                placeholder={"Connexion requise..."}
+                                disabled={true}
+                            />
+                    }
+                </div>
+
+                <div
+                    onClick={() => {
+                        if (newComment !== "") {
+                            sendNewComment();
+                        }
+                    }}
+                    className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
+                    <PaperAirplaneIcon/>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     )
 }
 

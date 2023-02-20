@@ -44,6 +44,7 @@ const NouveauChapitre = ({bookData,  err}) => {
     const [title,setTitle] = useState('')
     const [content,setContent] = useState();
     const [text,setText] = useState('');
+    const [canSend,setCanSend] = useState(false)
     const router = useRouter();
     const [closeMenu,setCloseMenu ] = useState(true);
 
@@ -53,6 +54,15 @@ const NouveauChapitre = ({bookData,  err}) => {
             setLoading(false);
         }
     },[router.isReady])
+
+    useEffect(() => {
+        if(title !== "" && title.length < 200 && text !== '' && content){
+            setCanSend(true);
+        }
+        else {
+            setCanSend(false)
+        }
+    },[content,title])
 
 
     const editor = useEditor({
@@ -87,10 +97,7 @@ const NouveauChapitre = ({bookData,  err}) => {
     })
 
     const sendData = (publish) => {
-        if( title !== "" &&
-            title.length < 200 &&
-            text !== ''
-            && content)
+        if(canSend)
         {
             const data = {
                 book_id: book._id,
@@ -153,11 +160,13 @@ const NouveauChapitre = ({bookData,  err}) => {
                             </div>
                             <div className={styles.btnList}>
                                 <button
-                                    className={styles.draft}
+                                    className={canSend ? styles.activeSaveBtn : ''}
                                     onClick={() => sendData(false)}
                                 >Enregistrer en tant que brouillon</button>
 
+
                                 <button
+                                    className={canSend ? styles.activePublishBtn : ''}
                                     onClick={() => sendData(true)}
                                 >Publier</button>
                             </div>

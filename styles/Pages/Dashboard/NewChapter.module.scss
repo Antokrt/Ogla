@@ -102,12 +102,11 @@
     gap: 10px;
   }
 
-  .draft{
-    background-color: #1C232B;
-  }
 
   button{
-    background-color: #9844AD;
+    cursor: initial;
+    transition: 0.1s!important;
+    background-color: #54595F;
     padding: 10px 35px;
     font-size: 11px;
     color: white;
@@ -307,15 +306,19 @@ display: flex;
     height: 100%;
     width: 2%;
   }
-
-
-
 }
 .ProseMirror p {
   color: red!important;
 }
 
+.activeSaveBtn{
+  cursor: pointer!important;
+  transition: 0.1s!important;
+  background-color: #1C232B!important;
+}
 
-.activeBtn{
-
+.activePublishBtn{
+  cursor: pointer!important;
+  transition: 0.1s!important;
+  background-color: #9844AD!important;
 }

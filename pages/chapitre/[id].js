@@ -55,9 +55,9 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
     const {data: session} = useSession();
     const [comments,setComments] = useState([]);
-    const [page,setPage] = useState(1);
-    const [size,setSize] = useState(1);
+    const [pageComment,setPageComment] = useState(1);
 
+    const [size,setSize] = useState(1);
 
     const likeChapter = () => {
         if(session){
@@ -87,22 +87,22 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         switch (sidebarSelect){
             case 'Commentary':
                 if(comments.length === 0){
-                    getComment(page,1);
+                    getComment(pageComment,1);
                 }
                 return (
                     <div
                         className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
                         <SidebarCommentary
                             limit={size}
-                            page={page}
+                            page={pageComment}
                             refresh={() => {
-                                getComment(page, 1);
+                                getComment(pageComment, 1);
                             }}
                             scrollChange={hasToScroll}
                             likeAComment={(id) => likeComment(id)}
                             createNewComment={(res) => newComment(res)}
                             deleteAComment={(id) => deleteComment(id)}
-                            seeMore = {() => getComment(page)}
+                            seeMore = {() => getComment(pageComment)}
                             sendANewAnswer={(data) => sendAnswer(data)}
                             deleteAnswer={(id) => deleteAnswer(id)}
                             likeAnswer={(id) => likeAnswer(id)}
@@ -141,10 +141,10 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
     }
 
     const getComment =  () => {
-        GetCommentService('chapter',chapterData._id, page, 1, session)
+        GetCommentService('chapter',chapterData._id, pageComment, 1, session)
             .then((res) => {
                 if(res.length !== 0){
-                    setPage(page + 1);
+                    setPageComment(pageComment + 1);
                 }
                 res.forEach(element => {
                     if(!lastCommentId.includes(element._id)){
@@ -178,7 +178,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
             res._id
         ])
 
-        setPage((page + 1));
+        setPageComment((pageComment + 1));
         setNbCommentary(nbCommentary + 1);
 
         setTimeout(() =>         setHasToScroll(!hasToScroll),10)
@@ -186,7 +186,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
-        setPage(page - 1);
+        setPageComment(pageComment - 1);
         setNbCommentary(nbCommentary - 1);
     }
 

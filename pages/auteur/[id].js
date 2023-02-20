@@ -17,6 +17,7 @@ import {GetBooksByAuthor} from "../../service/Author";
 
 
 export async function getServerSideProps({params}){
+
     const pseudo = params.id;
     const profil = await GetAuthorProfilAPI(pseudo);
 

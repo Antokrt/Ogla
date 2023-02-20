@@ -154,7 +154,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
     const deleteThis = () => {
         deleteChapter(chapterData._id)
-            .then((res) => router.push('/dashboard/books/'+ bookData._id))
+            .then((res) => router.replace('/dashboard/books/'+ bookData._id))
             .catch((err) => console.log(err));
     }
     return (
