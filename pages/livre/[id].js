@@ -21,6 +21,7 @@ import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
+import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 
 
 export async function getServerSideProps({req, params}) {
@@ -82,7 +83,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
         GetChapterListService(bookData._id, filter, page)
             .then((res) => {
-                console.log(res)
                 if (res.length !== 0) {
                     setState(prevState => [...prevState, ...res]);
                     setPage(page + 1);
@@ -259,7 +259,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                             className={styles.btnItem}>
                             <HeartIcon className={styles.cursor}/>
                             <p>({likes})</p>
-                            {activeFilterChapterSidebar}
                         </div>
                         <div className={styles.btnItem}>
                             <DocumentTextIcon/>
@@ -278,7 +277,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
                     </div>
 
-<p>{pageChapterSideBar}</p>
                     <div className={styles.btnRead}>
                         <button
                             onClick={() => {
@@ -315,7 +313,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
 
                             }}>Trier <ArrowsUpDownIcon/></button>
-                            <p>{pageChapter}</p>
                             <div><p>({chapterData?.length})</p>
                                 <Book/>
                             </div>
@@ -324,6 +321,12 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
                     <div className={styles.contentChapterList}>
                         {chapterData && chapterList.map((item, index) => {
+                            let chapterNumber;
+                            if (activeFilter === "recent") {
+                                chapterNumber = bookData?.nbChapters - index;
+                            } else {
+                                chapterNumber = index + 1;
+                            }
                             return (<div
                                     onClick={() => {
                                         router.push({
@@ -334,8 +337,8 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                     }}
                                     className={styles.chapter}>
                                     <div className={styles.headerChapter}>
-                                        <h6>{item.title}</h6>
-                                        <h7>{item.date_creation}</h7>
+                                        <h6>Chapitre {chapterNumber} : {item.title}</h6>
+                                        <h7>{FormatDateNb(item.date_creation)}</h7>
                                     </div>
 
                                     <div className={styles.likeChapter}>

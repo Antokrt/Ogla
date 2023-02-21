@@ -15,17 +15,20 @@ import {
 import {useEffect, useState} from "react";
 import SidebarPost from "./SidebarCommentary";
 import {LikeBookService} from "../../service/Like/LikeService";
+import {useRouter} from "next/router";
 
 
 
-const FooterOnChapter = ({openCommentary,openList,img, title, likes, nbCommentary, author, nbChapter, index, next,previous, likeChapter }) => {
+const FooterOnChapter = ({navChapters,openCommentary,openList,img, title, likes, nbCommentary, author, nbChapter, index, next,previous, likeChapter }) => {
 
     const [openSidebar,setOpenSidebar ] = useState(true);
     const [hasLikeChapter, setHasLikeChapter] = useState('hasLike');
 
+    const router = useRouter();
 
-
-
+    useEffect(() => {
+       console.log(index + 1)
+    },[])
 
     return (<div className={styles.container}>
         <div className={styles.titleContainer}>
@@ -41,11 +44,20 @@ const FooterOnChapter = ({openCommentary,openList,img, title, likes, nbCommentar
         <div className={styles.likeContainer}>
             <div>
                 {
-                    nbChapter > 1 && index !== 1 &&
-                        <>
+                   navChapters.prev &&
+                        <div
+                            className={styles.navDiv}
+                            onClick={() => {
+                                router.push({
+                                    pathname: "/chapitre/" + navChapters.prev._id, query: {
+                                        name:navChapters.prev.title, slug: navChapters.prev.slug, i: index - 1
+                                    },
+                                })
+                            }}
+                        >
                             <ChevronLeftIcon/>
                             <p>Précédent (Ch.{index - 1})</p>
-                        </>
+                        </div>
                 }
             </div>
 
@@ -60,11 +72,20 @@ likeChapter()
 
             <div>
                 {
-                    nbChapter > 1 &&
-                        <>
+                    navChapters.next &&
+                        <div
+                            className={styles.navDiv}
+                            onClick={() => {
+                                router.push({
+                                    pathname: "/chapitre/" + navChapters.next._id, query: {
+                                        name:navChapters.next.title, slug: navChapters.next.slug, i: index+ 1
+                                    },
+                                })
+                            }}
+                        >
                             <ChevronRightIcon/>
-                            <p>Suivant (Ch.{index})</p>
-                        </>
+                            <p>Suivant (Ch.{index + 1})</p>
+                        </div>
                 }
             </div>
         </div>

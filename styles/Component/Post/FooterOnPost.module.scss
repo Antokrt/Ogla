@@ -40,13 +40,13 @@ font-size: 11px;
 }
 
 .likeContainer{
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   div{
     margin: 0px 20px;
     display: flex;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     flex-direction: column;

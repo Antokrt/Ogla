@@ -198,7 +198,6 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         setComments(DeleteAnswerReduce(comments,id));
     };
 
-
     const likeAnswer = (replyId) => {
         setComments(LikeAnswerReduce(comments,replyId));
     }
@@ -217,7 +216,6 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 .then(() => setComments(newState))
         }
     }
-
 
     return (
         <div className={styles.container}>
@@ -271,6 +269,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 title={chapterData?.title}
                 likes={likes}
                 index={index}
+                navChapters={chapterData.navChapter}
                 author={bookData?.author_pseudo}
                 nbChapter={bookData?.chapter_list.length}
                 nbCommentary={nbCommentary}
