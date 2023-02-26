@@ -59,9 +59,6 @@ export default function Home({err,books}) {
 
             </div>
             <Banner/>
-            <button style={{zIndex:'1000'}} onClick={() => updateSession()}>
-                azssas
-            </button>
 <CategoryHome/>
             <div className={styles.hot}>
                 <div className={styles.headerHot}>

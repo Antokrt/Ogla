@@ -19,29 +19,29 @@ const SidebarCommentary = ({
                                comments,
                                typeId,
                                type,
-                               refresh,
+                               getMore,
                                limit,
                                page,
                                createNewComment,
+    refresh,
                                deleteAComment,
                                likeAComment,
                                sendANewAnswer,
                                deleteAnswer,
                                changeFilter,
+                               activeFilter,
                                likeAnswer,
                                newPageAnswer
                            }) => {
     const router = useRouter();
-    const [typeFilter, setTypeFilter] = useState([
-        "Populaire(s)",
-        "Récent(s)",
-        "Ancien(s)",
-    ]);
     const [commentList, setCommentList] = useState(comments);
-    const [selectFilter, setSelectFilter] = useState("Récent(s)");
     const [newComment, setNewComment] = useState('');
     const divRef = useRef(null);
     const {data: session} = useSession();
+
+    useEffect(() => {
+       setCommentList(comments)
+    },[comments])
 
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
@@ -108,10 +108,11 @@ const SidebarCommentary = ({
                 <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
 
                 <div>
-                    <p onClick={() => setSelectFilter('popular')}
-                       className={selectFilter === 'popular' ? styles.filterActive : ""}>Populaire(s)</p>
-                    <p onClick={() => setSelectFilter('recent')}
-                       className={selectFilter === 'order' ? styles.filterActive : ""}>Récent(s)</p>
+                    <p onClick={() => changeFilter('popular')}
+                       className={activeFilter === 'popular' && styles.filterActive}>Populaire(s)</p>
+                    <p onClick={() => changeFilter('recent')}
+                       className={activeFilter === 'recent' && styles.filterActive}>Récent(s)</p>
+                    <p onClick={() => refresh()}>Refresh</p>
                 </div>
             </div>
 
@@ -148,9 +149,9 @@ const SidebarCommentary = ({
             <div className={styles.commentaryContainer}>
                 <button
                     onClick={() => {
-                        refresh();
+                        getMore();
                     }}
-                >Voir plus ({limit})
+                >Scroll
                 </button>
                 <div className={styles.formContainer}>
                     {

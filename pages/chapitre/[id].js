@@ -25,49 +25,50 @@ import {GetCommentService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
 
-export async function getServerSideProps({req,params,query}){
+export async function getServerSideProps({req, params, query}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
-    const hasLike = await VerifLikeApi(req,'chapter',data.chapter._id);
+    const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
     return {
-        props:{
-            err:data.err,
+        props: {
+            err: data.err,
             chapterData: data.chapter,
             bookData: data.book,
             chapterList: data.chapterList,
-            index:parseInt(query.i),
-            authorData:data.author,
-            hasLikeData:hasLike
+            index: parseInt(query.i),
+            authorData: data.author,
+            hasLikeData: hasLike
         }
     }
 }
 
-const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLikeData}) => {
+const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, hasLikeData}) => {
 
     const router = useRouter();
     const headerFixed = useRef();
     const [hasToBeFixed, setHasToBeFixed] = useState(false);
-    const [likes,setLikes] = useState(chapterData?.likes);
-    const [hasToScroll,setHasToScroll] = useState(false);
+    const [likes, setLikes] = useState(chapterData?.likes);
+    const [hasToScroll, setHasToScroll] = useState(false);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [nbCommentary, setNbCommentary] = useState(chapterData?.nbCommentary);
-    const [lastCommentId,setLastCommentId]= useState([]);
+    const [lastCommentId, setLastCommentId] = useState([]);
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
     const {data: session} = useSession();
-    const [comments,setComments] = useState([]);
-    const [pageComment,setPageComment] = useState(1);
+    const [activeFilterComments, setActiveFilterComments] = useState('popular');
+    const [comments, setComments] = useState([]);
+    const [pageComment, setPageComment] = useState(1);
 
-    const [size,setSize] = useState(1);
+
+    const [size, setSize] = useState(1);
 
     const likeChapter = () => {
-        if(session){
+        if (session) {
             LikeChapterService(chapterData._id)
                 .then((res) => setHasLike(!hasLike))
                 .then(() => {
-                    if(hasLike){
+                    if (hasLike) {
                         setLikes(likes - 1);
-                    }
-                    else{
+                    } else {
                         setLikes(likes + 1);
                     }
                 })
@@ -75,19 +76,24 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         }
     }
 
+    const refresh = () => {
+        setPageComment(1);
+        setComments([]);
+    }
+
     const editorReadOnly = useEditor({
-        extensions:[
+        extensions: [
             StarterKit,
         ],
-        editable:false,
-        content:JSON.parse(chapterData?.content)
+        editable: false,
+        content: JSON.parse(chapterData?.content)
     })
 
     const checkSide = () => {
-        switch (sidebarSelect){
+        switch (sidebarSelect) {
             case 'Commentary':
-                if(comments.length === 0){
-                    getComment(pageComment,1);
+                if (comments.length === 0) {
+                    getComment(pageComment, 1);
                 }
                 return (
                     <div
@@ -95,17 +101,26 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                         <SidebarCommentary
                             limit={size}
                             page={pageComment}
-                            refresh={() => {
+                            getMore={() => {
                                 getComment(pageComment, 1);
                             }}
                             scrollChange={hasToScroll}
                             likeAComment={(id) => likeComment(id)}
                             createNewComment={(res) => newComment(res)}
                             deleteAComment={(id) => deleteComment(id)}
-                            seeMore = {() => getComment(pageComment)}
+                            seeMore={() => getComment(pageComment)}
                             sendANewAnswer={(data) => sendAnswer(data)}
                             deleteAnswer={(id) => deleteAnswer(id)}
                             likeAnswer={(id) => likeAnswer(id)}
+                            refresh={() => refresh()}
+                            activeFilter={activeFilterComments}
+                            changeFilter={() => {
+                                if (activeFilterComments === 'popular') {
+                                    setActiveFilterComments('recent');
+                                } else {
+                                    setActiveFilterComments('popular');
+                                }
+                            }}
                             newPageAnswer={(id) => loadMoreAnswer(id)}
                             type={'chapter'}
                             typeId={chapterData._id}
@@ -140,15 +155,15 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         }
     }
 
-    const getComment =  () => {
-        GetCommentService('chapter',chapterData._id, pageComment, 1, session)
+    const getComment = () => {
+        GetCommentService('chapter', chapterData._id, pageComment, 1, session, activeFilterComments)
             .then((res) => {
-                if(res.length !== 0){
+                if (res.length !== 0) {
                     setPageComment(pageComment + 1);
                 }
                 res.forEach(element => {
-                    if(!lastCommentId.includes(element._id)){
-                        setComments((prevState)=> ([
+                    if (!lastCommentId.includes(element._id)) {
+                        setComments((prevState) => ([
                             ...prevState,
                             element
                         ]))
@@ -156,19 +171,19 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 })
             })
             .then(() => {
-                if(comments.length !== 0){
-                    setTimeout(() =>         setHasToScroll(!hasToScroll),50)
+                if (comments.length !== 0) {
+                    setTimeout(() => setHasToScroll(!hasToScroll), 50)
                 }
             })
             .catch((err) => console.log(err))
     }
 
     const likeComment = (id) => {
-        setComments(LikeCommentReduce(id,comments));
+        setComments(LikeCommentReduce(id, comments));
     }
 
     const newComment = (res) => {
-        setComments((prevState)=> [
+        setComments((prevState) => [
             ...prevState,
             res
         ])
@@ -181,7 +196,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
         setPageComment((pageComment + 1));
         setNbCommentary(nbCommentary + 1);
 
-        setTimeout(() =>         setHasToScroll(!hasToScroll),10)
+        setTimeout(() => setHasToScroll(!hasToScroll), 10)
     }
 
     const deleteComment = (id) => {
@@ -191,24 +206,24 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
     }
 
     const sendAnswer = (data) => {
-        setComments(SendAnswerReduce(comments,data.target_id,data));
+        setComments(SendAnswerReduce(comments, data.target_id, data));
     };
 
     const deleteAnswer = (id) => {
-        setComments(DeleteAnswerReduce(comments,id));
+        setComments(DeleteAnswerReduce(comments, id));
     };
 
     const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments,replyId));
+        setComments(LikeAnswerReduce(comments, replyId));
     }
 
     const loadMoreAnswer = (id) => {
         const newState = [...comments];
         const target = newState.find(obj => obj._id === id);
         if (target) {
-            GetAnswerByCommentService(id,target.answersPage,1, session)
+            GetAnswerByCommentService(id, target.answersPage, 1, session)
                 .then((res) => {
-                    if(res.data.length > 0){
+                    if (res.data.length > 0) {
                         target.answersPage += 1;
                         target.answers = [...target.answers, ...res.data];
                     }
@@ -248,7 +263,7 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
                         <h5>{bookData.title}</h5>
-                        <h6><img src={authorData.img} referrerPolicy={'no-referrer'} />{authorData.pseudo}</h6>
+                        <h6><img src={authorData.img} referrerPolicy={'no-referrer'}/>{authorData.pseudo}</h6>
                     </div>
                     <div className={styles.nextChapterContainer}>
 
@@ -274,10 +289,10 @@ const Chapter = ({chapterData,bookData, chapterList, authorData, err,index,hasLi
                 nbChapter={bookData?.chapter_list.length}
                 nbCommentary={nbCommentary}
                 openList={() => {
-                    ToogleSidebar("List",sidebarSelect,setSidebarSelect);
+                    ToogleSidebar("List", sidebarSelect, setSidebarSelect);
                 }}
                 openCommentary={() => {
-                    ToogleSidebar("Commentary",sidebarSelect,setSidebarSelect);
+                    ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
                 }}
                 img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
         </div>

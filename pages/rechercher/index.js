@@ -52,7 +52,7 @@ const SearchPage = ({queryData,data,err}) => {
                     setSearchData(res);
                     setActiveQuery(query);
                     setCanLoadMore(true);
-                    setPage(1);
+                    setPage(2);
                 })
                 .catch((err) => console.log(err))
         }
@@ -111,7 +111,7 @@ const SearchPage = ({queryData,data,err}) => {
             <div className={styles.containerM}>
                 <div className={styles.containerCardPreview}>
                     <div className={styles.sortContainer}>
-                        <h3 onClick={() => searchNewBooks()}>Résultat pour {activeQuery}</h3>
+                        <h3 onClick={() => searchNewBooks()}>Résultat pour {activeQuery} + page : {page}</h3>
                         <div>
                             {
                                 filter.list.map((item) => {

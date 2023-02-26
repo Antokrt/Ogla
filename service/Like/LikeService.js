@@ -27,10 +27,7 @@ export const LikeService = (type,id) => {
 export const VerifLikeService = (type,targetId) => {
 return new Promise((resolve, reject) => {
     instance.get('like/verif/'+ type + '/'+ targetId)
-        .then((res) => {
-            console.log(res)
-            resolve(res.data)
-        })
+        .then((res) => resolve(res.data))
         .catch((err) => reject(err));
 })
 }

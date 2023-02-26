@@ -1,6 +1,6 @@
 const DashboardProfil = () => {
     return (
-        <p>okkoook</p>
+        <p>Author Profil Page</p>
     )
 }
 

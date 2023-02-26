@@ -65,7 +65,8 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const [chapterListSidebar, setChapterListSidebar] = useState(chapterData)
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
     const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
-    const [activeFilter, setActiveFilter] = useState('order');
+    const [activeFilterList, setActiveFilterList] = useState('order');
+    const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
 
     const GetChapters = (setState, setCanSeeMore,filter) => {
@@ -92,6 +93,11 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
             })
     }
 
+    const refresh = () => {
+        setPageComment(1);
+        setComments([]);
+    }
+
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
@@ -103,9 +109,10 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     <SidebarCommentary
                         limit={sizeComment}
                         page={pageComment}
-                        refresh={() => {
+                        getMore={() => {
                             getComment(pageComment, 1);
                         }}
+                       refresh={() => refresh()}
                         scrollChange={hasToScroll}
                         likeAComment={(id) => likeComment(id)}
                         createNewComment={(res) => newComment(res)}
@@ -116,6 +123,18 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         likeAnswer={(id) => likeAnswer(id)}
                         newPageAnswer={(id) => loadMoreAnswer(id)}
                         type={'book'}
+                        activeFilter={activeFilterComments}
+                        changeFilter={(e) => {
+                            if (e === 'recent' && activeFilterComments === 'popular') {
+                                setActiveFilterComments('recent');
+                                setComments([]);
+                                setPageComment(1);
+                            } else if(e === 'popular' && activeFilterComments === 'recent') {
+                                setActiveFilterComments('popular');
+                                setComments([]);
+                                setPageComment(1);
+                            }
+                        }}
                         typeId={bookData._id}
                         bookId={bookData._id}
                         title={bookData.title}
@@ -160,7 +179,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     }
 
     const getComment = () => {
-        GetCommentService('book', bookData._id, pageComment, 1, session)
+        GetCommentService('book', bookData._id, pageComment, 1, session, activeFilterComments)
             .then((res) => {
                 if (res.length !== 0) {
                     setPageComment(pageComment + 1);
@@ -176,7 +195,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     setTimeout(() => setHasToScroll(!hasToScroll), 50)
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log('err'))
     }
 
     const likeBook = () => {
@@ -248,7 +267,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
             {checkSide()}
 
             <div className={styles.containerC}>
-
+                <p>{activeFilterComments}</p>
                 <div className={styles.imgContainer}>
                     <div className={styles.img}>
                         <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
@@ -301,13 +320,13 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         <p className={styles.snippet}> {bookData?.summary}</p>
                         <div className={styles.btnFilter}>
                             <button onClick={() => {
-                                if (activeFilter === 'order') {
+                                if (activeFilterList === 'order') {
                                     setPageChapter(2);
-                                    setActiveFilter('recent');
+                                    setActiveFilterList('recent');
                                     GetChapters(setChapterList,setCanSeeMoreChapter,'recent');
                                 } else {
                                     setPageChapter(2);
-                                    setActiveFilter('order');
+                                    setActiveFilterList('order');
                                     GetChapters(setChapterList,setCanSeeMoreChapter,'order');
                                 }
 
@@ -322,7 +341,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     <div className={styles.contentChapterList}>
                         {chapterData && chapterList.map((item, index) => {
                             let chapterNumber;
-                            if (activeFilter === "recent") {
+                            if (activeFilterList === "recent") {
                                 chapterNumber = bookData?.nbChapters - index;
                             } else {
                                 chapterNumber = index + 1;
@@ -352,7 +371,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         })}
 
                         {canSeeMoreChapter && <p className={styles.seeMore}
-                                                 onClick={() => GetMoreChapters(chapterList, setChapterList, activeFilter, pageChapter, setPageChapter, setCanSeeMoreChapter)}>Voir
+                                                 onClick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}>Voir
                             plus</p>}
 
                     </div>
