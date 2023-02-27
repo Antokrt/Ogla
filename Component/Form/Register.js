@@ -42,8 +42,6 @@ const Register = ({login}) => {
 
     const router = useRouter();
 
-
-
     const loginLink = () => {
         return (
             <div className={styles.conditions}>
@@ -51,7 +49,6 @@ const Register = ({login}) => {
             </div>
         )
     }
-
 
     const errMsgItem = (err) => {
         return (
@@ -62,10 +59,10 @@ const Register = ({login}) => {
       const submit =  async (values) => {
         const formData = {
             email : values.email,
-            pseudo:values.pseudo,
-            password:values.password,
-            is_author:false,
-            redirect:false
+            pseudo: values.pseudo,
+            password: values.password,
+            is_author: false,
+            redirect: false
         }
         console.log(formData)
         const register = await signIn('signup',formData)
@@ -231,8 +228,6 @@ const Register = ({login}) => {
                             </div>
                         </Form>
                     )}
-
-
                 </Formik>
             </div>
 
