@@ -294,7 +294,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 openCommentary={() => {
                     ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
                 }}
-                img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
+                img={bookData?.img}/>
         </div>
     )
 }

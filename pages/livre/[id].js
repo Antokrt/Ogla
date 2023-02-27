@@ -82,6 +82,10 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
             })
     }
 
+    useEffect(() => {
+       console.log(process.env.TEST)
+    },[])
+
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
         GetChapterListService(bookData._id, filter, page)
             .then((res) => {
@@ -280,10 +284,9 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
             {checkSide()}
 
             <div className={styles.containerC}>
-                <p>{activeFilterComments}</p>
                 <div className={styles.imgContainer}>
                     <div className={styles.img}>
-                        <img src={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}/>
+                        <img src={bookData?.img}/>
                     </div>
                     {bookData._id}
                     <div className={styles.btnContainer}>
@@ -395,7 +398,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                 likeBook={() => likeBook()}
                 title={bookData?.title}
                 like={likes}
-                img={process.env.NEXT_PUBLIC_BASE_IMG_BOOK + bookData?.img}
+                img={bookData?.img}
                 nbCommentary={nbCommentary}
                 author={bookData?.author_pseudo}
                 nbChapter={chapterData?.length}

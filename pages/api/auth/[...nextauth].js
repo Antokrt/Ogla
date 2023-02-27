@@ -66,8 +66,8 @@ export default function (req,res){
         providers: [
             Google(
                 {
-                    clientId: '1092772885175-pr1v5209i6c07o52utevpt9q0hp37g3d.apps.googleusercontent.com',
-                    clientSecret:'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',
+                    clientId: process.env.GOOGLE_CLIENT_ID,
+                    clientSecret:process.env.GOOGLE_SECRET,
                     authorization:{
                         params:{
                             prompt:'consent',
