@@ -15,7 +15,7 @@ import {useSession} from "next-auth/react";
 import {LikeBookService} from "../../service/Like/LikeService";
 import {VerifLikeApi} from "../api/like";
 import {GetOneBookApi} from "../api/book";
-import {GetCommentService} from "../../service/Comment/CommentService";
+import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
@@ -57,6 +57,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const [hasLike, setHasLike] = useState(hasLikeData);
     const {data: session} = useSession();
     const [comments, setComments] = useState([]);
+    const [myComments, setMyComments] = useState([]);
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
     const [pageChapter, setPageChapter] = useState(2);
@@ -96,13 +97,17 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const refresh = () => {
         setPageComment(1);
         setComments([]);
+        setMyComments([]);
     }
+
+
 
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
                 if (comments.length === 0) {
                     getComment(pageComment, 1);
+                    getMyComments(1,'popular');
                 }
                 return (<div
                     className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
@@ -178,6 +183,15 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
         }
     }
 
+
+    const getMyComments = (page, filter) => {
+        GetMyCommentsService('book', bookData._id, page, filter)
+            .then((res) => {
+                setComments([...res,...comments]);
+            })
+            .catch((err) => console.log(err));
+    };
+
     const getComment = () => {
         GetCommentService('book', bookData._id, pageComment, 1, session, activeFilterComments)
             .then((res) => {
@@ -218,8 +232,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     }
 
     const newComment = (res) => {
-        setComments((prevState) => [...prevState, res])
-
+        setComments((prevState) => [res,...prevState])
         setLastCommentId(prevState => [...prevState, res._id])
         setPageComment((pageComment + 1));
         setNbCommentary(nbCommentary + 1);

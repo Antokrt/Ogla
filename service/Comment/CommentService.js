@@ -39,6 +39,7 @@ export const GetCommentService = (type,id, page,limit, isConnected,filter ) => {
             .catch((err) => reject(err));
     });
 };
+
 export const NewCommentaryService = (target_id,content,type) => {
 return new Promise((resolve, reject) => {
     const data = {target_id,content,type};
@@ -48,11 +49,18 @@ return new Promise((resolve, reject) => {
 } )
 }
 
-
 export const DeleteCommentaryService = (commentToDeleteId) => {
     return new Promise((resolve, reject) => {
         instance.delete('comment/delete/'+ commentToDeleteId)
             .then((res) => resolve(res.data))
             .catch((err) => reject(err))
     } )
+}
+
+export const GetMyCommentsService = (type,targetId,page,filter) => {
+    return new Promise((resolve, reject) => {
+        instance.get('comment/my-comments/'+ type +'/'+ targetId+ '/'+ page + '/'+ filter)
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err));
+    })
 }
