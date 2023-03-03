@@ -7,7 +7,7 @@ import {signIn, useSession} from "next-auth/react";
 import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
 import {instance} from "../../service/config/Interceptor";
-
+import { toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail } from "../../utils/Toastify";
 
 const DevenirAuteur = () => {
 
@@ -300,8 +300,7 @@ const DevenirAuteur = () => {
     }
 
     const submit =  async (values) => {
-
-        if(session){
+        if(session) {
             const formData = {
                 pseudo:values.pseudo,
                 firstName:values.firstName,
@@ -309,22 +308,21 @@ const DevenirAuteur = () => {
                 description:values.description,
                 age:values.age
             }
-
-            instance.put('http://localhost:3008/author/turn-author',formData)
+            /*toastDisplayPromiseSendMail(*/instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
                     axios.get('/api/auth/session?update-author')
                         .then(() => router.push('/'))
                         .then(() => router.reload());
                 })
                 .catch((err) => console.log(err.data))
+            /*)*/
         }
-        else{
+        else {
             const formData = {
                 ...values,
                 is_author:true,
                 redirect:false
             }
-
             const register = await signIn('signupAuthor',formData)
                 .then((res) => {
                     console.log(res)
@@ -339,7 +337,6 @@ const DevenirAuteur = () => {
     }
 
         const btn = () => {
-
         return (
             <div className={styles.stepBtnContainer}>
                 {
@@ -348,7 +345,6 @@ const DevenirAuteur = () => {
                         setStepActiveForm(stepActiveForm - 1)
                     }}>Précédent</span>
                 }
-
                 <button
                     onClick={() => {
                         const data = getField();
@@ -361,7 +357,8 @@ const DevenirAuteur = () => {
                             data.pseudo === "" ||
                             data.description === ""
                         ){
-                            setSeeErr(true)
+                            setSeeErr(true);
+                            //toastDisplayError("Une erreur c'est produite.")
                         }
                         else {
                             setSeeErr(false);
@@ -369,7 +366,6 @@ const DevenirAuteur = () => {
                     }}
                     type={'submit'}
                     className={styles.stepBtn}>Envoyez</button>
-
             </div>
         )
     }
@@ -411,12 +407,11 @@ const DevenirAuteur = () => {
                         <h1>Deviens écrivain </h1>
                         {
                             stepActiveForm !== 3 ?
-                                <p>{activeText}</p>
+                                <p> {activeText} </p>
                                 :
-                                <p>Votre inscription sera traitée le plus rapidement possible par l'équipe d'OGLA !</p>
+                                <p> Votre inscription sera traitée le plus rapidement possible par l'équipe d'OGLA ! </p>
                         }
                     </div>
-
                     <div className={styles.form}>
                         {
                             formReady &&
@@ -428,15 +423,12 @@ const DevenirAuteur = () => {
                                 submit(values)
                             }}
                         >
-                                {({setFieldValue}) =>
-
-                                    (
-                                    <Form>
-                                         {
+                            {({setFieldValue}) =>
+                                (
+                                <Form>
+                                        {
                                             displayForm(stepActiveForm)
                                         }
-
-
                                         {
                                             stepActiveForm !== 3 && !session &&
                                             nextPreviousBtn()
@@ -453,11 +445,11 @@ const DevenirAuteur = () => {
                                             stepActiveForm === 2 && session &&
                                             btn()
                                         }
-                                    </Form>
-                                )}
-                        </Formik>}
+                                </Form>
+                            )}
+                            </Formik>
+                        }
                     </div>
-
                 </div>
             </div>
 

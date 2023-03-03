@@ -1,6 +1,5 @@
 import styles from "../../styles/Pages/Form/Login.module.scss";
 
-
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import {useEffect, useState} from "react";
 import {RegisterSchema} from "./Schema/RegisterSchema";
@@ -109,7 +108,6 @@ const Register = ({login}) => {
                 msg:'Oups une erreur à eu lieu',
                 show: true
             }))
-
             /*RegisterService(formData)
                 .catch((err) => {
                     let errMsg = err.response.data.message;
@@ -214,9 +212,7 @@ const Register = ({login}) => {
                                        placeholder={"Confirmez votre mot de passe"}
                                        name={"confirmPassword"}/>
                                 {/* CONFIRM PASSWORD */}
-
                                 {loginLink()}
-
                             </div>
                             {
                                 submitErr.show &&
@@ -230,8 +226,6 @@ const Register = ({login}) => {
                     )}
                 </Formik>
             </div>
-
-
         </div>
     )
 }

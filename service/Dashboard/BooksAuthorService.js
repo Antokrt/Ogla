@@ -59,5 +59,13 @@ export const UpdateBookPictureService = (file,bookId) => {
     else{
         return null;
     }
+}
 
+export const UpdateLinksProfilAuthor = (social, link) => {
+    return new Promise((resolve, reject) => {
+        const data = {social, link};
+        instance.put('author/social', data)
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err))
+    })
 }

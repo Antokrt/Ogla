@@ -2,7 +2,7 @@ import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {
     deleteBook, DeleteBookService,
-     UpdateBookPictureService, UpdateBookSummaryService,
+    UpdateBookPictureService, UpdateBookSummaryService,
     updatePicture,
     UpdatePictureService,
     updateSummary

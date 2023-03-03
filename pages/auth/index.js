@@ -32,14 +32,11 @@ const Auth = () => {
         else {
             return (
                 <div className={styles.container}>
-
                     <div className={styles.purple}></div>
-
                     <div className={styles.block}>
                         <div className={styles.imgContainer}>
                             <img src={"/assets/gon.png"}/>
                         </div>
-
                         {
                             choice === "register" &&
                             <Register login={() => {
@@ -60,7 +57,6 @@ const Auth = () => {
                                 }
                                 />
                         }
-
                         {
                             choice === "forgotPassword" &&
                             <ForgotPassword
@@ -71,14 +67,9 @@ const Auth = () => {
                             }
                             />
                         }
-
-
                     </div>
-
                 </div>
             )
         }
-
-
 }
 export default Auth;

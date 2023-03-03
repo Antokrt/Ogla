@@ -2,7 +2,7 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 import {useSession, signIn, signOut} from "next-auth/react";
 import {useEffect, useRef, useState} from "react";
 import {SendResetPasswordEmailService} from "../../service/User/Password.service";
-
+import { toastDisplayPromiseSendMail } from "../../utils/Toastify";
 
 const ForgotPassword = ({login}) => {
 
@@ -20,9 +20,10 @@ const ForgotPassword = ({login}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(email !== ''){
-            SendResetPasswordEmailService(email)
+            toastDisplayPromiseSendMail(SendResetPasswordEmailService(email)
                 .then((res) => setHasSendEmail(true))
-                .catch((err) => setHasSendEmail(true));
+                .catch((err) => setHasSendEmail(true))
+            )
         }
     }
 
@@ -46,8 +47,6 @@ const ForgotPassword = ({login}) => {
                             <p> Nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
                             </p>
                         </>
-
-
                 }
 
             </div>
@@ -78,9 +77,10 @@ const ForgotPassword = ({login}) => {
                             <p className={styles.notReceive}>Rien reçus ?</p>
                             <p className={styles.reSend} onClick={() => {
                                 if(email !== ''){
-                                    SendResetPasswordEmailService(email)
-                                        .then((res) => console.log(res))
+                                    toastDisplayPromiseSendMail(SendResetPasswordEmailService(email)
+                                        .then((res) => {console.log(res)})
                                         .catch((err) => console.log(err))
+                                    )
 
                                 }
                             }}>Renvoyer le mail</p>

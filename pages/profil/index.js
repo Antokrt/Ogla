@@ -45,7 +45,7 @@ export async function getServerSideProps({req}) {
     }
 }
 
-const Profil = ({profilData}) => {
+const Profil = ({profilData, err}) => {
     const router = useRouter();
     const [isCreator, setIsCreator] = useState(true);
     const [activeLink, setActiveLink] = useState("profil");
@@ -174,9 +174,17 @@ const Profil = ({profilData}) => {
     }
 
     return (
-        <div className={styles.container}>
-            <Header/>
-            <div className={styles.containerM}>
+
+            <div className={styles.container}>
+            {
+                err &&
+                <p> {err} </p>
+            }
+            {
+                profilData &&
+                <>
+                    <Header/>
+                    <div className={styles.containerM}>
                 <div className={styles.containerLeft}>
                     <div className={styles.firstCard}>
                         <div className={styles.headerFirstCard}>
@@ -185,9 +193,9 @@ const Profil = ({profilData}) => {
                         </div>
                         <div className={styles.listFirstCard}>
                             <p className={styles.dateInscription}><AcademicCapIcon
-                                className={styles.commentarySvg}/> Inscrit le {FormatDateStr(profilData.register_date)} </p>
+                                className={styles.commentarySvg}/> Inscrit le {FormatDateStr(profilData?.register_date)} </p>
                             <p className={styles.likeNb}><ChevronDoubleUpIcon/> <span
-                                className={styles.nb}>+ {profilData.stats.likes}</span>&nbsp;likes </p>
+                                className={styles.nb}>+ {profilData?.stats.likes}</span>&nbsp;likes </p>
                             <p className={styles.commentaryNb}><ChatBubbleLeftRightIcon/> <span className={styles.nb}>+ {profilData.stats.comments} </span> &nbsp;commentaires</p>
                             {
                                 profilData.verified ?
@@ -468,8 +476,10 @@ const Profil = ({profilData}) => {
 
 
                 </div>
+                    </div>
+                </>
+            }
             </div>
-        </div>
     )
 
 
