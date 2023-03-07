@@ -49,7 +49,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const {data: session} = useSession();
     const [active, setActive] = useState('chapter');
     const [book, setBook] = useState(bookData);
-    const [chapterList, setChapterList] = useState([chapterListData]);
+    const [chapterList, setChapterList] = useState(chapterListData);
     const [chapterPage, setChapterPage] = useState(2);
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
@@ -74,6 +74,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                 if (res.length === 0) {
                     setSeeMoreChapter(false);
                 } else {
+                    setChapterList(prevState => [...prevState, ...res]);
                     setChapterPage(chapterPage + 1);
                 }
             })
@@ -330,8 +331,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         </button>
 
                                                         {
-                                                            chapterList[0] ?
-                                                                chapterList[0]?.map((item, index) => {
+                                                            chapterList ?
+                                                                chapterList.map((item, index) => {
                                                                     return (
                                                                         <>
                                                                             <CardChapter
