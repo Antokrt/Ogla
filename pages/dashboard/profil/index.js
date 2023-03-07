@@ -4,9 +4,10 @@ import { GetPrivateProfilApi } from "../../api/user";
 import Facebook from "../../../Component/layouts/Icons/Social/facebook";
 import Instagram from "../../../Component/layouts/Icons/Social/instagram";
 import Twitter from "../../../Component/layouts/Icons/Social/twitter";
-import { BookOpenIcon, CheckIcon, HomeIcon, ListBulletIcon, PencilIcon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BellAlertIcon, BookOpenIcon, CheckIcon, HomeIcon, ListBulletIcon, PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { toastDisplayError, toastDisplaySuccess, toastDisplayInfo } from "../../../utils/Toastify";
 import { UpdateLinksProfilAuthor } from "../../../service/Dashboard/BooksAuthorService"
+import { useRouter } from "next/router";
 
 export async function getServerSideProps({req}) {
 
@@ -29,6 +30,7 @@ const DashboardProfil = ({ profilData, err }) => {
     const [tampFb, setTampFb] = useState("");
     const [tampIs, setTampIs] = useState("");
     const [tampTw, setTampTw] = useState("");
+    const Router = useRouter();
 
     function isValidFacebookUrl(url) {
         const regex = new RegExp("^https:\/\/(?:www\.)?facebook\.com\/[^\\s]+$");
@@ -37,7 +39,7 @@ const DashboardProfil = ({ profilData, err }) => {
     }
 
     function isValidTwitterUsername(url) {
-        const regex = new RegExp("^@[a-zA-Z0-9]{1,31}$");
+        const regex = new RegExp("^@[a-zA-Z0-9_]{3,16}$");
         const match = url.match(regex);
         return !!match;
     }
@@ -123,11 +125,11 @@ const DashboardProfil = ({ profilData, err }) => {
                     <p> Revenu mensuel </p>
                 </div>
                 <div className={Style.MenuProfilAuthor}>
-                    <div className={Style.itemMenuProfilAuthor} > <HomeIcon /> <p> Accueil </p> </div>
-                    <div className={Style.itemMenuProfilAuthor} > <UserIcon /> <p> Profil </p> </div>
-                    <div className={Style.itemMenuProfilAuthor} > <BookOpenIcon /> <p> Mes livres </p> </div>
-                    <div className={Style.itemMenuProfilAuthor} > <PencilIcon /> <p> Écrire </p> </div>
-                    <div className={Style.itemMenuProfilAuthor} > <ListBulletIcon /> <p> Catégories </p> </div>
+                    <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/")} > <HomeIcon /> <p> Accueil </p> </div>
+                    <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/Category")}  > <ListBulletIcon /> <p> Catégories </p> </div>
+                    <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/dashboard/books")}  > <BookOpenIcon /> <p> Mes livres </p> </div>
+                    <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/dashboard/nouveau-livre")}  > <PencilIcon /> <p> Écrire </p> </div>
+                    <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/dashboard/notifications")}  > <BellAlertIcon /> <p> Notifications </p> </div>
                 </div>
                 <h4> Déconnection </h4>
                 </div>
@@ -145,23 +147,23 @@ const DashboardProfil = ({ profilData, err }) => {
                         <div className={Style.ReseauxSociauxAuthor}>
                             <h2> Réseaux sociaux </h2>
                             <form>
-                                <div /*className={styles.form}*/>
+                                <div>
                                     <label> Facebook <Facebook/> </label>
                                     <div className={Style.InputAndButtonProfilAuthor}>
                                     {
-                                        !modifLinkFacebook && profilData.author.social.facebook !== "" &&
+                                        !modifLinkFacebook && (profilData.author.social.facebook !== "" || FacebookLink !== "") &&
                                         <>
                                             <a href={FacebookLink}  target="_blank" > {FacebookLink} </a>
                                             <button onClick={() => setModifLinkFacebook(true)}> Modifier </button>
                                         </>
                                     }
                                     {
-                                        (modifLinkFacebook || profilData.author.social.facebook === "") &&
+                                        (modifLinkFacebook || (profilData.author.social.facebook === "" && FacebookLink === "")) &&
                                         <>
-                                            <input onChange={(e) => setTampFb(e.target.value)} type={"text"} placeholder={"Lien Facebook"} />
+                                            <input onChange={(e) => setTampFb(e.target.value)} type={"text"} placeholder={"url"} />
                                             <div className={Style.svgModifLinksProfilAuthor} >
-                                                <CheckIcon onClick={() => changeLink("facebook")} />
-                                                <XMarkIcon onClick={() => AnnulationModificationLink("facebook")} />
+                                                <CheckIcon onClick={() => changeLink("facebook")} style={{ color:"green", border:"1px solid green" }} />
+                                                <XMarkIcon onClick={() => AnnulationModificationLink("facebook")}  style={{ color:"red", border:"1px solid red" }} />
                                             </div>
                                         </>
                                     }
@@ -169,19 +171,19 @@ const DashboardProfil = ({ profilData, err }) => {
                                     <label>Instagram <Instagram/></label>
                                     <div className={Style.InputAndButtonProfilAuthor}>
                                     {
-                                        !modifLinkInstagram && profilData.author.social.instagram !== "" &&
+                                        !modifLinkInstagram && (profilData.author.social.instagram !== "" || InstagramLink !== "") &&
                                         <>
                                             <a href={"https://www.instagram.com/" + (InstagramLink.substr(1))} target="_blank" style={{color:"#fb3958"}} > {InstagramLink} </a>
                                             <button onClick={() => setModifLinkInstagram(true)} style={{color:"#fb3958", border:"1px solid #fb3958"}}> Modifier </button>
                                         </>
                                     }
                                     {
-                                        (modifLinkInstagram || profilData.author.social.instagram === "") &&
+                                        (modifLinkInstagram || (profilData.author.social.instagram === "" && InstagramLink === "")) &&
                                         <>
                                                 <input onChange={(e) => setTampIs(e.target.value)} type={"text"} placeholder={"@"} />
                                                 <div className={Style.svgModifLinksProfilAuthor} >
-                                                    <CheckIcon onClick={() => changeLink("instagram")} />
-                                                    <XMarkIcon onClick={() => AnnulationModificationLink("instagram")} />
+                                                    <CheckIcon onClick={() => changeLink("instagram")} style={{ color:"green", border:"1px solid green" }} />
+                                                    <XMarkIcon onClick={() => AnnulationModificationLink("instagram")} style={{ color:"red", border:"1px solid red" }} />
                                                 </div>
                                         </>
                                     }
@@ -189,7 +191,7 @@ const DashboardProfil = ({ profilData, err }) => {
                                     <label> Twitter <Twitter/> </label>
                                     <div className={Style.InputAndButtonProfilAuthor}>
                                     {
-                                        !modifLinkTwitter && profilData.author.social.twitter !== "" &&
+                                        !modifLinkTwitter && (profilData.author.social.twitter !== "" || TwitterLink !== "") &&
                                         <>
                                             {/* <input type={"text"} value={TwitterLink} readOnly placeholder={"@"} style={{cursor:"default", backgroundColor:"rgb(172, 172, 172)"}} /> */}
                                             <a href={"https://www.twitter.com/" + TwitterLink} target="_blank" style={{color:"#1Da1f2"}} > {TwitterLink} </a>
@@ -197,12 +199,12 @@ const DashboardProfil = ({ profilData, err }) => {
                                         </>
                                     }
                                     {
-                                        (modifLinkTwitter || profilData.author.social.twitter === "") &&
+                                        (modifLinkTwitter || (profilData.author.social.twitter === "" && TwitterLink === "")) &&
                                         <>
                                             <input onChange={(e) => setTampTw(e.target.value)} type={"text"} placeholder={"@"} />
                                             <div className={Style.svgModifLinksProfilAuthor} >
-                                                <CheckIcon onClick={() => changeLink("twitter")} />
-                                                <XMarkIcon onClick={() => AnnulationModificationLink("twitter")} />
+                                                <CheckIcon onClick={() => changeLink("twitter")} style={{ color:"green", border:"1px solid green" }} />
+                                                <XMarkIcon onClick={() => AnnulationModificationLink("twitter")} style={{ color:"red", border:"1px solid red" }} />
                                             </div>
                                         </>
                                     }

@@ -31,7 +31,7 @@ export default function VerticalAuthorMenu() {
                         <li onClick={() => router.push('/dashboard')}> <HomeIcon/> Accueil  </li>
                         <li onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon/>Livres</li>
                         <li onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon/>Nouveau</li>
-                        <li onClick={() => router.push('/dashboard')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
+                        <li onClick={() => router.push('/dashboard/notifications')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
                     </ul>
                 </div>
             </div>
