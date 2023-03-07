@@ -1,16 +1,8 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {
-<<<<<<< HEAD
     DeleteBookService, GetMoreChapterService,
-    UpdateBookPictureService, UpdateBookSummaryService,
-=======
-    deleteBook, DeleteBookService,
-    UpdateBookPictureService, UpdateBookSummaryService,
-    updatePicture,
-    UpdatePictureService,
-    updateSummary
->>>>>>> Alex
+    UpdateBookPictureService, UpdateBookSummaryService
 } from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
@@ -77,7 +69,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     }
 
     const getMoreChapter = () => {
-        GetMoreChapterService(book._id,chapterPage)
+        GetMoreChapterService(book._id, chapterPage)
             .then((res) => {
                 if (res.length === 0) {
                     setSeeMoreChapter(false);
