@@ -63,9 +63,7 @@ const Login = ({register, forgotPassword}) => {
                         votre histoire parce que nous croyons au pouvoir des mots.
                     </p>
                 </div>
-
                 <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
-
                     <div className={styles.selectItem + " " + "fadeIn"}>
                         <label htmlFor={"pseudo"}>Identifiant</label>
                         <input type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>

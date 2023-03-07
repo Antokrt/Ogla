@@ -4,9 +4,9 @@ import {getSession} from "next-auth/react";
 
 export async function middleware(req){
 
-    const session = await getSession({
-        req:req
-    })
+    // const session = await getSession({
+    //     req:req
+    // })
     const token = await getToken({
         req,
         secret:'code'

@@ -78,7 +78,6 @@ export default function (req,res){
                     }
                 }
             ),
-
             CredentialsProvider({
                 id: 'login',
                 name: 'login',
@@ -259,7 +258,6 @@ export default function (req,res){
                 token.is_author = session.user.is_author
 
                 if(req.url === '/api/auth/session?update-author'){
-                    console.log('kekeke')
                     const config = await getConfigOfProtectedRoute(req);
                     const newAuthor = await fetch('http://localhost:3008/author/check',config);
                     const authorJson = await newAuthor.json();
@@ -273,8 +271,6 @@ export default function (req,res){
                     session.user.accessToken = token?.accessToken;
                     return session;
                 }
-
-
 
                 if(req.url === '/api/auth/session?update-picture'){
                     const res = await getProfil(token?.accessToken);
@@ -298,8 +294,6 @@ export default function (req,res){
         session:{
             maxAge: 604800  // 7 jours
         }
-
-
     })
 }
 

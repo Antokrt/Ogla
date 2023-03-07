@@ -163,15 +163,12 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 <div className={styles.verticalMenuContainer}>
                     <VerticalAuthorMenu/>
                 </div>
-
-
                 {
                     loading &&
                     <div className={styles.errContainer}>
                         <p>Loading</p>
                     </div>
                 }
-
                 {
                     err.chapter || err.book && !loading &&
                     <div className={styles.errContainer}>
@@ -184,9 +181,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 '\n'}
                         />
                     </div>
-
                 }
-
                 {
                     !err.chapter && !err.book && !loading && chapterData &&
                     <div className={styles.containerData}>
@@ -356,13 +351,8 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                         </div>
 
                     </div>
-
-
-
                 }
-
             </div>
-
         </div>
     )
 }

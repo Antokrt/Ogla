@@ -28,7 +28,7 @@
 
   .imgContainer{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     background-color: transparent;
     width: 35%;
@@ -235,7 +235,7 @@
 
     .resetPassword{
       display: flex;
-      justify-content: end!important;
+      justify-content: flex-end!important;
     }
 
     .conditions{

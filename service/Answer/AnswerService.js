@@ -26,7 +26,6 @@ export const NewAnswerService = (target,content,isConnected) => {
                 .catch((err) => reject(err));
         })
     }
-
 }
 
 
