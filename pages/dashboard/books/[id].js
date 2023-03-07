@@ -69,11 +69,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
     }
 
     const getMoreChapter = () => {
-        GetMoreChapterService(book._id,chapterPage)
+        GetMoreChapterService(book._id, chapterPage)
             .then((res) => {
                 if (res.length === 0) {
                     setSeeMoreChapter(false);
                 } else {
+                    setChapterList(prevState => [...prevState, ...res]);
                     setChapterPage(chapterPage + 1);
                 }
             })
