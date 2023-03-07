@@ -114,6 +114,7 @@ export default function Header() {
                                         className={styles.searchP}>Chercher <MagnifyingGlassIcon/></p>
                                     <p onClick={() => {
                                         setSearchValue('')
+                                        setQuery('')
                                     }}>Fermer</p>
                                 </div>
                             </div>

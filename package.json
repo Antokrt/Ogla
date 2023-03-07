@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.12",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@tiptap/extension-italic": "^2.0.0-beta.209",
     "@tiptap/extension-placeholder": "^2.0.0-beta.209",
     "@tiptap/react": "^2.0.0-beta.209",
     "@tiptap/starter-kit": "^2.0.0-beta.209",
     "axios": "^1.1.2",
+    "event-source-polyfill": "^1.0.31",
     "formik": "^2.2.9",
     "jsonwebtoken": "^9.0.0",
     "next": "12.3.1",
@@ -25,6 +27,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-scrollbar-size": "^5.0.0",
     "react-simple-image-slider": "^2.4.1",
+    "recharts": "^2.4.3",
     "sass": "^1.55.0",
     "url-slug": "^3.0.4",
     "yup": "^0.32.11"

@@ -33,6 +33,7 @@ const New = () => {
     }
 
     const sendData = () => {
+        console.log('jejeje')
         const form = {
             title: title,
             summary:summary,
@@ -64,9 +65,6 @@ const New = () => {
             summary !== "" &&
             summary.length <= 2000 &&
             category !== "";
-    }
-
-    const validSecond = () => {
     }
 
     const btn = () => {

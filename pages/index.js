@@ -7,12 +7,13 @@ import HotPost from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
-import {getToken} from "next-auth/jwt";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 import {useSession} from "next-auth/react";
+import {EventSource } from 'event-source-polyfill'
 import axios from "axios";
 import {instance} from "../service/config/Interceptor";
+import {fetchEventSource} from "@microsoft/fetch-event-source";
 
 /*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
@@ -35,10 +36,7 @@ import {instance} from "../service/config/Interceptor";
 
 export default function Home({err,books}) {
 
-    const updateSession = async () => {
-        const verifMail = instance.get('http://localhost:3000/api/auth/session?email-verified').then((res)=> {
-        })
-    }
+    const {data:session} = useSession();
 
     return (
         <div className={styles.container}>

@@ -1,0 +1,28 @@
+.close{
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e04444;
+  svg{
+    width: 16px;
+    color: white;
+  }
+}
+
+.check{
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3cad41;
+  svg{
+    width: 16px;
+    color: white;
+  }}

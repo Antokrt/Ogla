@@ -1,5 +1,6 @@
 import styles from "../../styles/Component/Post/HotPost.module.scss";
 import {ChevronDoubleUpIcon} from "@heroicons/react/24/outline";
+import {CountLike} from "../layouts/Btn/Like";
 
 const HotPost = ({img, title, category, author, nbChapter, description, likes, top}) => {
     return (
@@ -9,8 +10,7 @@ const HotPost = ({img, title, category, author, nbChapter, description, likes, t
                 <img src={img}/>
             </div>
             <div className={styles.thumbnail}>
-                <p>{likes}</p>
-                <ChevronDoubleUpIcon/>
+            <CountLike/>
             </div>
             {
                 top === true &&

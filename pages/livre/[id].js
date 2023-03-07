@@ -82,9 +82,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
             })
     }
 
-    useEffect(() => {
-       console.log(process.env.TEST)
-    },[])
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
         GetChapterListService(bookData._id, filter, page)

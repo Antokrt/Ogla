@@ -1,0 +1,22 @@
+.title{
+  font-size: 14px;
+  font-family: 'Montserrat',sans-serif;
+  font-weight:bold;
+}
+
+.pseudo{
+  &::before{
+    content: '@';
+  }
+font-family: 'Montserrat Alternates',sans-serif;
+  color: rgba(111, 114, 117, 0.87);
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.bookTitle{
+  font-family: 'Montserrat Alternates',sans-serif;
+  font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}

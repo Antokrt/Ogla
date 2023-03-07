@@ -1,5 +1,27 @@
 import {instance} from "../config/Interceptor";
 
+export const GetMoreBookService = (page) => {
+    return new Promise((resolve, reject) => {
+        instance.get('author/my-books/'+ page)
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err))
+    })
+}
+
+export const GetMoreChapterService = (id,page) => {
+    return new Promise((resolve, reject) => {
+        instance.get('chapter/dashboard/list/'+id+ '/'+ page)
+            .then((res) => {
+                console.log(res.data)
+                resolve(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+                reject(err)
+            })
+    })
+}
+
 export const NewBookService = (data, file) => {
     return new Promise((resolve, reject) => {
         instance.post('book/new', data)
@@ -20,7 +42,6 @@ export const NewBookService = (data, file) => {
             .catch((err) => reject(err))
     })
 }
-
 
 export const DeleteBookService = (id) => {
     const data = {

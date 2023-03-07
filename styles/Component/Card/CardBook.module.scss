@@ -1,0 +1,45 @@
+@import "styles/utils/var";
+.container{
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 15px;
+  height: 270px;
+  width: 170px;
+  .containerImg{
+    border-radius: 15px;
+    position: relative;
+    background-size: cover!important;
+    box-shadow: 5px 8px 4px rgba(100, 96, 96, 0.44);
+    height: 80%;
+    h4{
+      &:first-letter{
+        font-size: 28px;
+      }
+      position: absolute;
+      bottom: 8%;
+      left: 5%;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-family: 'Lobster',sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .label{
+    font-family: 'Montserrat Alternates',sans-serif;
+    div{
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+    .pseudo{
+
+      font-size: 12px;
+      font-weight: bold;
+      color: rgba(92, 92, 96, 0.76);
+    }
+  }
+}

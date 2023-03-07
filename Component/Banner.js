@@ -1,41 +1,14 @@
 import styles from "../styles/Component/Banner.module.scss";
 import {
-    ChatBubbleLeftRightIcon,
+    ChatBubbleLeftRightIcon, CheckIcon,
     CursorArrowRaysIcon,
 } from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
 import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
-import {useEffect} from "react";
-import axios from "axios";
-import {getAllBooks} from "../service/Book/HomeService";
-import {getBooksByAuthor} from "../service/Dashboard/BooksAuthorService";
-
-
-
-
 
 export default function Banner() {
     const {data: session} = useSession();
-
-    useEffect(() => {
-        if (session?.error === 'RefreshAccessTokenError') {
-            signOut();
-        }
-        console.log(session)
-    }, [session])
-
-    const getBooks = () => {
-        getAllBooks()
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-    }
-
-
-    /*    useEffect(() => {
-            axios.get('http://localhost:3008/book/')
-                .then((res) => console.log(res))
-        },[session])*/
 
     const router = useRouter();
     return (
@@ -107,7 +80,6 @@ export default function Banner() {
             </div>
             <div className={styles.mainB}>
                 <img className={styles.owl}
-                     onClick={() => getBooks()}
                      src={'assets/owl.png'}/>
                 <div className={styles.bubbleContainer}>
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>

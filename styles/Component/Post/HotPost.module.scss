@@ -46,20 +46,7 @@ border-radius: 10px;
     position: absolute;
     right: 0;
     padding: 10px 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    p{
-      font-family: "Rubik",sans-serif;
-      font-size: 10px;
-      color: $purpleLight;
-    }
-    svg{
-      margin-left: 5px;
-      color: $purpleLight;
-      width: 12px;
-      margin-top: -2px;
-    }
+
   }
 
   .contentContainer{

@@ -4,7 +4,7 @@ import {PencilIcon} from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
 
 
-const CardBook = ({image, title, nbChapter, id}) => {
+const CardBook = ({image, title, nbChapter, id, likes}) => {
 const router = useRouter();
     return (
     <div
@@ -19,8 +19,8 @@ const router = useRouter();
         <div className={styles.contentContainer}>
             <h6>{title}</h6>
             <div>
-                <p>{nbChapter} chapitres</p>
-                <p className={styles.likes}> <span>{nbChapter}</span>LIKES</p>
+                <p>{nbChapter} chapitre(s)</p>
+                <p className={styles.likes}> <span>{likes}</span>LIKE(S)</p>
 
             </div>
         </div>

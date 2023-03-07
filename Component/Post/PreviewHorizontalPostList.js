@@ -2,6 +2,7 @@ import styles from "../../styles/Component/Post/PreviewHorizontalPostList.module
 import {useState} from "react";
 import PreviewHorizontalPost from "./PreviewHorizontalPost";
 import {CheckIcon, ChevronDoubleRightIcon, ChevronRightIcon} from "@heroicons/react/24/outline";
+import {TitleComponent} from "../layouts/Text";
 
 const PreviewHorizontalPostList = ({title,type}) => {
     const [list, setList] = useState([
@@ -32,7 +33,7 @@ const PreviewHorizontalPostList = ({title,type}) => {
     ])
     return (
         <div className={styles.container}>
-            <h5 className={styles.title}>{title} <ChevronDoubleRightIcon/></h5>
+            <TitleComponent title={title}/>
             {
                 list.map((item, index) => {
                     return(

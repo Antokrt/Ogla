@@ -1,5 +1,6 @@
 import styles from "../../styles/Component/Post/PreviewHorizontalPost.module.scss";
 import {ChevronDoubleUpIcon} from "@heroicons/react/24/outline";
+import {AuthorComponent, BookTitle} from "../layouts/Text";
 
 const PreviewHorizontalPost = ({title,src,rank,author,nbChapter,nbLikes,category}) => {
     return (
@@ -15,8 +16,8 @@ const PreviewHorizontalPost = ({title,src,rank,author,nbChapter,nbLikes,category
     </div>
 
     <div className={styles.contentContainer}>
-        <h5>{title}</h5>
-        <p><span>{author}</span>    {nbLikes}  <ChevronDoubleUpIcon/></p>
+        <BookTitle title={title}/>
+        <AuthorComponent pseudo={author}/>
     </div>
 </div>
     )

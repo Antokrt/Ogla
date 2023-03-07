@@ -7,25 +7,41 @@ import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {useRouter} from "next/router";
+import {GetMoreBookService} from "../../../service/Dashboard/BooksAuthorService";
 
 export async function getServerSideProps({context, req}){
     const config = await getConfigOfProtectedRoute(req);
-    const books = await fetch('http://localhost:3008/author/my-books',config);
+    const books = await fetch('http://localhost:3008/author/my-books/1',config);
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
     return {
         props:{
-            err:{
-                books:booksErrData
-            },
-            books: booksJson,
+            err:booksErrData,
+            booksData: booksJson,
         }
     }
 }
 
-const Books = ({books}) => {
+const Books = ({booksData,err}) => {
 
     const {data: session} = useSession();
+    const [page,setPage] = useState(2);
+    const [books,setBooks] = useState(booksData);
+    const [seeMore,setSeeMore] = useState(true);
+
+    const getMoreBooks = () => {
+GetMoreBookService(page)
+    .then((res) => {
+        if(res.length <= 0){
+            setSeeMore(false);
+        }
+        else {
+            setBooks(prevState => [...prevState, ...res]);
+            setPage(page + 1);
+        }
+    })
+
+    }
 
 
     const hasNoBooks = () => {
@@ -69,18 +85,25 @@ const Books = ({books}) => {
                                     <div className={styles.list + ' ' + styles.scrollbar}>
 
                                        {
+                                           books && !err &&
                                             books.map((item, index) => {
                                                 return (
                                                     <CardBook id={item._id}
                                                               image={item.img}
                                                               title={item.title}
-                                                              nbChapter={12}
+                                                              nbChapter={item.nbChapter}
+                                                              likes={item.likes}
                                                     />
                                                 )
                                             })
                                         }
                                     </div>
-                        {
+                    {
+                        seeMore &&
+                        <p className={styles.seeMore} onClick={() => getMoreBooks()}>Voir plus</p>
+                    }
+
+                    {
                             books.length === 0 &&
                             hasNoBooks()
                         }
