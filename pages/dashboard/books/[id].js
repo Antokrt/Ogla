@@ -82,6 +82,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                 if (res.length === 0) {
                     setSeeMoreChapter(false);
                 } else {
+                    setChapterList(prevState => [...prevState, ...res]);
                     setChapterPage(chapterPage + 1);
                 }
             })
