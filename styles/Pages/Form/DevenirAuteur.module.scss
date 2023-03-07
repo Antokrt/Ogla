@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-min-height: 100vh;
+  min-height: 100vh;
   height: 100vh;
   background-color: #F0EDED;
 }
@@ -27,7 +27,7 @@ min-height: 100vh;
 
   .imgContainer{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     background-color: transparent;
     width: 35%;

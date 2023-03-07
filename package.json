@@ -25,9 +25,11 @@
     "react-burger-menu": "^3.0.8",
     "react-dom": "18.2.0",
     "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.8.2",
     "react-scrollbar-size": "^5.0.0",
     "react-simple-image-slider": "^2.4.1",
     "recharts": "^2.4.3",
+    "react-toastify": "^9.1.1",
     "sass": "^1.55.0",
     "url-slug": "^3.0.4",
     "yup": "^0.32.11"

@@ -613,7 +613,7 @@ font-family: "Montserrat",sans-serif;
         }
         .nbStats{
           display: flex;
-          align-items: end;
+          align-items: flex-end;
           flex-direction: column;
           color: #686f77;
           font-size: 9px;
@@ -636,7 +636,7 @@ font-family: "Montserrat",sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: end;
+      align-items: flex-end;
       width: 45%;
       margin-left: 50px;
 

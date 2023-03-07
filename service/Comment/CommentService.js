@@ -36,7 +36,7 @@ export const GetCommentService = (type,id, page,limit, isConnected,filter ) => {
             .then((comments) => {
                 resolve(comments);
             })
-            .catch((err) => reject(err));
+            .catch((err) => {reject(err); console.log(err)});
     });
 };
 
