@@ -9,37 +9,39 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {useRouter} from "next/router";
 import {GetMoreBookService} from "../../../service/Dashboard/BooksAuthorService";
 
-export async function getServerSideProps({context, req}){
+export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
-    const books = await fetch('http://localhost:3008/author/my-books/1',config);
+    const books = await fetch('http://localhost:3008/author/my-books/1', config);
+    const nbBooks = await fetch('http://localhost:3008/author/books-number', config)
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
+    const nbBooksJson = await nbBooks.json();
     return {
-        props:{
-            err:booksErrData,
+        props: {
+            err: booksErrData,
             booksData: booksJson,
+            nbBooks: nbBooksJson
         }
     }
 }
 
-const Books = ({booksData,err}) => {
+const Books = ({booksData, err, nbBooks}) => {
 
     const {data: session} = useSession();
-    const [page,setPage] = useState(2);
-    const [books,setBooks] = useState(booksData);
-    const [seeMore,setSeeMore] = useState(true);
+    const [page, setPage] = useState(2);
+    const [books, setBooks] = useState(booksData);
+    const [seeMore, setSeeMore] = useState(true);
 
     const getMoreBooks = () => {
-GetMoreBookService(page)
-    .then((res) => {
-        if(res.length <= 0){
-            setSeeMore(false);
-        }
-        else {
-            setBooks(prevState => [...prevState, ...res]);
-            setPage(page + 1);
-        }
-    })
+        GetMoreBookService(page)
+            .then((res) => {
+                if (res.length <= 0) {
+                    setSeeMore(false);
+                } else {
+                    setBooks(prevState => [...prevState, ...res]);
+                    setPage(page + 1);
+                }
+            })
 
     }
 
@@ -50,7 +52,9 @@ GetMoreBookService(page)
                 <div className={styles.hasNotWriteContainer}>
                     <div>
                         <h3>OUPS <span>...</span></h3>
-                        <p>Il n'y a pas encore de livres ici, mais ça ne veut pas dire que vous ne pouvez pas être le prochain Hemingway ou J.K. Rowling ! <br/> Commencez à écrire votre chef-d'œuvre dès maintenant !</p>
+                        <p>Il n'y a pas encore de livres ici, mais ça ne veut pas dire que vous ne pouvez pas être le
+                            prochain Hemingway ou J.K. Rowling ! <br/> Commencez à écrire votre chef-d'œuvre dès
+                            maintenant !</p>
                         <h5>Quelques astuces pour bien débuter :</h5>
                         <ul>
                             <li>1. Écrire sur <span>OGLA</span></li>
@@ -70,7 +74,6 @@ GetMoreBookService(page)
     }
 
 
-
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
@@ -78,38 +81,38 @@ GetMoreBookService(page)
                     <VerticalAuthorMenu/>
                 </div>
                 <div className={styles.containerData}>
-<HeaderDashboard/>
-                                    <div className={styles.headerList}>
-                                        <h4>Mes livres <span>({books?.length})</span> </h4>
-                                    </div>
-                                    <div className={styles.list + ' ' + styles.scrollbar}>
+                    <HeaderDashboard/>
+                    <div className={styles.headerList}>
+                        <h4>Mes livres { nbBooks && <span>({nbBooks})</span> } </h4>
+                    </div>
+                    <div className={styles.list + ' ' + styles.scrollbar}>
 
-                                       {
-                                           books && !err &&
-                                            books.map((item, index) => {
-                                                return (
-                                                    <CardBook id={item._id}
-                                                              image={item.img}
-                                                              title={item.title}
-                                                              nbChapter={item.nbChapter}
-                                                              likes={item.likes}
-                                                    />
-                                                )
-                                            })
-                                        }
-                                    </div>
+                        {
+                            books && !err &&
+                            books.map((item, index) => {
+                                return (
+                                    <CardBook id={item._id}
+                                              image={item.img}
+                                              title={item.title}
+                                              nbChapter={item.nbChapter}
+                                              likes={item.likes}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
                     {
                         seeMore &&
                         <p className={styles.seeMore} onClick={() => getMoreBooks()}>Voir plus</p>
                     }
 
                     {
-                            books.length === 0 &&
-                            hasNoBooks()
-                        }
-            </div>
+                        books.length === 0 &&
+                        hasNoBooks()
+                    }
+                </div>
 
-        </div>
+            </div>
 
 
         </div>

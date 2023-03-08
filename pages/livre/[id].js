@@ -102,13 +102,14 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     }
 
 
-
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
                 if (comments.length === 0) {
                     getComment(pageComment, 1);
-                    getMyComments(1,'popular');
+                    if(session){
+                        getMyComments(1,'popular');
+                    }
                 }
                 return (<div
                     className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
@@ -184,11 +185,13 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
         }
     }
 
-
     const getMyComments = (page, filter) => {
         GetMyCommentsService('book', bookData._id, page, filter)
             .then((res) => {
-                setComments([...res,...comments]);
+                if(res.length !== 0){
+                    console.log(res)
+                    setComments((prevState) => [...prevState, ...res]);
+                }
             })
             .catch((err) => console.log(err));
     };
@@ -196,9 +199,11 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const getComment = () => {
         GetCommentService('book', bookData._id, pageComment, 1, session, activeFilterComments)
             .then((res) => {
+                console.log(res)
                 if (res.length !== 0) {
                     setPageComment(pageComment + 1);
                 }
+
                 res.forEach(element => {
                     if (!lastCommentId.includes(element._id)) {
                         setComments((prevState) => ([...prevState, element]))
@@ -233,16 +238,18 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     }
 
     const newComment = (res) => {
+
         setComments((prevState) => [res,...prevState])
         setLastCommentId(prevState => [...prevState, res._id])
         setPageComment((pageComment + 1));
         setNbCommentary(nbCommentary + 1);
-        setTimeout(() => setHasToScroll(!hasToScroll), 10);
+        if(res.userId !== session.user.id){
+            setTimeout(() => setHasToScroll(!hasToScroll), 10);
+        }
     }
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
-        setPageComment(pageComment - 1);
         setNbCommentary(nbCommentary - 1)
     }
 
@@ -342,8 +349,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                     setActiveFilterList('order');
                                     GetChapters(setChapterList,setCanSeeMoreChapter,'order');
                                 }
-
-
                             }}>Trier <ArrowsUpDownIcon/></button>
                             <div><p>({chapterData?.length})</p>
                                 <Book/>

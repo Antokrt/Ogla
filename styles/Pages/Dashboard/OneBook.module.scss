@@ -270,12 +270,17 @@ color: #82e882;
     padding-bottom: 5px;
   }
   .category{
+    &:first-letter{
+      text-transform: uppercase;
+    }
     color: rgba(28, 35, 43, 0.68);
     font-weight: bold;
-    font-family: 'Potta One',sans-serif;
+    font-family: 'Montserrat Alternates',sans-serif;
   }
   .tag{
     transform: rotate(90deg);
+  }
+  .last{
   }
   svg{
     color: rgba(28, 35, 43, 0.58);
@@ -475,6 +480,7 @@ color: #82e882;
     display: block;
     height: 600px;
     flex-direction: column;
+
     padding-left: 10%;
     padding-right: 10%;
     justify-content: center;
@@ -495,6 +501,14 @@ color: #82e882;
       box-shadow: $shadow;
     }
 
+  }
+}
+
+.sortContainer{
+  margin-bottom: 20px;
+  svg{
+    cursor: pointer;
+    width: 18px;
   }
 }
 

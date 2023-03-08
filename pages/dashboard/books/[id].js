@@ -17,13 +17,16 @@ import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboar
 import {PencilIcon} from "@heroicons/react/24/solid";
 import chapter from "../../../Component/layouts/Icons/Chapter";
 import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
+import {FormatDateStr} from "../../../utils/Date";
+import {ArrowsUpDownIcon, ArrowUpIcon, EyeIcon} from "@heroicons/react/24/outline";
+import {Capitalize} from "../../../utils/String";
 
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
     const book = await fetch('http://localhost:3008/author/book/' + id, config);
-    const chapterList = await fetch('http://localhost:3008/chapter/dashboard/list/' + id + '/1', config);
+    const chapterList = await fetch('http://localhost:3008/chapter/dashboard/list/' + id + '/1/order', config);
     const chapterErrData = !chapterList.ok;
     const bookErrData = !book.ok;
     let chapterJson = await chapterList.json();
@@ -31,6 +34,8 @@ export async function getServerSideProps({req, params}) {
         chapterJson = null;
     }
     const booksJson = await book.json();
+    console.log(booksJson)
+
     booksJson.img = process.env.NEXT_PUBLIC_BASE_IMG_BOOK + booksJson.img;
     return {
         props: {
@@ -51,6 +56,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [book, setBook] = useState(bookData);
     const [chapterList, setChapterList] = useState(chapterListData);
     const [chapterPage, setChapterPage] = useState(2);
+    const [activeFilter, setActiveFilter] = useState('order');
+    const firstChapter = bookData.lastChapter;
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
@@ -69,13 +76,26 @@ const OneBook = ({bookData, chapterListData, err}) => {
     }
 
     const getMoreChapter = () => {
-        GetMoreChapterService(book._id, chapterPage)
+        GetMoreChapterService(book._id, chapterPage, activeFilter)
             .then((res) => {
                 if (res.length === 0) {
                     setSeeMoreChapter(false);
                 } else {
                     setChapterList(prevState => [...prevState, ...res]);
                     setChapterPage(chapterPage + 1);
+                }
+            })
+    }
+
+    const getChapterWithNewFilter = (filter) => {
+        GetMoreChapterService(book._id, 1, filter)
+            .then((res) => {
+                setSeeMoreChapter(true);
+                if (res.length === 0) {
+                    setSeeMoreChapter(false);
+                } else {
+                    setChapterList(res);
+                    setChapterPage(2);
                 }
             })
     }
@@ -160,8 +180,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                         <div className={styles.menuContainer}>
                             <p onClick={() => setActive('chapter')}
                                className={active === 'chapter' ? styles.active : ''}>Chapitres</p>
-                            <p onClick={() => setActive('commentary')}
-                               className={active === 'commentary' ? styles.active : ''}>Meilleurs commentaires</p>
                         </div>
 
                         <div className={styles.containerOneBook}>
@@ -266,15 +284,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 <div className={styles.presentationContainer}>
                                     <div className={styles.statsLabelContainer}>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>239</p>
+                                            <p className={styles.length}>{book.likes}</p>
                                             <h6>like(s)</h6>
                                         </div>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>67{book.chapter_list.length}</p>
+                                            <p className={styles.length}>{book.chapter_list.length}</p>
                                             <h6>chapitre(s)</h6>
                                         </div>
                                         <div className={styles.dateLabel}>
-                                            <p>17/02/2022</p>
+                                            <p>{FormatDateStr(book.date_creation)}</p>
                                             <h6>depuis le</h6>
                                         </div>
                                     </div>
@@ -282,15 +300,19 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                         <div>
                                             <TagIcon className={styles.tag}/>
                                             <p className={styles.category}>{book.category}</p>
-                                            <p>{book._id}</p>
                                         </div>
+                                        {
+                                            firstChapter &&
+                                            <div>
+                                                <BookOpenIcon/>
+                                                <p className={styles.last}>Dernier chapitre
+                                                    - <span>{Capitalize(firstChapter.title)} </span></p>
+                                            </div>
+                                        }
+
                                         <div>
-                                            <BookOpenIcon/>
-                                            <p className={styles.last}>Dernier chapitre - 18/09/23 </p>
-                                        </div>
-                                        <div>
-                                            <ArrowTrendingUpIcon/>
-                                            <p className={styles.last}>178 <br/>commentaires </p>
+                                            <EyeIcon/>
+                                            <p className={styles.last}>{book.stats.view} <br/>vue(s) </p>
                                         </div>
                                         <p
                                             onClick={() => {
@@ -307,7 +329,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                             </div>
                             <div className={styles.selectContainer}>
                                 {
-                                    active === 'chapter' ?
                                         <div className={styles.chapterContainer}>
                                             <div className={styles.headerChapter}>
                                                 <h4>Chapitres ({book.chapter_list.length})</h4>
@@ -325,6 +346,19 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
 
                                                     <div className={styles.contentChapterList}>
+                                                        <div className={styles.sortContainer}>
+                                                            <ArrowsUpDownIcon onClick={() => {
+                                                                if (activeFilter === 'order') {
+                                                                    setActiveFilter('recent');
+                                                                    getChapterWithNewFilter('recent');
+                                                                } else {
+                                                                    getChapterWithNewFilter('order');
+                                                                    setActiveFilter('order');
+                                                                }
+                                                            }
+                                                            }/>
+                                                            <p>{activeFilter}</p>
+                                                        </div>
                                                         <button className={styles.newChapter}
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
                                                         >Nouveau chapitre
@@ -352,14 +386,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         }
 
                                                         {
-                                                            seeMoreChapter &&
+                                                            seeMoreChapter && chapterList &&
                                                             <p onClick={() => getMoreChapter()}>Voir plus</p>
                                                         }
 
                                                     </div>
                                             }
-                                        </div> :
-                                        <>
+                                        </div>
+                          /*              <>
                                             <div className={styles.headerCommentary}>
                                                 <div className={styles.likesTotal}>
                                                     <p className={styles.totalLabel}>Total like(s)</p>
@@ -399,7 +433,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
                                                 />
                                             </div>
-                                        </>
+                                        </>*/
                                 }
 
 

@@ -21,7 +21,7 @@ import {GetOneChapterApi} from "../api/chapter";
 import {VerifLike, VerifLikeApi} from "../api/like";
 import {useSession} from "next-auth/react";
 import {LikeBookService, LikeChapterService} from "../../service/Like/LikeService";
-import {GetCommentService} from "../../service/Comment/CommentService";
+import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
 
@@ -29,6 +29,7 @@ export async function getServerSideProps({req, params, query}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
     const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
+    console.log(data.author)
     return {
         props: {
             err: data.err,
@@ -56,6 +57,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const {data: session} = useSession();
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [comments, setComments] = useState([]);
+
     const [pageComment, setPageComment] = useState(1);
 
 
@@ -94,6 +96,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
             case 'Commentary':
                 if (comments.length === 0) {
                     getComment(pageComment, 1);
+                    if(session){
+                        getMyComments(1,'popular');
+                    }
                 }
                 return (
                     <div
@@ -114,11 +119,15 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             likeAnswer={(id) => likeAnswer(id)}
                             refresh={() => refresh()}
                             activeFilter={activeFilterComments}
-                            changeFilter={() => {
-                                if (activeFilterComments === 'popular') {
+                            changeFilter={(e) => {
+                                if (e === 'recent' && activeFilterComments === 'popular') {
                                     setActiveFilterComments('recent');
-                                } else {
+                                    setComments([]);
+                                    setPageComment(1);
+                                } else if(e === 'popular' && activeFilterComments === 'recent') {
                                     setActiveFilterComments('popular');
+                                    setComments([]);
+                                    setPageComment(1);
                                 }
                             }}
                             newPageAnswer={(id) => loadMoreAnswer(id)}
@@ -154,6 +163,17 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 )
         }
     }
+
+    const getMyComments = (page, filter) => {
+        GetMyCommentsService('chapter', chapterData._id, page, filter)
+            .then((res) => {
+                if(res.length !== 0){
+                    console.log(res)
+                    setComments((prevState) => [...prevState, ...res]);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
 
     const getComment = () => {
         GetCommentService('chapter', chapterData._id, pageComment, 1, session, activeFilterComments)
@@ -201,7 +221,6 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
-        setPageComment(pageComment - 1);
         setNbCommentary(nbCommentary - 1);
     }
 
@@ -273,7 +292,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                         <EditorContent editor={editorReadOnly}>
                         </EditorContent>
                     </div>
-
+<p>{activeFilterComments}</p>
                 </div>
 
             </div>

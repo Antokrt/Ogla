@@ -10,6 +10,7 @@ import PreviewHorizontalPost from "../../Component/Post/PreviewHorizontalPost";
 import PreviewHorizontalPostList from "../../Component/Post/PreviewHorizontalPostList";
 import {BookTitle, TitleComponent} from "../../Component/layouts/Text";
 import MainSearchBar from "../../Component/MainSearchBar";
+import {Scroll} from "../../Component/layouts/Btn/Scroll";
 
 const Layouts = () => {
     const [hasLike, setHasLike] = useState(true);
@@ -29,8 +30,8 @@ const Layouts = () => {
                 <CloseBtn/>
                 <CheckBtn/>
                 <TitleComponent title={'Populaire'}/>
-                <PreviewHorizontalPostList title={'Populaire Horreur'}/>
                 <BookTitle title={'Heyy'}/>
+                <Scroll/>
             </div>
 
             <div className={styles.grid}>
