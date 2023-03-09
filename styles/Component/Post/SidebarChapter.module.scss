@@ -242,3 +242,11 @@ font-size: 12px;
 .dNone{
   display: none!important;
 }
+
+.loaderContainer{
+  position: absolute;
+  z-index: 2220!important;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2%;
+}

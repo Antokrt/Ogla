@@ -10,6 +10,8 @@ import {useSession} from "next-auth/react";
 import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
 import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
+import InfiniteScroll from "react-infinite-scroller";
+import {Loader2, LoaderCommentary} from "../layouts/Loader";
 
 
 const SidebarCommentary = ({
@@ -23,9 +25,11 @@ const SidebarCommentary = ({
                                limit,
                                page,
                                createNewComment,
-    refresh,
+                               refresh,
+                               canScroll,
                                deleteAComment,
                                likeAComment,
+                               loadingScroll,
                                sendANewAnswer,
                                deleteAnswer,
                                changeFilter,
@@ -37,11 +41,12 @@ const SidebarCommentary = ({
     const [commentList, setCommentList] = useState(comments);
     const [newComment, setNewComment] = useState('');
     const divRef = useRef(null);
+
     const {data: session} = useSession();
 
     useEffect(() => {
-       setCommentList(comments)
-    },[comments])
+        setCommentList(comments)
+    }, [comments])
 
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
@@ -93,14 +98,31 @@ const SidebarCommentary = ({
     }
 
     useEffect(() => {
-        scrollBottom();
-    }, [scrollChange])
+        const div = divRef.current;
 
+        const handleScroll = () => {
+            const threshold = 1;
+            const isBottom =
+                div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
+            if(isBottom && canScroll && !loadingScroll){
+               getMore()
+            }
+        };
+        div.addEventListener("scroll", handleScroll);
+        return () => {
+            div.removeEventListener("scroll", handleScroll);
+        };
+    }, [canScroll,loadingScroll]);
 
     return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{title}</p>
+                {
+                    canScroll ?
+                        <p>true</p> :
+                        <p>false</p>
+                }
                 <p onClick={() => router.push("/auteur/" + "Judy McLaren")}><span>{author}</span></p>
             </div>
             <div className={styles.titleSection}>
@@ -119,40 +141,40 @@ const SidebarCommentary = ({
             <div
                 ref={divRef}
                 className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
-                {
-                    commentList.map((item, index) => {
-                        return (
-                            <Commentary
-                                id={item._id}
-                                deleteComment={() => deleteComment(item._id)}
-                                deleteAanswer={(id) => deleteAanswer(id)}
-                                likeAanswer={(id) => likeAanswer(id)}
-                                likeComment={() => likeComment(item._id)}
-                                sendNewAnswer={(data) => sendNewAnswer(data)}
-                                answerPage={item.answersPage}
-                                newAnswerPage={() => newPageAnswer(item._id)}
-                                authorId={item.userId}
-                                hasLikeData={item.hasLike}
-                                content={item.content}
-                                likes={item.likes}
-                                img={item.img}
-                                date={item.date_creation}
-                                pseudo={item.pseudo}
-                                answers={item.answers}
-                            />
-                        )
-                    })
-                }
+
+
+                    {
+                                commentList.map((item, index) => {
+                                    return (
+                                        <Commentary
+                                            id={item._id}
+                                            deleteComment={() => deleteComment(item._id)}
+                                            deleteAanswer={(id) => deleteAanswer(id)}
+                                            likeAanswer={(id) => likeAanswer(id)}
+                                            likeComment={() => likeComment(item._id)}
+                                            sendNewAnswer={(data) => sendNewAnswer(data)}
+                                            answerPage={item.answersPage}
+                                            newAnswerPage={() => newPageAnswer(item._id)}
+                                            authorId={item.userId}
+                                            hasLikeData={item.hasLike}
+                                            content={item.content}
+                                            likes={item.likes}
+                                            img={item.img}
+                                            date={item.date_creation}
+                                            pseudo={item.pseudo}
+                                            answers={item.answers}
+                                        />
+
+                                    )
+                                })
+                    }
+
             </div>
 
 
             <div className={styles.commentaryContainer}>
-                <button
-                    onClick={() => {
-                        getMore();
-                    }}
-                >Scroll
-                </button>
+
+
                 <div className={styles.formContainer}>
                     {
                         session ?
@@ -175,6 +197,10 @@ const SidebarCommentary = ({
                             />
                     }
                 </div>
+                {
+                    loadingScroll &&
+                    <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                }
 
                 <div
                     onClick={() => {

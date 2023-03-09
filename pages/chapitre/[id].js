@@ -1,10 +1,8 @@
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {getPost} from "../../services/Post";
+import {useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Header from "../../Component/Header";
 import styles from "../../styles/Pages/ChapterPage.module.scss";
-import scroll from "../../styles/utils/scrollbar.module.scss";
-import {HeartIcon, UserCircleIcon} from "@heroicons/react/20/solid";
+import {HeartIcon,} from "@heroicons/react/20/solid";
 import {TagIcon} from "@heroicons/react/24/solid";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
 import FooterOnChapter from "../../Component/Post/FooterOnChapter";
@@ -24,12 +22,12 @@ import {LikeBookService, LikeChapterService} from "../../service/Like/LikeServic
 import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
+import {GetChapterListService} from "../../service/Chapter/ChapterService";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
     const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
-    console.log(data.author)
     return {
         props: {
             err: data.err,
@@ -48,20 +46,46 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const router = useRouter();
     const headerFixed = useRef();
     const [hasToBeFixed, setHasToBeFixed] = useState(false);
-    const [likes, setLikes] = useState(chapterData?.likes);
     const [hasToScroll, setHasToScroll] = useState(false);
+
+
+    const [likes, setLikes] = useState(chapterData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
+
+
     const [nbCommentary, setNbCommentary] = useState(chapterData?.nbCommentary);
     const [lastCommentId, setLastCommentId] = useState([]);
+    const [canScroll, setCanScroll] = useState(true);
+    const [loadingScroll, setLoadingScroll] = useState(false);
+
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
-    const {data: session} = useSession();
+
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [comments, setComments] = useState([]);
-
     const [pageComment, setPageComment] = useState(1);
-
-
     const [size, setSize] = useState(1);
+
+    const [loadingScrollChapterSidebar, setLoadingScrollChapterSidebar] = useState(false);
+    const [canScrollChapterSidebar, setCanScrollChapterSidebar] = useState(false);
+    const [pageChapterSideBar, setPageChapterSideBar] = useState(2);
+    const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
+    const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
+    const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
+
+    const {data: session} = useSession();
+
+
+    const GetChapters = (setState, setCanSeeMore, filter) => {
+        GetChapterListService(bookData._id, filter, 1)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setState(res);
+                    setCanSeeMore(true);
+                } else {
+                    setCanSeeMore(false);
+                }
+            })
+    }
 
     const likeChapter = () => {
         if (session) {
@@ -94,10 +118,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
-                if (comments.length === 0) {
+                if (comments.length === 0 && canScroll) {
                     getComment(pageComment, 1);
-                    if(session){
-                        getMyComments(1,'popular');
+                    if (session) {
+                        getMyComments(1, 'popular');
                     }
                 }
                 return (
@@ -107,8 +131,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             limit={size}
                             page={pageComment}
                             getMore={() => {
-                                getComment(pageComment, 1);
+                                getComment();
                             }}
+                            refresh={() => refresh()}
                             scrollChange={hasToScroll}
                             likeAComment={(id) => likeComment(id)}
                             createNewComment={(res) => newComment(res)}
@@ -117,20 +142,24 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             sendANewAnswer={(data) => sendAnswer(data)}
                             deleteAnswer={(id) => deleteAnswer(id)}
                             likeAnswer={(id) => likeAnswer(id)}
-                            refresh={() => refresh()}
+                            newPageAnswer={(id) => loadMoreAnswer(id)}
+                            canScroll={canScroll}
+                            loadingScroll={loadingScroll}
                             activeFilter={activeFilterComments}
                             changeFilter={(e) => {
                                 if (e === 'recent' && activeFilterComments === 'popular') {
+                                    setCanScroll(true);
                                     setActiveFilterComments('recent');
                                     setComments([]);
                                     setPageComment(1);
-                                } else if(e === 'popular' && activeFilterComments === 'recent') {
+
+                                } else if (e === 'popular' && activeFilterComments === 'recent') {
+                                    setCanScroll(true);
                                     setActiveFilterComments('popular');
                                     setComments([]);
                                     setPageComment(1);
                                 }
                             }}
-                            newPageAnswer={(id) => loadMoreAnswer(id)}
                             type={'chapter'}
                             typeId={chapterData._id}
                             title={chapterData.title}
@@ -152,7 +181,25 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 return (
                     <div
                         className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                        <SidebarChapter title={bookData?.title} chapters={chapterList} select={sidebarSelect}/>
+                        <SidebarChapter
+                            changeFilter={() => {
+                                if (activeFilterChapterSidebar === 'order') {
+                                    GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'recent');
+                                    setActiveFilterChapterSidebar('recent');
+                                    setPageChapterSideBar(2);
+                                } else {
+                                    GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'order');
+                                    setActiveFilterChapterSidebar('order');
+                                    setPageChapterSideBar(2);
+                                }
+                            }}
+                            loadingScroll={loadingScrollChapterSidebar}
+                            canScroll={canScrollChapterSidebar}
+                            getMoreChapter={() => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
+                            title={bookData?.title}
+                            filter={activeFilterChapterSidebar}
+                            maxChapter={bookData?.nbChapters}
+                            canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect}/>
                     </div>
                 )
                 break;
@@ -164,11 +211,38 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         }
     }
 
+    const GetMoreChaptersSidebar = (state, setState, filter, page, setPage, setCanSeeMore) => {
+        setLoadingScrollChapterSidebar(true);
+        setCanScrollChapterSidebar(false);
+        GetChapterListService(bookData._id, filter, page)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setState(prevState => [...prevState, ...res]);
+                    setPage(page + 1);
+                    setCanScrollChapterSidebar(true);
+                } else {
+                    setCanSeeMore(false);
+                }
+            })
+            .then(() => setLoadingScrollChapterSidebar(false));
+    }
+
+    const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
+        GetChapterListService(bookData._id, filter, page)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setState(prevState => [...prevState, ...res]);
+                    setPage(page + 1);
+                } else {
+                    setCanSeeMore(false);
+                }
+            })
+    }
+
     const getMyComments = (page, filter) => {
         GetMyCommentsService('chapter', chapterData._id, page, filter)
             .then((res) => {
-                if(res.length !== 0){
-                    console.log(res)
+                if (res.length !== 0) {
                     setComments((prevState) => [...prevState, ...res]);
                 }
             })
@@ -176,27 +250,31 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     };
 
     const getComment = () => {
-        GetCommentService('chapter', chapterData._id, pageComment, 1, session, activeFilterComments)
+        setLoadingScroll(true);
+        setCanScroll(false);
+        GetCommentService('chapter', chapterData._id, pageComment, 5, session, activeFilterComments)
             .then((res) => {
-                if (res.length !== 0) {
-                    setPageComment(pageComment + 1);
-                }
                 res.forEach(element => {
                     if (!lastCommentId.includes(element._id)) {
-                        setComments((prevState) => ([
-                            ...prevState,
-                            element
-                        ]))
+                        setComments((prevState) => ([...prevState, element]))
                     }
                 })
-            })
-            .then(() => {
-                if (comments.length !== 0) {
-                    setTimeout(() => setHasToScroll(!hasToScroll), 50)
+                if (res.length !== 0) {
+                    setPageComment(pageComment + 1);
+                    setCanScroll(true);
+                } else {
+                    setCanScroll(false);
                 }
             })
-            .catch((err) => console.log(err))
+            .then(() => {
+                setLoadingScroll(false);
+                /*       if (comments.length !== 0) {
+                           setTimeout(() => setHasToScroll(!hasToScroll), 50);
+                       }*/
+            })
+            .catch((err) => console.log('err'))
     }
+
 
     const likeComment = (id) => {
         setComments(LikeCommentReduce(id, comments));
@@ -292,7 +370,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                         <EditorContent editor={editorReadOnly}>
                         </EditorContent>
                     </div>
-<p>{activeFilterComments}</p>
+                    <p>{activeFilterComments}</p>
                 </div>
 
             </div>

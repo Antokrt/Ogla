@@ -334,13 +334,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 <h4>Chapitres ({book.chapter_list.length})</h4>
                                             </div>
                                             {
-                                                book.chapter_list.length === 10 ?
+                                                book.chapter_list.length === 0 ?
                                                     <div className={styles.emptyContainer}>
                                                         <h6>Oups !</h6>
                                                         <p>C'est bien vide ici, écrivez votre prochain chapitre dès
                                                             maintenant</p>
                                                         <button
-                                                            onClick={() => router.push('/dashboard/nouveau-livre')}>Ecrire... <PencilIcon/>
+                                                            onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
+                                                        >Ecrire... <PencilIcon/>
                                                         </button>
                                                     </div> :
 

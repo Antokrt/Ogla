@@ -75,7 +75,7 @@
   .contentCommentaryContainer {
     padding-top: 10px;
     padding-bottom: 60px;
-    max-height: 80%;
+    height: 600px;
     display: block;
     overflow: auto;
     direction: ltr !important;
@@ -169,4 +169,12 @@
 
 .active{
   background-color: #9844AD!important;
+}
+
+.loaderContainer{
+  position: absolute;
+  z-index: 2220!important;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 118%;
 }
