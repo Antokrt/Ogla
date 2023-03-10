@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Component/Dashboard/SmHeaderDashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Component/Dashboard/SmHeader.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/Loader.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Loader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Chapter/ChapterService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Chapter/ChapterService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Loader.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Loader.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +215,8 @@
       <workItem from="1678098625770" duration="17625000" />
       <workItem from="1678181111456" duration="16179000" />
       <workItem from="1678266315535" duration="18607000" />
-      <workItem from="1678354854085" duration="17138000" />
+      <workItem from="1678354854085" duration="17208000" />
+      <workItem from="1678443523785" duration="8937000" />
     </task>
     <servers />
   </component>

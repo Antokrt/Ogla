@@ -83,7 +83,7 @@ const Books = ({booksData, err, nbBooks}) => {
                 <div className={styles.containerData}>
                     <HeaderDashboard/>
                     <div className={styles.headerList}>
-                        <h4>Mes livres { nbBooks && <span>({nbBooks})</span> } </h4>
+                        <h4>Mes livres {nbBooks && <span>({nbBooks})</span>} </h4>
                     </div>
                     <div className={styles.list + ' ' + styles.scrollbar}>
 

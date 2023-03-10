@@ -9,17 +9,25 @@ import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {useRouter} from "next/router";
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
-import {UserCircleIcon} from "@heroicons/react/24/solid";
+import {PlusIcon, UserCircleIcon} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
 import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
-import {PencilIcon} from "@heroicons/react/24/solid";
 import chapter from "../../../Component/layouts/Icons/Chapter";
 import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
 import {FormatDateStr} from "../../../utils/Date";
-import {ArrowsUpDownIcon, ArrowUpIcon, EyeIcon} from "@heroicons/react/24/outline";
+import {
+    ArrowDownCircleIcon,
+    ArrowsUpDownIcon,
+    ArrowUpIcon,
+    ArrowUturnLeftIcon,
+    EyeIcon,
+    PlusCircleIcon, QuestionMarkCircleIcon
+} from "@heroicons/react/24/outline";
 import {Capitalize} from "../../../utils/String";
+import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
+import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
 
 
 export async function getServerSideProps({req, params}) {
@@ -62,11 +70,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [errSummary, setErrSummary] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
     const imgRef = useRef();
+    const divRef = useRef(null);
     const [file, setFile] = useState(true);
     const [localImg, setLocalImg] = useState(null);
     const [errImg, setErrImg] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const router = useRouter();
+    const [loadingScroll, setLoadingScroll] = useState(false);
+    const [loadingChapter, setLoadingChapter] = useState(false);
+    const [errListChapter, setErrChapter] = useState(false);
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -76,6 +88,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     }
 
     const getMoreChapter = () => {
+        setLoadingScroll(true);
         GetMoreChapterService(book._id, chapterPage, activeFilter)
             .then((res) => {
                 if (res.length === 0) {
@@ -85,9 +98,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     setChapterPage(chapterPage + 1);
                 }
             })
+            .then(() => setLoadingScroll(false))
+            .catch(() => {
+                setLoadingScroll(false);
+                setErrChapter(true);
+            });
     }
 
     const getChapterWithNewFilter = (filter) => {
+        setLoadingChapter(true);
         GetMoreChapterService(book._id, 1, filter)
             .then((res) => {
                 setSeeMoreChapter(true);
@@ -97,6 +116,11 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     setChapterList(res);
                     setChapterPage(2);
                 }
+            })
+            .then(() => setLoadingChapter(false))
+            .catch(() => {
+                setLoadingChapter(false);
+                setErrChapter(true);
             })
     }
 
@@ -155,7 +179,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
             <div className={styles.containerData}>
                 <div className={styles.containerHeader}>
-                    <HeaderDashboard/>
+                    <SmHeaderDashboard title={bookData.title}/>
                 </div>
                 {
                     loading &&
@@ -177,15 +201,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
                 {
                     !loading && !err.book && book.length !== 0 &&
                     <>
-                        <div className={styles.menuContainer}>
+                        {/*      <div className={styles.menuContainer}>
                             <p onClick={() => setActive('chapter')}
                                className={active === 'chapter' ? styles.active : ''}>Chapitres</p>
-                        </div>
+                        </div>*/}
 
                         <div className={styles.containerOneBook}>
                             <div className={styles.labelContainer}>
                                 <div className={styles.containerTitle}>
-                                    <h2>{book.title}</h2>
+                                    <h2> {Capitalize(book.title)} <QuestionMarkCircleIcon/></h2>
                                     <span></span>
                                 </div>
                                 <div className={styles.imgADescription}>
@@ -329,112 +353,153 @@ const OneBook = ({bookData, chapterListData, err}) => {
                             </div>
                             <div className={styles.selectContainer}>
                                 {
-                                        <div className={styles.chapterContainer}>
-                                            <div className={styles.headerChapter}>
-                                                <h4>Chapitres ({book.chapter_list.length})</h4>
-                                            </div>
-                                            {
-                                                book.chapter_list.length === 0 ?
-                                                    <div className={styles.emptyContainer}>
-                                                        <h6>Oups !</h6>
-                                                        <p>C'est bien vide ici, écrivez votre prochain chapitre dès
-                                                            maintenant</p>
-                                                        <button
-                                                            onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                        >Ecrire... <PencilIcon/>
-                                                        </button>
-                                                    </div> :
+                                    <div className={styles.chapterContainer}>
+                                        {
+                                            !errListChapter  && !loadingChapter &&
+                                            <>
+                                                <div className={styles.headerChapter}>
+                                                    <h4>Chapitre(s) ({book.chapter_list.length})</h4>
+                                                    <div>
 
-
-                                                    <div className={styles.contentChapterList}>
-                                                        <div className={styles.sortContainer}>
-                                                            <ArrowsUpDownIcon onClick={() => {
-                                                                if (activeFilter === 'order') {
-                                                                    setActiveFilter('recent');
-                                                                    getChapterWithNewFilter('recent');
-                                                                } else {
-                                                                    getChapterWithNewFilter('order');
-                                                                    setActiveFilter('order');
-                                                                }
+                                                        <ArrowsUpDownIcon onClick={() => {
+                                                            if (activeFilter === 'order') {
+                                                                setActiveFilter('recent');
+                                                                getChapterWithNewFilter('recent');
+                                                            } else {
+                                                                getChapterWithNewFilter('order');
+                                                                setActiveFilter('order');
                                                             }
-                                                            }/>
-                                                            <p>{activeFilter}</p>
-                                                        </div>
-                                                        <button className={styles.newChapter}
-                                                                onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                        >Nouveau chapitre
+                                                        }
+                                                        }/>
+                                                        <button>
+                                                            Nouveau chapitre
                                                         </button>
 
-                                                        {
-                                                            chapterList ?
-                                                                chapterList.map((item, index) => {
-                                                                    return (
-                                                                        <>
-                                                                            <CardChapter
-                                                                                id={item._id}
-                                                                                date={item.date}
-                                                                                title={item.title}
-                                                                                index={index + 1}
-                                                                                like={item.like}
-                                                                                publish={item.publish}
-                                                                            />
-                                                                        </>
-
-                                                                    )
-                                                                }) :
-
-                                                                <p>C'est vide ici</p>
-                                                        }
-
-                                                        {
-                                                            seeMoreChapter && chapterList &&
-                                                            <p onClick={() => getMoreChapter()}>Voir plus</p>
-                                                        }
 
                                                     </div>
-                                            }
-                                        </div>
-                          /*              <>
-                                            <div className={styles.headerCommentary}>
-                                                <div className={styles.likesTotal}>
-                                                    <p className={styles.totalLabel}>Total like(s)</p>
-                                                    <p className={styles.totalNb}> 2128 </p>
-                                                    <p className={styles.smLabel}>Total like depuis sa sortie
-                                                        (18/29/23)</p>
-                                                </div>
-                                                <div className={styles.border}>
 
                                                 </div>
-                                                <div className={styles.likesTotal}>
-                                                    <p className={styles.totalLabel}>Total commentaire(s)</p>
-                                                    <p className={styles.totalNb}> 237 </p>
-                                                    <p className={styles.smLabel}>Total de commentaires depuis sa
-                                                        sortie </p>
-                                                </div>
-                                            </div>
-                                            <div className={styles.some}>
-                                                <h7>Quelques commentaires :</h7>
-                                            </div>
-                                            <div className={styles.commentaryContainer}>
-                                                <CommentaryDashboard
-                                                    pseudo={'JoséBeauvais'}
-                                                    img={'/assets/livre6.jpg'}
-                                                    role={'Lecteur'}
-                                                    date={'18/02/28'}
-                                                    likes={2891}
-                                                    content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
-                                                />
 
-                                                <CommentaryDashboard
-                                                    pseudo={'JoséBeauvais'}
-                                                    img={'/assets/livre3.jpg'}
-                                                    role={'Lecteur'}
-                                                    date={'18/02/28'}
-                                                    likes={2891}
-                                                    content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
-                                                />
-                                            </div>
-                                        </>*/
+                                            </>
+
+
+                                        }
+
+                                        {
+                                            book.chapter_list.length === 0 ?
+                                                <div className={styles.emptyContainer}>
+                                                    <h6>Oups !</h6>
+                                                    <p>C'est bien vide ici, écrivez votre prochain chapitre dès
+                                                        maintenant</p>
+                                                    <button
+                                                        onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
+                                                    >Ecrire... <PencilIcon/>
+                                                    </button>
+                                                </div> :
+
+                                                errListChapter ?
+
+                                                    <div className={styles.emptyContainer}>
+                                                        <h6>Oups !</h6>
+                                                        <p>Impossible de récupérer les chapitres</p>
+                                                        <button
+                                                            onClick={() => router.reload()}
+                                                        >Rafraîchir <ArrowUturnLeftIcon/>
+                                                        </button>
+                                                    </div>
+                                                    :
+
+                                                    loadingChapter ?
+                                                        <div className={styles.loadingChapter}><Loader1/></div>
+                                                        :
+
+                                                        <div className={styles.contentChapterList} ref={divRef}>
+
+                                                            {
+                                                                chapterListData && bookData && !errListChapter  ?
+                                                                    chapterList.map((item, index) => {
+
+                                                                        let chapterNumber;
+                                                                        if (activeFilter === "recent") {
+                                                                            chapterNumber = bookData.chapter_list.length - index;
+                                                                        } else {
+                                                                            chapterNumber = index + 1;
+                                                                        }
+
+                                                                        return (
+                                                                            <>
+                                                                                <CardChapter
+                                                                                    id={item._id}
+                                                                                    date={item.date}
+                                                                                    title={item.title}
+                                                                                    index={chapterNumber}
+                                                                                    like={item.like}
+                                                                                    publish={item.publish}
+                                                                                />
+                                                                            </>
+
+                                                                        )
+                                                                    }) :
+
+                                                                    <p>C'est vide ici</p>
+                                                            }
+
+
+                                                            <div className={styles.seeMoreContainer}>
+                                                                {
+                                                                    seeMoreChapter && chapterList && !loadingScroll &&
+                                                                    <ArrowDownCircleIcon
+                                                                        onClick={() => getMoreChapter()}/>
+                                                                }
+                                                                {
+                                                                    loadingScroll &&
+                                                                    <LoaderCommentary/>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                        }
+                                    </div>
+                                    /*              <>
+                                                      <div className={styles.headerCommentary}>
+                                                          <div className={styles.likesTotal}>
+                                                              <p className={styles.totalLabel}>Total like(s)</p>
+                                                              <p className={styles.totalNb}> 2128 </p>
+                                                              <p className={styles.smLabel}>Total like depuis sa sortie
+                                                                  (18/29/23)</p>
+                                                          </div>
+                                                          <div className={styles.border}>
+
+                                                          </div>
+                                                          <div className={styles.likesTotal}>
+                                                              <p className={styles.totalLabel}>Total commentaire(s)</p>
+                                                              <p className={styles.totalNb}> 237 </p>
+                                                              <p className={styles.smLabel}>Total de commentaires depuis sa
+                                                                  sortie </p>
+                                                          </div>
+                                                      </div>
+                                                      <div className={styles.some}>
+                                                          <h7>Quelques commentaires :</h7>
+                                                      </div>
+                                                      <div className={styles.commentaryContainer}>
+                                                          <CommentaryDashboard
+                                                              pseudo={'JoséBeauvais'}
+                                                              img={'/assets/livre6.jpg'}
+                                                              role={'Lecteur'}
+                                                              date={'18/02/28'}
+                                                              likes={2891}
+                                                              content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                                          />
+
+                                                          <CommentaryDashboard
+                                                              pseudo={'JoséBeauvais'}
+                                                              img={'/assets/livre3.jpg'}
+                                                              role={'Lecteur'}
+                                                              date={'18/02/28'}
+                                                              likes={2891}
+                                                              content={"J'aime beaucoup ce livre qui qu qui qui qui qui qui qui qui qui qui qui qui sssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssquisssssssssssssssssssssssssssssssssssssssssssssqui fait parti mes préférés, je conseille à tous de lire ce chef d'oeuvre"}
+                                                          />
+                                                      </div>
+                                                  </>*/
                                 }
 
 
