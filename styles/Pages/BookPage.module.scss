@@ -99,22 +99,27 @@ padding-right: 10px;
   .infoContainer{
     display: flex;
     flex-direction: column;
-
     justify-content: flex-start;
 h4{
   &:first-letter{
     text-transform: uppercase;
   }
-  color: $darkBrown;
+  color: rgba(81, 86, 91, 0.91);
   font-family: "Potta One",sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   span{
     cursor: pointer;
   }
 }
     h3{
+      &:first-letter{
+        font-size: 30px;
+        text-transform: uppercase;
+      }
       margin-top: 10px;
 color: $darkBrown;
+      letter-spacing: 1px;
+      font-size: 22px;
       font-family: "Montserrat Alternates",sans-serif;
       font-weight: bold;
     }
@@ -193,7 +198,7 @@ color: $darkBrown;
     overflow-y: auto!important;
     margin-top: 20px;
     display: block;
-    height: 600px;
+    height: 60vh;
     padding-right: 20px;
     flex-direction: column;
     padding-bottom: 200px;
@@ -248,7 +253,6 @@ align-items: center;
 
 
 .seeMore{
-  position: absolute;
   margin-top: 10px;
   text-align: center;
   cursor: pointer;

@@ -22,6 +22,7 @@ import {
 } from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
+import {FilterBtn} from "../../Component/layouts/Btn/ActionBtn";
 
 
 export async function getServerSideProps({req, params}) {
@@ -325,22 +326,21 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     </div>
                     {bookData._id}
                     <div className={styles.btnContainer}>
+                        <div className={styles.btnItem}>
+                            <DocumentTextIcon/>
+                            <p>{bookData.nbChapters} chapitre(s)</p>
+                        </div>
                         <div
                             className={styles.btnItem}>
                             <HeartIcon className={styles.cursor}/>
-                            <p>({likes})</p>
+                            <p>{likes} likes</p>
                         </div>
-                        <div className={styles.btnItem}>
-                            <DocumentTextIcon/>
-                            <p>({chapterData?.length})</p>
 
-                        </div>
 
                         <div
-                            onClick={() => getComment()}
                             className={styles.btnItem}>
                             <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
-                            <p>({nbCommentary})</p>
+                            <p>{nbCommentary} commentaire(s)</p>
 
                         </div>
 
@@ -348,16 +348,20 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     </div>
 
                     <div className={styles.btnRead}>
-                        <button
-                            onClick={() => {
-                                router.push({
-                                    pathname: "/chapitre/" + chapterData[0]._id, query: {
-                                        name: chapterData[0].title, slug: chapterData[0].slug, i: 1
-                                    },
-                                })
-                            }}
-                        >Lire le chapitre 1
-                        </button>
+                        {
+                            chapterData &&
+                            <button
+                                onClick={() => {
+                                    router.push({
+                                        pathname: "/chapitre/" + chapterData[0]._id, query: {
+                                            name: chapterData[0].title, slug: chapterData[0].slug, i: 1
+                                        },
+                                    })
+                                }}
+                            >Lire le chapitre 1
+                            </button>
+                        }
+
                     </div>
                 </div>
 
@@ -370,7 +374,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         <h3>{bookData?.title}</h3>
                         <p className={styles.snippet}> {bookData?.summary}</p>
                         <div className={styles.btnFilter}>
-                            <button onClick={() => {
+                            <FilterBtn filter={activeFilterList} onclick={() => {
                                 if (activeFilterList === 'order') {
                                     setPageChapter(2);
                                     setActiveFilterList('recent');
@@ -380,9 +384,9 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                     setActiveFilterList('order');
                                     GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
                                 }
-                            }}>Trier <ArrowsUpDownIcon/></button>
-                            <div><p>({chapterData?.length})</p>
-                                <Book/>
+                            }
+                            }/>
+                            <div><p>{bookData.nbChapters} chapitres</p>
                             </div>
                         </div>
                     </div>
@@ -418,7 +422,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
                             )
                         })}
-
                         {canSeeMoreChapter && <p className={styles.seeMore}
                                                  onClick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}>Voir
                             plus</p>}
@@ -434,7 +437,8 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                 img={bookData?.img}
                 nbCommentary={nbCommentary}
                 author={bookData?.author_pseudo}
-                nbChapter={chapterData?.length}
+                nbChapter={bookData?.nbChapters}
+                hasLike={hasLike}
                 openList={() => {
                     ToogleSidebar("List", sidebarSelect, setSidebarSelect);
                 }}

@@ -112,6 +112,8 @@
         width: 100%;
         object-fit: cover;
         box-shadow: $shadow;
+        border: $divBorder;
+        border-radius: 5px;
         object-position: top;
       }
 
@@ -167,6 +169,10 @@
 
           .seeBtn {
             cursor: pointer;
+            svg{
+              color: white;
+              width: 15px;
+            }
             background-color: #9844AD;
           }
 
@@ -240,6 +246,7 @@
     justify-content: space-around;
     padding: 15px;
     background-color: white;
+    border: $divBorder;
 
     .dateLabel {
       p {
@@ -288,6 +295,8 @@
   gap: 1vh;
   background-color: white;
   padding: 5%;
+  border: $divBorder;
+
 
 
   div {
@@ -465,13 +474,8 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      svg{
-        width: 18px;
-        color: #1C232B;
-        cursor: pointer;
-      }
     }
-    button{
+    .newChapter{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -479,13 +483,10 @@
       padding: 10px 20px;
       background-color: #9844AD;
       color: white;
-      font-size: 12px;
+      font-size: 11px;
       border-radius: 15px;
       font-family: 'Montserrat',sans-serif;
-    }
-    svg{
-      color: white;
-      width: 15px;
+      box-shadow: $shadow;
     }
   }
 
@@ -563,24 +564,7 @@
     margin-top: 20px;
     padding-right: 10%;
     justify-content: center;
-
-    .newChapter {
-      display: none;
-      position: absolute;
-      bottom: 2%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      background-color: #9844AD;
-      border-radius: 25px;
-      padding: 10px 15px;
-      color: white;
-      font-family: 'Potta One', sans-serif;
-      font-size: 11px;
-      width: 50%;
-      box-shadow: $shadow;
-    }
-
+    scroll-behavior: smooth;
   }
 }
 

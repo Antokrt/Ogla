@@ -10,20 +10,18 @@ export const LikeBtn = ({isLike, onLike}) => {
             className={styles.like}>
 
             <HeartIcon className={isLike ? styles.active : styles.disabled}/>
-            <i className={styles.i}>0</i>
             <span className={styles.span}></span>
         </div>
     )
 }
 
-export const LikeBtnSm = ({isLike, onLike}) => {
+export const LikeBtnSidebar = ({isLike, onLike}) => {
     return (
         <div
             onClick={onLike}
-            className={styles.like}>
+            className={styles.likeSidebar}>
 
             <HeartIcon className={isLike ? styles.active : styles.disabled}/>
-            <i className={styles.i}>0</i>
             <span className={styles.span}></span>
         </div>
     )

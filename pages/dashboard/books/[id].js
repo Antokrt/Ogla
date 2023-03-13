@@ -22,12 +22,14 @@ import {
     ArrowsUpDownIcon,
     ArrowUpIcon,
     ArrowUturnLeftIcon,
-    EyeIcon,
     PlusCircleIcon, QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 import {Capitalize} from "../../../utils/String";
+import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
+import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
 import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
+import {FilterBtn} from "../../../Component/layouts/Btn/ActionBtn";
 
 
 export async function getServerSideProps({req, params}) {
@@ -98,7 +100,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     setChapterPage(chapterPage + 1);
                 }
             })
-            .then(() => setLoadingScroll(false))
+            .then(() => {
+                setLoadingScroll(false);
+                setTimeout(() => {    divRef.current.scrollTop = divRef.current.scrollHeight;},10)
+            })
             .catch(() => {
                 setLoadingScroll(false);
                 setErrChapter(true);
@@ -272,7 +277,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         pathname: '/livre/' + book._id,
                                                         query: book.slug
                                                     })}
-                                                    className={styles.seeBtn}>Voir le livre
+                                                    className={styles.seeBtn}><EyeSolid/>
                                                 </button>
                                                 <button
                                                     onClick={() => sumUpdate()}
@@ -335,7 +340,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                         }
 
                                         <div>
-                                            <EyeIcon/>
+                                            <EyeOutline/>
                                             <p className={styles.last}>{book.stats.view} <br/>vue(s) </p>
                                         </div>
                                         <p
@@ -346,7 +351,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             }
                                             }
                                             className={styles.delete}>Supprimer le livre</p>
-
                                     </div>
                                 </div>
 
@@ -355,13 +359,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 {
                                     <div className={styles.chapterContainer}>
                                         {
-                                            !errListChapter  && !loadingChapter &&
+                                            !errListChapter && !loadingChapter &&
                                             <>
                                                 <div className={styles.headerChapter}>
                                                     <h4>Chapitre(s) ({book.chapter_list.length})</h4>
                                                     <div>
-
-                                                        <ArrowsUpDownIcon onClick={() => {
+                                                        <FilterBtn filter={activeFilter} onclick={() => {
                                                             if (activeFilter === 'order') {
                                                                 setActiveFilter('recent');
                                                                 getChapterWithNewFilter('recent');
@@ -371,7 +374,11 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             }
                                                         }
                                                         }/>
-                                                        <button>
+                                                        <button
+                                                            className={styles.newChapter}
+                                                            onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
+
+                                                        >
                                                             Nouveau chapitre
                                                         </button>
 
@@ -416,7 +423,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <div className={styles.contentChapterList} ref={divRef}>
 
                                                             {
-                                                                chapterListData && bookData && !errListChapter  ?
+                                                                chapterListData && bookData && !errListChapter ?
                                                                     chapterList.map((item, index) => {
 
                                                                         let chapterNumber;

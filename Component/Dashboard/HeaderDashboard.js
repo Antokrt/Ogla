@@ -15,7 +15,7 @@ const HeaderDashboard = () => {
                 <button className={styles.search}><MagnifyingGlassIcon className={styles.bell}/></button>
                 <button className={styles.search}><BellAlertIcon className={styles.bell}/></button>
                 <button className={styles.addBtnHeader}> + Nouveau livre</button>
-                <img src={session?.user.image}/>
+                <img referrerPolicy={'no-referrer'} src={session?.user.image}/>
             </div>
         </div>
     )

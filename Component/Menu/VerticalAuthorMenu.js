@@ -46,7 +46,7 @@ export default function VerticalAuthorMenu() {
 
                 <div className={styles.profilContainer}>
 <div className={styles.profil}>
-    <img src={session?.user.image}/>
+    <img referrerPolicy={'no-referrer'} src={session?.user.image}/>
     <div className={styles.infos}>
         <p className={styles.name}>{session?.user.author.firstName} {session?.user.author.lastName}</p>
         <p className={styles.pseudo}>@{session?.user.pseudo}</p>

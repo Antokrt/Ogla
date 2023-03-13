@@ -1,3 +1,6 @@
+@import "styles/utils/var";
+
+
 .close{
   cursor: pointer;
   width: 25px;
@@ -26,3 +29,21 @@
     width: 16px;
     color: white;
   }}
+
+
+.filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background-color: white;
+  border: $divBorder;
+  padding: 5px 10px;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 12px;
+  border-radius: 5px;
+  svg{
+    width: 12px;
+    color: #54595F;
+  }
+}
