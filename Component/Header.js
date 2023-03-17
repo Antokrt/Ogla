@@ -10,27 +10,29 @@ import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
 import {SearchBarService} from "../service/Search/SearchService"
 
-import { toastDisplayError } from "../utils/Toastify";
-import { ToastContainer } from 'react-toastify';
+import {toastDisplayError} from "../utils/Toastify";
+import {ToastContainer} from 'react-toastify';
+import {useDispatch, useSelector} from "react-redux";
+import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
+import {LogoutService} from "../service/User/Account.service";
 
 export default function Header() {
     const router = useRouter();
     const {data: session} = useSession();
-    const [searchValue,setSearchValue] = useState('');
-    const [data,setData] = useState();
-    const [query,setQuery] = useState('');
-    
+    const [searchValue, setSearchValue] = useState('');
+    const [data, setData] = useState();
+    const [query, setQuery] = useState('');
+
     const goToProfil = () => {
-            if(session.user.is_author){
-                router.push("/dashboard/profil")
-            }
-            else{
-                router.push('/profil')
-            }
+        if (session.user.is_author) {
+            router.push("/dashboard/profil")
+        } else {
+            router.push('/profil')
+        }
     }
 
     const search = () => {
-        if(query.length > 0){
+        if (query.length > 0) {
             SearchBarService(query)
                 .then((res) => {
                     setData(res);
@@ -41,8 +43,11 @@ export default function Header() {
 
     useEffect(() => {
         search();
-    },[query])
+    }, [query]);
 
+
+    const comments = useSelector(selectComments);
+    const dispatch = useDispatch();
     return (
         <div className={styles.container}>
             <div className={styles.mainA}>
@@ -91,7 +96,9 @@ export default function Header() {
                                 setQuery(e)
                             }}
                             search={query}
-                            submit={() => {setSearchValue("")}}
+                            submit={() => {
+                                setSearchValue("")
+                            }}
                             height={50}
                             width={100}/>
 
@@ -99,7 +106,7 @@ export default function Header() {
                             query !== "" && data &&
                             <div className={styles.containerResultSearchBar}>
                                 <ResultSearchBar
-                                    searchBtn = {() => setSearchValue("")}
+                                    searchBtn={() => setSearchValue("")}
                                     destroy={() => {
                                         setSearchValue("")
                                     }}
@@ -132,10 +139,9 @@ export default function Header() {
                                 session.user.image === '' ?
                                     <div className={styles.account}
                                          onClick={() => {
-                                             if(session.user.is_author){
+                                             if (session.user.is_author) {
                                                  router.push("/dashboard/profil")
-                                             }
-                                             else{
+                                             } else {
                                                  router.push('/profil')
                                              }
 
@@ -159,10 +165,12 @@ export default function Header() {
 
                             <ArrowLeftOnRectangleIcon
                                 onClick={() => {
-                                    signOut()
-                                        .then(() => router.push('/'))
-                                }
-                                }
+                                    LogoutService()
+                                        .then(() => signOut()
+                                            .then(() => router.push('/')))
+                                        .catch(() => signOut()
+                                            .then(() => router.push('/')))
+                                }}
                                 title={'Se déconnecter'}/>
                         </div>
 

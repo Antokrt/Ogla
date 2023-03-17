@@ -1,5 +1,5 @@
 import styles from '../../../styles/Layouts/Btn/Like.module.scss';
-import {HeartIcon} from "@heroicons/react/24/solid";
+import {HeartIcon} from "@heroicons/react/24/outline";
 import {ChevronDoubleUpIcon, HandThumbUpIcon as NotLikeIcon} from "@heroicons/react/24/outline";
 import {HandThumbUpIcon as LikeIcon} from "@heroicons/react/24/solid";
 
@@ -16,13 +16,13 @@ export const LikeBtn = ({isLike, onLike}) => {
 }
 
 export const LikeBtnSidebar = ({isLike, onLike}) => {
+    console.log(isLike)
     return (
         <div
             onClick={onLike}
             className={styles.likeSidebar}>
 
-            <HeartIcon className={isLike ? styles.active : styles.disabled}/>
-            <span className={styles.span}></span>
+            <HeartIcon className={isLike === true ? styles.active : styles.disabled}/>
         </div>
     )
 }

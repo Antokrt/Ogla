@@ -1,92 +1,85 @@
 import styles from "../../styles/Component/Post/FooterOnPost.module.scss"
 import {
-    ArrowLeftCircleIcon,
-    ArrowLeftIcon,
-    ArrowRightCircleIcon,
-    ArrowRightIcon,
-    ChatBubbleBottomCenterTextIcon,
-    ChevronDoubleLeftIcon,
-    ChevronDoubleRightIcon,
-    ChevronDoubleUpIcon, ChevronLeftIcon,
-    ChevronRightIcon,
-    HeartIcon,
+    BackwardIcon,
+    ChatBubbleBottomCenterTextIcon
+    , ForwardIcon,
     QueueListIcon
 } from "@heroicons/react/24/outline";
-import {useEffect, useState} from "react";
-import SidebarPost from "./SidebarCommentary";
-import {LikeBookService} from "../../service/Like/LikeService";
 import {useRouter} from "next/router";
+import {LikeBtnSidebar} from "../layouts/Btn/Like";
+import {ref} from "yup";
 
 
-
-const FooterOnChapter = ({navChapters,openCommentary,openList,img, title, likes, nbCommentary, author, nbChapter, index, next,previous, likeChapter }) => {
-
-    const [openSidebar,setOpenSidebar ] = useState(true);
-    const [hasLikeChapter, setHasLikeChapter] = useState('hasLike');
+const FooterOnChapter = ({
+                             navChapters,
+                             openCommentary,
+                             openList,
+                             img,
+                             title,
+                             likes,
+                             nbCommentary,
+                             author,
+                             nbChapter,
+                             refresh,
+                             index,
+                             likeChapter,
+                             hasLike
+                         }) => {
 
     const router = useRouter();
-
-    useEffect(() => {
-       console.log(index + 1)
-    },[])
 
     return (<div className={styles.container}>
         <div className={styles.titleContainer}>
             <img src={img}/>
             <div>
                 <h7>Chapitre {index} : {title}</h7>
-                <p>{likes} likes - {nbChapter} commentaires - {author}</p>
+                <p>{likes} likes - {author}</p>
             </div>
 
 
         </div>
 
-        <div className={styles.likeContainer}>
+        <div className={styles.likeContainer + ' ' + styles.likeContainerWithNav}>
             <div>
-                {
-                   navChapters.prev &&
-                        <div
-                            className={styles.navDiv}
-                            onClick={() => {
+
+                    <div
+                        className={navChapters.prev ? styles.navDiv : styles.hidden + ' ' + styles.navDiv}
+                        onClick={() => {
+                            if(navChapters.prev){
                                 router.push({
                                     pathname: "/chapitre/" + navChapters.prev._id, query: {
-                                        name:navChapters.prev.title, slug: navChapters.prev.slug, i: index - 1
-                                    },
+                                        name: navChapters.prev.title, slug: navChapters.prev.slug, i: index - 1,
+                                    }
                                 })
-                            }}
-                        >
-                            <ChevronLeftIcon/>
-                            <p>Précédent (Ch.{index - 1})</p>
-                        </div>
-                }
+                            }
+                        }}
+                    >
+                        <BackwardIcon/>
+                        <p>Précédent (Ch.{index - 1})</p>
+                    </div>
             </div>
 
-            <div
-            onClick={() => {
-likeChapter()
-            }}
-            >
-                <HeartIcon/>
-                <p>J'aime ({likes})</p>
-            </div>
+            <LikeBtnSidebar onLike={likeChapter} isLike={hasLike}/>
+
 
             <div>
-                {
-                    navChapters.next &&
-                        <div
-                            className={styles.navDiv}
-                            onClick={() => {
+
+                    <div
+                        className={navChapters.next ? styles.navDiv : styles.hidden + ' ' + styles.navDiv}
+                        onClick={() => {
+                            if(navChapters.next){
                                 router.push({
                                     pathname: "/chapitre/" + navChapters.next._id, query: {
-                                        name:navChapters.next.title, slug: navChapters.next.slug, i: index+ 1
+                                        name: navChapters.next.title, slug: navChapters.next.slug, i: index + 1
                                     },
                                 })
-                            }}
-                        >
-                            <ChevronRightIcon/>
-                            <p>Suivant (Ch.{index + 1})</p>
-                        </div>
-                }
+                            }
+                        }}
+
+                    >
+                        <ForwardIcon/>
+                        <p>Suivant (Ch.{index + 1})</p>
+                    </div>
             </div>
         </div>
 
@@ -102,7 +95,6 @@ likeChapter()
                 <p>Chapitres ({nbChapter})</p>
             </div>
         </div>
-
 
 
     </div>)

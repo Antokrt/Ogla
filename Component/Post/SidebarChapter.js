@@ -1,9 +1,11 @@
 import styles from "../../styles/Component/Post/SidebarChapter.module.scss";
 import {useEffect, useRef, useState} from "react";
-import {BarsArrowDownIcon, ChevronDoubleUpIcon, QueueListIcon} from "@heroicons/react/24/outline";
+import {ArrowDownIcon, BarsArrowDownIcon, ChevronDoubleUpIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {BookOpenIcon, HeartIcon} from "@heroicons/react/24/solid";
 import {useRouter} from "next/router";
 import {LoaderCommentary} from "../layouts/Loader";
+import {Capitalize} from "../../utils/String";
+import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
 
 
 const SidebarChapter = ({
@@ -14,53 +16,73 @@ const SidebarChapter = ({
                             maxChapter,
                             canSeeMore,
                             getMoreChapter,
+                            author,
+                            bookTitle,
+                            nbChapters,
+                            bookId,
+                            bookSlug,
                             loadingScroll,
                             canScroll
                         }) => {
 
     const [chapterList, setChapterList] = useState(chapters);
+    const [seeBtnAddMore, setSeeBtnAddMore] = useState(false);
     const divRef = useRef(null);
     const router = useRouter();
 
-    useEffect(() => {
-        const div = divRef.current;
+    /*    useEffect(() => {
+            const div = divRef.current;
 
-        const handleScroll = () => {
-            const threshold = 1;
-            const isBottom =
-                div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-            if (isBottom && canScroll && !loadingScroll) {
-                getMoreChapter();
-            }
-        };
-        div.addEventListener("scroll", handleScroll);
-        return () => {
-            div.removeEventListener("scroll", handleScroll);
-        };
-    }, [canScroll, loadingScroll]);
+            const handleScroll = () => {
+                const threshold = 1;
+                const isBottom =
+                    div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
+                console.log({isBottom,canScroll,loadingScroll,canSeeMore})
+                if (isBottom && !loadingScroll && canSeeMore) {
+                    loadingScroll = true;
+                    getMoreChapter();
+                }
+            };
+            div.addEventListener("scroll", handleScroll);
+            return () => {
+                div.removeEventListener("scroll", handleScroll);
+            };
+        }, [canScroll]);*/
 
 
     useEffect(() => {
         setChapterList(chapters);
     }, [chapters])
 
-    useEffect(() => {
-        console.log(chapters)
-    }, [])
+    const scrollToTop = () => {
+        return new Promise((resolve, reject) => {
+            divRef.current.scrollTop = 0;
+            resolve();
+        })
+    }
 
 
     return (<div className={styles.container}>
 
         <div className={styles.headerComment}>
-            <p><QueueListIcon/>{title}</p>
-            <p onClick={() => router.push('/auteur/' + 'Judy McLaren')}><span>Judy McLaren</span></p>
+            <p><QueueListIcon/> <span onClick={() => router.push({
+                pathname: '/livre/' + bookId,
+                query: bookSlug
+            })}>{Capitalize(bookTitle)} </span>  &nbsp; ({nbChapters} chapitre(s))</p>
+            <p onClick={() => router.push('/auteur/' + 'Judy McLaren')}><span>{author}</span></p>
         </div>
 
         <div className={styles.titleSection}>
             <h5>{title}</h5>
-            <h1>{filter} + {maxChapter}</h1>
             <div>
-                <BarsArrowDownIcon onClick={changeFilter}/>
+
+                <BarsArrowDownIcon onClick={() => {
+                    setSeeBtnAddMore(false);
+                    changeFilter();
+                    scrollToTop()
+                        .then(() => setSeeBtnAddMore(true))
+                        .catch(() => setSeeBtnAddMore(true));
+                }}/>
             </div>
         </div>
         {/*
@@ -99,7 +121,6 @@ const SidebarChapter = ({
                 } else {
                     chapterNumber = index + 1;
                 }
-                console.log(chapterNumber)
                 return (
                     <div
                         className={styles.item}
@@ -116,30 +137,27 @@ const SidebarChapter = ({
                     >
                         <div className={styles.titleChapter}>
                             <p className={styles.title}>
-                                Chapitre {chapterNumber} - {item.title}
+                                <span>Chapitre {chapterNumber} :</span> {Capitalize(item.title)}
                             </p>
-                            <p className={styles.date}>{item.date_creation}</p>
+                            <p className={styles.date}>{FormatDateStr(item.date_creation)}</p>
                         </div>
 
                         <p className={styles.likes}>
-                            {item.likes} <HeartIcon/>
+                            {item.likes} like(s)
                         </p>
+
                     </div>
+
+
                 );
             })}
-
-
+            {
+                !loadingScroll && canSeeMore &&
+                <div className={styles.seeMore}>
+                    <button onClick={() => getMoreChapter()}><ArrowDownIcon/></button>
+                </div>
+            }
         </div>
-
-        {
-            canSeeMore &&
-            <button onClick={getMoreChapter}>Voir plus</button>
-        }
-
-        {
-            loadingScroll &&
-            <div className={styles.loaderContainer}><LoaderCommentary/></div>
-        }
 
     </div>)
 }

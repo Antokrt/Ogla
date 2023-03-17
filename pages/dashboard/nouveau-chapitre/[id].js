@@ -20,95 +20,93 @@ import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";
 
-export async function getServerSideProps({req,params}){
+export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
-    const book = await fetch('http://localhost:3008/author/book/'+ id,config);
+    const book = await fetch('http://localhost:3008/author/book/' + id, config);
     const bookErrData = !book.ok;
     const booksJson = await book.json();
 
     return {
-        props:{
-            err:{
-                book:bookErrData
+        props: {
+            err: {
+                book: bookErrData
             },
             bookData: booksJson,
         }
     }
 }
 
-const NouveauChapitre = ({bookData,  err}) => {
+const NouveauChapitre = ({bookData, err}) => {
 
-    const [loading,setLoading] = useState(true);
-    const [book,setBook] = useState(bookData);
-    const [title,setTitle] = useState('')
-    const [content,setContent] = useState();
-    const [text,setText] = useState('');
-    const [canSend,setCanSend] = useState(false)
+    const [loading, setLoading] = useState(true);
+    const [book, setBook] = useState(bookData);
+    const [title, setTitle] = useState('')
+    const [content, setContent] = useState();
+    const [text, setText] = useState('');
+    const [canSend, setCanSend] = useState(false)
     const router = useRouter();
-    const [closeMenu,setCloseMenu ] = useState(true);
+    const [closeMenu, setCloseMenu] = useState(true);
 
 
     useEffect(() => {
-        if(router.isReady){
+        if (router.isReady) {
             setLoading(false);
         }
-    },[router.isReady])
+    }, [router.isReady])
 
     useEffect(() => {
-        if(title !== "" && title.length < 200 && text !== '' && content){
+        if (title !== "" && title.length < 200 && text !== '' && content) {
             setCanSend(true);
-        }
-        else {
+        } else {
             setCanSend(false)
         }
-    },[content,title])
+    }, [content, title])
 
 
     const editor = useEditor({
-        extensions:[
+        extensions: [
             StarterKit,
             Placeholder.configure({
-                emptyEditorClass:'is-editor-empty',
-                placeholder:'Commencez à écrire votre chapitre ici...'
+                emptyEditorClass: 'is-editor-empty',
+                placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
-        onUpdate({editor}){
-          setContent(editor?.getJSON());
-          setText(editor?.getText());
+        onUpdate({editor}) {
+            setContent(editor?.getJSON());
+            setText(editor?.getText());
         },
-        content:'<p></p>'
+        content: '<p></p>'
     })
 
     const bold = () => {
-       return editor.chain().focus().toggleBold().run();
+        return editor.chain().focus().toggleBold().run();
     }
 
     const italic = () => {
-        return  editor.chain().focus().toggleItalic().run();
+        return editor.chain().focus().toggleItalic().run();
     }
 
     const editorReadOnly = useEditor({
-        extensions:[
+        extensions: [
             StarterKit,
         ],
-        editable:false,
-        content:content
+        editable: false,
+        content: content
     })
 
     const sendData = (publish) => {
-        if(canSend)
-        {
+        if (canSend) {
             const data = {
                 book_id: book._id,
-                content:JSON.stringify(content),
+                content: JSON.stringify(content),
                 title,
                 text,
                 publish
             }
 
             newChapter(data)
-                .then((res) => router.push('/dashboard/books/'+ book._id))
+                .then((res) => router.push('/dashboard/books/' + book._id))
                 .catch((err) => console.log(err));
         }
 
@@ -121,105 +119,117 @@ const NouveauChapitre = ({bookData,  err}) => {
                     <VerticalAuthorMenu/>
                 </div>
 
-                    {
-                        loading &&
-                        <div className={styles.errContainer}>
-                            <p>Loading</p>
-                        </div>
-                    }
+                {
+                    loading &&
+                    <div className={styles.errContainer}>
+                        <p>Loading</p>
+                    </div>
+                }
 
-                    {
-                        err.chapter && !loading &&
-                        <div className={styles.errContainer}>
-                            <ErrorDashboard
-                                title={'Impossible de récupérer ce chapitre'}
-                                img={'/assets/chara/chara5.png'}
-                                link={() => router.push('/dashboard/books/')}
-                                btn={'Retour'}
-                                subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
-                                    '\n'}
-                            />
-                        </div>
+                {
+                    err.chapter && !loading &&
+                    <div className={styles.errContainer}>
+                        <ErrorDashboard
+                            title={'Impossible de récupérer ce chapitre'}
+                            img={'/assets/chara/chara5.png'}
+                            link={() => router.push('/dashboard/books/')}
+                            btn={'Retour'}
+                            subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
+                                '\n'}
+                        />
+                    </div>
 
-                    }
+                }
 
-                    {
-                        !loading && !err.book && book.length !== 0 &&
-                        <div className={styles.containerData}>
+                {
+                    !loading && !err.book && book.length !== 0 &&
+                    <div className={styles.containerData}>
                         <div className={styles.header}>
                             <div className={styles.list}>
                                 <HomeIcon/>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <h6
-                                onClick={() => router.push('/dashboard/books/'+ book._id)}
+                                    onClick={() => router.push('/dashboard/books/' + book._id)}
                                 >{book.title}</h6>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <p>Nouveau Chapitre</p>
                                 <ChevronRightIcon className={styles.arrow}/>
-                                <p><span>{book.chapter_list.length + 1 }</span></p>
+                                <p><span>{book.chapter_list.length + 1}</span></p>
                             </div>
                             <div className={styles.btnList}>
                                 <button
                                     className={canSend ? styles.activeSaveBtn : ''}
                                     onClick={() => sendData(false)}
-                                >Enregistrer en tant que brouillon</button>
+                                >Enregistrer en tant que brouillon
+                                </button>
 
 
                                 <button
                                     className={canSend ? styles.activePublishBtn : ''}
                                     onClick={() => sendData(true)}
-                                >Publier</button>
+                                >Publier
+                                </button>
                             </div>
 
 
                         </div>
 
-                            <div className={styles.containerSecond}>
+                        <div className={styles.containerSecond}>
 
-                                <div className={styles.containerText}>
-                                    <div onClick={() => setCloseMenu(!closeMenu)}
-                                        className={styles.toogleMenuContainer}>
-                                        {
-                                            closeMenu ?
-                                                <ChevronDoubleRightIcon/> :
-                                                <ChevronDoubleLeftIcon/>
-                                        }
-                                    </div>
-                                    <div className={styles.containerTitle}>
-                                        <div className={styles.titleL}>
-                                            <p>Chapitre {book.chapter_list.length + 1 }</p>
-                                            <input
-                                                onChange={(e) => setTitle(e.target.value)}
-                                                name={"title"}
-                                                type={'text'}
-                                                placeholder={'Ajoutez un titre ici'}
-                                            />
-                                        </div>
-
-                                        <div className={styles.titleR}>
-                                            <p>{DateNow()}</p>
-                                        </div>
-
+                            <div className={styles.containerText}>
+                                <div className={styles.containerTitle}>
+                                    <div className={styles.titleL}>
+                                        <p>Chapitre {book.chapter_list.length + 1}</p>
+                                        <input
+                                            onChange={(e) => setTitle(e.target.value)}
+                                            name={"title"}
+                                            type={'text'}
+                                            placeholder={'Ajoutez un titre ici'}
+                                        />
                                     </div>
 
-
-                                    <div className={styles.containerTextEditor}>
-                                        <button
-                                            onClick={() => bold()}
-                                            className={editor.isActive('bold') ? styles.bold : ''}>B</button>
-                                        <div className={styles.separatorEditor}></div>
-                                        <button
-                                            onClick={() => italic()}
-                                            className={editor.isActive('italic') ? styles.italic : ''}>I</button>
-                                        <div className={styles.separatorEditor}></div>
+                                    <div className={styles.titleR}>
+                                        <p>{DateNow()}</p>
                                     </div>
 
-                                    <div className={styles.text}>
-<EditorContent editor={editor}/>
-                                    </div>
                                 </div>
 
-                                {
+
+                                <div className={styles.containerTextEditor}>
+                                    <button
+                                        onClick={() => bold()}
+                                        className={editor.isActive('bold') ? styles.bold : ''}>B
+                                    </button>
+                                    <div className={styles.separatorEditor}></div>
+                                    <button
+                                        onClick={() => italic()}
+                                        className={editor.isActive('italic') ? styles.italic : ''}>I
+                                    </button>
+                                    <div className={styles.separatorEditor}></div>
+                                </div>
+
+                                <div className={styles.text}>
+                                    <EditorContent editor={editor}/>
+                                </div>
+                            </div>
+                            <div className={styles.containerPresentationBook}>
+                                <div onClick={() => router.push('/dashboard/books/' + book._id)}
+                                     className={styles.headPresentation}>
+                                    <img src={book.img}/>
+                                    <h3>La quete du maitre</h3>
+                                </div>
+
+                                <div className={styles.summary}>
+                                    <p>"{bookData?.summary}"</p>
+                                </div>
+
+                                <div className={styles.statsPresentation}>
+                                    <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide d'écriture...</h6>
+                                    <p>Cliquez ici pour en savoir plus !</p>
+                                </div>
+                            </div>
+
+                            {/*                   {
                                     closeMenu ?
                                         <div className={styles.containerCommentary}>
                                             <div className={styles.headerCommentary}>
@@ -288,11 +298,11 @@ const NouveauChapitre = ({bookData,  err}) => {
                                         </div> :
                                         <div className={styles.closedMenuContainer}>
                                         </div>
-                                }
-                            </div>
-
+                                }*/}
                         </div>
-                    }
+
+                    </div>
+                }
             </div>
 
         </div>

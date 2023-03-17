@@ -12,6 +12,7 @@ import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
 import InfiniteScroll from "react-infinite-scroller";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
+import {Capitalize} from "../../utils/String";
 
 
 const SidebarCommentary = ({
@@ -117,24 +118,17 @@ const SidebarCommentary = ({
     return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
-                <p><QueueListIcon/>{title}</p>
-                {
-                    canScroll ?
-                        <p>true</p> :
-                        <p>false</p>
-                }
-                <p onClick={() => router.push("/auteur/" + "Judy McLaren")}><span>{author}</span></p>
+                <p><QueueListIcon/>{Capitalize(title)}</p>
+                <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
             </div>
             <div className={styles.titleSection}>
                 <h5>Commentaire(s) <span>({comments?.length})</span></h5>
-                <h5>Page: <span>{page}</span> Limit: <span>{limit} </span></h5>
 
                 <div>
                     <p onClick={() => changeFilter('popular')}
                        className={activeFilter === 'popular' && styles.filterActive}>Populaire(s)</p>
                     <p onClick={() => changeFilter('recent')}
                        className={activeFilter === 'recent' && styles.filterActive}>Récent(s)</p>
-                    <p onClick={() => refresh()}>Refresh</p>
                 </div>
             </div>
 

@@ -23,6 +23,8 @@ import {DateNow} from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import scrollbar from "../../../styles/utils/scrollbar.module.scss";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
+import {EyeIcon} from "@heroicons/react/24/solid";
+import {Capitalize} from "../../../utils/String";
 
 
 export async function getServerSideProps({req, params}) {
@@ -31,7 +33,7 @@ export async function getServerSideProps({req, params}) {
     const chapter = await fetch('http://localhost:3008/chapter/' + id, config);
     const chapterErrData = !chapter.ok;
     let chapterJson = await chapter.json();
-    const book = await fetch('http://localhost:3008/author/book/'+ chapterJson.book_id,config);
+    const book = await fetch('http://localhost:3008/author/book/' + chapterJson.book_id, config);
     const bookErrData = !book.ok;
     let booksJson = await book.json();
     if (chapterJson.statusCode === 404) {
@@ -46,7 +48,7 @@ export async function getServerSideProps({req, params}) {
         props: {
             err: {
                 chapter: chapterErrData,
-                book:bookErrData
+                book: bookErrData
             },
             chapterData: chapterJson,
             bookData: booksJson
@@ -69,21 +71,19 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const index = router.query.index
 
     useEffect(() => {
-            setChapter(chapterData);
-            setBook(bookData);
-            setLoading(false);
+        setChapter(chapterData);
+        setBook(bookData);
+        setLoading(false);
     }, [])
 
 
-
     useEffect(() => {
-       if(JSON.stringify(content) !== chapterData.content || title !== chapterData.title){
-           setHasChange(true);
-       }
-       else {
-           setHasChange(false);
-       }
-    },[content,title])
+        if (JSON.stringify(content) !== chapterData.content || title !== chapterData.title) {
+            setHasChange(true);
+        } else {
+            setHasChange(false);
+        }
+    }, [content, title])
 
 
     const editor = useEditor({
@@ -110,9 +110,9 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     }
 
     const saveThis = () => {
-        if(hasChange){
+        if (hasChange) {
             const data = {
-                id:chapterData._id,
+                id: chapterData._id,
                 title,
                 content: JSON.stringify(content),
                 text,
@@ -121,7 +121,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
             saveChapter(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
-                    chapterData.title= res.data.title;
+                    chapterData.title = res.data.title;
                     setTitle(chapterData.title);
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
@@ -131,9 +131,9 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     }
 
     const publishThis = () => {
-        if(hasChange || !chapterData.publish){
+        if (hasChange || !chapterData.publish) {
             const data = {
-                id:chapterData._id,
+                id: chapterData._id,
                 title,
                 content: JSON.stringify(content),
                 text,
@@ -142,7 +142,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
             publishChapter(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
-                    chapterData.title= res.data.title;
+                    chapterData.title = res.data.title;
                     chapterData.publish = res.data.publish;
                     setTitle(chapterData.title);
                     setContent(JSON.parse(chapterData.content));
@@ -154,7 +154,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
     const deleteThis = () => {
         deleteChapter(chapterData._id)
-            .then((res) => router.replace('/dashboard/books/'+ bookData._id))
+            .then((res) => router.replace('/dashboard/books/' + bookData._id))
             .catch((err) => console.log(err));
     }
     return (
@@ -190,7 +190,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 <HomeIcon/>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <h6
-                                    onClick={() => router.push('/dashboard/books/'+ book._id)}
+                                    onClick={() => router.push('/dashboard/books/' + book._id)}
                                 >{book?.title}</h6>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <p>Nouveau Chapitre</p>
@@ -198,6 +198,40 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 <p><span>{index}</span></p>
                             </div>
                             <div className={styles.btnList}>
+
+
+                                {
+                                    !chapterData.publish &&
+                                    <button
+                                        className={hasChange ? styles.activeSaveBtn : ''}
+                                        onClick={() => {
+                                            saveThis()
+                                        }
+                                        }
+                                    >Enregistrer</button>
+                                }
+
+
+                                <button
+                                    className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                    onClick={() => publishThis(true)}
+                                >Publier
+                                </button>
+
+
+                                {
+                                    chapterData?.publish &&
+                                    <div
+                                        onClick={() =>    router.push({
+                                            pathname: "/chapitre/" + chapterData._id, query: {
+                                                name: chapterData?.title, slug: chapterData?.slug, i: index
+                                            },
+                                        })}
+                                        className={styles.eyeDiv}>
+                                        <EyeIcon/>
+                                    </div>
+                                }
+
 
                                 <div
                                     onClick={() => {
@@ -208,23 +242,6 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                     <TrashIcon/>
                                 </div>
 
-                                {
-                                    !chapterData.publish &&
-                                    <button
-                                        className={hasChange ? styles.activeSaveBtn : ''}
-                                        onClick={() => {
-                                        saveThis()
-                                        }
-                                        }
-                                    >Enregistrer</button>
-                                }
-
-
-                                        <button
-                                            className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
-                                            onClick={() => publishThis(true)}
-                                        >Publier</button>
-
 
                             </div>
                         </div>
@@ -232,14 +249,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                         <div className={styles.containerSecond}>
 
                             <div className={styles.containerText}>
-                                <div onClick={() => setCloseMenu(!closeMenu)}
-                                     className={styles.toogleMenuContainer}>
-                                    {
-                                        closeMenu ?
-                                            <ChevronDoubleRightIcon/> :
-                                            <ChevronDoubleLeftIcon/>
-                                    }
-                                </div>
+
                                 <div className={styles.containerTitle}>
                                     <div className={styles.titleL}>
                                         <p>Chapitre {index}</p>
@@ -247,7 +257,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             onChange={(e) => setTitle(e.target.value)}
                                             name={"title"}
                                             type={'text'}
-                                            value={title}
+                                            value={Capitalize(title)}
                                             placeholder={'Ajoutez un titre ici'}
                                         />
                                     </div>
@@ -262,11 +272,13 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 <div className={styles.containerTextEditor}>
                                     <button
                                         onClick={() => bold()}
-                                        className={editor.isActive('bold') ? styles.bold : ''}>B</button>
+                                        className={editor.isActive('bold') ? styles.bold : ''}>B
+                                    </button>
                                     <div className={styles.separatorEditor}></div>
                                     <button
                                         onClick={() => italic()}
-                                        className={editor.isActive('italic') ? styles.italic : ''}>I</button>
+                                        className={editor.isActive('italic') ? styles.italic : ''}>I
+                                    </button>
                                     <div className={styles.separatorEditor}></div>
                                 </div>
 
@@ -278,7 +290,25 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 </div>
                             </div>
 
-                            {
+                            <div className={styles.containerPresentationBook}>
+                                <div onClick={() => router.push('/dashboard/books/' + book._id)}
+                                     className={styles.headPresentation}>
+                                    <img src={book.img}/>
+                                    <h3>{bookData?.title}</h3>
+                                </div>
+                                <div className={styles.summary}>
+                                    <p>"{bookData?.summary}"</p>
+                                </div>
+
+                                <div className={styles.statsPresentation}>
+                                    <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
+                                        d'écriture...</h6>
+                                    <p>Cliquez ici pour en savoir plus !</p>
+                                </div>
+                            </div>
+
+
+                            {/*    {
                                 closeMenu ?
                                     <div className={styles.containerCommentary}>
                                         <div className={styles.headerCommentary}>
@@ -347,7 +377,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                     </div> :
                                     <div className={styles.closedMenuContainer}>
                                     </div>
-                            }
+                            }*/}
                         </div>
 
                     </div>

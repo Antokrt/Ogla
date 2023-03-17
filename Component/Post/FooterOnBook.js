@@ -20,10 +20,6 @@ import {LikeBtn, LikeBtnSidebar} from "../layouts/Btn/Like";
 
 const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook, hasLike}) => {
 
-    const [openSidebar,setOpenSidebar ] = useState(true);
-    const [book,setBook] = useState();
-
-
     return (
         <div className={styles.container}>
 
@@ -32,7 +28,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
             <img src={img}/>
             <div>
                 <h7>{title}</h7>
-                <p>{like} like(s) - {nbCommentary} commentaire(s) - {author}</p>
+                <p>{like} like(s) - <span>{author}</span></p>
             </div>
 
 
@@ -49,10 +45,6 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
                 <p>{nbCommentary} commentaire(s) </p>
             </div>
 
-            <div onClick={openList}>
-                <QueueListIcon/>
-                <p>{nbChapter} chapitre(s)</p>
-            </div>
         </div>
 
 

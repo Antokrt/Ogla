@@ -69,19 +69,22 @@
 }
 
 .likeSidebar {
-  position: relative;
   cursor: pointer;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   transition: all 0.3s ease;
+  background-color: white;
 
 
   svg {
+    z-index: 2;
     width: 18px;
+    margin: 0;
+    padding: 0;
     color: rgba(28, 35, 43, 0.35);
     transition: all 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
     path {
@@ -100,15 +103,7 @@
   transform: translatey(-160%);
 }
 
-.span {
-  opacity: 1;
-  z-index: -99;
-  position: absolute;
-  width: 90%;
-  height: 90%;
-  border-radius: 100%;
-  background-color: white;
-}
+
 
 .bubble-motion {
   animation: bubbleMotion 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;

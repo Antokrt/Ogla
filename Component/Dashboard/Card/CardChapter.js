@@ -1,6 +1,9 @@
 import styles from "../../../styles/Component/Dashboard/Card/CardChapter.module.scss";
 import Like from "../../layouts/Icons/Like";
 import {useRouter} from "next/router";
+import {Capitalize} from "../../../utils/String";
+import {FormatDateFrom} from "../../../utils/Date";
+import {CheckIcon, DocumentCheckIcon, PencilIcon, PencilSquareIcon} from "@heroicons/react/24/outline";
 
 export const CardChapter = ({id,title,index,like,date, publish}) => {
     const router = useRouter();
@@ -12,20 +15,15 @@ export const CardChapter = ({id,title,index,like,date, publish}) => {
             })}
             className={styles.chapter}>
             <div className={styles.headerChapter}>
-                <h6><span>Chapitre {index}</span><br/> {title}</h6>
-                <p>{id}</p>
+                <h6>Chapitre {index} : <span>{Capitalize(title)}</span> {!publish && <span className={styles.schema}>(Brouillon)</span>}
+                </h6>
+                <h7>{FormatDateFrom(date)}</h7>
 
-                <h7>{date}</h7>
-                {
-                    publish ?
-                        <p>Publié!</p> :
-                        <p>Brouillon</p>
-                }
             </div>
 
             <div className={styles.likeChapter}>
-                <Like/>
                 <p>{like}</p>
+                <p>likes</p>
 
             </div>
         </div>

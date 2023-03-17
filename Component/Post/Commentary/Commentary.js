@@ -7,6 +7,7 @@ import SubCommentary from "./SubCommentary";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
 import {LikeBookService, LikeService} from "../../../service/Like/LikeService";
+import {FormatDateFrom, FormatDateStr} from "../../../utils/Date";
 
 const Commentary = ({pseudo,
                         img,
@@ -71,12 +72,11 @@ const Commentary = ({pseudo,
                     }
 
                     <div className={styles.authorDate}>
-                        <h8 is={'h8'}>{pseudo}  <span>{id}</span></h8>
+                        <h8 is={'h8'}>{pseudo}  <span>{FormatDateFrom(date)}</span></h8>
 
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
-                        <p>Answer Page : {answerPage}</p>
                     </p>
 
                     {
@@ -112,7 +112,7 @@ const Commentary = ({pseudo,
                             {
                                 answers?.length <= 0 ?
                                 <> Répondre</> :
-                                    <>lsalsa</>
+                                    <>Voir les réponses</>
                             }
                             {
                                 openSubCategory &&

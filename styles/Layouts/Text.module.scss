@@ -15,8 +15,11 @@ font-family: 'Montserrat Alternates',sans-serif;
 }
 
 .bookTitle{
+  &:first-letter{
+    text-transform: uppercase;
+  }
   font-family: 'Montserrat Alternates',sans-serif;
-  font-size: 12px;
+  font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
 }

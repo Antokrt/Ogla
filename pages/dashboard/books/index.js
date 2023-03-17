@@ -8,6 +8,8 @@ import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {useRouter} from "next/router";
 import {GetMoreBookService} from "../../../service/Dashboard/BooksAuthorService";
+import CardBookPublic, {CardBookDashboard} from "../../../Component/Card/CardBook";
+import {SeeMoreBtn} from "../../../Component/layouts/Btn/ActionBtn";
 
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
@@ -91,19 +93,25 @@ const Books = ({booksData, err, nbBooks}) => {
                             books && !err &&
                             books.map((item, index) => {
                                 return (
-                                    <CardBook id={item._id}
-                                              image={item.img}
+                                    <CardBookDashboard id={item._id}
+                                              img={item.img}
                                               title={item.title}
                                               nbChapter={item.nbChapter}
                                               likes={item.likes}
                                     />
+
                                 )
                             })
                         }
+
+
                     </div>
+
                     {
                         seeMore &&
-                        <p className={styles.seeMore} onClick={() => getMoreBooks()}>Voir plus</p>
+                        <div className={styles.seeMoreContainer}>
+                            <SeeMoreBtn onclick={() => getMoreBooks()}/>
+                        </div>
                     }
 
                     {

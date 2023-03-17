@@ -155,31 +155,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                 </div>)
                 break;
 
-            case 'List':
-                return (<div
-                    className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                    <SidebarChapter
-                        changeFilter={() => {
-                            if (activeFilterChapterSidebar === 'order') {
-                                GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'recent');
-                                setActiveFilterChapterSidebar('recent');
-                                setPageChapterSideBar(2)
-                            } else {
-                                GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'order');
-                                setActiveFilterChapterSidebar('order');
-                                setPageChapterSideBar(2);
-                            }
-                        }}
-                        loadingScroll={loadingScrollChapterSidebar}
-                        canScroll={canScrollChapterSidebar}
-                        getMoreChapter={() => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
-                        title={bookData?.title}
-                        filter={activeFilterChapterSidebar}
-                        maxChapter={bookData?.nbChapters}
-                        canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect}/>
-                </div>)
-                break;
-
             default:
                 return (<div></div>)
         }
@@ -219,23 +194,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                        }*/
             })
             .catch((err) => console.log('err'))
-    }
-
-
-    const GetMoreChaptersSidebar = (state, setState, filter, page, setPage, setCanSeeMore) => {
-        setLoadingScrollChapterSidebar(true);
-        setCanScrollChapterSidebar(false);
-        GetChapterListService(bookData._id, filter, page)
-            .then((res) => {
-                if (res.length !== 0) {
-                    setState(prevState => [...prevState, ...res]);
-                    setPage(page + 1);
-                    setCanScrollChapterSidebar(true);
-                } else {
-                    setCanSeeMore(false);
-                }
-            })
-            .then(() => setLoadingScrollChapterSidebar(false));
     }
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
@@ -332,14 +290,14 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         </div>
                         <div
                             className={styles.btnItem}>
-                            <HeartIcon className={styles.cursor}/>
+                            <HeartIcon/>
                             <p>{likes} likes</p>
                         </div>
 
 
                         <div
                             className={styles.btnItem}>
-                            <ChatBubbleBottomCenterTextIcon className={styles.cursor}/>
+                            <ChatBubbleBottomCenterTextIcon/>
                             <p>{nbCommentary} commentaire(s)</p>
 
                         </div>
@@ -386,7 +344,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                 }
                             }
                             }/>
-                            <div><p>{bookData.nbChapters} chapitres</p>
+                            <div><p>{bookData.nbChapters} chapitre(s)</p>
                             </div>
                         </div>
                     </div>
@@ -403,7 +361,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                     onClick={() => {
                                         router.push({
                                             pathname: "/chapitre/" + item._id, query: {
-                                                name: bookData.title, slug: item.title, i: index + 1
+                                                name: bookData.title, slug: item.title, i: chapterNumber
                                             },
                                         })
                                     }}
@@ -414,8 +372,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                                     </div>
 
                                     <div className={styles.likeChapter}>
-                                        <Like/>
-                                        <p>({item.likes})</p>
+                                        <p>{item.likes} like(s)</p>
 
                                     </div>
                                 </div>

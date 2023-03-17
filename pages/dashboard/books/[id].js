@@ -29,7 +29,7 @@ import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
 import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
 import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
-import {FilterBtn} from "../../../Component/layouts/Btn/ActionBtn";
+import {FilterBtn, SeeMoreBtn} from "../../../Component/layouts/Btn/ActionBtn";
 
 
 export async function getServerSideProps({req, params}) {
@@ -44,9 +44,6 @@ export async function getServerSideProps({req, params}) {
         chapterJson = null;
     }
     const booksJson = await book.json();
-    console.log(booksJson)
-
-    booksJson.img = process.env.NEXT_PUBLIC_BASE_IMG_BOOK + booksJson.img;
     return {
         props: {
             err: {
@@ -102,7 +99,9 @@ const OneBook = ({bookData, chapterListData, err}) => {
             })
             .then(() => {
                 setLoadingScroll(false);
-                setTimeout(() => {    divRef.current.scrollTop = divRef.current.scrollHeight;},10)
+                setTimeout(() => {
+                    divRef.current.scrollTop = divRef.current.scrollHeight;
+                }, 10)
             })
             .catch(() => {
                 setLoadingScroll(false);
@@ -437,10 +436,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                             <>
                                                                                 <CardChapter
                                                                                     id={item._id}
-                                                                                    date={item.date}
+                                                                                    date={item.date_creation}
                                                                                     title={item.title}
                                                                                     index={chapterNumber}
-                                                                                    like={item.like}
+                                                                                    like={item.likes}
                                                                                     publish={item.publish}
                                                                                 />
                                                                             </>
@@ -455,8 +454,9 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             <div className={styles.seeMoreContainer}>
                                                                 {
                                                                     seeMoreChapter && chapterList && !loadingScroll &&
-                                                                    <ArrowDownCircleIcon
-                                                                        onClick={() => getMoreChapter()}/>
+                                                                    <SeeMoreBtn
+                                                                        onclick={() => getMoreChapter()}
+                                                                    />
                                                                 }
                                                                 {
                                                                     loadingScroll &&

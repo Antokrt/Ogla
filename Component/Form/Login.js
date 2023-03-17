@@ -7,6 +7,7 @@ import scrollbar from "../../styles/utils/scrollbar.module.scss";
 import {useSession, signIn, signOut} from "next-auth/react";
 import {useEffect, useRef, useState} from "react";
 import {router} from "next/router";
+import {GoogleLoginBtn} from "../layouts/Btn/Link";
 
 const Login = ({register, forgotPassword}) => {
 
@@ -80,8 +81,9 @@ const Login = ({register, forgotPassword}) => {
                         <p className={styles.submitErr + ' ' + styles.fadeIn }>{submitErr.msg}</p>
                     }
 
-                    <div className={styles.stepBtnContainer}>
-                        <button type={'submit'} className={styles.stepBtn}>Se connecter</button>
+                    <div className={styles.stepBtnContainer + ' ' + styles.logBtnContainer}>
+                        <button type={'submit'} className={styles.stepBtn + ' ' + styles.logInBtn}>Se connecter</button>
+                        <GoogleLoginBtn/>
                     </div>
                 </form>
             </div>

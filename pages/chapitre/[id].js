@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Header from "../../Component/Header";
 import styles from "../../styles/Pages/ChapterPage.module.scss";
@@ -23,13 +23,16 @@ import {GetCommentService, GetMyCommentsService} from "../../service/Comment/Com
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
+import {Capitalize} from "../../utils/String";
 
-export async function getServerSideProps({req, params, query}) {
+export async function getServerSideProps({req, params, query, ctx}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
     const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
+
     return {
         props: {
+            key: id,
             err: data.err,
             chapterData: data.chapter,
             bookData: data.book,
@@ -57,7 +60,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const [lastCommentId, setLastCommentId] = useState([]);
     const [canScroll, setCanScroll] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
-
+    const [contentChapter, setContentChapter] = useState(JSON.parse(chapterData?.content));
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
 
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
@@ -76,6 +79,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
+
         GetChapterListService(bookData._id, filter, 1)
             .then((res) => {
                 if (res.length !== 0) {
@@ -111,9 +115,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         extensions: [
             StarterKit,
         ],
-        editable: false,
         content: JSON.parse(chapterData?.content)
     })
+
 
     const checkSide = () => {
         switch (sidebarSelect) {
@@ -196,7 +200,12 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             loadingScroll={loadingScrollChapterSidebar}
                             canScroll={canScrollChapterSidebar}
                             getMoreChapter={() => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
-                            title={bookData?.title}
+                            bookTitle={bookData?.title}
+                            title={chapterData?.title}
+                            nbChapters={bookData?.nbChapters}
+                            bookId={bookData?._id}
+                            bookSlug={bookData?.slug}
+                            author={authorData?.pseudo}
                             filter={activeFilterChapterSidebar}
                             maxChapter={bookData?.nbChapters}
                             canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect}/>
@@ -213,18 +222,19 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
     const GetMoreChaptersSidebar = (state, setState, filter, page, setPage, setCanSeeMore) => {
         setLoadingScrollChapterSidebar(true);
-        setCanScrollChapterSidebar(false);
+        setCanSeeMore(false);
         GetChapterListService(bookData._id, filter, page)
             .then((res) => {
                 if (res.length !== 0) {
                     setState(prevState => [...prevState, ...res]);
                     setPage(page + 1);
-                    setCanScrollChapterSidebar(true);
                 } else {
-                    setCanSeeMore(false);
+                    setCanSeeMoreChapterSidebar(false);
                 }
             })
-            .then(() => setLoadingScrollChapterSidebar(false));
+            .then(() => {
+                setLoadingScrollChapterSidebar(false)
+            });
     }
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
@@ -274,7 +284,6 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
             })
             .catch((err) => console.log('err'))
     }
-
 
     const likeComment = (id) => {
         setComments(LikeCommentReduce(id, comments));
@@ -346,12 +355,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                     className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                     ref={headerFixed}
                 >
-                    <h3>Chapitre {index} - {chapterData.title}</h3>
-                    <p>{chapterData._id}</p>
-
+                    <h3>Chapitre {index} - {Capitalize(chapterData.title)}</h3>
                     <div className={styles.thumbnailContainer}>
-                        <p className={styles.category}><span>{bookData.category}</span><TagIcon/></p>
-                        <p className={styles.mSide}>{likes} <HeartIcon/></p>
+                        <p className={styles.category}><span>{bookData.category}</span></p>
+                        <p className={styles.mSide}>{likes} like(s)</p>
                         <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
                     </div>
                 </div>
@@ -360,17 +367,35 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
                         <h5>{bookData.title}</h5>
-                        <h6><img src={authorData.img} referrerPolicy={'no-referrer'}/>{authorData.pseudo}</h6>
+                        <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
+                                                                                             referrerPolicy={'no-referrer'}/>{authorData.pseudo}
+                        </h6>
                     </div>
                     <div className={styles.nextChapterContainer}>
 
                     </div>
 
                     <div className={styles.textContainer}>
-                        <EditorContent editor={editorReadOnly}>
-                        </EditorContent>
+                        {
+                            chapterData &&
+                            <EditorContent editor={editorReadOnly}>
+
+                            </EditorContent>
+                        }
+
                     </div>
-                    <p>{activeFilterComments}</p>
+                    {
+                        chapterData.navChapter.next &&
+                        <button className={styles.readMore} onClick={() => {
+                            router.push({
+                                pathname: "/chapitre/" + chapterData.navChapter.next._id, query: {
+                                    name: chapterData.navChapter.next.title,
+                                    slug: chapterData.navChapter.next.slug,
+                                    i: index + 1
+                                },
+                            })
+                        }}>Suivant ({chapterData.navChapter.next.title})</button>
+                    }
                 </div>
 
             </div>
@@ -378,8 +403,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
             <FooterOnChapter
                 likeChapter={() => likeChapter()}
+                hasLike={hasLike}
                 title={chapterData?.title}
                 likes={likes}
+                refresh={() => refreshChapter()}
                 index={index}
                 navChapters={chapterData.navChapter}
                 author={bookData?.author_pseudo}
