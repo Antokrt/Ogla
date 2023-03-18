@@ -108,7 +108,7 @@ const Books = ({booksData, err, nbBooks}) => {
                     </div>
 
                     {
-                        seeMore &&
+                        seeMore && books.length > 5 &&
                         <div className={styles.seeMoreContainer}>
                             <SeeMoreBtn onclick={() => getMoreBooks()}/>
                         </div>

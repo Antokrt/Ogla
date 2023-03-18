@@ -20,9 +20,9 @@ export async function middleware(req){
         return NextResponse.redirect(new URL('/', req.url))
     }
 
-    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {
+/*    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {
         return NextResponse.redirect(new URL('/dashboard/profil', req.url))
-    }
+    }*/
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && token && !token.is_author) {
         return NextResponse.redirect(new URL('/', req.url))

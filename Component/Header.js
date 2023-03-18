@@ -23,13 +23,7 @@ export default function Header() {
     const [data, setData] = useState();
     const [query, setQuery] = useState('');
 
-    const goToProfil = () => {
-        if (session.user.is_author) {
-            router.push("/dashboard/profil")
-        } else {
-            router.push('/profil')
-        }
-    }
+
 
     const search = () => {
         if (query.length > 0) {
@@ -139,12 +133,7 @@ export default function Header() {
                                 session.user.image === '' ?
                                     <div className={styles.account}
                                          onClick={() => {
-                                             if (session.user.is_author) {
-                                                 router.push("/dashboard/profil")
-                                             } else {
-                                                 router.push('/profil')
-                                             }
-
+router.push('/profil')
                                          }}
                                     >
 
@@ -158,7 +147,9 @@ export default function Header() {
 
                                     <img
                                         referrerPolicy="no-referrer"
-                                        onClick={() => goToProfil()}
+                                        onClick={() => {
+                                            router.push('/profil')
+                                        }}
                                         className={styles.imgProfil} src={session.user.image}/>
                             }
 
