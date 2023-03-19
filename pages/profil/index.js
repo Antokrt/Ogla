@@ -196,9 +196,15 @@ const Profil = ({profilData, err}) => {
                                 <p>Gérez vos informations personnelles et personnalisez votre profil ici </p>
                             </div>
                             <div className={styles.menuLink}>
-                                <button onClick={() => setActiveLink('profil')} className={ activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil</button>
-                                <button onClick={() => setActiveLink('writer')} className={activeLink === 'writer' && styles.activeMenu}>Ecrivain</button>
-                                <button onClick={() => setActiveLink('notifications')} className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications</button>
+                                <button onClick={() => setActiveLink('profil')}
+                                        className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                </button>
+                                <button onClick={() => setActiveLink('writer')}
+                                        className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                </button>
+                                <button onClick={() => setActiveLink('notifications')}
+                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications
+                                </button>
 
                             </div>
 
@@ -263,27 +269,37 @@ const Profil = ({profilData, err}) => {
                                         <label className={styles.emailLabel}>Email <span>{session.user.verified ?
                                             <CheckBadgeIcon/> :
                                             <span className={styles.verify} onClick={() => {
-                                                if(!session.user?.verified){
+                                                if (!session.user?.verified) {
                                                     verifyEmail();
                                                 }
                                             }}>Vérifiez maintenant</span>}</span></label>
                                         <input disabled={true} type={"text"} value={profilData.email}/>
-                                        <label>Modifier votre mot de passe</label>
-                                        <input value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}
-                                               type={"password"} placeholder={'Ancien mot de passe'}/>
-                                        <input value={newPassword} onChange={(e) => setNewPassowrd(e.target.value)}
-                                               type={"password"} placeholder={'Nouveau mot de passe'}/>
                                         {
-                                            errMsgModifyPassword.show &&
-                                            <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                            session.user.provider === 'ogla' &&
+                                            <>
+                                                <label>Modifier votre mot de passe</label>
+                                                <input value={oldPassword}
+                                                       onChange={(e) => setOldPassword(e.target.value)}
+                                                       type={"password"} placeholder={'Ancien mot de passe'}/>
+                                                <input value={newPassword}
+                                                       onChange={(e) => setNewPassowrd(e.target.value)}
+                                                       type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                                {
+                                                    errMsgModifyPassword.show &&
+                                                    <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                                }
+
+                                                <button onClick={(e) => changePassword(e)}
+                                                        className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                                                </button>
+                                            </>
+
                                         }
 
-                                        <button onClick={(e) => changePassword(e)}
-                                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' '+ styles.modifyBtn}>Modifier
+
+                                        <button className={styles.deleteAccount}
+                                                onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
                                         </button>
-
-
-                                        <button className={styles.deleteAccount} onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte             </button>
 
                                     </div>
                                 </div>

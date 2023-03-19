@@ -6,6 +6,8 @@ import {
 import {useRouter} from "next/router";
 import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
+import {useState} from "react";
+import {LoginModal} from "./Modal/LoginModal";
 
 export default function Banner() {
     const {data: session} = useSession();
@@ -158,6 +160,7 @@ export default function Banner() {
                     autoPlayDelay={7.0}
                 />
 */}
+
         </div>
     )
 }

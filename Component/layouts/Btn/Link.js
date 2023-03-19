@@ -27,7 +27,7 @@ export const DeleteBtn = ({click, text}) => {
     )
 }
 
-export const GoogleLoginBtn = ({text}) => {
+export const GoogleLoginBtn = () => {
     return (
         <button type={'button'} onClick={() => signIn('google')} className={styles.containerGoogleBtn}>
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"

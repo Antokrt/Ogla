@@ -14,8 +14,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 5%;
-  min-width: 30vw;
+  padding: 2% 2%;
+  min-width: 20vw;
   border-radius: 15px;
   background-color: white;
   box-shadow: $shadow;
@@ -35,8 +35,12 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+  img{
+    width: 120px;
+    clip-path: circle();
+  }
   h5{
-    font-size: calc(12px + 0.2vw);
+    font-size: calc(15px + 0.2vw);
     font-family: 'Montserrat',sans-serif;
     font-weight: bold;
   }
@@ -45,44 +49,49 @@
     font-family: 'Poppins',sans-serif;
     font-size: 12px;
   }
+
+
+}
+
+.google{
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.or{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  div{
+    background-color: rgba(28, 35, 43, 0.13);
+    height: 1px;
+    margin-top: +0.4%;
+    width: 45%;
+  }
+  p{
+    font-size: 12px;
+    color: rgba(28, 35, 43, 0.8);
+    font-family: 'Poppins',sans-serif;
+  }
 }
 
 .form{
-  margin-top: 4%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  margin-top: 10px;
 
-  img{
-    width: 120px;
-    margin-top: 5%;
-    margin-bottom: 5%;
-  }
-
-  .emailLabel{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    svg{
-      color: #3cad41;
-      margin-top: -2px;
-      width: 12px;
-    }
-  }
   label{
     text-align: left;
-    width: 50%;
+    width: 90%;
     font-size: 11px;
     font-weight: bold;
     margin-bottom: 5px;
     font-family: "Montserrat",sans-serif;
-
-    .verify{
-      cursor: pointer;
-      font-size: 9px;
-    }
   }
 
 
@@ -101,41 +110,43 @@
     border: solid 1px $border;
     margin-bottom: 10px;
     padding: 5px 10px;
-    width: 50%;
+    width: 90%;
+  }
+
+  .btn{
+display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  .register{
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    text-decoration: underline;
+    color: rgb(66, 60, 53);
+    font-size: 13px;
   }
 
 }
 
-.deleteBtn{
-  margin-top: 5%;
-  background-color: #1C232B;
-  min-width: 50%;
+.loginBtn{
+  margin-top: 20px;
+  background-color: #9844AD;
   color: white;
-  font-size: 11px;
-  font-family: 'Montserrat',sans-serif;
-  padding: 10px 15px;
+  font-size: 12px;
+  padding: 12px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: 'Montserrat Alternates',sans-serif;
 }
 
 .errMsg {
+  margin-top: 10px;
+  padding-left: 5px;
   display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  text-align: left;
+  text-align: center;
   font-size: 10px;
   font-family: "Poppins", sans-serif;
   font-style: italic;
   color: red;
-}
-
-
-.disabled {
-  cursor: initial;
-  transition: 0.1s;
-  background-color: #54595F !important;
-}
-
-.active {
-  cursor: pointer;
-  transition: 0.1s;
-  background-color: #e04444;
 }
