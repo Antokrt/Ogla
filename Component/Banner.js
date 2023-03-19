@@ -37,10 +37,7 @@ export default function Banner() {
                         :
 
                         <>
-                            <button onClick={() => {
-                                signIn('google');
-                            }
-                            }>Se connecter avec Google</button>
+                        
                             <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de

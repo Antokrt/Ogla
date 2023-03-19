@@ -83,7 +83,7 @@ const Login = ({register, forgotPassword}) => {
 
                     <div className={styles.stepBtnContainer + ' ' + styles.logBtnContainer}>
                         <button type={'submit'} className={styles.stepBtn + ' ' + styles.logInBtn}>Se connecter</button>
-                        <GoogleLoginBtn/>
+                        <GoogleLoginBtn click={() => signIn('google')}/>
                     </div>
                 </form>
             </div>

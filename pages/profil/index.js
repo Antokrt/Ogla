@@ -32,6 +32,7 @@ import {GetDefaultUserImg} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService} from "../../service/User/Password.service";
+import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
 
 
 export async function getServerSideProps({req}) {
@@ -55,6 +56,7 @@ const Profil = ({profilData, err}) => {
     const [newProfil, setNewProfil] = useState(profil);
     const {data: session, status} = useSession();
     const [password, setPassword] = useState('');
+    const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
     const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
@@ -281,15 +283,18 @@ const Profil = ({profilData, err}) => {
                                         </button>
 
 
-                                        <button className={styles.deleteAccount}>Supprimer mon compte             </button>
+                                        <button className={styles.deleteAccount} onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte             </button>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
+                    {
+                        openModalDeleteAccount && session &&
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
+                    }
                 </div>
             }
         </>
