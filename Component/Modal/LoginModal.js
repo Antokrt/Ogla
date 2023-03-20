@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {DeleteAccountService} from "../../service/User/Account.service";
 import {GoogleLoginBtn} from "../layouts/Btn/Link";
 import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {setActiveModalState} from "../../store/slices/modalSlice";
 
 export const LoginModal = ({close}) => {
     const {data: session} = useSession();
@@ -15,7 +17,9 @@ export const LoginModal = ({close}) => {
     });
     const [password, setPassword] = useState('');
     const [pseudo, setPseudo] = useState('');
+    const dispatch = useDispatch()
     const router = useRouter();
+
     const handleSubmit = async () => {
 
         if (password.length > 3) {
@@ -23,7 +27,7 @@ export const LoginModal = ({close}) => {
             const response = await signIn('login', {
                 pseudo: pseudo,
                 password: password,
-                callbackUrl: '/',
+                callbackUrl: '',
                 redirect: false
             })
                 .then((res) => {
@@ -36,63 +40,69 @@ export const LoginModal = ({close}) => {
                         close()
                     }
                 })
+                .then(() => router.reload());
         } else {
             return null;
         }
     }
 
+
     return (
-        <div className={styles.container} onKeyPress={(event) => {
-            if (event.key === 'Enter') {
-                handleSubmit();
-            }}}>
-            <div className={styles.containerContent + ' ' + anim.scaleInModal}>
-                <XMarkIcon onClick={close} className={styles.close}/>
-                <div className={styles.headerModal}>
-                    <img src={'assets/chara/chara1.png'}/>
-                    <h5>Connexion</h5>
-                    <p>Connectez-vous pour accéder à toutes les fonctionnalités d'Ogla !</p>
-                </div>
-
-                <div className={styles.google}>
-                    <GoogleLoginBtn/>
-                </div>
-
-                <div className={styles.or}>
-                    <div></div>
-                    <p>ou</p>
-                    <div></div>
-                </div>
-
-                <div className={styles.form}>
-                    <label>Pseudo</label>
-                    <input value={pseudo} onChange={(e) => setPseudo(e.target.value)} type={"text"}
-                           placeholder={'Pseudo'}/>
-                    <label>Modifier votre mot de passe</label>
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} type={"password"}
-                           placeholder={'Mot de passe'}/>
-                    <div className={styles.btn}>
-                        <p className={styles.register} onClick={() => router.push({
-                            pathname: "/auth",
-                            query: "register"
-                        })}>Pas encore inscrit?</p>
-                        <p className={styles.register} onClick={() => router.push({
-                            pathname: "/auth",
-                            query: "forgotPassword"
-                        })}>Mot de passe oublié ?</p>
+        !session ?
+            <div className={styles.container} onKeyPress={(event) => {
+                if (event.key === 'Enter') {
+                    handleSubmit();
+                }
+            }}>
+                <div className={styles.containerContent + ' ' + anim.scaleInModal}>
+                    <XMarkIcon onClick={close} className={styles.close}/>
+                    <div className={styles.headerModal}>
+                        <img src={'assets/chara/chara1.png'}/>
+                        <h5>Connexion</h5>
+                        <p>Connectez-vous pour accéder à toutes les fonctionnalités d'Ogla !</p>
                     </div>
 
+                    <div className={styles.google}>
+                        <GoogleLoginBtn/>
+                    </div>
+
+                    <div className={styles.or}>
+                        <div></div>
+                        <p>ou</p>
+                        <div></div>
+                    </div>
+
+                    <div className={styles.form}>
+                        <label>Pseudo</label>
+                        <input value={pseudo} onChange={(e) => setPseudo(e.target.value)} type={"text"}
+                               placeholder={'Pseudo'}/>
+                        <label>Modifier votre mot de passe</label>
+                        <input value={password} onChange={(e) => setPassword(e.target.value)} type={"password"}
+                               placeholder={'Mot de passe'}/>
+                        <div className={styles.btn}>
+                            <p className={styles.register} onClick={() => router.push({
+                                pathname: "/auth",
+                                query: "register"
+                            }).then(() => dispatch(setActiveModalState(false))).catch(() => dispatch(setActiveModalState(false)))}>Pas encore inscrit?</p>
+                            <p className={styles.register} onClick={() => router.push({
+                                pathname: "/auth",
+                                query: "forgotPassword"
+                            }).then(() => dispatch(setActiveModalState(false))).catch(() => dispatch(setActiveModalState(false)))}>Mot de passe oublié ?</p>
+                        </div>
+
+                    </div>
+
+                    {
+                        errMsg.show &&
+                        <p className={styles.errMsg}>Mot de passe incorrect</p>
+                    }
+
+                    <button className={styles.loginBtn} onClick={() => handleSubmit()}>Se connecter
+                    </button>
+
                 </div>
-
-                {
-                    errMsg.show &&
-                    <p className={styles.errMsg}>Mot de passe incorrect</p>
-                }
-
-                <button className={styles.loginBtn} onClick={() => handleSubmit()}>Se connecter
-                </button>
-
             </div>
-        </div>
+            :
+            null
     )
 }

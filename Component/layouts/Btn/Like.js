@@ -42,8 +42,8 @@ export const TextLikeBtn = ({isLike, onLike, nb}) => {
         <div className={styles.containerTextLikeBtn}>
             {
                 isLike ?
-                    <NotLikeIcon onClick={onLike}/>:
-                    <LikeIcon onClick={onLike}/>
+                    <LikeIcon onClick={onLike}/>:
+                    <NotLikeIcon onClick={onLike}/>
             }
             <p>{nb}</p>
         </div>

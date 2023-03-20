@@ -17,9 +17,11 @@ export const LikeCommentReduce = (id,arr) => {
 export const SendAnswerReduce = (prevComments, targetId, data) => {
     return prevComments.map(comment => {
         if (comment._id === targetId) {
+            console.log('test')
             return {
                 ...comment,
                 answers: comment.answers ? [...comment.answers, data] : [data],
+                nbAnswers: comment.nbAnswers + 1,
                 answersPage: comment.answersPage === 0 ? 1 : comment.answersPage + 1
             };
         }
@@ -35,6 +37,7 @@ export const DeleteAnswerReduce = (prevComments, id) => {
                 return {
                     ...comment,
                     answers: updatedAnswers,
+                    nbAnswers:comment.nbAnswers - 1,
                     answersPage: updatedAnswers.length === 0 ? 1 : comment.answersPage - 1
                 };
             }

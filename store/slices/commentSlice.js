@@ -22,10 +22,10 @@ export const commentSlice = createSlice({
         addComment: (state, action) => {
             state.test = [...state.test, action.payload];
         },
-        editComment: (state,action) => {
-            const {  username, comment } = action.payload;
+        editComment: (state, action) => {
+            const {username, comment} = action.payload;
             const index = state.test.findIndex(item => item.username === username);
-            if(index !== -1){
+            if (index !== -1) {
                 state.test[index].comment = comment;
             }
         }
@@ -41,6 +41,6 @@ export const commentSlice = createSlice({
     }
 })
 
-export const {addComment, editComment } = commentSlice.actions;
+export const {addComment, editComment} = commentSlice.actions;
 export const selectComments = (state) => state.comments.test;
 export default commentSlice.reducer;

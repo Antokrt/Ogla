@@ -13,6 +13,8 @@ import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/Answer
 import InfiniteScroll from "react-infinite-scroller";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
+import {useDispatch, useSelector} from "react-redux";
+import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 
 
 const SidebarCommentary = ({
@@ -27,6 +29,7 @@ const SidebarCommentary = ({
                                page,
                                createNewComment,
                                refresh,
+    nbCommentary,
                                canScroll,
                                deleteAComment,
                                likeAComment,
@@ -44,6 +47,8 @@ const SidebarCommentary = ({
     const divRef = useRef(null);
 
     const {data: session} = useSession();
+    const modalState = useSelector(selectLoginModalStatus);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setCommentList(comments)
@@ -122,7 +127,7 @@ const SidebarCommentary = ({
                 <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
             </div>
             <div className={styles.titleSection}>
-                <h5>Commentaire(s) <span>({comments?.length})</span></h5>
+                <h5>Commentaire(s) <span>({nbCommentary})</span></h5>
 
                 <div>
                     <p onClick={() => changeFilter('popular')}
@@ -152,6 +157,7 @@ const SidebarCommentary = ({
                                             authorId={item.userId}
                                             hasLikeData={item.hasLike}
                                             content={item.content}
+                                            nbAnswers={item.nbAnswers}
                                             likes={item.likes}
                                             img={item.img}
                                             date={item.date_creation}
@@ -186,8 +192,9 @@ const SidebarCommentary = ({
                             <textarea
                                 className={scroll.scrollbar}
                                 type={"textarea"}
-                                placeholder={"Connexion requise..."}
-                                disabled={true}
+                                onClick={() => dispatch(setActiveModalState(true))}
+                                placeholder={"Connectez vous pour commenter " + Capitalize(title)}
+                                readOnly={true}
                             />
                     }
                 </div>

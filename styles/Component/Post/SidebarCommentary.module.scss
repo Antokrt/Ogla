@@ -63,7 +63,7 @@
       justify-content: start;
 
       p {
-        transition: 0.2s;
+        transition: 0.2s color;
         cursor: pointer;
         font-size: 10px;
         font-family: "Montserrat", sans-serif;
@@ -120,6 +120,9 @@
           font-style: italic;
           font-size: 12px;
         }
+        &:read-only{
+          cursor: pointer;
+        }
 
         border-radius: 5px;
         font-family: "Montserrat", sans-serif;
@@ -164,7 +167,6 @@
 
 
 .filterActive{
-  transition: 0.2s;
   font-weight: bold!important;
 }
 
@@ -177,5 +179,5 @@
   z-index: 2220!important;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 118%;
+  bottom: 110%;
 }

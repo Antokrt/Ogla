@@ -1,26 +1,22 @@
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useMemo, useState} from "react";
 
 export const LangueContext = createContext(undefined, undefined);
 
-const LangueProvider = ({ children }) => {
-const [language,setLanguage] = useState("Francais");
+    function LangueProvider({children}) {
+        const [langue, setLangue] = useState('fr');
 
-const changeLanguage = () =>{
-    if(language === 'Francais'){
-        setLanguage("Espagnol")
+        const value = useMemo(() => {
+            return {
+                langue,
+                setLangue,
+            };
+        }, [langue]);
+
+        return (
+            <LangueContext.Provider value={value}>
+                {children}
+            </LangueContext.Provider>
+        );
     }
 
-    else{
-        setLanguage('Francais')
-    }
-}
-
-return (
-<LangueContext.Provider value={{language,changeLanguage}} >
-    {children}
-</LangueContext.Provider>
-)
-
-}
-
-export default LangueProvider;
+    export default LangueProvider;

@@ -8,6 +8,9 @@ import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
 import {LikeBookService, LikeService} from "../../../service/Like/LikeService";
 import {FormatDateFrom, FormatDateStr} from "../../../utils/Date";
+import {useDispatch, useSelector} from "react-redux";
+import {selectLoginModalStatus, setActiveModalState} from "../../../store/slices/modalSlice";
+import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 
 const Commentary = ({pseudo,
                         img,
@@ -23,6 +26,7 @@ const Commentary = ({pseudo,
                         likeAanswer,
                         sendNewAnswer,
                         deleteAanswer,
+    nbAnswers,
                         answerPage,
                     newAnswerPage
                     }) => {
@@ -35,6 +39,8 @@ const Commentary = ({pseudo,
     const [page,setPage] = useState(answerPage)
     const [hasLike,setHasLike] = useState(hasLikeData);
     const {data: session } = useSession();
+    const modalState = useSelector(selectLoginModalStatus);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
      setHasLike(hasLikeData);
@@ -97,13 +103,16 @@ const Commentary = ({pseudo,
                     }
 
                     <div className={styles.likeCommentaryContainer}>
-                        <p className={styles.likeCount}><HeartIcon
-                        onClick={() => {
+                        <p className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
                             if(session){
                                 likeComment(id);
                             }
-                        }}/> {likes}</p>
-                        <p className={styles.replyCount}> 29 réponses</p>
+                            else {
+                                dispatch(setActiveModalState(true))
+                            }
+                        }}/> </p>
+
+                        <p className={styles.replyCount}> {nbAnswers} réponse(s)</p>
                     </div>
 
                     <div className={styles.replyContainer}>
@@ -146,8 +155,10 @@ const Commentary = ({pseudo,
                                             }
                                         }} value={newAnswer} className={scroll.scrollbar} placeholder={"Répondez à " + pseudo + "..."}/> :
 
-                                        <textarea disabled={true} className={scroll.scrollbar} placeholder={"Connectez vous pour répondre à " + pseudo+ '...'}/>
+                                        <textarea onClick={() => dispatch(setActiveModalState(true))} readOnly={true} className={scroll.scrollbar} placeholder={"Connectez vous pour répondre à " + pseudo+ '...'}/>
                                 }
+
+
 
                                 <div className={styles.sendResponse}>
                                     <button onClick={() => {

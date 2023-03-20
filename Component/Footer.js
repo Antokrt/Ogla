@@ -1,11 +1,17 @@
 import styles from '../styles/Component/Footer.module.scss';
 import Link from "next/link";
 import React, {useContext, useState} from "react";
-import {LangueContext} from "../utils/context";
 import {useRouter} from "next/router";
+import {LangueContext} from "../utils/context";
+
+
 export default function Footer(){
-const  langueActive  = useContext(LangueContext);
 const router = useRouter();
+
+    const { langue, setLangue } = useContext(LangueContext);
+
+
+
     return(
         <div className={styles.container}>
             {
@@ -16,8 +22,7 @@ const router = useRouter();
                     </div>
                 </div>
             }
-
-
+            <button onClick={() => setLangue('es')}>Changez de langue ({langue})</button>
             <div className={styles.linkFooter}>
 
                 <div className={styles.planContainer}>

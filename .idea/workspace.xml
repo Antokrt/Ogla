@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Modal/LoginModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Modal/LoginModal.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store/slices/modalSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/Link.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/Link.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Modal/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/LoginModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/Like.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/Like.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Category/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Category/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/commentSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/commentSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/CommentaryUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/CommentaryUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/context/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/context/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,7 +236,8 @@
       <workItem from="1679046214008" duration="16120000" />
       <workItem from="1679135996283" duration="11947000" />
       <workItem from="1679218687935" duration="8392000" />
-      <workItem from="1679230094079" duration="5190000" />
+      <workItem from="1679230094079" duration="5227000" />
+      <workItem from="1679302668224" duration="18473000" />
     </task>
     <servers />
   </component>

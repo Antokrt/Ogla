@@ -23,6 +23,9 @@ import {
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {FilterBtn} from "../../Component/layouts/Btn/ActionBtn";
+import {LoginModal} from "../../Component/Modal/LoginModal";
+import {useDispatch, useSelector} from "react-redux";
+import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 
 
 export async function getServerSideProps({req, params}) {
@@ -42,14 +45,13 @@ export async function getServerSideProps({req, params}) {
             }
         }
     }
-
-
 }
 
 
 const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
     const router = useRouter();
+    const [loginModal, setLoginModal] = useState(true);
     const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
@@ -75,6 +77,10 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
     const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
+
+    const modalState = useSelector(selectLoginModalStatus);
+    const dispatch = useDispatch();
+
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -113,6 +119,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         getMore={() => {
                             getComment();
                         }}
+                        nbCommentary={nbCommentary}
                         refresh={() => refresh()}
                         scrollChange={hasToScroll}
                         likeAComment={(id) => likeComment(id)}
@@ -220,6 +227,9 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     }
                 })
                 .catch((err) => console.log(err));
+        }
+        else {
+            dispatch(setActiveModalState(true));
         }
     }
 
@@ -406,7 +416,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
         </>
 
         }
-
 
     </div>)
 }

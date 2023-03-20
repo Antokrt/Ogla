@@ -24,6 +24,8 @@ import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {Capitalize} from "../../utils/String";
+import {setActiveModalState} from "../../store/slices/modalSlice";
+import {useDispatch} from "react-redux";
 
 export async function getServerSideProps({req, params, query, ctx}) {
     const id = params.id;
@@ -76,6 +78,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
 
     const {data: session} = useSession();
+    const dispatch = useDispatch();
 
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
@@ -103,6 +106,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                     }
                 })
                 .catch((err) => console.log(err));
+        }
+        else {
+            dispatch(setActiveModalState(true));
         }
     }
 
@@ -137,6 +143,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             getMore={() => {
                                 getComment();
                             }}
+                            nbCommentary={nbCommentary}
                             refresh={() => refresh()}
                             scrollChange={hasToScroll}
                             likeAComment={(id) => likeComment(id)}
