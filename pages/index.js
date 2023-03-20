@@ -14,6 +14,8 @@ import {EventSource } from 'event-source-polyfill'
 import axios from "axios";
 import {instance} from "../service/config/Interceptor";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
+import { Provider } from 'react-redux';
+import { store } from '../utils/reducer/store';
 
 /*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
@@ -39,6 +41,7 @@ export default function Home({err,books}) {
     const {data:session} = useSession();
 
     return (
+
         <div className={styles.container}>
             <Head>
                 <title>Ogla - Une histoire d'écrivain</title>
@@ -57,7 +60,7 @@ export default function Home({err,books}) {
 
             </div>
             <Banner/>
-<CategoryHome/>
+            <CategoryHome/>
             <div className={styles.hot}>
                 <div className={styles.headerHot}>
 

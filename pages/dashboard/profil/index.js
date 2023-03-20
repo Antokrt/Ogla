@@ -8,6 +8,9 @@ import { BellAlertIcon, BookOpenIcon, CheckIcon, HomeIcon, ListBulletIcon, Penci
 import { toastDisplayError, toastDisplaySuccess, toastDisplayInfo } from "../../../utils/Toastify";
 import { UpdateLinksProfilAuthor } from "../../../service/Dashboard/BooksAuthorService"
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { socket } from "../../../utils/reducer/sockerReducer";
+// import useSocket from "../../../Component/useSocket";
 
 export async function getServerSideProps({req}) {
 
@@ -219,7 +222,6 @@ const DashboardProfil = ({ profilData, err }) => {
 
                 </div>
             </div>
-
         </div>
     )
 }

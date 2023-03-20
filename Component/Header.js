@@ -10,8 +10,6 @@ import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
 import {SearchBarService} from "../service/Search/SearchService"
 
-import { toastDisplayError } from "../utils/Toastify";
-import { ToastContainer } from 'react-toastify';
 
 export default function Header() {
     const router = useRouter();
@@ -20,6 +18,8 @@ export default function Header() {
     const [data,setData] = useState();
     const [query,setQuery] = useState('');
     
+
+
     const goToProfil = () => {
             if(session.user.is_author){
                 router.push("/dashboard/profil")
