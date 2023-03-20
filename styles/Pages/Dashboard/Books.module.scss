@@ -25,13 +25,13 @@
 .headerList{
   padding: 2% 5%;
   h4{
-    font-size: 1vw;
+    font-size: 0.9vw;
     font-family: 'Montserrat',sans-serif;
     font-weight: bold;
     width: 50%;
     padding-bottom: 1%;
     color: #1C232B;
-    border-bottom: 2px rgba(28, 35, 43, 0.35) solid;
+    border-bottom: 1px rgba(28, 35, 43, 0.06) solid;
   }
 }
 
@@ -46,6 +46,10 @@
   grid-column-gap: 0px;
   grid-row-gap: 50px;
   overflow-y: scroll;
+}
+
+.seeMoreContainer{
+  z-index: 2;
 }
 
 .scrollbar{

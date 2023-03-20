@@ -18,3 +18,10 @@ export const Loader2 = () => {
         </div>
     )
 }
+
+export const LoaderCommentary = () => {
+    return (
+        <div className={styles.loaderCommentary}>
+        </div>
+    )
+}

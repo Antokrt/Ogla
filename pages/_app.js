@@ -1,30 +1,45 @@
 import '../styles/globals.scss';
 import '../styles/editor.css';
-import LangueProvider from "../utils/context";
-import { SessionProvider } from "next-auth/react";
-import { ToastContainer } from 'react-toastify';
+import {SessionProvider, useSession} from "next-auth/react";
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Provider } from 'react-redux';
-import { wrapper } from '../utils/reducer/store';
-// import SocketComponent from '../Component/useSocket'
-import { useEffect } from 'react';
-import  SocketProvider  from '../utils/context/socket';
+import {wrapper} from "../store/store";
+import {Provider, useDispatch, useSelector} from "react-redux";
+import {selectLoginModalStatus, setActiveModalState} from "../store/slices/modalSlice";
+import {useState} from "react";
+import {LoginModal} from "../Component/Modal/LoginModal";
+import Banner from "../Component/Banner";
+import LangueProvider, {LangueContext} from "../utils/context";
+import SocketProvider from '../utils/context/socket';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
 
-  // const {store} = wrapper.useWrappedStore(pageProps);
+    const {store} = wrapper.useWrappedStore(pageProps);
 
-  return (
-    <SessionProvider session={pageProps.session} >
-      <SocketProvider>
-        {/* <Provider store={store} > */}
-        {/* <SocketComponent /> */}
-        <Component {...pageProps} />
-        <ToastContainer limit={3} />
-        {/* </Provider> */}
-      </SocketProvider>
-    </SessionProvider>
-  )
+    return (
+        <SessionProvider session={pageProps.session}>
+                <Provider store={store}>
+                    <SocketProvider>
+                        <Modal/>
+                        <Component {...pageProps} />
+                        <ToastContainer limit={3}/>
+                    </SocketProvider>
+                </Provider>
+        </SessionProvider>
+    )
 }
 
-export default MyApp
+function Modal() {
+    const modalState = useSelector(selectLoginModalStatus);
+    const dispatch = useDispatch();
+    const {data:session} = useSession();
+
+    if(modalState && !session){
+        return (
+            <LoginModal close={() => dispatch(setActiveModalState(false))}/>
+        )
+    }
+}
+
+
+export default MyApp;

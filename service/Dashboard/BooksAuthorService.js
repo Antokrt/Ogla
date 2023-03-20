@@ -8,9 +8,9 @@ export const GetMoreBookService = (page) => {
     })
 }
 
-export const GetMoreChapterService = (id,page) => {
+export const GetMoreChapterService = (id,page,filter) => {
     return new Promise((resolve, reject) => {
-        instance.get('chapter/dashboard/list/'+id+ '/'+ page)
+        instance.get('chapter/dashboard/list/'+id+ '/'+ page+'/'+filter)
             .then((res) => {
                 console.log(res.data)
                 resolve(res.data)

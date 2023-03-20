@@ -1,5 +1,6 @@
 import styles from '../../../styles/Layouts/Btn/ActionBtn.module.scss';
-import {CheckIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {ArrowDownIcon, ArrowsUpDownIcon, CheckIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {useState} from "react";
 
 export const CloseBtn = () => {
     return (
@@ -14,5 +15,35 @@ export const CheckBtn = () => {
         <div className={styles.check}>
             <CheckIcon/>
         </div>
+    )
+}
+
+export const FilterBtn = ({filter, onclick}) => {
+    const [label, setLabel] = useState('filter');
+    return (
+        <>
+            {
+                filter === 'recent' ?
+                    <button onClick={onclick} className={styles.filter}>
+                        Récent
+                        <ArrowsUpDownIcon/>
+                    </button> :
+                    <button onClick={onclick} className={styles.filter}>
+                        Ordre
+                        <ArrowsUpDownIcon/>
+                    </button>
+            }
+        </>
+
+    )
+}
+
+export const SeeMoreBtn = ({onclick}) => {
+    return (
+
+        <div className={styles.seeMore}>
+            <button onClick={onclick}><ArrowDownIcon/></button>
+        </div>
+
     )
 }

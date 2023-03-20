@@ -23,3 +23,26 @@ export const FormatDateStr = (timestamp) => {
    const moisNoms = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
    return `${jour} ${moisNoms[mois]} ${annee}`;
 }
+
+export const FormatDateFrom = (timestamp) => {
+   const currentDate = new Date();
+   const date = new Date(timestamp);
+   const diffTime = Math.abs(currentDate - date);
+   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+   const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+   const diffMinutes = Math.floor(diffTime / (1000 * 60));
+
+   if (diffDays > 1) {
+      return `${date.toLocaleDateString()}`;
+   } else if (diffDays === 1) {
+      return `Il y a ${diffDays} jour`;
+   } else if (diffHours > 1) {
+      return `Il y a ${diffHours} heures`;
+   } else if (diffHours === 1) {
+      return `Il y a ${diffHours} heure`;
+   } else if (diffMinutes > 1) {
+      return `Il y a ${diffMinutes} minutes`;
+   } else {
+      return `Il y a quelques secondes...`;
+   }
+}

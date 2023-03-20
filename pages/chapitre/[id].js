@@ -1,10 +1,8 @@
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {getPost} from "../../services/Post";
+import {useEffect, useRef, useState} from "react";
 import {useRouter} from "next/router";
 import Header from "../../Component/Header";
 import styles from "../../styles/Pages/ChapterPage.module.scss";
-import scroll from "../../styles/utils/scrollbar.module.scss";
-import {HeartIcon, UserCircleIcon} from "@heroicons/react/20/solid";
+import {HeartIcon,} from "@heroicons/react/20/solid";
 import {TagIcon} from "@heroicons/react/24/solid";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
 import FooterOnChapter from "../../Component/Post/FooterOnChapter";
@@ -21,16 +19,22 @@ import {GetOneChapterApi} from "../api/chapter";
 import {VerifLike, VerifLikeApi} from "../api/like";
 import {useSession} from "next-auth/react";
 import {LikeBookService, LikeChapterService} from "../../service/Like/LikeService";
-import {GetCommentService} from "../../service/Comment/CommentService";
+import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
+import {GetChapterListService} from "../../service/Chapter/ChapterService";
+import {Capitalize} from "../../utils/String";
+import {setActiveModalState} from "../../store/slices/modalSlice";
+import {useDispatch} from "react-redux";
 
-export async function getServerSideProps({req, params, query}) {
+export async function getServerSideProps({req, params, query, ctx}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
     const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
+
     return {
         props: {
+            key: id,
             err: data.err,
             chapterData: data.chapter,
             bookData: data.book,
@@ -47,19 +51,48 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const router = useRouter();
     const headerFixed = useRef();
     const [hasToBeFixed, setHasToBeFixed] = useState(false);
-    const [likes, setLikes] = useState(chapterData?.likes);
     const [hasToScroll, setHasToScroll] = useState(false);
+
+
+    const [likes, setLikes] = useState(chapterData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
+
+
     const [nbCommentary, setNbCommentary] = useState(chapterData?.nbCommentary);
     const [lastCommentId, setLastCommentId] = useState([]);
+    const [canScroll, setCanScroll] = useState(true);
+    const [loadingScroll, setLoadingScroll] = useState(false);
+    const [contentChapter, setContentChapter] = useState(JSON.parse(chapterData?.content));
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
-    const {data: session} = useSession();
+
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [comments, setComments] = useState([]);
     const [pageComment, setPageComment] = useState(1);
-
-
     const [size, setSize] = useState(1);
+
+    const [loadingScrollChapterSidebar, setLoadingScrollChapterSidebar] = useState(false);
+    const [canScrollChapterSidebar, setCanScrollChapterSidebar] = useState(false);
+    const [pageChapterSideBar, setPageChapterSideBar] = useState(2);
+    const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
+    const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
+    const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
+
+    const {data: session} = useSession();
+    const dispatch = useDispatch();
+
+
+    const GetChapters = (setState, setCanSeeMore, filter) => {
+
+        GetChapterListService(bookData._id, filter, 1)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setState(res);
+                    setCanSeeMore(true);
+                } else {
+                    setCanSeeMore(false);
+                }
+            })
+    }
 
     const likeChapter = () => {
         if (session) {
@@ -74,6 +107,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 })
                 .catch((err) => console.log(err));
         }
+        else {
+            dispatch(setActiveModalState(true));
+        }
     }
 
     const refresh = () => {
@@ -85,15 +121,18 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         extensions: [
             StarterKit,
         ],
-        editable: false,
         content: JSON.parse(chapterData?.content)
     })
+
 
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
-                if (comments.length === 0) {
+                if (comments.length === 0 && canScroll) {
                     getComment(pageComment, 1);
+                    if (session) {
+                        getMyComments(1, 'popular');
+                    }
                 }
                 return (
                     <div
@@ -102,8 +141,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             limit={size}
                             page={pageComment}
                             getMore={() => {
-                                getComment(pageComment, 1);
+                                getComment();
                             }}
+                            nbCommentary={nbCommentary}
+                            refresh={() => refresh()}
                             scrollChange={hasToScroll}
                             likeAComment={(id) => likeComment(id)}
                             createNewComment={(res) => newComment(res)}
@@ -112,16 +153,24 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             sendANewAnswer={(data) => sendAnswer(data)}
                             deleteAnswer={(id) => deleteAnswer(id)}
                             likeAnswer={(id) => likeAnswer(id)}
-                            refresh={() => refresh()}
+                            newPageAnswer={(id) => loadMoreAnswer(id)}
+                            canScroll={canScroll}
+                            loadingScroll={loadingScroll}
                             activeFilter={activeFilterComments}
-                            changeFilter={() => {
-                                if (activeFilterComments === 'popular') {
+                            changeFilter={(e) => {
+                                if (e === 'recent' && activeFilterComments === 'popular') {
+                                    setCanScroll(true);
                                     setActiveFilterComments('recent');
-                                } else {
+                                    setComments([]);
+                                    setPageComment(1);
+
+                                } else if (e === 'popular' && activeFilterComments === 'recent') {
+                                    setCanScroll(true);
                                     setActiveFilterComments('popular');
+                                    setComments([]);
+                                    setPageComment(1);
                                 }
                             }}
-                            newPageAnswer={(id) => loadMoreAnswer(id)}
                             type={'chapter'}
                             typeId={chapterData._id}
                             title={chapterData.title}
@@ -143,7 +192,30 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 return (
                     <div
                         className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-                        <SidebarChapter title={bookData?.title} chapters={chapterList} select={sidebarSelect}/>
+                        <SidebarChapter
+                            changeFilter={() => {
+                                if (activeFilterChapterSidebar === 'order') {
+                                    GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'recent');
+                                    setActiveFilterChapterSidebar('recent');
+                                    setPageChapterSideBar(2);
+                                } else {
+                                    GetChapters(setChapterListSidebar, setCanSeeMoreChapterSidebar, 'order');
+                                    setActiveFilterChapterSidebar('order');
+                                    setPageChapterSideBar(2);
+                                }
+                            }}
+                            loadingScroll={loadingScrollChapterSidebar}
+                            canScroll={canScrollChapterSidebar}
+                            getMoreChapter={() => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
+                            bookTitle={bookData?.title}
+                            title={chapterData?.title}
+                            nbChapters={bookData?.nbChapters}
+                            bookId={bookData?._id}
+                            bookSlug={bookData?.slug}
+                            author={authorData?.pseudo}
+                            filter={activeFilterChapterSidebar}
+                            maxChapter={bookData?.nbChapters}
+                            canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect}/>
                     </div>
                 )
                 break;
@@ -155,27 +227,69 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         }
     }
 
-    const getComment = () => {
-        GetCommentService('chapter', chapterData._id, pageComment, 1, session, activeFilterComments)
+    const GetMoreChaptersSidebar = (state, setState, filter, page, setPage, setCanSeeMore) => {
+        setLoadingScrollChapterSidebar(true);
+        setCanSeeMore(false);
+        GetChapterListService(bookData._id, filter, page)
             .then((res) => {
                 if (res.length !== 0) {
-                    setPageComment(pageComment + 1);
+                    setState(prevState => [...prevState, ...res]);
+                    setPage(page + 1);
+                } else {
+                    setCanSeeMoreChapterSidebar(false);
                 }
-                res.forEach(element => {
-                    if (!lastCommentId.includes(element._id)) {
-                        setComments((prevState) => ([
-                            ...prevState,
-                            element
-                        ]))
-                    }
-                })
             })
             .then(() => {
-                if (comments.length !== 0) {
-                    setTimeout(() => setHasToScroll(!hasToScroll), 50)
+                setLoadingScrollChapterSidebar(false)
+            });
+    }
+
+    const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
+        GetChapterListService(bookData._id, filter, page)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setState(prevState => [...prevState, ...res]);
+                    setPage(page + 1);
+                } else {
+                    setCanSeeMore(false);
                 }
             })
-            .catch((err) => console.log(err))
+    }
+
+    const getMyComments = (page, filter) => {
+        GetMyCommentsService('chapter', chapterData._id, page, filter)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setComments((prevState) => [...prevState, ...res]);
+                }
+            })
+            .catch((err) => console.log(err));
+    };
+
+    const getComment = () => {
+        setLoadingScroll(true);
+        setCanScroll(false);
+        GetCommentService('chapter', chapterData._id, pageComment, 5, session, activeFilterComments)
+            .then((res) => {
+                res.forEach(element => {
+                    if (!lastCommentId.includes(element._id)) {
+                        setComments((prevState) => ([...prevState, element]))
+                    }
+                })
+                if (res.length !== 0) {
+                    setPageComment(pageComment + 1);
+                    setCanScroll(true);
+                } else {
+                    setCanScroll(false);
+                }
+            })
+            .then(() => {
+                setLoadingScroll(false);
+                /*       if (comments.length !== 0) {
+                           setTimeout(() => setHasToScroll(!hasToScroll), 50);
+                       }*/
+            })
+            .catch((err) => console.log('err'))
     }
 
     const likeComment = (id) => {
@@ -201,7 +315,6 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
-        setPageComment(pageComment - 1);
         setNbCommentary(nbCommentary - 1);
     }
 
@@ -249,12 +362,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                     className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                     ref={headerFixed}
                 >
-                    <h3>Chapitre {index} - {chapterData.title}</h3>
-                    <p>{chapterData._id}</p>
-
+                    <h3>Chapitre {index} - {Capitalize(chapterData.title)}</h3>
                     <div className={styles.thumbnailContainer}>
-                        <p className={styles.category}><span>{bookData.category}</span><TagIcon/></p>
-                        <p className={styles.mSide}>{likes} <HeartIcon/></p>
+                        <p className={styles.category}><span>{bookData.category}</span></p>
+                        <p className={styles.mSide}>{likes} like(s)</p>
                         <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
                     </div>
                 </div>
@@ -263,17 +374,35 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                     className={styles.contentChapter}>
                     <div className={styles.headerContent}>
                         <h5>{bookData.title}</h5>
-                        <h6><img src={authorData.img} referrerPolicy={'no-referrer'}/>{authorData.pseudo}</h6>
+                        <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
+                                                                                             referrerPolicy={'no-referrer'}/>{authorData.pseudo}
+                        </h6>
                     </div>
                     <div className={styles.nextChapterContainer}>
 
                     </div>
 
                     <div className={styles.textContainer}>
-                        <EditorContent editor={editorReadOnly}>
-                        </EditorContent>
-                    </div>
+                        {
+                            chapterData &&
+                            <EditorContent editor={editorReadOnly}>
 
+                            </EditorContent>
+                        }
+
+                    </div>
+                    {
+                        chapterData.navChapter.next &&
+                        <button className={styles.readMore} onClick={() => {
+                            router.push({
+                                pathname: "/chapitre/" + chapterData.navChapter.next._id, query: {
+                                    name: chapterData.navChapter.next.title,
+                                    slug: chapterData.navChapter.next.slug,
+                                    i: index + 1
+                                },
+                            })
+                        }}>Suivant ({chapterData.navChapter.next.title})</button>
+                    }
                 </div>
 
             </div>
@@ -281,8 +410,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
             <FooterOnChapter
                 likeChapter={() => likeChapter()}
+                hasLike={hasLike}
                 title={chapterData?.title}
                 likes={likes}
+                refresh={() => refreshChapter()}
                 index={index}
                 navChapters={chapterData.navChapter}
                 author={bookData?.author_pseudo}

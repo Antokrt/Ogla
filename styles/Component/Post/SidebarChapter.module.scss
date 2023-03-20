@@ -15,7 +15,7 @@
     justify-content: space-between;
     height: auto;
     padding: 15px 15px;
-    background-color: $purple;
+    background-color: #1C232B;
     span{
       cursor: pointer;
     }
@@ -32,6 +32,9 @@
         width: 15px;
         margin-right: 10px;
         color: white;
+      }
+      span{
+        cursor: pointer;
       }
     }
   }
@@ -68,10 +71,7 @@
         font-weight: bold;
 
       }
-      .seeMore{
-        cursor: pointer;
-        color: $purple;
-      }
+
     }
   }
 
@@ -111,11 +111,30 @@
   }
 
   .chapterList{
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background:transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(28, 35, 43, 0.44);
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $grey;
+    }
     z-index: 1;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
     overflow-y: auto;
     display: block;
+    scroll-behavior: smooth;
 .item{
   display: flex;
   justify-content: space-between;
@@ -147,14 +166,21 @@
       justify-content: space-around;
 
       .title{
+        &:first-letter{
+          font-size: 13px;
+        }
 font-size: 12px;
         font-family: "Montserrat Alternates",sans-serif;
+        font-weight: bold;
         margin-bottom: 5px;
-        color: $purple;
+        color: #1C232B;
+        span{
+        }
       }
 
       .date{
         font-size: 11px;
+        color: rgba(28, 35, 43, 0.84);
         font-family: "Montserrat",sans-serif;
 
       }
@@ -168,13 +194,19 @@ font-size: 12px;
     height: 80px;
     margin-bottom: 10px;
     padding-left: 15px;
+    padding-bottom: 10px;
     border-bottom: solid 1px $grey;
-    background-color: $purple;
+    background-color: #1C232B;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 5px;
     h5 {
+      &:first-letter{
+        text-transform: uppercase;
+      }
       color: white;
-      font-family: "Potta One", sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     svg{
@@ -224,6 +256,25 @@ font-size: 12px;
 }
 
 
+.seeMore{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 10px;
+  button{
+    background-color: #e04444;
+    color: white;
+    font-family: 'Montserrat Alternates',sans-serif;
+    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    svg{
+      width: 12px;
+    }
+  }
+
+}
 
 
 .filterActive{
@@ -241,4 +292,12 @@ font-size: 12px;
 
 .dNone{
   display: none!important;
+}
+
+.loaderContainer{
+  position: absolute;
+  z-index: 2220!important;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2%;
 }

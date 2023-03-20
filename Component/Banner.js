@@ -6,6 +6,8 @@ import {
 import {useRouter} from "next/router";
 import {getSession, signIn, signOut, useSession} from "next-auth/react";
 import {Capitalize} from "../utils/String";
+import {useState} from "react";
+import {LoginModal} from "./Modal/LoginModal";
 
 export default function Banner() {
     const {data: session} = useSession();
@@ -37,10 +39,7 @@ export default function Banner() {
                         :
 
                         <>
-                            <button onClick={() => {
-                                signIn('google');
-                            }
-                            }>Se connecter avec Google</button>
+                        
                             <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
@@ -161,6 +160,7 @@ export default function Banner() {
                     autoPlayDelay={7.0}
                 />
 */}
+
         </div>
     )
 }

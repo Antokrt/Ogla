@@ -14,47 +14,37 @@ import {
 } from "@heroicons/react/24/outline";
 import {useEffect, useState} from "react";
 import SidebarPost from "./SidebarCommentary";
+import {LikeBtn, LikeBtnSidebar} from "../layouts/Btn/Like";
 
 
 
-const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook}) => {
-
-    const [openSidebar,setOpenSidebar ] = useState(true);
-    const [book,setBook] = useState();
-
+const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook, hasLike}) => {
 
     return (
         <div className={styles.container}>
 
-        <div className={styles.titleContainer}>
+
+        <div className={styles.titleContainer + ' ' + styles.child}>
             <img src={img}/>
             <div>
                 <h7>{title}</h7>
-                <p>{like} like(s) - {nbCommentary} commentaire(s) - {author}</p>
+                <p>{like} like(s) - <span>{author}</span></p>
             </div>
 
 
         </div>
 
-        <div className={styles.likeContainer}>
-            <div onClick={likeBook}>
-                <HeartIcon/>
-                <p>J'aime ({like})</p>
-            </div>
-
+        <div className={styles.likeContainer + ' ' + styles.child}>
+            <LikeBtnSidebar onLike={likeBook} isLike={hasLike}/>
         </div>
 
-        <div className={styles.commentAndListContainer}>
+        <div className={styles.commentAndListContainer + ' ' + styles.child}>
 
             <div onClick={openCommentary}>
                 <ChatBubbleBottomCenterTextIcon/>
-                <p>Commentaires ({nbCommentary})</p>
+                <p>{nbCommentary} commentaire(s) </p>
             </div>
 
-            <div onClick={openList}>
-                <QueueListIcon/>
-                <p>Chapitres ({nbChapter})</p>
-            </div>
         </div>
 
 

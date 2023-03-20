@@ -1,0 +1,141 @@
+@import "styles/utils/var";
+.container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 9999 !important;
+  background-color: rgba(28, 35, 43, 0.77);
+}
+
+.containerContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  min-width: 30vw;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: $shadow;
+}
+
+.close {
+  position: absolute;
+  width: 20px;
+  right: 4%;
+  top: 4%;
+  cursor: pointer;
+}
+
+.headerModal{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  h5{
+    font-size: calc(12px + 0.2vw);
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+  }
+  p{
+    color: #6b7077;
+    font-family: 'Poppins',sans-serif;
+    font-size: 12px;
+  }
+}
+
+.form{
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  img{
+    width: 120px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  .emailLabel{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    svg{
+      color: #3cad41;
+      margin-top: -2px;
+      width: 12px;
+    }
+  }
+  label{
+    text-align: left;
+    width: 50%;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: "Montserrat",sans-serif;
+
+    .verify{
+      cursor: pointer;
+      font-size: 9px;
+    }
+  }
+
+
+  input{
+    &:focus{
+      box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+      transition: 0.1s;
+    }
+    &::placeholder{
+    }
+    transition: 0.1s;
+    outline: none!important;
+    font-family: "Montserrat",sans-serif;
+    border-radius: 5px;
+    font-size: 11px;
+    border: solid 1px $border;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    width: 50%;
+  }
+
+}
+
+.deleteBtn{
+  margin-top: 5%;
+  background-color: #1C232B;
+  min-width: 50%;
+  color: white;
+  font-size: 11px;
+  font-family: 'Montserrat',sans-serif;
+  padding: 10px 15px;
+}
+
+.errMsg {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+  color: red;
+}
+
+
+.disabled {
+  cursor: initial;
+  transition: 0.1s;
+  background-color: #54595F !important;
+}
+
+.active {
+  cursor: pointer;
+  transition: 0.1s;
+  background-color: #e04444;
+}

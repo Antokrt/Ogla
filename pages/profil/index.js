@@ -4,8 +4,8 @@ import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
     ArrowDownIcon,
     CalendarIcon,
-    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon,
-    ChevronDoubleUpIcon, DocumentChartBarIcon, SparklesIcon, UserCircleIcon
+    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon,
+    ChevronDoubleUpIcon, DocumentChartBarIcon, DocumentCheckIcon, EnvelopeIcon, SparklesIcon, UserCircleIcon, XMarkIcon
 } from "@heroicons/react/24/outline";
 import {BookmarkIcon, ChatBubbleLeftRightIcon, ChatBubbleBottomCenterTextIcon} from "@heroicons/react/24/outline";
 import {AcademicCapIcon} from "@heroicons/react/24/solid";
@@ -32,13 +32,14 @@ import {GetDefaultUserImg} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService} from "../../service/User/Password.service";
+import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
 
 
 export async function getServerSideProps({req}) {
 
     const data = await GetPrivateProfilApi(req);
     return {
-        props:{
+        props: {
             err: data.err,
             profilData: data.profilJson
         }
@@ -48,19 +49,20 @@ export async function getServerSideProps({req}) {
 const Profil = ({profilData, err}) => {
     const router = useRouter();
     const [isCreator, setIsCreator] = useState(true);
-    const [activeLink, setActiveLink] = useState("profil");
+    const [activeLink, setActiveLink] = useState('profil');
     const [hasChanged, setHasChanged] = useState(false);
-    const [wantToDelete,setWantToDelete] = useState(false);
+    const [wantToDelete, setWantToDelete] = useState(false);
     const [profil, setProfil] = useState(profilData);
     const [newProfil, setNewProfil] = useState(profil);
     const {data: session, status} = useSession();
-    const [password,setPassword] = useState('');
-    const [oldPassword,setOldPassword] = useState('');
-    const [newPassword,setNewPassowrd] = useState('');
+    const [password, setPassword] = useState('');
+    const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassowrd] = useState('');
     const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
-    const [errMsgModifyPassword,setErrMsgModifyPassword] = useState({
-        msg:'',
-        show:false
+    const [errMsgModifyPassword, setErrMsgModifyPassword] = useState({
+        msg: '',
+        show: false
     })
     const [errMsgPassword, setErrMsgPassword] = useState('Mot de passe incorect');
     const [localImg, setLocalImg] = useState(null);
@@ -76,8 +78,9 @@ const Profil = ({profilData, err}) => {
         }
     }, [newProfil])
 
+
     const handleFileSelect = (event) => {
-        if(event?.target.files && event.target.files[0]){
+        if (event?.target.files && event.target.files[0]) {
             setFile(event.target.files[0]);
             setLocalImg(URL.createObjectURL(event.target.files[0]));
         }
@@ -88,7 +91,7 @@ const Profil = ({profilData, err}) => {
     }
 
     const updatePic = () => {
-        if(file){
+        if (file) {
             UpdateUserProfilPictureService(file)
                 .then((res) => {
                     setProfil((prevState) => ({
@@ -99,9 +102,9 @@ const Profil = ({profilData, err}) => {
                     setFile(null);
                 })
                 .then(() => {
-                  axios.get('/api/auth/session?update-picture')
-                      .then(() => ReloadSession())
-                      .catch((err) => console.log(err));
+                    axios.get('/api/auth/session?update-picture')
+                        .then(() => ReloadSession())
+                        .catch((err) => console.log(err));
                 })
                 .catch((err) => {
                     console.log(err)
@@ -130,16 +133,15 @@ const Profil = ({profilData, err}) => {
     }
 
     const deleteAccount = () => {
-        if(password.length > 3){
-            DeleteAccountService(session.user.email,password)
+        if (password.length > 3) {
+            DeleteAccountService(session.user.email, password)
                 .then((res) => signOut())
                 .catch((err) => {
                     const statusCode = err.response.data.statusCode;
-                    if(statusCode === 401){
+                    if (statusCode === 401) {
                         setErrMsgPassword('Mot de passe incorrect');
                         setWrongPasswordErr(true);
-                    }
-                    else{
+                    } else {
                         setErrMsgPassword('Impossible de supprimer le compte');
                         setWrongPasswordErr(true);
                     }
@@ -149,14 +151,14 @@ const Profil = ({profilData, err}) => {
 
     const verifyEmail = () => {
         VerifyEmailService()
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            .then((res) => console.log('send'))
+            .catch((err) => console.log('err to send email'));
     }
 
     const changePassword = (e) => {
         e.preventDefault();
-        if(oldPassword !== '' && newPassword !== '' && session){
-            ChangePasswordService(profilData.email, oldPassword,newPassword)
+        if (oldPassword !== '' && newPassword !== '' && session) {
+            ChangePasswordService(profilData.email, oldPassword, newPassword)
                 .then((res) => {
                     setNewPassowrd('');
                     setOldPassword('');
@@ -174,17 +176,165 @@ const Profil = ({profilData, err}) => {
     }
 
     return (
-
-            <div className={styles.container}>
+        <>
             {
                 err &&
-                <p> {err} </p>
-            }
-            {
-                profilData &&
-                <>
+                <div>
                     <Header/>
-                    <div className={styles.containerM}>
+                    <p>Impossible de récupérer le profil</p>
+                </div>
+            }
+
+            {
+                !err && profilData && session &&
+                <div className={styles.container}>
+                    <Header/>
+                    <div className={styles.containerF}>
+                        <div className={styles.containerM}>
+                            <div className={styles.headerTitle}>
+                                <h1>Bonjour {session.user.pseudo} !</h1>
+                                <p>Gérez vos informations personnelles et personnalisez votre profil ici </p>
+                            </div>
+                            <div className={styles.menuLink}>
+                                <button onClick={() => setActiveLink('profil')}
+                                        className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                </button>
+                                <button onClick={() => setActiveLink('writer')}
+                                        className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                </button>
+                                <button onClick={() => setActiveLink('notifications')}
+                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications
+                                </button>
+
+                            </div>
+
+                            <div className={styles.containerItem}>
+                                <div className={styles.profil}>
+                                    <div className={styles.imgContainer}>
+                                        {
+                                            localImg && file ?
+                                                <>
+                                                    <img
+                                                        onClick={() => imgClick()}
+                                                        src={localImg} alt={'Profil Pic'}/>
+                                                </>
+                                                :
+                                                <img
+                                                    onClick={() => imgClick()}
+                                                    src={profil.img} alt={'Profil Pic'}/>
+                                        }
+                                        <input
+                                            style={{display: 'none'}}
+                                            type={'file'}
+                                            ref={imgRef}
+                                            accept={"image/png , image/jpeg , image/jpg"}
+                                            id={'file'}
+                                            onChange={(e) => {
+                                                const file = e.target.files[0];
+                                                if (!file?.type.match(imageMimeType)) {
+                                                    return null;
+                                                }
+                                                handleFileSelect(e);
+                                            }}
+                                        />
+                                        <div className={styles.labelImg}>
+                                            <h5>Avatar</h5>
+                                            <p>.png .jpg jpeg </p>
+
+                                            <div className={styles.imgCheck}>
+                                                {
+                                                    localImg && file &&
+                                                    <>
+                                                        <CheckCircleIcon
+                                                            onClick={() => updatePic()}
+                                                            className={styles.check}/>
+                                                        <XCircleIcon
+                                                            onClick={() => {
+                                                                setLocalImg(null);
+                                                                setFile(null);
+                                                            }
+                                                            }
+                                                            className={styles.off}/>
+                                                    </>
+
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.form}>
+                                        <label>Pseudo</label>
+                                        <input disabled={true} type={"text"} value={profilData.pseudo}/>
+                                        <label className={styles.emailLabel}>Email <span>{session.user.verified ?
+                                            <CheckBadgeIcon/> :
+                                            <span className={styles.verify} onClick={() => {
+                                                if (!session.user?.verified) {
+                                                    verifyEmail();
+                                                }
+                                            }}>Vérifiez maintenant</span>}</span></label>
+                                        <input disabled={true} type={"text"} value={profilData.email}/>
+                                        {
+                                            session.user.provider === 'ogla' &&
+                                            <>
+                                                <label>Modifier votre mot de passe</label>
+                                                <input value={oldPassword}
+                                                       onChange={(e) => setOldPassword(e.target.value)}
+                                                       type={"password"} placeholder={'Ancien mot de passe'}/>
+                                                <input value={newPassword}
+                                                       onChange={(e) => setNewPassowrd(e.target.value)}
+                                                       type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                                {
+                                                    errMsgModifyPassword.show &&
+                                                    <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                                }
+
+                                                <button onClick={(e) => changePassword(e)}
+                                                        className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                                                </button>
+                                            </>
+
+                                        }
+
+
+                                        <button className={styles.deleteAccount}
+                                                onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {
+                        openModalDeleteAccount && session &&
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
+                    }
+                </div>
+            }
+        </>
+
+    )
+
+
+}
+
+
+export default Profil;
+
+
+/*
+<div className={styles.container}>
+    {
+        err &&
+        <p> {err} </p>
+    }
+    {
+        profilData &&
+        <>
+            <Header/>
+            <div className={styles.containerM}>
                 <div className={styles.containerLeft}>
                     <div className={styles.firstCard}>
                         <div className={styles.headerFirstCard}>
@@ -194,51 +344,15 @@ const Profil = ({profilData, err}) => {
                         <div className={styles.listFirstCard}>
                             <p className={styles.dateInscription}><AcademicCapIcon
                                 className={styles.commentarySvg}/> Inscrit le {FormatDateStr(profilData?.register_date)} </p>
-                            <p className={styles.likeNb}><ChevronDoubleUpIcon/> <span
-                                className={styles.nb}>+ {profilData?.stats.likes}</span>&nbsp;likes </p>
-                            <p className={styles.commentaryNb}><ChatBubbleLeftRightIcon/> <span className={styles.nb}>+ {profilData.stats.comments} </span> &nbsp;commentaires</p>
-                            {
-                                profilData.verified ?
-                                    <p>Email vérifiée !</p> :
-                                    <>
-                                        <p>Email non vérifiée !</p>
-                                        <button
-                                        onClick={() => {
-                                            if(!session.user?.verified){
-                                                verifyEmail();
-                                            }
-                                        }
-                                        }
-                                        >Vérifiez mon email !</button>
-                                    </>
-                            }
-                            <p onClick={() => {
-                                setWantToDelete(!wantToDelete);
-                                setWrongPasswordErr(false);
-                            }} className={styles.deleteAccount}>Supprimer mon compte</p>
-                            {
-                                wantToDelete ?
-                                    <div>
-                                        <label>Etes vous certain de vouloir nous quitter?</label>
-                                        <input
-                                        onChange={(e) => {
-                                            setPassword(e.target.value);
-                                        }}
-                                            type={"password"}
-                                               placeholder={"Mot de passe"}/>
-                                        {
-                                            wrongPasswordErr &&
-                                            <p className={styles.wrongPassword}>{errMsgPassword}</p>
-                                        }
-                                        <button
-                                            onClick={() => deleteAccount()}
-                                            className={password.length < 4 ? styles.deleteBtn : styles.deleteBtn + ' ' + styles.activeBtnDeleteAccount }> Supprimer mon compte</button>
-                                    </div>
-                                    :
-                                    <div>
-                                        <button onClick={() => signOut()} className={styles.logOut}>Se déconnecter</button>
-                                    </div>
-                            }
+
+                            {/!*        <div className={styles.verifyEmail}>
+                                {
+                                    session.user.verified ?
+                                        <div className={styles.msgVerify}><EnvelopeIcon/> <CheckBadgeIcon className={styles.env}/></div> :
+                                        <button>Vérifier mon email</button>
+                                }
+                            </div>*!/}
+
                         </div>
 
                     </div>
@@ -350,7 +464,6 @@ const Profil = ({profilData, err}) => {
                                                 className={styles.btnBg}>Modifier</button>
                                             <button
                                                 onClick={() => {
-                                                    console.log(file)
                                                     if(!localImg && !file && session.user.image !== GetDefaultUserImg()){
                                                         deletePic();
                                                     }
@@ -374,7 +487,7 @@ const Profil = ({profilData, err}) => {
                                                 errMsgModifyPassword.show &&
                                                 <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
                                             }
-                                            {/*     <label htmlFor={"genres"}>Genre favoris</label>
+                                            {/!*     <label htmlFor={"genres"}>Genre favoris</label>
                                             <div className={styles.selectCategory}>
                                                 <ArrowDownIcon/>
                                                 <select name="genres" id="pet-select">
@@ -388,10 +501,10 @@ const Profil = ({profilData, err}) => {
                                                     }
                                                     <option value={"none"}>Pas de préférence</option>
                                                 </select>
-                                            </div>*/}
+                                            </div>*!/}
 
-                                        {   <button onClick={(e) => changePassword(e)}
-                                                    className={oldPassword !== "" && newPassword !== "" ? styles.active : styles.disabled}>Modifier
+                                            {   <button onClick={(e) => changePassword(e)}
+                                                        className={oldPassword !== "" && newPassword !== "" ? styles.active : styles.disabled}>Modifier
                                             </button>}
                                         </div>
                                     </form>
@@ -476,15 +589,11 @@ const Profil = ({profilData, err}) => {
 
 
                 </div>
-                    </div>
-                </>
-            }
             </div>
-    )
+        </>
+    }
+</div>
+*/
 
 
 
-}
-
-
-export default Profil;

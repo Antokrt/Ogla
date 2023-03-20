@@ -12,9 +12,12 @@
     background-size: cover!important;
     box-shadow: 5px 8px 4px rgba(100, 96, 96, 0.44);
     height: 80%;
+
+
     h4{
       &:first-letter{
-        font-size: 28px;
+        font-size: 22px;
+        text-transform: uppercase;
       }
       position: absolute;
       bottom: 8%;
@@ -35,11 +38,27 @@
       justify-content: space-between;
       gap: 5px;
     }
+
+    .titleDash{
+      &:first-letter{
+        text-transform: uppercase;
+      }
+      margin-bottom: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
     .pseudo{
 
       font-size: 12px;
       font-weight: bold;
       color: rgba(92, 92, 96, 0.76);
+    }
+
+    .nbChapters{
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }

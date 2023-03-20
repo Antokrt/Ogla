@@ -1,3 +1,6 @@
+@import "styles/utils/var";
+
+
 .close{
   cursor: pointer;
   width: 25px;
@@ -26,3 +29,41 @@
     width: 16px;
     color: white;
   }}
+
+
+.filter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: white;
+  border: $divBorder;
+  padding: 5px 10px;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 12px;
+  border-radius: 5px;
+  svg{
+    width: 12px;
+    color: #54595F;
+  }
+}
+
+.seeMore{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 10px;
+  button{
+    background-color: #e04444;
+    color: white;
+    font-family: 'Montserrat Alternates',sans-serif;
+    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    svg{
+      width: 12px;
+    }
+  }
+
+}

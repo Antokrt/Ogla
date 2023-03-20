@@ -17,3 +17,11 @@ export const VerifyEmailService = () => {
     })
 }
 
+
+export const LogoutService = () => {
+    return new Promise((resolve, reject) =>{
+        instance.get('auth/logout')
+            .then(resolve)
+            .catch(reject)
+    })
+}

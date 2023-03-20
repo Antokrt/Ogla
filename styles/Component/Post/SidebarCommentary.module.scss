@@ -14,7 +14,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px 15px;
-    background-color: $purple;
+    background-color: $purpleLight;
 
     span{
       cursor: pointer;
@@ -43,13 +43,14 @@
     height: 80px;
     padding-left: 15px;
     border-bottom: solid 1px $grey;
-    background-color: $purple;
+    background-color: $purpleLight;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 5px;
 
 
     h5 {
-      font-family: "Potta One", sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
+      font-weight: bold;
       color: white;
       span{
         font-family: "Poppins",sans-serif;
@@ -62,7 +63,7 @@
       justify-content: start;
 
       p {
-        transition: 0.2s;
+        transition: 0.2s color;
         cursor: pointer;
         font-size: 10px;
         font-family: "Montserrat", sans-serif;
@@ -75,7 +76,7 @@
   .contentCommentaryContainer {
     padding-top: 10px;
     padding-bottom: 60px;
-    max-height: 80%;
+    height: 600px;
     display: block;
     overflow: auto;
     direction: ltr !important;
@@ -118,6 +119,9 @@
           font-family: "Montserrat", sans-serif;
           font-style: italic;
           font-size: 12px;
+        }
+        &:read-only{
+          cursor: pointer;
         }
 
         border-radius: 5px;
@@ -163,10 +167,17 @@
 
 
 .filterActive{
-  transition: 0.2s;
   font-weight: bold!important;
 }
 
 .active{
   background-color: #9844AD!important;
+}
+
+.loaderContainer{
+  position: absolute;
+  z-index: 2220!important;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 110%;
 }

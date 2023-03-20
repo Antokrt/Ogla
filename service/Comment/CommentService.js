@@ -11,9 +11,11 @@ export const GetAuthorProfilOfCommentService = (id) => {
 }
 
 export const GetCommentService = (type,id, page,limit, isConnected,filter ) => {
+    console.log(filter)
     return new Promise((resolve, reject) => {
         instance.get('comment/by/'+ type + '/'+id + '/'+ page + '/' +limit + '/'+filter)
             .then((res) => {
+                console.log(res.data)
                     return Promise.all(res.data.map(async (comment) => {
                         if(isConnected){
                             const hasLike = await VerifLikeService('comment', comment._id);

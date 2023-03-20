@@ -3,13 +3,13 @@ import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
 import {BookTitle} from "../layouts/Text";
 
-export const CardBookPublic = ({id,slug}) => {
+export const CardBookPublic = ({id, slug}) => {
     const router = useRouter();
     return (
         <div className={styles.container} onClick={() => {
             router.push({
-                pathname:'/livre/'+id,
-                query:slug
+                pathname: '/livre/' + id,
+                query: slug
             })
         }}>
             <div
@@ -31,4 +31,26 @@ export const CardBookPublic = ({id,slug}) => {
     )
 }
 
-export default CardBookPublic;
+export const CardBookDashboard = ({id, img, title,nbChapter,likes}) => {
+    const router = useRouter();
+    return (
+        <div className={styles.container} onClick={() => {
+            router.push('/dashboard/books/' + id)
+        }}>
+            <div
+                style={{
+                    background: "linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) ), url("+img+")"
+                }}
+                className={styles.containerImg}>
+            </div>
+
+            <div className={styles.label}>
+                <h5 className={styles.titleDash}>{title}</h5>
+                <div>
+                    <p className={styles.nbChapters}>{nbChapter} chapitres</p>
+                    <CountLike/>
+                </div>
+            </div>
+        </div>
+    )
+}

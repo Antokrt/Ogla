@@ -9,7 +9,9 @@ const nextConfig = {
     NEXT_PUBLIC_BASE_IMG_USER:'http://localhost:3008/public/user/',
     GOOGLE_CLIENT_ID:'1092772885175-pr1v5209i6c07o52utevpt9q0hp37g3d.apps.googleusercontent.com',
     GOOGLE_SECRET:'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',
-    CALLBACK_URL: 'http://localhost:3008/auth/google/redirect'
+    CALLBACK_URL: 'http://localhost:3008/auth/google/redirect',
+    NEXT_PUBLIC_GOOGLE_SECRET_DELETE: 'Kg6Opr0HHPtufd8'
+
   }
 }
 

@@ -12,6 +12,8 @@ import LogCard from "../../Component/layouts/LogCard";
 import {DateNow} from "../../utils/Date";
 import Footer from "../../Component/Footer";
 import {getSession, useSession} from "next-auth/react";
+import {useSelector} from "react-redux";
+import {selectLoginModalStatus} from "../../store/slices/modalSlice";
 
 export async function getServerSideProps({req}){
     const params = {
@@ -45,14 +47,14 @@ export default function CategoryPage({popularBooks}) {
     });
     const {data:session} = useSession();
     const [post, setPost] = useState([]);
+    const modalState = useSelector(selectLoginModalStatus);
     const {query: {cat}} = router;
 
 
     useEffect(() => {
-        getData()
-            .then((res) => {setPost(res)})
-            .catch((err) => console.log(err))
+   console.log(modalState)
     }, [])
+
 
     return (
         <div className={styles.container}>
