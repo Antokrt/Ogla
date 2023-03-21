@@ -11,7 +11,6 @@ export const GetAnswerByCommentService = async (id, page, limit, isConnected) =>
         }
         return answer;
     }));
-
     res.data = updatedData;
     return res;
 };

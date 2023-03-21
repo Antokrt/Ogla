@@ -51,7 +51,6 @@ export async function getServerSideProps({req, params}) {
 const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
     const router = useRouter();
-    const [loginModal, setLoginModal] = useState(true);
     const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
@@ -105,6 +104,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
+                console.log(comments)
                 if (comments.length === 0 && canScroll) {
                     getComment(pageComment, 1);
                     if (session) {
@@ -274,6 +274,9 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     if (res.data.length > 0) {
                         target.answersPage += 1;
                         target.answers = [...target.answers, ...res.data];
+                    }
+                    else{
+                        target.seeMoreAnswers = false;
                     }
                 })
                 .then(() => setComments(newState))

@@ -104,20 +104,23 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
         <div className={styles.container}>
             <Header/>
 
-            <div className={styles.containerF}>
+            {
+                profilData &&
+                <>
+                    <div className={styles.containerF}>
 
-                <div className={styles.imgContainer}>
-                    <div className={styles.img}>
-                        <img referrerPolicy={'no-referrer'} src={profilAuthor?.img}/>
-                    </div>
+                        <div className={styles.imgContainer}>
+                            <div className={styles.img}>
+                                <img referrerPolicy={'no-referrer'} src={profilAuthor?.img}/>
+                            </div>
 
-                    <div className={styles.profil}>
-                        <Instagram/>
-                        <Facebook/>
-                        <Twitter/>
-                    </div>
+                            <div className={styles.profil}>
+                                <Instagram/>
+                                <Facebook/>
+                                <Twitter/>
+                            </div>
 
-{/*
+                            {/*
                     <div className={styles.listCommentary}>
                         <form className={styles.form}>
                             <input type={"text"} placeholder={"Laissez votre avis sur "+ dataAuthor?.name + "..."}/>
@@ -130,129 +133,132 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                         </div>
                     </div>
 */}
-                </div>
-
-
-               <div className={styles.chapterContainer}>
-                    <div className={styles.infoContainer}>
-                        <div>
-                            <h3>{profilAuthor?.pseudo}</h3>
-                            <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
                         </div>
 
-                        <h6> Tendance : <span> {profilAuthor.trend}</span></h6>
 
-                        <p className={styles.snippet}> {profilAuthor.author.description}</p>
-                    </div>
+                        <div className={styles.chapterContainer}>
+                            <div className={styles.infoContainer}>
+                                <div>
+                                    <h3>{profilAuthor?.pseudo}</h3>
+                                    <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
+                                </div>
 
-                    <h6 className={styles.topBook}>Tops livres <FireIcon/></h6>
+                                <h6> Tendance : <span> {profilAuthor.trend}</span></h6>
 
-                        <div className={styles.rankingGridContainer}>
-                            {
-                                profilAuthor.topBooks
-                                    .sort((a,b)=> b.likes - a.likes)
-                                    .map((item,index)=>{
-                                        return  (
-                                            <FeaturedCategoryPostList
-                                                key={item}
-                                                id={item._id}
-                                                rank={index+1}
-                                                title={item.title}
-                                                summary={item.summary}
-                                                likes={item.likes}
-                                                slug={item.slug}
-                                                category={item.category}
-                                                author={item.author}
-                                                chapterNb={item.nbChapter}
-                                                img={item.img}
-                                            />
-                                        )
-                                    })
-                            }
-                    </div>
+                                <p className={styles.snippet}> {profilAuthor.author.description}</p>
+                            </div>
 
+                            <h6 className={styles.topBook}>Tops livres <FireIcon/></h6>
 
-
-                </div>
-
-            </div>
-
-            <div className={styles.containerS}>
-                <div className={styles.sortContainer}>
-                    <h3>Trier par </h3>
-                    <MainSearchBar width={50} height={50}/>
-                    <div>
-                        <button
-                            className={activeFilter === 'popular'  && styles.activeBtn}
-                            onClick={() => {
-                           if(activeFilter !== 'popular'){
-                               setActiveFilter('popular');
-                           }
-                        }}>Populaire(s)</button>
-                        <button
-                            className={activeFilter === 'recent' && styles.activeBtn}
-                            onClick={() => {
-                            if(activeFilter !== 'recent'){
-                                if(recent.length === 0){
-                                    fetchRecentBooks();
+                            <div className={styles.rankingGridContainer}>
+                                {
+                                    profilAuthor.topBooks
+                                        .sort((a,b)=> b.likes - a.likes)
+                                        .map((item,index)=>{
+                                            return  (
+                                                <FeaturedCategoryPostList
+                                                    key={item}
+                                                    id={item._id}
+                                                    rank={index+1}
+                                                    title={item.title}
+                                                    summary={item.summary}
+                                                    likes={item.likes}
+                                                    slug={item.slug}
+                                                    category={item.category}
+                                                    author={item.author}
+                                                    chapterNb={item.nbChapter}
+                                                    img={item.img}
+                                                />
+                                            )
+                                        })
                                 }
-                                setActiveFilter('recent');
-                                setPage(2);
-                            }
-                        }}>Récent(s)</button>
+                            </div>
+
+
+
+                        </div>
+
                     </div>
-                </div>
 
-                <div className={styles.card}>
+                    <div className={styles.containerS}>
+                        <div className={styles.sortContainer}>
+                            <h3>Trier par </h3>
+                            <MainSearchBar width={50} height={50}/>
+                            <div>
+                                <button
+                                    className={activeFilter === 'popular'  && styles.activeBtn}
+                                    onClick={() => {
+                                        if(activeFilter !== 'popular'){
+                                            setActiveFilter('popular');
+                                        }
+                                    }}>Populaire(s)</button>
+                                <button
+                                    className={activeFilter === 'recent' && styles.activeBtn}
+                                    onClick={() => {
+                                        if(activeFilter !== 'recent'){
+                                            if(recent.length === 0){
+                                                fetchRecentBooks();
+                                            }
+                                            setActiveFilter('recent');
+                                            setPage(2);
+                                        }
+                                    }}>Récent(s)</button>
+                            </div>
+                        </div>
+
+                        <div className={styles.card}>
+                            {
+                                activeFilter === 'recent' && recent.length !== 0 &&
+                                recent.map((item) => {
+                                    return(
+                                        <PreviewPost
+                                            title={item.title}
+                                            category={item.category}
+                                            author={profilData.pseudo}
+                                            snippet={item.summary}
+                                            id={item._id}
+                                            nbChapter={item.chapter_list.length}
+                                            like={item.likes}
+                                            img={item.img}
+                                            slug={item.slug}
+                                        />
+                                    )
+                                })
+                            }
+                            {
+                                activeFilter === 'popular' && popular.length !== 0 &&
+                                popular.map((item) => {
+                                    return(
+                                        <PreviewPost
+                                            title={item.title}
+                                            category={item.category}
+                                            author={profilData.pseudo}
+                                            snippet={item.summary}
+                                            id={item._id}
+                                            nbChapter={item.chapter_list.length}
+                                            like={item.likes}
+                                            img={item.img}
+                                            slug={item.slug}
+                                        />
+                                    )
+                                })
+                            }
+
+
+                        </div>
+                    </div>
                     {
-                        activeFilter === 'recent' && recent.length !== 0 &&
-                        recent.map((item) => {
-                            return(
-                                <PreviewPost
-                                title={item.title}
-                                category={item.category}
-                                author={profilData.pseudo}
-                                snippet={item.summary}
-                                id={item._id}
-                                nbChapter={item.chapter_list.length}
-                                like={item.likes}
-                                img={item.img}
-                                slug={item.slug}
-                                />
-                            )
-                        })
+                        activeFilter === 'popular' && canSeeMorePopular &&
+                        <p className={styles.seeMore} onClick={() => fetchMorePopularBooks()}>Voir plus Populaire</p>
                     }
+
                     {
-                        activeFilter === 'popular' && popular.length !== 0 &&
-                        popular.map((item) => {
-                                return(
-                                    <PreviewPost
-                                        title={item.title}
-                                        category={item.category}
-                                        author={profilData.pseudo}
-                                        snippet={item.summary}
-                                        id={item._id}
-                                        nbChapter={item.chapter_list.length}
-                                        like={item.likes}
-                                        img={item.img}
-                                        slug={item.slug}
-                                    />
-                                )
-                            })
+                        activeFilter === 'recent' && canSeeMoreRecent &&
+                        <p className={styles.seeMore} onClick={() => fetchMoreRecentBooks()}>Voir plus Recent</p>
                     }
-
-
-                </div>
-            </div>
-            {
-                activeFilter === 'popular' && canSeeMorePopular &&
-                <p className={styles.seeMore} onClick={() => fetchMorePopularBooks()}>Voir plus Populaire</p>
+                </>
             }
 
-            {
-                activeFilter === 'recent' && canSeeMoreRecent &&
-                <p className={styles.seeMore} onClick={() => fetchMoreRecentBooks()}>Voir plus Recent</p>
-            }
 
 
 

@@ -17,7 +17,6 @@ export const LikeCommentReduce = (id,arr) => {
 export const SendAnswerReduce = (prevComments, targetId, data) => {
     return prevComments.map(comment => {
         if (comment._id === targetId) {
-            console.log('test')
             return {
                 ...comment,
                 answers: comment.answers ? [...comment.answers, data] : [data],

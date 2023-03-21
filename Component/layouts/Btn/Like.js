@@ -16,7 +16,6 @@ export const LikeBtn = ({isLike, onLike}) => {
 }
 
 export const LikeBtnSidebar = ({isLike, onLike}) => {
-    console.log(isLike)
     return (
         <div
             onClick={onLike}

@@ -145,11 +145,7 @@ color: $darkBrown;
         width: 100%;
         min-height: 20px;
         padding-top: 10px;
-        button{
-          position: absolute;
-          right: 0;
-          background-color: #9844AD;
-        }
+
         .sendResponse{
           display: flex;
           justify-content: start;
@@ -163,6 +159,7 @@ color: $darkBrown;
             color: #A6A6A6;
             font-size: 11px;
             padding: 5px;
+            margin: 5px 0px;
             font-family: "Montserrat Alternates",sans-serif;
           }
         }
@@ -231,4 +228,15 @@ color: $darkBrown;
   transition: 0.1s!important;
 background-color: #9844AD!important;
   color: white!important;
+}
+
+.getMoreBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button{
+    color: #9844AD;
+    font-size: 11px;
+    font-family: 'Montserrat',sans-serif;
+  }
 }

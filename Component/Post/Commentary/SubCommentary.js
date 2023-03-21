@@ -3,14 +3,14 @@ import {HeartIcon} from "@heroicons/react/24/solid";
 import {useEffect, useState} from "react";
 import {useSession} from "next-auth/react";
 import {TrashIcon} from "@heroicons/react/24/outline";
-const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, hasLike, likeAnswer, id, authorId}) => {
+import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
+import {FormatDateFrom} from "../../../utils/Date";
+const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers}) => {
 
     const [sizeCommentary,setSizeCommentary] = useState(content?.length);
     const [tooLong,setTooLong] = useState(false);
     const {data:session } = useSession();
 
-    useEffect(() => {
-    },[])
 
 return (
     <div className={styles.container}>
@@ -30,15 +30,10 @@ return (
 
 
                 <div className={styles.authorDate}>
-                    <h8>{pseudo}<span>{id}</span></h8>
+                    <h8>{pseudo}<span>{FormatDateFrom(date)}</span></h8>
                 </div>
                 <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>{content}
                 </p>
-                {
-                    hasLike ?
-                        <p className={styles.commentary}>true</p> :
-                        <p className={styles.commentary}>false</p>
-                }
 
                 {
                     tooLong &&
@@ -58,13 +53,11 @@ return (
                 }
 
                 <div className={styles.likeCommentaryContainer}>
-                    <p className={styles.likeCount}><HeartIcon
-                    onClick={() => {
-                        if(session){
-                            likeAnswer()
-                        }
-                    }}
-                    /> {likes}</p>
+            <TextLikeBtn onLike={() => {
+                if(session){
+                    likeAnswer();
+                }
+            }} nb={likes} isLike={hasLike}/>
                 </div>
 
             </div>

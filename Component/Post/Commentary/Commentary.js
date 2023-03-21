@@ -27,6 +27,7 @@ const Commentary = ({pseudo,
                         sendNewAnswer,
                         deleteAanswer,
     nbAnswers,
+    seeMoreAnswers,
                         answerPage,
                     newAnswerPage
                     }) => {
@@ -192,9 +193,16 @@ const Commentary = ({pseudo,
 
                                     }
 
+                                    {
+                                        seeMoreAnswers &&
+                                        <div className={styles.getMoreBtn}>
+                                            <button  onClick={() => newAnswerPage(id)}>Voir plus</button>
+                                        </div>
+                                    }
+
+
                                 </div>
 
-                                <button onClick={() => newAnswerPage(id)}>Voir plus</button>
                             </div>
                         }
 

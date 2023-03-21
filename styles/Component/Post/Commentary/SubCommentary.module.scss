@@ -29,6 +29,7 @@
     }
 
     .contentCommentContainer{
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: start;
@@ -45,6 +46,7 @@
           font-size: 12px;
           font-weight: bold;
           span{
+            margin-left: 5px;
             color: rgba(28, 35, 43, 0.43);
             font-size: 10px;
           }
@@ -52,6 +54,9 @@
       }
 
       .commentary{
+        &:first-letter{
+          text-transform: uppercase;
+        }
 padding-right: 20px;
         font-family: "Montserrat Alternates", sans-serif;
         color: rgba(28, 35, 43, 0.84);
@@ -103,7 +108,6 @@ padding-right: 20px;
       margin-top: 5px;
       display: flex;
       flex-direction: column;
-
       button{
         background-color: #f6f6f6;
         width: 50%;
@@ -121,6 +125,10 @@ padding-right: 20px;
         width: 80%;
         min-height: 20px;
       }
+    }
+    svg{
+      margin-bottom: 0!important;
+      margin-right: 4px!important;
     }
   }
 }

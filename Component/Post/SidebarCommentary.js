@@ -10,7 +10,6 @@ import {useSession} from "next-auth/react";
 import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
 import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
-import InfiniteScroll from "react-infinite-scroller";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {useDispatch, useSelector} from "react-redux";
@@ -146,6 +145,7 @@ const SidebarCommentary = ({
                                 commentList.map((item, index) => {
                                     return (
                                         <Commentary
+                                            seeMoreAnswers={item.seeMoreAnswers}
                                             id={item._id}
                                             deleteComment={() => deleteComment(item._id)}
                                             deleteAanswer={(id) => deleteAanswer(id)}
