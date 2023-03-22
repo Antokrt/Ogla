@@ -13,16 +13,6 @@ const PreviewPost = ({title, snippet, like, category, author, nbChapter ,img, sl
 
 const router = useRouter();
 
-const goToCategory = (link,query) => {
-    router.push(
-        {
-            pathname:link,
-            query:{cat:props.category}
-        }
-
-    )
-}
-
 return (
     <div className={styles.container}
     onClick={() => {
@@ -53,16 +43,16 @@ router.push({
                         router.push('/User/'+ author)
                         }
                         }
-                        >{author}</p>
+                        >@{author}</p>
                         :
-                            <p className={styles.author}>{author}</p>
+                            <p className={styles.author}>@{author}</p>
                     }
                 </div>
 
 
                 <div>
                     <p className={styles.like}>{like} </p>
-                    <ChevronDoubleUpIcon/>
+                    <HeartIcon/>
                 </div>
 
             </div>

@@ -1,5 +1,5 @@
 import styles from '../../../styles/Layouts/Btn/Like.module.scss';
-import {HeartIcon} from "@heroicons/react/24/outline";
+import {HeartIcon} from "@heroicons/react/24/solid";
 import {ChevronDoubleUpIcon, HandThumbUpIcon as NotLikeIcon} from "@heroicons/react/24/outline";
 import {HandThumbUpIcon as LikeIcon} from "@heroicons/react/24/solid";
 
@@ -26,11 +26,11 @@ export const LikeBtnSidebar = ({isLike, onLike}) => {
     )
 }
 
-export const CountLike = ({isLike, onLike}) => {
+export const CountLike = ({like}) => {
     return (
         <div className={styles.containerCount}>
-            <p>1221</p>
-            <ChevronDoubleUpIcon/>
+            <p>{like}</p>
+            <HeartIcon/>
         </div>
 
     )

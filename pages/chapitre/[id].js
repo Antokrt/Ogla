@@ -26,24 +26,44 @@ import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {Capitalize} from "../../utils/String";
 import {setActiveModalState} from "../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
+import {AddViewToChapterApi} from "../api/book";
 
 export async function getServerSideProps({req, params, query, ctx}) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
-    const hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
-
-    return {
-        props: {
-            key: id,
-            err: data.err,
-            chapterData: data.chapter,
-            bookData: data.book,
-            chapterList: data.chapterList,
-            index: parseInt(query.i),
-            authorData: data.author,
-            hasLikeData: hasLike
+    let hasLike;
+    if(data.chapter){
+        await AddViewToChapterApi(id);
+        hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
+        return {
+            props: {
+                key: id,
+                err: data.err,
+                chapterData: data.chapter,
+                bookData: data.book,
+                chapterList: data.chapterList,
+                index: parseInt(query.i),
+                authorData: data.author,
+                hasLikeData: hasLike
+            }
         }
     }
+    else{
+        return {
+            props: {
+                key: id,
+                err: data.err,
+                chapterData: null,
+                bookData: null,
+                chapterList: null,
+                index: null,
+                authorData: null,
+                hasLikeData: null
+            }
+        }
+    }
+
+
 }
 
 const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, hasLikeData}) => {
@@ -62,7 +82,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const [lastCommentId, setLastCommentId] = useState([]);
     const [canScroll, setCanScroll] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
-    const [contentChapter, setContentChapter] = useState(JSON.parse(chapterData?.content));
+    const [contentChapter, setContentChapter] = useState(chapterData && JSON.parse(chapterData?.content));
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
 
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
@@ -121,7 +141,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         extensions: [
             StarterKit,
         ],
-        content: JSON.parse(chapterData?.content)
+        content: chapterData ? JSON.parse(chapterData?.content) : null
     })
 
 
@@ -347,7 +367,9 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
     return (
         <div className={styles.container}>
+
             {
+                chapterData &&
                 checkSide()
             }
             <div>
@@ -355,77 +377,87 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 <HeaderOnChapter/>
             </div>
 
-            <div
-                className={styles.containerC}>
+            {
+                chapterData && !err ?
+                    <>
 
-                <div
-                    className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
-                    ref={headerFixed}
-                >
-                    <h3>Chapitre {index} - {Capitalize(chapterData.title)}</h3>
-                    <div className={styles.thumbnailContainer}>
-                        <p className={styles.category}><span>{bookData.category}</span></p>
-                        <p className={styles.mSide}>{likes} like(s)</p>
-                        <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
-                    </div>
-                </div>
+                        <div
+                            className={styles.containerC}>
+                            <div
+                                className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
+                                ref={headerFixed}
+                            >
+                                <h3>Chapitre {index} - {Capitalize(chapterData.title)}</h3>
+                                <div className={styles.thumbnailContainer}>
+                                    <p className={styles.category}><span>{bookData.category}</span></p>
+                                    <p className={styles.mSide}>{likes} like(s)</p>
+                                    <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
+                                </div>
+                            </div>
 
-                <div
-                    className={styles.contentChapter}>
-                    <div className={styles.headerContent}>
-                        <h5>{bookData.title}</h5>
-                        <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
-                                                                                             referrerPolicy={'no-referrer'}/>{authorData.pseudo}
-                        </h6>
-                    </div>
-                    <div className={styles.nextChapterContainer}>
+                            <div
+                                className={styles.contentChapter}>
+                                <div className={styles.headerContent}>
+                                    <h5>{bookData.title}</h5>
+                                    <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
+                                                                                                         referrerPolicy={'no-referrer'}/>{authorData.pseudo}
+                                    </h6>
+                                </div>
+                                <div className={styles.nextChapterContainer}>
 
-                    </div>
+                                </div>
 
-                    <div className={styles.textContainer}>
-                        {
-                            chapterData &&
-                            <EditorContent editor={editorReadOnly}>
+                                <div className={styles.textContainer}>
+                                    {
+                                        chapterData &&
+                                        <EditorContent editor={editorReadOnly}>
 
-                            </EditorContent>
-                        }
+                                        </EditorContent>
+                                    }
 
-                    </div>
-                    {
-                        chapterData.navChapter.next &&
-                        <button className={styles.readMore} onClick={() => {
-                            router.push({
-                                pathname: "/chapitre/" + chapterData.navChapter.next._id, query: {
-                                    name: chapterData.navChapter.next.title,
-                                    slug: chapterData.navChapter.next.slug,
-                                    i: index + 1
-                                },
-                            })
-                        }}>Suivant ({chapterData.navChapter.next.title})</button>
-                    }
-                </div>
+                                </div>
+                                {
+                                    chapterData.navChapter.next &&
+                                    <button className={styles.readMore} onClick={() => {
+                                        router.push({
+                                            pathname: "/chapitre/" + chapterData.navChapter.next._id, query: {
+                                                name: chapterData.navChapter.next.title,
+                                                slug: chapterData.navChapter.next.slug,
+                                                i: index + 1
+                                            },
+                                        })
+                                    }}>Suivant ({chapterData.navChapter.next.title})</button>
+                                }
+                            </div>
 
-            </div>
+                        </div>
+                        <FooterOnChapter
+                            likeChapter={() => likeChapter()}
+                            hasLike={hasLike}
+                            title={chapterData?.title}
+                            likes={likes}
+                            refresh={() => refreshChapter()}
+                            index={index}
+                            navChapters={chapterData.navChapter}
+                            author={bookData?.author_pseudo}
+                            nbChapter={bookData?.chapter_list.length}
+                            nbCommentary={nbCommentary}
+                            openList={() => {
+                                ToogleSidebar("List", sidebarSelect, setSidebarSelect);
+                            }}
+                            openCommentary={() => {
+                                ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
+                            }}
+                            img={bookData?.img}/>
+
+                    </>
+                    :
+                    <p>Erreur</p>
+            }
 
 
-            <FooterOnChapter
-                likeChapter={() => likeChapter()}
-                hasLike={hasLike}
-                title={chapterData?.title}
-                likes={likes}
-                refresh={() => refreshChapter()}
-                index={index}
-                navChapters={chapterData.navChapter}
-                author={bookData?.author_pseudo}
-                nbChapter={bookData?.chapter_list.length}
-                nbCommentary={nbCommentary}
-                openList={() => {
-                    ToogleSidebar("List", sidebarSelect, setSidebarSelect);
-                }}
-                openCommentary={() => {
-                    ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
-                }}
-                img={bookData?.img}/>
+
+
         </div>
     )
 }

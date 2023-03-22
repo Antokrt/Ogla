@@ -14,7 +14,7 @@ import {useSession} from "next-auth/react";
 
 import {LikeBookService} from "../../service/Like/LikeService";
 import {VerifLikeApi} from "../api/like";
-import {GetOneBookApi} from "../api/book";
+import {AddViewToBookApi, GetOneBookApi} from "../api/book";
 import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {

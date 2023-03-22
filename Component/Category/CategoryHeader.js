@@ -18,18 +18,10 @@ const CategoryHeader = () => {
                 Category.category.map((item)=>{
                     return  (
                         <div
-                            onClick={()=>{
-                                router.push({
-                                    pathName:"Category",
-                                    query:{cat:item.name.toLowerCase()},
-                                },
-                                    undefined,
-                                    {scroll:false}
-                                )
-                            }}
+                     onClick={() => router.push('/cat/'+ item.name)}
                             key={item.name}
                             className={Capitalize(cat) === item.name ? styles.active +" " + styles.book : styles.book}>
-                            <img src="assets/book_pixel.png"
+                            <img src="/assets/book_pixel.png"
 
                          />
                         <p>{item.name}</p>

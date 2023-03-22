@@ -2,6 +2,7 @@ import styles from '../../styles/Component/Card/CardBook.module.scss';
 import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
 import {BookTitle} from "../layouts/Text";
+import {HeartIcon} from "@heroicons/react/20/solid";
 
 export const CardBookPublic = ({id, slug}) => {
     const router = useRouter();
@@ -21,10 +22,10 @@ export const CardBookPublic = ({id, slug}) => {
             </div>
 
             <div className={styles.label}>
-                <BookTitle title={'La quete du maitre'}/>
-                <div>
+                <h5>La quete du maître</h5>
+                <div className={styles.content}>
                     <p className={styles.pseudo}>@JoséBeauvais</p>
-                    <CountLike/>
+                    <p className={styles.like}>418 <HeartIcon/></p>
                 </div>
             </div>
         </div>
@@ -39,16 +40,16 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes}) => {
         }}>
             <div
                 style={{
-                    background: "linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8) ), url("+img+")"
+                    background: "linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4) ), url("+img+")"
                 }}
                 className={styles.containerImg}>
             </div>
 
             <div className={styles.label}>
                 <h5 className={styles.titleDash}>{title}</h5>
-                <div>
-                    <p className={styles.nbChapters}>{nbChapter} chapitres</p>
-                    <CountLike/>
+                <div className={styles.content}>
+                    <p className={styles.nbChapters}>{nbChapter} chapitre(s)</p>
+                    <CountLike like={likes}/>
                 </div>
             </div>
         </div>

@@ -5,10 +5,8 @@ import {
     ArrowDownIcon,
     CalendarIcon,
     ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon,
-    ChevronDoubleUpIcon, DocumentChartBarIcon, DocumentCheckIcon, EnvelopeIcon, SparklesIcon, UserCircleIcon, XMarkIcon
 } from "@heroicons/react/24/outline";
-import {BookmarkIcon, ChatBubbleLeftRightIcon, ChatBubbleBottomCenterTextIcon} from "@heroicons/react/24/outline";
-import {AcademicCapIcon} from "@heroicons/react/24/solid";
+
 import {useEffect, useRef, useState} from "react";
 import {
     ArrowTrendingUpIcon,

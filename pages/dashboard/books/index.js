@@ -10,6 +10,7 @@ import {useRouter} from "next/router";
 import {GetMoreBookService} from "../../../service/Dashboard/BooksAuthorService";
 import CardBookPublic, {CardBookDashboard} from "../../../Component/Card/CardBook";
 import {SeeMoreBtn} from "../../../Component/layouts/Btn/ActionBtn";
+import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);

@@ -25,6 +25,7 @@ import scrollbar from "../../../styles/utils/scrollbar.module.scss";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {EyeIcon} from "@heroicons/react/24/solid";
 import {Capitalize} from "../../../utils/String";
+import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 
 
 export async function getServerSideProps({req, params}) {
@@ -68,6 +69,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [text, setText] = useState(chapterData.text);
     const [closeMenu, setCloseMenu] = useState(true);
     const [hasChange, setHasChange] = useState(false);
+    const [seeConfirmModal, setSeeConfirmModal] = useState(false);
     const index = router.query.index
 
     useEffect(() => {
@@ -222,7 +224,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                 {
                                     chapterData?.publish &&
                                     <div
-                                        onClick={() =>    router.push({
+                                        onClick={() => router.push({
                                             pathname: "/chapitre/" + chapterData._id, query: {
                                                 name: chapterData?.title, slug: chapterData?.slug, i: index
                                             },
@@ -235,7 +237,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
                                 <div
                                     onClick={() => {
-                                        deleteThis()
+                                        setSeeConfirmModal(true);
                                     }
                                     }
                                     className={styles.iconDiv}>
@@ -383,6 +385,11 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     </div>
                 }
             </div>
+            {
+                seeConfirmModal &&
+                <ConfirmModal confirm={() => deleteThis()} img={bookData.img} btnConfirm={'Supprimer'}
+                              close={() => setSeeConfirmModal(false)} title={'Supprimer ce chapitre'} subTitle={'Êtes-vous sûr de vouloir continuer ?'}/>
+            }
         </div>
     )
 }

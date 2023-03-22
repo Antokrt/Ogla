@@ -29,7 +29,7 @@ export const FilterBtn = ({filter, onclick}) => {
                         <ArrowsUpDownIcon/>
                     </button> :
                     <button onClick={onclick} className={styles.filter}>
-                        Ordre
+                        Plus ancien(s)
                         <ArrowsUpDownIcon/>
                     </button>
             }
@@ -46,4 +46,8 @@ export const SeeMoreBtn = ({onclick}) => {
         </div>
 
     )
+}
+
+export const TextSeeMore = ({onclick})=> {
+    return <button className={styles.seeMoreText} onClick={onclick}>Voir plus</button>
 }

@@ -12,7 +12,7 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {PlusIcon, UserCircleIcon} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
-import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
+import {ArrowTrendingUpIcon, CheckCircleIcon, PencilIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
 import chapter from "../../../Component/layouts/Icons/Chapter";
 import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
@@ -29,7 +29,8 @@ import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
 import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
 import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
-import {FilterBtn, SeeMoreBtn} from "../../../Component/layouts/Btn/ActionBtn";
+import {FilterBtn, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn/ActionBtn";
+import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 
 
 export async function getServerSideProps({req, params}) {
@@ -64,7 +65,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [chapterList, setChapterList] = useState(chapterListData);
     const [chapterPage, setChapterPage] = useState(2);
     const [activeFilter, setActiveFilter] = useState('order');
-    const firstChapter = bookData.lastChapter;
+    const lastChapter = bookData.lastChapter;
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
@@ -78,6 +79,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [loadingChapter, setLoadingChapter] = useState(false);
     const [errListChapter, setErrChapter] = useState(false);
+    const [seeConfirmModal, setSeeConfirmModal] = useState(false);
+
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -175,6 +178,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
         }
     }
 
+    useEffect(() => {
+       console.log(book)
+    },[])
+
     return (
         <div className={styles.container}>
             <div className={styles.verticalMenuContainer}>
@@ -271,13 +278,13 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                         <div className={styles.headerTextarea}>
                                             <h5>Résumé</h5>
                                             <div className={styles.btn}>
-                                                <button
+                                                <div
                                                     onClick={() => router.push({
                                                         pathname: '/livre/' + book._id,
                                                         query: book.slug
                                                     })}
                                                     className={styles.seeBtn}><EyeSolid/>
-                                                </button>
+                                                </div>
                                                 <button
                                                     onClick={() => sumUpdate()}
                                                     className={newSummary !== book.summary ? styles.activeBtn : ''}
@@ -323,30 +330,29 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             <p>{FormatDateStr(book.date_creation)}</p>
                                             <h6>depuis le</h6>
                                         </div>
+
                                     </div>
                                     <div className={styles.contentContainer}>
                                         <div>
-                                            <TagIcon className={styles.tag}/>
-                                            <p className={styles.category}>{book.category}</p>
+                                            <p className={styles.label}>Catégorie :</p>
+                                            <p className={styles.value}>{Capitalize(book.category)}</p>
                                         </div>
                                         {
-                                            firstChapter &&
+                                            lastChapter &&
                                             <div>
-                                                <BookOpenIcon/>
-                                                <p className={styles.last}>Dernier chapitre
-                                                    - <span>{Capitalize(firstChapter.title)} </span></p>
+                                                <p className={styles.label}> Dernier chapitre :
+                                                </p>
+                                                <p className={styles.value}>{Capitalize(lastChapter.title)}</p>
                                             </div>
                                         }
 
-                                        <div>
+                                        <div className={styles.view}>
                                             <EyeOutline/>
-                                            <p className={styles.last}>{book.stats.view} <br/>vue(s) </p>
+                                            <p className={styles.value}>{book.stats.view} <br/>vue(s) </p>
                                         </div>
                                         <p
                                             onClick={() => {
-                                                DeleteBookService(book._id)
-                                                    .then(() => router.push('/dashboard/books'))
-                                                    .catch((err) => console.log('err'))
+                                                setSeeConfirmModal(true);
                                             }
                                             }
                                             className={styles.delete}>Supprimer le livre</p>
@@ -358,10 +364,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 {
                                     <div className={styles.chapterContainer}>
                                         {
-                                            !errListChapter && !loadingChapter &&
+                                            !errListChapter && !loadingChapter && chapterList.length > 0 &&
                                             <>
                                                 <div className={styles.headerChapter}>
-                                                    <h4>Chapitre(s) ({book.chapter_list.length})</h4>
+                                                    <h4>{book.chapter_list.length} chapitre(s)</h4>
                                                     <div>
                                                         <FilterBtn filter={activeFilter} onclick={() => {
                                                             if (activeFilter === 'order') {
@@ -399,7 +405,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         maintenant</p>
                                                     <button
                                                         onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                    >Ecrire... <PencilIcon/>
+                                                    >Commencez à écrire
                                                     </button>
                                                 </div> :
 
@@ -454,7 +460,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             <div className={styles.seeMoreContainer}>
                                                                 {
                                                                     seeMoreChapter && chapterList && !loadingScroll &&
-                                                                    <SeeMoreBtn
+                                                                    <TextSeeMore
                                                                         onclick={() => getMoreChapter()}
                                                                     />
                                                                 }
@@ -516,6 +522,17 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                 }
             </div>
+            {
+                seeConfirmModal &&
+                <ConfirmModal confirm={() => {
+                    DeleteBookService(book._id)
+                        .then(() => router.push('/dashboard/books'))
+                        .catch((err) => console.log('err'))
+                }
+                } img={bookData?.img} btnConfirm={'Supprimer'}
+                              subTitle={'Supprimer ' + bookData.title + ' et ses chapitres.'}
+                              title={'Êtes-vous sûr de vouloir continuer ? '} close={() => setSeeConfirmModal(false)}/>
+            }
         </div>
 
 

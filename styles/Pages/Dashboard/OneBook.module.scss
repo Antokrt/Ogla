@@ -6,6 +6,7 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+
 }
 
 .verticalMenuContainer {
@@ -22,7 +23,7 @@
 
   .containerTitle {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
 
     h2 {
@@ -31,23 +32,29 @@
       }
       display: flex;
       gap: 10px;
+      position: relative;
       text-align: left;
       font-family: 'Montserrat', sans-serif;
       font-weight: bold;
       font-size: 1.2vw;
       margin-bottom: 10px;
       svg{
+        position: absolute;
         cursor: pointer;
         margin-top: -3%;
         width: 14px;
+        right: -25%;
+      }
+      span{
+        width: 40%;
+        height: 2px;
+        background-color: #9844AD;
+
       }
     }
 
-    span {
-      background-color: #9844ad;
-      height: 2px;
-      width: 30%;
-    }
+
+
   }
 
 }
@@ -82,6 +89,7 @@
 .containerOneBook {
   display: flex;
   flex: 1;
+  border-top-left-radius: 25px;
   padding: 0% 2%;
   gap: 20px;
 }
@@ -173,6 +181,10 @@
               color: white;
               width: 15px;
             }
+            display: flex;
+            justify-content: center;align-items: center;
+            padding: 10px;
+            border-radius: 25%;
             background-color: #9844AD;
           }
 
@@ -218,7 +230,6 @@
         &::-webkit-scrollbar-thumb:hover {
           background: $grey;
         }
-
         padding: 2%;
         font-size: 11px;
         color: rgba(28, 35, 43, 0.87);
@@ -246,7 +257,6 @@
     justify-content: space-around;
     padding: 15px;
     background-color: white;
-    border: $divBorder;
 
     .dateLabel {
       p {
@@ -256,7 +266,6 @@
 
     .chapterNbLabel, .dateLabel {
       display: flex;
-      gap: 5px;
       flex-direction: column;
       text-align: center;
 
@@ -268,14 +277,12 @@
       }
 
       .length {
-        color: #9844AD;
       }
 
       h6 {
-        font-size: 0.7vw;
-        font-weight: bold;
+        font-size: 0.6vw;
         color: rgba(28, 35, 43, 0.58);
-        font-family: 'Open sans', sans-serif;
+        font-family: 'Montserrat Alternates', sans-serif;
       }
     }
   }
@@ -288,40 +295,49 @@
   }
 }
 
+
 .contentContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1vh;
-  background-color: white;
+
   padding: 5%;
-  border: $divBorder;
-
-
 
   div {
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 20px;
+    gap: 5px;
     padding-bottom: 5px;
   }
 
-  .category {
-    &:first-letter {
-      text-transform: uppercase;
-    }
+  .label{
+    font-size: 10px;
+    color: rgba(28, 35, 43, 0.75);
+    font-family: 'Montserrat Alternates',sans-serif;
+  }
+  .category{
+    font-size: 10px;
+    color: rgba(28, 35, 43, 0.75);
+    font-family: 'Poppins',sans-serif;
+    background-color: #3cad41;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+    color: white;
+    padding: 10px 15px;
+  }
 
-    color: rgba(28, 35, 43, 0.68);
+  .value{
     font-weight: bold;
-    font-family: 'Montserrat Alternates', sans-serif;
+    color: rgba(28, 35, 43, 0.64);
+    font-size: 12px;
+    font-family: 'Poppins',sans-serif;
   }
 
-  .tag {
-    transform: rotate(90deg);
-  }
+  .view{
+    gap: 10px;
 
-  .last {
   }
 
   svg {
@@ -329,19 +345,18 @@
     width: 0.8vw;
   }
 
-  p {
-    font-size: calc(10px + 0.1vw);
-    font-family: "Open sans", sans-serif;
-    font-weight: bold;
-    color: rgba(28, 35, 43, 0.58);
-  }
 
   .svgCommentary {
     color: rgba(152, 68, 173, 0.89);
   }
 
   .delete {
+    display: inline-flex;
+    white-space: pre;
+    width: min-content;
     cursor: pointer;
+    font-size: 12px;
+    font-family: 'Poppins',sans-serif;
     color: rgba(255, 0, 0, 0.69);
     text-decoration: underline;
   }
@@ -505,7 +520,7 @@
     }
 
     p {
-      font-family: 'Montserrat Alternates', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       margin-bottom: 20px;
       font-size: calc(12px + 0.1vw);
     }
@@ -520,8 +535,10 @@
       font-size: 0.6vw;
       background-color: #9844AD;
       color: white;
-      font-family: 'Montserrat Alternates', sans-serif;
-      padding: 8px 15px;
+      font-family: 'Poppins', sans-serif;
+      border-radius: 5px;
+
+      padding: 10px 30px;
 
       svg {
         margin-left: 10px;

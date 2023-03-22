@@ -3,8 +3,8 @@
 .container {
   position: relative;
   display: flex;
-  height: 150px;
-  width: 300px;
+  height: 170px;
+  width: 330px;
   border-radius: 20px;
   margin-right: 20px;
   cursor: pointer;
@@ -23,7 +23,7 @@
       &:first-letter{
         text-transform: uppercase;
       }
-      font-size: 10px;
+      font-size: 12px;
       font-family: "Potta One",sans-serif;
       color: #1C232B;
 
@@ -34,13 +34,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 80%;
+    width: 140px;
+    height: 100%;
     img{
       object-fit: cover;
-      border-radius: 5px;
+      border-radius: 25px;
       width: 100%;
       height: 100%;
+      box-shadow: 5px 3px 4px rgba(100, 96, 96, 0.3);
     }
   }
 
@@ -59,8 +60,9 @@
         text-decoration: underline;
       }
       cursor: pointer;
-      font-weight: 700;
-      color: #1C232B;      font-family: "Montserrat",sans-serif;
+      font-weight: bold;
+      color: #1C232B;
+      font-family: "Montserrat",sans-serif;
       font-size: 14px;
       margin-bottom: 10px;
     }
@@ -68,7 +70,7 @@
     .snippet{
       overflow: hidden;
       text-overflow: ellipsis;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       font-size: 12px;
@@ -103,18 +105,20 @@
       align-items: center;
       justify-content: center;
       color: #686f77;
-font-size: 11px;
-      font-family: "Montserrat",sans-serif;
+
     }
 
     .author{
-      font-size: 11px!important;
+      font-size: 12px;
+      font-family: 'Montserrat',sans-serif;
+      color: #1C232B;
       text-decoration: underline;
-      font-weight: bold;
     }
     .like{
       font-weight: bold;
-      color: $purpleLight;
+      font-size: 10px;
+      font-family: 'Poppins',sans-serif;
+      color: #1C232B;
     }
     button{
       background-color: $purple;
