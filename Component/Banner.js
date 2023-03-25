@@ -16,7 +16,26 @@ export default function Banner() {
     return (
         <div className={styles.container}>
 
-            <div className={styles.absBlock}>
+            <div className={styles.HomeCenterBlock}>
+                <div className={styles.HomeCenterContent}>
+                    <div className={styles.HomeCenterTitle}>
+                        <h1> Commencez votre voyage avec nous! </h1>
+                        <p> Découvrez des histoires captivantes et des 
+                            aventures passionantes qui vous ferrons voyager au-delà de votre imagination... </p>
+                        <div className={styles.HomeCenterButton}> Voir la librairie </div>
+                    </div>
+                    <div className={styles.HomeCenterContainerImg}>
+                        <img src="/assets/diapo/BannerImg.png" alt="Banner"/>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.HomeTitleHebo}>
+                <h2> Top Hebdomadaire </h2>
+                <p> Voir plus.. </p>
+            </div>
+            
+            {/*<div className={styles.absBlock}>
 
             </div>
             <div className={styles.mainA}>
@@ -37,9 +56,7 @@ export default function Banner() {
                                 croyons au pouvoir des <strong>mots</strong>.</p>
                         </>
                         :
-
                         <>
-                        
                             <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
@@ -76,11 +93,11 @@ export default function Banner() {
                         }
                     </div>
                 </div>
-            </div>
+                    </div> */}
+            
             <div className={styles.mainB}>
-                <img className={styles.owl}
-                     src={'assets/owl.png'}/>
-                <div className={styles.bubbleContainer}>
+                <img className={styles.owl} src={'assets/owl.png'}/>
+                {/*<div className={styles.bubbleContainer}>
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
                     <div className={styles.textBg}>
                         <p><span>#</span>1</p>
@@ -114,14 +131,13 @@ export default function Banner() {
                         </div>
                     </div>
                     <button>Découvrir</button>
-                </div>
+                </div> */}
             </div>
-            {/*         <h1>Cette semaine</h1>
 
-            <div className={styles.cardContainer}>
+            {/* <div className={styles.cardContainer}>
 
                 <div className={styles.containerImg}>
-<img src={"/assets/livre7.jpg"}/>
+                    <img src={"/assets/livre7.jpg"}/>
                 </div>
                 <div className={styles.contentContainer}>
 
@@ -148,18 +164,8 @@ export default function Banner() {
                     <button>Découvrir</button>
                 </div>
 
-            </div>*/}
+            </div> */}
 
-            {/*       <SimpleImageSlider
-                    width={width - useScrollbarSize().width}
-                    height={height / 1.2}
-                    images={slideImages}
-                    showBullets={false}
-                    showNavs={false}
-                    autoPlay={true}
-                    autoPlayDelay={7.0}
-                />
-*/}
 
         </div>
     )

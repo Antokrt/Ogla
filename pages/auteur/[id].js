@@ -103,7 +103,9 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
     return (
         <div className={styles.container}>
             <Header/>
-
+        
+        {
+            profilAuthor.author &&
             <div className={styles.containerF}>
 
                 <div className={styles.imgContainer}>
@@ -137,20 +139,20 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                     <div className={styles.infoContainer}>
                         <div>
                             <h3>{profilAuthor?.pseudo}</h3>
-                            <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
+                            <p>Devenu auteur le : {profilAuthor?.author?.became_author} </p>
                         </div>
 
                         <h6> Tendance : <span> {profilAuthor.trend}</span></h6>
 
-                        <p className={styles.snippet}> {profilAuthor.author.description}</p>
+                        <p className={styles.snippet}> {profilAuthor?.author?.description}</p>
                     </div>
 
                     <h6 className={styles.topBook}>Tops livres <FireIcon/></h6>
 
                         <div className={styles.rankingGridContainer}>
                             {
-                                profilAuthor.topBooks
-                                    .sort((a,b)=> b.likes - a.likes)
+                                profilAuthor?.topBooks
+                                    ?.sort((a,b)=> b.likes - a.likes)
                                     .map((item,index)=>{
                                         return  (
                                             <FeaturedCategoryPostList
@@ -176,6 +178,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                 </div>
 
             </div>
+        }
 
             <div className={styles.containerS}>
                 <div className={styles.sortContainer}>
@@ -223,8 +226,8 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                         })
                     }
                     {
-                        activeFilter === 'popular' && popular.length !== 0 &&
-                        popular.map((item) => {
+                        activeFilter === 'popular' && popular?.length !== 0 &&
+                        popular?.map((item) => {
                                 return(
                                     <PreviewPost
                                         title={item.title}

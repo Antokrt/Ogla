@@ -10,8 +10,6 @@ const router = useRouter();
 
     // const { langue, setLangue } = useContext(LangueContext);
 
-
-
     return(
         <div className={styles.container}>
             {
@@ -46,7 +44,7 @@ const router = useRouter();
                             <li>Données personnelles</li>
                             <li>Nous rejoindre</li>
                             <li>Conditions générales</li>
-                            <li>© OGLA Tous droits réservés 2022
+                            <li>© OGLA Tous droits réservés 2023
                             </li>
 
                         </ul>

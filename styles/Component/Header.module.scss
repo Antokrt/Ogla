@@ -17,6 +17,7 @@
     display: flex;
 
     h3{
+      cursor: pointer;
       z-index: 2;
       margin-right: 100px;
       font-family: 'Montserrat',sans-serif;
@@ -50,13 +51,12 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      width: 20vw;
+      width: 25vw;
       gap: 230px;
       z-index: 202;
 
     }
     .containerResultSearchBar{
-
       position: absolute;
       top: 8vh;
       background-color: $grey;
@@ -96,7 +96,10 @@
     }
     .accountContainer{
       display: flex;
-      svg{
+      svg {
+        &:hover {
+          color: #e94f37;
+        }
         cursor: pointer;
         width: 25px;
         z-index: 2;
@@ -105,12 +108,17 @@
     }
 
     .imgProfil{
+      &:hover {
+        filter: brightness(0.95);
+      }
       z-index: 2;
       cursor: pointer;
       width: 50px;
       height: 50px;
-      clip-path: circle();
+      border-radius: 25px;
+      // clip-path: circle();
       margin-right: 20px;
+
     }
     .account{
       margin-right: 20px;
@@ -296,7 +304,8 @@ padding-left: 20px;
 }
 
 .activeNav {
-  color: $purpleLight !important;
+  color: #e94f37 !important;
+  // color: $purpleLight !important;
 }
 
 .bNone{

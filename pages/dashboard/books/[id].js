@@ -22,6 +22,7 @@ import {
     ArrowsUpDownIcon,
     ArrowUpIcon,
     ArrowUturnLeftIcon,
+    PencilIcon,
     PlusCircleIcon, QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 import {Capitalize} from "../../../utils/String";

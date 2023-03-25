@@ -1,0 +1,90 @@
+@import "styles/utils/var";
+
+.HeaderResponsive {
+    height: 100vh;
+    position: fixed;
+    box-shadow: 3px 1px 14px 4px rgba(0,0,0,0.42);
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    .HeaderResponsiveClosed {}
+
+    .HeaderResponsiveOpen {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+
+        svg {
+            height: 45px;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .HeaderResponsiveOpenForm {
+            position: relative;
+            display: flex;
+            width: 100%;
+            input {
+                padding: 5px;
+                padding-left: 15px;
+                width: 100%;
+                background-color: rgb(236, 236, 236);
+                border-radius: 20px;
+                font-size: 14px;
+                font-family: "Montserrat", sans-serif;
+                color: $dark;
+            }
+            input::placeholder {
+                font-family: "Montserrat Alternates", sans-serif;
+                color: $brown;
+            }
+            input:focus {
+                outline: none !important;
+            }
+        }
+
+        .HeaderResponsiveOpenSubject {
+            font-family: 'Montserrat';
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            color: rgb(197, 197, 197);
+            margin-bottom: 5px;
+        }
+
+        .HeaderResponsiveOpenMenu {
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            svg {
+                height: 18px;
+                margin-right: 15px;
+            }
+            h3 {
+                font-size: 18px;
+                width: 180px;
+            }
+        }
+
+        .HeaderResponsiveOpenLine {
+            width: 100%;
+            height: 1px;
+            background-color: #e94f37;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+}
