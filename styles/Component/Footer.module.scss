@@ -12,21 +12,24 @@
   flex-direction: column;
   justify-content: center;
   height: 200px;
-  background-color: $purple;
+  background-color: #e94f37;
 
   h5{
     color: white;
     font-size: 18px;
     text-align: center;
-    font-family: "Potta One",sans-serif;
+    font-weight: bold;
+    font-family: "Montserrat Alternates",sans-serif;
   }
   .social{
+    display: flex;
+    gap: 20px;
     margin-top: 30px;
-  .icon{
-    color: white;
-    font-size: 30px;
-    margin: 0px 20px;
-  }
+ svg{
+   cursor: pointer;
+   width: 30px;
+   fill: white!important;
+ }
   }
 }
 

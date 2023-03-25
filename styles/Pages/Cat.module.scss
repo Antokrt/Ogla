@@ -1,5 +1,8 @@
 @import "styles/utils/var";
 
+.container{
+  background-color: white;
+}
 .containerM {
   display: flex;
   flex-direction: column;
@@ -10,8 +13,6 @@
   background-image: url("/assets/blurry.svg");
   background-size: 100%;
   background-repeat: no-repeat;
-
-
 }
 
 .containerCategory{
@@ -43,15 +44,10 @@
       color: #1C232B;
       letter-spacing: 1px;
 
-      .f {
-        text-transform: capitalize;
-      }
     }
   }
 
-  .rankContainer {
-    display: none;
-  }
+
 
   .rankOther {
     display: flex;
@@ -353,6 +349,13 @@
   }
 }
 
+.containerSeeMore{
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
 @media screen and (max-width: 1700px) {
   .card {

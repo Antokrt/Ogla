@@ -10,7 +10,7 @@ const HeaderDashboard = () => {
 
     return(
         <div className={styles.container}>
-            <SMSeachBar width={40}/>
+            <h4>Tableau de bord</h4>
             <div className={styles.sBlock}>
                 <button className={styles.search}><MagnifyingGlassIcon className={styles.bell}/></button>
                 <button className={styles.search}><BellAlertIcon className={styles.bell}/></button>

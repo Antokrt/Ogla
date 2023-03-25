@@ -19,17 +19,35 @@ export const CheckBtn = () => {
 }
 
 export const FilterBtn = ({filter, onclick}) => {
-    const [label, setLabel] = useState('filter');
     return (
         <>
             {
                 filter === 'recent' ?
                     <button onClick={onclick} className={styles.filter}>
-                        Récent
+                        Récent(s)
                         <ArrowsUpDownIcon/>
                     </button> :
                     <button onClick={onclick} className={styles.filter}>
                         Plus ancien(s)
+                        <ArrowsUpDownIcon/>
+                    </button>
+            }
+        </>
+
+    )
+}
+
+export const FilterBtn3 = ({filter, onclick}) => {
+    return (
+        <>
+            {
+                filter === 'recent' ?
+                    <button onClick={onclick} className={styles.filter}>
+                        Récent(s)
+                        <ArrowsUpDownIcon/>
+                    </button> :
+                    <button onClick={onclick} className={styles.filter}>
+                        Populaire(s)
                         <ArrowsUpDownIcon/>
                     </button>
             }

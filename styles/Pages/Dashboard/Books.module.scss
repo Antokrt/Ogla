@@ -4,6 +4,7 @@
   width: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
+  background-color: #faf8f8;
 }
 .containerMain{
   display: flex;
@@ -20,36 +21,70 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 2%;
 }
 
 .headerList{
-  padding: 2% 5%;
+  width: 80%;
+  margin-top: 1%;
+  margin-bottom: 1%;
   h4{
-    font-size: 0.9vw;
+    text-align: center;
+    font-size: 1vw;
     font-family: 'Montserrat',sans-serif;
     font-weight: bold;
-    width: 50%;
-    padding-bottom: 1%;
     color: #1C232B;
-    border-bottom: 1px rgba(28, 35, 43, 0.06) solid;
+  }
+
+}
+
+.sortContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin-bottom: 2%;
+button{
+  padding: 10px 15px;
+}
+  p{
+    font-family: 'Montserrat Alternates',sans-serif;
+    border-radius: 5px;
+    padding: 6px 16px;
+    background-color: rgba(152, 68, 173, 0.21);
+    color: #9844AD;
+    font-size: 14px;
   }
 }
 
-.list{
-  margin-left: 5%;
-  padding: 1% 5% 2% 2%;
-  display: grid;
-  border-radius: 25px;
-  width: 70vw;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 50px;
+.listContainer{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  gap: 10px;
+  flex: 1;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 80%;
 }
 
 .seeMoreContainer{
+  margin-top: 10px;
+  display: flex;
+  padding: 20px 0;
+  justify-content: center;
+  align-items: center;
   z-index: 2;
+  button{
+    font-size: 12px!important;
+  }
 }
 
 .scrollbar{

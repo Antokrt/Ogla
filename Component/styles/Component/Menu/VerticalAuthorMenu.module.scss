@@ -7,15 +7,16 @@
   height: 100%;
   width: 100%;
   z-index: 1;
-  padding-top: 15%;
-  padding-bottom: 10%;
-  background-color: #1C232B;
+  padding-top: 10%;
+  padding-bottom: 5%;
+  background-color: white;
+  box-shadow: $shadow;
 
   .fContainer{
     display: flex;
     flex-direction: column;
     .logo{
-      margin-bottom: 15%;
+      margin-bottom: 10%;
       h3{
         cursor: pointer;
         text-align: center;
@@ -23,32 +24,46 @@
         font-family: 'Montserrat',sans-serif;
         font-weight: bold;
         font-size: 25px;
-        color: white;
+        color: #1C232B;
       }
     }
   }
 
   .navContainer{
-    padding-left: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
     ul{
       display: flex;
       flex-direction: column;
-      gap: 30px;
+
+      gap: 10px;
       li{
         cursor: pointer;
         display: flex;
+        justify-content: start;
+        align-items: center;
         gap: 8%;
-        color: white;
+        color: #54595F;
+        padding: 1.5vh;
+        border-radius: 15px;
         font-family: "Montserrat",sans-serif;
         letter-spacing: 1px;
         font-weight: bold;
-        font-size: 10px;
+        font-size: 0.6vw;
         svg{
+          margin-top: -2px;
           width: 25px;
-          margin-top: -6px;
-          color: white;
+          color: #54595F;
         }
       }
+    }
+  }
+
+  .imgContainer{
+    display: flex;
+    justify-content: center;
+    img{
+      width: 60%;
     }
   }
 
@@ -79,17 +94,17 @@
           display: flex;
           flex-direction: column;
           .name{
-            font-size: 11px;
-            font-family: 'Montserrat Alternates',sans-serif;
+            font-size: 12px;
+            font-family: 'Montserrat',sans-serif;
             font-weight: bold;
-            color: white;
+            color: #686f77;
             letter-spacing: 1px;
           }
           .pseudo{
             font-size: 10px;
             font-weight: bold;
             font-family: 'Poppins',sans-serif;
-            color: white;
+            color: #686f77;
           }
         }
       }
@@ -114,5 +129,14 @@
 }
 
 .bell{
+  color: #54595F;
+}
+
+.activeMenu{
+  background-color: #9844AD!important;
   color: white!important;
+  svg{
+    color: white!important;
+  }
+
 }

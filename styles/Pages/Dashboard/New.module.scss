@@ -285,8 +285,11 @@ background-color: #1C232B;
       font-family: 'Montserrat',sans-serif;
     }
     img{
+      height: 200px;
+      width: 200px;
+      object-fit: 100% 100%;
+      border-radius: 10px;
       box-shadow: $shadow;
-      width: 10vw;
     }
 
     textarea {

@@ -6,14 +6,16 @@ import {
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
-} from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 
 export default function VerticalAuthorMenu() {
 
     const {data: session} = useSession();
+
     const router = useRouter();
+    const isActiveMenuBooks = router.pathname.startsWith('/dashboard/books') || router.pathname.startsWith('/dashboard/chapitre/');
 
 
     return (
@@ -28,11 +30,15 @@ export default function VerticalAuthorMenu() {
                 <div className={styles.navContainer}>
                     <ul>
                         <li onClick={() => router.push('/dashboard')}> <HomeIcon/> Accueil  </li>
-                        <li onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon/>Livres</li>
-                        <li onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon/>Nouveau</li>
+                        <li className={ isActiveMenuBooks  && styles.activeMenu} onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon/>Livres</li>
+                        <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon/>Nouveau</li>
                         <li onClick={() => router.push('/dashboard/notifications')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
                     </ul>
                 </div>
+            </div>
+
+            <div className={styles.imgContainer}>
+                <img src={'/assets/jim/cool2.png'}/>
             </div>
 
             <div className={styles.sContainer}>

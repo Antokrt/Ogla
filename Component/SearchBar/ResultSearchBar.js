@@ -4,11 +4,11 @@ import {TagIcon} from "@heroicons/react/24/solid";
 import {useRouter} from "next/router";
 
 
-const ResultSearchBar = ({  destroy, query,data}) => {
+const ResultSearchBar = ({destroy, query, data}) => {
 
-const router = useRouter();
+    const router = useRouter();
 
-    const titleHeader = (type,number) => {
+    const titleHeader = (type, number) => {
         return (
             <div className={styles.titleHeader}>
                 <h5>{type} ({number})</h5>
@@ -20,20 +20,21 @@ const router = useRouter();
     return (
         <div className={styles.resultContainer}>
             {
-              data &&
+                data &&
                 <>
                     {
                         data?.books.length > 0 &&
                         <>
-                            {titleHeader('Livre(s)' ,data.books.length)}
+                            {titleHeader('Livre(s)', data.books.length)}
                             {
-                                data.books.map((item,index) => {
+                                data.books.map((item, index) => {
                                     return (
                                         <div
                                             onClick={() => {
                                                 router.push({
-                                                    pathname:'/livre/'+ item._id,
-                                                    query:item.slug                                        })
+                                                    pathname: '/livre/' + item._id,
+                                                    query: item.slug
+                                                })
                                             }}
                                             className={styles.itemResult}>
                                             <p className={styles.title}>{item.title}</p>
@@ -52,14 +53,14 @@ const router = useRouter();
                     {
                         data?.authors.length > 0 &&
                         <>
-                            {titleHeader('Auteur(s)' ,data?.authors.length)}
+                            {titleHeader('Auteur(s)', data?.authors.length)}
                             {
-                                data?.authors.map((item,index) => {
+                                data?.authors.map((item, index) => {
                                     return (
                                         <div
                                             onClick={() => {
                                                 router.push({
-                                                    pathname:'/auteur/'+ item._id,
+                                                    pathname: '/auteur/' + item._id,
                                                 })
                                             }}
                                             className={styles.itemResult}>
@@ -75,12 +76,11 @@ const router = useRouter();
                     }
 
 
-
                 </>
-                  /*  :
-                    <div className={styles.errContainer}>
-                        <h5><span>Oh non ! </span> <br/> La recherche ne donne rien...</h5>
-                    </div>*/
+                /*  :
+                  <div className={styles.errContainer}>
+                      <h5><span>Oh non ! </span> <br/> La recherche ne donne rien...</h5>
+                  </div>*/
             }
 
         </div>

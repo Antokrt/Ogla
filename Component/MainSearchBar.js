@@ -1,11 +1,11 @@
 import styles from "../styles/Component/Searchbar.module.scss";
 import {useEffect, useState} from "react";
-import {router} from "next/router";
+import {router, useRouter} from "next/router";
 import { SearchBarService} from "../service/Search/SearchService";
 
 export default function MainSearchBar({data,submit,width,height,query,search}) {
 
-
+    const router = useRouter();
 
     return (
         <div style={{

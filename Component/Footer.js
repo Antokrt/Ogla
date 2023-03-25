@@ -3,6 +3,10 @@ import Link from "next/link";
 import React, {useContext, useState} from "react";
 import {useRouter} from "next/router";
 import {LangueContext} from "../utils/context";
+import Facebook from "./layouts/Icons/Social/facebook";
+import Instagram from "./layouts/Icons/Social/instagram";
+import Twitter from "./layouts/Icons/Social/twitter";
+import DiscordIcon from "./layouts/Icons/Social/discord";
 
 
 export default function Footer(){
@@ -17,8 +21,13 @@ const router = useRouter();
             {
                 router.pathname === "/" &&
                 <div className={styles.socialLinks}>
-                    <h5>Laisse écrire l'auteur qui est en toi</h5>
+                    <h5>Rejoins nous sur Discord</h5>
                     <div className={styles.social}>
+                        <Facebook/>
+                        <Instagram/>
+                        <Twitter/>
+                        <DiscordIcon/>
+
                     </div>
                 </div>
             }

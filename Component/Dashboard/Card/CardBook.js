@@ -1,32 +1,43 @@
-import styles from '../../../styles/Component/Dashboard/Card/CardBook.module.scss';
-import {ChevronDoubleUpIcon, FireIcon} from "@heroicons/react/24/solid";
-import {PencilIcon} from "@heroicons/react/24/outline";
+import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboard.module.scss';
+import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
+
 import {useRouter} from "next/router";
+import {Capitalize} from "../../../utils/String";
+import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
 
 
-const CardBook = ({image, title, nbChapter, id, likes}) => {
-const router = useRouter();
+export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date, nbView}) => {
+    const router = useRouter();
+
+    const catClassName = 'style.'+category;
     return (
-    <div
-        onClick={() => {
-            router.push('/dashboard/books/'+ id)
-        }}
-        className={styles.container}>
-        <div className={styles.thumbnail}>
-            <FireIcon/>
-        </div>
-        <img src={'http://localhost:3008/public/book/' + image}/>
-        <div className={styles.contentContainer}>
-            <h6>{title}</h6>
-            <div>
-                <p>{nbChapter} chapitre(s)</p>
-                <p className={styles.likes}> <span>{likes}</span>LIKE(S)</p>
+        <div className={styles.container} onClick={() => {
+            router.push({
+                pathname: '/dashboard/books/' + id,
+            })
+        }}>
+            <div
+                className={styles.containerImg}>
+                <img src={img}/>
+            </div>
 
+            <div className={styles.thumbnail}>
+                {likes}
+               <HeartIcon/>
+            </div>
+            <div className={styles.containerLabel}>
+                <div className={styles.label}>
+                    <div className={styles.title}>
+                        <h6>{title}</h6>
+                        <span className={styles[category]}>{Capitalize(category)}</span>
+                    </div>
+                    <p> <span className={styles.date}>Depuis le {FormatDateStr(date)}</span> </p>
+                </div>
+                <div className={styles.stats}>
+                    <h7>{nbChapter}  <span> chapitre(s)</span></h7>
+                    <p>{nbView} vue(s) totale(s) - {likes} like(s)</p>
+                </div>
             </div>
         </div>
-
-    </div>
-)
+    )
 }
-
-export default CardBook;

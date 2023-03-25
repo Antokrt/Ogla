@@ -1,6 +1,7 @@
 import { NextResponse} from "next/server";
 import {getToken} from "next-auth/jwt";
 import {getSession} from "next-auth/react";
+import {GetCategory} from "./pages/api/utils/Category";
 
 export async function middleware(req){
 
@@ -18,6 +19,13 @@ export async function middleware(req){
 
     if (req.nextUrl.pathname.startsWith('/profil') && !token) {
         return NextResponse.redirect(new URL('/', req.url))
+    }
+
+
+
+    if (req.nextUrl.pathname.startsWith('/cat/') && !GetCategory().includes(req.nextUrl.pathname.split('/cat/')[1])) {
+        console.log(req.nextUrl.pathname.split('/cat/')[1])
+        return NextResponse.redirect(new URL('/cat/', req.url));
     }
 
 /*    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {

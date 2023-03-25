@@ -14,49 +14,47 @@ import {getSession, useSession} from "next-auth/react";
 
 import {CardBookPublic} from "../../Component/Card/CardBook";
 import {GetAuthorProfilAPI} from "../api/Author";
-import {GetBookByCategoryApi} from "../api/book";
-import {Capitalize} from "../../utils/String";
+import {GetBookByCategoryApi, GetOneBookApi} from "../api/book";
 import {GetBooksWithCategoryService} from "../../service/Book/BookService";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
-import {LoaderCommentary} from "../../Component/layouts/Loader";
+import {Loader1, Loader2, LoaderCommentary} from "../../Component/layouts/Loader";
+import {Capitalize} from "../../utils/String";
+import {ErrModal} from "../../Component/Modal/ErrModal";
 import ErrMsg from "../../Component/ErrMsg";
 import HotPost from "../../Component/Post/HotPost";
 
-export async function getServerSideProps({req,params}){
-
-    let category = params.id;
+export async function getServerSideProps({req, params}) {
+    let category = 'popular';
 
     const data = await GetBookByCategoryApi(category, 'popular');
 
 
     return {
         props: {
-            key:category,
             err: data.err,
-            cat:category,
             bookListData: data.book
         }
     }
 }
 
-export default function CatPage({cat,err,bookListData}) {
+export default function CatPage({cat, err, bookListData}) {
 
     const router = useRouter();
     const [filter, setFilter] = useState('popular');
     const [page, setPage] = useState(2);
     const {data: session} = useSession();
-    const [bookList,setBookList] = useState(bookListData);
-    const [canSeeMore,setCanSeeMore] = useState(true);
-    const [loadingScroll, setLoadingScroll] =useState(false);
+    const [bookList, setBookList] = useState(bookListData);
+    const [canSeeMore, setCanSeeMore] = useState(true);
+    const [loadingScroll, setLoadingScroll] = useState(false);
 
-    useEffect(() =>  {
-        console.log({bookListData,err});
-    },[])
+    useEffect(() => {
+        console.log({bookListData, err});
+    }, [])
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
         setCanSeeMore(true);
-        GetBooksWithCategoryService(cat,filter,1)
+        GetBooksWithCategoryService('popular', filter, 1)
             .then((res) => {
                 setBookList(res);
             })
@@ -70,17 +68,16 @@ export default function CatPage({cat,err,bookListData}) {
     const loadMoreBooks = () => {
         setLoadingScroll(true);
         setCanSeeMore(false);
-        GetBooksWithCategoryService(cat,filter,page)
+        GetBooksWithCategoryService('popular', filter, page)
             .then((res) => {
-                if(res.length !== 0){
-                    setBookList((prevState)=> [
+                if (res.length !== 0) {
+                    setBookList((prevState) => [
                         ...prevState,
                         ...res
                     ]);
                     setCanSeeMore(true);
                     setPage(page + 1);
-                }
-                else{
+                } else {
                     setCanSeeMore(false);
                 }
             })
@@ -96,10 +93,18 @@ export default function CatPage({cat,err,bookListData}) {
             {
                 !err && bookListData &&
                 <div className={styles.containerM}>
-
+                    <div className={styles.hotContainer}>
+                        <HotPost className={styles.hotItem}
+                                 likes={bookList[0].likes}
+                                 title={"Livre 2"} nbChapter={205} author={"ThomasK"}
+                                 img={"/assets/livre1.jpg"} category={"Horreur"}
+                                 description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
+                                     "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
+                                     "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
+                        />
+                    </div>
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>
-
                             <div className={styles.headerRanking}>
                                 {
                                     cat === undefined &&
@@ -138,43 +143,48 @@ export default function CatPage({cat,err,bookListData}) {
                             </div>
                             {
                                 !err && bookListData &&
-                                <div className={styles.card}>
+                                <>
+                                    <div className={styles.card}>
+                                        {
+                                            bookList.map((item, index) => {
+                                                return (
+                                                    <CardBookPublic
+                                                        slug={item.slug}
+                                                        id={item._id}
+                                                        title={item.title}
+                                                        snippet={item.summary}
+                                                        like={item.likes}
+                                                        category={Capitalize(item.category)}
+                                                        author={item.author_pseudo}
+                                                        img={item.img}/>
+                                                )
+                                            })
+                                        }
+                                    </div>
+
                                     {
-                                        bookList.map((item,index) => {
-                                            return (
-                                                <PreviewPost title={item.title}
-                                                             snippet={item.summary}
-                                                             like={item.likes}
-                                                             category={item.category}
-                                                             author={item.author_pseudo}
-                                                             nbChapter={item.nbChapters}
-                                                             img={item.img}/>
-                                            )
-                                        })
+                                        canSeeMore && !loadingScroll &&
+                                        <div className={styles.containerSeeMore}>
+                                            <TextSeeMore onclick={() => loadMoreBooks()}/>
+                                        </div>
                                     }
-                                </div>
 
-                            }
-                            {
-                                canSeeMore && !loadingScroll && bookList.length !== 0 &&
-                                <div className={styles.containerSeeMore}>
-                                    <TextSeeMore onclick={() => {
-                                        loadMoreBooks();
-                                    }}/>
-                                </div>
+                                    {
+                                        loadingScroll &&
+                                        <div className={styles.containerSeeMore}>
+                                            <LoaderCommentary/>
+                                        </div>
+                                    }
+                                </>
                             }
 
-                            {
-                                loadingScroll &&
-                                <div className={styles.containerSeeMore}>
-                                    <LoaderCommentary/>
-                                </div>
-                            }
 
                         </div>
                     </div>
                 </div>
+
             }
+
             {
                 err &&
                 <ErrMsg text={'Impossible de récupérer les livres, veuillez réessayer...'}/>

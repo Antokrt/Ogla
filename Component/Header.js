@@ -48,6 +48,11 @@ export default function Header() {
         search();
     }, [query]);
 
+    useEffect(() => {
+        setQuery('');
+        setSearchValue('');
+    },[router])
+
 
     const comments = useSelector(selectComments);
     const dispatch = useDispatch();
@@ -55,13 +60,14 @@ export default function Header() {
         <div className={styles.container}>
             <div className={styles.mainA}>
                 <h3>OGLA</h3>
+                <p>{query}</p>
                 <nav>
                     <ul>
                         <li><Link href="/"><a
                             className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
                         <li><Link href=
                                       {{
-                                          pathname: "/Category",
+                                          pathname: "/cat/",
                                       }}
                         ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
                         </li>
@@ -100,18 +106,18 @@ export default function Header() {
                             }}
                             search={query}
                             submit={() => {
-                                setSearchValue("")
+                                setSearchValue('');
                             }}
                             height={50}
                             width={100}/>
 
                         {
-                            query !== "" && data &&
+                            query !== '' && data &&
                             <div className={styles.containerResultSearchBar}>
                                 <ResultSearchBar
-                                    searchBtn={() => setSearchValue("")}
+                                    searchBtn={() => setSearchValue('')}
                                     destroy={() => {
-                                        setSearchValue("")
+                                        setSearchValue('')
                                     }}
                                     search={searchValue}
                                     query={query}
@@ -125,6 +131,7 @@ export default function Header() {
                                         })}
                                         className={styles.searchP}>Chercher <MagnifyingGlassIcon/></p>
                                     <p onClick={() => {
+
                                         setSearchValue('')
                                         setQuery('')
                                     }}>Fermer</p>

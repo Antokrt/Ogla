@@ -6,61 +6,55 @@ import {ChevronDoubleUpIcon} from "@heroicons/react/24/solid";
 import {DocumentTextIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import Like from "../layouts/Icons/Like";
 import IconChapter from "../layouts/Icons/Chapter";
+import {CountLike} from "../layouts/Btn/Like";
+import {Capitalize} from "../../utils/String";
 
 
 const PreviewPost = ({title, snippet, like, category, author, nbChapter ,img, slug,id}) => {
 
 
-const router = useRouter();
+    const router = useRouter();
 
-return (
-    <div className={styles.container}
-    onClick={() => {
-router.push({
-    pathname:'/livre/'+ id,
-    query:slug
-})
-    }}
-    >
-        <div className={styles.thumbnail}>
-<p>{category}</p>
-        </div>
-<div className={styles.image}>
-    <img src={img}/>
-</div>
-        <div className={styles.content}>
-            <h5>{title}</h5>
-            <p className={styles.snippet}>{snippet}</p>
-            <div className={styles.stats}>
+    const goToCategory = (link,query) => {
+        router.push(
+            {
+                pathname:link,
+                query:{cat:props.category}
+            }
 
-                <div>
-                    {
-                        router.pathname !== "/auteur/[id]" ?
-                        <p title={"Découvrez " + author} className={styles.author} style={{
-                            cursor:"pointer"
-                        }}
-                        onClick={() => {
-                        router.push('/User/'+ author)
-                        }
-                        }
-                        >@{author}</p>
-                        :
-                            <p className={styles.author}>@{author}</p>
-                    }
-                </div>
+        )
+    }
 
+    return (
+        <div className={styles.container}
+             onClick={() => {
+                 router.push({
+                     pathname: '/livre/' + id,
+                     query: slug
+                 })
+             }}
+        >
 
-                <div>
-                    <p className={styles.like}>{like} </p>
-                    <HeartIcon/>
-                </div>
-
+            <div className={styles.snippet}>
+                <h7>{title}</h7>
+<p>{Capitalize(snippet)}</p>
             </div>
+            <div className={styles.containerImg}>
+                <img src={img}/>
+            </div>
+
+            <div className={styles.containerTitle}>
+                <h5>{title}</h5>
+                <p> Résumé</p>
+            </div>
+
+            <div className={styles.thumbnailDiscover}>
+                <CountLike like={like}/>
+            </div>
+
+
         </div>
-
-
-    </div>
-)
+    );
 }
 
 export default PreviewPost;

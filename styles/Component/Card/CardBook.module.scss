@@ -2,17 +2,69 @@
 .container{
   display: flex;
   flex-direction: column;
+  position: relative;
   cursor: pointer;
   gap: 15px;
-  height: 270px;
-  width: 180px;
+  height: 300px;
+  width: 200px;
+
+  .thumbnaiLike{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    background-color: #e94f37;
+    box-shadow: $shadow;
+    padding: 5px 12px;
+border-radius: 4px;
+    p{
+      font-size: 10px;
+      font-family: 'Montserrat',sans-serif;
+      color: white;
+    }
+    svg{
+      width: 15px;
+      color: white;
+    }
+  }
+
+
   .containerImg{
+/*    &:hover{
+      &:before{
+        opacity: 0;
+        transition: 0.2s opacity;
+      }
+      .thumbnaiLike{
+        transition: 0.1s;
+      }
+    }*/
+    &:before{
+      transition: 0.2s;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.69));
+      opacity: 1;
+      border-radius: 10px;
+    }
+
     position: relative;
     border-radius: 10px;
-    background-size: cover!important;
     box-shadow: 5px 3px 4px rgba(100, 96, 96, 0.44);
-    height: 80%;
-
+    height: 200px;
+    width: 200px;
+    img{
+      height: 100%;
+      width: 100%;
+      border-radius: 12px;
+      object-fit: 100% 100%;
+    }
 
     h4{
       &:first-letter{
@@ -41,6 +93,11 @@
     h5{
       font-size: 14px;
       font-family: 'Montserrat',sans-serif;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
       font-weight: bold;
       letter-spacing: 0px;
       text-transform: capitalize;
@@ -79,3 +136,6 @@ display: flex;
     }
   }
 }
+
+
+
