@@ -14,6 +14,7 @@ import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {GetAuthorProfilAPI} from "../api/Author";
 import {FormatDateNb} from "../../utils/Date";
 import {GetBooksByAuthor} from "../../service/Author";
+import {CardBookPublic} from "../../Component/Card/CardBook";
 
 
 export async function getServerSideProps({params}){
@@ -183,7 +184,6 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                     <div className={styles.containerS}>
                         <div className={styles.sortContainer}>
                             <h3>Trier par </h3>
-                            <MainSearchBar width={50} height={50}/>
                             <div>
                                 <button
                                     className={activeFilter === 'popular'  && styles.activeBtn}
@@ -211,7 +211,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                                 activeFilter === 'recent' && recent.length !== 0 &&
                                 recent.map((item) => {
                                     return(
-                                        <PreviewPost
+                                        <CardBookPublic
                                             title={item.title}
                                             category={item.category}
                                             author={profilData.pseudo}
@@ -229,7 +229,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                                 activeFilter === 'popular' && popular.length !== 0 &&
                                 popular.map((item) => {
                                     return(
-                                        <PreviewPost
+                                        <CardBookPublic
                                             title={item.title}
                                             category={item.category}
                                             author={profilData.pseudo}

@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
+import {TextSeeMore} from "../layouts/Btn/ActionBtn";
 
 
 const SidebarChapter = ({
@@ -151,12 +152,17 @@ const SidebarChapter = ({
 
                 );
             })}
-            {
-                !loadingScroll && canSeeMore &&
+
                 <div className={styles.seeMore}>
-                    <button onClick={() => getMoreChapter()}><ArrowDownIcon/></button>
+                    {
+                        canSeeMore && !loadingScroll &&
+                        <TextSeeMore onclick={() => getMoreChapter()}/>
+                    }
+                    {
+                        loadingScroll &&
+                        <LoaderCommentary/>
+                    }
                 </div>
-            }
         </div>
 
     </div>)

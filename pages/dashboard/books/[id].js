@@ -334,8 +334,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                     </div>
                                     <div className={styles.contentContainer}>
                                         <div>
-                                            <p className={styles.label}>Catégorie :</p>
-                                            <p className={styles.value}>{Capitalize(book.category)}</p>
+                                            <span className={styles[book.category] + ' ' + styles.cat}>{Capitalize(book.category)}</span>
                                         </div>
                                         {
                                             lastChapter &&

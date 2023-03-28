@@ -28,6 +28,9 @@ const Commentary = ({pseudo,
                         deleteAanswer,
     nbAnswers,
     seeMoreAnswers,
+    authorHasLike,
+    authorImg,
+    authorPseudo,
                         answerPage,
                     newAnswerPage
                     }) => {
@@ -66,8 +69,12 @@ const Commentary = ({pseudo,
         <div className={styles.container}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
+
                     <img referrerPolicy="no-referrer" src={img}/>
                 </div>
+
+
+
 
 
                 <div className={styles.contentCommentContainer}>
@@ -78,6 +85,8 @@ const Commentary = ({pseudo,
                             className={styles.trash}/>
                     }
 
+
+
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo}  <span>{FormatDateFrom(date)}</span></h8>
 
@@ -85,6 +94,8 @@ const Commentary = ({pseudo,
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
                     </p>
+
+                    {}
 
                     {
                         tooLong &&
@@ -117,26 +128,41 @@ const Commentary = ({pseudo,
                     </div>
 
                     <div className={styles.replyContainer}>
-                        <button className={styles.showReplyBtn}
-                                onClick={() => setOpenSubCategory(!openSubCategory)}>
+                        <div className={styles.show}>
+                            <button className={styles.showReplyBtn}
+                                    onClick={() => setOpenSubCategory(!openSubCategory)}>
+                                {
+                                    answers?.length <= 0 ?
+                                        <> Répondre</> :
+                                        <>Voir les réponses</>
+                                }
+                                {
+                                    openSubCategory &&
+                                    <ArrowUpIcon/>
+                                }
+                                {
+                                    !openSubCategory &&
+                                    <ArrowDownIcon/>
+                                }
+                            </button>
+
                             {
-                                answers?.length <= 0 ?
-                                <> Répondre</> :
-                                    <>Voir les réponses</>
+                                authorHasLike && session.user.pseudo !== authorPseudo &&
+                                <div className={styles.likeAuthor}>
+
+                                    <img src={authorImg} referrerPolicy={'no-referrer'}/>
+                                    <HeartIcon className={styles.like}/>
+
+                                </div>
                             }
-                            {
-                                openSubCategory &&
-                                <ArrowUpIcon/>
-                            }
-                            {
-                                !openSubCategory &&
-                                <ArrowDownIcon/>
-                            }
-                        </button>
+
+                        </div>
+
 
                         {
                             openSubCategory &&
                             <div className={styles.containerSubCommentary}>
+
                                 {
                                     session ?
                                     <textarea

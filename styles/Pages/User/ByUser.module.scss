@@ -320,8 +320,8 @@ display: flex;
         border-radius: 20px;
         padding: 10px 15px;
         font-family: "Potta One",sans-serif;
-        border: solid 1px $purple;
-        color: $purple;
+        border: solid 1px #9844AD;
+        color: #9844AD;
       }
     }
   }
@@ -341,13 +341,13 @@ display: flex;
 .seeMore{
   cursor: pointer;
   color: #9844AD;
-  font-family: 'Montserrat';
+  font-family: 'Montserrat',sans-serif;
   font-size: 12px;
 }
 
 .activeBtn{
   transition: 0.1s;
-  background-color: #635291 !important;
+  background-color: #9844AD !important;
   color: #fcfaf7 !important;
 }
 

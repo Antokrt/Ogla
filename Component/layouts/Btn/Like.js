@@ -1,7 +1,10 @@
 import styles from '../../../styles/Layouts/Btn/Like.module.scss';
 import {HeartIcon} from "@heroicons/react/24/solid";
+import {HeartIcon as HeartOutline} from "@heroicons/react/24/outline";
+
 import {ChevronDoubleUpIcon, HandThumbUpIcon as NotLikeIcon} from "@heroicons/react/24/outline";
 import {HandThumbUpIcon as LikeIcon} from "@heroicons/react/24/solid";
+import {useEffect, useState} from "react";
 
 export const LikeBtn = ({isLike, onLike}) => {
     return (
@@ -16,14 +19,33 @@ export const LikeBtn = ({isLike, onLike}) => {
 }
 
 export const LikeBtnSidebar = ({isLike, onLike}) => {
-    return (
-        <div
-            onClick={onLike}
-            className={styles.likeSidebar}>
 
-            <HeartIcon className={isLike === true ? styles.active : styles.disabled}/>
+    const [startAnim, setStartAnim] = useState(false);
+
+    useEffect(() => {
+        if (startAnim) {
+            // Déclencher l'animation
+            const animationTimeout = setTimeout(() => {
+                setStartAnim(false);
+            }, 1000);
+
+            return () => {
+                clearTimeout(animationTimeout);
+            };
+        }
+    }, [startAnim]);
+
+    return (
+        <div className={styles.likeButtonSidebar} onClick={() => {
+            if(!isLike){
+                setStartAnim(!startAnim);
+            }
+            onLike();
+        }}>
+            <HeartIcon className={`${styles.heart} ${isLike ? styles.liked : ''}`}>  </HeartIcon>
+            { startAnim && <div className={styles.animation}></div>}
         </div>
-    )
+    );
 }
 
 export const CountLike = ({like}) => {

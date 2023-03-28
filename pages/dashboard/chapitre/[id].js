@@ -195,7 +195,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                     onClick={() => router.push('/dashboard/books/' + book._id)}
                                 >{book?.title}</h6>
                                 <ChevronRightIcon className={styles.arrow}/>
-                                <p>Nouveau Chapitre</p>
+                                <p>Nouveau chapitre</p>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <p><span>{index}</span></p>
                             </div>
@@ -299,10 +299,11 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                     <h3>{bookData?.title}</h3>
                                 </div>
                                 <div className={styles.summary}>
-                                    <p>"{bookData?.summary}"</p>
+                                    <p>"{Capitalize(bookData?.summary)}"</p>
                                 </div>
 
                                 <div className={styles.statsPresentation}>
+                                    <img src={'/assets/jim/cool2.png'}/>
                                     <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
                                         d'écriture...</h6>
                                     <p>Cliquez ici pour en savoir plus !</p>

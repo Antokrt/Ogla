@@ -6,7 +6,7 @@
   position: fixed;
   bottom: 0;
   background-color: #1C232B;
-  padding: 10px 2%;
+  padding: 15px 2%;
   height: 8vh;
   box-shadow: 2px 1px 10px 3px rgba(28, 35, 43, 0.8);
   width: 100%;
@@ -36,10 +36,10 @@ h7{
   color: $white;
   font-family: "Montserrat Alternates",sans-serif;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 11px;
 }
     p{
-font-size: 11px;
+font-size: 10px;
       font-family: "Montserrat";
       color: $white;
       span{
@@ -75,11 +75,11 @@ font-size: 11px;
     gap: 10px;
     svg{
       color: white;
-      width: 20px;
+      width: 18px;
     }
     p{
       color: white;
-      font-size: 10px;
+      font-size: 9px;
       font-family: 'Montserrat',sans-serif;
     }
   }
@@ -100,8 +100,7 @@ display: flex;
     justify-content: center;
   }
   svg{
-    width: 40px;
-    height: 25px;
+    width: 20px;
     color: $grey;
     margin-bottom: 5px;
 

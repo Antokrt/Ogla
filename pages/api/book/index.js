@@ -11,6 +11,7 @@ export async function GetOneBookApi(id) {
     return {
         book: booksJson.book,
         chapter: booksJson.chapter,
+        author:booksJson.author,
         err: bookErrData
     };
 }

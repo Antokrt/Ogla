@@ -47,9 +47,7 @@ export default function CatPage({cat, err, bookListData}) {
     const [canSeeMore, setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
 
-    useEffect(() => {
-        console.log({bookListData, err});
-    }, [])
+
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);

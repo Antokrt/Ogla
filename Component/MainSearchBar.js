@@ -29,7 +29,7 @@ export default function MainSearchBar({data,submit,width,height,query,search}) {
                     autoComplete={'off'}
                     onChange={(e) => {
                     query(e.target.value);
-                }} type="text" name={"searchbar"} placeholder="Cherchez un livre"/>
+                }} type="text" name={"searchbar"} placeholder="Chercher un livre"/>
             </form>
         </div>
 

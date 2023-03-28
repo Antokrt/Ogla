@@ -5,7 +5,7 @@ const SMSeachBar = (props) => {
         <form className={styles.container} style={{
             width:props.width+"%"
         }}>
-            <input type="text" placeholder="Cherchez un livre..."/>
+            <input type="text" placeholder="Chercher un livre..."/>
         </form>
 
     )

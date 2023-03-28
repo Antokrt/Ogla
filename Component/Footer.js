@@ -65,7 +65,7 @@ const router = useRouter();
 
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>
-                <p>Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous. Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
+                <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
 
                     <p></p>
                 </div>

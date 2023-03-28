@@ -22,10 +22,12 @@ import {
 } from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {FilterBtn} from "../../Component/layouts/Btn/ActionBtn";
+import {FilterBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoginModal} from "../../Component/Modal/LoginModal";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
+import CardCategory from "../../Component/Card/CardCategory";
+import {LoaderCommentary} from "../../Component/layouts/Loader";
 
 
 export async function getServerSideProps({req, params}) {
@@ -35,7 +37,11 @@ export async function getServerSideProps({req, params}) {
         const hasLikeJson = await VerifLikeApi(req, 'book', data.book._id);
         return {
             props: {
-                err: false, bookData: data?.book, chapterData: data?.chapter, hasLikeData: hasLikeJson
+                err: false,
+                bookData: data?.book,
+                chapterData: data?.chapter,
+                hasLikeData: hasLikeJson,
+                authorData: data?.author
             }
         }
     } else {
@@ -48,7 +54,7 @@ export async function getServerSideProps({req, params}) {
 }
 
 
-const Post = ({bookData, chapterData, err, hasLikeData}) => {
+const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     const router = useRouter();
     const {data: session} = useSession();
@@ -67,18 +73,14 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const [pageChapter, setPageChapter] = useState(2);
     const [canScroll, setCanScroll] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
-    const [loadingScrollChapterSidebar, setLoadingScrollChapterSidebar] = useState(false);
-    const [canScrollChapterSidebar, setCanScrollChapterSidebar] = useState(false);
-    const [pageChapterSideBar, setPageChapterSideBar] = useState(2);
+    const [loadingScrollChapterList,setLoadingScrollChapterList] = useState(false);
     const [chapterList, setChapterList] = useState(chapterData);
-    const [chapterListSidebar, setChapterListSidebar] = useState(chapterData)
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
-    const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
-    const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
+    const [snippetTooBig,setSnippetTooBig] = useState(bookData.summary.length > 500);
 
-    const modalState = useSelector(selectLoginModalStatus);
     const dispatch = useDispatch();
+
 
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
@@ -104,7 +106,6 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
-                console.log(comments)
                 if (comments.length === 0 && canScroll) {
                     getComment(pageComment, 1);
                     if (session) {
@@ -128,6 +129,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                         seeMore={() => getComment(pageComment)}
                         sendANewAnswer={(data) => sendAnswer(data)}
                         deleteAnswer={(id) => deleteAnswer(id)}
+                        authorImg={authorData?.img}
                         likeAnswer={(id) => likeAnswer(id)}
                         newPageAnswer={(id) => loadMoreAnswer(id)}
                         type={'book'}
@@ -204,6 +206,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
     }
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
+        setLoadingScrollChapterList(true);
         GetChapterListService(bookData._id, filter, page)
             .then((res) => {
                 if (res.length !== 0) {
@@ -213,6 +216,8 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     setCanSeeMore(false);
                 }
             })
+            .then(() => setLoadingScrollChapterList(false))
+            .catch(() => setLoadingScrollChapterList(false));
     }
 
     const likeBook = () => {
@@ -227,8 +232,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     }
                 })
                 .catch((err) => console.log(err));
-        }
-        else {
+        } else {
             dispatch(setActiveModalState(true));
         }
     }
@@ -274,8 +278,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     if (res.data.length > 0) {
                         target.answersPage += 1;
                         target.answers = [...target.answers, ...res.data];
-                    }
-                    else{
+                    } else {
                         target.seeMoreAnswers = false;
                     }
                 })
@@ -295,28 +298,7 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
                     <div className={styles.img}>
                         <img src={bookData?.img}/>
                     </div>
-                    {bookData._id}
-                    <div className={styles.btnContainer}>
-                        <div className={styles.btnItem}>
-                            <DocumentTextIcon/>
-                            <p>{bookData.nbChapters} chapitre(s)</p>
-                        </div>
-                        <div
-                            className={styles.btnItem}>
-                            <HeartIcon/>
-                            <p>{likes} likes</p>
-                        </div>
 
-
-                        <div
-                            className={styles.btnItem}>
-                            <ChatBubbleBottomCenterTextIcon/>
-                            <p>{nbCommentary} commentaire(s)</p>
-
-                        </div>
-
-
-                    </div>
 
                     <div className={styles.btnRead}>
                         {
@@ -339,11 +321,27 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
                 <div className={styles.chapterContainer}>
                     <div className={styles.infoContainer}>
-                        <h4> {bookData?.category} | Par : <span onClick={() => {
-                            router.push("/auteur/" + bookData?.author_pseudo)
-                        }}>{bookData?.author_pseudo}</span></h4>
+                        <div className={styles.infosBook} onClick={() => router.push({
+                            pathname: '/auteur/' + authorData.pseudo
+                        })}>
+                            <div className={styles.authorInfos}>
+                                <p>Par <span>{authorData.pseudo}</span></p>
+                                <img src={authorData.img}/>
+                            </div>
+
+                            <CardCategory category={bookData?.category}/>
+
+                        </div>
                         <h3>{bookData?.title}</h3>
-                        <p className={styles.snippet}> {bookData?.summary}</p>
+                        <p className={snippetTooBig ? styles.snippet + ' ' + styles.cutSummary : styles.snippet}> {bookData?.summary}
+                        </p>
+                        {
+                            snippetTooBig ?
+                            <span className={styles.seeMore} onClick={() => setSnippetTooBig(false)} > Voir le résumé complet  </span>
+                                :
+                                <span className={styles.seeMore} onClick={() => setSnippetTooBig(true)} > Masquer  </span>
+
+                        }
                         <div className={styles.btnFilter}>
                             <FilterBtn filter={activeFilterList} onclick={() => {
                                 if (activeFilterList === 'order') {
@@ -392,10 +390,17 @@ const Post = ({bookData, chapterData, err, hasLikeData}) => {
 
                             )
                         })}
-                        {canSeeMoreChapter && <p className={styles.seeMore}
-                                                 onClick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}>Voir
-                            plus</p>}
-
+                        <div className={styles.seeMoreContainer}>
+                            {
+                                canSeeMoreChapter && !loadingScrollChapterList &&
+                                <TextSeeMore
+                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
+                            }
+                            {
+                                loadingScrollChapterList &&
+                                <LoaderCommentary/>
+                            }
+                        </div>
                     </div>
                 </div>
 

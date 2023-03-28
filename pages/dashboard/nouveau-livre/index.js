@@ -200,7 +200,10 @@ const New = () => {
     const thirdStep = () => {
         return (
             <div className={styles.finalContainer}>
+                {
+                    localImg &&
                     <img src={localImg}/>
+                }
                     <h4>{title}</h4>
                 <p>{category}</p>
 

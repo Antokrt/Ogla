@@ -30,17 +30,16 @@ export default function Banner() {
                             <h1>Bienvenue <span><strong>{Capitalize(session.user?.pseudo)}</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
-                                lecture de <strong>livres</strong> <strong>d'histoires</strong> ou
-                                de <strong>romans</strong> ouverte à tous. Nous voulons que vous vous assuriez que
-                                personne
-                                ne puisse jamais vous empêcher d’écrire <strong>votre histoire </strong> parce que nous
+                                lecture de <strong>textes</strong> ou
+                                de <strong>romans</strong> ouverte à tous. Grâce à Ogla, personne
+                                ne vous empêchera d’écrire <strong>votre histoire </strong> parce que nous
                                 croyons au pouvoir des <strong>mots</strong>.</p>
                         </>
                         :
 
                         <>
                         
-                            <h1>Partagez vos histoires au monde entier avec <span><strong>OGLA</strong></span></h1>
+                            <h1>Partagez vos histoires avec le monde entier grâce à <span><strong>OGLA</strong></span></h1>
                             <p className={styles.presentation}><span
                                 className={styles.bold}><strong>OGLA</strong></span> est une plateforme d’écriture et de
                                 lecture de <strong>livres</strong> <strong>d'histoires</strong> ou

@@ -23,7 +23,7 @@
 }
 
 .containerM{
-  width: 50%;
+  width: 60%;
   height: 100%;
   flex: 1;
 }
@@ -49,7 +49,7 @@ h1{
   display: flex;
   padding-left: 5px;
   padding-right: 5px;
-  margin-bottom: 5%;
+  margin-bottom: 4%;
   button{
     transition: 0.1s background-color;
     background-color: rgba(180, 185, 190, 0.13);
@@ -139,6 +139,282 @@ h1{
 
 }
 
+.writer{
+  display: flex;
+gap: 8vw;
+  width: 100%;
+
+  .lContainerWriter, .rContainerWriter{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 40%;
+  }
+
+  .lContainerWriter{
+    .imgWriter{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px;
+      p{
+        font-family: 'Poppins',sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      img{
+        width: 50px;
+        border-radius: 50%;
+      }
+    }
+
+    .title{
+      color: #6b7077;
+      font-family: "Poppins", sans-serif;
+      font-size: 11px;
+      span{
+        font-weight: bold;
+      }
+    }
+
+    .headerWriter{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+
+      .itemWriter{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        h6,p{
+          color: #6b7077;
+          font-family: "Montserrat Alternates", sans-serif;
+          font-size: 11px;
+        }
+
+        p{
+          font-size: 10px;
+          font-family: 'Montserrat Alternates',sans-serif;
+          color: white;
+          font-weight: bold;
+          background-color: #9844AD;
+          border: solid 1px #9844AD;
+          border-radius: 12px;
+          padding: 5px 20px;
+        }
+      }
+
+
+    }
+
+    .formWriter{
+      margin-top: 2vh;
+      display: flex;
+      flex-direction: column;
+      gap: 2vh;
+      border-radius: 12px;
+
+      .hWriter{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2vh;
+        img{
+          width: 7vw;
+        }
+      }
+      h5{
+        font-family: 'Poppins',sans-serif;
+        font-weight: bold;
+        font-size: 12px;
+
+      }
+
+      .writerItem{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .label{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          text-align: left;
+          width: 100%;
+          font-size: 10px;
+          font-weight: bold;
+          margin-bottom: 2px;
+          color: #54595F;
+          font-family: "Montserrat",sans-serif;
+          svg{
+            color: #9844AD;
+            width: 16px;
+          }
+        }
+
+        .value{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          text-align: left;
+          width: 100%;
+          font-size: 12px;
+          font-weight: bold;
+          margin-bottom: 1px;
+          font-family: "Montserrat",sans-serif;
+          span{
+            font-size: 10px;
+            color: #9844AD;
+          }
+        }
+      }
+
+
+
+      input{
+        transition: 0.1s;
+        outline: none!important;
+        font-family: "Montserrat",sans-serif;
+        border-radius: 5px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        padding: 5px 0px;
+        width: 80%;
+      }
+    }
+
+  }
+
+  .rContainerWriter{
+    .title{
+        font-family: 'Poppins',sans-serif;
+        font-weight: bold;
+        font-size: 12px;
+      text-align: center;
+    }
+
+    .containerPresentation{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+
+      .headerPresentation{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        h6{
+          color: #6b7077;
+          font-family: "Poppins", sans-serif;
+          font-size: 11px;
+        }
+
+        button{
+          box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
+          transition: 0.1s;
+          font-size: 0.5vw;
+          color: white;
+          font-family: "Montserrat Alternates", sans-serif;
+          padding: 8px 15px;
+        }
+
+      }
+
+
+      textarea{
+        padding: 2%;
+        font-size: 11px;
+        color: #1C232B;
+        font-family: "Montserrat", sans-serif;
+        border: solid 1px rgba(84, 89, 95, 0.13);
+        height: 12vh;
+        width: 100%;
+        outline: none;
+        resize: none;
+        border-radius: 5px;
+        overflow-y: scroll;
+      }
+    }
+
+    .containerSocial{
+      display: flex;
+      flex-direction: column;
+      margin-top: 2vh;
+
+      .headSocial{
+        h5{
+          font-family: 'Poppins',sans-serif;
+          font-weight: bold;
+          font-size: 12px;
+          text-align: center;
+        }
+        p{
+          margin-top: 15px;
+          color: #6b7077;
+          font-family: "Montserrat", sans-serif;
+          font-size: 11px;
+          text-align: left;
+        }
+      }
+
+      .socialForm{
+        margin-top: 2vh;
+        display: flex;
+        flex-direction: column;
+        label{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-align: left;
+          width: 80%;
+          font-size: 11px;
+          font-weight: bold;
+          margin-bottom: 5px;
+          font-family: "Montserrat",sans-serif;
+          svg{
+            width: 15px;
+          }
+          .verify{
+            cursor: pointer;
+            font-size: 9px;
+          }
+        }
+
+
+        input{
+          &:focus{
+            box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+            transition: 0.1s;
+          }
+          &::placeholder{
+          }
+          transition: 0.1s;
+          outline: none!important;
+          font-family: "Montserrat",sans-serif;
+          border-radius: 5px;
+          font-size: 11px;
+          border: solid 1px $border;
+          margin-bottom: 10px;
+          padding: 5px 5px;
+          width: 80%;
+        }
+
+        button{
+
+        }
+
+      }
+
+    }
+  }
+
+
+}
+
 .form{
 display: flex;
   flex-direction: column;
@@ -208,14 +484,14 @@ background-color: white!important;
 
 .disabled {
   cursor: initial;
-  transition: 0.1s;
+  transition: 0.1s!important;
   background-color: #54595F !important;
 }
 
 .active {
   cursor: pointer;
   transition: 0.1s;
-  background-color: $purpleLight;
+  background-color: $purpleLight!important;
 }
 
 

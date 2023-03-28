@@ -49,10 +49,6 @@ export default function CatPage({cat,err,bookListData}) {
     const [canSeeMore,setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] =useState(false);
 
-    useEffect(() =>  {
-        console.log({bookListData,err});
-    },[])
-
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
         setCanSeeMore(true);
@@ -142,7 +138,9 @@ export default function CatPage({cat,err,bookListData}) {
                                     {
                                         bookList.map((item,index) => {
                                             return (
-                                                <PreviewPost title={item.title}
+                                                <CardBookPublic
+                                                    id={item._id}
+                                                    title={item.title}
                                                              snippet={item.summary}
                                                              like={item.likes}
                                                              category={item.category}

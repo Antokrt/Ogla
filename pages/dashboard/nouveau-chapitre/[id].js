@@ -19,6 +19,7 @@ import {DateNow} from "../../../utils/Date";
 import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import {Capitalize} from "../../../utils/String";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -152,7 +153,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                     onClick={() => router.push('/dashboard/books/' + book._id)}
                                 >{book.title}</h6>
                                 <ChevronRightIcon className={styles.arrow}/>
-                                <p>Nouveau Chapitre</p>
+                                <p>Nouveau chapitre</p>
                                 <ChevronRightIcon className={styles.arrow}/>
                                 <p><span>{book.chapter_list.length + 1}</span></p>
                             </div>
@@ -220,7 +221,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                 </div>
 
                                 <div className={styles.summary}>
-                                    <p>"{bookData?.summary}"</p>
+                                    <p>"{Capitalize(bookData?.summary)}"</p>
                                 </div>
 
                                 <div className={styles.statsPresentation}>

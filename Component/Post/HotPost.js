@@ -10,7 +10,7 @@ const HotPost = ({img, title, category, author, nbChapter, description, likes, t
                 <img src={img}/>
             </div>
             <div className={styles.thumbnail}>
-            <CountLike/>
+            <CountLike like={likes}/>
             </div>
             {
                 top === true &&

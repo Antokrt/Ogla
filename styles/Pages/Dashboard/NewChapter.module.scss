@@ -305,6 +305,7 @@ display: flex;
     .summary{
       margin-top: 10px;
       p{
+
         overflow: hidden;
         text-overflow: ellipsis;
         -webkit-line-clamp: 5;
@@ -324,6 +325,7 @@ display: flex;
       flex: 1;
       gap: 20px;
       h6{
+
         font-size: 14px;
         font-style: italic;
       }

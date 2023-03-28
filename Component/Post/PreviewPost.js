@@ -45,10 +45,10 @@ const PreviewPost = ({title, snippet, like, category, author, nbChapter ,img, sl
 
             <div className={styles.containerTitle}>
                 <h5>{title}</h5>
-                <p> Résumé</p>
+                <p> Par {author}</p>
             </div>
 
-            <div className={styles.thumbnailDiscover}>
+            <div className={styles.thumbnail}>
                 <CountLike like={like}/>
             </div>
 

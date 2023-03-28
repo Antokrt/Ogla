@@ -134,7 +134,7 @@ const DashboardProfil = ({ profilData, err }) => {
                     <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/dashboard/nouveau-livre")}  > <PencilIcon /> <p> Écrire </p> </div>
                     <div className={Style.itemMenuProfilAuthor} onClick={() => Router.push("/dashboard/notifications")}  > <BellAlertIcon /> <p> Notifications </p> </div>
                 </div>
-                <h4> Déconnection </h4>
+                <h4> Déconnexion </h4>
                 </div>
                 <div className={Style.otherblock}>
                     <div className={Style.ProfilAuthorCenterBlock}>

@@ -39,11 +39,9 @@
       font-size: 1.2vw;
       margin-bottom: 10px;
       svg{
-        position: absolute;
         cursor: pointer;
         margin-top: -3%;
         width: 14px;
-        right: -25%;
       }
       span{
         width: 40%;
@@ -310,6 +308,14 @@
     justify-content: start;
     gap: 5px;
     padding-bottom: 5px;
+
+    .cat{
+      font-family: 'Montserrat Alternates',sans-serif;
+      font-weight: bold;
+      font-size: 11px;
+      border-radius: 5px;
+      padding: 6px 10px;
+    }
   }
 
   .label{
@@ -632,4 +638,36 @@
     cursor: pointer;
     width: 1.5vw;
   }
+}
+
+
+
+.action{
+  background-color: rgba(96, 135, 217, 0.21);
+  color: #5a80d0;
+}
+
+.horreur{
+  background-color: rgba(224, 68, 68, 0.21);
+  color: #e04444;
+}
+
+.science-fiction{
+  background-color: rgba(152, 68, 173, 0.21);
+  color: #9844AD;
+}
+
+.comédie{
+  background-color: rgba(60, 173, 65, 0.21);
+  color: #3cad41;
+}
+
+.fantaisie{
+  background-color: rgba(60, 173, 65, 0.21);
+  color: #3cad41;
+}
+
+.drama{
+  background-color: rgba(224, 68, 68, 0.21);
+  color: #e04444;
 }

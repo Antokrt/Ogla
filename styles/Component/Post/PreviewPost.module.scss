@@ -6,7 +6,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 205px;
+  width: 255px;
   height: 280px;
   .containerImg{
     height: 80%;
@@ -54,9 +54,10 @@
       font-weight: bold;
       color: rgba(84, 89, 95, 0.74);
     }
+
   }
 
-  .thumbnailDiscover{
+  .thumbnail{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,7 +67,7 @@
     right: -10%;
     padding: 5px 10px;
     height: 30px;
-    background-color: rgb(152, 68, 173);
+    background-color: #e04444;
     box-shadow: $shadow;
     border-radius: 12px;
     svg{
@@ -111,7 +112,7 @@
     }
     font-family: 'Montserrat',sans-serif;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   p{

@@ -195,6 +195,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             typeId={chapterData._id}
                             title={chapterData.title}
                             author={chapterData.author_pseudo}
+                            authorImg={authorData?.img}
                             comments={comments}
                             select={sidebarSelect}/>
                     </div>
@@ -364,6 +365,10 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 .then(() => setComments(newState))
         }
     }
+
+    useEffect(() => {
+       console.log(chapterData)
+    },[])
 
     return (
         <div className={styles.container}>

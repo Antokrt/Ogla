@@ -29,6 +29,7 @@ const SidebarCommentary = ({
                                createNewComment,
                                refresh,
     nbCommentary,
+    authorImg,
                                canScroll,
                                deleteAComment,
                                likeAComment,
@@ -157,6 +158,9 @@ const SidebarCommentary = ({
                                             authorId={item.userId}
                                             hasLikeData={item.hasLike}
                                             content={item.content}
+                                            authorHasLike={item.authorHasLike}
+                                            authorImg={authorImg}
+                                            authorPseudo={author}
                                             nbAnswers={item.nbAnswers}
                                             likes={item.likes}
                                             img={item.img}
@@ -193,7 +197,7 @@ const SidebarCommentary = ({
                                 className={scroll.scrollbar}
                                 type={"textarea"}
                                 onClick={() => dispatch(setActiveModalState(true))}
-                                placeholder={"Connectez vous pour commenter " + Capitalize(title)}
+                                placeholder={"Connectez vous pour pouvoir commenter..."}
                                 readOnly={true}
                             />
                     }

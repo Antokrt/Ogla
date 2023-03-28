@@ -246,13 +246,13 @@ const DevenirAuteur = () => {
                     id={'description'}
                     type={"text"}
                     name={"description"}
-                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous brève mais sympathique... "}
+                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "}
                     className={styles.textareaForm}
                 />
 
 
                 <div className={styles.conditions}>
-                    <label htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA </strong>, j'accepte les <span>conditions d'utilisations</span></label>
+                    <label htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA </strong>, j'accepte les <span>conditions d'utilisation</span></label>
                 </div>
 
 
