@@ -63,7 +63,7 @@
     display: flex;
     justify-content: center;
     img{
-      width: 60%;
+      width: 50%;
     }
   }
 
@@ -85,26 +85,28 @@
         height: 100%;
         width: 80%;
         img{
+          cursor: pointer;
           width: 40px;
-          clip-path: circle();
+          border-radius: 50%;
           object-fit: cover;
         }
 
         .infos{
+          cursor: pointer;
           display: flex;
           flex-direction: column;
           .name{
             font-size: 12px;
             font-family: 'Montserrat',sans-serif;
             font-weight: bold;
-            color: #686f77;
+            color: #1C232B;
             letter-spacing: 1px;
           }
           .pseudo{
             font-size: 10px;
             font-weight: bold;
             font-family: 'Poppins',sans-serif;
-            color: #686f77;
+            color: #1C232B;
           }
         }
       }

@@ -53,6 +53,7 @@ const Profil = ({profilData, err}) => {
     const [hasChanged, setHasChanged] = useState(false);
     const [wantToDelete, setWantToDelete] = useState(false);
     const [profil, setProfil] = useState(profilData);
+
     const [newProfil, setNewProfil] = useState(profil);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
     const {data: session, status} = useSession();
@@ -133,12 +134,12 @@ const Profil = ({profilData, err}) => {
     const updateDescription = () => {
         UpdateAuthorDescriptionService(newPresentation)
             .then((res) => {
-               setProfil((prevState) => ({
-                   ...prevState,
-                   author:{
-                       description:res
-                   }
-               }));
+                setProfil((prevState) => ({
+                    ...prevState,
+                    author: {
+                        description: res
+                    }
+                }));
                 setNewPresentation(res);
             })
             .catch((err) => console.log(err));
@@ -209,7 +210,7 @@ const Profil = ({profilData, err}) => {
                             if (!session.user?.verified) {
                                 verifyEmail();
                             }
-                        }}>Vérifiez maintenant</span>}</span></label>
+                        }}>Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
                     {
                         session.user.provider === 'ogla' &&
@@ -245,7 +246,6 @@ const Profil = ({profilData, err}) => {
     }
 
     const writerComponent = () => {
-        console.log(profilData)
         return (
             <div className={styles.writer}>
                 <div className={styles.lContainerWriter}>
@@ -263,17 +263,17 @@ const Profil = ({profilData, err}) => {
 
                         <div className={styles.headerWriter}>
                             <div className={styles.itemWriter}>
-                                <p>4</p>
+                                <p>{profil.author.stats.nbBooks}</p>
                                 <h6>livre(s)</h6>
 
                             </div>
                             <div className={styles.itemWriter}>
-                                <p>26</p>
+                                <p>{profil.author.stats.nbChapters}</p>
                                 <h6>chapitre(s)</h6>
                             </div>
                             <div className={styles.itemWriter}>
-                                <p>67</p>
-                                <h6>chapitre(s)</h6>
+                                <p>{profil.author.stats.totalLikes}</p>
+                                <h6>like(s) reçus</h6>
                             </div>
 
                         </div>
@@ -289,10 +289,6 @@ const Profil = ({profilData, err}) => {
                             <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
                         </div>
 
-                        <div className={styles.writerItem}>
-                            <p className={styles.label}>Livre ayant le plus de chapitres <BookmarkIcon/></p>
-                            <p className={styles.value}>La quete du maitre</p>
-                        </div>
                     </div>
                 </div>
                 <div className={styles.rContainerWriter}>
@@ -303,7 +299,6 @@ const Profil = ({profilData, err}) => {
                             <h6>Présentation</h6>
                             <button onClick={() => {
                                 if (profil.author.description !== newPresentation) {
-                                    console.log(newPresentation)
                                     updateDescription();
                                 }
                             }}
@@ -322,7 +317,7 @@ const Profil = ({profilData, err}) => {
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                          value={newPresentation}/>
+                                    value={newPresentation}/>
                         }
 
 
@@ -352,13 +347,31 @@ const Profil = ({profilData, err}) => {
         )
     }
 
+    const becameWriter = () => {
+        return (
+            <div className={styles.becameWriter}>
+                <img src={'/assets/jim/smile8.png'}/>
+                <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
+                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier ! <br/>
+                    Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
+                    d'être entendue"</p>
+
+                <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
+            </div>
+        )
+    }
+
     const checkSide = () => {
         switch (activeLink) {
             case 'profil':
                 return profilComponent();
 
             case 'writer' :
-                return writerComponent();
+                if (profil.is_author) {
+                    return writerComponent();
+                } else {
+                    return becameWriter();
+                }
 
             case 'notif':
                 return (

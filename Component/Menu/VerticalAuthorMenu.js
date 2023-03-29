@@ -17,6 +17,10 @@ export default function VerticalAuthorMenu() {
     const router = useRouter();
     const isActiveMenuBooks = router.pathname.startsWith('/dashboard/books') || router.pathname.startsWith('/dashboard/chapitre/');
 
+    const goToProfil = () => {
+        return router.push('/profil');
+    }
+
 
     return (
         <div className={styles.container}>
@@ -51,8 +55,8 @@ export default function VerticalAuthorMenu() {
 
                 <div className={styles.profilContainer}>
 <div className={styles.profil}>
-    <img referrerPolicy={'no-referrer'} src={session?.user.image}/>
-    <div className={styles.infos}>
+    <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}/>
+    <div className={styles.infos} onClick={() => goToProfil()}>
         <p className={styles.name}>{session?.user.author.firstName} {session?.user.author.lastName}</p>
         <p className={styles.pseudo}>@{session?.user.pseudo}</p>
     </div>

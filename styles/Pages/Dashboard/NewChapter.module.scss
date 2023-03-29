@@ -305,10 +305,10 @@ display: flex;
     .summary{
       margin-top: 10px;
       p{
-
+        word-break: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
-        -webkit-line-clamp: 5;
+        -webkit-line-clamp: 10;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         font-size: 11px;
