@@ -2,6 +2,13 @@
 
 
 .container {
+  ::selection {
+    background: transparent;
+  }
+  ::-moz-selection {
+    background: transparent;
+  }
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -101,6 +108,13 @@
         width: 25px;
         z-index: 2;
         color: #1C232B;
+      }
+    }
+
+    .headphone{
+
+      iframe{
+        visibility: hidden;
       }
     }
 

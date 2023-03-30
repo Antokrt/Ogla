@@ -298,6 +298,7 @@
     .summary{
       margin-top: 10px;
       p{
+        word-break: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
         -webkit-line-clamp: 5;

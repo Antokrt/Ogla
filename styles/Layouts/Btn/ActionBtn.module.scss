@@ -73,3 +73,32 @@ font-size: 11px;
   color: #9844AD;
   font-family: 'Montserrat Alternates',sans-serif;
 }
+
+.headphone{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+
+  svg{
+    width: 25px;
+    fill: #1C232B;
+  }
+
+  .disabled {
+
+    position: absolute;
+    top: -15%;
+    left: 14%;
+    width: 2px;
+    height: 50px;
+    transform-origin: bottom left;
+    transform: rotate(45deg);
+    z-index: 2;
+    background-color: #1C232B;
+  }
+
+}

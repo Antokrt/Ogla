@@ -40,8 +40,8 @@ const Books = ({booksData, err, nbBooks}) => {
     const [seeMore, setSeeMore] = useState(true);
     const [loadingScroll,setLoadingScroll] = useState(false);
     const [activeFilter, setActiveFilter] = useState('popular');
-
     const divRef = useRef(null);
+    const router = useRouter();
 
     const scrollBottom = () => {
         divRef.current.scrollTop = divRef.current.scrollHeight
@@ -118,7 +118,7 @@ const Books = ({booksData, err, nbBooks}) => {
                     <HeaderDashboard/>
                     {
                         err &&
-                        <ErrMsg text={'Impossible de récupérer vos livres, veuillez réessayer'}/>
+                        <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')} text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
                     }
 
                     {

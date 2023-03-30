@@ -12,14 +12,9 @@ import DiscordIcon from "./layouts/Icons/Social/discord";
 export default function Footer(){
 const router = useRouter();
 
-    // const { langue, setLangue } = useContext(LangueContext);
-
-
-
     return(
         <div className={styles.container}>
-            {
-                router.pathname === "/" &&
+
                 <div className={styles.socialLinks}>
                     <h5>Rejoins nous sur Discord</h5>
                     <div className={styles.social}>
@@ -30,7 +25,6 @@ const router = useRouter();
 
                     </div>
                 </div>
-            }
             <div className={styles.linkFooter}>
 
                 <div className={styles.planContainer}>

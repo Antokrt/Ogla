@@ -185,7 +185,7 @@ export default function CatPage({cat, err, bookListData}) {
 
             {
                 err &&
-                <ErrMsg text={'Impossible de récupérer les livres, veuillez réessayer...'}/>
+                <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'}/>
             }
 
             <Footer/>

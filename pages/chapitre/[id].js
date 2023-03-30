@@ -27,6 +27,7 @@ import {Capitalize} from "../../utils/String";
 import {setActiveModalState} from "../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
 import {AddViewToChapterApi} from "../api/book";
+import ErrMsg from "../../Component/ErrMsg";
 
 export async function getServerSideProps({req, params, query, ctx}) {
     const id = params.id;
@@ -66,7 +67,7 @@ export async function getServerSideProps({req, params, query, ctx}) {
 
 }
 
-const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, hasLikeData}) => {
+const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, hasLikeData, bookId}) => {
 
     const router = useRouter();
     const headerFixed = useRef();
@@ -366,9 +367,6 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         }
     }
 
-    useEffect(() => {
-       console.log(chapterData)
-    },[])
 
     return (
         <div className={styles.container}>
@@ -457,7 +455,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
                     </>
                     :
-                    <p>Erreur</p>
+                    <ErrMsg click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'}/>
             }
 
 

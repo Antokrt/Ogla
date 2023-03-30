@@ -15,6 +15,7 @@ import {ToastContainer} from 'react-toastify';
 import {useDispatch, useSelector} from "react-redux";
 import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
 import {LogoutService} from "../service/User/Account.service";
+import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
 
 export default function Header() {
     const router = useRouter();
@@ -22,6 +23,7 @@ export default function Header() {
     const [searchValue,setSearchValue] = useState('');
     const [data,setData] = useState();
     const [query,setQuery] = useState('');
+    const [activMusic,setActivMusic] = useState(false)
     
 
 
@@ -60,7 +62,6 @@ export default function Header() {
         <div className={styles.container}>
             <div className={styles.mainA}>
                 <h3>OGLA</h3>
-                <p>{query}</p>
                 <nav>
                     <ul>
                         <li><Link href="/"><a
@@ -97,7 +98,7 @@ export default function Header() {
 
             <div className={styles.mainLog}>
                 {
-                    router.pathname !== '/rechercher' &&
+                    router.pathname !== '/rechercher' && !router.pathname.startsWith('/chapitre') &&
                     <div className={styles.containerSearchBarHeader}>
                         <MainSearchBar
                             data={(value) => setData(value)}
@@ -140,6 +141,11 @@ export default function Header() {
                         }
                     </div>
                 }
+
+                    <div className={styles.headphone}>
+                        <HeadPhoneBtn/>
+
+                    </div>
 
 
                 {

@@ -15,17 +15,12 @@ export const SearchBarService = (query) => {
     })
 }
 
-export const SearchBookService = (query,page) => {
+export const SearchBookService = (query,page,filter) => {
     return new Promise((resolve, reject) => {
-        instance.get('search/books/1/'+page,{params:{
+        instance.get('search/books/'+page+'/'+filter,{params:{
                 q:query
             }})
-            .then((res) => {
-                if(res.data.length === 0 ){
-                    resolve(null);
-                }
-                resolve(res.data)
-            })
+            .then((res) => resolve(res.data))
             .catch((err) => reject(err));
     })
 }

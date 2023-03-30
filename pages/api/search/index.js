@@ -1,5 +1,5 @@
 export const SearchBookAPI = async (query) => {
-    const data = await fetch('http://localhost:3008/search/books/1/1?q='+query);
+    const data = await fetch('http://localhost:3008/search/books/1/popular/?q='+query);
     const errData = !data.ok;
     let dataJson = await data.json();
 

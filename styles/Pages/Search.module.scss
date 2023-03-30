@@ -6,6 +6,9 @@ z-index: 1;
   background-image: url("/assets/blurry.svg");
   background-size: 100%;
   background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .containerM{
@@ -72,7 +75,7 @@ z-index: 1;
       font-family: "Montserrat", sans-serif;
       font-size: 16px;
       font-weight: 900;
-      border-bottom: 2px solid rgba(84, 89, 95, 0.32);
+      border-bottom: 2px solid rgba(84, 89, 95, 0.12);
       padding-bottom: 10px;
       margin-bottom: 0px;
     }
@@ -90,14 +93,14 @@ z-index: 1;
         font-size: 11px;
         padding: 10px 20px;
         font-family: "Montserrat Alternates", sans-serif;
-        color: $purple;
+        color: #1C232B;
         transition: 0.1s;
         font-weight: bold;
       }
 
       .activeBtn {
         transition: 0.1s;
-        background-color: $purple !important;
+        background-color: #9844AD !important;
         color: $white !important;
       }
     }
@@ -112,6 +115,12 @@ z-index: 1;
     gap: 30px 0px;
     width: 60%;
   }
+}
+
+.seeMoreContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .seeMore{

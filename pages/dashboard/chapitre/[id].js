@@ -26,6 +26,7 @@ import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChap
 import {EyeIcon} from "@heroicons/react/24/solid";
 import {Capitalize} from "../../../utils/String";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+import {LoaderCommentary} from "../../../Component/layouts/Loader";
 
 
 export async function getServerSideProps({req, params}) {
@@ -168,7 +169,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 {
                     loading &&
                     <div className={styles.errContainer}>
-                        <p>Loading</p>
+                        <LoaderCommentary/>
                     </div>
                 }
                 {
