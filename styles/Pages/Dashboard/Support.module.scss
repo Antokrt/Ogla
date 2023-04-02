@@ -41,10 +41,32 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: -10%;
+  gap: 4vh;
 
   h3{
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Poppins',sans-serif;
     font-size: 1vw;
+    font-weight: bold;
+  }
+
+  img{
+    width: 200px;
+  }
+
+  p{
+    font-size: 15px;
+    font-family: 'Poppins',sans-serif;
+  }
+
+  strong{
+    cursor: pointer;
+  }
+
+  .discord{
+    cursor: pointer;
+    font-weight: bold;
+    color: #7289d9 ;
   }
 
 

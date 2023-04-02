@@ -75,30 +75,54 @@ font-size: 11px;
 }
 
 .headphone{
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  transition: 0.2s;
   position: relative;
   display: flex;
   justify-content: center;
+  box-shadow: $shadow;
   align-items: center;
   height: 50px;
   width: 50px;
+  border-radius: 50%;
+  border: rgba(28, 35, 43, 0.15) solid 1px;
   cursor: pointer;
 
   svg{
-    width: 25px;
-    fill: #1C232B;
+    color: rgba(28, 35, 43, 0.37);
+    width: 22px;
   }
 
-  .disabled {
 
+  .animation{
     position: absolute;
-    top: -15%;
-    left: 14%;
-    width: 2px;
-    height: 50px;
-    transform-origin: bottom left;
-    transform: rotate(45deg);
-    z-index: 2;
-    background-color: #1C232B;
+    width: 40px;
+    height: 40px;
+    background: #9844AD;
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
   }
 
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes grow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }

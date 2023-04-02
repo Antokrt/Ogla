@@ -19,3 +19,11 @@ export const GetBooksWithCategoryService = (category,filter,page) => {
             .catch((err) => reject(err));
     })
 }
+
+export const GetRandomBookService = () => {
+    return new Promise((resolve, reject) => {
+        instance.get('/book-render/random')
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err));
+    } )
+}

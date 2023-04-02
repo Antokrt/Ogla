@@ -25,16 +25,15 @@
   width: 35%;
 
   .img{
-    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     img{
-      height: 100%;
-      border-radius: 25px;
-      box-shadow: $shadow;
-
-      width: 100%;
-      object-fit: contain;
-      clip-path: circle();
+      border-radius: 50%;
+      height: 150px;
+      width: 150px;
+    object-fit: cover;
     }
   }
 }

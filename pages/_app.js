@@ -64,7 +64,7 @@ function Lofi(){
 
     const playNextMusic = () => {
         dispatch(setIndexMusic(selectIndexMusicState + 1));
-        audioRef.current.src = '/assets/music/lofi' + selectIndexMusicState + '.mp3';
+        audioRef.current.src = process.env.NEXT_PUBLIC_BASE_MUSIC + 'lofi' +selectIndexMusicState + '.mp3';
         audioRef.current.oncanplaythrough = () => {
             audioRef.current.play();
         }
@@ -74,7 +74,7 @@ function Lofi(){
 
     return (
         <>
-            <audio controls={true} ref={audioRef} onEnded={() => playNextMusic()} src={'/assets/music/lofi'+selectIndexMusicState+'.mp3'}>
+            <audio controls={true}  ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC +'lofi'+ selectIndexMusicState + '.mp3'}>
             </audio>
         </>
 

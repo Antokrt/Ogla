@@ -3,7 +3,7 @@ import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 
 const Support = () => {
-    return(
+    return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
                 <div className={styles.verticalMenuContainer}>
@@ -12,7 +12,11 @@ const Support = () => {
                 <div className={styles.containerData}>
                     <HeaderDashboard/>
                     <div className={styles.supportContainer}>
-                        <h3>Support</h3>
+                        <img src={'/assets/jim/smile6.png'}/>
+                        <h3>Contactez nous</h3>
+                        <p>Pour toute question ou problème technique, contactez notre équipe de support sur <span
+                            className={styles.discord}>Discord</span> ou à l'adresse suivante : <strong><a
+                            href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>support@ogla.fr</a> </strong></p>
                     </div>
                 </div>
 

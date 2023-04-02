@@ -2,35 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/store/slices/musicSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/HeaderDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/HeaderDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/ErrMsg.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/ErrMsg.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/search/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/search/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/cat/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/cat/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/cat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/cat/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/jim/cool2.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/jim/cool2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Search/SearchService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Search/SearchService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CardBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CardBook.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Header.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Header.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Book/BookService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Book/BookService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/musicSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/musicSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Footer.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +247,10 @@
       <workItem from="1679924421397" duration="12510000" />
       <workItem from="1679991229994" duration="17446000" />
       <workItem from="1680080038380" duration="7246000" />
-      <workItem from="1680165840864" duration="21145000" />
+      <workItem from="1680165840864" duration="23014000" />
+      <workItem from="1680255946783" duration="6108000" />
+      <workItem from="1680342545347" duration="610000" />
+      <workItem from="1680366547103" duration="10537000" />
     </task>
     <servers />
   </component>

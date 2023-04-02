@@ -15,6 +15,7 @@ import {GetAuthorProfilAPI} from "../api/Author";
 import {FormatDateNb} from "../../utils/Date";
 import {GetBooksByAuthor} from "../../service/Author";
 import {CardBookPublic} from "../../Component/Card/CardBook";
+import Footer from "../../Component/Footer";
 
 
 export async function getServerSideProps({params}){
@@ -71,6 +72,9 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
     })
     .catch((err) => setCanSeeMoreRecent(false));
     }
+    useEffect(() => {
+       console.log(profilAuthor)
+    },[])
 
     const fetchMorePopularBooks = () => {
         GetBooksByAuthor(profilAuthor.pseudo,'popular',pagePopular)
@@ -141,7 +145,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                             <div className={styles.infoContainer}>
                                 <div>
                                     <h3>{profilAuthor?.pseudo}</h3>
-                                    <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
+                                    <p>Devenu auteur le : {profilAuthor.author.became_author} </p>
                                 </div>
 
                                 <h6> Tendance : <span> {profilAuthor.trend}</span></h6>
@@ -259,9 +263,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                 </>
             }
 
-
-
-
+            <Footer/>
         </div>
     )
 }

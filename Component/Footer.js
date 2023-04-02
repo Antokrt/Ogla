@@ -7,16 +7,27 @@ import Facebook from "./layouts/Icons/Social/facebook";
 import Instagram from "./layouts/Icons/Social/instagram";
 import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
+import {GetRandomBookService} from "../service/Book/BookService";
+import {useSession} from "next-auth/react";
 
 
 export default function Footer(){
 const router = useRouter();
+const {data:session} = useSession();
+
+const getRandomBook = () => {
+GetRandomBookService()
+    .then((res) => router.push({
+        pathname: '/livre/' + res._id,
+        query: res.slug
+    }))
+}
 
     return(
         <div className={styles.container}>
 
                 <div className={styles.socialLinks}>
-                    <h5>Rejoins nous sur Discord</h5>
+                    <h5>Rejoins OGLA sur Discord</h5>
                     <div className={styles.social}>
                         <Facebook/>
                         <Instagram/>
@@ -35,8 +46,14 @@ const router = useRouter();
                                 className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
                             <li><Link href="/Category"><a className={router.pathname === "/post" ? styles.activeNav : ""}>Derniers
                                 ouvrages</a></Link></li>
-                            <li><Link href="/"><a className={router.pathname === "/new-writer" ? styles.activeNav : ""}>Deviens
-                                écrivain</a></Link></li>
+                            {
+                                !session || !session.user.is_author &&
+                                <li><Link href="/"><a className={router.pathname === "/new-writer" ? styles.activeNav : ""}>Deviens
+                                    écrivain</a></Link></li>
+                            }
+
+                            <li style={{cursor:'pointer'}} onClick={() => getRandomBook()}>Aléatoire</li>
+
                             <li><Link href="/"><a
                                 className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link></li>
                         </ul>
@@ -47,8 +64,8 @@ const router = useRouter();
                         <ul>
                             <li>Mentions légales</li>
                             <li>Données personnelles</li>
-                            <li>Nous rejoindre</li>
                             <li>Conditions générales</li>
+                            <li>Support</li>
                             <li>© OGLA Tous droits réservés 2022
                             </li>
 

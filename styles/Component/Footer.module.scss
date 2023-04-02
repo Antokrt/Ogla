@@ -1,6 +1,7 @@
 @import "styles/utils/var";
 
 .container{
+  margin-top: 5vh;
   min-height: auto;
   height: auto;
   width: 100%;
@@ -12,7 +13,7 @@
   flex-direction: column;
   justify-content: center;
   height: 200px;
-  background-color: #e94f37;
+  background-color: #1C232B;
 
   h5{
     color: white;

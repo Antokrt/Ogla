@@ -33,7 +33,6 @@ const New = () => {
     }
 
     const sendData = () => {
-        console.log('jejeje')
         const form = {
             title: title,
             summary:summary,

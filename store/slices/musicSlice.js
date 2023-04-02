@@ -4,7 +4,7 @@ import {HYDRATE} from "next-redux-wrapper";
 
 const initialState = {
     active: false,
-    index:1
+    index:Math.floor(Math.random() * 7) + 1
 }
 
 export const musicSlice = createSlice({
@@ -15,8 +15,8 @@ export const musicSlice = createSlice({
             state.active = action.payload
         },
         setIndexMusic:(state,action) => {
-            if(state.index >= 2){
-               return  state.index = 1;
+            if(state.index >= 7){
+             state.index = 1;
             }
             else  state.index = action.payload;
         }
