@@ -10,34 +10,37 @@ import CategoryHome from "../Component/CategoryHome";
 import React, {useContext, useEffect, useState} from "react";
 import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 import {useSession} from "next-auth/react";
-
-import {useDispatch, useSelector} from "react-redux";
-import {activeOrDisable, selectLoginModalStatus, setActiveModalState} from "../store/slices/modalSlice";
-
 import {LoginModal} from "../Component/Modal/LoginModal";
+import {GetTopBooksOnHomeApi} from "./api/book";
+import {GetActiveMonthlyCateoryApi} from "./api/Category";
+import {Capitalize} from "../utils/String";
+import {useRouter} from "next/router";
 
-/*export async function getServerSideProps({context, req, res}){
-    const config = await getConfigOfProtectedRoute(req);
-    const bookData = await fetch('http://localhost:3008/book/', config);
-    const bookErrData = bookData.ok ? false : bookData.status;
-    const json = await bookData.json();
+export async function getServerSideProps() {
+    const cat = await GetActiveMonthlyCateoryApi();
+    let data;
+    if (!cat.err) {
+        data = await GetTopBooksOnHomeApi(cat.data.fCat, cat.data.sCat);
+    }
 
-
+    console.log(cat.data)
     return {
-        props:{
-            err: {
-                books:bookErrData
-            },
-            books:json
+        props: {
+            err: data.err,
+            tops: data.tops,
+            firstTopBooks: data.firstTop,
+            secondTopBooks: data.secondTop,
+            cat1: cat.data.fCat,
+            cat2: cat.data.sCat
         }
     }
-}*/
+}
 
 
+export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2}) {
 
-export default function Home({err,books}) {
-
-    const {data:session} = useSession();
+    const {data: session} = useSession();
+    const router = useRouter();
 
     return (
 
@@ -49,46 +52,46 @@ export default function Home({err,books}) {
             </Head>
 
             <div
-               /** style={{
-                position: "fixed",
-                top: 0,
-                zIndex: 2,
-                width: "100%"
-            }*/>
+                /** style={{
+                 position: "fixed",
+                 top: 0,
+                 zIndex: 2,
+                 width: "100%"
+             }*/>
                 <Header/>
 
             </div>
             <Banner/>
-<CategoryHome/>
+            <CategoryHome/>
             <div className={styles.hot}>
                 <div className={styles.headerHot}>
                     <h4>Populaires :</h4>
-                    <h5>Tout voir <ChevronDoubleRightIcon/></h5>
+                    <h5 onClick={() => router.push({pathname:'/cat'})}>Tout voir <ChevronDoubleRightIcon/></h5>
                 </div>
                 <div className={styles.hotContainer}>
                     <HotPost className={styles.hotItem}
-                             likes={234}
+                             likes={tops[0].likes}
                              top={true}
-                             title={"Livre 1"} nbChapter={35} author={"JimmyS"}
-                             img={"/assets/livre7.jpg"} category={"Action"}
-                             description={"Fu Jiu appears to be a normal lad in high school on the surface. But in fact, she (Yes! She!) is the hacker, Z, a villain-terminator in the online world of an alternate world. Having reincarnated into the body of a woman and being forced to disguise herself as a young man, she reigns over the game world, fights for justice, and puts a spell on all the girls around with her innate charm. However, her flirting comes across as gay to the rich Almighty Qin and his inner circle. Over time, the Almighty Qin falls for him… her. Has he turned gay for him… her? Now, that's confusing!"}
+                             title={tops[0].title} nbChapter={tops[0].nbChapters} author={tops[0].author_pseudo}
+                             img={tops[0].img} category={tops[0].category}
+                             description={tops[0].summary}
                     />
                     <HotPost className={styles.hotItem}
-                             likes={9784}
-                             title={"Livre 2"} nbChapter={205} author={"ThomasK"}
-                             img={"/assets/livre1.jpg"} category={"Horreur"}
-                             description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
-                                 "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
-                                 "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
+                             likes={tops[1].likes}
+                             top={false}
+                             title={tops[1].title} nbChapter={tops[1].nbChapters} author={tops[1].author_pseudo}
+                             img={tops[1].img} category={tops[1].category}
+                             description={tops[1].summary}
                     />
 
                 </div>
 
+                <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
+
+
                 <div className={styles.previewPostListContainer}>
-                    <PreviewHorizontalPostList title={"Populaire Horreur"} type={"Horreur"}/>
-                    <PreviewHorizontalPostList title={"Populaire Horreur"} type={"Horreur"}/>
-
-
+                    <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance '+ cat1} type={"Horreur"}/>
+                    <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' +cat2} type={"Horreur"}/>
                 </div>
 
             </div>

@@ -11,7 +11,7 @@ export async function GetOneBookApi(id) {
     return {
         book: booksJson.book,
         chapter: booksJson.chapter,
-        author:booksJson.author,
+        author: booksJson.author,
         err: bookErrData
     };
 }
@@ -40,4 +40,21 @@ export async function GetBookByCategoryApi(category, filter) {
         book: booksListJson,
         err: bookErrData
     };
+}
+
+export async function GetTopBooksOnHomeApi(cat1, cat2) {
+    const booksData = await fetch('http://localhost:3008/book-render/popular-home/' + cat1 + '/' + cat2)
+    const booksErrData = !booksData.ok;
+    let booksDataJson = await booksData.json();
+
+    if (booksDataJson.statusCode === 404) {
+        booksDataJson = null;
+    }
+
+    return {
+        tops: booksDataJson.topTwoBooks,
+        firstTop: booksDataJson.topBooksCat1,
+        secondTop: booksDataJson.topBooksCat2,
+        err: booksErrData
+    }
 }

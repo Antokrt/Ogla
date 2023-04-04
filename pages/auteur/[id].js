@@ -13,95 +13,98 @@ import Facebook from "../../Component/layouts/Icons/Social/facebook";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {GetAuthorProfilAPI} from "../api/Author";
 import {FormatDateNb} from "../../utils/Date";
-import {GetBooksByAuthor} from "../../service/Author";
+import {GetBooksByAuthorService} from "../../service/Author";
 import {CardBookPublic} from "../../Component/Card/CardBook";
 import Footer from "../../Component/Footer";
+import {Snippet} from "../../Component/Snippet";
+import CardCategory from "../../Component/Card/CardCategory";
+import {ListCard} from "../../Component/Card/ListCard";
+import {LoaderCommentary} from "../../Component/layouts/Loader";
 
 
-export async function getServerSideProps({params}){
+export async function getServerSideProps({params}) {
 
     const pseudo = params.id;
     const profil = await GetAuthorProfilAPI(pseudo);
 
     return {
-        props:{
+        props: {
             profilData: profil.profil,
-            err:profil.err
+            booksData: profil.books,
+            errProfil: profil.errProfil,
+            errBooks: profil.errBook
         }
     }
 }
 
-const AuthorProfil = ({profilData}) => {
+const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
 
     const [profilAuthor, setProfilAuthor] = useState(profilData);
     const router = useRouter();
-    const [page,setPage] = useState(2);
+    const [page, setPage] = useState(2);
     const [activeFilter, setActiveFilter] = useState('popular');
-    const [canSeeMore,setCanSeeMore] = useState(true);
-    const [canSeeMoreRecent,setCanSeeMoreRecent] = useState(true);
-    const [canSeeMorePopular,setCanSeeMorePopular] = useState(true);
-    const [pagePopular,setPagePopular] = useState(2);
+    const [canSeeMore, setCanSeeMore] = useState(true);
+    const [canSeeMoreRecent, setCanSeeMoreRecent] = useState(true);
+    const [loading,setLoading] = useState(false);
+    const [canSeeMorePopular, setCanSeeMorePopular] = useState(true);
+    const [pagePopular, setPagePopular] = useState(2);
     const [pageRecent, setPageRecent] = useState(1);
-    const [popular,setPopular] = useState(profilAuthor.bookList);
-    const [recent,setRecent] = useState([]);
-
-    const fetchBooks = (filter) => {
-        GetBooksByAuthor(profilAuthor.pseudo,filter,1)
-            .then((res) => {
-                if(filter === 'popular'){
-                    setPopular(res);
-                }
-                if(filter === 'recent'){
-                    setRecent(res);
-                    setPageRecent(pageRecent + 1);
-                }
-                setCanSeeMore(true);
-            })
-    }
+    const [popular, setPopular] = useState(booksData);
+    const [recent, setRecent] = useState([]);
 
     const fetchRecentBooks = () => {
-GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
-    .then((res) => {
-        if(res.length !== 0){
-            setRecent(res)
-            setPageRecent(2);
-        }
-        else {
-            setCanSeeMoreRecent(false);
-        }
-    })
-    .catch((err) => setCanSeeMoreRecent(false));
-    }
-    useEffect(() => {
-       console.log(profilAuthor)
-    },[])
-
-    const fetchMorePopularBooks = () => {
-        GetBooksByAuthor(profilAuthor.pseudo,'popular',pagePopular)
+        setLoading(true)
+        GetBooksByAuthorService(profilAuthor.pseudo, 'recent', 1)
             .then((res) => {
-                if(res.length !== 0){
-                    setPopular(prevState => [...prevState, ...res]);
-                    setPagePopular(pagePopular + 1);
-                }
-                else {
-                    setCanSeeMorePopular(false);
-                }
-            })
-            .catch((err) => setCanSeeMorePopular(false));
-    }
-
-    const fetchMoreRecentBooks = () => {
-        GetBooksByAuthor(profilAuthor.pseudo,'recent',pageRecent)
-            .then((res) => {
-                if(res.length !== 0){
-                    setRecent(prevState => [...prevState, ...res]);
-                    setPageRecent(pageRecent + 1);
-                }
-                else {
+                if (res.length !== 0) {
+                    setRecent(res)
+                    setPageRecent(2);
+                } else {
                     setCanSeeMoreRecent(false);
                 }
             })
-            .catch((err) => setCanSeeMoreRecent(false));
+            .then(() => setLoading(false))
+            .catch((err) => {
+                setLoading(false);
+                setCanSeeMoreRecent(false);
+            });
+    }
+
+
+    const fetchMorePopularBooks = () => {
+        setLoading(true);
+        GetBooksByAuthorService(profilAuthor.pseudo, 'popular', pagePopular)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setPopular(prevState => [...prevState, ...res]);
+                    setPagePopular(pagePopular + 1);
+                } else {
+                    setCanSeeMorePopular(false);
+                }
+            })
+            .then(() => setLoading(false))
+            .catch((err) => {
+                setLoading(false);
+                setCanSeeMorePopular(false);
+            });
+    }
+
+    const fetchMoreRecentBooks = () => {
+        setLoading(true);
+        GetBooksByAuthorService(profilAuthor.pseudo, 'recent', pageRecent)
+            .then((res) => {
+                if (res.length !== 0) {
+                    setRecent(prevState => [...prevState, ...res]);
+                    setPageRecent(pageRecent + 1);
+                } else {
+                    setCanSeeMoreRecent(false);
+                }
+            })
+            .then(() => setLoading(false))
+            .catch((err) => {
+                setLoading(false);
+                setCanSeeMoreRecent(false)
+            });
     }
 
 
@@ -110,7 +113,7 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
             <Header/>
 
             {
-                profilData &&
+                profilData && !errProfil &&
                 <>
                     <div className={styles.containerF}>
 
@@ -148,39 +151,10 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                                     <p>Devenu auteur le : {profilAuthor.author.became_author} </p>
                                 </div>
 
-                                <h6> Tendance : <span> {profilAuthor.trend}</span></h6>
+                                <h6> Tendance : <CardCategory category={profilAuthor?.trend}/></h6>
 
-                                <p className={styles.snippet}> {profilAuthor.author.description}</p>
+                                <Snippet line={12} maxSize={1600} content={profilAuthor.author.description}/>
                             </div>
-
-                            <h6 className={styles.topBook}>Tops livres <FireIcon/></h6>
-
-                            <div className={styles.rankingGridContainer}>
-                                {
-                                    profilAuthor.topBooks
-                                        .sort((a,b)=> b.likes - a.likes)
-                                        .map((item,index)=>{
-                                            return  (
-                                                <FeaturedCategoryPostList
-                                                    key={item}
-                                                    id={item._id}
-                                                    rank={index+1}
-                                                    title={item.title}
-                                                    summary={item.summary}
-                                                    likes={item.likes}
-                                                    slug={item.slug}
-                                                    category={item.category}
-                                                    author={item.author}
-                                                    chapterNb={item.nbChapter}
-                                                    img={item.img}
-                                                />
-                                            )
-                                        })
-                                }
-                            </div>
-
-
-
                         </div>
 
                     </div>
@@ -190,76 +164,62 @@ GetBooksByAuthor(profilAuthor.pseudo,'recent', 1)
                             <h3>Trier par </h3>
                             <div>
                                 <button
-                                    className={activeFilter === 'popular'  && styles.activeBtn}
+                                    className={activeFilter === 'popular' && styles.activeBtn}
                                     onClick={() => {
-                                        if(activeFilter !== 'popular'){
+                                        if (activeFilter !== 'popular') {
                                             setActiveFilter('popular');
                                         }
-                                    }}>Populaire(s)</button>
+                                    }}>Populaire(s)
+                                </button>
                                 <button
                                     className={activeFilter === 'recent' && styles.activeBtn}
                                     onClick={() => {
-                                        if(activeFilter !== 'recent'){
-                                            if(recent.length === 0){
+                                        if (activeFilter !== 'recent') {
+                                            if (recent.length === 0) {
                                                 fetchRecentBooks();
                                             }
                                             setActiveFilter('recent');
                                             setPage(2);
                                         }
-                                    }}>Récent(s)</button>
+                                    }}>Récent(s)
+                                </button>
                             </div>
                         </div>
+                        {
+                            !errBooks &&
+                            <>
+                                {
+                                    activeFilter === 'recent' && recent.length !== 0 &&
+                                    <ListCard books={recent}/>
+                                }
+                                {
+                                    activeFilter === 'popular' && popular.length !== 0 &&
+                                    <ListCard books={popular}/>
+                                }
+                                <div className={styles.seeMore}>
 
-                        <div className={styles.card}>
-                            {
-                                activeFilter === 'recent' && recent.length !== 0 &&
-                                recent.map((item) => {
-                                    return(
-                                        <CardBookPublic
-                                            title={item.title}
-                                            category={item.category}
-                                            author={profilData.pseudo}
-                                            snippet={item.summary}
-                                            id={item._id}
-                                            nbChapter={item.chapter_list.length}
-                                            like={item.likes}
-                                            img={item.img}
-                                            slug={item.slug}
-                                        />
-                                    )
-                                })
-                            }
-                            {
-                                activeFilter === 'popular' && popular.length !== 0 &&
-                                popular.map((item) => {
-                                    return(
-                                        <CardBookPublic
-                                            title={item.title}
-                                            category={item.category}
-                                            author={profilData.pseudo}
-                                            snippet={item.summary}
-                                            id={item._id}
-                                            nbChapter={item.chapter_list.length}
-                                            like={item.likes}
-                                            img={item.img}
-                                            slug={item.slug}
-                                        />
-                                    )
-                                })
-                            }
+                                    {
+                                        loading &&
+                                        <LoaderCommentary/>
+                                    }
+
+                                    {
+                                        activeFilter === 'popular' && canSeeMorePopular && !loading &&
+                                        <p onClick={() => fetchMorePopularBooks()}>Voir plus</p>
+                                    }
+
+                                    {
+                                        activeFilter === 'recent' && canSeeMoreRecent && !loading &&
+                                        <p onClick={() => fetchMoreRecentBooks()}>Voir plus</p>
+                                    }
+                                </div>
 
 
-                        </div>
+                            </>
+                        }
+
                     </div>
-                    {
-                        activeFilter === 'popular' && canSeeMorePopular &&
-                        <p className={styles.seeMore} onClick={() => fetchMorePopularBooks()}>Voir plus Populaire</p>
-                    }
 
-                    {
-                        activeFilter === 'recent' && canSeeMoreRecent &&
-                        <p className={styles.seeMore} onClick={() => fetchMoreRecentBooks()}>Voir plus Recent</p>
-                    }
                 </>
             }
 

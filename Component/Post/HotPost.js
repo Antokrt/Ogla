@@ -24,7 +24,7 @@ const HotPost = ({img, title, category, author, nbChapter, description, likes, t
                     <h6>{title}</h6>
                     <p><span className={styles.category}>{category}</span> | <span
                         className={styles.author}>{author}</span> | <span
-                        className={styles.nbChapter}>{nbChapter} chapitres</span></p>
+                        className={styles.nbChapter}>{nbChapter} chapitre(s)</span></p>
                 </div>
                 <div className={styles.description}>
                     <p>{description}</p>

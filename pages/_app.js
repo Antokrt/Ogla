@@ -74,7 +74,7 @@ function Lofi(){
 
     return (
         <>
-            <audio controls={true}  ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC +'lofi'+ selectIndexMusicState + '.mp3'}>
+            <audio  ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC +'lofi'+ selectIndexMusicState + '.mp3'}>
             </audio>
         </>
 

@@ -44,13 +44,21 @@ font-size: 14px;
       margin-top: 50px;
     }
 
+  .trendTitle{
+    margin-top: 5vh;
+    font-family: 'Montserrat Alternates',sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+
+    strong{
+      color: #9844AD;
+    }
+  }
+
   .previewPostListContainer{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-column-gap: 50px;
-    grid-row-gap: 0px;
-    width: 50%;
-    margin-top: 50px;
+    display: flex;
+    gap: 15vh;
+    border-radius: 10px;
+    padding: 4vh;
   }
 }

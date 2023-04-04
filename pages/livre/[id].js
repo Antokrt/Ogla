@@ -28,6 +28,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 import CardCategory from "../../Component/Card/CardCategory";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
+import {Snippet} from "../../Component/Snippet";
 
 
 export async function getServerSideProps({req, params}) {
@@ -302,7 +303,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                     <div className={styles.btnRead}>
                         {
-                            chapterData &&
+                            chapterData && chapterData.length !== 0 &&
                             <button
                                 onClick={() => {
                                     router.push({
@@ -333,15 +334,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                         </div>
                         <h3>{bookData?.title}</h3>
-                        <p className={snippetTooBig ? styles.snippet + ' ' + styles.cutSummary : styles.snippet}> {bookData?.summary}
-                        </p>
-                        {
-                            snippetTooBig ?
-                            <span className={styles.seeMore} onClick={() => setSnippetTooBig(false)} > Voir le résumé complet  </span>
-                                :
-                                <span className={styles.seeMore} onClick={() => setSnippetTooBig(true)} > Masquer  </span>
 
-                        }
+                        <Snippet line={3} maxSize={500} content={bookData?.summary}/>
                         <div className={styles.btnFilter}>
                             <FilterBtn filter={activeFilterList} onclick={() => {
                                 if (activeFilterList === 'order') {
@@ -361,7 +355,15 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     </div>
 
                     <div className={styles.contentChapterList}>
-                        {chapterData && chapterList.map((item, index) => {
+
+                        {
+                            chapterList.length <= 0 &&
+                            <div className={styles.empty}>
+                                <img src={'/assets/jim/smile8.png'}/>
+                                <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
+                            </div>
+                        }
+                        {chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
                             let chapterNumber;
                             if (activeFilterList === "recent") {
                                 chapterNumber = bookData?.nbChapters - index;
@@ -392,7 +394,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         })}
                         <div className={styles.seeMoreContainer}>
                             {
-                                canSeeMoreChapter && !loadingScrollChapterList &&
+                                canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 &&
                                 <TextSeeMore
                                     onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
                             }

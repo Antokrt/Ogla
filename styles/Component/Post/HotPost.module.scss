@@ -64,23 +64,32 @@ border-radius: 10px;
     }
 
     .header{
+
       p{
+        &:first-letter{
+          text-transform: uppercase;
+        }
         font-size: 10px;
         color: #54595F;
         font-family: "Montserrat Alternates",sans-serif;
 
         .category{
+
           font-weight: bold;
           color: $purpleLight;
         }
         .author{
           font-weight: bold;
         }
+
+        .nbChapter{
+        }
       }
       margin-bottom: 20px;
     }
 
     .description{
+      min-height: 100px;
       padding-right: 35px;
       p{
         overflow: hidden;

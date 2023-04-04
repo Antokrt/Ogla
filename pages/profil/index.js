@@ -137,9 +137,11 @@ const Profil = ({profilData, err}) => {
                 setProfil((prevState) => ({
                     ...prevState,
                     author: {
+                        ...prevState.author,
                         description: res
                     }
                 }));
+                console.log(profil)
                 setNewPresentation(res);
             })
             .catch((err) => console.log(err));
@@ -263,16 +265,16 @@ const Profil = ({profilData, err}) => {
 
                         <div className={styles.headerWriter}>
                             <div className={styles.itemWriter}>
-                                <p>{profil.author.stats.nbBooks}</p>
+                                <p>{profil?.author?.stats?.nbBooks}</p>
                                 <h6>livre(s)</h6>
 
                             </div>
                             <div className={styles.itemWriter}>
-                                <p>{profil.author.stats.nbChapters}</p>
+                                <p>{profil?.author?.stats?.nbChapters}</p>
                                 <h6>chapitre(s)</h6>
                             </div>
                             <div className={styles.itemWriter}>
-                                <p>{profil.author.stats.totalLikes}</p>
+                                <p>{profil?.author?.stats?.totalLikes}</p>
                                 <h6>like(s) reçus</h6>
                             </div>
 

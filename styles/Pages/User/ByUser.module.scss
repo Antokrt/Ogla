@@ -1,6 +1,6 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -9,80 +9,83 @@
 
 }
 
-.containerF{
+.containerF {
   display: flex;
   justify-content: space-between;
   width: 65%;
   margin-top: 50px;
 }
 
-.imgContainer{
+.imgContainer {
   display: flex;
   justify-content: start;
   flex-direction: column;
   height: auto;
   margin-right: 50px;
+
   width: 35%;
 
-  .img{
+  .img {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    img{
+    img {
+      box-shadow: $shadow;
+
       border-radius: 50%;
       height: 150px;
       width: 150px;
-    object-fit: cover;
+      object-fit: cover;
     }
   }
 }
 
-.profil{
+.profil {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   width: 100%;
-
-  svg{
+  svg {
     cursor: pointer;
     width: 20px;
     margin: 10px;
   }
 
-  h5{
+  h5 {
     text-align: center;
     font-size: 12px;
-    font-family: "Montserrat",sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: $purple;
   }
 }
 
-.listCommentary{
+.listCommentary {
   margin-top: 10px;
   height: 400px;
   display: flex;
   flex-direction: column;
 
 
-  .headerListCommentary{
+  .headerListCommentary {
     display: flex;
     justify-content: start;
     margin-bottom: 10px;
 
-    p{
-      font-family: "Montserrat",sans-serif;
+    p {
+      font-family: "Montserrat", sans-serif;
       font-size: 12px;
 
       padding-bottom: 5px;
     }
-    svg{
+
+    svg {
       margin-left: 10px;
       width: 14px;
     }
   }
 
-  .contentListCommentary{
+  .contentListCommentary {
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -95,14 +98,14 @@
   }
 }
 
-.form{
+.form {
   height: 50px;
   border-bottom: solid 1px rgba(28, 35, 43, 0.12);
   padding-bottom: 5px;
 
-  input{
+  input {
     font-size: 11px;
-    font-family: "Montserrat",sans-serif;
+    font-family: "Montserrat", sans-serif;
     padding: 10px 0px;
     outline: none;
     width: 100%;
@@ -110,79 +113,86 @@
   }
 }
 
-.chapterContainer{
+.chapterContainer {
 
   height: auto;
   width: 65%;
   padding-right: 10px;
-  .infoContainer{
+
+  .infoContainer {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    border-bottom:solid 1px $border;
-    div{
+    border-bottom: solid 1px rgba(84, 89, 95, 0.07);
+
+    div {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      p{
+
+      p {
         font-size: 11px;
         color: #686f77;
-        font-family: "Montserrat",sans-serif;
+        font-family: "Montserrat", sans-serif;
       }
     }
-    h6{
+
+    h6 {
+      display: flex;
+      justify-content: start;
+      align-items: center;
       color: $darkBrown;
-      font-family: "Poppins",sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 13px;
-      span{
+      gap: 20px;
+
+      span {
         text-transform: capitalize;
         font-weight: bold;
         color: $purple;
       }
     }
-    h3{
+
+    h3 {
       font-size: 16px;
       text-align: center;
       border-radius: 25px;
       color: $darkBrown;
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
       font-weight: bold;
     }
 
-    .snippet{
-      margin: 10px 0px;
+    .snippet {
+      margin: 5px 0px;
       overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 6;
-      display: -webkit-box;
-      font-style: italic;
-      -webkit-box-orient: vertical;
-      font-size: 13px;
+      word-break: break-word;
+      font-size: 12px;
       color: rgba(28, 35, 43, 0.87);
-      font-family: "Montserrat",sans-serif;
+      font-style: italic;
+      font-family: "Montserrat", sans-serif;
     }
 
 
   }
 
-.topBook{
-  margin-top: 20px;
-  margin-bottom: 10px;
-font-family: "Montserrat",sans-serif;
-  font-size: 12px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding-bottom: 5px;
+  .topBook {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-bottom: 5px;
 
-  svg{
-    margin-left: 10px;
-    width: 14px;
+    svg {
+      margin-left: 10px;
+      width: 14px;
+    }
   }
-}
 
-  .rankingGridContainer{
+  .rankingGridContainer {
     margin-bottom: 20px;
     display: grid;
     overflow: visible;
@@ -190,38 +200,43 @@ font-family: "Montserrat",sans-serif;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 10px;
     grid-row-gap: 20px;
-    h4{
+
+    h4 {
 
     }
   }
 
-  .btnFilter{
+  .btnFilter {
     margin-top: 10px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    button{
+
+    button {
       display: flex;
       justify-content: end;
       align-items: center;
       color: rgba(28, 35, 43, 0.84);
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
       font-weight: bolder;
-      svg{
+
+      svg {
         width: 15px;
         color: $darkBrown;
         margin-left: 10px;
       }
     }
-    p{
+
+    p {
       display: flex;
       font-size: 14px;
       align-items: center;
       justify-content: center;
       color: $purple;
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
       font-weight: bolder;
-      svg{
+
+      svg {
         width: 14px;
         color: $purple;
         margin-left: 10px;
@@ -229,7 +244,7 @@ font-family: "Montserrat",sans-serif;
     }
   }
 
-  .contentChapterList{
+  .contentChapterList {
 
     overflow-y: auto;
     margin-top: 20px;
@@ -238,42 +253,47 @@ font-family: "Montserrat",sans-serif;
     padding: 0px 0px;
 
 
-    .chapter{
+    .chapter {
       display: flex;
       justify-content: space-between;
       height: 80px;
       border-bottom: solid 1px $grey;
       cursor: pointer;
-      .headerChapter{
+
+      .headerChapter {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        h6{
-          font-family: "Montserrat Alternates",sans-serif;
+
+        h6 {
+          font-family: "Montserrat Alternates", sans-serif;
           color: $darkBrown;
           font-size: 13px;
           font-weight: bold;
         }
-        h7{
-          font-family: "Poppins",sans-serif;
+
+        h7 {
+          font-family: "Poppins", sans-serif;
           font-size: 12px;
           color: rgba(0, 0, 0, 0.68);
         }
       }
 
-      .likeChapter{
+      .likeChapter {
         width: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        p{
+
+        p {
           text-align: center;
           color: $blue;
           font-size: 13px;
-          font-family: "Poppins",sans-serif;
+          font-family: "Poppins", sans-serif;
         }
-        svg{
+
+        svg {
           width: 13px;
           color: $blue;
           margin-top: 5px;
@@ -284,112 +304,121 @@ font-family: "Montserrat",sans-serif;
 }
 
 
-.containerS{
-display: flex;
+.containerS {
+  display: flex;
   justify-content: start;
   align-items: flex-start;
   width: 65%;
   flex-direction: column;
   padding-bottom: 20px;
-  .sortContainer{
+
+  .sortContainer {
     display: flex;
     justify-content: start;
     flex-direction: column;
     width: 80%;
     margin-bottom: 30px;
-    h3{
-      font-family: "Montserrat Alternates",sans-serif;
-      font-size: 20px;
+
+    h3 {
+      font-family: "Montserrat Alternates", sans-serif;
+      font-size: 15px;
       font-weight: bold;
-      border-bottom:solid 1px $border;
+      border-bottom: solid 1px rgba(84, 89, 95, 0.07);
       padding-bottom: 10px;
       margin-bottom: 20px;
     }
 
-    div{
+    div {
       display: flex;
       justify-content: start;
       align-items: flex-start;
       margin-top: 20px;
-      button{
-        font-size: 12px;
+
+      button {
         cursor: pointer;
         margin-right: 5px;
-        background-color: transparent;
         border-radius: 20px;
-        padding: 10px 15px;
-        font-family: "Potta One",sans-serif;
-        border: solid 1px #9844AD;
-        color: #9844AD;
+        font-size: 11px;
+        padding: 10px 20px;
+        font-family: "Montserrat Alternates", sans-serif;
+        color: #1C232B;
+        transition: 0.1s;
+        font-weight: bold;
       }
     }
   }
 }
 
-.card{
+.card {
 
   display: grid;
   justify-content: center;
   justify-items: start;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
-  gap:0px 0px;
+  gap: 0px 0px;
   width: 100%;
 }
 
-.seeMore{
-  cursor: pointer;
-  color: #9844AD;
-  font-family: 'Montserrat',sans-serif;
-  font-size: 12px;
+.seeMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  p{
+    cursor: pointer;
+    color: #9844AD;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+  }
 }
 
-.activeBtn{
+.activeBtn {
   transition: 0.1s;
   background-color: #9844AD !important;
   color: #fcfaf7 !important;
 }
 
-@media screen and (max-width: 1700px){
-  .card{
-    grid-template-columns: 1fr 1fr!important;
+@media screen and (max-width: 1700px) {
+  .card {
+    grid-template-columns: 1fr 1fr !important;
   }
 }
 
-@media screen and (max-width: 1400px){
-  .card{
+@media screen and (max-width: 1400px) {
+  .card {
     width: 80% !important;
   }
 }
 
-@media screen and (max-width: 1200px){
-  .card{
+@media screen and (max-width: 1200px) {
+  .card {
     width: 100% !important;
   }
 }
 
-@media screen and (max-width: 1100px){
-  .card{
-    grid-template-columns: 1fr 1fr 1fr!important;
+@media screen and (max-width: 1100px) {
+  .card {
+    grid-template-columns: 1fr 1fr 1fr !important;
     width: 70% !important;
   }
 }
 
-@media screen and (max-width: 850px){
+@media screen and (max-width: 850px) {
   .card {
-    grid-template-columns: 1fr 1fr!important;
+    grid-template-columns: 1fr 1fr !important;
   }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 550px) {
   .card {
     width: 100% !important;
   }
 }
 
-@media screen and (max-width: 400px){
-  .card{
-    grid-template-columns: 1fr!important;
+@media screen and (max-width: 400px) {
+  .card {
+    grid-template-columns: 1fr !important;
   }
 }
 

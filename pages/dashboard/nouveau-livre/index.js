@@ -111,6 +111,7 @@ const New = () => {
             placeholder={'Entrez le titre de votre livre ici...'}
             type='text'
             onChange={(e) => {
+                console.log(title.length)
                 setTitle(e.target.value);
             }}
         />
