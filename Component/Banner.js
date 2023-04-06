@@ -17,29 +17,34 @@ export default function Banner() {
         <div className={styles.container}>
 
             <div className={styles.HomeCenterBlock}>
-                <div className={styles.HomeCenterContent}>
+                <div className={styles.HomeTextBlock}>
                     <div className={styles.HomeCenterTitle}>
+                        <svg id="visual" viewBox="0 0 900 600"  version="1.1"><path d="M808 600L813 580C818 560 828 520 828 480C828 440 818 400 809 360C800 320 792 280 785.5 240C779 200 774 160 771.5 120C769 80 769 40 769 20L769 0L900 0L900 20C900 40 900 80 900 120C900 160 900 200 900 240C900 280 900 320 900 360C900 400 900 440 900 480C900 520 900 560 900 580L900 600Z" fill="#311959" stroke-linecap="round" stroke-linejoin="miter"/></svg>
+
                         <h1> Commencez votre voyage avec nous! </h1>
                         <p> Découvrez des histoires captivantes et des 
                             aventures passionantes qui vous ferrons voyager au-delà de votre imagination... </p>
                         <div className={styles.HomeCenterButton}> Voir la librairie </div>
                     </div>
+                </div>
+                <div className={styles.HomeCenterContent}>
+                    {/* <img src="/assets/diapo/Welcome.png" /> */}
+                    
                     <div className={styles.HomeCenterContainerImg}>
-                        <img src="/assets/diapo/BannerImg.png" alt="Banner"/>
                     </div>
                 </div>
+
             </div>
 
-            <div className={styles.HomeTitleHebo}>
+            {/* <div className={styles.HomeTitleHebo}>
                 <h2> Top Hebdomadaire </h2>
                 <p> Voir plus.. </p>
-            </div>
+            </div> */}
             
             {/*<div className={styles.absBlock}>
 
             </div>
             <div className={styles.mainA}>
-
                 {
                     session ?
                         <>
@@ -96,7 +101,7 @@ export default function Banner() {
                     </div> */}
             
             <div className={styles.mainB}>
-                <img className={styles.owl} src={'assets/owl.png'}/>
+                {/* <img className={styles.owl} src={'assets/owl.png'}/> */}
                 {/*<div className={styles.bubbleContainer}>
                     <h5 className={styles.title}>Cette semaine <CursorArrowRaysIcon/></h5>
                     <div className={styles.textBg}>

@@ -59,7 +59,7 @@ export default function Header() {
                     <ul>
                         <li><Link href="/"><a
                             className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                        <li><Link href={{pathname: "/Category"}}><a 
+                        <li><Link href={{ pathname: "/Category" }}><a
                             className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
                         </li>
                         {

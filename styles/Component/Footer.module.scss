@@ -1,152 +1,164 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   min-height: auto;
   height: auto;
   width: 100%;
 }
 
-.socialLinks{
+.socialLinks {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   height: 200px;
   background-color: $purple;
+  // background-image: url("../../public/assets/wave-haikei.png");
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
 
-  h5{
+  h5 {
     color: white;
     font-size: 18px;
     text-align: center;
-    font-family: "Potta One",sans-serif;
+    font-family: "Potta One", sans-serif;
   }
-  .social{
+
+  .social {
     margin-top: 30px;
-  .icon{
-    color: white;
-    font-size: 30px;
-    margin: 0px 20px;
-  }
+
+    .icon {
+      color: white;
+      font-size: 30px;
+      margin: 0px 20px;
+    }
   }
 }
 
-.linkFooter{
+.linkFooter {
   padding: 50px;
   background-color: #1C232B;
   height: auto;
   display: flex;
   align-items: flex-start;
-justify-content: center;
+  justify-content: center;
 
-  .planContainer{
+  .planContainer {
     display: flex;
   }
-  .plan{
-width: auto;
-margin: 0px 30px;
+
+  .plan {
+    width: auto;
+    margin: 0px 30px;
+
     ul {
       display: flex;
       flex-direction: column;
       width: 100%;
 
-      li{
+      li {
 
         margin: 10px 0px;
         font-size: 11px;
-        font-family: "Poppins",sans-serif;
+        font-family: "Poppins", sans-serif;
         color: #7A7A7A;
         width: 100%;
 
-        a{
+        a {
           color: #7A7A7A;
-text-decoration: none;
+          text-decoration: none;
         }
       }
     }
 
-    h6{
+    h6 {
       text-align: left;
       white-space: nowrap;
       color: white;
       font-size: 15px;
       font-weight: 600;
-margin-bottom: 20px;
-      font-family: "Montserrat Alternates",sans-serif;
+      margin-bottom: 20px;
+      font-family: "Montserrat Alternates", sans-serif;
     }
   }
 
-  .text{
-    h6{
+  .text {
+    h6 {
       text-align: left;
       color: white;
       font-size: 16px;
       margin-bottom: 15px;
       font-weight: 600;
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
     }
+
     width: auto;
     margin: 0px 70px;
-    p{
+
+    p {
       width: 260px;
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
       font-size: 11px;
       line-height: 20px;
       font-style: italic;
-color: $purple;
+      color: $purple;
     }
   }
 }
 
-.activeNav{
-  color: white!important;
+.activeNav {
+  color: white !important;
 }
 
-@media screen and (max-width: 650px){
-  .plan{
-    width: 50%!important;
+@media screen and (max-width: 650px) {
+  .plan {
+    width: 50% !important;
   }
 
-  .text{
+  .text {
     width: 100% !important;
-    margin: 0!important;
+    margin: 0 !important;
   }
 
-  .linkFooter{
-flex-direction: column!important;
+  .linkFooter {
+    flex-direction: column !important;
     padding: 50px 20px;
   }
 
-  .planContainer{
+  .planContainer {
     width: 100% !important;
     margin-bottom: 20px;
   }
 
-  .text{
-    h6{
-      font-size: 1.5rem!important;
+  .text {
+    h6 {
+      font-size: 1.5rem !important;
     }
-    p{
+
+    p {
       width: 100% !important;
     }
   }
 }
 
-@media screen and (max-width: 300px){
-  .planContainer{
-    flex-direction: column!important;
+@media screen and (max-width: 300px) {
+  .planContainer {
+    flex-direction: column !important;
 
-    .plan{
+    .plan {
       width: 100% !important;
       margin: 20px 0px;
-      h6{
+
+      h6 {
         text-align: center;
       }
     }
   }
 
-  .text{
-    h6{
-      font-size: 20px!important;
+  .text {
+    h6 {
+      font-size: 20px !important;
     }
   }
 }
