@@ -68,7 +68,7 @@ z-index: 1;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    width: 60%;
+    width: 70%;
     margin-bottom: 30px;
 
     h3 {
@@ -113,7 +113,7 @@ z-index: 1;
     align-items: flex-start;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 30px 0px;
-    width: 60%;
+    width: 70%;
   }
 }
 
@@ -121,6 +121,7 @@ z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5%;
 }
 
 .seeMore{

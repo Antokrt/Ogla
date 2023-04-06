@@ -289,3 +289,34 @@ font-size: 12px;
   transform: translateX(-50%);
   bottom: 2%;
 }
+
+.err{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+
+  img{
+    margin-top: -6%;
+    padding: 1%;
+    height: 20vh;
+    width: 220px;
+    border-radius: 24px;
+    object-fit: contain;
+  }
+
+  h4{
+    font-size: 24px;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  p{
+    margin-bottom: 20px;
+    font-family: 'Montserrat',sans-serif;
+    color: rgba(28, 35, 43, 0.83);
+    font-size: 14px;
+  }
+}

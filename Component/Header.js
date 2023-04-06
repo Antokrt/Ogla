@@ -16,6 +16,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
 import {LogoutService} from "../service/User/Account.service";
 import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
+import {BellAlertIcon} from "@heroicons/react/24/outline";
+import {selectNotifStatus, setActiveModalNotif} from "../store/slices/notifSlice";
 
 export default function Header() {
     const router = useRouter();
@@ -57,6 +59,7 @@ export default function Header() {
 
 
     const comments = useSelector(selectComments);
+    const notifState = useSelector(selectNotifStatus);
     const dispatch = useDispatch();
     return (
         <div className={styles.container}>
@@ -146,6 +149,13 @@ export default function Header() {
                         <HeadPhoneBtn/>
 
                     </div>
+
+
+            <div className={styles.bell}>
+                <BellAlertIcon onClick={() => {
+                    dispatch(setActiveModalNotif(true));
+                }}/>
+            </div>
 
 
                 {

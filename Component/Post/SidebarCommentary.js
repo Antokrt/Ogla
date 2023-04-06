@@ -28,8 +28,8 @@ const SidebarCommentary = ({
                                page,
                                createNewComment,
                                refresh,
-    nbCommentary,
-    authorImg,
+                               nbCommentary,
+                               authorImg,
                                canScroll,
                                deleteAComment,
                                likeAComment,
@@ -47,7 +47,7 @@ const SidebarCommentary = ({
     const divRef = useRef(null);
 
     const {data: session} = useSession();
-    const modalState = useSelector(selectLoginModalStatus);
+    const inputRef = useRef(null);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -110,15 +110,15 @@ const SidebarCommentary = ({
             const threshold = 1;
             const isBottom =
                 div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-            if(isBottom && canScroll && !loadingScroll){
-               getMore()
+            if (isBottom && canScroll && !loadingScroll) {
+                getMore()
             }
         };
         div.addEventListener("scroll", handleScroll);
         return () => {
             div.removeEventListener("scroll", handleScroll);
         };
-    }, [canScroll,loadingScroll]);
+    }, [canScroll, loadingScroll]);
 
     return (
         <div className={styles.container}>
@@ -142,36 +142,50 @@ const SidebarCommentary = ({
                 className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
 
 
-                    {
-                                commentList.map((item, index) => {
-                                    return (
-                                        <Commentary
-                                            seeMoreAnswers={item.seeMoreAnswers}
-                                            id={item._id}
-                                            deleteComment={() => deleteComment(item._id)}
-                                            deleteAanswer={(id) => deleteAanswer(id)}
-                                            likeAanswer={(id) => likeAanswer(id)}
-                                            likeComment={() => likeComment(item._id)}
-                                            sendNewAnswer={(data) => sendNewAnswer(data)}
-                                            answerPage={item.answersPage}
-                                            newAnswerPage={() => newPageAnswer(item._id)}
-                                            authorId={item.userId}
-                                            hasLikeData={item.hasLike}
-                                            content={item.content}
-                                            authorHasLike={item.authorHasLike}
-                                            authorImg={authorImg}
-                                            authorPseudo={author}
-                                            nbAnswers={item.nbAnswers}
-                                            likes={item.likes}
-                                            img={item.img}
-                                            date={item.date_creation}
-                                            pseudo={item.pseudo}
-                                            answers={item.answers}
-                                        />
+                {
+                    commentList && commentList.length > 0 && commentList.map((item, index) => {
+                        return (
+                            <Commentary
+                                seeMoreAnswers={item.seeMoreAnswers}
+                                id={item._id}
+                                deleteComment={() => deleteComment(item._id)}
+                                deleteAanswer={(id) => deleteAanswer(id)}
+                                likeAanswer={(id) => likeAanswer(id)}
+                                likeComment={() => likeComment(item._id)}
+                                sendNewAnswer={(data) => sendNewAnswer(data)}
+                                answerPage={item.answersPage}
+                                newAnswerPage={() => newPageAnswer(item._id)}
+                                authorId={item.userId}
+                                hasLikeData={item.hasLike}
+                                content={item.content}
+                                authorHasLike={item.authorHasLike}
+                                authorImg={authorImg}
+                                authorPseudo={author}
+                                nbAnswers={item.nbAnswers}
+                                likes={item.likes}
+                                img={item.img}
+                                date={item.date_creation}
+                                pseudo={item.pseudo}
+                                answers={item.answers}
+                            />
 
-                                    )
-                                })
-                    }
+                        )
+                    })
+                }
+
+                {
+                    commentList && commentList.length <= 0 &&
+                    <div className={styles.empty}>
+                        <img src={'/assets/jim/angry2.png'}/>
+                        <p>C'est bien silencieux ici ! <br/> <span onClick={() => {
+                            if (session) {
+                                inputRef.current.focus();
+                            } else {
+                                dispatch(setActiveModalState(true));
+                            }
+                        }}>Écris le premier commentaire dès maintenant... </span></p>
+                    </div>
+                }
 
             </div>
 
@@ -183,6 +197,7 @@ const SidebarCommentary = ({
                     {
                         session ?
                             <textarea
+                                ref={inputRef}
                                 value={newComment}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {

@@ -118,6 +118,24 @@
       }
     }
 
+    .bell{
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg{
+        &:hover{
+          transition: 0.1s;
+          color: #1C232B;
+        }
+        cursor: pointer;
+        color: rgba(28, 35, 43, 0.76);
+        transition: 0.1s;
+        width: 30px;
+      }
+    }
+
     .imgProfil{
       z-index: 2;
       cursor: pointer;

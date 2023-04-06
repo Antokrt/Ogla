@@ -83,6 +83,30 @@
     scroll-behavior: smooth;
   }
 
+  .empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 0% 2%;
+    img{
+      width: 120px;
+    }
+    p{
+      font-family: 'Montserrat',sans-serif;
+      font-weight: bold;
+      margin-top: 6%;
+
+      text-align: center;
+      span{
+        cursor: pointer;
+font-size: 12px;
+        text-decoration: underline;
+      }
+    }
+  }
+
   .commentaryContainer {
     z-index: 2;
     position: absolute;
@@ -123,7 +147,12 @@
         &:read-only{
           cursor: pointer;
         }
-
+        &:focus{
+          border-color: rgba(152, 68, 173, 0.36);
+          transition: 0.1s;
+        }
+        transition: 0.1s;
+        border: solid 1px transparent;
         border-radius: 5px;
         font-family: "Montserrat", sans-serif;
         resize: none;
@@ -132,7 +161,6 @@
         height: 50px;
         padding-top: 10px;
         padding-left: 10px;
-        border: none;
         font-size: 12px;
         width: 100%;
       }

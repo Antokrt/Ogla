@@ -7,6 +7,7 @@ import {LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
 import {TextSeeMore} from "../layouts/Btn/ActionBtn";
+import ErrMsg from "../ErrMsg";
 
 
 const SidebarChapter = ({
@@ -113,7 +114,18 @@ const SidebarChapter = ({
 
             </div>
 */}
+
+        {
+            !chapterList &&
+            <div className={styles.err}>
+                <img src={'/assets/jim/angry4.png'}/>
+                <h4>Oups !</h4>
+                <p>Impossible de récupérer les chapitres </p>
+
+            </div>
+        }
         <div className={styles.chapterList} ref={divRef}>
+
 
             {chapterList && chapterList.map((item, index) => {
                 let chapterNumber;
@@ -155,11 +167,11 @@ const SidebarChapter = ({
 
                 <div className={styles.seeMore}>
                     {
-                        canSeeMore && !loadingScroll &&
+                        canSeeMore && !loadingScroll && !chapterList &&
                         <TextSeeMore onclick={() => getMoreChapter()}/>
                     }
                     {
-                        loadingScroll &&
+                        loadingScroll && !chapterList &&
                         <LoaderCommentary/>
                     }
                 </div>

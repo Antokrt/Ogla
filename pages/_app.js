@@ -12,6 +12,8 @@ import {LoginModal} from "../Component/Modal/LoginModal";
 import SocketProvider from '../utils/context/socket';
 import YouTube from "react-youtube";
 import {selectActiveMusicStatus, selectIndexStateMusic, setIndexMusic} from "../store/slices/musicSlice";
+import {selectNotifStatus, setActiveModalNotif} from "../store/slices/notifSlice";
+import {NotifModal} from "../Component/Modal/NotifModal";
 
 
 function MyApp({Component, pageProps}) {
@@ -21,6 +23,8 @@ function MyApp({Component, pageProps}) {
     return (
         <SessionProvider session={pageProps.session}>
                 <Provider store={store}>
+                    <Notif/>
+
                     <SocketProvider>
                         <Modal/>
                         <Component {...pageProps} />
@@ -42,6 +46,29 @@ function Modal() {
             <LoginModal close={() => dispatch(setActiveModalState(false))}/>
         )
     }
+}
+
+function Notif() {
+    const notifState = useSelector(selectNotifStatus);
+    const dispatch = useDispatch();
+
+    if(notifState){
+        if(typeof window !== 'undefined'){
+            const body = document.querySelector('body');
+            body.style.overflow = 'hidden';
+        }
+        return (
+            <NotifModal close={() => dispatch(setActiveModalNotif(false))}/>
+        )
+    }
+    else {
+        if(typeof window !== 'undefined'){
+            const body = document.querySelector('body');
+            body.style.overflow = 'initial';
+        }
+    }
+
+
 }
 
 function Lofi(){

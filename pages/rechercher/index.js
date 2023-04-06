@@ -12,6 +12,7 @@ import {CardBookPublic} from "../../Component/Card/CardBook";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
+import {ListCard} from "../../Component/Card/ListCard";
 
 export async function getServerSideProps({req, query}) {
 
@@ -140,22 +141,8 @@ const SearchPage = ({queryData, data, err}) => {
                     <div className={styles.card}>
                         {
                             searchData && !err && searchData.length !== 0 &&
-                            searchData.map((item, index) => {
-                                return (
-                                    <CardBookPublic title={item.title}
-                                                    snippet={item.summary}
-                                                    like={item.likes}
-                                                    category={item.category}
-                                                    author={item.author_pseudo}
-                                                    slug={item.slug}
-                                                    nbChapter={item.chapter_list.length}
-                                                    img={item.img}
-                                                    id={item._id}
-                                    />
-                                )
-                            })
+                            <ListCard books={searchData}/>
                         }
-
                     </div>
                 </div>
                 <div className={styles.seeMoreContainer}>

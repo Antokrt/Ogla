@@ -126,7 +126,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                         setLikes(likes + 1);
                     }
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log('err'));
         }
         else {
             dispatch(setActiveModalState(true));
@@ -417,8 +417,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
                                         </EditorContent>
                                     }
-
-                                </div>
+                   </div>
                                 {
                                     chapterData.navChapter.next &&
                                     <button className={styles.readMore} onClick={() => {
@@ -443,7 +442,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             index={index}
                             navChapters={chapterData.navChapter}
                             author={bookData?.author_pseudo}
-                            nbChapter={bookData?.chapter_list.length}
+                            nbChapter={bookData?.nbChapters}
                             nbCommentary={nbCommentary}
                             openList={() => {
                                 ToogleSidebar("List", sidebarSelect, setSidebarSelect);

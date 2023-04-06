@@ -22,6 +22,8 @@ import {Capitalize} from "../../utils/String";
 import {ErrModal} from "../../Component/Modal/ErrModal";
 import ErrMsg from "../../Component/ErrMsg";
 import HotPost from "../../Component/Post/HotPost";
+import {HorizontalCard} from "../../Component/Card/HorizontalCard";
+import {ListCard} from "../../Component/Card/ListCard";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
@@ -142,23 +144,7 @@ export default function CatPage({cat, err, bookListData}) {
                             {
                                 !err && bookListData &&
                                 <>
-                                    <div className={styles.card}>
-                                        {
-                                            bookList.map((item, index) => {
-                                                return (
-                                                    <CardBookPublic
-                                                        slug={item.slug}
-                                                        id={item._id}
-                                                        title={item.title}
-                                                        snippet={item.summary}
-                                                        like={item.likes}
-                                                        category={Capitalize(item.category)}
-                                                        author={item.author_pseudo}
-                                                        img={item.img}/>
-                                                )
-                                            })
-                                        }
-                                    </div>
+                                    <ListCard books={bookList}/>
 
                                     {
                                         canSeeMore && !loadingScroll &&

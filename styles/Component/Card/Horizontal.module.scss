@@ -4,33 +4,33 @@
   position: relative;
   display: flex;
 cursor: pointer;
-  width: 450px;
+  width: 400px;
 height: 200px;
-  border: solid 1px rgba(84, 89, 95, 0.11);
+  border: solid 1px rgba(84, 89, 95, 0.05);
   border-radius: 15px;
   padding-right: 2%;
 }
 
-.thumbnaiLike{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.thumbnailLike{
   position: absolute;
-  top: -5%;
-  right: -5%;
-  background-color: #e94f37;
-  box-shadow: $shadow;
-  padding: 5px 12px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  right: 2%;
+  top: 5%;
   p{
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
     font-size: 10px;
-    font-family: 'Montserrat',sans-serif;
-    color: white;
+    letter-spacing: 1px;
+    color: #1C232B;
   }
   svg{
-    width: 13px;
-    color: white;
+    color: #9844AD;
+    width: 14px;
   }
+
 }
 
 .containerImg{
@@ -41,9 +41,9 @@ height: 200px;
   width: 40%;
   padding: 4%;
   img{
-    width: 100%;
+    width:100%;
     border-radius: 25px;
-    height: 100%;
+    height: 90%;
     object-fit: cover;
   }
 }
@@ -61,6 +61,7 @@ height: 200px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 10px;
 
     p{
       font-size: 10px;
@@ -70,6 +71,7 @@ height: 200px;
         font-weight: bold;
       }
     }
+
   }
 
   h5{
@@ -84,8 +86,13 @@ height: 200px;
     font-family: "Montserrat Alternates",sans-serif;
     color: rgba(28, 35, 43, 0.73);
     margin-bottom: 10px;
-
-
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    font-style: italic;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
   }
 
   .summary{
@@ -98,12 +105,20 @@ height: 200px;
     word-break: break-word;
     -webkit-box-orient: vertical;
     font-size: 11px;
+    min-height: 50px;
     color: rgba(28, 35, 43, 0.87);
     font-family: "Montserrat", sans-serif;
   }
 
+  .stats{
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+  }
+
   .nbChapters{
-    margin-top: 5px;
     font-size: 10px;
     color: rgba(28, 35, 43, 0.87);
     font-family: "Montserrat", sans-serif;

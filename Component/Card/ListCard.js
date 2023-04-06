@@ -4,6 +4,7 @@ import React from "react";
 import {HorizontalCard} from "./HorizontalCard";
 
 export const ListCard = ({books}) => {
+    console.log(books)
     return (
         <div className={styles.container}>
             {

@@ -1,11 +1,16 @@
 import styles from "../../styles/Component/Post/HotPost.module.scss";
 import {ChevronDoubleUpIcon} from "@heroicons/react/24/outline";
 import {CountLike} from "../layouts/Btn/Like";
+import {useRouter} from "next/router";
 
-const HotPost = ({img, title, category, author, nbChapter, description, likes, top}) => {
+const HotPost = ({img, title, category, author, nbChapter, description, likes, top,slug,id}) => {
+    const router = useRouter();
     return (
 
-        <div className={styles.container}>
+        <div className={styles.container} onClick={() => router.push({
+            pathname: '/livre/' + id,
+            query: slug
+        })}>
             <div className={styles.imgContainer}>
                 <img src={img}/>
             </div>

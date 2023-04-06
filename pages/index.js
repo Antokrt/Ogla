@@ -15,12 +15,21 @@ import {GetTopBooksOnHomeApi} from "./api/book";
 import {GetActiveMonthlyCateoryApi} from "./api/Category";
 import {Capitalize} from "../utils/String";
 import {useRouter} from "next/router";
+import {BannerBecameWriter} from "../Component/BannerBecameWriter";
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
     let data;
     if (!cat.err) {
         data = await GetTopBooksOnHomeApi(cat.data.fCat, cat.data.sCat);
+    }
+    else {
+        data.err = true;
+        return {
+            props: {
+                err: true,
+            }
+        }
     }
 
     console.log(cat.data)
@@ -37,7 +46,7 @@ export async function getServerSideProps() {
 }
 
 
-export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2}) {
+export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, err}) {
 
     const {data: session} = useSession();
     const router = useRouter();
@@ -63,41 +72,49 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2}) 
             </div>
             <Banner/>
             <CategoryHome/>
-            <div className={styles.hot}>
-                <div className={styles.headerHot}>
-                    <h4>Populaires :</h4>
-                    <h5 onClick={() => router.push({pathname:'/cat'})}>Tout voir <ChevronDoubleRightIcon/></h5>
-                </div>
-                <div className={styles.hotContainer}>
-                    <HotPost className={styles.hotItem}
-                             likes={tops[0].likes}
-                             top={true}
-                             title={tops[0].title} nbChapter={tops[0].nbChapters} author={tops[0].author_pseudo}
-                             img={tops[0].img} category={tops[0].category}
-                             description={tops[0].summary}
-                    />
-                    <HotPost className={styles.hotItem}
-                             likes={tops[1].likes}
-                             top={false}
-                             title={tops[1].title} nbChapter={tops[1].nbChapters} author={tops[1].author_pseudo}
-                             img={tops[1].img} category={tops[1].category}
-                             description={tops[1].summary}
-                    />
+            <BannerBecameWriter/>
+            {
+                !err && tops &&
+                <div className={styles.hot}>
+                    <div className={styles.headerHot}>
+                        <h4>Populaires :</h4>
+                        <h5 onClick={() => router.push({pathname:'/cat'})}>Tout voir <ChevronDoubleRightIcon/></h5>
+                    </div>
+                    <div className={styles.hotContainer}>
+                        <HotPost className={styles.hotItem}
+                                 id={tops[0]._id}
+                                 slug={tops[0].slug}
+                                 likes={tops[0].likes}
+                                 top={true}
+                                 title={tops[0].title} nbChapter={tops[0].nbChapters} author={tops[0].author_pseudo}
+                                 img={tops[0].img} category={tops[0].category}
+                                 description={tops[0].summary}
+                        />
+                        <HotPost
+                            className={styles.hotItem}
+                            id={tops[1]._id}
+                            slug={tops[1].slug}
+                                 likes={tops[1].likes}
+                                 top={false}
+                                 title={tops[1].title} nbChapter={tops[1].nbChapters} author={tops[1].author_pseudo}
+                                 img={tops[1].img} category={tops[1].category}
+                                 description={tops[1].summary}
+                        />
+
+                    </div>
+
+                    <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
+
+
+                    <div className={styles.previewPostListContainer}>
+                        <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance '+ cat1}/>
+                        <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' +cat2}/>
+                    </div>
 
                 </div>
+            }
 
-                <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
-
-
-                <div className={styles.previewPostListContainer}>
-                    <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance '+ cat1} type={"Horreur"}/>
-                    <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' +cat2} type={"Horreur"}/>
-                </div>
-
-            </div>
             <Footer></Footer>
-            <LoginModal close={() => alert('kek')}/>
-
         </div>
     )
 }

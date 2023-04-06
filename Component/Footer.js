@@ -31,7 +31,12 @@ GetRandomBookService()
                     <div className={styles.social}>
                         <Facebook/>
                         <Instagram/>
-                        <Twitter/>
+                        <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noopener'} >
+                            <a target={'_blank'}>
+                                <Twitter/>
+                            </a>
+
+                        </Link>
                         <DiscordIcon/>
 
                     </div>
@@ -44,7 +49,7 @@ GetRandomBookService()
                         <ul>
                             <li><Link href="/"><a
                                 className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                            <li><Link href="/Category"><a className={router.pathname === "/post" ? styles.activeNav : ""}>Derniers
+                            <li><Link href="/cat"><a className={router.pathname === "/cat" ? styles.activeNav : ""}>Derniers
                                 ouvrages</a></Link></li>
                             {
                                 !session || !session.user.is_author &&

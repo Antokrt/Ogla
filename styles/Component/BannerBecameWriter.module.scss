@@ -1,0 +1,76 @@
+.container{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+  width: 100%;
+}
+
+.girl{
+  width: 50%;
+  height: 60vh;
+  object-fit: contain;
+  position: absolute;
+  right: -14%;
+  bottom: 0;
+}
+
+.bird1{
+  width: 50%;
+  height: 10vh;
+  object-fit: contain;
+  position: absolute;
+  right: 5%;
+  bottom: 0%;
+}
+
+.bird2{
+  height: 10vh;
+  object-fit: contain;
+  position: absolute;
+  left: 4%;
+  bottom: -0.5%;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  padding-left: 5%;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  h5{
+    font-size: 5vh;
+    font-family: 'Branch',sans-serif;
+    font-weight: bold;
+    white-space: pre;
+    -webkit-text-stroke-width: 1px;
+  }
+  p{
+    text-align: center;
+    font-size: 1.6vh;
+    font-family: 'Poppins',sans-serif;
+    color: rgb(84, 89, 95);
+    width: 70%;
+    strong{
+      color: #9844AD;
+    }
+  }
+
+
+}
+
+.btnContainer{
+  margin-top: 4vh;
+  button{
+    font-family: 'Montserrat Alternates',sans-serif;
+    font-weight: bold;
+    background-color: #e04444;
+    color: white;
+    padding: 15px 3vw;
+    font-size: 12px;
+    border-radius: 25px;
+  }
+}

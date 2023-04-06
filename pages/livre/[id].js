@@ -31,8 +31,10 @@ import {LoaderCommentary} from "../../Component/layouts/Loader";
 import {Snippet} from "../../Component/Snippet";
 
 
-export async function getServerSideProps({req, params}) {
+export async function getServerSideProps({req, params,query}) {
     const id = params.id;
+    console.log(req)
+    console.log(query)
     const data = await GetOneBookApi(id);
     if (!data.err) {
         const hasLikeJson = await VerifLikeApi(req, 'book', data.book._id);
@@ -83,6 +85,15 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const dispatch = useDispatch();
 
 
+
+    useEffect(() => {
+        const openSidebar = localStorage.getItem('openSidebar');
+        if(openSidebar && typeof window !== 'undefined'){
+           setSidebarSelect('Commentary');
+           localStorage.removeItem('openSidebar');
+
+       }
+    },[])
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)

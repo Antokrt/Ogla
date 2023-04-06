@@ -21,6 +21,7 @@ import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
 import HotPost from "../../Component/Post/HotPost";
+import {ListCard} from "../../Component/Card/ListCard";
 
 export async function getServerSideProps({req,params}){
 
@@ -103,7 +104,7 @@ export default function CatPage({cat,err,bookListData}) {
                                 }
                                 {
                                     cat !== undefined &&
-                                    <h3><span className={styles.f}> Populaires</span></h3>
+                                    <h3><span className={styles.f}> Populaires - {Capitalize(cat)}</span></h3>
                                 }
 
                                 <p>{DateNow()}</p>
@@ -134,24 +135,7 @@ export default function CatPage({cat,err,bookListData}) {
                             </div>
                             {
                                 !err && bookListData &&
-                                <div className={styles.card}>
-                                    {
-                                        bookList.map((item,index) => {
-                                            return (
-                                                <CardBookPublic
-                                                    id={item._id}
-                                                    title={item.title}
-                                                             snippet={item.summary}
-                                                             like={item.likes}
-                                                             category={item.category}
-                                                             author={item.author_pseudo}
-                                                             nbChapter={item.nbChapters}
-                                                             img={item.img}/>
-                                            )
-                                        })
-                                    }
-                                </div>
-
+                                    <ListCard books={bookList}/>
                             }
                             {
                                 canSeeMore && !loadingScroll && bookList.length !== 0 &&
