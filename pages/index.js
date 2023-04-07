@@ -16,6 +16,7 @@ import { activeOrDisable, selectLoginModalStatus, setActiveModalState } from "..
 
 import { LoginModal } from "../Component/Modal/LoginModal";
 import HeaderResponsive from '../Component/HeaderResponsive';
+import MusicHome from '../Component/MusicHome';
 
 /*export async function getServerSideProps({context, req, res}){
     const config = await getConfigOfProtectedRoute(req);
@@ -55,6 +56,7 @@ export default function Home({ err, books }) {
             </div>
             <Banner />
             <CategoryHome />
+            <MusicHome />
             <div className={styles.hot}>
                 <div className={styles.headerHot}>
                     <h4>Populaires :</h4>

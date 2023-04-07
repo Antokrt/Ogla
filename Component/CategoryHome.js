@@ -19,7 +19,7 @@ return (
                 <CategoryCard title={'Drama'} category={'drama'}/>
                 <CategoryCard title={'Fantaisie'} category={'fantaisie'}/>
 
-                <CategoryCard title={'Science Fiction'} category={'sf'}/>
+                <CategoryCard title={'Science Fiction'} category={'sf1'}/>
             </div>
         </div>
 

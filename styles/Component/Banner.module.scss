@@ -1,21 +1,21 @@
 @import "/styles/utils/var";
+
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
   height: 100vh;
-  // margin-top: -10vh;
+  background-color: #311959;
 
   .HomeCenterBlock {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
     margin-top: -10vh;
-    
+
     .HomeCenterContent {
       width: 70%;
       height: 100%;
@@ -23,37 +23,24 @@
       background-repeat: no-repeat;
       background-position: right;
       background-size: 100% 100%;
-      display: flex;
-      justify-content: space-between;
-     
+      animation: testimg 3s ease;
+      animation-fill-mode: forwards;
+    }
 
-      .HomeCenterContainerImg {
-        // mix-blend-mode: multiply;
-        // width: 20%;
-        // min-width: 400px;
-        // img {
-        //   object-fit: cover;
-        //   width: 100%;
-        //   height: 100%;
-        //   filter: brightness(1.59);
-        //   border-radius: 20px;
-        //   border-bottom-left-radius: 0px;
-        //   border-top-left-radius: 0px;
-        // }
+    @keyframes testimg {
+      from {
+        background-size: 100% 100%; 
+      }
+      to {
+        background-size: 102% 102%; 
       }
     }
 
     .HomeTextBlock {
       background-color: #311959;
-      position: relative;
       width: 30%;
       height: 100%;
-      svg {
-        height: 100%;
-        position: absolute;
-        right: 0px;
-        z-index: 0;
-      }
+
       .HomeCenterTitle {
         padding: 35px;
         height: 100%;
@@ -69,10 +56,8 @@
           font-size: 5vh;
           font-family: "Branch", sans-serif;
           font-weight: bold;
-          // white-space: pre;
-          // -webkit-text-stroke-width: 1px;
           color: white;
-          margin-bottom: 50px;
+          margin-bottom: 80px;
           z-index: 1;
         }
         p {
@@ -81,8 +66,8 @@
           font-size: 25px;
           color: white;
           margin-bottom: 20px;
-          z-index: 1;
           margin-bottom: 80px;
+          z-index: 1;
         }
         .HomeCenterButton {
           &:hover {
@@ -94,7 +79,6 @@
           transition: 0.3s;
           font-family: 'Poppins';
           background-color: #e94f37;
-          // border: 1px solid #e94f37;
           color: white;
           width: 200px;
           height: 60px;
@@ -110,439 +94,8 @@
     }
   }
 
-  .HomeTitleHebo {
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h2 {
-      font-family: 'Branch';
-      color: rgb(133, 59, 151);
-      font-size: 25px;
-    }
-    p {
-      &:hover {
-        color: rgb(126, 40, 148);
-        transition: 0.3s;
-      }
-      transition: 0.3s;
-      font-size: 17px;
-      font-family: 'Poppins';
-      color: rgb(129, 106, 136);
-      cursor: pointer;
-    }
+  svg {
+    position: absolute;
+    bottom: 0px;
   }
-
-
-  .mainB {
-    img {
-      z-index: 3;
-      height: 150px;
-      position: absolute;
-      bottom: -4px;
-      right: 40px;
-    }
-  }
-
-
-
-  // .absBlock{
-  //   position: absolute;
-  //   right: 0;
-  //   width: 50%;
-  //   background-color: #4ce0d2;
-  //   height: 100%;
-  // }
-
-//   .mainA{
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     flex-direction: column;
-//     // height: 100%;
-//     width: 50%;
-//     .refre{
-//       // z-index: 7;
-//       white-space: pre;
-//       font-size: 11px;
-//     }
-//     h1{
-//       margin-bottom: 1%;
-//       width: 70%;
-//       font-size: 40px;
-//       font-weight: bold;
-//       font-family: "Montserrat Alternates",sans-serif;
-//       span{
-//         color: #9844AD;
-//         font-size: 40px;
-//       }
-//     }
-
-//     .presentation{
-//       margin-bottom: 6%;
-//       font-family: 'Montserrat',sans-serif;
-//       font-size: 14px;
-//       width: 70%;
-//       .bold{
-//         font-weight: bold;
-//         color: #9844AD;
-//       }
-//     }
-
-//     .blockBtn{
-//       display: flex;
-//       height: 100px;
-//       width: 80%;
-//       gap: 30px;
-//       .statsAuthor{
-// display: flex;
-//         flex-direction: column;
-//         .nb{
-//           display: flex;
-//           gap: 5px;
-//           font-size: 45px;
-//           font-family: 'Montserrat Alternates',sans-serif;
-//           font-weight: bold;
-//           span{
-//             font-size: 12px;
-//             color: #9844AD;
-//           }
-//         }
-//         .authorLabel{
-//           text-align: right;
-//           font-family: 'Montserrat Alternates',sans-serif;
-//         }
-//       }
-
-//       .btnJoin{
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         margin-left: 10%;
-//         cursor: pointer;
-//         height: 140px;
-//         width: 140px;
-//         border-radius: 50%;
-//         box-shadow: 1px 1px 5px 10px rgba(28, 35, 43, 0.09);
-//         border: thick double  white;
-//         background-color: $purpleLight;
-//         padding: 2%;
-//     button{
-//       font-size: 12px;
-//       display: flex;
-//       color: white;
-//       font-family: 'Potta One',sans-serif;
-//       svg{
-//         width: 20px;
-//         margin-left: 15px;
-//       }
-//     }
-//       }
-//     }
-//   }
-
-//   .mainB{
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-around;
-//     // height: 100%;
-//     width: 50%;
-//     margin-top: 5%;
-//     padding-right: 2%;
-//     padding-left: 2%;
-//     gap: 30px;
-//     .owl{
-//       margin-bottom: -30%;
-//       width: 35%;
-//       height: 80%;
-//       object-fit: contain;
-//       margin-right: 0%;
-//     }
-
-//     .bubbleContainer{
-//       &::before,
-//       &::after {
-//         content:"";
-//         background-color:#fff;
-//         border-radius:50%;
-//         display:block;
-//         position:absolute;
-//         bottom: 0;
-//         left: -0px;
-//         z-index:-1;
-//       }
-//       &::before {
-//         bottom: -45px;
-//         width:24px;
-//         height:24px;
-//         left:-38px;
-//         box-shadow:-50px 30px 0 -12px #fff;
-//       }
-
-//       &::after {
-//         z-index: 3;
-//         bottom:-10px;
-//         right:26px;
-//         width:30px;
-//         height:30px;
-//         box-shadow:40px -34px 0 0 #fff,
-//         -28px -6px 0 -2px #fff,
-//         -24px 17px 0 -6px #fff,
-//         -5px 25px 0 -10px #fff;
-
-//       }
-//       display: flex;
-//       flex-direction: column;
-//       justify-content: center;
-//       align-items: center;
-//       position: relative;
-//       background-color: white;
-//       height: auto;
-//       width: auto;
-//       min-width: 55%;
-//       margin-bottom: 30%;
-//       padding: 30px;
-//       gap: 10px;
-//       border-radius: 15px;
-//       box-shadow: 5px 5px 5px 5px rgba(28, 35, 43, 0.25);
-//       .title{
-//         display: flex;
-//         width: 100%;
-//         gap: 10px;
-//         font-family: 'Montserrat',sans-serif;
-//         font-size: 12px;
-//         font-weight: bold;
-//         color: #1C232B;
-//         svg{
-//          width: 15px;
-//           color: #1C232B;
-//         }
-//       }
-//       .textBg{
-//         position: absolute;
-//         top: -2%;
-//         right: -5%;
-//         background-color: #9844AD;
-//         padding: 5px 20px;
-//         border-radius: 25px;
-//         box-shadow: $shadow;
-//         p{
-//           span{
-//             font-size: 8px;
-//           }
-//           color: white;
-//           font-size: 10px;
-//           font-family: "Potta One",sans-serif;
-//         }
-
-//       }
-
-//       .listContainer{
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: center;
-//         align-items: center;
-//         position: relative;
-//         height: auto;
-//         width: 100%;
-
-
-//         .item{
-//           z-index: 1;
-//           display: flex;
-//           flex-direction: column;
-//           gap: 10px;
-//           height: auto;
-//           width: 100%;
-//           .author{
-//             display: flex;
-//             align-items: center;
-//             margin-bottom: 10px;
-//             img {
-//               clip-path: circle();
-// object-fit: cover;
-//               margin-right: 15px;
-//               height: 50px;
-//               width: 50px;
-//             }
-//             p{
-//               text-decoration: underline;
-//             }
-
-//           }
-//           .stats{
-//             p{
-//               font-style: initial;
-//             }
-//             span{
-//               font-style: initial;
-//             }
-//             .aut{
-//               font-style: italic;
-//             }
-//             .category{
-//               color: #9844AD;
-//               font-weight: bold;
-//               font-style: initial;
-//             }
-//           }
-//           h5{
-//             text-align: center;
-//             font-family: 'Potta One',sans-serif;
-//             font-weight: bold;
-//             font-size: 16px;
-//             color: #1C232B;
-//           }
-//           p{
-//             overflow: hidden;
-//             text-overflow: ellipsis;
-//             -webkit-line-clamp: 5;
-//             display: -webkit-box;
-//             -webkit-box-orient: vertical;
-//             font-size: 12px;
-//             font-weight: lighter;
-//             color: rgba(28, 35, 43, 0.71);
-//             font-style: italic;
-//             font-family: "Rubik", sans-serif;
-//           }
-
-//         }
-
-
-//       }
-//       button{
-//         margin-top: 15px;
-//         background-color:#9844AD;
-//         padding: 10px 30px;
-//         color: white;
-//         font-family: "Potta One",sans-serif;
-//         border-radius: 5px;
-//         box-shadow: $shadow;
-//         font-size: 10px;
-//       }
-//     }
-//   }
-
-  /*
-  background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('/assets/diapo/image.png');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;*/
-
-  /*h1{
-    font-size: 3.5vh;
-    font-family: "Montserrat",sans-serif;
-    color: white;
-    font-weight: 700;
-    text-shadow: $shadowText;
-  }
-
-  .cardContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 80%;
-    height: 80%;
-
-    .containerImg{
-      width: 300px;
-      height: 100%;
-      img{
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .contentContainer{
-      margin-left: 30px;
-      padding-top: 2%;
-      height: 100%;
-      width: 60%;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-direction: column;
-
-      .hADescription{
-        position: relative;
-        margin-bottom: 5%;
-
-      }
-      .thumbnail{
-        position: absolute;
-        right: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 25px;
-        padding: 10px 20px;
-        background-color: $purpleLight;
-        p{
-          font-size: 11px;
-          font-family: "Montserrat",sans-serif;
-          color: white;
-          font-weight: 700;
-        }
-        svg{
-          margin-left: 1px;
-          color: white;
-          margin-top: -3px;
-          width: 20px;
-        }
-      }
-      .header{
-        display: flex;
-        flex-direction: column;
-        h4{
-          color: white;
-          font-family: "Montserrat",sans-serif;
-          font-size: 12px;
-
-        }
-        h3{
-          color: white;
-          font-family: "Montserrat",sans-serif;
-          font-weight: 700;
-          font-size: 3vh;
-
-        }
-        p{
-          font-family: "Montserrat Alternates",sans-serif;
-          font-size: 11px;
-          color: white;
-        }
-      }
-
-      .descriptionContainer{
-        margin-top: 10px;
-        color: #ffffff;
-        font-size: 1.5vh;
-        text-shadow: $shadowText;
-        font-weight: 300;
-        font-family: "Montserrat",sans-serif;
-        font-style: italic;
-        width: 80%;
-      }
-
-      button{
-        background-color: $purpleLight;
-        padding: 10px 30px;
-        color: white;
-        font-family: "Potta One",sans-serif;
-        font-size: 1.4vh;
-        border-radius: 5px;
-        box-shadow: $shadow;
-      }
-
-      .reviewContainer{
-        margin-top: 2%;
-        background-color: #1C232B;
-        width: 100%;
-        height: 40%;
-      }
-
-    }
-  }*/
 }
-
