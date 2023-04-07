@@ -12,7 +12,7 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {PlusIcon, UserCircleIcon} from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
-import {ArrowTrendingUpIcon, CheckCircleIcon, PencilIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
+import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
 import chapter from "../../../Component/layouts/Icons/Chapter";
 import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";

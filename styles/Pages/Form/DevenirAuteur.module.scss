@@ -1,12 +1,27 @@
 @import "styles/utils/var";
 @import "styles/utils/keyframe.module";
-.container{
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   height: 100vh;
   background-color: #F0EDED;
+  position: relative;
+}
+
+.LogoHead {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  h1 {
+    cursor: pointer;
+    z-index: 2;
+    margin-right: 100px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+  }
 }
 
 .purple{

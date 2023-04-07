@@ -1,12 +1,12 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
-import {useEffect, useRef, useState} from "react";
-import {Formik, Field, Form, ErrorMessage, useFormikContext,} from "formik";
+import { useEffect, useRef, useState } from "react";
+import { Formik, Field, Form, ErrorMessage, useFormikContext, } from "formik";
 
-import {router, useRouter} from "next/router";
-import {signIn, useSession} from "next-auth/react";
-import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
+import { router, useRouter } from "next/router";
+import { signIn, useSession } from "next-auth/react";
+import { AuthorSchema, AuthorSchemaLog } from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
-import {instance} from "../../service/config/Interceptor";
+import { instance } from "../../service/config/Interceptor";
 import { toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail } from "../../utils/Toastify";
 
 const DevenirAuteur = () => {
@@ -17,21 +17,21 @@ const DevenirAuteur = () => {
     const [seeErr, setSeeErr] = useState(false);
     const [errMsg, setErrMsg] = useState('Champs incorrects ou manquants');
     const [formReady, setFormReady] = useState(false);
-    const [activeSchema,setActiveSchema] = useState(AuthorSchema);
+    const [activeSchema, setActiveSchema] = useState(AuthorSchema);
     const ref = useRef(null);
     const router = useRouter();
 
     /// SI L'UTILISATEUR EST CONNECTÉ \\\
     const [userObject, setUserObject] = useState({});
     const [initialValues, setInitialValues] = useState({
-        firstName:"",
-        lastName:"",
-        age:"",
+        firstName: "",
+        lastName: "",
+        age: "",
         email: "",
         pseudo: "",
         password: "",
         confirmPassword: "",
-        description:""
+        description: ""
     })
 
 
@@ -42,12 +42,12 @@ const DevenirAuteur = () => {
             initialValues.email = userObject.email;
             initialValues.pseudo = userObject.pseudo;
             setActiveSchema(AuthorSchemaLog);
-           setFormReady(true);
+            setFormReady(true);
         }
         if (session && session.user.is_author) {
             router.replace('/');
         }
-        else{
+        else {
             setFormReady(true);
         }
     }, [session])
@@ -83,45 +83,45 @@ const DevenirAuteur = () => {
                             type={"email"}
                             name={"email"}
                             value={session.user.email}
-                            placeholder={"Votre adresse mail"}/>
+                            placeholder={"Votre adresse mail"} />
                     </>
                 }
 
                 {/* LAST-NAME */}
                 <label htmlFor={"lastName"}>Nom</label>
                 <p className={styles.errMsgItem}>
-                    <ErrorMessage name={"lastName"}/>
+                    <ErrorMessage name={"lastName"} />
                 </p>
                 <Field
                     id={'lastName'}
                     type={"text"}
                     name={"lastName"}
-                    placeholder={"Nom"}/>
+                    placeholder={"Nom"} />
                 {/* LAST-NAME */}
 
 
                 {/* FIRST-NAME */}
                 <label htmlFor={"firstName"}>Prénom</label>
                 <p className={styles.errMsgItem}>
-                    <ErrorMessage name={"firstName"}/>
+                    <ErrorMessage name={"firstName"} />
                 </p>
                 <Field
                     id={'firstName'}
                     type={"text"}
                     name={"firstName"}
-                    placeholder={"Prénom"}/>
+                    placeholder={"Prénom"} />
                 {/* FIRST-NAME */}
 
                 {/* AGE */}
                 <label htmlFor={"age"}>Date de naissance</label>
                 <p className={styles.errMsgItem}>
-                    <ErrorMessage name={"age"}/>
+                    <ErrorMessage name={"age"} />
                 </p>
                 <Field
                     id={'age'}
                     type={"date"}
                     name={"age"}
-                    placeholder={"Date de naissance"}/>
+                    placeholder={"Date de naissance"} />
                 {/* AGE */}
 
                 {
@@ -142,39 +142,39 @@ const DevenirAuteur = () => {
                         {/* EMAIL */}
                         <label htmlFor={"email"}>Email</label>
                         <p className={styles.errMsgItem}>
-                            <ErrorMessage name={"email"}/>
+                            <ErrorMessage name={"email"} />
                         </p>
                         <Field
                             id={'email'}
                             type={"email"}
                             name={"email"}
-                            placeholder={"Votre adresse mail"}/>
+                            placeholder={"Votre adresse mail"} />
                         {/* EMAIL */}
 
 
                         {/* PASSWORD */}
                         <label htmlFor={"password"}>Mot de passe</label>
                         <p className={styles.errMsgItem}>
-                            <ErrorMessage name={"password"}/>
+                            <ErrorMessage name={"password"} />
                         </p>
                         <Field
                             id={'password'}
                             type={"password"}
                             name={"password"}
-                            placeholder={"Mot de passe"}/>
+                            placeholder={"Mot de passe"} />
                         {/* PASSWORD */}
 
 
                         {/* CONFIRMATION PASSWORD */}
                         <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
                         <p className={styles.errMsgItem}>
-                            <ErrorMessage name={"confirmPassword"}/>
+                            <ErrorMessage name={"confirmPassword"} />
                         </p>
                         <Field
                             id={'confirmPassword'}
                             type={"password"}
                             name={"confirmPassword"}
-                            placeholder={"Mot de passe"}/>
+                            placeholder={"Mot de passe"} />
                         {/* CONFIRMATION PASSWORD */}
 
                     </>
@@ -194,24 +194,24 @@ const DevenirAuteur = () => {
             <div className={styles.selectItem + " " + "fadeIn"}>
                 {
                     session ?
-                    <>
-                        <label htmlFor={"pseudo"}>Nom d'auteur</label>
-                        <p className={styles.errMsgItem}>
-                            Votre nom d'auteur remplacera votre pseudo
-                        </p>
-                        <Field
-                            className={styles.pseudoChange}
-                            id={'pseudo'}
-                            type={"text"}
-                            name={"pseudo"}
-                            placeholder={userObject.pseudo}
-                        />
-                    </>
+                        <>
+                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <p className={styles.errMsgItem}>
+                                Votre nom d'auteur remplacera votre pseudo
+                            </p>
+                            <Field
+                                className={styles.pseudoChange}
+                                id={'pseudo'}
+                                type={"text"}
+                                name={"pseudo"}
+                                placeholder={userObject.pseudo}
+                            />
+                        </>
                         :
                         <>
                             <label htmlFor={"pseudo"}>Nom d'auteur</label>
                             <p className={styles.errMsgItem}>
-                                <ErrorMessage name={"pseudo"}/>
+                                <ErrorMessage name={"pseudo"} />
                             </p>
                             <Field
                                 id={'pseudo'}
@@ -240,7 +240,7 @@ const DevenirAuteur = () => {
                 </div>*/}
                 <label htmlFor={"description"}>Une petite présentation</label>
                 <p className={styles.errMsgItem}>
-                    <ErrorMessage name={"description"}/>
+                    <ErrorMessage name={"description"} />
                 </p>
                 <Field
                     id={'description'}
@@ -270,13 +270,13 @@ const DevenirAuteur = () => {
     }
 
     const displayForm = (param) => {
-        if(!session){
+        if (!session) {
             switch (param) {
-                case 0 :
+                case 0:
                     return firstStepForm();
-                case 1 :
+                case 1:
                     return firstStepForm();
-                case 2 :
+                case 2:
                     return secondStepForm();
                 case 3:
                     return thirdStepForm();
@@ -287,9 +287,9 @@ const DevenirAuteur = () => {
         }
         else {
             switch (param) {
-                case 1 :
+                case 1:
                     return firstStepForm();
-                case 2 :
+                case 2:
                     return thirdStepForm();
 
                 default:
@@ -299,14 +299,14 @@ const DevenirAuteur = () => {
 
     }
 
-    const submit =  async (values) => {
-        if(session) {
+    const submit = async (values) => {
+        if (session) {
             const formData = {
-                pseudo:values.pseudo,
-                firstName:values.firstName,
-                lastName:values.lastName,
-                description:values.description,
-                age:values.age
+                pseudo: values.pseudo,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                description: values.description,
+                age: values.age
             }
             /*toastDisplayPromiseSendMail(*/instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
@@ -320,15 +320,15 @@ const DevenirAuteur = () => {
         else {
             const formData = {
                 ...values,
-                is_author:true,
-                redirect:false
+                is_author: true,
+                redirect: false
             }
-            const register = await signIn('signupAuthor',formData)
+            const register = await signIn('signupAuthor', formData)
                 .then((res) => {
                     console.log(res)
                 })
                 .catch((err) => {
-                    if(err.response.status === 401){
+                    if (err.response.status === 401) {
                         setErrMsg('Email ou pseudo déjà existant')
                         setSeeErr(true);
                     }
@@ -336,7 +336,7 @@ const DevenirAuteur = () => {
         }
     }
 
-        const btn = () => {
+    const btn = () => {
         return (
             <div className={styles.stepBtnContainer}>
                 {
@@ -348,7 +348,7 @@ const DevenirAuteur = () => {
                 <button
                     onClick={() => {
                         const data = getField();
-                        if(
+                        if (
                             data.lastName === "" ||
                             data.firstName === "" ||
                             data.age === "" ||
@@ -356,7 +356,7 @@ const DevenirAuteur = () => {
                             data.password === "" ||
                             data.pseudo === "" ||
                             data.description === ""
-                        ){
+                        ) {
                             setSeeErr(true);
                             //toastDisplayError("Une erreur c'est produite.")
                         }
@@ -394,12 +394,14 @@ const DevenirAuteur = () => {
 
     return (
         <div className={styles.container}>
-
+            <div className={styles.LogoHead}>
+                <h1 onClick={() => router.push("/")}> OGLA </h1>
+            </div> 
             <div className={styles.purple}></div>
 
             <div className={styles.block}>
                 <div className={styles.imgContainer}>
-                    <img src={"/assets/gon.png"}/>
+                    <img src={"/assets/gon.png"} />
                 </div>
 
                 <div className={styles.formContainer}>
@@ -416,16 +418,16 @@ const DevenirAuteur = () => {
                         {
                             formReady &&
                             <Formik
-                            innerRef={ref}
-                            initialValues={initialValues}
-                            validationSchema={activeSchema}
-                            onSubmit={(values, actions) => {
-                                submit(values)
-                            }}
-                        >
-                            {({setFieldValue}) =>
+                                innerRef={ref}
+                                initialValues={initialValues}
+                                validationSchema={activeSchema}
+                                onSubmit={(values, actions) => {
+                                    submit(values)
+                                }}
+                            >
+                                {({ setFieldValue }) =>
                                 (
-                                <Form>
+                                    <Form>
                                         {
                                             displayForm(stepActiveForm)
                                         }
@@ -445,8 +447,8 @@ const DevenirAuteur = () => {
                                             stepActiveForm === 2 && session &&
                                             btn()
                                         }
-                                </Form>
-                            )}
+                                    </Form>
+                                )}
                             </Formik>
                         }
                     </div>

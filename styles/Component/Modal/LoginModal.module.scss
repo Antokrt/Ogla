@@ -114,7 +114,7 @@
   }
 
   .btn{
-display: flex;
+    display: flex;
     justify-content: space-between;
     width: 90%;
   }
@@ -130,6 +130,9 @@ display: flex;
 }
 
 .loginBtn{
+  &:hover {
+    color: black !important;
+  }
   margin-top: 20px;
   background-color: #9844AD;
   color: white;

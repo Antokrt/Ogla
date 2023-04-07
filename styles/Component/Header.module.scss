@@ -19,11 +19,13 @@
   width: 100%;
   height: 10vh;
   z-index: 1111!important;
-
+  // background-color: #311959;
+  color: white;
   .mainA{
     display: flex;
 
     h3{
+      cursor: pointer;
       z-index: 2;
       margin-right: 100px;
       font-family: 'Montserrat',sans-serif;
@@ -57,13 +59,12 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      width: 20vw;
+      width: 25vw;
       gap: 230px;
       z-index: 202;
 
     }
     .containerResultSearchBar{
-
       position: absolute;
       top: 8vh;
       background-color: $grey;
@@ -72,7 +73,6 @@
       height: auto;
       box-shadow: 5px 10px 4px 2px rgba(100, 96, 96, 0.44);
       border-radius: 15px;
-
 
       .containerBtnSearch{
         display: flex;
@@ -103,7 +103,10 @@
     }
     .accountContainer{
       display: flex;
-      svg{
+      svg {
+        &:hover {
+          color: #e94f37;
+        }
         cursor: pointer;
         width: 25px;
         z-index: 2;
@@ -137,12 +140,17 @@
     }
 
     .imgProfil{
+      &:hover {
+        filter: brightness(0.95);
+      }
       z-index: 2;
       cursor: pointer;
       width: 50px;
       height: 50px;
-      clip-path: circle();
+      border-radius: 25px;
+      // clip-path: circle();
       margin-right: 20px;
+
     }
     .account{
       margin-right: 20px;
@@ -182,153 +190,11 @@
       }
     }
   }
- /* display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 150px;
-  padding: 1%;
-  width: 100%;
-  background-color: white;
-  box-shadow: rgba(28, 35, 43, 0.1) 1px 2px 10px;
-  z-index: 20;
-
-  .mainA{
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-    .logo{
-      width: 8%;
-      img{
-        width: 40px;
-        height: 40px;
-      }
-    }
-
-    .searchBar{
-      position: relative;
-      width: 37%;
-    }
-    .accountContainer{
-      display: flex;
-      svg{
-        cursor: pointer;
-        width: 25px;
-        color: #1C232B;
-      }
-    }
-
-    .account{
-      margin-right: 20px;
-      cursor: pointer;
-      flex-wrap: wrap;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: $blue;
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-      p{
-        color: white;
-        font-family:"Montserrat Alternates" ,sans-serif;
-        font-weight: bold;
-      }
-    }
-
-    .login{
-      width: 130px;
-      button{
-        color: white;
-        font-family: "Potta One",sans-serif;
-        border-radius: 25px;
-        padding: 15px 17px;
-        width: 100%;
-        font-size: 11px;
-        background-color: $purpleLight;
-
-      }
-    }
-  }
-
-
-
-
-
-}
-
-
-.mainH {
-  margin-top: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-
-    ul {
-      width: auto;
-      display: flex;
-
-      li {
-        a {
-          &:hover {
-            color: $purpleLight;
-            transition: 0.1s;
-          }
-
-          font-size: 0.9rem;
-          font-family: 'Montserrat Alternates', sans-serif;
-          font-weight: 700;
-          padding: 20px;
-          transition: 0.1s;
-          text-decoration: none;
-          color: $brown;
-        }
-      }
-    }
-  }
-
-  img {
-    object-fit: contain;
-    height: 50px;
-  }
-}
-
-.category {
-  display: none;
-  width: 100%;
-  height: auto;
-
-  ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    li {
-      a {
-
-        color: #54595F;
-        text-decoration: none;
-        font-family: 'Potta One', cursive;
-        font-weight: lighter;
-        font-size: 0.8rem;
-        border-right: solid 2px #54595F;
-padding-left: 20px;
-        padding-right: 20px;
-      }
-    }
-  }*/
 }
 
 .activeNav {
-  color: $purpleLight !important;
+  color: #e94f37 !important;
+  // color: $purpleLight !important;
 }
 
 .bNone{

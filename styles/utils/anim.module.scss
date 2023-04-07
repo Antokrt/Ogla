@@ -29,4 +29,124 @@
   }
 }
 
+.slideInRight {
+    -webkit-animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-right 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
 
+.fadeIn {
+    -webkit-animation: fade-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.fade-in {
+    -webkit-animation:fade-in 0.3s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both
+}
+
+@-webkit-keyframes fade-in{
+    0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}
+}
+
+@-webkit-keyframes slide-in-right {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-right {
+    0% {
+        -webkit-transform: translateX(-1000px);
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slideInLeft {
+  animation: LeftOut 0.3s ease 0s 1 normal forwards;
+}
+
+@keyframes LeftOut {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-250px);
+	}
+}
+
+.FadeOut {
+  animation: FadeOut 300ms ease 0s 1 normal forwards;
+}
+
+@keyframes FadeOut {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+.scaleUpVerticalTop {
+  animation: scaleUpVerticalTop 0.3s ease 0s 1 normal forwards;
+}
+
+@keyframes scaleUpVerticalTop {
+	0% {
+		transform: scaleY(0.4);
+		transform-origin: 100% 0%;
+	}
+
+	100% {
+		transform: scaleY(1);
+		transform-origin: 100% 0%;
+	}
+}
+
+.scaleDownVerticalTop {
+  animation: scaleDownVerticalTop 0.3s ease 0s 1 normal forwards;
+}
+
+@keyframes scaleDownVerticalTop {
+	0% {
+		transform: scaleY(1);
+		transform-origin: 100% 0%;
+  }
+
+	100% {
+		transform: scaleY(0);
+		transform-origin: 100% 0%;
+    height: 0px;
+	}
+}
+
+.animMouseUp1 {
+  animation: mouseUp 1.3s ease;
+}
+
+@keyframes mouseUp {
+  from {
+    box-shadow: 0 0 0 0 #e94f37;
+  }
+  to {
+    box-shadow: 0 0 0 15px rgb(233, 79, 55, 0.01);
+  }
+}

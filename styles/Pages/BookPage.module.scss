@@ -1,13 +1,13 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   background-image: url("/assets/blurry.svg");
   background-size: 100%;
   background-repeat: no-repeat;
-overflow-y: hidden;
+  overflow-y: hidden;
 }
 
-.sidebar{
+.sidebar {
   position: fixed;
   display: flex;
   justify-content: space-around;
@@ -20,13 +20,13 @@ overflow-y: hidden;
   box-shadow: 5px 2px 10px $darkBrown;
 }
 
-.containerC{
+.containerC {
   display: flex;
   justify-content: center;
   margin-top: 2vh;
 }
 
-.imgContainer{
+.imgContainer {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -76,12 +76,11 @@ overflow-y: hidden;
   }
 }
 
-
-
 .btnRead{
   margin-top: 10px;
-width: 100%;
-  button{
+  width: 100%;
+
+  button {
     width: 100%;
     padding: 14px 15px;
     background-color: $purpleLight;
@@ -93,12 +92,13 @@ width: 100%;
   }
 }
 
-.chapterContainer{
+.chapterContainer {
 
-height: 80vh;
+  height: 80vh;
   width: 700px;
-padding-right: 10px;
-  .infoContainer{
+  padding-right: 10px;
+
+  .infoContainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -121,6 +121,7 @@ h4{
         font-size: 24px;
         text-transform: uppercase;
       }
+
       margin-top: 10px;
 color: $darkBrown;
       font-size: 18px;
@@ -153,49 +154,54 @@ color: $darkBrown;
       width: 100%;
       display: flex;
       justify-content: space-between;
-      button{
+
+      button {
         display: flex;
         justify-content: end;
         align-items: center;
         color: rgba(28, 35, 43, 0.84);
-        font-family: "Montserrat Alternates",sans-serif;
+        font-family: "Montserrat Alternates", sans-serif;
         font-weight: bolder;
-        svg{
+
+        svg {
           width: 15px;
           color: $darkBrown;
           margin-left: 10px;
         }
       }
-      div{
+
+      div {
         display: flex;
         justify-content: center;
-        align-items:  center;
-        p{
+        align-items: center;
+
+        p {
           margin-right: 10px;
-          font-family: "Montserrat",sans-serif;
+          font-family: "Montserrat", sans-serif;
           font-size: 10px;
         }
       }
-      p{
+
+      p {
         display: flex;
         font-size: 14px;
         align-items: center;
         justify-content: center;
         color: $purple;
-        font-family: "Montserrat Alternates",sans-serif;
+        font-family: "Montserrat Alternates", sans-serif;
         font-weight: bolder;
       }
     }
   }
 
-  .contentChapterList{
+  .contentChapterList {
     &::-webkit-scrollbar {
       width: 3px;
     }
 
     /* Track */
     &::-webkit-scrollbar-track {
-      background:transparent;
+      background: transparent;
     }
 
     /* Handle */
@@ -207,7 +213,8 @@ color: $darkBrown;
     &::-webkit-scrollbar-thumb:hover {
       background: $grey;
     }
-    overflow-y: auto!important;
+
+    overflow-y: auto !important;
     margin-top: 20px;
     display: block;
     height: 60vh;
@@ -221,31 +228,35 @@ color: $darkBrown;
       justify-content: space-between;
       height: 80px;
       border-bottom: solid 1px $grey;
-cursor: pointer;
-      .headerChapter{
+      cursor: pointer;
+
+      .headerChapter {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        h6{
-          font-family: "Montserrat Alternates",sans-serif;
+
+        h6 {
+          font-family: "Montserrat Alternates", sans-serif;
           color: $darkBrown;
           font-size: 13px;
           font-weight: bold;
         }
-        h7{
-          font-family: "Poppins",sans-serif;
+
+        h7 {
+          font-family: "Poppins", sans-serif;
           font-size: 12px;
           color: rgba(0, 0, 0, 0.68);
         }
       }
 
-      .likeChapter{
+      .likeChapter {
         width: 20px;
         display: flex;
         justify-content: center;
-align-items: center;
+        align-items: center;
         flex-direction: column;
-        p{
+
+        p {
           margin-top: 5px;
           text-align: center;
           color: rgba(28, 35, 43, 0.7);
@@ -260,8 +271,8 @@ align-items: center;
 }
 
 
-.cursor{
-    cursor: pointer;
+.cursor {
+  cursor: pointer;
 }
 
 
@@ -311,6 +322,7 @@ width: 180px;
     transform: translateX(1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -324,17 +336,18 @@ width: 180px;
     transform: translateX(1000px);
     opacity: 0;
   }
+
   100% {
     -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
   }
 }
+
 .slideOut {
   -webkit-animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both;
   animation: slide-out-right 0.2s cubic-bezier(.55, .085, .68, .53) both
 }
-
 
 @-webkit-keyframes slide-out-right {
   0% {
@@ -342,6 +355,7 @@ width: 180px;
     transform: translateX(0);
     opacity: 1
   }
+
   100% {
     -webkit-transform: translateX(1000px);
     transform: translateX(1000px);
@@ -354,8 +368,130 @@ width: 180px;
     -webkit-transform: translateX(0);
     transform: translateX(0);
   }
+
   100% {
     -webkit-transform: translateX(1000px);
     transform: translateX(1000px);
+  }
+}
+
+.PhoneStyleBook {
+  width: 100%;
+  height: 100vh;
+
+  .PhoneBookImgTitle {
+    position: relative;
+    width: 100%;
+    height: 60%;
+
+    img {
+      height: 600px;
+      width: 100%;
+      filter: brightness(70%)
+    }
+
+    .PhoneBookInfosAuthor {
+      position: absolute;
+      width: 90%;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+
+      h2 {
+        font-family: 'Alkatra', cursive;
+        font-size: 35px;
+        color: white;
+      }
+
+      p {
+        font-family: 'Poppins', cursive;
+        font-size: 18px;
+        color: rgb(194, 194, 194);
+      }
+
+    }
+  }
+
+  .PhoneBookDescription {
+    background-color: #ffeeeb;
+    position: relative;
+    height: 40%;
+    border-radius: 35px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    z-index: 2;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px -12px 23px 6px rgba(0, 0, 0, 0.77);
+
+    h2 {
+      font-family: 'Alkatra', cursive;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .PhoneBookDescriptionStyle {
+      display: flex;
+      margin-bottom: 20px;
+      h1 {
+        font-family: 'Alkatra', cursive;
+        font-size: 90px;
+        margin-right: 20px;
+      }
+
+      p {
+        font-family: 'Alkatra', cursive;
+        font-size: 18px;
+      }
+    }
+
+    .PhoneBookReadButtonPosition {
+      display: flex;
+      justify-content: center;
+
+      .PhoneBookReadButton {
+        &:hover {
+          background-color: white;
+          svg {
+            color: #9844AD;
+          }
+          h3 {
+            color: #9844AD !important;
+          }
+          p {
+            color: #9844AD !important;
+          }
+          transition: 0.3s;
+        }
+        transition: 0.3s;
+        padding: 13px;
+        border: 1px solid #9844AD;
+        background-color: #9844AD;
+        border-radius: 18px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        svg {
+          height: 58px;
+          color: white;
+          margin-right: 10px;
+        }
+        .PhoneBookRead {
+          h3 {
+            font-family: 'Alkatra', cursive;
+            font-size: 25px;
+            color: white;
+          }
+
+          p {
+            color: white;
+            margin-top: -5px;
+          }
+        }
+      }
+    }
+
   }
 }

@@ -19,5 +19,4 @@ export default function ScreenSize() {
     }, []);
 
     return [width, height]
-
 }
