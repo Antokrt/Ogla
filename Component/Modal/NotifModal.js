@@ -49,7 +49,6 @@ export const NotifModal = ({close}) => {
                 <p></p>
                 <h5>Notifications <span></span></h5>
                 <XCircleIcon onClick={close} className={styles.close}/>
-
             </div>
 
 

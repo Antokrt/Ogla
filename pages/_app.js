@@ -19,7 +19,7 @@ import {NotifModal} from "../Component/Modal/NotifModal";
 function MyApp({Component, pageProps}) {
 
     const {store} = wrapper.useWrappedStore(pageProps);
-
+console.log('heyy')
     return (
         <SessionProvider session={pageProps.session}>
                 <Provider store={store}>
