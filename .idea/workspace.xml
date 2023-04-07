@@ -2,9 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/store/slices/modalSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/NotifModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/NotifModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Modal/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/LoginModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/Like.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/Like.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Category/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Category/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/commentSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/commentSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/CommentaryUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/CommentaryUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/context/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/context/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +49,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/Front/asset/Branch&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/Front/pages/dashboard/nouveau/livre&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
@@ -42,16 +58,15 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Dev\Ogla\Front\asset\Branch" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau\livre" />
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Dev\Ogla\Front\asset\Branch" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau" />
       <recent name="C:\Dev\Ogla\Front\styles\Pages\Dashboard" />
       <recent name="C:\Dev\Ogla\Front\styles\Component\Dashboard\Pages" />
       <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
+      <recent name="C:\Dev\Ogla\pages" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.MainSearchBar.js">
@@ -222,29 +237,7 @@
       <workItem from="1679135996283" duration="11947000" />
       <workItem from="1679218687935" duration="8392000" />
       <workItem from="1679230094079" duration="5227000" />
-      <workItem from="1679302668224" duration="22231000" />
-      <workItem from="1679414347256" duration="6656000" />
-      <workItem from="1679475425262" duration="20201000" />
-      <workItem from="1679555662139" duration="25255000" />
-      <workItem from="1679594060048" duration="26990000" />
-      <workItem from="1679760207582" duration="13620000" />
-      <workItem from="1679821298022" duration="3206000" />
-      <workItem from="1679847458232" duration="1530000" />
-      <workItem from="1679850598028" duration="792000" />
-      <workItem from="1679907088347" duration="9203000" />
-      <workItem from="1679924421397" duration="12510000" />
-      <workItem from="1679991229994" duration="17446000" />
-      <workItem from="1680080038380" duration="7246000" />
-      <workItem from="1680165840864" duration="23014000" />
-      <workItem from="1680255946783" duration="6108000" />
-      <workItem from="1680342545347" duration="610000" />
-      <workItem from="1680366547103" duration="10664000" />
-      <workItem from="1680514281380" duration="19289000" />
-      <workItem from="1680601179211" duration="11320000" />
-      <workItem from="1680687045407" duration="18068000" />
-      <workItem from="1680771058601" duration="19564000" />
-      <workItem from="1680803469777" duration="2346000" />
-      <workItem from="1680858579734" duration="601000" />
+      <workItem from="1679302668224" duration="18473000" />
     </task>
     <servers />
   </component>
