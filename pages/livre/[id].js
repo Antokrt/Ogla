@@ -29,6 +29,8 @@ import { selectLoginModalStatus, setActiveModalState } from "../../store/slices/
 import CardCategory from "../../Component/Card/CardCategory";
 import { LoaderCommentary } from "../../Component/layouts/Loader";
 import { Snippet } from "../../Component/Snippet";
+import has from "lodash/has";
+import {CreateNotificationService} from "../../service/Notification";
 
 export async function getServerSideProps({ req, params, query }) {
     const id = params.id;
@@ -235,12 +237,18 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
     const likeBook = () => {
         if (session) {
             LikeBookService(bookData._id)
-                .then((res) => setHasLike(!hasLike))
-                .then(() => {
-                    if (hasLike) {
-                        setLikes(likes - 1);
-                    } else {
-                        setLikes(likes + 1);
+                .then((res) => {
+                    setHasLike(!hasLike);
+                    return res;
+                })
+                .then((res) => {
+                    hasLike ? setLikes(likes - 1) : setLikes(likes + 1);
+                    return res;
+                })
+                .then((res) => {
+                    if(res.msg === 'like'){
+                        console.log(bookData.author_id)
+                        CreateNotificationService(bookData.author_id,1, bookData._id)
                     }
                 })
                 .catch((err) => console.log(err));
@@ -373,7 +381,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                                         chapterList.length <= 0 &&
                                         <div className={styles.empty}>
                                             <img src={'/assets/jim/smile8.png'} />
-                                            <p>{authorData.pseudo} n'a pas encore Ã©crit de chapitres !</p>
+                                            <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
                                         </div>
                                     }
                                     {chapterData && chapterList.length > 0 && chapterList.map((item, index) => {

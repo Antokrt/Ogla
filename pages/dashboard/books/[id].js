@@ -400,6 +400,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             book.chapter_list.length === 0 ?
                                                 <div className={styles.emptyContainer}>
                                                     <h6>Oups !</h6>
+                                                    <img src={'/assets/jim/smile6.png'}/>
                                                     <p>C'est bien vide ici, écrivez votre prochain chapitre dès
                                                         maintenant</p>
                                                     <button

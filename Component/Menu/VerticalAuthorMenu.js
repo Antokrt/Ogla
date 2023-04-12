@@ -42,7 +42,7 @@ export default function VerticalAuthorMenu() {
             </div>
 
             <div className={styles.imgContainer}>
-                <img src={'/assets/jim/cool2.png'}/>
+                <img src={'/assets/diapo/mountain.png'}/>
             </div>
 
             <div className={styles.sContainer}>

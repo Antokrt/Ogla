@@ -8,10 +8,10 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding-top: 100px;
   padding-bottom: 100px;
   align-items: center;
   background-image: url("/assets/blurry.svg");
+  background-position: top;
   background-size: 100%;
   background-repeat: no-repeat;
   .headerHot {
@@ -20,9 +20,8 @@
     align-items: center;
     justify-content: space-between;
     h4 {
-      font-family: "Montserrat Alternates", sans-serif;
+      font-family: "Rebond Grotesque", sans-serif;
       font-size: 16px;
-      font-weight: bold;
       -webkit-text-stroke-width: 1px;
       stroke-width: 1px;
       -webkit-text-stroke-color: #1C232B;
@@ -31,7 +30,7 @@
       letter-spacing: 1px;
     }
     h5{
-      font-family: "Montserrat", sans-serif;
+      font-family: "Rebond Grotesque", sans-serif;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -54,7 +53,7 @@ font-size: 14px;
 
   .trendTitle{
     margin-top: 5vh;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
     font-size: 15px;
     font-weight: bold;
 

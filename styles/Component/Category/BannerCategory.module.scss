@@ -1,0 +1,43 @@
+@import "styles/utils/var";
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2vh;
+  height: 40vh;
+  .content{
+    width: 30%;
+    h4{
+      &:after{
+        content: 'Drama';
+        position: absolute;
+        left: 5%;
+      bottom: -60%;
+
+        opacity: 0.1;
+        font-size: 20vh;
+      }
+      position: relative;
+      font-size: 8vh;
+      font-family: "Branch", sans-serif;
+      font-weight: bold;
+      white-space: pre;
+      -webkit-text-stroke-width: 1px;
+      text-align: center;
+      margin-bottom: 4vh;
+    }
+
+
+
+    p{
+      text-align: center;
+      font-size: 1.6vh;
+      font-family: "Rebond Grotesque", sans-serif;
+      color: rgb(84, 89, 95);
+    }
+  }
+
+  img{
+    height: 40vh;
+  }
+}

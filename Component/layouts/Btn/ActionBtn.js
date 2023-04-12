@@ -3,6 +3,7 @@ import {ArrowDownIcon, ArrowsUpDownIcon, CheckIcon, MusicalNoteIcon, XMarkIcon} 
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectActiveMusicStatus, selectIndexStateMusic, setActiveMusic} from "../../../store/slices/musicSlice";
+import {useRouter} from "next/router";
 
 export const CloseBtn = () => {
     return (
@@ -76,10 +77,10 @@ export const HeadPhoneBtn = ({onclick}) => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const selectIndex = useSelector(selectIndexStateMusic);
-
+    const router = useRouter();
     const dispatch = useDispatch();
 
-    return <div className={styles.headphone} onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
+    return <div className={router.pathname === '/' ? styles.headphone + ' ' + styles.home : styles.headphone} onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
         <MusicalNoteIcon/>
 
         {

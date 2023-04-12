@@ -175,6 +175,7 @@ export default function CatPage({cat, err, bookListData}) {
             }
 
             <Footer/>
+
         </div>
     )
 }

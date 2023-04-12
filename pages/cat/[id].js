@@ -22,6 +22,7 @@ import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
 import HotPost from "../../Component/Post/HotPost";
 import {ListCard} from "../../Component/Card/ListCard";
+import {BannerCategory} from "../../Component/Category/BannerCategory";
 
 export async function getServerSideProps({req,params}){
 
@@ -90,9 +91,19 @@ export default function CatPage({cat,err,bookListData}) {
         <div className={styles.container}>
             <Header/>
             <CategoryHeader/>
+            <BannerCategory/>
             {
-                !err && bookListData &&
+                !err && bookListData && bookList && bookList.length > 0 &&
                 <div className={styles.containerM}>
+
+                    <HotPost className={styles.hotItem}
+                             likes={bookList[0].likes}
+                             title={"Livre 2"} nbChapter={205} author={"ThomasK"}
+                             img={"/assets/livre1.jpg"} category={"Horreur"}
+                             description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
+                                 "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
+                                 "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
+                    />
 
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>
@@ -163,6 +174,15 @@ export default function CatPage({cat,err,bookListData}) {
             }
 
             <Footer/>
+
+
+       {/*     <div className={styles.emailTest}>
+                <h1>Bienvenue chez Ogla</h1>
+                <p className={styles.thanks}>Merci de nous avoir rejoins, validez votre email en cliquant sur le <span>lien de confirmation. </span> </p>
+                <p className={styles.citation}>Ogla est une plateforme d’écriture et de lecture ouverte à tous.  <br/>Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.
+</p>
+            </div>
+*/}
         </div>
     )
 }

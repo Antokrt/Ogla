@@ -2,9 +2,9 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    ArrowDownIcon,
+    ArrowDownIcon, BellAlertIcon,
     CalendarIcon,
-    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon,
+    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon, MusicalNoteIcon,
 } from "@heroicons/react/24/outline";
 
 import {useEffect, useRef, useState} from "react";
@@ -33,6 +33,8 @@ import {ChangePasswordService} from "../../service/User/Password.service";
 import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
 import {BookmarkIcon} from "@heroicons/react/24/solid";
 import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
+import {useDispatch} from "react-redux";
+import {setActiveModalNotif} from "../../store/slices/notifSlice";
 
 
 export async function getServerSideProps({req}) {
@@ -70,7 +72,10 @@ const Profil = ({profilData, err}) => {
     const [localImg, setLocalImg] = useState(null);
     const [file, setFile] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
+    const [notifState,setNotifState] = useState(false);
+    const [musicState,setMusicState] = useState(false);
     const imgRef = useRef();
+    const dispatch = useDispatch()
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -237,9 +242,6 @@ const Profil = ({profilData, err}) => {
                     }
 
 
-                    <button className={styles.deleteAccount}
-                            onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
-                    </button>
 
                 </div>
             </div>
@@ -354,11 +356,64 @@ const Profil = ({profilData, err}) => {
             <div className={styles.becameWriter}>
                 <img src={'/assets/jim/smile8.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
-                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier ! <br/>
+                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
+                    ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d'être entendue"</p>
 
                 <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
+            </div>
+        )
+    }
+
+    const settingComponent = () => {
+        return (
+            <div className={styles.settings}>
+                <h5>Réglages</h5>
+                <div className={styles.itemSetting}>
+                    <div className={styles.fSetting}>
+                        <BellAlertIcon/>
+                        <div>
+                            <p className={styles.labelSetting}>Notifications </p>
+                            <p className={styles.valueSetting}>Désactiver les notifications en temps réelle </p>
+                        </div>
+
+
+                    </div>
+
+                    <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn} onClick={() => setNotifState(!notifState)}>
+                        <input checked={notifState}  type="checkbox" id="toggle1"/>
+                            <label htmlFor="toggle1"></label>
+                    </div>
+
+                </div>
+
+                <div className={styles.itemSetting} style={{
+                    borderBottom:'solid 1px rgba(84, 89, 95, 0.13)'
+                }}>
+                    <div className={styles.fSetting}>
+
+                        <MusicalNoteIcon/>
+                        <div>
+                            <p className={styles.labelSetting}>Musique </p>
+                            <p className={styles.valueSetting}>Désactiver la musique</p>
+                        </div>
+                    </div>
+
+                    <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle} onClick={() => {
+                        console.log('click music')
+                        setMusicState(!musicState)
+                    }}>
+                        <input checked={musicState}  type="checkbox" id="toggle2"/>
+                        <label htmlFor="toggle2"></label>
+                    </div>
+
+
+                </div>
+
+                <button className={styles.deleteAccount}
+                        onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                </button>
             </div>
         )
     }
@@ -375,11 +430,8 @@ const Profil = ({profilData, err}) => {
                     return becameWriter();
                 }
 
-            case 'notif':
-                return (
-                    <p>notifs</p>
-                )
-
+            case 'settings':
+                return settingComponent();
             default:
                 return profilComponent();
         }
@@ -412,7 +464,10 @@ const Profil = ({profilData, err}) => {
                                 <button onClick={() => setActiveLink('writer')}
                                         className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
                                 </button>
-                                <button onClick={() => setActiveLink('notifications')}
+                                <button onClick={() => setActiveLink('settings')}
+                                        className={activeLink === 'settings' && styles.activeMenu}>Réglages
+                                </button>
+                                <button onClick={() => dispatch(setActiveModalNotif(true))}
                                         className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications
                                 </button>
 

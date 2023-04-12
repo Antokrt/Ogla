@@ -1,46 +1,27 @@
 .container{
+  margin-top: 4vh;
+  background-color: white;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   position: relative;
-  height: 60vh;
+  height: 40vh;
   overflow: hidden;
   width: 100%;
 }
 
-.girl{
-  width: 50%;
-  height: 60vh;
+.mountain{
+  width: 30%;
   object-fit: contain;
-  position: absolute;
-  right: -14%;
-  bottom: 0;
-}
-
-.bird1{
-  width: 50%;
-  height: 10vh;
-  object-fit: contain;
-  position: absolute;
-  right: 5%;
-  bottom: 0%;
-}
-
-.bird2{
-  height: 10vh;
-  object-fit: contain;
-  position: absolute;
-  left: 4%;
-  bottom: -0.5%;
 }
 
 .content{
   display: flex;
   flex-direction: column;
-  padding-left: 5%;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 35%;
+
   h5{
     font-size: 5vh;
     font-family: 'Branch',sans-serif;
@@ -51,7 +32,7 @@
   p{
     text-align: center;
     font-size: 1.6vh;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
     color: rgb(84, 89, 95);
     width: 70%;
     strong{
@@ -65,9 +46,18 @@
 .btnContainer{
   margin-top: 4vh;
   button{
-    font-family: 'Montserrat Alternates',sans-serif;
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(92%);
+    }
+    transition: 0.2s;
+    font-family: 'Rebond Grotesque',sans-serif;
     font-weight: bold;
-    background-color: #e04444;
+    background-color: #e94f37;
     color: white;
     padding: 15px 3vw;
     font-size: 12px;

@@ -23,9 +23,7 @@ const CategoryHeader = () => {
                      }}
                             key={item}
                             className={Capitalize(cat) === item ? styles.active +" " + styles.book : styles.book}>
-                            <img src="/assets/book_pixel.png"
-
-                         />
+                            <img src="/assets/category/icons/drama.svg"/>
                         <p>{item}</p>
                         </div>
                     )
