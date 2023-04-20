@@ -8,6 +8,9 @@ import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
+import {renderPrediction} from "../../../utils/ImageUtils";
+import {toastDisplayError} from "../../../utils/Toastify";
+import {LoaderImg} from "../../../Component/layouts/Loader";
 
 
 const New = () => {
@@ -20,11 +23,12 @@ const New = () => {
     const fileRef = useRef(null);
     const [seeErrMsg,setSeeErrMsg] = useState(false);
     const [localImg, setLocalImg] = useState(null);
+    const [loadingImg,setLoadingImg] = useState(false);
     const router = useRouter();
 
     const handleFileSelect = (event) => {
         if(event?.target.files && event.target.files[0]){
-            setLocalImg(URL.createObjectURL(event.target.files[0]))
+            setLocalImg(URL.createObjectURL(event.target.files[0]));
         }
     }
 
@@ -89,7 +93,7 @@ const New = () => {
                         </>
                     }
                     {
-                        step >= 3 &&
+                        step >= 3 && !loadingImg &&
                         <>
                             <button onClick={() => previous()}>Précédent</button>
                             <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer</button>
@@ -158,10 +162,16 @@ const New = () => {
                 </h5>
 
                 <div className={styles.inputContainer}>
-                    <label>Ajoutez une image (Facultatif)</label>
+                    <label>Ajoutez une image (facultatif)</label>
                     {
                         selectedFile && localImg &&
                         <div className={styles.fileContainer}>
+                            {
+                                loadingImg &&
+                                <div className={styles.loaderImg}>
+                                    <LoaderImg/>
+                                </div>
+                            }
                             <img
                                 onClick={openFileUpload}
                                 src={localImg}
@@ -171,6 +181,12 @@ const New = () => {
                         </div>
                     }
                     <div className={styles.addFileContainer}>
+                        {
+                            loadingImg && !localImg && !selectedFile &&
+                            <div>
+                                <LoaderImg/>
+                            </div>
+                        }
                         <label className={styles.labelFile} htmlFor={'file'}>Choisir une image</label>
 
                     </div>
@@ -181,13 +197,23 @@ const New = () => {
                            accept={"image/png , image/jpeg , image/jpg" }
                            type='file'
                            ref={fileRef}
-                           onChange={(e) => {
+                           onChange={ async (e) => {
+                               setLoadingImg(true);
                                const file = e.target.files[0];
                                if(!file?.type.match(imageMimeType)){
+                                   setLoadingImg(false);
                                    return null;
                                }
-                               handleFileSelect(e);
-                               setSelectedFile(e.target.files[0]);
+                               const data = await renderPrediction(file,'book');
+                               if(data){
+                                   handleFileSelect(e);
+                                   setSelectedFile(e.target.files[0]);
+                                   setLoadingImg(false);
+                               }
+                               else {
+                                   setLoadingImg(false);
+                                   toastDisplayError("Image non conforme");
+                               }
                            }}
                     />
                 </div>

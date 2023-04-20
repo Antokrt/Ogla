@@ -110,11 +110,23 @@ h1{
     position: relative;
     display: flex;
     gap: 20px;
+
+    .loaderImg{
+      position: absolute;
+      left: 40px;
+      bottom: 10px;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+      padding: 5px;
+      background-color: rgba(0, 0, 0, 0.51);
+      border-radius: 50px;
+    }
+
     img{
       cursor: pointer;
       width: 80px;
       height: 80px;
-      object-fit: contain;
+      object-fit: cover;
       border-radius: 50%;
     }
 

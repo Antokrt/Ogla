@@ -1,34 +1,31 @@
-@import "/styles/utils/var";
-
-
-
-.container{
+.container {
+    margin-top: 4vh;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    position: relative;
+    height: 40vh;
+    gap: 2%;
+    overflow: hidden;
     width: 100%;
-
-    svg{
-        width: 100% !important;
-    }
-
-    img{
-        height: 100%;
-        object-fit: contain;
-        width: 40%;
-    }
 }
 
+.image {
+    width: 30vw;
+    object-fit: contain;
+}
 
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
 
-.text{
-    text-align: center;
-    width: 40%;
-
-    h5{
+    h5 {
         font-size: 5vh;
-        font-family: "Branch", sans-serif;
+        font-family: 'Branch', sans-serif;
         font-weight: bold;
         white-space: pre;
         -webkit-text-stroke-width: 1px;
@@ -36,28 +33,139 @@
             color: #9844AD;
         }
     }
-    p{
+
+    p {
+        text-align: center;
         font-size: 1.6vh;
-        font-family: "Rebond Grotesque", sans-serif;
+        font-family: 'Rebond Grotesque', sans-serif;
         color: rgb(84, 89, 95);
+        width: 70%;
+
+        strong {
+            color: #9844AD;
+        }
     }
 
-    button{
-        &:active{
+
+}
+
+.btnContainer {
+    margin-top: 4vh;
+
+    button {
+        &:active {
             transform: scale(0.8);
             transition: 0.2s;
         }
-        &:hover{
+
+        &:hover {
             transition: 0.2s;
             filter: brightness(92%);
         }
-        font-family: "Montserrat Alternates", sans-serif;
+
+        transition: 0.2s;
+        font-family: 'Rebond Grotesque', sans-serif;
         font-weight: bold;
         background-color: #e94f37;
         color: white;
         padding: 15px 3vw;
         font-size: 12px;
         border-radius: 25px;
-        margin-top: 4vh;
+    }
+}
+
+
+@media screen and (max-width: 1500px) {
+    .container {
+        gap: 5% !important;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .content {
+        p {
+            margin-top: 4% !important;
+            width: 100% !important;
+        }
+    }
+}
+
+@media screen and (max-width: 1300px){
+    .container{
+        height: auto!important;
+    }
+    .image{
+        width: 50vh!important;
+    }
+    .content{
+        width: 50% !important;
+h5{
+    text-align: center;
+    white-space: initial;
+}
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .container{
+        height: auto;
+        flex-direction: column!important;
+        gap: 4vh!important;
+        margin-top: 8vh;
+
+        img{
+            width: 50vw;
+        }
+
+        button{
+            padding: 15px 6vw;
+        }
+
+        h5{
+            font-size: 30px;
+        }
+        p{
+            font-size: 16px;
+        }
+    }
+
+    .content{
+        width: 80%!important;
+        p{
+            margin-top: 0%!important;
+        }
+    }
+}
+
+
+@media screen and (max-width: 600px){
+    .container{
+        img{
+            width: 70vw;
+        }
+    }
+    .content{
+        h5{
+            font-size: 4vh!important;
+        }
+    }
+
+}
+
+
+@media screen and (max-width: 500px){
+    .container{
+        h5{
+            white-space: initial!important;
+            text-align: center;
+            line-height: 6vh;
+            margin-bottom: 20px;
+        }
+    }
+
+    .content{
+        button{
+            padding: 15px 40px;
+        }
     }
 }

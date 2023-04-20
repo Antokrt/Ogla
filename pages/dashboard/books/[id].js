@@ -27,10 +27,14 @@ import {
 import {Capitalize} from "../../../utils/String";
 import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
 import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
-import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
+import {Loader1, Loader2, LoaderCommentary, LoaderImg} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
 import {FilterBtn, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn/ActionBtn";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+
+import {renderPrediction} from "../../../utils/ImageUtils";
+import {toastDisplayError} from "../../../utils/Toastify";
+
 
 
 export async function getServerSideProps({req, params}) {
@@ -68,12 +72,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const lastChapter = bookData.lastChapter;
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
+    const [loadingImg,setLoadingImg] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
     const imgRef = useRef();
     const divRef = useRef(null);
     const [file, setFile] = useState(true);
     const [localImg, setLocalImg] = useState(null);
-    const [errImg, setErrImg] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const router = useRouter();
     const [loadingScroll, setLoadingScroll] = useState(false);
@@ -82,11 +86,11 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
 
 
-    const handleFileSelect = (event) => {
+    const handleFileSelect = async (event) => {
         if (event?.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
-            setLocalImg(URL.createObjectURL(event.target.files[0]));
-        }
+                setFile(event.target.files[0]);
+                setLocalImg(URL.createObjectURL(event.target.files[0]));
+            }
     }
 
     const getMoreChapter = () => {
@@ -131,23 +135,34 @@ const OneBook = ({bookData, chapterListData, err}) => {
             })
     }
 
-    const updatePic = () => {
+    const updatePic = async () => {
         if (file) {
-            UpdateBookPictureService(file, book._id)
-                .then((res) => {
-                    setBook((prevState) => ({
-                        ...prevState,
-                        img: res.data.img
-                    }))
-                })
-                .then(() => {
-                    setLocalImg(null);
-                    setFile(null);
-                    setErrImg(false);
-                })
-                .catch((err) => {
-                    setErrImg(true);
-                })
+            setLoadingImg(true);
+            const data = await renderPrediction(file,'book');
+            if(data){
+                UpdateBookPictureService(file, book._id)
+                    .then((res) => {
+                        setBook((prevState) => ({
+                            ...prevState,
+                            img: res.data.img
+                        }))
+                    })
+                    .then(() => {
+                        setLocalImg(null);
+                        setFile(null);
+                        setLoadingImg(false);
+                    })
+                    .catch((err) => {
+                        setLoadingImg(false);
+                        toastDisplayError("Impossible de modifier l'image.");
+                    })
+            }
+            else {
+                setLoadingImg(false);
+                toastDisplayError('Image non conforme.')
+            }
+
+
         }
     }
 
@@ -178,10 +193,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
         }
     }
 
-    useEffect(() => {
-       console.log(book)
-    },[])
-
     return (
         <div className={styles.container}>
             <div className={styles.verticalMenuContainer}>
@@ -189,9 +200,13 @@ const OneBook = ({bookData, chapterListData, err}) => {
             </div>
 
             <div className={styles.containerData}>
-                <div className={styles.containerHeader}>
-                    <SmHeaderDashboard title={bookData.title}/>
-                </div>
+                {
+                    !err.book &&
+                    <div className={styles.containerHeader}>
+                        <SmHeaderDashboard title={bookData.title}/>
+                    </div>
+                }
+
                 {
                     loading &&
                     <p>Loading...</p>
@@ -206,7 +221,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                             router.push('/dashboard/books')
                         }
                         }
-                        img={'/assets/chara/chara5.png'}
+                        img={'/assets/diapo/mountain.png'}
                     />
                 }
                 {
@@ -226,6 +241,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 <div className={styles.imgADescription}>
                                     <div className={styles.containerImg}>
                                         {
+                                            loadingImg &&
+                                            <div className={styles.loaderImg}>
+                                                <LoaderImg/>
+                                            </div>
+                                        }
+                                        {
                                             localImg && file ?
                                                 <>
                                                     <img src={localImg} className={styles.darkImg}/>
@@ -234,7 +255,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <CheckCircleIcon
                                                             onClick={() => updatePic()}
                                                             className={styles.check}/>
-                                                        <XCircleIcon
+                                                      f  <XCircleIcon
                                                             onClick={() => {
                                                                 setLocalImg(null);
                                                                 setFile(null);
@@ -250,11 +271,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             imgClick();
                                                         }}
                                                         src={book.img}/>
-                                                    {
-                                                        errImg &&
-                                                        <p className={styles.errMsgSummary + " " + styles.errImg}>Impossible
-                                                            de modifier l'image</p>
-                                                    }
+
+
                                                     <input
                                                         type={'file'}
                                                         ref={imgRef}
@@ -265,6 +283,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             if (!file?.type.match(imageMimeType)) {
                                                                 return null;
                                                             }
+
+
                                                             handleFileSelect(e);
                                                         }}
                                                     />

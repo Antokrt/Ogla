@@ -107,9 +107,6 @@
     .accountContainer{
       display: flex;
       svg {
-        &:hover {
-          color: #e94f37;
-        }
         cursor: pointer;
         width: 25px;
         z-index: 2;
@@ -129,7 +126,7 @@
       svg{
         &:hover{
           transition: 0.1s;
-          color: #1C232B;
+          color: #e94f37;
         }
         cursor: pointer;
         color: rgba(28, 35, 43, 0.76);
@@ -143,11 +140,7 @@
    }
 
     .imgProfil{
-      &:hover {
-        transition: 0.1s;
-        filter: brightness(0.95);
-      }
-      transition: 0.1s;
+      transition: 0.2s;
       z-index: 2;
       cursor: pointer;
       width: 50px;

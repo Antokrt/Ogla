@@ -12,23 +12,24 @@
     clip-path: circle();
   }
   h5{
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
 font-size: 1.3vw;
     font-weight: bold;
     color: rgba(255, 0, 0, 0.73);
   }
   p{
     font-style: italic;
-    font-size: calc(12px + 0.1vw);
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-size: calc(14px + 0.1vw);
+    font-family: 'Rebond Grotesque',sans-serif;
     color: rgba(28, 35, 43, 0.78);
   }
   button{
-    background-color: #9844AD;
+    background-color: #e94f37;
     color: white;
-    font-size: 0.6vw;
+    font-size: 12px;
     padding: 10px 55px;
-    font-family: "Montserrat Alternates",sans-serif;
+    font-family: "Rebond Grotesque",sans-serif;
+    font-weight: bold;
     border-radius: 25px;
   }
 }

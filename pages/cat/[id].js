@@ -20,9 +20,11 @@ import {GetBooksWithCategoryService} from "../../service/Book/BookService";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
-import HotPost from "../../Component/Post/HotPost";
+import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
 import {ListCard} from "../../Component/Card/ListCard";
 import {BannerCategory} from "../../Component/Category/BannerCategory";
+import {GetPresentationOfCategory} from "../../utils/CategoryUtils";
+import ScreenSize from "../../utils/Size";
 
 export async function getServerSideProps({req,params}){
 
@@ -50,6 +52,9 @@ export default function CatPage({cat,err,bookListData}) {
     const [bookList,setBookList] = useState(bookListData);
     const [canSeeMore,setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] =useState(false);
+    const [width, height] = ScreenSize();
+
+    const topBook = bookListData[0];
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
@@ -91,19 +96,42 @@ export default function CatPage({cat,err,bookListData}) {
         <div className={styles.container}>
             <Header/>
             <CategoryHeader/>
-            <BannerCategory/>
+            <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)}/>
             {
                 !err && bookListData && bookList && bookList.length > 0 &&
                 <div className={styles.containerM}>
+                    {
+                        topBook &&
+                        <div className={styles.hotContainer}>
+                            {
+                                width > 450 ?
+                                    <HotPost className={styles.hotItem}
+                                             likes={topBook.likes}
+                                             title={topBook.title} author={topBook.author_pseudo}
+                                             img={topBook.img} category={topBook.category}
+                                             nbChapter={topBook.nbChapters}
+                                             slug={topBook.slug}
+                                             id={topBook._id}
+                                             top={true}
+                                             description={topBook.summary}
+                                    />
+                                    :
+                                    <HotPostPhone className={styles.hotItem}
+                                             likes={topBook.likes}
+                                             title={topBook.title} author={topBook.author_pseudo}
+                                             img={topBook.img} category={topBook.category}
+                                             nbChapter={topBook.nbChapters}
+                                             slug={topBook.slug}
+                                             id={topBook._id}
+                                             top={true}
+                                             description={topBook.summary}
+                                    />
+                            }
 
-                    <HotPost className={styles.hotItem}
-                             likes={bookList[0].likes}
-                             title={"Livre 2"} nbChapter={205} author={"ThomasK"}
-                             img={"/assets/livre1.jpg"} category={"Horreur"}
-                             description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
-                                 "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
-                                 "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
-                    />
+                        </div>
+
+                    }
+
 
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>

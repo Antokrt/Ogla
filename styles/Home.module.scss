@@ -8,12 +8,8 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  padding-bottom: 100px;
   align-items: center;
-  background-image: url("/assets/blurry.svg");
-  background-position: top;
-  background-size: 100%;
-  background-repeat: no-repeat;
+  margin-top: 50px;
   .headerHot {
     width: 1050px;
     display: flex;
@@ -21,7 +17,7 @@
     justify-content: space-between;
     h4 {
       font-family: "Rebond Grotesque", sans-serif;
-      font-size: 16px;
+      font-size: 20px;
       -webkit-text-stroke-width: 1px;
       stroke-width: 1px;
       -webkit-text-stroke-color: #1C232B;
@@ -45,6 +41,15 @@ font-size: 14px;
     }
   }
     .hotContainer{
+      &::-webkit-scrollbar {
+        height: 3px;
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+        background: rgba(28, 35, 43, 0.21);
+      }
+
       display: flex;
       justify-content: space-between;
       width: 1050px;
@@ -56,6 +61,7 @@ font-size: 14px;
     font-family: 'Rebond Grotesque',sans-serif;
     font-size: 15px;
     font-weight: bold;
+    text-align: center;
 
     strong{
       color: #9844AD;
@@ -64,8 +70,73 @@ font-size: 14px;
 
   .previewPostListContainer{
     display: flex;
-    gap: 15vh;
+    align-items: center;
+    gap: 10vh;
     border-radius: 10px;
     padding: 4vh;
+
+    .sep{
+      height: 330px;
+      width: 1px;
+      background-color: rgba(28, 35, 43, 0.1);
+    }
+  }
+}
+
+@media screen and (max-width: 1150px){
+  .hot{
+    margin-top: 80px!important;
+  }
+  .headerHot{
+    padding-right: 2%;
+    width: 100% !important;
+  }
+
+  .hotContainer{
+    width: 95% !important;
+  }
+}
+
+
+@media screen and (max-width: 850px){
+  .headerHot{
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .hotContainer{
+    margin-top: 40px!important;
+    padding-bottom: 50px;
+    padding-left: 5%;
+    padding-top: 2%;
+    width: 100% !important;
+    display: flex!important;
+    overflow-x: scroll!important;
+    white-space: nowrap;
+    height: auto;
+  }
+
+  .previewPostListContainer{
+    gap: 5vh!important;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .previewPostListContainer{
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .hot{
+  }
+  .hotContainer{
+    overflow-x: hidden!important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding-left: 0% !important;
+    padding-right: 0% !important;
+    height: auto;
   }
 }

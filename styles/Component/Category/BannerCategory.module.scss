@@ -9,22 +9,21 @@
     width: 30%;
     h4{
       &:after{
-        content: 'Drama';
+        content: attr(data-after);
         position: absolute;
-        left: 5%;
-      bottom: -60%;
+        left:-18%;
+      bottom: -10%;
 
-        opacity: 0.1;
-        font-size: 20vh;
+        opacity: 0.08;
+        font-size: 15vh;
       }
       position: relative;
-      font-size: 8vh;
+      font-size: 10vh;
       font-family: "Branch", sans-serif;
       font-weight: bold;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
       text-align: center;
-      margin-bottom: 4vh;
     }
 
 
@@ -37,7 +36,91 @@
     }
   }
 
-  img{
+  .image{
     height: 40vh;
+  }
+
+
+}
+
+
+@media screen and (max-width: 1500px){
+  .container{
+    gap: 100px;
+  }
+}
+
+@media screen and (max-width: 1200px){
+
+  .container{
+    gap: 20px;
+  }
+  .content{
+    width: 50% !important;
+
+    h4{
+      &:after{
+        left: 0% !important;
+      }
+    }
+  }
+
+  .image{
+    object-fit: contain;
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .container{
+    padding-left: 5vw;
+  }
+}
+
+@media screen and (max-width: 750px){
+  .container{
+    flex-direction: column-reverse;
+    height: auto;
+  }
+
+  .image{
+    height: 20vh!important;
+  }
+
+  .content{
+    width: 500px !important;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .content{
+    h4{
+      &:after{
+        left: -10% !important;
+        font-size: 22vw!important;
+      }
+      font-size: 15vw!important;
+    }
+  }
+}
+
+@media screen and (max-width: 550px){
+  .content{
+    padding: 0 30px!important;
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .content{
+    h4{
+    }
+  }
+}
+
+@media screen and (max-width: 400px){
+  .content{
+    h4{
+    }
   }
 }

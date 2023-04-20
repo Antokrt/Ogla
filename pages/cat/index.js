@@ -21,9 +21,11 @@ import {Loader1, Loader2, LoaderCommentary} from "../../Component/layouts/Loader
 import {Capitalize} from "../../utils/String";
 import {ErrModal} from "../../Component/Modal/ErrModal";
 import ErrMsg from "../../Component/ErrMsg";
-import HotPost from "../../Component/Post/HotPost";
+import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
 import {HorizontalCard} from "../../Component/Card/HorizontalCard";
+
 import {ListCard} from "../../Component/Card/ListCard";
+import ScreenSize from "../../utils/Size";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
@@ -48,6 +50,8 @@ export default function CatPage({cat, err, bookListData}) {
     const [bookList, setBookList] = useState(bookListData);
     const [canSeeMore, setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
+    const [width, height] = ScreenSize();
+
 
 
 
@@ -94,21 +98,34 @@ export default function CatPage({cat, err, bookListData}) {
                 !err && bookListData &&
                 <div className={styles.containerM}>
                     <div className={styles.hotContainer}>
-                        <HotPost className={styles.hotItem}
-                                 likes={bookList[0].likes}
-                                 title={"Livre 2"} nbChapter={205} author={"ThomasK"}
-                                 img={"/assets/livre1.jpg"} category={"Horreur"}
-                                 description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
-                                     "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
-                                     "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
-                        />
+                        {
+                            width > 530 ?
+                                <HotPost className={styles.hotItem}
+                                         likes={bookList[0].likes}
+                                         title={"Livre 2"} nbChapter={205} author={"ThomasK"}
+                                         img={"/assets/livre1.jpg"} category={"Horreur"}
+                                         description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
+                                             "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
+                                             "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
+                                />
+                                :
+                                <HotPostPhone className={styles.hotItem}
+                                         likes={bookList[0].likes}
+                                         title={"Livre 2"} nbChapter={205} author={"ThomasK"}
+                                         img={"/assets/livre1.jpg"} category={"Horreur"}
+                                         description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
+                                             "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
+                                             "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
+                                />
+                        }
+
                     </div>
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>
                             <div className={styles.headerRanking}>
                                 {
                                     cat === undefined &&
-                                    <h3>Populaire(s) {cat} - <span className={styles.f}>Tout voir</span></h3>
+                                    <h3>Populaire(s) {cat} </h3>
                                 }
                                 {
                                     cat !== undefined &&

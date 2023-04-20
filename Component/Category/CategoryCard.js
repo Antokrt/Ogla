@@ -11,8 +11,6 @@ import {BoltIcon, BookOpenIcon, FireIcon} from "@heroicons/react/24/outline";
 const CategoryCard = (props) =>{
     const router = useRouter();
 
-    useEffect(() => console.log(props.category))
-
     const checkSvg = () => {
         switch (props.category){
             case 'action':

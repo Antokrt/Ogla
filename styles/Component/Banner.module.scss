@@ -26,6 +26,8 @@
         align-items: center;
         object-fit: contain;
         width: 1200px;
+        animation: testimg 4s ease;
+        animation-fill-mode: forwards;
         height: 90%;
       }
 /*      display: none;
@@ -39,11 +41,12 @@
       animation-fill-mode: forwards;*/
 
     @keyframes testimg {
-      from {
-        background-size: 100% 100%;
+      0%{
+        transform: scale(1);
       }
-      to {
-        background-size: 102% 102%;
+
+      100%{
+        transform: scale(1.1);
       }
     }
 
@@ -68,7 +71,8 @@
           font-family: "Branch", sans-serif;
           font-weight: bold;
           color: white;
-          margin-bottom: 80px;
+          margin-bottom: 40px;
+          text-shadow: 0px 0px 5px black;
           z-index: 1;
 
         }
@@ -76,6 +80,7 @@
           width: 600px;
           font-family: 'Branch';
           font-size: 25px;
+          text-shadow: 0px 0px 5px black;
           color: white;
           margin-bottom: 40px;
           z-index: 1;
@@ -126,6 +131,7 @@
   .HomeCenterTitle{
     align-items: center;
     h1{
+      text-shadow: initial!important;
       text-align: center;
       white-space: pre!important;
       width: auto!important;
@@ -134,6 +140,7 @@
       margin-bottom: 20px!important;
     }
     p{
+      text-shadow: initial!important;
       text-align: center;
       font-size: 2vw!important;
       font-weight: bold!important;
@@ -148,6 +155,7 @@
   }
 
   .container{
+    height: 100vh!important;
     background-color: white;
   }
 
@@ -209,10 +217,9 @@
   }
 }
 
-@media (orientation: landscape) {
+@media screen and (orientation: landscape) and (max-width: 900px) {
 .container{
-  height: 140vh;
+  height: 140vh!important;
   transition: 0.1s;
 }
-
 }

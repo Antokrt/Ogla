@@ -11,7 +11,7 @@ export const BannerBecameWriter = () => {
                 </div>
             </div>
 
-            <img className={styles.mountain} src={'/assets/diapo/mountain.png'}/>
+            <img className={styles.image} src={'/assets/diapo/mountain.png'}/>
 
         </div>
     )

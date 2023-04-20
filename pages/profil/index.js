@@ -26,7 +26,7 @@ import {GetPrivateProfilApi} from "../api/user";
 import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg} from "../../utils/ImageUtils";
+import {GetDefaultUserImg, renderPrediction} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService} from "../../service/User/Password.service";
@@ -35,6 +35,8 @@ import {BookmarkIcon} from "@heroicons/react/24/solid";
 import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
 import {useDispatch} from "react-redux";
 import {setActiveModalNotif} from "../../store/slices/notifSlice";
+import {LoaderImg} from "../../Component/layouts/Loader";
+import {toastDisplayError} from "../../utils/Toastify";
 
 
 export async function getServerSideProps({req}) {
@@ -55,7 +57,6 @@ const Profil = ({profilData, err}) => {
     const [hasChanged, setHasChanged] = useState(false);
     const [wantToDelete, setWantToDelete] = useState(false);
     const [profil, setProfil] = useState(profilData);
-
     const [newProfil, setNewProfil] = useState(profil);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
     const {data: session, status} = useSession();
@@ -64,6 +65,7 @@ const Profil = ({profilData, err}) => {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
     const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
+    const [loadingImg,setLoadingImg] = useState(false);
     const [errMsgModifyPassword, setErrMsgModifyPassword] = useState({
         msg: '',
         show: false
@@ -88,25 +90,40 @@ const Profil = ({profilData, err}) => {
         imgRef.current.click();
     }
 
-    const updatePic = () => {
+    const updatePic = async () => {
         if (file) {
-            UpdateUserProfilPictureService(file)
-                .then((res) => {
-                    setProfil((prevState) => ({
-                        ...prevState,
-                        img: res.data
-                    }))
-                    setLocalImg(null);
-                    setFile(null);
-                })
-                .then(() => {
-                    axios.get('/api/auth/session?update-picture')
-                        .then(() => ReloadSession())
-                        .catch((err) => console.log(err));
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+            setLoadingImg(true);
+            const data = await renderPrediction(file,'user');
+            if(data){
+                UpdateUserProfilPictureService(file)
+                    .then((res) => {
+                        setProfil((prevState) => ({
+                            ...prevState,
+                            img: res.data
+                        }))
+                        setLocalImg(null);
+                        setFile(null);
+                    })
+                    .then(() => {
+                        axios.get('/api/auth/session?update-picture')
+                            .then(() => {
+                                ReloadSession();
+                                setLoadingImg(false)
+                            })
+                            .catch((err) => {
+                                setLoadingImg(false);
+                            });
+                    })
+                    .catch((err) => {
+                        setLoadingImg(false);
+                        toastDisplayError("Impossible de modifier l'image.");
+                    })
+            }
+            else {
+                setLoadingImg(false);
+                toastDisplayError('Image non conforme.')
+            }
+
         }
     }
 
@@ -156,6 +173,13 @@ const Profil = ({profilData, err}) => {
         return (
             <div className={styles.profil}>
                 <div className={styles.imgContainer}>
+                    {
+                        loadingImg &&
+                        <div className={styles.loaderImg}>
+                            <LoaderImg/>
+                        </div>
+                    }
+
                     {
                         localImg && file ?
                             <>
@@ -211,10 +235,10 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.form}>
                     <label>Pseudo</label>
                     <input disabled={true} type={"text"} value={profilData.pseudo}/>
-                    <label className={styles.emailLabel}>Email <span>{session.user.verified ?
+                    <label className={styles.emailLabel}>Email <span>{profilData.verified ?
                         <CheckBadgeIcon/> :
                         <span className={styles.verify} onClick={() => {
-                            if (!session.user?.verified) {
+                            if (!profilData.verified) {
                                 verifyEmail();
                             }
                         }}>Vérifier maintenant</span>}</span></label>

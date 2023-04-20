@@ -460,13 +460,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                     </div>
 
                     <div className={styles.contentChapterList}>
-                        {
-                            chapterList.length <= 0 &&
-                            <div className={styles.empty}>
-                                <img src={'/assets/jim/smile8.png'} />
-                                <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
-                            </div>
-                        }
+
                         {
                             chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
                                 let chapterNumber;

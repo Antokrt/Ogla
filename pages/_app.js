@@ -80,7 +80,7 @@ function Lofi(){
 
     useEffect(() => {
         if(audioRef.current.paused && selectMusicState){
-            audioRef.current.volume = 0.1;
+            audioRef.current.volume = 0.4;
             audioRef.current.play();
         }
         else {

@@ -5,6 +5,7 @@
   justify-content: space-around;
   flex-direction: column;
   gap: 10px;
+  width: 400px;
 
   h7{
     display: flex;
@@ -30,5 +31,24 @@
       color: #1C232B;
       width: 14px;
     }
+  }
+}
+
+
+@media screen and (max-width: 975px){
+  .container{
+    width: 300px!important;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .container{
+    width: 400px !important;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .container{
+    width: 110%!important;
   }
 }
