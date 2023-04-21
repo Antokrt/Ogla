@@ -1,12 +1,18 @@
-export const LikeCommentReduce = (id,arr) => {
+import { sendNotif } from "../service/Notifications/NotificationsService";
+
+export const LikeCommentReduce = (id, arr, authorId, userId) => {
     const newArr = [...arr];
     newArr.map((item) => {
-        if(item._id === id){
-            if(item.hasLike){
+        if (item._id === id) {
+            if (item.hasLike) {
                 item.likes = item.likes - 1;
             }
             else {
                 item.likes += 1;
+                if (authorId != userId)
+                    sendNotif(item.userId, 4, id);
+                else
+                    sendNotif(item.userId, 6, id);
             }
             item.hasLike = !item.hasLike;
         }
@@ -36,7 +42,7 @@ export const DeleteAnswerReduce = (prevComments, id) => {
                 return {
                     ...comment,
                     answers: updatedAnswers,
-                    nbAnswers:comment.nbAnswers - 1,
+                    nbAnswers: comment.nbAnswers - 1,
                     answersPage: updatedAnswers.length === 0 ? 1 : comment.answersPage - 1
                 };
             }
@@ -45,16 +51,20 @@ export const DeleteAnswerReduce = (prevComments, id) => {
     });
 };
 
-export const LikeAnswerReduce = (comments, replyId) => {
+export const LikeAnswerReduce = (comments, replyId, authorId, userId) => {
     const newArr = [...comments];
     newArr.map((comment) => {
         comment.answers.map((reply) => {
-            if(reply._id === replyId){
-                if(reply.hasLike){
+            if (reply._id === replyId) {
+                if (reply.hasLike) {
                     reply.likes = reply.likes - 1;
                 }
                 else {
                     reply.likes += 1;
+                    if (authorId != userId)
+                        sendNotif(reply.userId, 5, replyId);
+                    else
+                        sendNotif(reply.userId, 7, replyId);
                 }
                 reply.hasLike = !reply.hasLike;
             }

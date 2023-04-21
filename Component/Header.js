@@ -10,24 +10,26 @@ import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
 import { SearchBarService } from "../service/Search/SearchService"
 
-import {toastDisplayError} from "../utils/Toastify";
-import {ToastContainer} from 'react-toastify';
-import {useDispatch, useSelector} from "react-redux";
-import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
-import {LogoutService} from "../service/User/Account.service";
-import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
-import {BellAlertIcon} from "@heroicons/react/24/outline";
-import {selectNotifStatus, setActiveModalNotif} from "../store/slices/notifSlice";
+import { toastDisplayError } from "../utils/Toastify";
+import { ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, editComment, selectComments } from "../store/slices/commentSlice";
+import { LogoutService } from "../service/User/Account.service";
+import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
+import { BellAlertIcon } from "@heroicons/react/24/outline";
+import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import { openAll } from "../service/Notifications/NotificationsService";
 
 export default function Header() {
     const router = useRouter();
-    const {data: session} = useSession();
-    const [searchValue,setSearchValue] = useState('');
-    const [data,setData] = useState();
-    const [query,setQuery] = useState('');
-    const [activMusic,setActivMusic] = useState(false)
-    
-
+    const { data: session } = useSession();
+    const [searchValue, setSearchValue] = useState('');
+    const [data, setData] = useState();
+    const [query, setQuery] = useState('');
+    const [activMusic, setActivMusic] = useState(false)
+    const Notifs = useSelector(selectNotifs)
+    const [nbNotifs, setNbNotifs] = useState(0);
+    const statusNotif = useSelector(selectNotifStatus);
 
     const goToProfil = () => {
         if (session.user.is_author) {
@@ -55,8 +57,21 @@ export default function Header() {
     useEffect(() => {
         setQuery('');
         setSearchValue('');
-    },[router])
+    }, [router])
 
+    useEffect(() => {
+        var nb = 0;
+        console.log("status = " + statusNotif);
+        if (statusNotif && Notifs.length > 0)
+            openAll(Notifs[0].date_creation, session?.user.id)
+        else {
+            Notifs.forEach((elem) => {
+                if (!elem.open)
+                    nb++;
+            })
+        }
+        setNbNotifs(nb);
+    }, [Notifs])
 
     const comments = useSelector(selectComments);
     const notifState = useSelector(selectNotifStatus);
@@ -70,9 +85,9 @@ export default function Header() {
                         <li><Link href="/"><a
                             className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
                         <li><Link href=
-                                      {{
-                                          pathname: "/cat/",
-                                      }}
+                            {{
+                                pathname: "/cat/",
+                            }}
                         ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
                         </li>
                         {
@@ -97,7 +112,6 @@ export default function Header() {
                     </ul>
                 </nav>
             </div>
-
             <div className={styles.mainLog}>
                 {
                     router.pathname !== '/rechercher' && !router.pathname.startsWith('/chapitre') &&
@@ -143,20 +157,30 @@ export default function Header() {
                         }
                     </div>
                 }
-
-                    <div className={styles.headphone}>
-                        <HeadPhoneBtn/>
-
-                    </div>
-
-
-            <div className={styles.bell}>
-                <BellAlertIcon onClick={() => {
-                    dispatch(setActiveModalNotif(true));
-                }}/>
-            </div>
-
-
+                <div className={styles.headphone}>
+                    <HeadPhoneBtn />
+                </div>
+                <div className={styles.bell}>
+                    {
+                        nbNotifs === 0 &&
+                        <BellAlertIcon onClick={() => {
+                            dispatch(setActiveModalNotif(true));
+                        }} />
+                    }
+                    {
+                        nbNotifs > 0 &&
+                        <div className={styles.bellActive}>
+                            <BellAlertIcon onClick={() => {
+                                openAll(Notifs[0].date_creation, session.user.id)
+                                    .then((res) => console.log(res))
+                                    .catch((err) => console.log(err));
+                                dispatch(setActiveModalNotif(true));
+                                dispatch(setOpen());
+                            }} />
+                            <p> {nbNotifs} </p>
+                        </div>
+                    }
+                </div>
                 {
                     session ?
                         <div className={styles.accountContainer}>
@@ -184,7 +208,6 @@ export default function Header() {
                                         className={styles.imgProfil} src={session.user.image} />
                             }
 
-
                             <ArrowLeftOnRectangleIcon
                                 onClick={() => {
                                     LogoutService()
@@ -195,7 +218,6 @@ export default function Header() {
                                 }}
                                 title={'Se déconnecter'} />
                         </div>
-
                         :
                         <div
                             onClick={() => router.push({
@@ -208,80 +230,6 @@ export default function Header() {
                         </div>
                 }
             </div>
-            {/*           <div className={styles.mainA}>
-                <div className={styles.logo}>
-                    <img src={"/assets/logo.png"}/>
-                </div>
-
-                <div className={styles.searchBar}>
-                    <MainSearchBar  change={(e) => setSearchValue(e.target.value)} submit={() => {setSearchValue("")}} width={100} height={50}/>
-                    {
-                        searchValue !== "" &&
-                        <ResultSearchBar searchBtn = {() => setSearchValue("")} destroy={() => setSearchValue("")} search={searchValue}/>
-                    }
-                </div>
-
-                {
-                    status === 'authenticated' ?
-                        <div className={styles.accountContainer}>
-                            <div className={styles.account}
-                                 onClick={() =>{
-                                     router.push("/profil")
-                                 }}
-                            >
-                                <div>
-                                    <p>{session.user.pseudo[0].toUpperCase()}</p>
-                                </div>
-                            </div>
-
-                            <ArrowLeftOnRectangleIcon
-                                onClick={() => {
-                                signOut()
-                                    .then(() => router.push('/'))
-                                }
-                                }
-                                title={'Se déconnecter'}/>
-                        </div>
-
-                        :
-                        <div className={styles.login}>
-                            <button onClick={() => router.push({
-                                pathname: "auth",
-                                query: "login"
-                            })}>Se connecter
-                            </button>
-                        </div>
-                }
-
-            </div>
-
-
-            {
-                router.pathname !== "/Post/[id]" &&
-
-                <div className={styles.mainH}>
-                    <nav>
-                        <ul>
-                            <li><Link href="/"><a
-                                className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                            <li><Link href=
-                                          {{
-                                              pathname: "/Category",
-                                          }}
-                            ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
-                            </li>
-                            <li><Link href="/devenir-auteur"><a
-                                className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens
-                                écrivain</a></Link></li>
-                            <li><Link href="/"><a
-                                className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-            }*/}
-
         </div>
     )
 }

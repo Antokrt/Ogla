@@ -54,8 +54,8 @@
 .authorInfos{
   cursor: pointer;
   display: flex;
-  justify-content: start;
-  align-items: end;
+  justify-content: flex-start;
+  align-items: flex-end;
   width: 100%;
   gap: 10px;
 
@@ -157,7 +157,7 @@ color: $darkBrown;
 
       button {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         align-items: center;
         color: rgba(28, 35, 43, 0.84);
         font-family: "Montserrat Alternates", sans-serif;

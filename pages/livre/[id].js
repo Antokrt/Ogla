@@ -29,6 +29,7 @@ import { selectLoginModalStatus, setActiveModalState } from "../../store/slices/
 import CardCategory from "../../Component/Card/CardCategory";
 import { LoaderCommentary } from "../../Component/layouts/Loader";
 import { Snippet } from "../../Component/Snippet";
+import { sendNotif } from "../../service/Notifications/NotificationsService";
 
 export async function getServerSideProps({ req, params, query }) {
     const id = params.id;
@@ -241,16 +242,18 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                         setLikes(likes - 1);
                     } else {
                         setLikes(likes + 1);
+                        sendNotif(authorData._id, 1, bookData._id)
                     }
                 })
                 .catch((err) => console.log(err));
-        } else {
+        } 
+        else {
             dispatch(setActiveModalState(true));
         }
     }
 
     const likeComment = (id) => {
-        setComments(LikeCommentReduce(id, comments));
+        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id));
     }
 
     const newComment = (res) => {
@@ -262,6 +265,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
         if (res.userId !== session.user.id) {
             setTimeout(() => setHasToScroll(!hasToScroll), 10);
         }
+        sendNotif(authorData._id, 10, bookData._id)
     }
 
     const deleteComment = (id) => {
@@ -271,6 +275,15 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
 
     const sendAnswer = (data) => {
         setComments(SendAnswerReduce(comments, data.target_id, data));
+        comments.forEach((elem) =>  {
+            if (elem._id === data.target_id) {
+                if (authorData._id != session.user.id)
+                    sendNotif(elem.userId, 20, data._id)
+                else
+                    sendNotif(elem.userId, 21, data._id)
+                return;
+            }
+        })
     };
 
     const deleteAnswer = (id) => {
@@ -278,7 +291,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
     };
 
     const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments, replyId));
+        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id));
     }
 
     const loadMoreAnswer = (id) => {

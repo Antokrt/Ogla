@@ -17,10 +17,12 @@ const {data:session} = useSession();
 
 const getRandomBook = () => {
 GetRandomBookService()
-    .then((res) => router.push({
+    .then((res) => {
+        console.log(res);
+        router.push({
         pathname: '/livre/' + res._id,
         query: res.slug
-    }))
+    })})
 }
 
     return(
