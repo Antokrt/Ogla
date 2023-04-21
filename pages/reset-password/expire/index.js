@@ -5,6 +5,7 @@ const ExpiredEmail = () => {
     const router = useRouter();
     return (
         <div className={styles.container}>
+            <img src={'/assets/diapo/mountain.png'}/>
             <h1>Désolé</h1>
             <p>Le lien pour modifier votre mot de passe a expiré. Veuillez <span className={styles.retry} onClick={() =>{
                 router.replace({

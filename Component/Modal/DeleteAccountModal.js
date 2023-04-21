@@ -46,7 +46,7 @@ export const DeleteAccountModal = ({close}) => {
                     {
                         session.user.provider === 'ogla' ?
                             <>
-                                <img src={'assets/chara/chara6.png'}/>
+                                <img src={'assets/jim/angry4.png'}/>
                                 <label>Mot de passe</label>
                                 <input value={password} onChange={(e) => setPassword(e.target.value)} type={"password"}
                                        placeholder={'Mot de passe'}/>

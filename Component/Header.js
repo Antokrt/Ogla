@@ -34,8 +34,7 @@ export default function Header() {
     const goToProfil = () => {
         if (session.user.is_author) {
             router.push("/dashboard/profil")
-        }
-        else {
+        } else {
             router.push('/profil')
         }
     }
@@ -81,14 +80,14 @@ export default function Header() {
             <div className={styles.mainA}>
                 <h3 onClick={() => router.push('/')}> OGLA </h3>
                 <nav>
-                    <ul>
-                        <li><Link href="/"><a
-                            className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                        <li><Link href=
+                    <ul className={router.pathname === ('/') ? styles.colorW : styles.colorDark}>
+                        <li className={router.pathname === "/" ? styles.activeNav : ""}><Link href="/"><a
+                        >Accueil</a></Link></li>
+                        <li className={router.pathname.startsWith('/cat') ? styles.activeNavDark : ""}><Link href=
                             {{
                                 pathname: "/cat/",
                             }}
-                        ><a className={router.pathname === "/Category" ? styles.activeNav : ""}>Catégorie</a></Link>
+                        ><a>Catégorie</a></Link>
                         </li>
                         {
                             session && session.user.is_author ?
@@ -105,8 +104,8 @@ export default function Header() {
                                 </>
 
                                 :
-                                <li><Link href="/devenir-auteur"><a
-                                    className={router.pathname === "/devenir-auteur" ? styles.activeNav : ""}>Deviens écrivain</a></Link></li>
+                                <li><Link href="/devenir-auteur"><a>Deviens
+                                    écrivain</a></Link></li>
                         }
 
                     </ul>
@@ -157,9 +156,13 @@ export default function Header() {
                         }
                     </div>
                 }
-                <div className={styles.headphone}>
-                    <HeadPhoneBtn />
-                </div>
+                {
+                    router.pathname !== '/' &&
+                    <div className={styles.headphone}>
+                        <HeadPhoneBtn />
+                    </div>
+                }
+
                 <div className={styles.bell}>
                     {
                         nbNotifs === 0 &&
@@ -198,7 +201,8 @@ export default function Header() {
                                                 <p>{session.user.pseudo[0].toUpperCase()}</p>
                                             }
                                         </div>
-                                    </div> :
+                                    </div>
+                                    :
 
                                     <img
                                         referrerPolicy="no-referrer"
@@ -209,6 +213,7 @@ export default function Header() {
                             }
 
                             <ArrowLeftOnRectangleIcon
+                                className={router.pathname === '/' && styles.colorW}
                                 onClick={() => {
                                     LogoutService()
                                         .then(() => signOut()
@@ -219,15 +224,33 @@ export default function Header() {
                                 title={'Se déconnecter'} />
                         </div>
                         :
-                        <div
-                            onClick={() => router.push({
-                                pathname: "/auth",
-                                query: "login"
-                            })}
-                            className={styles.login}>
-                            <button>Se connecter
-                            </button>
-                        </div>
+
+                        <>
+                            {
+                                router.pathname === '/' ?
+                                    <div
+                                        onClick={() => router.push({
+                                            pathname: "/auth",
+                                            query: "login"
+                                        })}
+                                        className={styles.login}>
+                                        <button>Se connecter
+                                        </button>
+                                    </div>
+                                    :
+                                    <div
+                                        onClick={() => router.push({
+                                            pathname: "/auth",
+                                            query: "login"
+                                        })}
+                                        className={styles.login}>
+                                        <button>Se connecter
+                                        </button>
+                                    </div>
+                            }
+
+                        </>
+
                 }
             </div>
         </div>

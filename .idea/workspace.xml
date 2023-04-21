@@ -2,8 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Component/Menu/VerticalPhoneMenu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenuPhone.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Scroll.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Card/ListCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/ListCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/book/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/book/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/cat/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/cat/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/cat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/cat/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Card/Horizontal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/Horizontal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Card/List.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/List.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/SmHeader.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/SmHeader.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Cat.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Cat.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,6 +244,23 @@
       <workItem from="1679218687935" duration="8392000" />
       <workItem from="1679230094079" duration="5227000" />
       <workItem from="1679302668224" duration="18473000" />
+      <workItem from="1680886819691" duration="1498000" />
+      <workItem from="1680980864948" duration="72000" />
+      <workItem from="1681026431522" duration="1220000" />
+      <workItem from="1681064360593" duration="382000" />
+      <workItem from="1681117079732" duration="19610000" />
+      <workItem from="1681160752762" duration="1243000" />
+      <workItem from="1681203678834" duration="292000" />
+      <workItem from="1681203978441" duration="7262000" />
+      <workItem from="1681240348190" duration="1456000" />
+      <workItem from="1681253050061" duration="141000" />
+      <workItem from="1681295288197" duration="13044000" />
+      <workItem from="1681480577960" duration="3798000" />
+      <workItem from="1681551733043" duration="10000" />
+      <workItem from="1681805443090" duration="15084000" />
+      <workItem from="1681893858735" duration="22348000" />
+      <workItem from="1681979047250" duration="26004000" />
+      <workItem from="1682065859857" duration="17625000" />
     </task>
     <servers />
   </component>

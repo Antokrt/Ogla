@@ -14,7 +14,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 5%;
+  padding: 3%;
   min-width: 30vw;
   border-radius: 15px;
   background-color: white;
@@ -48,7 +48,6 @@
 }
 
 .form{
-  margin-top: 4%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -56,9 +55,7 @@
   flex: 1;
 
   img{
-    width: 120px;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    width: 180px;
   }
 
   .emailLabel{

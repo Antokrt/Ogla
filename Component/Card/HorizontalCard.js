@@ -3,6 +3,7 @@ import CardCategory from "./CardCategory";
 import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
 import {HeartIcon} from "@heroicons/react/20/solid";
+import Header from "../Header";
 
 export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters}) => {
     const router = useRouter();
@@ -19,23 +20,18 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
                 <img src={img}/>
             </div>
 
-            <div className={styles.thumbnailLike}>
-                <p>{like}</p>
-                <HeartIcon/>
-            </div>
 
             <div className={styles.containerContent}>
-                <div className={styles.headerContent}>
-                    <p> <span>@{author}</span></p>
 
-
-                </div>
 
                 <h5>{title} <span></span></h5>
-                <p className={styles.summary}>{snippet} </p>
                 <div className={styles.stats}>
-                    <span className={styles.nbChapters}>{nbChapters} chapitre(s)</span>
-                    <CardCategory category={category}/>
+                    <span className={styles.nbChapters}>Par {author}  </span>
+
+                    <div>
+                        <span className={styles.nbChapters}>{nbChapters} chapitre(s) </span>
+                        <span className={styles.likes}>2{like} <HeartIcon/> </span>
+                    </div>
 
                 </div>
 

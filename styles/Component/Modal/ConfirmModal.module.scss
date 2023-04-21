@@ -10,7 +10,7 @@
   background-color: rgba(28, 35, 43, 0.77);
 
   img{
-    width: 100px;
+    width: 200px;
     margin-top: 20px;
   }
 }
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   padding: 2%;
-width: 22vw;
+width: 25vw;
   border-radius: 15px;
   background-color: white;
   box-shadow: $shadow;
@@ -39,7 +39,7 @@ width: 22vw;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 25px;
   h5{
     font-size: calc(12px + 0.2vw);
     font-family: 'Montserrat',sans-serif;
@@ -63,8 +63,12 @@ margin-top: 20px;
   button{
     background-color: #1C232B;
     color: white;
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border-radius: 5px;
     font-size: 11px;
+    box-shadow: $shadow;
     padding: 10px 20px;
   }
   .red{

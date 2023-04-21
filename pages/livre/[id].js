@@ -30,6 +30,8 @@ import CardCategory from "../../Component/Card/CardCategory";
 import { LoaderCommentary } from "../../Component/layouts/Loader";
 import { Snippet } from "../../Component/Snippet";
 import { sendNotif } from "../../service/Notifications/NotificationsService";
+import has from "lodash/has";
+import {CreateNotificationService} from "../../service/Notification";
 
 export async function getServerSideProps({ req, params, query }) {
     const id = params.id;
@@ -386,7 +388,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                                         chapterList.length <= 0 &&
                                         <div className={styles.empty}>
                                             <img src={'/assets/jim/smile8.png'} />
-                                            <p>{authorData.pseudo} n'a pas encore Ã©crit de chapitres !</p>
+                                            <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
                                         </div>
                                     }
                                     {chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
@@ -465,13 +467,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                     </div>
 
                     <div className={styles.contentChapterList}>
-                        {
-                            chapterList.length <= 0 &&
-                            <div className={styles.empty}>
-                                <img src={'/assets/jim/smile8.png'} />
-                                <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
-                            </div>
-                        }
+
                         {
                             chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
                                 let chapterNumber;

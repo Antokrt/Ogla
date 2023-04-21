@@ -7,38 +7,52 @@
   align-items: center;
   height: 100vh;
   background-color: #311959;
+  margin-top: -10vh;
+
 
   .HomeCenterBlock {
+    position: relative;
     height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -10vh;
 
-    .HomeCenterContent {
+      img{
+        position: absolute;
+        right: 0%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        object-fit: contain;
+        width: 1200px;
+        animation: testimg 4s ease;
+        animation-fill-mode: forwards;
+        height: 90%;
+      }
+/*      display: none;
       width: 70%;
       height: 100%;
       background-image: url("../../public/assets/diapo/Welcome.png");
       background-repeat: no-repeat;
-      background-position: right;
+      background-position: left;
       background-size: 100% 100%;
-      animation: testimg 3s ease;
-      animation-fill-mode: forwards;
-    }
+      animation: testimg 6s ease;
+      animation-fill-mode: forwards;*/
 
     @keyframes testimg {
-      from {
-        background-size: 100% 100%; 
+      0%{
+        transform: scale(1);
       }
-      to {
-        background-size: 102% 102%; 
+
+      100%{
+        transform: scale(1.1);
       }
     }
 
     .HomeTextBlock {
       background-color: #311959;
-      width: 30%;
+      width: 100%;
       height: 100%;
 
       .HomeCenterTitle {
@@ -52,43 +66,54 @@
         flex-direction: column;
         justify-content: center;
         h1 {
-          width: 800px;
+          width: 900px;
           font-size: 5vh;
           font-family: "Branch", sans-serif;
           font-weight: bold;
           color: white;
-          margin-bottom: 80px;
+          margin-bottom: 40px;
+          text-shadow: 0px 0px 5px black;
           z-index: 1;
+
         }
         p {
           width: 600px;
           font-family: 'Branch';
           font-size: 25px;
+          text-shadow: 0px 0px 5px black;
           color: white;
-          margin-bottom: 20px;
-          margin-bottom: 80px;
+          margin-bottom: 40px;
           z-index: 1;
         }
-        .HomeCenterButton {
-          &:hover {
-            background-color: white;
-            color:  rgb(133, 59, 151);
-            transition: 0.3s;
+
+        .token{
+          display: none;
+          white-space: pre;
+          background-color: #1C232B;
+          font-family: 'Montserrat';
+          font-size: 12px;
+        }
+
+        button{
+          &:active{
+            transform: scale(0.8);
+            transition: 0.2s;
           }
-          z-index: 1;
-          transition: 0.3s;
-          font-family: 'Poppins';
+          &:hover{
+            transition: 0.2s;
+            filter: brightness(92%);
+          }
+          cursor: pointer;
+          transition: 0.2s;
+          font-family: "Rebond Grotesque", sans-serif;
+          font-weight: bold;
           background-color: #e94f37;
           color: white;
-          width: 200px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 35px;
-          font-size: 20px;
-          padding: 5px;
-          cursor: pointer;
+          padding: 20px 61px;
+          font-size: 15px;
+          width: 250px;
+          border-radius: 25px;
+          z-index: 1;
         }
       }
     }
@@ -98,4 +123,103 @@
     position: absolute;
     bottom: 0px;
   }
+}
+.mountain{
+  display: none!important;
+}
+@media screen and (max-width: 1200px){
+  .HomeCenterTitle{
+    align-items: center;
+    h1{
+      text-shadow: initial!important;
+      text-align: center;
+      white-space: pre!important;
+      width: auto!important;
+      font-size: 5vw!important;
+      color: #1C232B!important;
+      margin-bottom: 20px!important;
+    }
+    p{
+      text-shadow: initial!important;
+      text-align: center;
+      font-size: 2vw!important;
+      font-weight: bold!important;
+      width: 80% !important;
+      color: #1C232B!important;
+    }
+
+  }
+
+  .welcomeDesktop{
+    display: none!important;
+  }
+
+  .container{
+    height: 100vh!important;
+    background-color: white;
+  }
+
+  .mountain{
+    position: absolute;
+    display: initial!important;
+    height: 40vh!important;
+    bottom: 0;
+  }
+
+  .HomeTextBlock{
+    background-color: transparent!important;
+  }
+  .HomeCenterBlock{
+    height: 90% !important;
+  }
+}
+
+
+@media screen and (max-width: 800px){
+  .HomeCenterBlock{
+    height: 80% !important;
+  }
+
+
+  .HomeCenterTitle{
+    h1{
+      white-space: initial!important;
+    }
+    p{
+      width: 100% !important;
+      color: rgba(28, 35, 43, 0.71) !important;
+      font-size: 3vw!important;
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 500px){
+  .HomeCenterTitle{
+    h1{
+      width: auto!important;
+      font-size: 7vw!important;
+    }
+    p{
+      font-size: 4vw!important;
+    }
+    button{
+      width: auto!important;
+      padding: 20px 60px!important;
+      font-size: 12px!important;
+    }
+  }
+  .container{
+    img{
+      object-fit: cover!important;
+    }
+  }
+}
+
+@media screen and (orientation: landscape) and (max-width: 900px) {
+.container{
+  height: 140vh!important;
+  transition: 0.1s;
+}
 }

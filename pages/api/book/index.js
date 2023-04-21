@@ -29,15 +29,22 @@ export async function AddViewToChapterApi(id) {
 
 export async function GetBookByCategoryApi(category, filter) {
     const bookList = await fetch('http://localhost:3008/book-render/by-cat/' + category + '/' + filter + '/1');
+    const topBook = await fetch('http://localhost:3008/book-render/popular-month/');
+    const topErrData = !topBook.ok;
     const bookErrData = !bookList.ok;
     let booksListJson = await bookList.json();
+    let topBookJson = await topBook.json();
 
     if (booksListJson.statusCode === 404) {
         booksListJson = null;
     }
+    if(topBookJson.statusCode === 404){
+        topBookJson = null;
+    }
 
     return {
         book: booksListJson,
+        top: topBookJson,
         err: bookErrData
     };
 }

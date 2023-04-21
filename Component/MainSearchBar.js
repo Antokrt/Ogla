@@ -26,6 +26,7 @@ export default function MainSearchBar({data,submit,width,height,query,search}) {
                 return null;
             }}>
                 <input
+                    className={router.pathname === '/' && styles.homeSearch}
                     autoComplete={'off'}
                     onChange={(e) => {
                     query(e.target.value);

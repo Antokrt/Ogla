@@ -158,6 +158,19 @@
       .fileContainer{
         margin-top: 20px;
         margin-bottom: 20px;
+        position: relative;
+
+        .loaderImg{
+          position: absolute;
+          top: 50%;
+          left: 17%;
+          z-index: 1;
+          transform: translate(-50%, -50%);
+          padding: 5px;
+          background-color: rgba(0, 0, 0, 0.27);
+          border-radius: 50px;
+        }
+
         img{
           cursor: pointer;
           width: 10vw;
@@ -169,7 +182,11 @@
       .addFileContainer{
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: flex-start;
+        flex-direction: column;
+        div{
+          margin: 20px 0;
+        }
         .labelFile{
           cursor: pointer;
           text-align: center;
@@ -273,6 +290,9 @@ background-color: #1C232B;
     margin-top: 10px;
     margin-bottom: 10px;
     h4{
+      &:first-letter{
+        text-transform: uppercase;
+      }
       font-family: 'Montserrat',sans-serif;
       font-weight: bold;
       font-size: 1.2vw;
@@ -286,8 +306,9 @@ background-color: #1C232B;
     }
     img{
       height: 200px;
+      padding: 10px;
       width: 200px;
-      object-fit: 100% 100%;
+      object-fit: cover;
       border-radius: 10px;
       box-shadow: $shadow;
     }
