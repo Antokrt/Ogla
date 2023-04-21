@@ -25,3 +25,4 @@ export const LogoutService = () => {
             .catch(reject)
     })
 }
+

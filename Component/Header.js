@@ -54,6 +54,10 @@ export default function Header() {
     }, [query]);
 
     useEffect(() => {
+       console.log(session.user.accessToken)
+    },[])
+
+    useEffect(() => {
         setQuery('');
         setSearchValue('');
     }, [router])
@@ -166,7 +170,7 @@ export default function Header() {
                 <div className={styles.bell}>
                     {
                         nbNotifs === 0 &&
-                        <BellAlertIcon onClick={() => {
+                        <BellAlertIcon className={router.pathname !== '/' && styles.activeNavDark} onClick={() => {
                             dispatch(setActiveModalNotif(true));
                         }} />
                     }
@@ -213,7 +217,7 @@ export default function Header() {
                             }
 
                             <ArrowLeftOnRectangleIcon
-                                className={router.pathname === '/' && styles.colorW}
+                                className={router.pathname !== '/' && styles.colorW}
                                 onClick={() => {
                                     LogoutService()
                                         .then(() => signOut()
