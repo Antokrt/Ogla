@@ -9,28 +9,31 @@ import {selectLoginModalStatus, setActiveModalState} from "../store/slices/modal
 import React, {useEffect, useRef, useState} from "react";
 import {LoginModal} from "../Component/Modal/LoginModal";
 
-import SocketProvider from '../utils/context/socket';
+import SocketProvider, { SocketContext } from '../utils/context/socket';
 import YouTube from "react-youtube";
 import {selectActiveMusicStatus, selectIndexStateMusic, setIndexMusic} from "../store/slices/musicSlice";
-import {selectNotifStatus, setActiveModalNotif} from "../store/slices/notifSlice";
+import {selectNotifStatus, setActiveModalNotif, setAllNotifs, selectNotifs, addNotif} from "../store/slices/notifSlice";
 import {NotifModal} from "../Component/Modal/NotifModal";
-
+import { useContext } from 'react';
+import { io } from "socket.io-client";
+import { selectSocketStatus, setActiveSocket } from '../store/slices/socketSlice';
+import notifSlice from '../store/slices/notifSlice';
 
 function MyApp({Component, pageProps}) {
 
     const {store} = wrapper.useWrappedStore(pageProps);
-console.log('heyy')
+    
     return (
         <SessionProvider session={pageProps.session}>
                 <Provider store={store}>
                     <Notif/>
-
-                    <SocketProvider>
+                    {/* <SocketProvider> */}
                         <Modal/>
                         <Component {...pageProps} />
+                        <Socket />
                         <ToastContainer limit={3}/>
                         <Lofi/>
-                    </SocketProvider>
+                    {/* </SocketProvider> */}
                 </Provider>
         </SessionProvider>
     )
@@ -52,7 +55,7 @@ function Notif() {
     const notifState = useSelector(selectNotifStatus);
     const dispatch = useDispatch();
 
-    if(notifState){
+    if(notifState) {
         if(typeof window !== 'undefined'){
             const body = document.querySelector('body');
             body.style.overflow = 'hidden';
@@ -67,17 +70,15 @@ function Notif() {
             body.style.overflow = 'initial';
         }
     }
-
-
 }
 
-function Lofi(){
+function Lofi() {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const selectIndexMusicState = useSelector(selectIndexStateMusic);
     const dispatch = useDispatch();
     const audioRef = useRef(null);
-
+    const session = useSession();
     useEffect(() => {
         if(audioRef.current.paused && selectMusicState){
             audioRef.current.volume = 0.1;
@@ -97,15 +98,51 @@ function Lofi(){
         }
     }
 
-
-
     return (
         <>
             <audio  ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC +'lofi'+ selectIndexMusicState + '.mp3'}>
             </audio>
         </>
+    )
+}
 
+function Socket() {
+    const selectSocketState = useSelector(selectSocketStatus);
+    const selectNotifsState = useSelector(selectNotifs);
+    const dispatch = useDispatch();
 
+    const {data: session} = useSession();
+
+    useEffect(() => {
+        console.log(session);
+    }, [selectNotifsState]);
+
+    if (session) {
+        let socket;
+        if (!selectSocketState) {
+            socket = io("http://localhost:3008/notifications", {
+                auth: {
+                    token: session?.user.accessToken
+                }}
+            );
+            dispatch(setActiveSocket(true))
+        }
+        if (socket) {
+            socket.emit("userId", 1190201)
+            socket.removeAllListeners("status");
+            socket.on("status" , (notif) => {
+                dispatch(setAllNotifs(notif));
+            })
+
+            socket.removeAllListeners("new");
+            socket.on("new" , (notif) => {
+                dispatch(addNotif(notif));
+            })
+        }
+    }
+
+    return (
+        <h1 style={{color: "red", fontSize: "30px", zIndex:"12", display:"none"}}>  salut </h1>
     )
 }
 

@@ -4,6 +4,7 @@ import {commentSlice} from "./slices/commentSlice";
 import {modalSlice} from "./slices/modalSlice";
 import {musicSlice} from "./slices/musicSlice";
 import {notifSlice} from "./slices/notifSlice";
+import {socketSlice} from "./slices/socketSlice";
 
 const makeStore = () =>
     configureStore({
@@ -11,7 +12,8 @@ const makeStore = () =>
             [commentSlice.name]: commentSlice.reducer,
             [notifSlice.name]: notifSlice.reducer,
             [modalSlice.name]: modalSlice.reducer,
-            [musicSlice.name]: musicSlice.reducer
+            [musicSlice.name]: musicSlice.reducer,
+            [socketSlice.name]: socketSlice.reducer,
         },
         devTools: true
     })

@@ -110,12 +110,15 @@
         cursor: pointer;
         width: 25px;
         z-index: 2;
-        color: #1C232B;
+        // color: #1C232B;
+        color: white;
       }
     }
 
     .headphone{
-
+      svg {
+        color: white;
+      }
       iframe{
         visibility: hidden;
       }
@@ -130,13 +133,49 @@
       svg{
         &:hover{
           transition: 0.1s;
-          color: #1C232B;
+          color: #e94f37;
         }
         cursor: pointer;
-        color: rgba(28, 35, 43, 0.76);
+        // color: rgba(28, 35, 43, 0.76);
+        color: white;
         transition: 0.1s;
         width: 30px;
       }
+    }
+
+    .bellActive {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      svg {
+        &:hover{
+          transition: 0.1s;
+          color: #e94f37;
+        }
+        cursor: pointer;
+        // color: rgba(28, 35, 43, 0.76);
+        color: white;
+        transition: 0.1s;
+        width: 30px;
+      }
+
+      p {
+          display: flex;
+          justify-content: center;
+          width: 14px;
+          background-color: #e94f37;
+          color: white;
+          border-radius: 50%;
+          position: absolute;
+          bottom: 8px;
+          right: -2px;
+          font-size: 11px;
+          text-align: center;
+      }
+
     }
 
     .imgProfil{
@@ -164,7 +203,7 @@
       height: 50px;
       border-radius: 50px;
       z-index: 2;
-      p{
+      p {
         color: white;
         font-family:"Montserrat Alternates" ,sans-serif;
         font-weight: bold;

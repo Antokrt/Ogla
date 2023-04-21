@@ -1,10 +1,10 @@
-import {useEffect, useRef, useState} from "react";
-import {useRouter} from "next/router";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import Header from "../../Component/Header";
 import styles from "../../styles/Pages/ChapterPage.module.scss";
-import {HeartIcon,} from "@heroicons/react/20/solid";
-import {TagIcon} from "@heroicons/react/24/solid";
-import {BookOpenIcon} from "@heroicons/react/24/solid";
+import { HeartIcon, } from "@heroicons/react/20/solid";
+import { TagIcon } from "@heroicons/react/24/solid";
+import { BookOpenIcon } from "@heroicons/react/24/solid";
 import FooterOnChapter from "../../Component/Post/FooterOnChapter";
 import SidebarPost from "../../Component/Post/SidebarCommentary";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
@@ -12,28 +12,29 @@ import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
 import ToogleSidebar from "../../utils/ToogleSidebar";
 import HeaderOnChapter from "../../Component/Post/HeaderOnChapter";
-import {EditorContent, useEditor} from "@tiptap/react";
-import {StarterKit} from "@tiptap/starter-kit";
-import {getConfigOfProtectedRoute} from "../api/utils/Config";
-import {GetOneChapterApi} from "../api/chapter";
-import {VerifLike, VerifLikeApi} from "../api/like";
-import {useSession} from "next-auth/react";
-import {LikeBookService, LikeChapterService} from "../../service/Like/LikeService";
-import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
-import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
-import {DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce} from "../../utils/CommentaryUtils";
-import {GetChapterListService} from "../../service/Chapter/ChapterService";
-import {Capitalize} from "../../utils/String";
-import {setActiveModalState} from "../../store/slices/modalSlice";
-import {useDispatch} from "react-redux";
-import {AddViewToChapterApi} from "../api/book";
+import { EditorContent, useEditor } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import { getConfigOfProtectedRoute } from "../api/utils/Config";
+import { GetOneChapterApi } from "../api/chapter";
+import { VerifLike, VerifLikeApi } from "../api/like";
+import { useSession } from "next-auth/react";
+import { LikeBookService, LikeChapterService } from "../../service/Like/LikeService";
+import { GetCommentService, GetMyCommentsService } from "../../service/Comment/CommentService";
+import { GetAnswerByCommentService } from "../../service/Answer/AnswerService";
+import { DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce } from "../../utils/CommentaryUtils";
+import { GetChapterListService } from "../../service/Chapter/ChapterService";
+import { Capitalize } from "../../utils/String";
+import { setActiveModalState } from "../../store/slices/modalSlice";
+import { useDispatch } from "react-redux";
+import { AddViewToChapterApi } from "../api/book";
 import ErrMsg from "../../Component/ErrMsg";
+import { sendNotif } from "../../service/Notifications/NotificationsService";
 
-export async function getServerSideProps({req, params, query, ctx}) {
+export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
     const data = await GetOneChapterApi(id);
     let hasLike;
-    if(data.chapter){
+    if (data.chapter) {
         await AddViewToChapterApi(id);
         hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
         return {
@@ -49,7 +50,7 @@ export async function getServerSideProps({req, params, query, ctx}) {
             }
         }
     }
-    else{
+    else {
         return {
             props: {
                 key: id,
@@ -67,17 +68,15 @@ export async function getServerSideProps({req, params, query, ctx}) {
 
 }
 
-const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, hasLikeData, bookId}) => {
+const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, hasLikeData, bookId }) => {
 
     const router = useRouter();
     const headerFixed = useRef();
     const [hasToBeFixed, setHasToBeFixed] = useState(false);
     const [hasToScroll, setHasToScroll] = useState(false);
 
-
     const [likes, setLikes] = useState(chapterData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
-
 
     const [nbCommentary, setNbCommentary] = useState(chapterData?.nbCommentary);
     const [lastCommentId, setLastCommentId] = useState([]);
@@ -98,9 +97,8 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
     const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
 
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const dispatch = useDispatch();
-
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
 
@@ -124,6 +122,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                         setLikes(likes - 1);
                     } else {
                         setLikes(likes + 1);
+                        sendNotif(authorData._id, 2, chapterData._id);
                     }
                 })
                 .catch((err) => console.log('err'));
@@ -144,7 +143,6 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         ],
         content: chapterData ? JSON.parse(chapterData?.content) : null
     })
-
 
     const checkSide = () => {
         switch (sidebarSelect) {
@@ -198,7 +196,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             author={chapterData.author_pseudo}
                             authorImg={authorData?.img}
                             comments={comments}
-                            select={sidebarSelect}/>
+                            select={sidebarSelect} />
                     </div>
                 )
                 break;
@@ -237,7 +235,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             author={authorData?.pseudo}
                             filter={activeFilterChapterSidebar}
                             maxChapter={bookData?.nbChapters}
-                            canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect}/>
+                            canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect} />
                     </div>
                 )
                 break;
@@ -315,7 +313,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     }
 
     const likeComment = (id) => {
-        setComments(LikeCommentReduce(id, comments));
+        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id));
     }
 
     const newComment = (res) => {
@@ -333,6 +331,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
         setNbCommentary(nbCommentary + 1);
 
         setTimeout(() => setHasToScroll(!hasToScroll), 10)
+        sendNotif(authorData._id, 11, chapterData._id)
     }
 
     const deleteComment = (id) => {
@@ -342,6 +341,15 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
     const sendAnswer = (data) => {
         setComments(SendAnswerReduce(comments, data.target_id, data));
+        comments.forEach((elem) =>  {
+            if (elem._id === data.target_id) {
+                if (authorData._id != session.user.id)
+                    sendNotif(elem.userId, 20, data._id)
+                else
+                    sendNotif(elem.userId, 21, data._id)
+                return;
+            }
+        })
     };
 
     const deleteAnswer = (id) => {
@@ -349,7 +357,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
     };
 
     const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments, replyId));
+        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id));
     }
 
     const loadMoreAnswer = (id) => {
@@ -376,8 +384,8 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                 checkSide()
             }
             <div>
-                <Header/>
-                <HeaderOnChapter/>
+                <Header />
+                <HeaderOnChapter />
             </div>
 
             {
@@ -394,7 +402,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                                 <div className={styles.thumbnailContainer}>
                                     <p className={styles.category}><span>{bookData.category}</span></p>
                                     <p className={styles.mSide}>{likes} like(s)</p>
-                                    <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon/></p>
+                                    <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon /></p>
                                 </div>
                             </div>
 
@@ -403,7 +411,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                                 <div className={styles.headerContent}>
                                     <h5>{bookData.title}</h5>
                                     <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
-                                                                                                         referrerPolicy={'no-referrer'}/>{authorData.pseudo}
+                                        referrerPolicy={'no-referrer'} />{authorData.pseudo}
                                     </h6>
                                 </div>
                                 <div className={styles.nextChapterContainer}>
@@ -417,7 +425,7 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
 
                                         </EditorContent>
                                     }
-                   </div>
+                                </div>
                                 {
                                     chapterData.navChapter.next &&
                                     <button className={styles.readMore} onClick={() => {
@@ -450,11 +458,11 @@ const Chapter = ({chapterData, bookData, chapterList, authorData, err, index, ha
                             openCommentary={() => {
                                 ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
                             }}
-                            img={bookData?.img}/>
+                            img={bookData?.img} />
 
                     </>
                     :
-                    <ErrMsg click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'}/>
+                    <ErrMsg click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'} />
             }
 
 

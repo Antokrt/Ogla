@@ -1,4 +1,7 @@
+import { useEffect } from "react";
 import styles from "../styles/Component/Banner.module.scss";
+import { useContext } from "react";
+import { SocketContext } from "../utils/context/socket";
 
 export default function Banner() {
     return (

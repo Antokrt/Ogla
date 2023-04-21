@@ -55,7 +55,7 @@ const Register = ({login}) => {
         )
     }
 
-      const submit =  async (values) => {
+    const submit =  async (values) => {
         const formData = {
             email : values.email,
             pseudo: values.pseudo,
@@ -68,7 +68,7 @@ const Register = ({login}) => {
             .then((res) => {
                 if(res.status === 401){
                     let errMsg = res.error;
-                    switch (errMsg){
+                    switch (errMsg) {
                         case"email && pseudo already exists":
                             setSubmitErr({
                                 msg: 'Email ou pseudo déjà existant',

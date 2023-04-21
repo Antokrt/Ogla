@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { activeOrDisable, selectLoginModalStatus, setActiveModalState } from "../store/slices/modalSlice";
 import HeaderResponsive from '../Component/HeaderResponsive';
 import MusicHome from '../Component/MusicHome';
+import { DeleteAll } from '../service/Notifications/NotificationsService';
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -50,11 +51,17 @@ export async function getServerSideProps() {
     }
 }
 
-
 export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, err}) {
 
     const {data: session} = useSession();
     const router = useRouter();
+
+    function deleteNotifs() {
+        console.log(session)
+        DeleteAll(session.user.id)
+        .then((res) => console.log("good"))
+        .catch((err) => console.log(err))
+    }
 
     return (
 
@@ -67,6 +74,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
             <div>
                 <Header/>
+                {/* <HeaderResponsive /> */}
             </div>
             <Banner/>
             <CategoryHome/>
