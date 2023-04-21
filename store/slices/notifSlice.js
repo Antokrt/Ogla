@@ -11,10 +11,10 @@ export const notifSlice = createSlice({
     initialState,
     reducers: {
         setActiveModalNotif: (state, action) => {
-            state.see = action.payload
+            state.see = action.payload;
         },
         setAllNotifs: (state, action) => {
-            state.notifs = action.payload
+            state.notifs = action.payload;
         },
         addNotif : (state, action) => {
             state.notifs.unshift(action.payload);

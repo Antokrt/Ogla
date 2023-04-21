@@ -2,20 +2,12 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    CheckBadgeIcon,
-    ArrowDownIcon, BellAlertIcon,
-    CalendarIcon,
-    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon, MusicalNoteIcon,
+    BellAlertIcon,CheckBadgeIcon, MusicalNoteIcon,
 } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import {
-    ArrowTrendingUpIcon, ChartBarIcon,
-    ChatBubbleLeftIcon,
-    CheckCircleIcon, HeartIcon,
-    PencilIcon,
-    StarIcon, XCircleIcon
+    ChartBarIcon, CheckCircleIcon, HeartIcon,XCircleIcon
 } from "@heroicons/react/20/solid";
-import Category from "../../json/category.json";
 import { Capitalize } from "../../utils/String";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
