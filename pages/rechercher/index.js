@@ -13,6 +13,7 @@ import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
 import {ListCard} from "../../Component/Card/ListCard";
+import {ScrollDownUtils} from "../../utils/Scroll";
 
 export async function getServerSideProps({req, query}) {
 
@@ -51,6 +52,7 @@ const SearchPage = ({queryData, data, err}) => {
     useEffect(() => {
         const params = router.query;
         setQuery(params.search);
+        console.log(searchData)
     }, [router.query]);
 
     const focusInput = () => {
@@ -93,6 +95,7 @@ const SearchPage = ({queryData, data, err}) => {
                     }
                 })
                 .then(() => setLoadingScroll(false))
+                .then(() => ScrollDownUtils(104))
                 .catch(() => {
                     setLoadingScroll(false);
                     setCanLoadMore(false);
@@ -138,7 +141,7 @@ const SearchPage = ({queryData, data, err}) => {
                                 className={filter === "recent" && styles.activeBtn}>Récent(s)</button>
                         </div>
                     </div>
-                    <div className={styles.card}>
+                    <div className={styles.containerList}>
                         {
                             searchData && !err && searchData.length !== 0 &&
                             <ListCard books={searchData}/>
@@ -156,7 +159,9 @@ const SearchPage = ({queryData, data, err}) => {
                     }
                     {
                         searchData.length <= 0 &&
-                        <ErrMsg text={'Il semblerait que votre recherche ne donne rien !'} textBtn={'Réessayer'} click={() => focusInput()}/>
+                        <div className={styles.err}>
+                            <ErrMsg text={'Il semblerait que votre recherche ne donne rien !'} textBtn={'Réessayer'} click={() => focusInput()}/>
+                        </div>
                     }
                 </div>
 

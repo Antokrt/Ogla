@@ -34,6 +34,9 @@ import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 
 import {renderPrediction} from "../../../utils/ImageUtils";
 import {toastDisplayError} from "../../../utils/Toastify";
+import CardCategory from "../../../Component/Card/CardCategory";
+import ScreenSize from "../../../utils/Size";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 
 
 
@@ -84,6 +87,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [loadingChapter, setLoadingChapter] = useState(false);
     const [errListChapter, setErrChapter] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
+    const [width, height] = ScreenSize();
+
 
 
     const handleFileSelect = async (event) => {
@@ -195,9 +200,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.verticalMenuContainer}>
-                <VerticalAuthorMenu/>
-            </div>
+            {
+                width > 700 ?
+                    <div className={styles.verticalMenuContainer}>
+                        <VerticalAuthorMenu/>
+                    </div> :
+                  <VerticalPhoneMenu/>
+            }
+
 
             <div className={styles.containerData}>
                 {
@@ -207,10 +217,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     </div>
                 }
 
-                {
-                    loading &&
-                    <p>Loading...</p>
-                }
                 {
                     !loading && err.book &&
                     <ErrorDashboard
@@ -337,13 +343,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 </div>
 
                                 <div className={styles.presentationContainer}>
+                                    <img className={styles.mountain} src={'/assets/diapo/mountain4.png'}/>
                                     <div className={styles.statsLabelContainer}>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>{book.likes}</p>
+                                            <p>{book.likes}</p>
                                             <h6>like(s)</h6>
                                         </div>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>{book.chapter_list.length}</p>
+                                            <p>{book.chapter_list.length}</p>
                                             <h6>chapitre(s)</h6>
                                         </div>
                                         <div className={styles.dateLabel}>
@@ -353,9 +360,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                     </div>
                                     <div className={styles.contentContainer}>
-                                        <div>
-                                            <span className={styles[book.category] + ' ' + styles.cat}>{Capitalize(book.category)}</span>
-                                        </div>
+
+                              <CardCategory category={book.category}/>
                                         {
                                             lastChapter &&
                                             <div>

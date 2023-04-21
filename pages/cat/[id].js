@@ -25,6 +25,7 @@ import {ListCard} from "../../Component/Card/ListCard";
 import {BannerCategory} from "../../Component/Category/BannerCategory";
 import {GetPresentationOfCategory} from "../../utils/CategoryUtils";
 import ScreenSize from "../../utils/Size";
+import {ScrollDownUtils} from "../../utils/Scroll";
 
 export async function getServerSideProps({req,params}){
 
@@ -70,6 +71,7 @@ export default function CatPage({cat,err,bookListData}) {
             .catch((err) => console.log(err))
     }
 
+
     const loadMoreBooks = () => {
         setLoadingScroll(true);
         setCanSeeMore(false);
@@ -88,6 +90,7 @@ export default function CatPage({cat,err,bookListData}) {
                 }
             })
             .then(() => setLoadingScroll(false))
+            .then(() => ScrollDownUtils(104))
             .catch((err) => setLoadingScroll(false));
     }
 
@@ -181,6 +184,7 @@ export default function CatPage({cat,err,bookListData}) {
                                 <div className={styles.containerSeeMore}>
                                     <TextSeeMore onclick={() => {
                                         loadMoreBooks();
+
                                     }}/>
                                 </div>
                             }

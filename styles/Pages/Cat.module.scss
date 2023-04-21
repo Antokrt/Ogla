@@ -350,7 +350,7 @@
 }
 
 .containerSeeMore{
-  margin-top: 5%;
+  margin-top: 8%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -434,6 +434,7 @@
 @media screen and (max-width: 550px) {
   .card {
     width: 100% !important;
+    color: #5a6673;
   }
 }
 

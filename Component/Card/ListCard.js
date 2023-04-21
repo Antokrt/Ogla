@@ -4,15 +4,11 @@ import React, {useRef} from "react";
 import {HorizontalCard} from "./HorizontalCard";
 
 export const ListCard = ({books,seeMore}) => {
-    const divRef = useRef();
     return (
         <div className={styles.container}>
 
-            <button onClick={() => {
-                divRef.current.scrollTop = divRef.current.scrollHeight;
-                console.log(divRef.current.scrollTop)
-            }}>Clique</button>
-            <div className={styles.list} ref={divRef}>
+
+            <div className={styles.list}>
                 {
                     books &&
                     books.map((item) => {

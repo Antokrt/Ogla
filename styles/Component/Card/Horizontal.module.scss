@@ -68,9 +68,9 @@
     font-family: "Rebond Grotesque", sans-serif;
     color: rgba(28, 35, 43, 0.94);
     font-weight: 600;
-    margin-bottom: 10px;
-    overflow: hidden;
     text-overflow: ellipsis;
+    padding-bottom: 10px;
+    overflow: hidden;
     -webkit-line-clamp: 2;
     display: -webkit-box;
     word-break: break-word;
@@ -100,6 +100,35 @@
     justify-content: center;
     gap: 10px;
     width: 100%;
+    div{
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .likes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: rgba(152, 68, 173, 0.93);
+    color: white;
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    margin-left: 5px;
+    letter-spacing: 1px;
+    box-shadow: $shadow;
+      svg {
+        margin-bottom: -1px;
+        margin-left: 2px;
+        width: 12px;
+        color: white;
+    }
   }
 
   .nbChapters {
@@ -115,6 +144,7 @@
       width: 14px;
       color: #9844AD;
     }
+
   }
 }
 
@@ -134,9 +164,14 @@
     }
 
     .stats{
-      gap: 2px;
+      gap: 12px;
     }
 
+    .nbChapters{
+      div{
+        gap: 20px!important;
+      }
+    }
   }
 }
 
@@ -150,4 +185,82 @@
       height:130px;
     }
   }
+
+  .likes{
+    padding: 10px 10px!important;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .likes{
+    position: absolute;
+    top: -50px;
+    right: 0;
+    padding: 10px 20px!important;
+  }
+}
+
+@media screen and (max-width: 350px){
+
+  .containerContent{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    h5{
+      font-size: 17px;
+      border-bottom: solid 1px rgba(152, 68, 173, 0.06);
+      padding-bottom: 5px;
+      width: 200px;
+      text-align: center;
+    }
+    .stats{
+      margin-top: 0!important;
+      gap: 10px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      span{
+        font-size: 12px;
+      }
+    }
+  }
+
+  .likes{
+    background-color: #9844AD!important;
+    padding: 10px 12px!important;
+    gap: 2px!important;
+    left: 15%!important;
+    border-radius: 8px!important;
+    top: -0px!important;
+    font-size: 10px!important;
+    margin-left: 0px!important;
+    width: min-content;
+  }
+
+  .stats{
+    div{
+      align-items: center!important;
+      justify-content: center!important;
+    }
+  }
+  .container{
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    text-align: center;
+    flex-direction: column;
+    img{
+      height: 140px;
+      width: 140px;
+      border-radius: 15px!important;
+      object-fit: cover;
+      box-shadow: $shadow;
+    }
+  }
+
+
+
+
+
 }

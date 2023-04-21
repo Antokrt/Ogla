@@ -26,6 +26,7 @@ import {HorizontalCard} from "../../Component/Card/HorizontalCard";
 
 import {ListCard} from "../../Component/Card/ListCard";
 import ScreenSize from "../../utils/Size";
+import {ScrollDownUtils} from "../../utils/Scroll";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
@@ -36,12 +37,13 @@ export async function getServerSideProps({req, params}) {
     return {
         props: {
             err: data.err,
-            bookListData: data.book
+            bookListData: data.book,
+            topData: data.top
         }
     }
 }
 
-export default function CatPage({cat, err, bookListData}) {
+export default function CatPage({cat, err, bookListData,topData}) {
 
     const router = useRouter();
     const [filter, setFilter] = useState('popular');
@@ -86,6 +88,7 @@ export default function CatPage({cat, err, bookListData}) {
                 }
             })
             .then(() => setLoadingScroll(false))
+            .then(() => ScrollDownUtils(104))
             .catch((err) => setLoadingScroll(false));
     }
 
@@ -97,29 +100,32 @@ export default function CatPage({cat, err, bookListData}) {
             {
                 !err && bookListData &&
                 <div className={styles.containerM}>
-                    <div className={styles.hotContainer}>
-                        {
-                            width > 530 ?
-                                <HotPost className={styles.hotItem}
-                                         likes={bookList[0].likes}
-                                         title={"Livre 2"} nbChapter={205} author={"ThomasK"}
-                                         img={"/assets/livre1.jpg"} category={"Horreur"}
-                                         description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
-                                             "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
-                                             "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
-                                />
-                                :
-                                <HotPostPhone className={styles.hotItem}
-                                         likes={bookList[0].likes}
-                                         title={"Livre 2"} nbChapter={205} author={"ThomasK"}
-                                         img={"/assets/livre1.jpg"} category={"Horreur"}
-                                         description={"She was pushed to a mysterious man and choose to run away. 6 years later, she brought back a little boy! The little boy is looking for a perfect man for his little fairy mommy : tall, 6 packs muscles and richest man!\n" +
-                                             "“Mommy, how is this man?” The little boy pointed his finger to his magnified version of himself.\n" +
-                                             "Bo Qingyue : “You ran away with my genes for so long. it’s time to admit you were wrong!"}
-                                />
-                        }
 
-                    </div>
+                    {
+                        topData &&
+                        <div className={styles.hotContainer}>
+
+                            {
+                                width > 530 ?
+                                    <HotPost className={styles.hotItem}
+                                             top={true}
+                                             likes={topData.likes}
+                                             title={topData.title} nbChapter={topData.nbChapters} author={topData.author_pseudo}
+                                             img={topData.img} category={topData.category}
+                                             description={topData.summary}
+                                       />
+                                    :
+                                    <HotPostPhone className={styles.hotItem}
+                                                  likes={topData.likes}
+                                                  title={topData.title} nbChapter={topData.nbChapters} author={topData.author_pseudo}
+                                                  img={topData.img} category={topData.category}
+                                                  description={topData.summary}
+                                    />
+                            }
+
+                        </div>
+
+                    }
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>
                             <div className={styles.headerRanking}>
