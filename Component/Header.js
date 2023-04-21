@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import styles from "../styles/Component/Header.module.scss";
 import Link from "next/link";
-import { router, useRouter } from "next/router";
+import {router, useRouter} from "next/router";
 import {
     ArrowLeftOnRectangleIcon, MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { signIn, signOut, useSession } from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
-import { SearchBarService } from "../service/Search/SearchService"
+import {SearchBarService} from "../service/Search/SearchService"
 
-import { toastDisplayError } from "../utils/Toastify";
-import { ToastContainer } from 'react-toastify';
-import { useDispatch, useSelector } from "react-redux";
-import { addComment, editComment, selectComments } from "../store/slices/commentSlice";
-import { LogoutService } from "../service/User/Account.service";
-import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
-import { BellAlertIcon } from "@heroicons/react/24/outline";
-import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
-import { openAll } from "../service/Notifications/NotificationsService";
+import {toastDisplayError} from "../utils/Toastify";
+import {ToastContainer} from 'react-toastify';
+import {useDispatch, useSelector} from "react-redux";
+import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
+import {LogoutService} from "../service/User/Account.service";
+import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
+import {BellAlertIcon} from "@heroicons/react/24/outline";
+import {selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
+import {openAll} from "../service/Notifications/NotificationsService";
 
 export default function Header() {
     const router = useRouter();
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState();
     const [query, setQuery] = useState('');
@@ -54,8 +54,8 @@ export default function Header() {
     }, [query]);
 
     useEffect(() => {
-       console.log(session.user.accessToken)
-    },[])
+        console.log(session?.user?.settings)
+    }, [])
 
     useEffect(() => {
         setQuery('');
@@ -88,9 +88,9 @@ export default function Header() {
                         <li className={router.pathname === "/" ? styles.activeNav : ""}><Link href="/"><a
                         >Accueil</a></Link></li>
                         <li className={router.pathname.startsWith('/cat') ? styles.activeNavDark : ""}><Link href=
-                            {{
-                                pathname: "/cat/",
-                            }}
+                                                                                                                 {{
+                                                                                                                     pathname: "/cat/",
+                                                                                                                 }}
                         ><a>Catégorie</a></Link>
                         </li>
                         {
@@ -129,7 +129,7 @@ export default function Header() {
                                 setSearchValue('');
                             }}
                             height={50}
-                            width={100} />
+                            width={100}/>
 
                         {
                             query !== '' && data &&
@@ -147,9 +147,9 @@ export default function Header() {
                                     <p
                                         onClick={() => router.push({
                                             pathname: "/rechercher",
-                                            query: { search: query }
+                                            query: {search: query}
                                         })}
-                                        className={styles.searchP}>Chercher <MagnifyingGlassIcon /></p>
+                                        className={styles.searchP}>Chercher <MagnifyingGlassIcon/></p>
                                     <p onClick={() => {
 
                                         setSearchValue('')
@@ -160,19 +160,30 @@ export default function Header() {
                         }
                     </div>
                 }
+
                 {
-                    router.pathname !== '/' &&
-                    <div className={styles.headphone}>
-                        <HeadPhoneBtn />
-                    </div>
+                    session && router.pathname !== '/' ?
+                        <>
+                            {
+                                session.user.settings.music &&
+                                <div className={styles.headphone}>
+                                    <HeadPhoneBtn/>
+                                </div>
+                            }
+                        </>
+                        :
+                        <div className={styles.headphone}>
+                            <HeadPhoneBtn/>
+                        </div>
                 }
+
 
                 <div className={styles.bell}>
                     {
                         nbNotifs === 0 &&
                         <BellAlertIcon className={router.pathname !== '/' && styles.activeNavDark} onClick={() => {
                             dispatch(setActiveModalNotif(true));
-                        }} />
+                        }}/>
                     }
                     {
                         nbNotifs > 0 &&
@@ -183,7 +194,7 @@ export default function Header() {
                                     .catch((err) => console.log(err));
                                 dispatch(setActiveModalNotif(true));
                                 dispatch(setOpen());
-                            }} />
+                            }}/>
                             <p> {nbNotifs} </p>
                         </div>
                     }
@@ -194,9 +205,9 @@ export default function Header() {
                             {
                                 session.user.image === '' ?
                                     <div className={styles.account}
-                                        onClick={() => {
-                                            router.push('/profil')
-                                        }}
+                                         onClick={() => {
+                                             router.push('/profil')
+                                         }}
                                     >
 
                                         <div>
@@ -213,7 +224,7 @@ export default function Header() {
                                         onClick={() => {
                                             router.push('/profil')
                                         }}
-                                        className={styles.imgProfil} src={session.user.image} />
+                                        className={styles.imgProfil} src={session.user.image}/>
                             }
 
                             <ArrowLeftOnRectangleIcon
@@ -225,7 +236,7 @@ export default function Header() {
                                         .catch(() => signOut()
                                             .then(() => router.push('/')))
                                 }}
-                                title={'Se déconnecter'} />
+                                title={'Se déconnecter'}/>
                         </div>
                         :
 

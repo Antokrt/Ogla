@@ -108,6 +108,7 @@ const Profil = ({profilData, err}) => {
                             music: newSettings.music
                         }
                     }))
+                    .then(() => ReloadSession())
                     .catch(() => toastDisplayError('Impossible de modifier les réglages'))
                 )
                 .catch(() => toastDisplayError('Impossible de modifier les réglages'))
@@ -422,7 +423,7 @@ const Profil = ({profilData, err}) => {
                         <BellAlertIcon/>
                         <div>
                             <p className={styles.labelSetting}>Notifications </p>
-                            <p className={styles.valueSetting}>Désactiver les notifications en temps réelle </p>
+                            <p className={styles.valueSetting}>Activer les notifications en temps réelle </p>
                         </div>
 
 
@@ -444,7 +445,7 @@ const Profil = ({profilData, err}) => {
                         <MusicalNoteIcon/>
                         <div>
                             <p className={styles.labelSetting}>Musique </p>
-                            <p className={styles.valueSetting}>Désactiver la musique</p>
+                            <p className={styles.valueSetting}>Activer la musique</p>
                         </div>
                     </div>
 
