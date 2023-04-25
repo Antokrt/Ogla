@@ -25,7 +25,6 @@ export default function VerticalAuthorMenu() {
 
     const dispatch = useDispatch()
 
-
     return (
         <div className={styles.container}>
             <div className={styles.fContainer}>

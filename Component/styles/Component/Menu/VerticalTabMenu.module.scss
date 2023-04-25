@@ -6,10 +6,9 @@
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  min-width: 80px;
   z-index: 1;
-  padding-top: 10%;
-  padding-bottom: 5%;
+  padding-top: 35px;
+  padding-bottom: 35px;
   background-color: white;
   box-shadow: $shadow;
 
@@ -17,7 +16,7 @@
     display: flex;
     flex-direction: column;
     .logo{
-      margin-bottom: 10%;
+      margin-bottom: 80px;
       h3{
         cursor: pointer;
         text-align: center;
@@ -41,9 +40,8 @@
       li{
         cursor: pointer;
         display: flex;
-        justify-content: start;
+        justify-content: center;
         align-items: center;
-        gap: 8%;
         color: #54595F;
         padding: 1.5vh;
         border-radius: 15px;
@@ -83,6 +81,7 @@
       .profil{
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8%;
         height: 100%;
         width: 80%;
@@ -120,16 +119,6 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  span{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: #9844AD;
-    font-size: 10px;
-  }
 }
 
 .bell{

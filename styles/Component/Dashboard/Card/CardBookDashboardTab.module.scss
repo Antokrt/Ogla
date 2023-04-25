@@ -7,9 +7,7 @@
   height: 200px;
   width: 100%;
   background-color: white;
-  box-shadow: $shadow;
-  border-radius: 10px;
-  border: solid 2px rgba(84, 89, 95, 0.08);
+  border-bottom: solid 2px rgba(84, 89, 95, 0.08);
 
 }
 
@@ -50,22 +48,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  padding: 0px 50px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: rgba(28, 35, 43, 0.05);
-  margin-right: 2%;
+  margin-right: 0%;
 
   img{
-    height: 70%;
-    width: 70%;
-    border-radius: 15px;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
     object-fit: cover;
   }
 }
 
 .containerLabel{
-display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100%;
@@ -96,14 +94,14 @@ display: flex;
       text-transform: uppercase;
     }
     color: rgba(28, 35, 43, 0.83);
-    margin-right: 20px;
     font-size: 17px;
     font-family: "Rebond Grotesque",sans-serif;
     font-weight: bold;
+    width: 300px;
   }
 
   p{
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Lato',sans-serif;
     font-weight: bold;
     font-size: 12px;
     color: #54595F;
@@ -118,9 +116,11 @@ display: flex;
     text-align: right;
     color: #9844AD;
     font-size: 13px;
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Lato',sans-serif;
     font-weight: bold;
-
+    span{
+      font-family: 'Rebond Grotesque',sans-serif;
+    }
   }
 
   .containerImgBook{
@@ -128,7 +128,7 @@ display: flex;
     justify-content: end;
     align-items: center;
     img{
-width: 3vw;
+      width: 6vw;
 
     }
 
@@ -141,6 +141,8 @@ width: 3vw;
     text-align: right;
     color: rgba(84, 89, 95, 0.84);
     border-radius: 5px;
+    white-space: pre;
+
     span{
       font-family: 'Lato',sans-serif;
       font-weight: bold;
@@ -186,5 +188,21 @@ width: 3vw;
 .drama{
   background-color: rgba(224, 68, 68, 0.21);
   color: #e04444;
+}
+
+
+@media screen and (max-width: 800px){
+
+  .container{
+    h6{
+      font-size: 16px;
+      width: 200px;
+    }
+  }
+.containerImg{
+  padding: 0px 10px;
+  img{
+  }
+}
 }
 

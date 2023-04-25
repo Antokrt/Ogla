@@ -4,7 +4,7 @@ export async function VerifLikeApi(req,type,id){
     const config = await getConfigOfProtectedRoute(req);
     let like;
     let likeErrData;
-    let hasLikeJson = 'disable';
+    let hasLikeJson = false;
     if(config){
         like = await fetch('http://localhost:3008/like/verif/'+type +'/'+ id,config);
         likeErrData = !like.ok;

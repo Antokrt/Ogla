@@ -14,6 +14,8 @@
   background-repeat: no-repeat;
 }
 
+
+
 .containerCategory{
   width: 1300px;
   margin-top: 5vh;
@@ -34,11 +36,11 @@
       font-family: "Montserrat Alternates",sans-serif;
     }
     h3 {
-      font-family: "Montserrat Alternates", sans-serif;
+      font-family: "Rebond Grotesque", sans-serif;
       font-size: 16px;
-      font-weight: bold;
       -webkit-text-stroke-width: 1px;
       stroke-width: 1px;
+      letter-spacing: 1px;
       -webkit-text-stroke-color: #1C232B;
       stroke: #1C232B;
       color: #1C232B;
@@ -281,6 +283,16 @@
       }
     }
   }
+}
+
+.thisMonthPhone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 50px 0px 0px 0px;
+  font-family: 'Rebond Grotesque',sans-serif;
+  font-weight: bold;
 }
 
 .containerCardPreview {

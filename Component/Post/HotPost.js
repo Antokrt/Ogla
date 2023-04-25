@@ -1,9 +1,10 @@
 import styles from "../../styles/Component/Post/HotPost.module.scss";
-import {ChevronDoubleUpIcon} from "@heroicons/react/24/outline";
+import {ChevronDoubleRightIcon, ChevronDoubleUpIcon, CursorArrowRaysIcon} from "@heroicons/react/24/outline";
 import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
 import {Capitalize} from "../../utils/String";
-import {HeartIcon} from "@heroicons/react/24/solid";
+import {ArrowsPointingInIcon, ForwardIcon, HeartIcon,ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
+import BookSvg from "../layouts/Icons/BookSvg";
 
 export const HotPost = ({img, title, category, author, nbChapter, description, likes, top,slug,id}) => {
     const router = useRouter();
@@ -17,12 +18,12 @@ export const HotPost = ({img, title, category, author, nbChapter, description, l
                 <img src={img}/>
             </div>
             <div className={styles.thumbnail}>
-            <CountLike like={likes}/>
+            <CountLike like={121}/>
             </div>
             {
                 top === true &&
                 <div className={styles.sThumbnail}>
-                    <p>Top du mois !</p>
+                    <p>Top du mois</p>
                 </div>
             }
 
@@ -34,7 +35,7 @@ export const HotPost = ({img, title, category, author, nbChapter, description, l
                         className={styles.nbChapter}>{nbChapter} chapitre(s)</span></p>
                 </div>
                 <div className={styles.description}>
-                    <p>{description}</p>
+                    <p>{description} {description} descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription</p>
                 </div>
                 <div></div>
             </div>
@@ -44,22 +45,20 @@ export const HotPost = ({img, title, category, author, nbChapter, description, l
 
 export const HotPostPhone = ({img, title, category, author, nbChapter, description, likes, top,slug,id}) => {
     return (
-        <div className={styles.containerPhone}>
+        <div data-after={Capitalize(category)} className={styles.containerPhone}>
             <div className={styles.headerPhone}>
                 <img src={img} />
                 <div className={styles.likeThumbnailPhone}>
-                    <p>{likes}</p>
-                    <HeartIcon/>
+                    <p>{likes} like(s)</p>
                 </div>
                 <div>
-                    <p> Par <span className={styles.author}>{author}</span>  </p>
+                    <p> Par <span className={styles.author}>{Capitalize(author)}</span>  </p>
                     <p>{nbChapter}1222 chapitre(s)</p>
-                    <p> {category}</p>
                     </div>
             </div>
             <h6>{title}</h6>
             <p className={styles.descriptionPhone}> {description}           </p>
-            <button>Découvrir</button>
+            <button className={styles.discoverPhone}>Découvrir <CursorArrowRaysIcon/></button>
         </div>
     )
 }

@@ -61,11 +61,11 @@ export default function CategoryPage({popularBooks}) {
                         <div className={styles.headerRanking}>
                             {
                                 cat === undefined &&
-                                <h3>Populaires {cat} - <span className={styles.f}>Tout voir</span></h3>
+                                <h3>Librairie {cat} - <span className={styles.f}>Tout voir</span></h3>
                             }
                             {
                                 cat !== undefined &&
-                                <h3>Populaires - <span className={styles.f}> {cat}</span></h3>
+                                <h3>Librairie - <span className={styles.f}> {cat}</span></h3>
                             }
 
                             <p>{DateNow()}</p>

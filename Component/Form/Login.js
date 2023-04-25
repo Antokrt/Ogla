@@ -13,7 +13,6 @@ const Login = ({register, forgotPassword}) => {
     const captchaRef = useRef(null);
 
      const token = async () => {
-
         const captchaToken = await captchaRef.current.executeAsync();
         captchaToken.current.reset();
     }

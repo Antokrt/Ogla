@@ -19,6 +19,7 @@ import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
 import {BellAlertIcon} from "@heroicons/react/24/outline";
 import {selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
 import {openAll} from "../service/Notifications/NotificationsService";
+import {setActiveModalState} from "../store/slices/modalSlice";
 
 export default function Header() {
     const router = useRouter();
@@ -45,7 +46,7 @@ export default function Header() {
                 .then((res) => {
                     setData(res);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log('err'));
         }
     }
 
@@ -53,9 +54,7 @@ export default function Header() {
         search();
     }, [query]);
 
-    useEffect(() => {
-        console.log(session?.user?.settings)
-    }, [])
+
 
     useEffect(() => {
         setQuery('');
@@ -64,7 +63,6 @@ export default function Header() {
 
     useEffect(() => {
         var nb = 0;
-        console.log("status = " + statusNotif);
         if (statusNotif && Notifs.length > 0)
             openAll(Notifs[0].date_creation, session?.user.id)
         else {
@@ -165,7 +163,7 @@ export default function Header() {
                     session && router.pathname !== '/' ?
                         <>
                             {
-                                session.user.settings.music &&
+                                session?.user?.settings?.music &&
                                 <div className={styles.headphone}>
                                     <HeadPhoneBtn/>
                                 </div>
@@ -190,8 +188,8 @@ export default function Header() {
                         <div className={styles.bellActive}>
                             <BellAlertIcon onClick={() => {
                                 openAll(Notifs[0].date_creation, session.user.id)
-                                    .then((res) => console.log(res))
-                                    .catch((err) => console.log(err));
+                                    .then((res) => console.log('res'))
+                                    .catch((err) => console.log('err'));
                                 dispatch(setActiveModalNotif(true));
                                 dispatch(setOpen());
                             }}/>
@@ -228,7 +226,7 @@ export default function Header() {
                             }
 
                             <ArrowLeftOnRectangleIcon
-                                className={router.pathname !== '/' && styles.colorW}
+                                className={router.pathname === '/' ? styles.colorW : styles.colorDark}
                                 onClick={() => {
                                     LogoutService()
                                         .then(() => signOut()
@@ -242,7 +240,7 @@ export default function Header() {
 
                         <>
                             {
-                                router.pathname === '/' ?
+                                router.pathname === '/' || router.pathname === '/devenir-auteur' ?
                                     <div
                                         onClick={() => router.push({
                                             pathname: "/auth",
@@ -254,10 +252,7 @@ export default function Header() {
                                     </div>
                                     :
                                     <div
-                                        onClick={() => router.push({
-                                            pathname: "/auth",
-                                            query: "login"
-                                        })}
+                                        onClick={() => dispatch(setActiveModalState(true))}
                                         className={styles.login}>
                                         <button>Se connecter
                                         </button>

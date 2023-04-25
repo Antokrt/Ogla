@@ -35,11 +35,11 @@ import {CreateNotificationService} from "../../service/Notification";
 
 export async function getServerSideProps({ req, params, query }) {
     const id = params.id;
-    console.log(req)
-    console.log(query)
+
     const data = await GetOneBookApi(id);
     if (!data.err) {
         const hasLikeJson = await VerifLikeApi(req, 'book', data.book._id);
+        console.log(hasLikeJson)
         return {
             props: {
                 err: false,
@@ -93,8 +93,8 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
         if (openSidebar && typeof window !== 'undefined') {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
-
         }
+        console.log(hasLikeData)
     }, [])
 
     const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');

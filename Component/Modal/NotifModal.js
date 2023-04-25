@@ -71,8 +71,8 @@ export const NotifModal = ({ close }) => {
             {
                 allNotifs.length > 0 &&
                 <div className={styles.footer}>
-                    <h3 className={styles.lus} onClick={readAllNotifs}> Toutes les noter comme lus</h3>
-                    <h3 className={styles.suppr} onClick={DeleteAll}> Supprimer les notifications </h3>
+                    <h3 className={styles.lus} onClick={readAllNotifs}> Marquer comme lue(s)</h3>
+                    <h3 className={styles.suppr} onClick={DeleteAll}> Tout supprimer </h3>
                 </div>
             }
         </div>

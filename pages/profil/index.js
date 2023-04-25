@@ -66,8 +66,8 @@ const Profil = ({profilData, err}) => {
     const [localImg, setLocalImg] = useState(null);
     const [file, setFile] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
-    const [notifState, setNotifState] = useState(profil.settings.notif);
-    const [musicState, setMusicState] = useState(profil.settings.music);
+    const [notifState, setNotifState] = useState(profil?.settings?.notif);
+    const [musicState, setMusicState] = useState(profil?.settings?.music);
     const imgRef = useRef();
     const dispatch = useDispatch()
 

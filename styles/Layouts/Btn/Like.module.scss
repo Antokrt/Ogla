@@ -4,16 +4,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
   p{
-    font-family: 'Poppins',sans-serif;
-    font-weight: bold;
+    font-family: 'Branch',sans-serif;
+    -webkit-text-stroke-width: 0.4px;
     font-size: 10px;
-    letter-spacing: 1px;
     color: #1C232B;
   }
   svg{
-    width: 14px;
+    width: 12px;
     color: #9844AD;
   }
 }

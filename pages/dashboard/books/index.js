@@ -1,6 +1,12 @@
 import styles from '../../../styles/Pages/Dashboard/Books.module.scss';
 import {useSession} from "next-auth/react";
-import {BellAlertIcon, ClockIcon, MagnifyingGlassIcon, PencilIcon} from "@heroicons/react/24/outline";
+import {
+    ArrowDownCircleIcon,
+    BellAlertIcon,
+    ClockIcon,
+    MagnifyingGlassIcon,
+    PencilIcon, QueueListIcon, Square3Stack3DIcon
+} from "@heroicons/react/24/outline";
 import CardBook, {CardBookDashboard} from "../../../Component/Dashboard/Card/CardBook";
 import {useEffect, useRef, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
@@ -15,6 +21,14 @@ import {DateNow} from "../../../utils/Date";
 import {LoaderCommentary} from "../../../Component/layouts/Loader";
 import {GetBooksWithCategoryService} from "../../../service/Book/BookService";
 import ErrMsg from "../../../Component/ErrMsg";
+import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
+import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
+import ScreenSize from "../../../utils/Size";
+import useOrientation from "../../../utils/Orientation";
+import {ArrowSmallDownIcon, Bars4Icon} from "@heroicons/react/24/solid";
+import {CardBookDashboardTab} from "../../../Component/Dashboard/Card/CardBookTab";
+import {CardBookPhone} from "../../../Component/Dashboard/Card/CardBookPhone";
 
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
@@ -38,8 +52,10 @@ const Books = ({booksData, err, nbBooks}) => {
     const [page, setPage] = useState(2);
     const [books, setBooks] = useState(booksData);
     const [seeMore, setSeeMore] = useState(true);
-    const [loadingScroll,setLoadingScroll] = useState(false);
+    const [loadingScroll, setLoadingScroll] = useState(false);
     const [activeFilter, setActiveFilter] = useState('popular');
+    const [width, height] = ScreenSize();
+    const orientation = useOrientation();
     const divRef = useRef(null);
     const router = useRouter();
 
@@ -50,7 +66,7 @@ const Books = ({booksData, err, nbBooks}) => {
     const getMoreBooks = () => {
         setSeeMore(false);
         setLoadingScroll(true);
-        GetMoreBookService(activeFilter,page)
+        GetMoreBookService(activeFilter, page)
             .then((res) => {
                 if (res.length <= 0) {
                     setSeeMore(false);
@@ -62,13 +78,16 @@ const Books = ({booksData, err, nbBooks}) => {
             })
             .then(() => setLoadingScroll(false))
             .then(() => setTimeout(() => scrollBottom()), 20)
-            .catch((err) => {setLoadingScroll(false); console.log(err)})
+            .catch((err) => {
+                setLoadingScroll(false);
+                console.log(err)
+            })
     }
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
         setSeeMore(true);
-        GetMoreBookService(filter,1)
+        GetMoreBookService(filter, 1)
             .then((res) => {
                 setBooks(res);
             })
@@ -111,21 +130,38 @@ const Books = ({booksData, err, nbBooks}) => {
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
-                <div className={styles.verticalMenuContainer}>
-                    <VerticalAuthorMenu/>
-                </div>
+                {
+                    width < 700 && orientation === 'portrait' ?
+                        <VerticalPhoneMenu/>
+                        :
+                        <>
+                            {
+                                width >= 700 && width <= 900 ?
+                                    <div className={styles.verticalTabContainer}>
+                                        <VerticalTabMenu/>
+                                    </div>
+                                    :
+                                    <div className={styles.verticalMenuContainer}>
+                                        <VerticalAuthorMenu/>
+                                    </div>
+                            }
+                        </>
+
+                }
+
                 <div className={styles.containerData}>
-                    <HeaderDashboard/>
+                    <SmHeaderDashboard title={'Tableau de bord'}/>
                     {
                         err &&
-                        <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')} text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
+                        <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')}
+                                text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
                     }
 
                     {
                         books && booksData && !err &&
                         <div className={styles.listContainer} ref={divRef}>
                             <div className={styles.headerList}>
-                                <h4>Mes livres </h4>
+                                <h4>Mes livres <Square3Stack3DIcon/></h4>
                             </div>
                             <div className={styles.sortContainer}>
                                 <FilterBtn3 onclick={() => {
@@ -138,22 +174,63 @@ const Books = ({booksData, err, nbBooks}) => {
 
                                 {
                                     books.map((item, index) => {
+                                        let isTop = false;
+                                        if (item.top && nbBooks > 1) {
+                                            isTop = true;
+                                        }
                                         return (
-                                            <CardBookDashboard nbChapter={item.nbChapter}
-                                                               id={item._id}
-                                                               img={item.img}
-                                                               category={item.category}
-                                                               title={item.title}
-                                                               likes={item.likes}
-                                                               date={item.date_creation}
-                                                               nbView={item.stats.view}
-                                            />
+                                            <>
+                                                {
+                                                    width > 1300 &&
+                                                    <CardBookDashboard
+                                                        top={isTop}
+                                                        nbChapter={item.nbChapter}
+                                                        id={item._id}
+                                                        img={item.img}
+                                                        category={item.category}
+                                                        title={item.title + ' ainsi que des autres livres'}
+                                                        likes={item.likes}
+                                                        date={item.date_creation}
+                                                        nbView={item.stats.view}
+                                                    />
+                                                }
+
+                                                {
+                                                    width <= 1300 && width > 560 &&
+                                                    <CardBookDashboardTab
+                                                        top={isTop}
+                                                        nbChapter={item.nbChapter}
+                                                        id={item._id}
+                                                        img={item.img}
+                                                        category={item.category}
+                                                        title={item.title + ' ainsi que des autres livres'}
+                                                        likes={item.likes}
+                                                        date={item.date_creation}
+                                                        nbView={item.stats.view}
+                                                    />
+                                                }
+
+                                                {
+                                                    width <= 560 &&
+                                                    <CardBookPhone
+                                                        top={isTop}
+                                                        nbChapter={item.nbChapter}
+                                                        id={item._id}
+                                                        img={item.img}
+                                                        category={item.category}
+                                                        title={item.title + ' ainsi que des autres livres'}
+                                                        likes={item.likes}
+                                                        date={item.date_creation}
+                                                        nbView={item.stats.view}
+                                                    />
+                                                }
+                                            </>
+
                                         )
                                     })
                                 }
 
                             </div>
-
 
 
                             <div className={styles.seeMoreContainer}>

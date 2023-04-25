@@ -20,6 +20,10 @@ import {LikeBtn, LikeBtnSidebar} from "../layouts/Btn/Like";
 
 const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook, hasLike}) => {
 
+    useEffect(() => {
+       console.log(hasLike)
+    },[])
+
     return (
         <div className={styles.container}>
 

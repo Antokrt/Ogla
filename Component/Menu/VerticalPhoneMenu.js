@@ -27,7 +27,10 @@ export default function VerticalPhoneMenu() {
                     <HomeIcon/>
                     <p>Accueil</p>
                 </div>
-                <div className={router.pathname.startsWith('/dashboard/books/') && styles.item + ' ' + styles.activeItem}>
+                <div className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
+                    {
+
+                    }
                     <BookmarkSquareIcon/>
                     <p>Mes livres</p>
                 </div>
@@ -44,7 +47,7 @@ export default function VerticalPhoneMenu() {
                 </div>
                 <div className={styles.item}>
                     {
-                        session.user.image &&
+                        session && session.user.image &&
                         <>
                             <img src={session.user.image}/>
                             <span className={styles.circle}></span>
