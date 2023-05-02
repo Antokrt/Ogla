@@ -13,10 +13,11 @@ import {StarterKit} from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
 import {deleteChapter, newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
 import {
+    ArrowPathIcon,
     ChevronDoubleLeftIcon,
     ChevronDoubleRightIcon,
-    ChevronRightIcon,
-    HomeIcon,
+    ChevronRightIcon, CursorArrowRaysIcon, FolderArrowDownIcon,
+    HomeIcon, InboxArrowDownIcon,
     TrashIcon
 } from "@heroicons/react/24/outline";
 import {DateNow} from "../../../utils/Date";
@@ -27,6 +28,10 @@ import {EyeIcon} from "@heroicons/react/24/solid";
 import {Capitalize} from "../../../utils/String";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 import {LoaderCommentary} from "../../../Component/layouts/Loader";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
+import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
+import useOrientation from "../../../utils/Orientation";
+import ScreenSize from "../../../utils/Size";
 
 
 export async function getServerSideProps({req, params}) {
@@ -68,9 +73,10 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [title, setTitle] = useState(chapterData.title);
     const [content, setContent] = useState(JSON.parse(chapterData.content));
     const [text, setText] = useState(chapterData.text);
-    const [closeMenu, setCloseMenu] = useState(true);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
+    const orientation = useOrientation();
+    const [width, height] = ScreenSize();
     const index = router.query.index
 
     useEffect(() => {
@@ -163,21 +169,33 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
-                <div className={styles.verticalMenuContainer}>
-                    <VerticalAuthorMenu/>
-                </div>
                 {
-                    loading &&
-                    <div className={styles.errContainer}>
-                        <LoaderCommentary/>
-                    </div>
+                    width < 700 && orientation === 'portrait' ?
+                        <VerticalPhoneMenu/>
+                        :
+                        <>
+                            {
+                                width  >= 700 && width <= 1050 ?
+                                    <div className={styles.verticalTabContainer}>
+                                        <VerticalTabMenu/>
+                                    </div>
+                                    :
+                                    <div className={styles.verticalMenuContainer}>
+                                        <VerticalAuthorMenu/>
+                                    </div>
+                            }
+                        </>
+
                 }
+
+
+
                 {
                     err.chapter || err.book && !loading &&
                     <div className={styles.errContainer}>
                         <ErrorDashboard
                             title={'Impossible de récupérer ce chapitre'}
-                            img={'/assets/chara/chara5.png'}
+                            img={'/assets/jim/angry2.png'}
                             link={() => router.push('/dashboard/books/')}
                             btn={'Retour'}
                             subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
@@ -188,209 +206,295 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 {
                     !err.chapter && !err.book && !loading && chapterData &&
                     <div className={styles.containerData}>
-                        <div className={styles.header}>
-                            <div className={styles.list}>
-                                <HomeIcon/>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <h6
-                                    onClick={() => router.push('/dashboard/books/' + book._id)}
-                                >{book?.title}</h6>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <p>Nouveau chapitre</p>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <p><span>{index}</span></p>
-                            </div>
-                            <div className={styles.btnList}>
-
-
-                                {
-                                    !chapterData.publish &&
-                                    <button
-                                        className={hasChange ? styles.activeSaveBtn : ''}
-                                        onClick={() => {
-                                            saveThis()
-                                        }
-                                        }
-                                    >Enregistrer</button>
-                                }
-
-
-                                <button
-                                    className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
-                                    onClick={() => publishThis(true)}
-                                >Publier
-                                </button>
-
-
-                                {
-                                    chapterData?.publish &&
-                                    <div
-                                        onClick={() => router.push({
-                                            pathname: "/chapitre/" + chapterData._id, query: {
-                                                name: chapterData?.title, slug: chapterData?.slug, i: index
-                                            },
-                                        })}
-                                        className={styles.eyeDiv}>
-                                        <EyeIcon/>
+                        {
+                            width > 1200 ?
+                                <div className={styles.header}>
+                                    <div className={styles.list}>
+                                        <HomeIcon/>
+                                        <ChevronRightIcon className={styles.arrow}/>
+                                        <h6
+                                            onClick={() => router.push('/dashboard/books/' + book._id)}
+                                        >{book.title}</h6>
+                                        <ChevronRightIcon className={styles.arrow}/>
+                                        <p>{chapter.title} ({index})</p>
                                     </div>
-                                }
+                                    <div className={styles.btnList}>
+                                        {
+                                            !chapterData.publish &&
+                                            <button
+                                                className={hasChange ? styles.activeSaveBtn : ''}
+                                                onClick={() => {
+                                                    saveThis()
+                                                }
+                                                }
+                                            >Enregistrer <ArrowPathIcon/></button>
+                                        }
 
 
-                                <div
-                                    onClick={() => {
-                                        setSeeConfirmModal(true);
-                                    }
-                                    }
-                                    className={styles.iconDiv}>
-                                    <TrashIcon/>
+                                        <button
+                                            className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                            onClick={() => publishThis()}
+                                        >Publier <CursorArrowRaysIcon/>
+                                        </button>
+
+
+                                        {
+                                            chapterData?.publish &&
+                                            <div
+                                                onClick={() => router.push({
+                                                    pathname: "/chapitre/" + chapterData._id, query: {
+                                                        name: chapterData?.title, slug: chapterData?.slug, i: index
+                                                    },
+                                                })}
+                                                className={styles.eyeDiv}>
+                                                <EyeIcon/>
+                                            </div>
+                                        }
+
+
+                                        <div
+                                            onClick={() => {
+                                                setSeeConfirmModal(true);
+                                            }
+                                            }
+                                            className={styles.iconDiv}>
+                                            <TrashIcon/>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                :
+                                <div className={styles.headerResp}>
+                                    <div className={styles.list}>
+                                        <HomeIcon className={styles.homeHResp}/>
+                                        <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
+                                        <h6
+                                        >{book.title} et d'autres filouteries ({index})</h6>
+                                    </div>
+                                    <div className={styles.btnList}>
+                                        {
+                                            !chapterData.publish &&
+                                            <button
+                                                className={hasChange ? styles.activeSaveBtn : ''}
+                                                onClick={() => {
+                                                    saveThis()
+                                                }
+                                                }
+                                            >Enregistrer <ArrowPathIcon/>
+                                            </button>
+                                        }
+
+
+
+                                        <button
+                                            className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                            onClick={() => publishThis()}
+                                        >Publier <CursorArrowRaysIcon/>
+
+                                        </button>
+
+
+                                        <div
+                                            onClick={() => {
+                                                setSeeConfirmModal(true);
+                                            }
+                                            }
+                                            className={styles.iconDiv}>
+                                            <TrashIcon/>
+                                        </div>
+
+                                        {
+                                            chapterData?.publish &&
+                                            <div
+                                                onClick={() => router.push({
+                                                    pathname: "/chapitre/" + chapterData._id, query: {
+                                                        name: chapterData?.title, slug: chapterData?.slug, i: index
+                                                    },
+                                                })}
+                                                className={styles.eyeDiv}>
+                                                <EyeIcon/>
+                                            </div>
+                                        }
+                                    </div>
+
+
                                 </div>
 
+                        }
 
-                            </div>
-                        </div>
+                        {
+                            width > 700 ?
+                                <div className={styles.containerSecond}>
 
-                        <div className={styles.containerSecond}>
+                                    <div className={styles.containerText}>
 
-                            <div className={styles.containerText}>
+                                        <div className={styles.containerTitle}>
+                                            <div className={styles.titleL}>
+                                                <p>Chapitre {index}</p>
+                                                <input
+                                                    onChange={(e) => setTitle(e.target.value)}
+                                                    name={"title"}
+                                                    type={'text'}
+                                                    value={Capitalize(title)}
+                                                    placeholder={'Ajoutez un titre ici'}
+                                                />
+                                            </div>
+                                            <div className={styles.titleR}>
+                                                <p>{DateNow()}</p>
+                                                <div className={styles.containerImgBook}>
+                                                    <img src={'/assets/diapo/book.png'}/>
+                                                </div>
+                                            </div>
 
-                                <div className={styles.containerTitle}>
-                                    <div className={styles.titleL}>
-                                        <p>Chapitre {index}</p>
+                                        </div>
+
+
+                                        <div className={styles.containerTextEditor}>
+                                            <button
+                                                onClick={() => bold()}
+                                                className={editor.isActive('bold') ? styles.bold : ''}>B
+                                            </button>
+                                            <div className={styles.separatorEditor}></div>
+                                            <button
+                                                onClick={() => italic()}
+                                                className={editor.isActive('italic') ? styles.italic : ''}>I
+                                            </button>
+                                            <div className={styles.separatorEditor}></div>
+                                            {
+                                                width <= 700 &&
+                                                <img className={styles.bookEditor} src={'/assets/diapo/book.png'}/>
+                                            }
+                                        </div>
+
+                                        <div className={styles.text}>
+                                            {
+                                                content &&
+                                                <EditorContent editor={editor}/>
+                                            }
+                                        </div>
+
+                                        {
+                                            width < 1100 &&
+                                            <div className={styles.btnListResp}>
+                                                <button
+                                                    className={hasChange ? styles.activeSaveBtn : ''}
+                                                    onClick={() => {
+                                                        saveThis()
+                                                    }
+                                                    }
+                                                >Enregistrer <ArrowPathIcon/>
+                                                </button>
+
+
+                                                <button
+                                                    className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                                    onClick={() => publishThis()}
+                                                >Publier <CursorArrowRaysIcon/>
+                                                </button>
+
+                                                <div
+                                                    onClick={() => {
+                                                        setSeeConfirmModal(true);
+                                                    }
+                                                    }
+                                                    className={styles.iconDiv}>
+                                                    <TrashIcon/>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div className={styles.containerPresentationBook}>
+                                        <div onClick={() => router.push('/dashboard/books/' + book._id)}
+                                             className={styles.headPresentation}>
+                                            <img src={book.img}/>
+                                            <h3>{bookData?.title}</h3>
+                                        </div>
+                                        <div className={styles.summary}>
+                                            <p>"{Capitalize(bookData?.summary)}"</p>
+                                        </div>
+
+                                        <div className={styles.statsPresentation}>
+                                            <img src={'/assets/jim/cool2.png'}/>
+                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
+                                                d'écriture...</h6>
+                                            <p>Cliquez ici pour en savoir plus !</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                :
+                                <div className={styles.containerPhone}>
+                                    <div className={styles.containerTitlePhone}>
+                                        <div className={styles.titleLPhone}>
+                                            <h6>{chapter.title}</h6>
+                                            <p className={styles.new}>{book.title} ({book.chapter_list.length}) {!chapterData.publish && <>(brouillon)</>}</p>
+
+                                        </div>
+
+                                        <div className={styles.titleRPhone}>
+                                            <p>{DateNow()}</p>
+                                            <div className={styles.containerImgBook}>
+                                                <img src={book.img}/>
+                                            </div>
+                                        </div>
+
                                         <input
                                             onChange={(e) => setTitle(e.target.value)}
                                             name={"title"}
                                             type={'text'}
-                                            value={Capitalize(title)}
+                                            value={title}
                                             placeholder={'Ajoutez un titre ici'}
                                         />
                                     </div>
 
-                                    <div className={styles.titleR}>
-                                        <p>{DateNow()}</p>
+
+                                    <div className={styles.containerTextEditorPhone}>
+                                        <button
+                                            onClick={() => bold()}
+                                            className={editor.isActive('bold') ? styles.bold : ''}>B
+                                        </button>
+                                        <div className={styles.separatorEditor}></div>
+                                        <button
+                                            onClick={() => italic()}
+                                            className={editor.isActive('italic') ? styles.italic : ''}>I
+                                        </button>
+                                        <div className={styles.separatorEditor}></div>
+
                                     </div>
 
-                                </div>
+                                    <div className={styles.textPhone}>
 
-
-                                <div className={styles.containerTextEditor}>
-                                    <button
-                                        onClick={() => bold()}
-                                        className={editor.isActive('bold') ? styles.bold : ''}>B
-                                    </button>
-                                    <div className={styles.separatorEditor}></div>
-                                    <button
-                                        onClick={() => italic()}
-                                        className={editor.isActive('italic') ? styles.italic : ''}>I
-                                    </button>
-                                    <div className={styles.separatorEditor}></div>
-                                </div>
-
-                                <div className={styles.text}>
-                                    {
-                                        content &&
                                         <EditorContent editor={editor}/>
-                                    }
-                                </div>
-                            </div>
-
-                            <div className={styles.containerPresentationBook}>
-                                <div onClick={() => router.push('/dashboard/books/' + book._id)}
-                                     className={styles.headPresentation}>
-                                    <img src={book.img}/>
-                                    <h3>{bookData?.title}</h3>
-                                </div>
-                                <div className={styles.summary}>
-                                    <p>"{Capitalize(bookData?.summary)}"</p>
-                                </div>
-
-                                <div className={styles.statsPresentation}>
-                                    <img src={'/assets/jim/cool2.png'}/>
-                                    <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
-                                        d'écriture...</h6>
-                                    <p>Cliquez ici pour en savoir plus !</p>
-                                </div>
-                            </div>
-
-
-                            {/*    {
-                                closeMenu ?
-                                    <div className={styles.containerCommentary}>
-                                        <div className={styles.headerCommentary}>
-                                            <p>Dernier chapitre : {DateNow()}</p>
-                                            <h5>Le méchant troubadour</h5>
-                                        </div>
-                                        <h6> <ChatBubbleLeftRightIcon/>Commentaires du dernier chapitre</h6>
-
-                                        <div className={styles.listCommentary + ' ' + scrollbar.scrollbar}>
-                                            <CommentaryNewChapter
-                                                content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\n'}
-                                                img={'/assets/profil-example.png'}
-                                                pseudo={'Jimmy Lefuté'}
-                                                date={DateNow()}
-                                                likes={279}
-                                            />
-
-                                            <CommentaryNewChapter
-                                                content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\n'}
-                                                img={'/assets/profil-example.png'}
-                                                pseudo={'Jimmy Lefuté'}
-                                                date={DateNow()}
-                                                likes={279}
-                                            />
-
-                                            <CommentaryNewChapter
-                                                content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\n'}
-                                                img={'/assets/profil-example.png'}
-                                                pseudo={'Jimmy Lefuté'}
-                                                date={DateNow()}
-                                                likes={279}
-                                            />
-
-                                            <CommentaryNewChapter
-                                                content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                    '\n'}
-                                                img={'/assets/profil-example.png'}
-                                                pseudo={'Jimmy Lefuté'}
-                                                date={DateNow()}
-                                                likes={279}
-                                            />
-                                        </div>
-                                    </div> :
-                                    <div className={styles.closedMenuContainer}>
                                     </div>
-                            }*/}
-                        </div>
+
+                                    <div className={styles.containerBtnPhone}>
+                                        <button
+                                            className={hasChange ? styles.activeSaveBtn : ''}
+                                            onClick={() => saveThis()}
+                                        >Enregistrer <ArrowPathIcon/>
+                                        </button>
+
+
+                                        <button
+                                            className={hasChange ? styles.activePublishBtn : ''}
+                                            onClick={() => publishThis()}
+                                        >Publier <CursorArrowRaysIcon/>
+                                        </button>
+                                    </div>
+                                </div>
+
+                        }
 
                     </div>
                 }
             </div>
             {
                 seeConfirmModal &&
-                <ConfirmModal confirm={() => deleteThis()} img={bookData.img} btnConfirm={'Supprimer'}
-                              close={() => setSeeConfirmModal(false)} title={'Supprimer ce chapitre'} subTitle={'Êtes-vous sûr de vouloir continuer ?'}/>
+                <ConfirmModal confirm={() => deleteThis()} btnConfirm={'Supprimer'}
+                              close={() => setSeeConfirmModal(false)} title={'Supprimer le chapitre'} subTitle={'Êtes-vous sûr de vouloir supprimer "'+chapter.title +'" ?'}/>
             }
         </div>
     )

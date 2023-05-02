@@ -101,13 +101,17 @@ export default function CatPage({cat,err,bookListData}) {
             <CategoryHeader/>
             <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)}/>
             {
+                width < 530 &&
+                <h5 className={styles.thisMonthPhone}>Ce mois ci :</h5>
+            }
+            {
                 !err && bookListData && bookList && bookList.length > 0 &&
                 <div className={styles.containerM}>
                     {
                         topBook &&
                         <div className={styles.hotContainer}>
                             {
-                                width > 450 ?
+                                width > 530 ?
                                     <HotPost className={styles.hotItem}
                                              likes={topBook.likes}
                                              title={topBook.title} author={topBook.author_pseudo}
@@ -119,16 +123,19 @@ export default function CatPage({cat,err,bookListData}) {
                                              description={topBook.summary}
                                     />
                                     :
-                                    <HotPostPhone className={styles.hotItem}
-                                             likes={topBook.likes}
-                                             title={topBook.title} author={topBook.author_pseudo}
-                                             img={topBook.img} category={topBook.category}
-                                             nbChapter={topBook.nbChapters}
-                                             slug={topBook.slug}
-                                             id={topBook._id}
-                                             top={true}
-                                             description={topBook.summary}
-                                    />
+                                    <>
+                                        <HotPostPhone className={styles.hotItem}
+                                                      likes={topBook.likes}
+                                                      title={topBook.title} author={topBook.author_pseudo}
+                                                      img={topBook.img} category={topBook.category}
+                                                      nbChapter={topBook.nbChapters}
+                                                      slug={topBook.slug}
+                                                      id={topBook._id}
+                                                      top={true}
+                                                      description={topBook.summary}
+                                        />
+                                    </>
+
                             }
 
                         </div>
@@ -146,7 +153,7 @@ export default function CatPage({cat,err,bookListData}) {
                                 }
                                 {
                                     cat !== undefined &&
-                                    <h3><span className={styles.f}> Populaires - {Capitalize(cat)}</span></h3>
+                                    <h3><span className={styles.f}> Librairie  ({Capitalize(cat)})</span></h3>
                                 }
 
                                 <p>{DateNow()}</p>

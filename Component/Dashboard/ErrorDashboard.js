@@ -1,4 +1,5 @@
 import styles from '../../styles/Component/Dashboard/ErrorDashboard.module.scss';
+import {CursorArrowRaysIcon} from "@heroicons/react/24/outline";
 
 const ErrorDashboard = ({img, title, subTitle, btn, link}) => {
 return (
@@ -6,7 +7,7 @@ return (
         <img src={img}/>
         <h5>{title}</h5>
         <p>{subTitle}</p>
-        <button onClick={link}>{btn}</button>
+        <button onClick={link}>{btn} <CursorArrowRaysIcon/></button>
     </div>
 )
 }

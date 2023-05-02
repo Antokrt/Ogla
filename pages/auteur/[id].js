@@ -20,6 +20,7 @@ import {Snippet} from "../../Component/Snippet";
 import CardCategory from "../../Component/Card/CardCategory";
 import {ListCard} from "../../Component/Card/ListCard";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
+import ScreenSize from "../../utils/Size";
 
 
 export async function getServerSideProps({params}) {
@@ -50,7 +51,11 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
     const [pagePopular, setPagePopular] = useState(2);
     const [pageRecent, setPageRecent] = useState(1);
     const [popular, setPopular] = useState(booksData);
+    const [line,setLine] = useState(12);
     const [recent, setRecent] = useState([]);
+    const [maxSize, setMaxSize] = useState(1600);
+    const [width, height] = ScreenSize();
+
 
     const fetchRecentBooks = () => {
         setLoading(true)
@@ -107,6 +112,13 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
             });
     }
 
+    useEffect(() => {
+        if(width < 1300){
+            setMaxSize(1000);
+            setLine(8)
+        }
+    },[width])
+
 
     return (
         <div className={styles.container}>
@@ -146,14 +158,15 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
 
                         <div className={styles.chapterContainer}>
                             <div className={styles.infoContainer}>
-                                <div>
+                                <p className={styles.absoText}>{profilAuthor?.pseudo}assasaasa</p>
+                                <div className={styles.pseudo_date}>
                                     <h3>{profilAuthor?.pseudo}</h3>
-                                    <p>Devenu auteur le : {profilAuthor.author.became_author} </p>
+                                    <p>Devenu auteur le : 18/02/29 {profilAuthor.author.became_author} </p>
                                 </div>
 
-                                <h6> Tendance : <CardCategory category={profilAuthor?.trend}/></h6>
+                                <h6>Écrivain <span>OGLA</span> </h6>
 
-                                <Snippet line={12} maxSize={1600} content={profilAuthor.author.description}/>
+                                <Snippet line={line} maxSize={maxSize} content={profilAuthor.author.description}/>
                             </div>
                         </div>
 
@@ -161,7 +174,6 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
 
                     <div className={styles.containerS}>
                         <div className={styles.sortContainer}>
-                            <h3>Trier par </h3>
                             <div>
                                 <button
                                     className={activeFilter === 'popular' && styles.activeBtn}

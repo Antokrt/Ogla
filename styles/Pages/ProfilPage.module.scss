@@ -77,14 +77,7 @@
   gap: 20px;
   min-width: 40%;
 
-  .modifyBtn {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: white;
-    padding: 5px 10px;
-    margin-top: 20px;
-    width: 80%;
-  }
+
 
 
   .imgCheck {
@@ -502,9 +495,9 @@
   button {
     box-shadow: $shadow;
     background-color: #9844AD;
-    padding: 10px 30px;
+    padding: 15px 40px;
     border-radius: 15px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Rebond Grotesque', sans-serif;
     font-weight: bold;
     font-size: 12px;
     color: white;
@@ -658,10 +651,9 @@ background-color: white!important;
     background-color: #9332ac !important;
   }
   cursor: pointer;
-  transition: 0.1s;
+  transition: 0.2s;
   background-color: $purpleLight !important;
   border-radius: 15px;
-  border: 1px solid transparent;
 }
 
 .errMsg {
@@ -671,6 +663,21 @@ background-color: white!important;
   font-family: "Poppins", sans-serif;
   font-style: italic;
   color: red;
+}
+
+.modifySettingsBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+
+  button{
+    width: 100%;
+    font-family: 'Montserrat',sans-serif;
+    letter-spacing: 1px;
+    padding: 15px 10px;
+    transition: 0.2s;
+  }
 }
 
 .deleteAccount {
@@ -744,6 +751,16 @@ background-color: white!important;
     }
   }
 
+}
+
+.modifyBtn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: white;
+  padding: 10px 10px;
+  transition: 0.2s;
+  margin-top: 20px;
+  width: 80%;
 }
 
 @media screen and (max-width: 1530px) {

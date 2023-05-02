@@ -25,7 +25,6 @@ export default function VerticalAuthorMenu() {
 
     const dispatch = useDispatch()
 
-
     return (
         <div className={styles.container}>
             <div className={styles.fContainer}>
@@ -60,6 +59,7 @@ export default function VerticalAuthorMenu() {
                 <div className={styles.profilContainer}>
 <div className={styles.profil}>
     <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}/>
+    <span></span>
     <div className={styles.infos} onClick={() => goToProfil()}>
         <p className={styles.name}>{session?.user.author.firstName} {session?.user.author.lastName}</p>
         <p className={styles.pseudo}>@{session?.user.pseudo}</p>

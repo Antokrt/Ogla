@@ -1,0 +1,141 @@
+@import "styles/utils/var";
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100px;
+  z-index: 1;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  background-color: #1C232B;
+  box-shadow: $shadow;
+
+  .fContainer{
+    display: flex;
+    flex-direction: column;
+    .logo{
+      margin-bottom: 80px;
+    }
+  }
+
+  .navContainer{
+    padding-left: 10%;
+    padding-right: 10%;
+    ul{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      li{
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        padding: 1.5vh;
+        border-radius: 15px;
+        svg{
+          margin-top: -2px;
+          width: 25px;
+          min-width: 20px;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .imgContainer{
+    display: flex;
+    justify-content: center;
+    img{
+      width: 140px;
+    }
+  }
+
+  .sContainer{
+    display: flex;
+    flex-direction: column;
+    .profilContainer{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10%;
+      width: 100%;
+      height: auto;
+
+      .profil{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8%;
+        height: 100%;
+        width: 80%;
+        img{
+          cursor: pointer;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        span{
+          position: absolute;
+          bottom: 10%;
+          right: 22%;
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background-color: #97fd97;
+        }
+
+      }
+    }
+  }
+}
+
+.notification{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.bell{
+  width: 25px;
+  color: #54595F;
+}
+
+.activeMenu{
+  background-color: #9844AD!important;
+  color: white!important;
+  svg{
+    color: white!important;
+  }
+
+}
+
+
+
+
+@media screen and (max-width: 900px){
+  .container{
+    li {
+      font-size: 0!important;
+      span{
+        display: none;
+      }
+    }
+  }
+}
+
+
+
+
+@media screen and (max-height: 500px) and (orientation: landscape){
+  .container{
+    display: none;
+  }
+}
+
+

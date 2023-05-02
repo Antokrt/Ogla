@@ -1,0 +1,208 @@
+@import "styles/utils/var";
+.container{
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  gap: 15px;
+  height: 200px;
+  width: 100%;
+  background-color: white;
+  border-bottom: solid 2px rgba(84, 89, 95, 0.08);
+
+}
+
+.back{
+  &:first-letter{
+    text-transform: uppercase;
+  }
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translate(-50%, -50%);   font-size: 30px;
+  font-family: 'Branch',sans-serif;
+  white-space: pre;
+  opacity: 0.09;
+}
+
+.thumbnail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -5%;
+  right: -2%;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: "Poppins",sans-serif;
+  background-color: #e94f37;
+  color: white;
+  gap: 5px;
+  svg{
+    width: 14px;
+  }
+}
+
+.containerImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 50px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: rgba(28, 35, 43, 0.05);
+  margin-right: 0%;
+
+  img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.containerLabel{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  padding-right: 2%;
+
+  .label,.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+  }
+}
+
+
+.label{
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .date{
+    font-weight: initial;
+  }
+  h6{
+    &:first-letter{
+      text-transform: uppercase;
+    }
+    color: rgba(28, 35, 43, 0.83);
+    font-size: 17px;
+    font-family: "Rebond Grotesque",sans-serif;
+    font-weight: bold;
+    width: 300px;
+  }
+
+  p{
+    font-family: 'Lato',sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    color: #54595F;
+  }
+}
+
+
+
+.stats{
+
+  h7{
+    text-align: right;
+    color: #9844AD;
+    font-size: 13px;
+    font-family: 'Lato',sans-serif;
+    font-weight: bold;
+    span{
+      font-family: 'Rebond Grotesque',sans-serif;
+    }
+  }
+
+  .containerImgBook{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    img{
+      width: 6vw;
+
+    }
+
+  }
+
+
+  p{
+    font-size: 13px;
+    font-family: 'Rebond Grotesque',sans-serif;
+    text-align: right;
+    color: rgba(84, 89, 95, 0.84);
+    border-radius: 5px;
+    white-space: pre;
+
+    span{
+      font-family: 'Lato',sans-serif;
+      font-weight: bold;
+    }
+  }
+}
+
+
+
+
+
+.activeItem{
+  border: solid 2px #9844AD;
+}
+
+
+
+.action{
+  background-color: rgba(96, 135, 217, 0.21);
+  color: #5a80d0;
+}
+
+.horreur{
+  background-color: rgba(224, 68, 68, 0.21);
+  color: #e04444;
+}
+
+.science-fiction{
+  background-color: rgba(152, 68, 173, 0.21);
+  color: #9844AD;
+}
+
+.comédie{
+  background-color: rgba(60, 173, 65, 0.21);
+  color: #3cad41;
+}
+
+.fantaisie{
+  background-color: rgba(60, 173, 65, 0.21);
+  color: #3cad41;
+}
+
+.drama{
+  background-color: rgba(224, 68, 68, 0.21);
+  color: #e04444;
+}
+
+
+@media screen and (max-width: 800px){
+
+  .container{
+    h6{
+      font-size: 16px;
+      width: 200px;
+    }
+  }
+.containerImg{
+  padding: 0px 10px;
+  img{
+  }
+}
+}
+

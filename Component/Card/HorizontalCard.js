@@ -4,6 +4,7 @@ import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
 import {HeartIcon} from "@heroicons/react/20/solid";
 import Header from "../Header";
+import {Capitalize} from "../../utils/String";
 
 export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters}) => {
     const router = useRouter();
@@ -24,13 +25,16 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
             <div className={styles.containerContent}>
 
 
-                <h5>{title} <span></span></h5>
+                <h5>{Capitalize(title)} <span></span></h5>
                 <div className={styles.stats}>
-                    <span className={styles.nbChapters}>Par {author}  </span>
+                    <span className={styles.nbChapters}>{nbChapters} chapitre(s) </span>
 
                     <div>
-                        <span className={styles.nbChapters}>{nbChapters} chapitre(s) </span>
-                        <span className={styles.likes}>2{like} <HeartIcon/> </span>
+                        <span className={styles.author}>Par {author}  </span>
+                        {
+                            like > 0 &&
+                            <span className={styles.likes}>21{like} <HeartIcon/> </span>
+                        }
                     </div>
 
                 </div>

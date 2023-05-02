@@ -3,8 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2vh;
   height: 40vh;
+  margin-bottom: 3vh;
   .content{
     width: 30%;
     h4{
@@ -108,6 +108,12 @@
   .content{
     padding: 0 30px!important;
     width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 530px){
+  .container{
+    margin-bottom: 50px!important;
   }
 }
 

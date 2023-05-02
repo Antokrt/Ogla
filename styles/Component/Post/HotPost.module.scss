@@ -29,33 +29,26 @@ border-radius: 10px;
 
   .sThumbnail{
     position: absolute;
-    left: -6%;
-    top: -5%;
-    z-index: 2!important;
-    background-color: #57f6b3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
-    font-size: 10px;
-    font-family: "Rebond Grotesque",sans-serif;
-    font-weight: 700;
-    border-radius: 25px;
-    color: #1C232B;
+    right: 4%;
+    opacity: 0.06;
+    font-size: 4vh;
+    top: 0%;
+    font-family: 'Branch',sans-serif;
+
+
   }
 
 
   .thumbnail{
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: -4%;
+    right: -2%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 2px;
     background-color: #e94f37;
     color: white;
-    font-size: 10px;
     padding: 5px 10px;
     border-radius: 15px;
     font-weight: bold;
@@ -65,9 +58,12 @@ border-radius: 10px;
     box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
     p{
       color: white;
+      font-size: 12px;
     }
     svg{
+      width: 14px;
       color: white;
+      margin-left: 2px;
     }
   }
 
@@ -84,7 +80,8 @@ border-radius: 10px;
       }
       font-size: 18px;
       font-family: "Rebond Grotesque",sans-serif;
-      font-weight: 700;
+      -webkit-text-stroke-width: 1px;
+      text-transform: capitalize;
       color: #1C232B;
     }
 
@@ -134,28 +131,48 @@ border-radius: 10px;
 
 
 .containerPhone{
+  &:after{
+    content: attr(data-after);
+    position: absolute;
+    bottom: 50%;
+    right: 5%;
+    opacity: 0.06;
+    font-size: 4vh;
+    font-family: 'Branch',sans-serif;
+  }
+
+  margin: 20px;
+  border-radius: 10px;
   position: relative;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   align-items: center;
   height: auto;
   width: 100%;
-  padding: 0% 4%;
+  padding: 6% 5%;
 
   .likeThumbnailPhone{
     position: absolute;
     right: 3%;
-    top: 0%;
+    top: 4%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    padding: 5px 10px;
     gap: 5px;
 p{
-  font-family: 'Poppins',sans-serif!important;
+  -webkit-text-stroke-width: 1px;
+  letter-spacing: 1px;
+  font-family: 'Branch',sans-serif!important;
   font-weight: bold!important;
-  color: #1C232B!important;
+  color: rgba(28, 35, 43, 0.76) !important;
+  font-size: 12px!important;
 }
     svg{
-      width: 12px;
+      margin-top: 1px;
+      width: 14px;
       color: #9844AD;
     }
 
@@ -179,7 +196,7 @@ p{
       font-weight: bold;
       font-size: 12px;
       text-align: right;
-      color: rgba(28, 35, 43, 0.87);
+      color: rgb(28, 35, 43);
       .author{
         color: #e94f37;
       }
@@ -187,13 +204,20 @@ p{
   }
 
   h6{
+    &:first-letter{
+      text-transform: uppercase;
+    }
     font-size: 18px;
     font-family: "Rebond Grotesque", sans-serif;
-    font-weight: 700;
+    -webkit-text-stroke-width: 1px;
     color: #1C232B;
     margin-top: 30px;
   }
-
+.catphone{
+  &:first-letter{
+    text-transform: uppercase;
+  }
+}
   .descriptionPhone{
     margin-top: 20px;
     overflow: hidden;
@@ -211,6 +235,25 @@ p{
     font-family: "Rebond Grotesque", sans-serif;
   }
 
+  .discoverPhone{
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(92%);
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    svg{
+      width: 14px;
+      color: white;
+    }
+  }
+
   button{
     margin-top: 30px;
     background-color: #e94f37;
@@ -220,7 +263,7 @@ p{
     color: white;
     font-size: 10px;
     border-radius: 25px;
-    padding: 12px 60px;
+    padding: 12px 40px;
   }
 }
 
@@ -229,14 +272,25 @@ p{
   .container{
     width: 500px;
   }
+  .imgContainer{
+    width: 40% !important;
+  }
+  .contentContainer{
+    width: 60% !important;
+  }
 }
 
 @media screen and (max-width: 600px){
-  .sThumbnail{
-    position: absolute!important;
-    top:3% !important;
-    left: 51% !important;
 
-    transform: translate(-50%, -50%);
+
+  .thumbnail{
+    width: min-content!important;
+    svg{
+      margin-left: 2px!important;
+    }
+  }
+
+  .sThumbnail{
+
   }
 }

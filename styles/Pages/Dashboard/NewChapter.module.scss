@@ -30,8 +30,9 @@
 .containerData{
   display: flex;
   flex-direction: column;
-  width: 85%;
-  background-color: #1C232B;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
   overflow-y: hidden;
 }
 
@@ -62,10 +63,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2% 3%;
-  background-color: white;
-  box-shadow: $shadow;
-
+  padding: 0px 3%;
+  height: 12vh;
+  border-bottom: solid 1px rgba(90, 102, 115, 0.16);
   .list{
     display: flex;
     align-items: center;
@@ -87,6 +87,7 @@
       cursor: pointer;
       text-decoration: underline;
     }
+
     p{
       font-family: 'Montserrat',sans-serif;
       font-size: 12px;
@@ -107,15 +108,23 @@
 
 
   button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     cursor: initial;
     transition: 0.1s!important;
     background-color: #54595F;
-    padding: 10px 35px;
+    padding: 10px 25px;
     font-size: 11px;
     color: white;
     box-shadow: $shadow;
     font-weight: bold;
     font-family: 'Montserrat Alternates',sans-serif;
+    svg{
+      width: 15px!important;
+      color: white;
+    }
   }
 }
 
@@ -123,11 +132,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: 1;
+  height: 88vh;
+  margin-top: 2vh;
 padding-left: 2%;
-  padding-bottom: 1%;
-  background-color: white;
-
+  padding-bottom: 2%;
 
   .containerText{
     display: flex;
@@ -172,6 +180,7 @@ padding-left: 2%;
         display: flex;
         flex-direction: column;
         gap: 5px;
+        width: 70%;
         p{
           font-family: 'Montserrat Alternates',sans-serif;
           color: rgba(28, 35, 43, 0.55);
@@ -181,14 +190,14 @@ padding-left: 2%;
             font-size: calc(18px + 0.5vw);
             color: rgba(28, 35, 43, 0.56);
             font-weight: bold;
-            font-family: 'Poppins',sans-serif;
+            font-family: 'Rebond Grotesque',sans-serif;
           }
           font-weight: bold;
           border: none;
           outline: none;
           width: 100%;
-          font-size: calc(18px + 0.6vw);
-          font-family: 'Poppins',sans-serif;
+          font-size: calc(16px + 0.6vw);
+          font-family: 'Rebond Grotesque',sans-serif;
           background-color: transparent;
           color: rgb(28, 35, 43);
           text-align: left;
@@ -199,16 +208,30 @@ padding-left: 2%;
       }
 
       .titleR{
+        display: flex;
+        flex-direction: column;
         p{
           font-size: 14px;
           font-family: 'Montserrat Alternates',sans-serif;
           color: rgba(28, 35, 43, 0.42);
+        }
+
+        .containerImgBook{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 10px;
+
+          img{
+            width: 4vw;
+          }
         }
       }
 
     }
 
     .containerTextEditor{
+      position: relative;
       margin-top: 20px;
 display: flex;
       align-items: center;
@@ -222,6 +245,13 @@ display: flex;
         height: 100%;
         width: 2px;
         background-color: rgba(28, 35, 43, 0.14);
+      }
+
+      .bookEditor{
+        position: absolute;
+        right: 0;
+        width: 12vw;
+        min-width: 50px;
       }
 
       button{
@@ -260,10 +290,6 @@ display: flex;
         background: rgba(152, 68, 173, 0.98);
       }
 
-      /* Handle on hover */
-      &::-webkit-scrollbar-thumb:hover {
-        background: rgba(152, 68, 173, 0.24);
-      }
       margin-top: 20px;
       width: 100%;
       overflow-y: scroll;
@@ -271,7 +297,6 @@ display: flex;
       padding-right: 1.5%;
       height: 65vh;
       padding-bottom: 20px;
-
     }
   }
 
@@ -418,3 +443,385 @@ display: flex;
   transition: 0.1s!important;
   background-color: #9844AD!important;
 }
+
+.headerResp{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2% 3%;
+  border-bottom: solid 1px rgba(90, 102, 115, 0.16);
+
+  .list{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    svg{
+      width: 20px;
+      color: rgba(28, 35, 43, 0.71);
+    }
+
+    .arrow{
+      width: 15px;
+    }
+
+
+    .newPad{
+      font-weight: initial;
+      font-family: 'Montserrat',sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    h6{
+      font-weight: bold;
+      font-family: 'Montserrat',sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: underline;
+
+      span{
+        color: #5a6673;
+        font-size: 10px;
+      }
+    }
+    p{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: pre;
+      font-family: 'Montserrat',sans-serif;
+      font-weight: bold;
+      font-size: 12px;
+      width: min-content;
+      margin-right: 20px;
+      color: rgba(28, 35, 43, 0.89);
+      span{
+        font-weight: bold;
+        color: #9844AD;
+      }
+    }
+
+
+  }
+
+  .btnList{
+    display: flex;
+    gap: 10px;
+  }
+
+
+  button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: initial;
+    transition: 0.1s!important;
+    background-color: #54595F;
+    padding: 10px 20px;
+    font-size: 10px;
+    color: white;
+    box-shadow: $shadow;
+    font-weight: bold;
+    font-family: 'Montserrat Alternates',sans-serif;
+    gap: 8px;
+    svg{
+      width: 15px;
+    }
+  }
+}
+
+.btnListResp{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-top: 2%;
+
+  button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: initial;
+    transition: 0.1s!important;
+    background-color: #54595F;
+    padding: 10px 25px;
+    font-size: 10px;
+    color: white;
+    box-shadow: $shadow;
+    font-weight: bold;
+    font-family: 'Montserrat Alternates',sans-serif;
+    gap: 8px;
+    svg{
+      margin-bottom: 1px;
+      width: 18px;
+      color: white;
+    }
+  }
+}
+
+.containerPhone{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3%;
+  padding-right: 5%;
+  padding-left: 5%;
+  height: calc(100vh - 80px) ;
+}
+
+.containerTitlePhone{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+
+
+  h6{
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-family: "Rebond Grotesque", sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .new{
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    color: rgba(28, 35, 43, 0.89);
+  }
+
+  input{
+    margin-top: 2%;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: calc(14px + 0.6vw);
+    font-family: "Poppins", sans-serif;
+    background-color: transparent;
+    color: rgb(28, 35, 43);
+    text-align: left;
+  }
+
+  .titleRPhone{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    p{
+      font-size: 12px;
+      font-family: 'Montserrat Alternates',sans-serif;
+    }
+
+    img{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+.containerBtnPhone{
+  position: fixed;
+  bottom: 12%;
+  z-index: 20000!important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-top: 2%;
+
+  button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: initial;
+    transition: 0.1s!important;
+    background-color: #54595F;
+    padding: 10px 25px;
+    font-size: 10px;
+    color: white;
+    box-shadow: $shadow;
+    font-weight: bold;
+    font-family: 'Montserrat Alternates',sans-serif;
+    gap: 8px;
+    svg{
+      margin-bottom: 1px;
+      width: 18px;
+      color: white;
+    }
+  }
+}
+
+.containerTextEditorPhone{
+  margin-top: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding-bottom: 4%;
+  border-bottom: solid 1px rgba(28, 35, 43, 0.14);
+  width: 100%;
+
+  button{
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .separatorEditor{
+    height: 100%;
+    width: 2px;
+    background-color: rgba(28, 35, 43, 0.14);
+  }
+
+
+}
+
+.textPhone{
+  margin-top: 2vh;
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: auto;
+  margin-bottom: 9vh;
+}
+
+@media screen and (max-width: 1500px){
+  .containerPresentationBook{
+    display: none!important;
+  }
+
+  .containerSecond{
+    padding-left: 0% !important;
+  }
+
+  .header{
+    border-bottom: solid 1px rgba(28, 35, 43, 0.09);
+    box-shadow: none;
+  }
+
+  .containerText{
+    width: 100%!important;
+    border: none!important;
+  }
+}
+
+@media screen and (max-width: 1400px){
+  .verticalMenuContainer{
+    width: 20% !important;
+  }
+
+  .text{
+    padding-bottom: 5%;
+  }
+
+  .containerImgBook{
+    img{
+      width: 6vw!important;
+      min-width: 60px;
+    }
+  }
+}
+
+@media screen and (max-width: 1100px){
+  .containerData{
+    height: auto!important;
+    overflow-y: scroll!important;
+  }
+
+
+  .btnListResp{
+    margin-top: 2vh!important;
+  }
+
+  .headerResp{
+  flex-direction: column!important;
+  gap: 30px;
+  border-bottom: solid 1px rgba(90, 102, 115, 0.07);
+  .btnList{
+    display: none;
+  }
+
+  .arrowResp,.homeHResp,.countIndex{
+    display: none!important;
+  }
+
+
+  h6{
+    text-align: center!important;
+    text-decoration: initial!important;
+    font-size: 18px!important;
+  }
+  .arrow{
+    width: 20px!important;
+  }
+}
+}
+
+@media screen and (max-width: 500px){
+  .containerTitlePhone{
+    input{
+      text-align: center;
+    }
+  }
+}
+
+@media screen and (max-width: 350px){
+  .containerTitlePhone{
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  .titleRPhone{
+    display: none!important;
+  }
+}
+
+@media screen and (max-width: 280px){
+  .containerBtnPhone{
+    gap: 10px;
+    flex-direction: column;
+    button{
+      min-width: 140px;
+    }
+  }
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape){
+ .container{
+    height: auto;
+    overflow-y: initial;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .containerSecond{
+    height: auto;
+  }
+
+  .containerMain{
+    height: auto;
+  }
+
+  .text{
+    height: auto!important;
+    overflow-y: initial!important;
+    overflow-x: initial!important;
+
+
+  }
+  .verticalMenuContainer{
+    display: none;
+  }
+
+  .verticalTabContainer{
+    display: none;
+  }
+}
+

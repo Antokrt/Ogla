@@ -1,45 +1,51 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import Header from "../../Component/Header";
-import { ArrowsUpDownIcon, BookOpenIcon, ChatBubbleBottomCenterTextIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/20/solid";
+import {
+    ArrowsUpDownIcon,
+    BookOpenIcon,
+    ChatBubbleBottomCenterTextIcon,
+    DocumentTextIcon
+} from "@heroicons/react/24/outline";
+import {HeartIcon} from "@heroicons/react/20/solid";
 import Book from "../../Component/layouts/Icons/Book";
 import Like from "../../Component/layouts/Icons/Like";
 import ToogleSidebar from "../../utils/ToogleSidebar";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
 import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
-import { useSession } from "next-auth/react";
+import {useSession} from "next-auth/react";
 import ScreenSize from "../../utils/Size"
-import { LikeBookService } from "../../service/Like/LikeService";
-import { VerifLikeApi } from "../api/like";
-import { AddViewToBookApi, GetOneBookApi } from "../api/book";
-import { GetCommentService, GetMyCommentsService } from "../../service/Comment/CommentService";
-import { GetAnswerByCommentService } from "../../service/Answer/AnswerService";
+import {LikeBookService} from "../../service/Like/LikeService";
+import {VerifLikeApi} from "../api/like";
+import {AddViewToBookApi, GetOneBookApi} from "../api/book";
+import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
+import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
-import { GetChapterListService } from "../../service/Chapter/ChapterService";
-import { FormatDateNb, FormatDateStr } from "../../utils/Date";
-import { FilterBtn, TextSeeMore } from "../../Component/layouts/Btn/ActionBtn";
-import { LoginModal } from "../../Component/Modal/LoginModal";
-import { useDispatch, useSelector } from "react-redux";
-import { selectLoginModalStatus, setActiveModalState } from "../../store/slices/modalSlice";
+import {GetChapterListService} from "../../service/Chapter/ChapterService";
+import {FormatDateNb, FormatDateStr} from "../../utils/Date";
+import {FilterBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
+import {LoginModal} from "../../Component/Modal/LoginModal";
+import {useDispatch, useSelector} from "react-redux";
+import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 import CardCategory from "../../Component/Card/CardCategory";
-import { LoaderCommentary } from "../../Component/layouts/Loader";
-import { Snippet } from "../../Component/Snippet";
-import { sendNotif } from "../../service/Notifications/NotificationsService";
+import {LoaderCommentary} from "../../Component/layouts/Loader";
+import {Snippet} from "../../Component/Snippet";
+import {sendNotif} from "../../service/Notifications/NotificationsService";
 import has from "lodash/has";
 import {CreateNotificationService} from "../../service/Notification";
+import {CardChapterPublic} from "../../Component/Card/CardChapterPublic";
 
-export async function getServerSideProps({ req, params, query }) {
+export async function getServerSideProps({req, params, query}) {
     const id = params.id;
-    console.log(req)
-    console.log(query)
+
     const data = await GetOneBookApi(id);
     if (!data.err) {
         const hasLikeJson = await VerifLikeApi(req, 'book', data.book._id);
+        console.log(hasLikeJson)
         return {
             props: {
                 err: false,
@@ -58,12 +64,12 @@ export async function getServerSideProps({ req, params, query }) {
     }
 }
 
-const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
+const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     const [width, height] = ScreenSize();
     const router = useRouter();
     const [loginModal, setLoginModal] = useState(true);
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
     const [lastCommentId, setLastCommentId] = useState([]);
@@ -82,18 +88,15 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
     const [chapterList, setChapterList] = useState(chapterData);
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
-    const [snippetTooBig, setSnippetTooBig] = useState(bookData.summary.length > 500);
+    const [snippetTooBig, setSnippetTooBig] = useState(bookData?.summary?.length > 500);
 
     const dispatch = useDispatch();
-
-
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
         if (openSidebar && typeof window !== 'undefined') {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
-
         }
     }, [])
 
@@ -170,7 +173,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                         title={bookData.title}
                         author={bookData.author_pseudo}
                         comments={comments}
-                        select={sidebarSelect} />
+                        select={sidebarSelect}/>
                 </div>)
                 break;
 
@@ -248,8 +251,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                     }
                 })
                 .catch((err) => console.log(err));
-        } 
-        else {
+        } else {
             dispatch(setActiveModalState(true));
         }
     }
@@ -277,7 +279,7 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
 
     const sendAnswer = (data) => {
         setComments(SendAnswerReduce(comments, data.target_id, data));
-        comments.forEach((elem) =>  {
+        comments.forEach((elem) => {
             if (elem._id === data.target_id) {
                 if (authorData._id != session.user.id)
                     sendNotif(elem.userId, 20, data._id)
@@ -318,14 +320,14 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
             {
                 width > 800 &&
                 <div className={styles.container}>
-                    <Header />
+                    <Header/>
                     {err ? <p>erreur</p> : <>
                         {checkSide()}
 
                         <div className={styles.containerC}>
                             <div className={styles.imgContainer}>
                                 <div className={styles.img}>
-                                    <img src={bookData?.img} />
+                                    <img src={bookData?.img}/>
                                 </div>
 
 
@@ -355,86 +357,76 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                                     })}>
                                         <div className={styles.authorInfos}>
                                             <p>Par <span>{authorData.pseudo}</span></p>
-                                            <img src={authorData.img} />
+                                            <img src={authorData.img}/>
                                         </div>
 
-                                        <CardCategory category={bookData?.category} />
+                                        <CardCategory category={bookData?.category}/>
 
                                     </div>
                                     <h3>{bookData?.title}</h3>
 
-                                    <Snippet line={3} maxSize={500} content={bookData?.summary} />
-                                    <div className={styles.btnFilter}>
-                                        <FilterBtn filter={activeFilterList} onclick={() => {
-                                            if (activeFilterList === 'order') {
-                                                setPageChapter(2);
-                                                setActiveFilterList('recent');
-                                                GetChapters(setChapterList, setCanSeeMoreChapter, 'recent');
-                                            } else {
-                                                setPageChapter(2);
-                                                setActiveFilterList('order');
-                                                GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
-                                            }
-                                        }
-                                        } />
-                                        <div><p>{bookData.nbChapters} chapitre(s)</p>
-                                        </div>
-                                    </div>
+                                    <Snippet line={3} maxSize={500} content={bookData?.summary}/>
+
                                 </div>
 
-                                <div className={styles.contentChapterList}>
+                            </div>
 
-                                    {
-                                        chapterList.length <= 0 &&
-                                        <div className={styles.empty}>
-                                            <img src={'/assets/jim/smile8.png'} />
-                                            <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
-                                        </div>
+                        </div>
+
+                        <div className={styles.containerChapterList}>
+                            <div className={styles.btnFilter}>
+                                <FilterBtn filter={activeFilterList} onclick={() => {
+                                    if (activeFilterList === 'order') {
+                                        setPageChapter(2);
+                                        setActiveFilterList('recent');
+                                        GetChapters(setChapterList, setCanSeeMoreChapter, 'recent');
+                                    } else {
+                                        setPageChapter(2);
+                                        setActiveFilterList('order');
+                                        GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
                                     }
-                                    {chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
-                                        let chapterNumber;
-                                        if (activeFilterList === "recent") {
-                                            chapterNumber = bookData?.nbChapters - index;
-                                        } else {
-                                            chapterNumber = index + 1;
-                                        }
-                                        return (<div
-                                            onClick={() => {
-                                                router.push({
-                                                    pathname: "/chapitre/" + item._id, query: {
-                                                        name: bookData.title, slug: item.title, i: chapterNumber
-                                                    },
-                                                })
-                                            }}
-                                            className={styles.chapter}>
-                                            <div className={styles.headerChapter}>
-                                                <h6>Chapitre {chapterNumber} : {item.title}</h6>
-                                                <h7>{FormatDateNb(item.date_creation)}</h7>
-                                            </div>
-
-                                            <div className={styles.likeChapter}>
-                                                <p>{item.likes} like(s)</p>
-
-                                            </div>
-                                        </div>
-
-                                        )
-                                    })}
-                                    <div className={styles.seeMoreContainer}>
-                                        {
-                                            canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 &&
-                                            <TextSeeMore
-                                                onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)} />
-                                        }
-                                        {
-                                            loadingScrollChapterList &&
-                                            <LoaderCommentary />
-                                        }
+                                }
+                                }/>
+                                <div><p>{bookData.nbChapters} chapitre(s)</p>
+                                </div>
+                            </div>
+                            <div className={styles.contentChapterList}>
+                                {
+                                    chapterList.length <= 0 &&
+                                    <div className={styles.empty}>
+                                        <img src={'/assets/jim/smile8.png'}/>
+                                        <p>{authorData.pseudo} n'a pas encore écrit de chapitres !</p>
                                     </div>
+                                }
+                                {chapterData && chapterList.length > 0 && chapterList.map((item, index) => {
+                                    let chapterNumber;
+                                    if (activeFilterList === "recent") {
+                                        chapterNumber = bookData?.nbChapters - index;
+                                    } else {
+                                        chapterNumber = index + 1;
+                                    }
+                                    return (
+                                        <CardChapterPublic id={item._id} title={item.title}
+                                                           date_creation={item.date_creation} likes={item.likes}
+                                                           index={chapterNumber} bookTitle={bookData.title}/>
+                                    )
+                                })}
+                                <div className={styles.seeMoreContainer}>
+                                    {
+                                        canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 &&
+                                        <TextSeeMore
+                                            onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
+                                    }
+                                    {
+                                        loadingScrollChapterList &&
+                                        <LoaderCommentary/>
+                                    }
                                 </div>
                             </div>
 
                         </div>
+
+
                         <FooterOnBook
                             likeBook={() => likeBook()}
                             title={bookData?.title}
@@ -457,9 +449,9 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
             }
             {
                 width <= 800 &&
-                <div className={styles.PhoneStyleBook} >
+                <div className={styles.PhoneStyleBook}>
                     <div className={styles.PhoneBookImgTitle}>
-                        <img src={bookData?.img} alt="BookIMG" />
+                        <img src={bookData?.img} alt="BookIMG"/>
                         <div className={styles.PhoneBookInfosAuthor}>
                             <h2> {bookData?.title} </h2>
                             <p> By {bookData?.author_pseudo} </p>
@@ -503,16 +495,16 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                             {
                                 canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 &&
                                 <TextSeeMore
-                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)} />
+                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
                             }
                             {
                                 loadingScrollChapterList &&
-                                <LoaderCommentary />
+                                <LoaderCommentary/>
                             }
                             <div className={styles.PhoneBookDescription}>
                                 <h2> Description </h2>
-                                <div className={styles.PhoneBookDescriptionStyle} >
-                                    <h1 style={{}} > {bookData?.summary[0]} </h1>
+                                <div className={styles.PhoneBookDescriptionStyle}>
+                                    <h1 style={{}}> {bookData?.summary[0]} </h1>
                                     <p> {bookData?.summary.substr(1)} </p>
                                 </div>
                                 <div className={styles.PhoneBookReadButtonPosition} onClick={() => {
@@ -522,9 +514,9 @@ const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
                                         },
                                     })
                                 }}>
-                                    <div className={styles.PhoneBookReadButton} >
-                                        <BookOpenIcon />
-                                        <div className={styles.PhoneBookRead} >
+                                    <div className={styles.PhoneBookReadButton}>
+                                        <BookOpenIcon/>
+                                        <div className={styles.PhoneBookRead}>
                                             <h3> Lire </h3>
                                             <p> {bookData.nbChapters} Chapitre(s) </p>
                                         </div>

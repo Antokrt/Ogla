@@ -1,3 +1,4 @@
+@import "../../../styles/utils/var";
 .container{
   display: flex;
   gap: 30px;
@@ -7,29 +8,40 @@
   flex: 1;
   padding-bottom: 10%;
   img{
-    width: 20%;
+    height: 20vh;
     object-fit: contain;
-    clip-path: circle();
   }
   h5{
+    text-align: center;
     font-family: 'Rebond Grotesque',sans-serif;
-font-size: 1.3vw;
+font-size: 20px;
     font-weight: bold;
+    padding: 0% 2%;
     color: rgba(255, 0, 0, 0.73);
   }
   p{
     font-style: italic;
-    font-size: calc(14px + 0.1vw);
+    text-align: center;
+    font-size: 16px;
     font-family: 'Rebond Grotesque',sans-serif;
     color: rgba(28, 35, 43, 0.78);
   }
   button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
     background-color: #e94f37;
     color: white;
     font-size: 12px;
-    padding: 10px 55px;
+    padding: 10px 35px;
     font-family: "Rebond Grotesque",sans-serif;
     font-weight: bold;
+    box-shadow: $shadow;
     border-radius: 25px;
+    svg{
+      color: white;
+      width: 20px;
+    }
   }
 }

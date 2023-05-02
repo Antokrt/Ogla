@@ -202,6 +202,7 @@ export default function (req,res){
                         user.provider = res.data.provider;
                         user.date_birth = res.data.date_birth;
                         user.verified = res.data.verified;
+                        user.settings = res.data.settings;
                         user.is_author = res.data.is_author;
                         if(user.is_author){
                             user.author = res.data.author;
@@ -220,6 +221,7 @@ export default function (req,res){
                     user.date_birth = res.data.date_birth;
                     user.is_author = res.data.is_author;
                     user.verified = res.data.verified;
+                    user.settings = res.data.settings
                     if(user.is_author){
                         user.author = res.data.author;
                     }
@@ -281,6 +283,12 @@ export default function (req,res){
                 if(req.url === '/api/auth/session?email-verified'){
                     const res = await getProfil(token?.accessToken);
                     session.user.verified = res.data.verified;
+                    return session;
+                }
+
+                if(req.url === '/api/auth/session?new-settings'){
+                    const res = await getProfil(token?.accessToken);
+                    session.user.settings = res.data.settings
                     return session;
                 }
 

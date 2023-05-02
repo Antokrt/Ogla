@@ -3,7 +3,13 @@ import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {useEffect, useRef, useState} from "react";
-import {ArrowDownIcon, CheckBadgeIcon} from "@heroicons/react/24/outline";
+import {
+    ArrowDownIcon,
+    ArrowLeftCircleIcon,
+    ArrowRightCircleIcon, ArrowRightOnRectangleIcon, ArrowSmallRightIcon,
+    CheckBadgeIcon,
+    CursorArrowRaysIcon
+} from "@heroicons/react/24/outline";
 import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
@@ -11,6 +17,12 @@ import {useRouter} from "next/router";
 import {renderPrediction} from "../../../utils/ImageUtils";
 import {toastDisplayError} from "../../../utils/Toastify";
 import {LoaderImg} from "../../../Component/layouts/Loader";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
+import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
+import useOrientation from "../../../utils/Orientation";
+import ScreenSize from "../../../utils/Size";
+import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import {PhotoIcon} from "@heroicons/react/20/solid";
 
 
 const New = () => {
@@ -25,17 +37,17 @@ const New = () => {
     const [localImg, setLocalImg] = useState(null);
     const [loadingImg,setLoadingImg] = useState(false);
     const router = useRouter();
+    const orientation = useOrientation();
+    const [width, height] = ScreenSize();
 
     const handleFileSelect = (event) => {
         if(event?.target.files && event.target.files[0]){
             setLocalImg(URL.createObjectURL(event.target.files[0]));
         }
     }
-
     const openFileUpload = () => {
         fileRef.current.click();
     }
-
     const sendData = () => {
         const form = {
             title: title,
@@ -52,15 +64,12 @@ const New = () => {
             .catch((err) => setSeeErrMsg(true));
 
     }
-
     const previous = () => {
         return setStep(step - 1);
     }
-
     const next = () => {
         return setStep(step + 1);
     }
-
     const validFirst = () => {
         return title !== '' &&
             title.length >= 5 &&
@@ -69,7 +78,6 @@ const New = () => {
             summary.length <= 2000 &&
             category !== "";
     }
-
     const btn = () => {
         return (
                 <div className={styles.btnContainer}>
@@ -79,8 +87,8 @@ const New = () => {
                             {
                                validFirst()
                                    ?
-                                <button onClick={() => next()}>Suivant</button> :
-                                    <button className={styles.disabledBtn}>Suivant</button>
+                                <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button> :
+                                    <button className={styles.disabledBtn}>Suivant <ChevronDoubleRightIcon/></button>
 
                             }
                         </>
@@ -88,21 +96,20 @@ const New = () => {
                     {
                         step === 2 &&
                         <>
-                            <button onClick={() => previous()}>Précédent</button>
-                            <button onClick={() => next()}>Suivant</button>
+                            <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
+                            <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button>
                         </>
                     }
                     {
                         step >= 3 && !loadingImg &&
                         <>
-                            <button onClick={() => previous()}>Précédent</button>
-                            <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer</button>
+                            <button onClick={() => previous()}><ChevronDoubleLeftIcon/>  Précédent</button>
+                            <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon/></button>
                         </>
                     }
                 </div>
         )
     }
-
     const firstStep = () => {
 
         return (
@@ -153,16 +160,15 @@ const New = () => {
 </>
         )
     }
-
     const secondStep = () => {
         return (
             <>
-                <h5>
+                <h5 className={styles.titleImg}>
                     Choisissez une image qui mettra en valeur votre livre et attirera l'attention des lecteurs. Cette image sera utilisée pour la couverture de votre livre et pour promouvoir votre livre sur les réseaux sociaux. Assurez-vous que l'image est de haute résolution et représente bien l'ambiance de votre histoire.
                 </h5>
 
                 <div className={styles.inputContainer}>
-                    <label>Ajoutez une image (facultatif)</label>
+                    <label className={styles.fileLabel}>Ajoutez une image (facultatif)</label>
                     {
                         selectedFile && localImg &&
                         <div className={styles.fileContainer}>
@@ -183,11 +189,11 @@ const New = () => {
                     <div className={styles.addFileContainer}>
                         {
                             loadingImg && !localImg && !selectedFile &&
-                            <div>
+                            <div className={styles.load}>
                                 <LoaderImg/>
                             </div>
                         }
-                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image</label>
+                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image <PhotoIcon/></label>
 
                     </div>
                     <input
@@ -222,7 +228,6 @@ const New = () => {
             </>
             )
     }
-
     const thirdStep = () => {
         return (
             <div className={styles.finalContainer}>
@@ -280,9 +285,25 @@ const New = () => {
 
     return(
         <div className={styles.container}>
-            <div className={styles.verticalMenuContainer}>
-                <VerticalAuthorMenu/>
-            </div>
+
+            {
+                width < 700 && orientation === 'portrait' ?
+                    <VerticalPhoneMenu/>
+                    :
+                    <>
+                        {
+                            width  >= 700 && width <= 1050 ?
+                                <div className={styles.verticalTabContainer}>
+                                    <VerticalTabMenu/>
+                                </div>
+                                :
+                                <div className={styles.verticalMenuContainer}>
+                                    <VerticalAuthorMenu/>
+                                </div>
+                        }
+                    </>
+
+            }
 
             <div className={styles.containerData}>
                 <div className={styles.abso}>
@@ -295,7 +316,7 @@ const New = () => {
                             <p>1</p>
                         </div>
                         <div className={styles.label}>
-                            <h6>Création </h6>
+                      <h6>Création</h6>
                             {
                                     validFirst()
                                     ?
@@ -333,7 +354,10 @@ const New = () => {
                 </div>
 
                 <div className={styles.newContainer}>
-                    { titleStep() }
+                    <div className={styles.titleABook}>
+                        {titleStep()}
+                        <img src={'/assets/diapo/book.png'}/>
+                    </div>
                     { checkStep() }
                     { btn() }
                     {

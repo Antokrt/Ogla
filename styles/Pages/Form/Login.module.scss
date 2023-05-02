@@ -6,15 +6,15 @@
   align-items: center;
   min-height: 100vh;
   height: 100vh;
-  background-color: #F0EDED;
+  background-color: white;
 }
 
 .purple{
   position: absolute;
   height: 100%;
-  width: 30%;
+  width: 50%;
   left: 0%;
-  background-color: #e04444;
+  background-color: #e94f37;
 }
 
 .block{
@@ -48,8 +48,7 @@
     border-radius: 25px 25px 0px 0px;
     padding-top: 20px;
     padding-bottom: 20px;
-    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-
+    border: solid 1px rgba(90, 102, 115, 0.2);
     .header{
       display: flex;
       flex-direction: column;
