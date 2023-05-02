@@ -2,8 +2,8 @@ import styles from '../../../styles/Pages/Dashboard/Books.module.scss';
 import {useSession} from "next-auth/react";
 import {
     ArrowDownCircleIcon,
-    BellAlertIcon,
-    ClockIcon,
+    BellAlertIcon, BookmarkSquareIcon,
+    ClockIcon, CursorArrowRaysIcon,
     MagnifyingGlassIcon,
     PencilIcon, QueueListIcon, Square3Stack3DIcon
 } from "@heroicons/react/24/outline";
@@ -103,21 +103,19 @@ const Books = ({booksData, err, nbBooks}) => {
         return (
             <div className={styles.mainHasNoBooks}>
                 <div className={styles.hasNotWriteContainer}>
-                    <div>
-                        <h3>OUPS <span>...</span></h3>
+                    <div className={styles.contentNoBooks}>
+                        <h3>OUPS...</h3>
                         <p>Il n'y a pas encore de livres ici, mais ça ne veut pas dire que vous ne pouvez pas être le
-                            prochain Hemingway ou J.K. Rowling ! <br/> Commencez à écrire votre chef-d'œuvre dès
+                            prochain Hemingway ou Zadie Smith !
+                   </p>
+                        <p>       Commencez à écrire votre chef-d'œuvre dès
                             maintenant !</p>
-                        <h5>Quelques astuces pour bien débuter :</h5>
-                        <ul>
-                            <li>1. Écrire sur <span>OGLA</span></li>
-                            <li>2. Choisir son image</li>
-                            <li>3. Fidéliser ses lecteurs</li>
 
-                        </ul>
-                        <button>Nouveau livre <PencilIcon/></button>
+                        <button onClick={() => router.push('/dashboard/nouveau-livre')}>C'est parti ! <CursorArrowRaysIcon/></button>
                     </div>
-                    <img src={'assets/chara/chara4.png'}/>
+                    <div className={styles.imgNoBooks}>
+                        <img src={'/assets/diapo/book.png'}/>
+                    </div>
 
                 </div>
             </div>
@@ -136,7 +134,7 @@ const Books = ({booksData, err, nbBooks}) => {
                         :
                         <>
                             {
-                                width >= 700 && width <= 900 ?
+                                width >= 700 && width <= 1050 ?
                                     <div className={styles.verticalTabContainer}>
                                         <VerticalTabMenu/>
                                     </div>
@@ -153,15 +151,18 @@ const Books = ({booksData, err, nbBooks}) => {
                     <SmHeaderDashboard title={'Tableau de bord'}/>
                     {
                         err &&
-                        <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')}
-                                text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
+                        <div className={styles.errContainer}>
+                            <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')}
+                                    text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
+                        </div>
+
                     }
 
                     {
-                        books && booksData && !err &&
+                        books && booksData && !err && books.length !== 0 &&
                         <div className={styles.listContainer} ref={divRef}>
                             <div className={styles.headerList}>
-                                <h4>Mes livres <Square3Stack3DIcon/></h4>
+                                <h4>Mes livres <BookmarkSquareIcon/></h4>
                             </div>
                             <div className={styles.sortContainer}>
                                 <FilterBtn3 onclick={() => {

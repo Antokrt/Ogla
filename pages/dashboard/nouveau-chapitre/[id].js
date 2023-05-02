@@ -10,8 +10,8 @@ import {
     ArrowRightIcon,
     ChevronDoubleLeftIcon,
     ChevronDoubleRightIcon,
-    ChevronRightIcon,
-    HomeIcon
+    ChevronRightIcon, CursorArrowRaysIcon,
+    HomeIcon, PaperAirplaneIcon
 } from "@heroicons/react/24/outline";
 import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
@@ -20,6 +20,11 @@ import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
 import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
 import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";
 import {Capitalize} from "../../../utils/String";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
+import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
+import useOrientation from "../../../utils/Orientation";
+import ScreenSize from "../../../utils/Size";
+import {ArrowPathIcon} from "@heroicons/react/24/solid";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -47,7 +52,10 @@ const NouveauChapitre = ({bookData, err}) => {
     const [text, setText] = useState('');
     const [canSend, setCanSend] = useState(false)
     const router = useRouter();
-    const [closeMenu, setCloseMenu] = useState(true);
+    const orientation = useOrientation();
+    const [width, height] = ScreenSize();
+
+
 
 
     useEffect(() => {
@@ -115,24 +123,35 @@ const NouveauChapitre = ({bookData, err}) => {
 
     return (
         <div className={styles.container}>
+
             <div className={styles.containerMain}>
-                <div className={styles.verticalMenuContainer}>
-                    <VerticalAuthorMenu/>
-                </div>
 
                 {
-                    loading &&
-                    <div className={styles.errContainer}>
-                        <p>Loading</p>
-                    </div>
+                    width < 700 && orientation === 'portrait' ?
+                        <VerticalPhoneMenu/>
+                        :
+                        <>
+                            {
+                                width  >= 700 && width <= 1050 ?
+                                    <div className={styles.verticalTabContainer}>
+                                        <VerticalTabMenu/>
+                                    </div>
+                                    :
+                                    <div className={styles.verticalMenuContainer}>
+                                        <VerticalAuthorMenu/>
+                                    </div>
+                            }
+                        </>
+
                 }
+
 
                 {
                     err.chapter && !loading &&
                     <div className={styles.errContainer}>
                         <ErrorDashboard
                             title={'Impossible de récupérer ce chapitre'}
-                            img={'/assets/chara/chara5.png'}
+                            img={'/assets/jim/angry2.png'}
                             link={() => router.push('/dashboard/books/')}
                             btn={'Retour'}
                             subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
@@ -142,45 +161,181 @@ const NouveauChapitre = ({bookData, err}) => {
 
                 }
 
+
                 {
                     !loading && !err.book && book.length !== 0 &&
                     <div className={styles.containerData}>
-                        <div className={styles.header}>
-                            <div className={styles.list}>
-                                <HomeIcon/>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <h6
-                                    onClick={() => router.push('/dashboard/books/' + book._id)}
-                                >{book.title}</h6>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <p>Nouveau chapitre</p>
-                                <ChevronRightIcon className={styles.arrow}/>
-                                <p><span>{book.chapter_list.length + 1}</span></p>
+                        {
+                            width > 1200 &&
+                            <div className={styles.header}>
+                                <div className={styles.list}>
+                                    <HomeIcon/>
+                                    <ChevronRightIcon className={styles.arrow}/>
+                                    <h6
+                                        onClick={() => router.push('/dashboard/books/' + book._id)}
+                                    >{book.title}</h6>
+                                    <ChevronRightIcon className={styles.arrow}/>
+                                    <p>Nouveau chapitre</p>
+                                    <ChevronRightIcon className={styles.arrow}/>
+                                    <p><span>{book.chapter_list.length + 1}</span></p>
+                                </div>
+                                <div className={styles.btnList}>
+                                    <button
+                                        className={canSend ? styles.activeSaveBtn : ''}
+                                        onClick={() => sendData(false)}
+                                    >Enregistrer en tant que brouillon <ArrowPathIcon/>
+                                    </button>
+
+
+                                    <button
+                                        className={canSend ? styles.activePublishBtn : ''}
+                                        onClick={() => sendData(true)}
+                                    >Publier <CursorArrowRaysIcon/>
+                                    </button>
+                                </div>
+
                             </div>
-                            <div className={styles.btnList}>
-                                <button
-                                    className={canSend ? styles.activeSaveBtn : ''}
-                                    onClick={() => sendData(false)}
-                                >Enregistrer en tant que brouillon
-                                </button>
+                        }
+                        {
+                            width >= 700 && width <= 1200 &&
+                                <div className={styles.headerResp}>
+                                    <div className={styles.list}>
+                                        <HomeIcon className={styles.homeHResp}/>
+                                        <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
+                                        <h6
+                                            onClick={() => router.push('/dashboard/books/' + book._id)}
+                                        >{book.title}</h6>
+                                        <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
+
+                                        {
+                                            width >= 1100 &&
+                                            <>
+                                                <p className={styles.newPad}>Nouveau chapitre</p>
+                                            </>
+                                        }
+
+                                    </div>
+                                    <div className={styles.btnList}>
+                                        <button
+                                            className={canSend ? styles.activeSaveBtn : ''}
+                                            onClick={() => sendData(false)}
+                                        >Brouillon <ArrowPathIcon/>
+                                        </button>
 
 
-                                <button
-                                    className={canSend ? styles.activePublishBtn : ''}
-                                    onClick={() => sendData(true)}
-                                >Publier
-                                </button>
-                            </div>
+                                        <button
+                                            className={canSend ? styles.activePublishBtn : ''}
+                                            onClick={() => sendData(true)}
+                                        >Publier <CursorArrowRaysIcon/>
+                                        </button>
+                                    </div>
 
 
-                        </div>
+                                </div>
 
-                        <div className={styles.containerSecond}>
+                        }
 
-                            <div className={styles.containerText}>
-                                <div className={styles.containerTitle}>
-                                    <div className={styles.titleL}>
-                                        <p>Chapitre {book.chapter_list.length + 1}</p>
+
+
+                        {
+                            width > 700 ?
+                                <div className={styles.containerSecond}>
+                                    <div className={styles.containerText}>
+                                        <div className={styles.containerTitle}>
+                                            <div className={styles.titleL}>
+                                                <p>Chapitre {book.chapter_list.length + 1}</p>
+                                                <input
+                                                    onChange={(e) => setTitle(e.target.value)}
+                                                    name={"title"}
+                                                    type={'text'}
+                                                    placeholder={'Ajoutez un titre ici'}
+                                                />
+                                            </div>
+
+                                            <div className={styles.titleR}>
+                                                <p>{DateNow()}</p>
+                                                <div className={styles.containerImgBook}>
+                                                    <img src={'/assets/diapo/book.png'}/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div className={styles.containerTextEditor}>
+                                            <button
+                                                onClick={() => bold()}
+                                                className={editor.isActive('bold') ? styles.bold : ''}>B
+                                            </button>
+                                            <div className={styles.separatorEditor}></div>
+                                            <button
+                                                onClick={() => italic()}
+                                                className={editor.isActive('italic') ? styles.italic : ''}>I
+                                            </button>
+                                            <div className={styles.separatorEditor}></div>
+                                            {
+                                                width <= 700 &&
+                                                <img className={styles.bookEditor} src={'/assets/diapo/book.png'}/>
+                                            }
+
+                                        </div>
+                                        <div className={styles.text}>
+
+                                            <EditorContent editor={editor}/>
+                                        </div>
+
+                                        {
+                                            width < 1100 &&
+                                            <div className={styles.btnListResp}>
+                                                <button
+                                                    className={canSend ? styles.activeSaveBtn : ''}
+                                                    onClick={() => sendData(false)}
+                                                >Brouillon <ArrowPathIcon/>
+                                                </button>
+
+
+                                                <button
+                                                    className={canSend ? styles.activePublishBtn : ''}
+                                                    onClick={() => sendData(true)}
+                                                >Publier <CursorArrowRaysIcon/>
+                                                </button>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div className={styles.containerPresentationBook}>
+                                        <div onClick={() => router.push('/dashboard/books/' + book._id)}
+                                             className={styles.headPresentation}>
+                                            <img src={book.img}/>
+                                            <h3>La quete du maitre</h3>
+                                        </div>
+
+                                        <div className={styles.summary}>
+                                            <p>"{Capitalize(bookData?.summary)}"</p>
+                                        </div>
+
+                                        <div className={styles.statsPresentation}>
+                                            <img src={'/assets/jim/cool2.png'}/>
+                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide d'écriture...</h6>
+                                            <p>Cliquez ici pour en savoir plus !</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                :
+
+                                <div className={styles.containerPhone}>
+                                    <div className={styles.containerTitlePhone}>
+                                        <div className={styles.titleLPhone}>
+                                            <h6>Nouveau chapitre</h6>
+                                            <p className={styles.new}>{book.title} ({book.chapter_list.length + 1})</p>
+
+                                        </div>
+
+                                        <div className={styles.titleRPhone}>
+                                            <p>{DateNow()}</p>
+                                            <div className={styles.containerImgBook}>
+                                                <img src={book.img}/>
+                                            </div>
+                                        </div>
+
                                         <input
                                             onChange={(e) => setTitle(e.target.value)}
                                             name={"title"}
@@ -189,119 +344,43 @@ const NouveauChapitre = ({bookData, err}) => {
                                         />
                                     </div>
 
-                                    <div className={styles.titleR}>
-                                        <p>{DateNow()}</p>
+
+                                    <div className={styles.containerTextEditorPhone}>
+                                        <button
+                                            onClick={() => bold()}
+                                            className={editor.isActive('bold') ? styles.bold : ''}>B
+                                        </button>
+                                        <div className={styles.separatorEditor}></div>
+                                        <button
+                                            onClick={() => italic()}
+                                            className={editor.isActive('italic') ? styles.italic : ''}>I
+                                        </button>
+                                        <div className={styles.separatorEditor}></div>
+
                                     </div>
 
+                                    <div className={styles.textPhone}>
+
+                                        <EditorContent editor={editor}/>
+                                    </div>
+
+                                    <div className={styles.containerBtnPhone}>
+                                            <button
+                                                className={canSend ? styles.activeSaveBtn : ''}
+                                                onClick={() => sendData(false)}
+                                            >Brouillon <ArrowPathIcon/>
+                                            </button>
+
+
+                                            <button
+                                                className={canSend ? styles.activePublishBtn : ''}
+                                                onClick={() => sendData(true)}
+                                            >Publier <CursorArrowRaysIcon/>
+                                            </button>
+                                    </div>
                                 </div>
 
-
-                                <div className={styles.containerTextEditor}>
-                                    <button
-                                        onClick={() => bold()}
-                                        className={editor.isActive('bold') ? styles.bold : ''}>B
-                                    </button>
-                                    <div className={styles.separatorEditor}></div>
-                                    <button
-                                        onClick={() => italic()}
-                                        className={editor.isActive('italic') ? styles.italic : ''}>I
-                                    </button>
-                                    <div className={styles.separatorEditor}></div>
-                                </div>
-
-                                <div className={styles.text}>
-                                    <EditorContent editor={editor}/>
-                                </div>
-                            </div>
-                            <div className={styles.containerPresentationBook}>
-                                <div onClick={() => router.push('/dashboard/books/' + book._id)}
-                                     className={styles.headPresentation}>
-                                    <img src={book.img}/>
-                                    <h3>La quete du maitre</h3>
-                                </div>
-
-                                <div className={styles.summary}>
-                                    <p>"{Capitalize(bookData?.summary)}"</p>
-                                </div>
-
-                                <div className={styles.statsPresentation}>
-                                    <img src={'/assets/jim/cool2.png'}/>
-                                    <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide d'écriture...</h6>
-                                    <p>Cliquez ici pour en savoir plus !</p>
-                                </div>
-                            </div>
-
-                            {/*                   {
-                                    closeMenu ?
-                                        <div className={styles.containerCommentary}>
-                                            <div className={styles.headerCommentary}>
-                                                <p>Dernier chapitre : {DateNow()}</p>
-                                                <h5>Le méchant troubadour</h5>
-                                            </div>
-                                            <h6> <ChatBubbleLeftRightIcon/>Commentaires du dernier chapitre</h6>
-
-                                            <div className={styles.listCommentary + ' ' + scrollbar.scrollbar}>
-                                                <CommentaryNewChapter
-                                                    content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\n'}
-                                                    img={'/assets/profil-example.png'}
-                                                    pseudo={'Jimmy Lefuté'}
-                                                    date={DateNow()}
-                                                    likes={279}
-                                                />
-
-                                                <CommentaryNewChapter
-                                                    content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\n'}
-                                                    img={'/assets/profil-example.png'}
-                                                    pseudo={'Jimmy Lefuté'}
-                                                    date={DateNow()}
-                                                    likes={279}
-                                                />
-
-                                                <CommentaryNewChapter
-                                                    content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\n'}
-                                                    img={'/assets/profil-example.png'}
-                                                    pseudo={'Jimmy Lefuté'}
-                                                    date={DateNow()}
-                                                    likes={279}
-                                                />
-
-                                                <CommentaryNewChapter
-                                                    content={'J\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\nJ\'aime beaucoup ce chapitre qui me rappelle mon enfance en Normandie avec mon chat et mon frère josué.\n' +
-                                                        '\n'}
-                                                    img={'/assets/profil-example.png'}
-                                                    pseudo={'Jimmy Lefuté'}
-                                                    date={DateNow()}
-                                                    likes={279}
-                                                />
-                                            </div>
-                                        </div> :
-                                        <div className={styles.closedMenuContainer}>
-                                        </div>
-                                }*/}
-                        </div>
+                        }
 
                     </div>
                 }

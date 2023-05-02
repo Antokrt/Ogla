@@ -15,10 +15,7 @@
   width: 15%;
 }
 
-.verticalTabContainer{
-  width: 15%;
-  min-width: 80px;
-}
+
 
 .verticalMenuContainerPhone{
   position: fixed;
@@ -315,8 +312,7 @@
       }
       .listItem{
         display: flex;
-        justify-content: center;
-        gap: 50px;
+        justify-content: space-between;
         width: 100%;
         margin: 15px 0;
         .itemStats{
@@ -324,12 +320,12 @@
           justify-content: space-between;
           align-items: center;
           height: 12vh;
-          min-width: 250px;
+          width: 48%;
           padding: 0 20px;
           box-shadow: $shadow;
           background-color: white;
           img{
-            height: 50%;
+            height: 55%;
             object-fit: contain;
             margin-bottom: 10px;
           }
@@ -352,6 +348,7 @@
             text-align: right;
             font-family: 'Lato',sans-serif;
             font-weight: bold;
+            font-size: 18px;
           }
         }
       }
@@ -696,8 +693,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border-left: solid 1px rgba(90, 102, 115, 0.12);
-
     flex: 1;
     gap: 10px;
 
@@ -707,13 +702,15 @@
 
     h6 {
       font-family: 'Montserrat Alternates', sans-serif;
-      font-size: 1.4vw;
+      font-weight: bold;
+      font-size: 18px;
     }
 
     p {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Rebond Grotesque', sans-serif;
+      text-align: center;
       margin-bottom: 20px;
-      font-size: calc(12px + 0.1vw);
+      font-size: 15px;
     }
 
     button {
@@ -723,17 +720,16 @@
       box-shadow: $shadow;
       transition: 0.1s;
       cursor: pointer;
-      font-size: 0.6vw;
+      font-size: 12px;
       background-color: #9844AD;
       color: white;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Rebond Grotesque', sans-serif;
       border-radius: 5px;
-
-      padding: 10px 30px;
-
+      font-weight: bold;
+      padding: 10px 20px;
       svg {
         margin-left: 10px;
-        width: 14px;
+        width: 15px;
       }
     }
   }
@@ -926,11 +922,14 @@
       flex: 1;
     }
   }
+
 }
 @media screen and (max-width: 1400px){
   .verticalMenuContainer{
     width: 20% !important;
   }
+
+
 }
 
 @media screen and (max-width: 1300px){
@@ -982,9 +981,6 @@
     flex: 1;
   }
 
-  .listItem{
-    gap: 80px!important;
-  }
 
 
   .contentChapterList{
@@ -1001,10 +997,6 @@
 @media screen and (max-width: 1050px){
   .verticalMenuContainer{
     width: 22% !important;
-  }
-
-  .listItem{
-    gap: 30px!important;
   }
 
   .description{
@@ -1039,6 +1031,10 @@
   }
   .labelContainer{
     width: 100vw;
+  }
+
+  .emptyContainer{
+    margin-bottom: 15vh;
   }
 }
 @media screen and (max-width: 600px){
@@ -1129,7 +1125,6 @@
     justify-content: center!important;
     align-items: center!important;
     box-shadow: initial!important;
-    min-width: 150px!important;
     border-bottom: solid 1px rgba(90, 102, 115, 0.13);
     img{
       height: 50% !important;
@@ -1149,6 +1144,15 @@
     }
   }
 }
+
+@media screen and (max-height: 900px) and (max-width: 1200px) and (orientation: landscape){
+.contentChapterList{
+  padding-bottom: 50px;
+}
+}
+
+
+
 
 @media screen and (max-height: 500px) and (orientation: landscape){
   .container{
@@ -1180,6 +1184,10 @@
   }
   .itemStats{
     height: 30vh!important;
+  }
+
+  .containerTitle{
+    margin-top: 30px;
   }
 
 }
@@ -1248,6 +1256,10 @@
     flex-direction: column!important;
   }
 
+  .itemStats{
+    width: 100% !important;
+  }
+
   .statsChapters{
     border-color: transparent!important;
   }
@@ -1277,4 +1289,18 @@
     background: $grey;
   }
   overflow-y: scroll!important;
+}
+
+
+@media screen and (max-width: 250px){
+  .headerTextarea{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h5{
+      margin-bottom: 10px!important;
+      text-align: center!important;
+    }
+  }
 }

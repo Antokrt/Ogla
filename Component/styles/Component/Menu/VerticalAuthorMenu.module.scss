@@ -81,14 +81,25 @@
       height: auto;
 
       .profil{
+        position: relative;
         display: flex;
         align-items: center;
         gap: 8%;
         height: 100%;
         width: 80%;
+        span{
+          position: absolute;
+          bottom: 4%;
+          left: 30px;
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background-color: #97fd97;
+        }
         img{
           cursor: pointer;
           width: 40px;
+          height: 40px;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -99,10 +110,9 @@
           flex-direction: column;
           .name{
             font-size: 12px;
-            font-family: 'Lato',sans-serif;
+            font-family: 'Rebond Grotesque',sans-serif;
             font-weight: bold;
             color: #1C232B;
-            letter-spacing: 1px;
           }
           .pseudo{
             font-size: 10px;
@@ -117,10 +127,13 @@
 }
 
 .notification{
+  position: relative;
   display: flex;
   justify-content: left;
   align-items: center;
   span{
+    position: absolute;
+    right: 0%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,6 +161,27 @@
 
 
 
+@media screen and (max-width: 1300px){
+  .container{
+    li{
+      span{
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px){
+  .container{
+    li{
+      font-size: 10px!important;
+    }
+    svg{
+      width: 10px!important;
+    }
+  }
+}
 
 @media screen and (max-width: 900px){
   .container{

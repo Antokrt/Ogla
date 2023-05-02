@@ -40,7 +40,7 @@ export async function getServerSideProps() {
     }
 
 
-    console.log(cat.data)
+
     return {
         props: {
             err: data.err,
@@ -60,7 +60,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
     const router = useRouter();
 useEffect(() => {
-    console.log(width)
+    console.log(err)
 },[width])
 
     function deleteNotifs() {
@@ -86,7 +86,7 @@ useEffect(() => {
             <Banner/>
             <CategoryHome/>
             {
-                !err && tops &&
+                !err && tops && tops.length !== 0 &&
                 <div className={styles.hot}>
                     <div className={styles.headerHot}>
                         <h4>Populaires :</h4>
@@ -98,23 +98,23 @@ useEffect(() => {
                             width > 450 ?
                                 <>
                                     <HotPost className={styles.hotItem}
-                                             id={tops[0]._id}
-                                             slug={tops[0].slug}
-                                             likes={tops[0].likes}
+                                             id={tops[0]?._id}
+                                             slug={tops[0]?.slug}
+                                             likes={tops[0]?.likes}
                                              top={true}
-                                             title={tops[0].title} nbChapter={tops[0].nbChapters} author={tops[0].author_pseudo}
-                                             img={tops[0].img} category={tops[0].category}
-                                             description={tops[0].summary}
+                                             title={tops[0]?.title} nbChapter={tops[0]?.nbChapters} author={tops[0]?.author_pseudo}
+                                             img={tops[0]?.img} category={tops[0]?.category}
+                                             description={tops[0]?.summary}
                                     />
                                     <HotPost
                                         className={styles.hotItem}
-                                        id={tops[1]._id}
-                                        slug={tops[1].slug}
-                                        likes={tops[1].likes}
+                                        id={tops[1]?._id}
+                                        slug={tops[1]?.slug}
+                                        likes={tops[1]?.likes}
                                         top={false}
-                                        title={tops[1].title} nbChapter={tops[1].nbChapters} author={tops[1].author_pseudo}
-                                        img={tops[1].img} category={tops[1].category}
-                                        description={tops[1].summary}
+                                        title={tops[1]?.title} nbChapter={tops[1]?.nbChapters} author={tops[1]?.author_pseudo}
+                                        img={tops[1]?.img} category={tops[1]?.category}
+                                        description={tops[1]?.summary}
                                     />
                                 </>
 
@@ -122,40 +122,46 @@ useEffect(() => {
                                 :
                                 <>
                                     <HotPostPhone className={styles.hotItem}
-                                                  id={tops[0]._id}
-                                                  slug={tops[0].slug}
-                                                  likes={tops[0].likes}
+                                                  id={tops[0]?._id}
+                                                  slug={tops[0]?.slug}
+                                                  likes={tops[0]?.likes}
                                                   top={true}
-                                                  title={tops[0].title} nbChapter={tops[0].nbChapters} author={tops[0].author_pseudo}
-                                                  img={tops[0].img} category={tops[0].category}
-                                                  description={tops[0].summary}
+                                                  title={tops[0]?.title} nbChapter={tops[0]?.nbChapters} author={tops[0]?.author_pseudo}
+                                                  img={tops[0]?.img} category={tops[0]?.category}
+                                                  description={tops[0]?.summary}
                                     />
                                     <HotPostPhone
                                         className={styles.hotItem}
-                                        id={tops[1]._id}
-                                        slug={tops[1].slug}
-                                        likes={tops[1].likes}
+                                        id={tops[1]?._id}
+                                        slug={tops[1]?.slug}
+                                        likes={tops[1]?.likes}
                                         top={false}
-                                        title={tops[1].title} nbChapter={tops[1].nbChapters} author={tops[1].author_pseudo}
-                                        img={tops[1].img} category={tops[1].category}
-                                        description={tops[1].summary}
+                                        title={tops[1]?.title} nbChapter={tops[1]?.nbChapters} author={tops[1]?.author_pseudo}
+                                        img={tops[1]?.img} category={tops[1]?.category}
+                                        description={tops[1]?.summary}
                                     />
                                 </>
                         }
 
 
                     </div>
+                    {
+                        firstTopBooks.length !== 0 && secondTopBooks.length !== 0 &&
+                        <>
+                            <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
 
-                    <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
+
+                            <div className={styles.previewPostListContainer}>
+                                <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance '+ cat1}/>
+                                <div className={styles.sep}>
+
+                                </div>
+                                <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' +cat2}/>
+                            </div>
+                        </>
+                    }
 
 
-                    <div className={styles.previewPostListContainer}>
-                        <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance '+ cat1}/>
-                        <div className={styles.sep}>
-
-                        </div>
-                        <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' +cat2}/>
-                    </div>
 
 
 

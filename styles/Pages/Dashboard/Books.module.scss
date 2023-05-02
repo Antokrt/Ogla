@@ -11,19 +11,22 @@
   height: 100vh;
   width: 100%;
 }
-
 .verticalMenuContainer{
   height: 100%;
   width: 15%;
 }
-
 .containerData{
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 2%;
 }
-
+.errContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 .headerList{
   width: 80%;
   margin-top: 1%;
@@ -44,7 +47,6 @@
   }
 
 }
-
 .sortContainer{
   display: flex;
   justify-content: space-between;
@@ -63,7 +65,6 @@ button{
     font-size: 10px;
   }
 }
-
 .listContainer{
   display: flex;
   justify-content: start;
@@ -74,14 +75,12 @@ button{
   gap: 10px;
   flex: 1;
 }
-
 .list{
   display: flex;
   flex-direction: column;
   gap: 25px;
   width: 80%;
 }
-
 .seeMoreContainer{
   margin-top: 10px;
   display: flex;
@@ -93,7 +92,6 @@ button{
     font-size: 12px!important;
   }
 }
-
 .scrollbar{
   &::-webkit-scrollbar {
     width: 3px;
@@ -115,6 +113,94 @@ button{
   }
 }
 
+.mainHasNoBooks{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0% 5%;
+
+  .hasNotWriteContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contentNoBooks{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+    color: rgba(28, 35, 43, 0.87);
+    h3{
+      font-size: 22px;
+      color: #1C232B!important;
+      font-family: 'Montserrat Alternates',sans-serif;
+      font-weight: bold;
+    }
+    p{
+      font-family: 'Montserrat',sans-serif;
+      font-size: 15px;
+      text-align: left;
+      line-height: 25px;
+      font-weight: bold;
+      margin: 10px 0;
+
+    }
+
+    h5{
+      font-family: 'Rebond Grotesque',sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    ul{
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 10px;
+      li{
+        font-size: 14px;
+        font-family: 'Rebond Grotesque',sans-serif;
+        font-weight: bold;
+        color: #9844AD;
+      }
+    }
+
+    button{
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: $shadow;
+      padding: 15px 15px;
+      font-size: 12px;
+      font-weight: bold;
+      font-family: 'Poppins',sans-serif;
+      background-color: #9844AD;
+      width: 160px;
+      color: white;
+      border-radius: 5px;
+      gap: 8px;
+      svg{
+        width: 15px;
+      }
+    }
+  }
+
+  .imgNoBooks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 30%;
+img{
+  width: 15vh;
+}
+  }
+}
+
 @media screen and (max-width: 1400px){
   .verticalMenuContainer{
     width: 20%;
@@ -131,7 +217,38 @@ button{
   }
 }
 
+@media screen and (max-width: 1000px){
+
+  .mainHasNoBooks{
+    padding: 0% 2% !important;
+  }
+  .hasNotWriteContainer{
+    flex-direction: column-reverse!important;
+
+    h3{
+      margin-top: 20px;
+      text-align: center;
+    }
+    p{
+      text-align: center!important;
+    }
+
+    .contentNoBooks{
+      justify-content: center;
+      width: 80% !important;
+      align-items: center;
+      button{
+        padding: 10px 30px ;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 700px){
+
+  .mainHasNoBooks{
+    margin-top: -10%;
+  }
   .seeMoreContainer{
     margin-bottom: 10vh;
   }
@@ -145,5 +262,19 @@ button{
   .sortContainer{
     margin-top: 20px;
     margin-bottom: 40px;
+  }
+
+  .errContainer{
+    margin-top: -10vh;
+  }
+}
+
+
+
+@media screen and (max-width: 300px){
+  .sortContainer{
+    p{
+      font-size: 10px!important;
+    }
   }
 }

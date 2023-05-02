@@ -18,24 +18,25 @@
 
   h4{
     font-size: 24px;
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
     font-weight: bold;
     margin-bottom: 5px;
   }
 
   p{
+    text-align: center;
     margin-bottom: 20px;
-    font-family: 'Montserrat',sans-serif;
-    color: rgba(28, 35, 43, 0.83);
+    font-family: 'Rebond Grotesque',sans-serif;
+    color: rgb(28, 35, 43);
 font-size: 14px;
   }
 
   button{
     color: white;
-    font-family: 'Montserrat',sans-serif;
+    font-family: 'Poppins',sans-serif;
     background-color: #9844AD;
     font-weight: bold;
-    font-size: 11px;
+    font-size: 10px;
     border-radius: 4px;
     box-shadow: $shadow;
     padding: 10px 30px;

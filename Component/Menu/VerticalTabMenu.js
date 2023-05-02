@@ -29,9 +29,7 @@ export default function VerticalTabMenu() {
         <div className={styles.container}>
             <div className={styles.fContainer}>
                 <div className={styles.logo}>
-                    <h3 onClick={() => {
-                        router.push('/')
-                    }}><strong>OGLA</strong></h3>
+
                 </div>
 
                 <div className={styles.navContainer}>
@@ -57,6 +55,7 @@ export default function VerticalTabMenu() {
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
                         <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}/>
+                        <span></span>
                     </div>
                 </div>
             </div>

@@ -5,11 +5,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 100%;
+  width: 100px;
   z-index: 1;
   padding-top: 35px;
   padding-bottom: 35px;
-  background-color: white;
+  background-color: #1C232B;
   box-shadow: $shadow;
 
   .fContainer{
@@ -17,15 +17,6 @@
     flex-direction: column;
     .logo{
       margin-bottom: 80px;
-      h3{
-        cursor: pointer;
-        text-align: center;
-        z-index: 2;
-        font-family: 'Montserrat',sans-serif;
-        font-weight: bold;
-        font-size: 25px;
-        color: #1C232B;
-      }
     }
   }
 
@@ -35,25 +26,20 @@
     ul{
       display: flex;
       flex-direction: column;
-
       gap: 10px;
       li{
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #54595F;
+        color: white;
         padding: 1.5vh;
         border-radius: 15px;
-        font-family: "Lato",sans-serif;
-        letter-spacing: 1px;
-        font-weight: bold;
-        font-size: 11px;
         svg{
           margin-top: -2px;
           width: 25px;
           min-width: 20px;
-          color: #54595F;
+          color: white;
         }
       }
     }
@@ -79,6 +65,7 @@
       height: auto;
 
       .profil{
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -88,28 +75,21 @@
         img{
           cursor: pointer;
           width: 40px;
+          height: 40px;
           border-radius: 50%;
           object-fit: cover;
         }
 
-        .infos{
-          cursor: pointer;
-          display: flex;
-          flex-direction: column;
-          .name{
-            font-size: 12px;
-            font-family: 'Lato',sans-serif;
-            font-weight: bold;
-            color: #1C232B;
-            letter-spacing: 1px;
-          }
-          .pseudo{
-            font-size: 10px;
-            font-weight: bold;
-            font-family: 'Lato',sans-serif;
-            color: #1C232B;
-          }
+        span{
+          position: absolute;
+          bottom: 10%;
+          right: 22%;
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background-color: #97fd97;
         }
+
       }
     }
   }
@@ -148,6 +128,8 @@
     }
   }
 }
+
+
 
 
 @media screen and (max-height: 500px) and (orientation: landscape){

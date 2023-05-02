@@ -94,7 +94,7 @@ const Profil = ({profilData, err}) => {
     }
 
     const updateSettings = () => {
-        if (musicState !== profil.settings.music || notifState !== profil.settings.notif) {
+        if (musicState !== profil?.settings?.music || notifState !== profil?.settings?.notif) {
             const newSettings = {
                 music: musicState,
                 notif: notifState
@@ -463,7 +463,7 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.modifySettingsBtn}>
                     <button
                         onClick={() => updateSettings()}
-                        className={musicState !== profil.settings.music || notifState !== profil.settings.notif ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                        className={musicState !== profil?.settings?.music || notifState !== profil?.settings?.notif ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
                     </button>
                 </div>
 

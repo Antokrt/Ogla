@@ -210,6 +210,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
         }
     }
 
+    useEffect(() => {
+       console.log(bookData)
+    },[])
+
     return (
         <div className={width < 500 && phoneMenuLinkActive === 'infos' ? styles.container + ' ' + styles.scrollO : styles.container }>
             {
@@ -218,7 +222,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     :
                     <>
                         {
-                            width  >= 700 && width <= 900 ?
+                            width  >= 700 && width <= 1050 ?
                                 <div className={styles.verticalTabContainer}>
                                     <VerticalTabMenu/>
                                 </div>
@@ -400,7 +404,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/stats/bar.png'}/>
 
                                                     <div>
-                                                        <p className={styles.valueStats}>{book.stats.view}</p>
+                                                        <p className={styles.valueStats}>{book?.stats?.view}</p>
                                                         <p className={styles.labelStats}>vue(s) <ChatBubbleBottomCenterTextIcon/></p>
                                                     </div>
 
@@ -416,7 +420,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/stats/comments.png'}/>
 
                                                     <div>
-                                                        <p className={styles.valueStats}>1287</p>
+                                                        <p className={styles.valueStats}>{book.stats.nbCommentary}</p>
 
                                                         <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/></p>
                                                     </div>
@@ -487,12 +491,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 book.chapter_list.length === 0 ?
                                                     <div className={styles.emptyContainer}>
                                                         <h6>Oups !</h6>
-                                                        <img src={'/assets/jim/smile6.png'}/>
+                                                        <img src={'/assets/diapo/moon.png'}/>
                                                         <p>C'est bien vide ici, écrivez votre prochain chapitre dès
                                                             maintenant</p>
                                                         <button
                                                             onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                        >Commencez à écrire
+                                                        >Commencez à écrire <CursorArrowRaysIcon/>
                                                         </button>
                                                     </div> :
 
@@ -535,6 +539,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                         like={item.likes}
                                                                                         publish={item.publish}
                                                                                     />
+
                                                                                     <CardChapter
                                                                                         id={item._id}
                                                                                         date={item.date_creation}
@@ -543,30 +548,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                         like={item.likes}
                                                                                         publish={item.publish}
                                                                                     />
-                                                                                    <CardChapter
-                                                                                        id={item._id}
-                                                                                        date={item.date_creation}
-                                                                                        title={item.title}
-                                                                                        index={chapterNumber}
-                                                                                        like={item.likes}
-                                                                                        publish={item.publish}
-                                                                                    />
-                                                                                    <CardChapter
-                                                                                        id={item._id}
-                                                                                        date={item.date_creation}
-                                                                                        title={item.title}
-                                                                                        index={chapterNumber}
-                                                                                        like={item.likes}
-                                                                                        publish={item.publish}
-                                                                                    />
-                                                                                    <CardChapter
-                                                                                        id={item._id}
-                                                                                        date={item.date_creation}
-                                                                                        title={item.title}
-                                                                                        index={chapterNumber}
-                                                                                        like={item.likes}
-                                                                                        publish={item.publish}
-                                                                                    />
+
+
                                                                                 </>
 
                                                                             )
@@ -784,7 +767,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <img src={'/assets/stats/comments.png'}/>
 
                                                         <div>
-                                                            <p className={styles.valueStats}>1287</p>
+                                                            <p className={styles.valueStats}>{book.stats.nbCommentary}</p>
 
                                                             <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/></p>
 </div>
@@ -852,13 +835,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 {
                                                     book.chapter_list.length === 0 ?
                                                         <div className={styles.emptyContainer}>
-                                                            <h6>Oups !</h6>
-                                                            <img src={'/assets/jim/smile6.png'}/>
+                                                            <img src={'/assets/diapo/moon.png'}/>
                                                             <p>C'est bien vide ici, écrivez votre prochain chapitre dès
                                                                 maintenant</p>
                                                             <button
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                            >Commencez à écrire
+                                                            >Commencez à écrire <CursorArrowRaysIcon/>
                                                             </button>
                                                         </div> :
 

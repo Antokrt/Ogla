@@ -46,7 +46,7 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date,
                         <img src={'/assets/diapo/book.png'}/>
 
                     </div>
-                    <h7>{nbChapter}212 chapitre(s)</h7>
+                    <h7>{nbChapter} chapitre(s)</h7>
                     <p><span>{nbView}221</span> vue(s) totale(s) | <span>221{likes}</span> like(s) |  <strong>{Capitalize(category)}</strong></p>
                 </div>
             </div>

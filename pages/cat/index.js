@@ -92,6 +92,10 @@ export default function CatPage({cat, err, bookListData,topData}) {
             .catch((err) => setLoadingScroll(false));
     }
 
+    useEffect(() => {
+       console.log(topData)
+    },[])
+
 
     return (
         <div className={styles.container}>
@@ -107,7 +111,6 @@ export default function CatPage({cat, err, bookListData,topData}) {
                     {
                         topData &&
                         <div className={styles.hotContainer}>
-
 
                             {
                                 width > 530 ?

@@ -5,9 +5,11 @@ import {useRouter} from "next/router";
 import {Capitalize} from "../../utils/String";
 import {ArrowsPointingInIcon, ForwardIcon, HeartIcon,ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 import BookSvg from "../layouts/Icons/BookSvg";
+import {useEffect} from "react";
 
 export const HotPost = ({img, title, category, author, nbChapter, description, likes, top,slug,id}) => {
     const router = useRouter();
+
     return (
 
         <div className={styles.container} onClick={() => router.push({
@@ -35,7 +37,7 @@ export const HotPost = ({img, title, category, author, nbChapter, description, l
                         className={styles.nbChapter}>{nbChapter} chapitre(s)</span></p>
                 </div>
                 <div className={styles.description}>
-                    <p>{description} {description} descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription</p>
+                    <p>{description} {description} </p>
                 </div>
                 <div></div>
             </div>
