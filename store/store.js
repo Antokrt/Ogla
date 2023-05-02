@@ -5,6 +5,7 @@ import {modalSlice} from "./slices/modalSlice";
 import {musicSlice} from "./slices/musicSlice";
 import {notifSlice} from "./slices/notifSlice";
 import {socketSlice} from "./slices/socketSlice";
+import {themeSlice} from "./slices/themeSlice";
 
 const makeStore = () =>
     configureStore({
@@ -14,6 +15,7 @@ const makeStore = () =>
             [modalSlice.name]: modalSlice.reducer,
             [musicSlice.name]: musicSlice.reducer,
             [socketSlice.name]: socketSlice.reducer,
+            [themeSlice.name]: themeSlice.reducer,
         },
         devTools: true
     })

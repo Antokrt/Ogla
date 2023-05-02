@@ -8,7 +8,7 @@ import FeaturedCategoryPostList from "../../Component/Post/FeaturedCategoryPostL
 import CategoryHeader from "../../Component/Category/CategoryHeader";
 import {getData} from "../../services/Post";
 import NewFeatured from "../../Component/Category/New";
-import {DateNow} from "../../utils/Date";
+import {DateNow, FormatDateMonthYear, FormatDateStr} from "../../utils/Date";
 import Footer from "../../Component/Footer";
 import {getSession, useSession} from "next-auth/react";
 
@@ -17,7 +17,7 @@ import {GetAuthorProfilAPI} from "../api/Author";
 import {GetBookByCategoryApi, GetOneBookApi} from "../api/book";
 import {GetBooksWithCategoryService} from "../../service/Book/BookService";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
-import {Loader1, Loader2, LoaderCommentary} from "../../Component/layouts/Loader";
+import {Loader1, Loader2, LoaderCard} from "../../Component/layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {ErrModal} from "../../Component/Modal/ErrModal";
 import ErrMsg from "../../Component/ErrMsg";
@@ -27,6 +27,8 @@ import {HorizontalCard} from "../../Component/Card/HorizontalCard";
 import {ListCard} from "../../Component/Card/ListCard";
 import ScreenSize from "../../utils/Size";
 import {ScrollDownUtils} from "../../utils/Scroll";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
@@ -53,9 +55,7 @@ export default function CatPage({cat, err, bookListData,topData}) {
     const [canSeeMore, setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [width, height] = ScreenSize();
-
-
-
+    const theme = useSelector(selectTheme);
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
@@ -98,7 +98,7 @@ export default function CatPage({cat, err, bookListData,topData}) {
 
 
     return (
-        <div className={styles.container}>
+        <div className={theme? styles.container : styles.darkContainer}>
             <Header/>
             <CategoryHeader/>
             {
@@ -144,8 +144,8 @@ export default function CatPage({cat, err, bookListData,topData}) {
                                     cat !== undefined &&
                                     <h3><span className={styles.f}> Populaires</span></h3>
                                 }
-
-                                <p>{DateNow()}</p>
+                                <p> {FormatDateMonthYear(Date.now())} </p>
+                                
                             </div>
                         </div>
 
@@ -175,18 +175,16 @@ export default function CatPage({cat, err, bookListData,topData}) {
                                 !err && bookListData &&
                                 <>
                                     <ListCard books={bookList}/>
-
                                     {
                                         canSeeMore && !loadingScroll &&
                                         <div className={styles.containerSeeMore}>
                                             <TextSeeMore onclick={() => loadMoreBooks()}/>
                                         </div>
                                     }
-
                                     {
                                         loadingScroll &&
                                         <div className={styles.containerSeeMore}>
-                                            <LoaderCommentary/>
+                                            <LoaderCard/>
                                         </div>
                                     }
                                 </>
@@ -198,14 +196,11 @@ export default function CatPage({cat, err, bookListData,topData}) {
                 </div>
 
             }
-
             {
                 err &&
                 <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'}/>
             }
-
             <Footer/>
-
         </div>
     )
 }

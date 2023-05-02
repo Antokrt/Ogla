@@ -2,11 +2,14 @@ import styles from "../../styles/SearchBar/SearchBarResult.module.scss";
 import React, {useEffect, useState} from "react";
 import {TagIcon} from "@heroicons/react/24/solid";
 import {useRouter} from "next/router";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 
 const ResultSearchBar = ({destroy, query, data}) => {
 
     const router = useRouter();
+    const light = useSelector(selectTheme);
 
     const titleHeader = (type, number) => {
         return (
@@ -18,7 +21,7 @@ const ResultSearchBar = ({destroy, query, data}) => {
 
 
     return (
-        <div className={styles.resultContainer}>
+        <div className={light? styles.resultContainer : styles.blackResultContainer}>
             {
                 data &&
                 <>

@@ -1,6 +1,6 @@
 @import "../../utils/var";
 
-.container{
+.container {
   &::-webkit-scrollbar {
     height: 2px;
   }
@@ -18,34 +18,39 @@
   gap: 10vh;
   margin: 4vh 0;
 
-  .list{
-display: inline-flex;
+  .list {
+    display: inline-flex;
     gap: 20px;
   }
 
-  .book{
-    &:hover{
-      a,p{
+  .book {
+    &:hover {
+
+      a,
+      p {
         color: $darkBrown;
         transition: 0.1s;
       }
     }
+
     opacity: 0.9;
     cursor: pointer;
-display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-width: 60px;
-    img{
+
+    img {
       margin-bottom: 10px;
       object-fit: cover;
       height: 60px;
       width: 60px;
     }
 
-    a,p{
-      &:first-letter{
+    a,
+    p {
+      &:first-letter {
         text-transform: uppercase;
       }
 
@@ -54,36 +59,111 @@ display: flex;
       text-decoration: none;
       color: rgba(28, 35, 43, 0.68);
       font-weight: bold;
-      font-family: "Lobster",sans-serif;
+      font-family: "Lobster",
+      sans-serif;
     }
   }
 
 }
 
-.active{
- a,p{
-   color: $darkBrown!important;
- }
-}
+.active {
 
-
-
-@media screen and (orientation: landscape) and (max-width: 900px) {
-  .container{
-    margin-top: 60px ;
+  a,
+  p {
+    color: $darkBrown !important;
   }
 }
 
-@media screen and (max-width: 950px){
-  .container{
-    gap: 4vh!important;
+/* Theme sombre */
+.darkContainer {
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(164, 160, 165, 0.15);
+  }
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10vh;
+  margin: 4vh 0;
+  background-color:  #0e0e10;
+
+  .list {
+    display: inline-flex;
+    gap: 20px;
+  }
+
+  .book {
+    &:hover {
+      a,
+      p {
+        color: white;
+        transition: 0.1s;
+      }
+    }
+
+    opacity: 0.9;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 60px;
+
+    img {
+      margin-bottom: 10px;
+      object-fit: cover;
+      height: 60px;
+      width: 60px;
+    }
+
+    a,
+    p {
+      &:first-letter {
+        text-transform: uppercase;
+      }
+
+      transition: 0.1s;
+      text-align: center;
+      text-decoration: none;
+      color:  hsla(0deg, 100%, 100%, 0.88);
+      font-weight: bold;
+      font-family: "Lobster",
+      sans-serif;
+    }
+  }
+
+}
+
+@media screen and (orientation: landscape) and (max-width: 900px) {
+  .container {
+    margin-top: 60px;
+  }
+  .darkContainer {
+    margin-top: 60px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .container {
+    gap: 4vh !important;
+    justify-content: center;
+    align-items: center;
+  }
+  .darkContainer {
+    gap: 4vh !important;
     justify-content: center;
     align-items: center;
   }
 }
 
-@media screen and (max-width: 600px){
-  .container{
+@media screen and (max-width: 600px) {
+  .container {
     justify-content: flex-start;
     overflow-x: scroll;
     padding-bottom: 20px;
@@ -93,4 +173,13 @@ display: flex;
     padding-right: 10px;
   }
 
+  .darkContainer {
+    justify-content: flex-start;
+    overflow-x: scroll;
+    padding-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 10px;
+    padding-left: 20px;
+    padding-right: 10px;
+  }
 }

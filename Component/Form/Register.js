@@ -1,13 +1,14 @@
-import styles from "../../styles/Pages/Form/Login.module.scss";
+import styles from "../../styles/Pages/Form/Register.module.scss";
 
-import {Formik, Field, Form, ErrorMessage} from 'formik';
-import {useEffect, useState} from "react";
-import {RegisterSchema} from "./Schema/RegisterSchema";
-import { useRouter} from "next/router";
-import {signIn} from "next-auth/react";
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { useEffect, useState } from "react";
+import { RegisterSchema } from "./Schema/RegisterSchema";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import ScreenSize from "../../utils/Size";
 
 
-const Register = ({login}) => {
+const Register = ({ login }) => {
 
     const [errItem, setErrItem] = useState({
         email: {
@@ -38,8 +39,8 @@ const Register = ({login}) => {
         password: "",
         confirmPassword: "",
     };
-
     const router = useRouter();
+    const [width, height] = ScreenSize();
 
     const loginLink = () => {
         return (
@@ -55,37 +56,37 @@ const Register = ({login}) => {
         )
     }
 
-    const submit =  async (values) => {
+    const submit = async (values) => {
         const formData = {
-            email : values.email,
+            email: values.email,
             pseudo: values.pseudo,
             password: values.password,
             is_author: false,
             redirect: false
         }
-        console.log(formData)
-        const register = await signIn('signup',formData)
+        const register = await signIn('signup', formData)
             .then((res) => {
-                if(res.status === 401){
+                console.log(res)
+                if (res.status === 401) {
                     let errMsg = res.error;
                     switch (errMsg) {
-                        case"email && pseudo already exists":
+                        case "Email & pseudo already exists":
                             setSubmitErr({
                                 msg: 'Email ou pseudo déjà existant',
                                 show: true
                             })
                             break;
 
-                        case "email already exists":
+                        case "Email  already exists":
                             setSubmitErr({
                                 msg: 'Email déjà existant',
                                 show: true
                             })
                             break;
 
-                        case "pseudo already exists":
+                        case "Pseudo already exists":
                             setSubmitErr({
-                                msg: 'Email déjà existant',
+                                msg: 'Pseudo déjà existant',
                                 show: true
                             })
                             break;
@@ -99,133 +100,146 @@ const Register = ({login}) => {
                 }
                 else {
                     setSubmitErr({
-                        msg:'Oups une erreur à eu lieu',
+                        msg: 'Oups une erreur à eu lieu',
                         show: true
                     })
                 }
             })
             .catch((err) => setSubmitErr({
-                msg:'Oups une erreur à eu lieu',
+                msg: 'Oups une erreur à eu lieu',
                 show: true
             }))
-            /*RegisterService(formData)
-                .catch((err) => {
-                    let errMsg = err.response.data.message;
-                    switch (errMsg){
-                        case"email && pseudo already exists":
-                            setSubmitErr({
-                                msg: 'Email ou pseudo déjà existant',
-                                show: true
-                            })
-                            break;
+        /*RegisterService(formData)
+            .catch((err) => {
+                let errMsg = err.response.data.message;
+                switch (errMsg){
+                    case"email && pseudo already exists":
+                        setSubmitErr({
+                            msg: 'Email ou pseudo déjà existant',
+                            show: true
+                        })
+                        break;
 
-                        case "email already exists":
-                            setSubmitErr({
-                                msg: 'Email déjà existant',
-                                show: true
-                            })
-                            break;
+                    case "email already exists":
+                        setSubmitErr({
+                            msg: 'Email déjà existant',
+                            show: true
+                        })
+                        break;
 
-                        case "pseudo already exists":
-                            setSubmitErr({
-                                msg: 'Email déjà existant',
-                                show: true
-                            })
-                            break;
+                    case "pseudo already exists":
+                        setSubmitErr({
+                            msg: 'Email déjà existant',
+                            show: true
+                        })
+                        break;
 
-                        default:
-                            setSubmitErr({
-                                msg: "Erreur lors de l'envoi du formulaire",
-                                show: true
-                            })
-                    }
-                })*/
+                    default:
+                        setSubmitErr({
+                            msg: "Erreur lors de l'envoi du formulaire",
+                            show: true
+                        })
+                }
+            })*/
     }
-
 
     return (
         <div className={styles.formContainer}>
+            <div className={styles.leftBlock}>
+                <div className={styles.content}>
+                    <div className={styles.header}>
+                        <img src="/assets/bookOrange2.png" />
+                        <h1> Rejoins nous !</h1>
+                        <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tout.
+                            Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
+                        {/* <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
+                        Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre
+                        histoire parce que nous croyons au pouvoir des mots.
+                    </p> */}
+                    </div>
+                    <div className={styles.form}>
+                        <Formik
+                            initialValues={initialValues}
+                            validationSchema={RegisterSchema}
+                            onSubmit={(values) => {
+                                submit(values)
+                            }}>
+                            {({ resetForm }) => (
+                                <Form>
+                                    <div className={styles.selectItem + " " + "fadeIn"}>
+                                        {/* EMAIL */}
+                                        <label htmlFor={"email"}>Email <span>*</span></label>
+                                        {email !== "" && errItem.email.show && !validateEmail(email) && errMsgItem(errItem.email.msg)}
+                                        <p className={styles.errMsgItem}>
+                                            <ErrorMessage name={"email"} />
+                                        </p>
+                                        <Field
+                                            id={'email'}
+                                            type={"email"}
+                                            name={"email"}
+                                            placeholder={"Email"} />
+                                        {/* EMAIL */}
 
-            <div className={styles.header}>
-                <h1>Rejoins nous !</h1>
-                <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
-                    Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre
-                    histoire parce que nous croyons au pouvoir des mots.
-                </p>
+                                        {/* PSEUDO */}
+                                        <label htmlFor={"pseudo"}>Pseudo <span>*</span></label>
+                                        <p className={styles.errMsgItem}>
+                                            <ErrorMessage name={"pseudo"} />
+                                        </p>
+                                        <Field
+                                            type={"text"}
+                                            id={"pseudo"}
+                                            name={"pseudo"}
+                                            placeholder={"Pseudo"} />
+                                        {/* PSEUDO */}
+
+                                        {/* PASSWORD */}
+                                        <label htmlFor={"password"}>Mot de passe <span>*</span></label>
+                                        <p className={styles.errMsgItem}>
+                                            <ErrorMessage name={"password"} />
+                                        </p>
+                                        <Field
+                                            id={'password'}
+                                            type={"password"}
+                                            name={"password"}
+                                            placeholder={"Mot de passe"} />
+                                        {/* PASSWORD */}
+
+                                        {/* CONFIRM PASSWORD */}
+                                        <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe <span>*</span></label>
+                                        <p className={styles.errMsgItem}>
+                                            <ErrorMessage name={"confirmPassword"} />
+                                        </p>
+                                        <Field
+                                            id={"confirmPassword"}
+                                            type={"password"}
+                                            placeholder={"Confirmez votre mot de passe"}
+                                            name={"confirmPassword"} />
+                                        {/* CONFIRM PASSWORD */}
+                                    </div>
+                                    {
+                                        submitErr.show &&
+                                        <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
+                                    }
+                                    <div className={styles.stepBtnContainer}>
+                                        <button type={'submit'} className={styles.stepBtn}> S'inscrire
+                                        </button>
+                                    </div>
+                                    <div className={styles.lastOptions}>
+                                        {loginLink()}
+                                        <p onClick={() => router.push("/")}> Accueil </p>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
+                    </div>
+                </div>
             </div>
-            <div className={styles.form}>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={RegisterSchema}
-                    onSubmit={(values) => {
-                        submit(values)
-                    }}>
-                    {({resetForm}) => (
-                        <Form>
-                            <div className={styles.selectItem + " " + "fadeIn"}>
-
-                                {/* EMAIL */}
-                                <label htmlFor={"email"}>Email <span>*</span></label>
-                                {email !== "" && errItem.email.show && !validateEmail(email) && errMsgItem(errItem.email.msg)}
-                                <p className={styles.errMsgItem}>
-                                    <ErrorMessage name={"email"}/>
-                                </p>
-                                <Field
-                                    id={'email'}
-                                    type={"email"}
-                                    name={"email"}
-                                    placeholder={"Email"}/>
-                                {/* EMAIL */}
-
-                                {/* PSEUDO */}
-                                <label htmlFor={"pseudo"}>Pseudo <span>*</span></label>
-                                <p className={styles.errMsgItem}>
-                                    <ErrorMessage name={"pseudo"}/>
-                                </p>
-                                <Field
-                                    type={"text"}
-                                    id={"pseudo"}
-                                    name={"pseudo"}
-                                    placeholder={"Pseudo"}/>
-                                {/* PSEUDO */}
-
-                                {/* PASSWORD */}
-                                <label htmlFor={"password"}>Mot de passe <span>*</span></label>
-                                <p className={styles.errMsgItem}>
-                                    <ErrorMessage name={"password"}/>
-                                </p>
-                                <Field
-                                    id={'password'}
-                                    type={"password"}
-                                    name={"password"}
-                                    placeholder={"Mot de passe"}/>
-                                {/* PASSWORD */}
-
-                                {/* CONFIRM PASSWORD */}
-                                <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe <span>*</span></label>
-                                <p className={styles.errMsgItem}>
-                                    <ErrorMessage name={"confirmPassword"}/>
-                                </p>
-                                <Field
-                                       id={"confirmPassword"}
-                                       type={"password"}
-                                       placeholder={"Confirmez votre mot de passe"}
-                                       name={"confirmPassword"}/>
-                                {/* CONFIRM PASSWORD */}
-                                {loginLink()}
-                            </div>
-                            {
-                                submitErr.show &&
-                                <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
-                            }
-                            <div className={styles.stepBtnContainer}>
-                                <button type={'submit'}  className={styles.stepBtn}>S'inscrire
-                                </button>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
+            {
+                width > 1000 &&
+                <div className={styles.containerImg}>
+                    <img src={"/assets/diapo/knight2.png"} />
+                </div>
+            }
         </div>
     )
 }

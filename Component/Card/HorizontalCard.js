@@ -5,9 +5,13 @@ import {useRouter} from "next/router";
 import {HeartIcon} from "@heroicons/react/20/solid";
 import Header from "../Header";
 import {Capitalize} from "../../utils/String";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters}) => {
     const router = useRouter();
+    const theme = useSelector(selectTheme);
+
     return(
         <div
             onClick={() => {
@@ -16,7 +20,7 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
                     query: slug
                 })
             }}
-            className={styles.container}>
+            className={theme? styles.container : styles.darkContainer}>
             <div className={styles.containerImg}>
                 <img src={img}/>
             </div>

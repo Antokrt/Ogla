@@ -16,9 +16,7 @@
   width: 100%;
 }
 
-
-
-@media screen and (max-width: 1020px){
+@media screen and (max-width: 1040px){
   .list{
     grid-template-columns: 1fr 1fr;
   }
@@ -31,7 +29,7 @@
 }
 
 
-@media screen and (max-width: 610px){
+@media screen and (max-width: 620px){
   .list{
     margin-top: 30px;
     grid-template-columns: 1fr;

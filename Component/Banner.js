@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import styles from "../styles/Component/Banner.module.scss";
 import {useSession} from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Banner() {
     const {data: session} = useSession();
+    const router = useRouter();
+
     return (
         <div className={styles.container}>
             <div className={styles.HomeCenterBlock}>
@@ -12,13 +15,11 @@ export default function Banner() {
                         <h1> Commencez votre voyage avec <span>OGLA</span> ! </h1>
                         <p> Découvrez des histoires captivantes et des
                             aventures passionantes qui vous ferons voyager au-delà de votre imagination... </p>
-                        <button> Voir la librairie</button>
+                        <button onClick={() => router.push("/cat")}> Voir la librairie</button>
                         <p className={styles.token}>{session?.user?.accessToken}</p>
                     </div>
                 </div>
-                    <img className={styles.welcomeDesktop} src={'/assets/diapo/Welcome.png'}/>
-
-
+                <img className={styles.welcomeDesktop} src={'/assets/diapo/Welcome.png'}/>
             </div>
             <img className={styles.mountain} src={'/assets/diapo/mountain2.png'}/>
             <svg id="visual" viewBox="0 0 960 540" version="1.1">

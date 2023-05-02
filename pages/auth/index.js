@@ -32,11 +32,8 @@ const Auth = () => {
         else {
             return (
                 <div className={styles.container}>
-                    <div className={styles.purple}></div>
-                    <div className={styles.block}>
-                        <div className={styles.imgContainer}>
-                            <img src={"/assets/gon.png"}/>
-                        </div>
+
+                    <div className={styles.content}> 
                         {
                             choice === "register" &&
                             <Register login={() => {
@@ -68,6 +65,42 @@ const Auth = () => {
                             />
                         }
                     </div>
+                    {/* <div className={styles.purple}></div> */}
+                    {/* <div className={styles.block}>
+                        <div className={styles.imgContainer}>
+                            <img src={"/assets/other/manStanding3.png"} />
+                        </div>
+                        {
+                            choice === "register" &&
+                            <Register login={() => {
+                                setChoice("login");
+                                setQuery("login");
+                            }}/>
+                        }
+                        {
+                            choice === "login" &&
+                                <Login register={() => {
+                                    setChoice("register");
+                                    setQuery("register");
+                                }}
+                                forgotPassword={() => {
+                                setChoice("forgotPassword");
+                                setQuery("forgotPassword")
+                                }
+                                }
+                                />
+                        }
+                        {
+                            choice === "forgotPassword" &&
+                            <ForgotPassword
+                            login={() => {
+                            setChoice("login");
+                            setQuery("login");
+                            }
+                            }
+                            />
+                        }
+                    </div> */}
                 </div>
             )
         }

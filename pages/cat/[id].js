@@ -1,33 +1,35 @@
 import Header from "../../Component/Header";
 import BannerOnPost from "../../Component/BannerOnPost";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import PreviewPost from "../../Component/Post/PreviewPost";
 import styles from "../../styles/Pages/Cat.module.scss";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import FeaturedCategoryPostList from "../../Component/Post/FeaturedCategoryPostList";
 import CategoryHeader from "../../Component/Category/CategoryHeader";
-import {getData} from "../../services/Post";
+import { getData } from "../../services/Post";
 import NewFeatured from "../../Component/Category/New";
-import {DateNow} from "../../utils/Date";
+import { DateNow, FormatDateMonthYear } from "../../utils/Date";
 import Footer from "../../Component/Footer";
-import {getSession, useSession} from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
-import {CardBookPublic} from "../../Component/Card/CardBook";
-import {GetAuthorProfilAPI} from "../api/Author";
-import {GetBookByCategoryApi} from "../api/book";
-import {Capitalize} from "../../utils/String";
-import {GetBooksWithCategoryService} from "../../service/Book/BookService";
-import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
-import {LoaderCommentary} from "../../Component/layouts/Loader";
+import { CardBookPublic } from "../../Component/Card/CardBook";
+import { GetAuthorProfilAPI } from "../api/Author";
+import { GetBookByCategoryApi } from "../api/book";
+import { Capitalize } from "../../utils/String";
+import { GetBooksWithCategoryService } from "../../service/Book/BookService";
+import { TextSeeMore } from "../../Component/layouts/Btn/ActionBtn";
+import { LoaderCard, LoaderCommentary } from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
-import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
-import {ListCard} from "../../Component/Card/ListCard";
-import {BannerCategory} from "../../Component/Category/BannerCategory";
-import {GetPresentationOfCategory} from "../../utils/CategoryUtils";
+import { HotPost, HotPostPhone } from "../../Component/Post/HotPost";
+import { ListCard } from "../../Component/Card/ListCard";
+import { BannerCategory } from "../../Component/Category/BannerCategory";
+import { GetPresentationOfCategory } from "../../utils/CategoryUtils";
 import ScreenSize from "../../utils/Size";
-import {ScrollDownUtils} from "../../utils/Scroll";
+import { ScrollDownUtils } from "../../utils/Scroll";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
-export async function getServerSideProps({req,params}){
+export async function getServerSideProps({ req, params }) {
 
     let category = params.id;
 
@@ -36,31 +38,31 @@ export async function getServerSideProps({req,params}){
 
     return {
         props: {
-            key:category,
+            key: category,
             err: data.err,
-            cat:category,
+            cat: category,
             bookListData: data.book
         }
     }
 }
 
-export default function CatPage({cat,err,bookListData}) {
+export default function CatPage({ cat, err, bookListData }) {
 
     const router = useRouter();
     const [filter, setFilter] = useState('popular');
     const [page, setPage] = useState(2);
-    const {data: session} = useSession();
-    const [bookList,setBookList] = useState(bookListData);
-    const [canSeeMore,setCanSeeMore] = useState(true);
-    const [loadingScroll, setLoadingScroll] =useState(false);
+    const { data: session } = useSession();
+    const [bookList, setBookList] = useState(bookListData);
+    const [canSeeMore, setCanSeeMore] = useState(true);
+    const [loadingScroll, setLoadingScroll] = useState(false);
     const [width, height] = ScreenSize();
-
+    const theme = useSelector(selectTheme);
     const topBook = bookListData[0];
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
         setCanSeeMore(true);
-        GetBooksWithCategoryService(cat,filter,1)
+        GetBooksWithCategoryService(cat, filter, 1)
             .then((res) => {
                 setBookList(res);
             })
@@ -75,17 +77,17 @@ export default function CatPage({cat,err,bookListData}) {
     const loadMoreBooks = () => {
         setLoadingScroll(true);
         setCanSeeMore(false);
-        GetBooksWithCategoryService(cat,filter,page)
+        GetBooksWithCategoryService(cat, filter, page)
             .then((res) => {
-                if(res.length !== 0){
-                    setBookList((prevState)=> [
+                if (res.length !== 0) {
+                    setBookList((prevState) => [
                         ...prevState,
                         ...res
                     ]);
                     setCanSeeMore(true);
                     setPage(page + 1);
                 }
-                else{
+                else {
                     setCanSeeMore(false);
                 }
             })
@@ -94,12 +96,11 @@ export default function CatPage({cat,err,bookListData}) {
             .catch((err) => setLoadingScroll(false));
     }
 
-
     return (
-        <div className={styles.container}>
-            <Header/>
-            <CategoryHeader/>
-            <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)}/>
+        <div className={theme ? styles.container : styles.darkContainer}>
+            <Header />
+            <CategoryHeader />
+            <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)} />
             {
                 width < 530 &&
                 <h5 className={styles.thisMonthPhone}>Ce mois ci :</h5>
@@ -113,26 +114,26 @@ export default function CatPage({cat,err,bookListData}) {
                             {
                                 width > 530 ?
                                     <HotPost className={styles.hotItem}
-                                             likes={topBook.likes}
-                                             title={topBook.title} author={topBook.author_pseudo}
-                                             img={topBook.img} category={topBook.category}
-                                             nbChapter={topBook.nbChapters}
-                                             slug={topBook.slug}
-                                             id={topBook._id}
-                                             top={true}
-                                             description={topBook.summary}
+                                        likes={topBook.likes}
+                                        title={topBook.title} author={topBook.author_pseudo}
+                                        img={topBook.img} category={topBook.category}
+                                        nbChapter={topBook.nbChapters}
+                                        slug={topBook.slug}
+                                        id={topBook._id}
+                                        top={true}
+                                        description={topBook.summary}
                                     />
                                     :
                                     <>
                                         <HotPostPhone className={styles.hotItem}
-                                                      likes={topBook.likes}
-                                                      title={topBook.title} author={topBook.author_pseudo}
-                                                      img={topBook.img} category={topBook.category}
-                                                      nbChapter={topBook.nbChapters}
-                                                      slug={topBook.slug}
-                                                      id={topBook._id}
-                                                      top={true}
-                                                      description={topBook.summary}
+                                            likes={topBook.likes}
+                                            title={topBook.title} author={topBook.author_pseudo}
+                                            img={topBook.img} category={topBook.category}
+                                            nbChapter={topBook.nbChapters}
+                                            slug={topBook.slug}
+                                            id={topBook._id}
+                                            top={true}
+                                            description={topBook.summary}
                                         />
                                     </>
 
@@ -156,7 +157,7 @@ export default function CatPage({cat,err,bookListData}) {
                                     <h3><span className={styles.f}> Librairie  ({Capitalize(cat)})</span></h3>
                                 }
 
-                                <p>{DateNow()}</p>
+                                <p>{FormatDateMonthYear(Date.now())}</p>
                             </div>
                         </div>
 
@@ -184,22 +185,20 @@ export default function CatPage({cat,err,bookListData}) {
                             </div>
                             {
                                 !err && bookListData &&
-                                    <ListCard books={bookList}/>
+                                <ListCard books={bookList} />
                             }
                             {
                                 canSeeMore && !loadingScroll && bookList.length !== 0 &&
                                 <div className={styles.containerSeeMore}>
                                     <TextSeeMore onclick={() => {
                                         loadMoreBooks();
-
-                                    }}/>
+                                    }} />
                                 </div>
                             }
-
                             {
                                 loadingScroll &&
                                 <div className={styles.containerSeeMore}>
-                                    <LoaderCommentary/>
+                                    <LoaderCard />
                                 </div>
                             }
 
@@ -209,13 +208,13 @@ export default function CatPage({cat,err,bookListData}) {
             }
             {
                 err &&
-                <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'}/>
+                <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'} />
             }
 
-            <Footer/>
+            <Footer />
 
 
-       {/*     <div className={styles.emailTest}>
+            {/*     <div className={styles.emailTest}>
                 <h1>Bienvenue chez Ogla</h1>
                 <p className={styles.thanks}>Merci de nous avoir rejoins, validez votre email en cliquant sur le <span>lien de confirmation. </span> </p>
                 <p className={styles.citation}>Ogla est une plateforme d’écriture et de lecture ouverte à tous.  <br/>Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.

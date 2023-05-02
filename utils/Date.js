@@ -24,6 +24,15 @@ export const FormatDateStr = (timestamp) => {
    return `${jour} ${moisNoms[mois]} ${annee}`;
 }
 
+export const FormatDateMonthYear = (timestamp) => {
+   const date = new Date(timestamp);
+   // const jour = date.getDate().toString().padStart(2, '0');
+   const mois = date.getMonth();
+   const annee = date.getFullYear();
+   const moisNoms = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+   return `${moisNoms[mois]} ${annee}`;
+}
+
 export const FormatDateFrom = (timestamp) => {
    const currentDate = new Date();
    const date = new Date(timestamp);

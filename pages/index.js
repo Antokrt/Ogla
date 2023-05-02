@@ -3,26 +3,26 @@ import styles from '../styles/Home.module.scss'
 import Header from "../Component/Header";
 import Banner from "../Component/Banner";
 import Footer from "../Component/Footer";
-import  {HotPostPhone, HotPost} from "../Component/Post/HotPost";
+import { HotPostPhone, HotPost } from "../Component/Post/HotPost";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
-import React, {useContext, useEffect, useState} from "react";
-import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
-import {useSession} from "next-auth/react";
-import {LoginModal} from "../Component/Modal/LoginModal";
-import {GetTopBooksOnHomeApi} from "./api/book";
-import {GetActiveMonthlyCateoryApi} from "./api/Category";
-import {Capitalize} from "../utils/String";
-import {useRouter} from "next/router";
-import {BannerBecameWriter} from "../Component/BannerBecameWriter";
+import React, { useContext, useEffect, useState } from "react";
+import { ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute } from "./api/utils/Config";
+import { useSession } from "next-auth/react";
+import { LoginModal } from "../Component/Modal/LoginModal";
+import { GetTopBooksOnHomeApi } from "./api/book";
+import { GetActiveMonthlyCateoryApi } from "./api/Category";
+import { Capitalize } from "../utils/String";
+import { useRouter } from "next/router";
+import { BannerBecameWriter } from "../Component/BannerBecameWriter";
 import { useDispatch, useSelector } from "react-redux";
 import { activeOrDisable, selectLoginModalStatus, setActiveModalState } from "../store/slices/modalSlice";
 import HeaderResponsive from '../Component/HeaderResponsive';
 import MusicHome from '../Component/MusicHome';
 import { DeleteAll } from '../service/Notifications/NotificationsService';
 import ScreenSize from "../utils/Size";
-import {ReCAPTCHA} from "react-google-recaptcha";
+import { ReCAPTCHA } from "react-google-recaptcha";
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -53,21 +53,21 @@ export async function getServerSideProps() {
     }
 }
 
-export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, err}) {
+export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, err }) {
 
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const [width, height] = ScreenSize();
 
     const router = useRouter();
-useEffect(() => {
-    console.log(err)
-},[width])
+    useEffect(() => {
+        console.log(width)
+    }, [width])
 
     function deleteNotifs() {
         console.log(session)
         DeleteAll(session.user.id)
-        .then((res) => console.log("good"))
-        .catch((err) => console.log(err))
+            .then((res) => console.log("good"))
+            .catch((err) => console.log(err))
     }
 
     return (
@@ -80,17 +80,17 @@ useEffect(() => {
             </Head>
 
             <div>
-                <Header/>
+                <Header />
                 {/* <HeaderResponsive /> */}
             </div>
-            <Banner/>
-            <CategoryHome/>
+            <Banner />
+            <CategoryHome />
             {
                 !err && tops && tops.length !== 0 &&
                 <div className={styles.hot}>
                     <div className={styles.headerHot}>
                         <h4>Populaires :</h4>
-                        <h5 onClick={() => router.push({pathname:'/cat'})}>Tout voir <ChevronDoubleRightIcon/></h5>
+                        <h5 onClick={() => router.push({ pathname: '/cat' })}>Tout voir <ChevronDoubleRightIcon /></h5>
                     </div>
 
                     <div className={styles.hotContainer}>
@@ -117,8 +117,6 @@ useEffect(() => {
                                         description={tops[1]?.summary}
                                     />
                                 </>
-
-
                                 :
                                 <>
                                     <HotPostPhone className={styles.hotItem}
@@ -160,14 +158,9 @@ useEffect(() => {
                             </div>
                         </>
                     }
-
-
-
-
-
                 </div>
             }
-            <BannerBecameWriter/>
+            <BannerBecameWriter />
             <MusicHome />
 
             <Footer></Footer>

@@ -9,16 +9,17 @@ import {signIn, signOut, useSession} from "next-auth/react";
 import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
 import {SearchBarService} from "../service/Search/SearchService"
-
-import {toastDisplayError} from "../utils/Toastify";
-import {ToastContainer} from 'react-toastify';
-import {useDispatch, useSelector} from "react-redux";
-import {addComment, editComment, selectComments} from "../store/slices/commentSlice";
-import {LogoutService} from "../service/User/Account.service";
-import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
-import {BellAlertIcon} from "@heroicons/react/24/outline";
-import {selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
-import {openAll} from "../service/Notifications/NotificationsService";
+import { toastDisplayError } from "../utils/Toastify";
+import { ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, editComment, selectComments } from "../store/slices/commentSlice";
+import { LogoutService } from "../service/User/Account.service";
+import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
+import { BellAlertIcon } from "@heroicons/react/24/outline";
+import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import { openAll } from "../service/Notifications/NotificationsService";
+import DarkLight from "./layouts/Btn/DarkLight";
+import { selectTheme } from "../store/slices/themeSlice";
 import {setActiveModalState} from "../store/slices/modalSlice";
 
 export default function Header() {
@@ -74,11 +75,10 @@ export default function Header() {
         setNbNotifs(nb);
     }, [Notifs])
 
-    const comments = useSelector(selectComments);
-    const notifState = useSelector(selectNotifStatus);
     const dispatch = useDispatch();
+    const light = useSelector(selectTheme); 
     return (
-        <div className={styles.container}>
+        <div className={light? styles.container : styles.darkContainer}>
             <div className={styles.mainA}>
                 <h3 onClick={() => router.push('/')}> OGLA </h3>
                 <nav>
@@ -113,7 +113,7 @@ export default function Header() {
                     </ul>
                 </nav>
             </div>
-            <div className={styles.mainLog}>
+            <div className={light? styles.mainLog : styles.darkMainLog}>
                 {
                     router.pathname !== '/rechercher' && !router.pathname.startsWith('/chapitre') &&
                     <div className={styles.containerSearchBarHeader}>
@@ -261,6 +261,10 @@ export default function Header() {
 
                         </>
 
+                }
+                {
+                    // router.pathname !== '/' &&
+                    <DarkLight />
                 }
             </div>
         </div>

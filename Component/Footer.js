@@ -1,48 +1,51 @@
 import styles from '../styles/Component/Footer.module.scss';
 import Link from "next/link";
-import React, {useContext, useState} from "react";
-import {useRouter} from "next/router";
-import {LangueContext} from "../utils/context";
+import React, { useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { LangueContext } from "../utils/context";
 import Facebook from "./layouts/Icons/Social/facebook";
 import Instagram from "./layouts/Icons/Social/instagram";
 import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
-import {GetRandomBookService} from "../service/Book/BookService";
-import {useSession} from "next-auth/react";
+import { GetRandomBookService } from "../service/Book/BookService";
+import { useSession } from "next-auth/react";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../store/slices/themeSlice';
 
 
-export default function Footer(){
-const router = useRouter();
-const {data:session} = useSession();
+export default function Footer() {
+    const router = useRouter();
+    const { data: session } = useSession();
+    const theme = useSelector(selectTheme)
 
-const getRandomBook = () => {
-GetRandomBookService()
-    .then((res) => {
-        console.log(res);
-        router.push({
-        pathname: '/livre/' + res._id,
-        query: res.slug
-    })})
-}
+    const getRandomBook = () => {
+        GetRandomBookService()
+            .then((res) => {
+                console.log(res);
+                router.push({
+                    pathname: '/livre/' + res._id,
+                    query: res.slug
+                })
+            })
+    }
 
-    return(
-        <div className={styles.container}>
+    return (
+        <div className={theme? styles.container : styles.darkContainer}>
+            <div className={styles.socialLinks}>
+                <h5>Rejoins OGLA sur Discord</h5>
+                <div className={styles.social}>
+                    <Facebook />
+                    <Instagram />
+                    <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noopener'} >
+                        <a target={'_blank'}>
+                            <Twitter />
+                        </a>
 
-                <div className={styles.socialLinks}>
-                    <h5>Rejoins OGLA sur Discord</h5>
-                    <div className={styles.social}>
-                        <Facebook/>
-                        <Instagram/>
-                        <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noopener'} >
-                            <a target={'_blank'}>
-                                <Twitter/>
-                            </a>
+                    </Link>
+                    <DiscordIcon />
 
-                        </Link>
-                        <DiscordIcon/>
-
-                    </div>
                 </div>
+            </div>
             <div className={styles.linkFooter}>
 
                 <div className={styles.planContainer}>
@@ -59,7 +62,7 @@ GetRandomBookService()
                                     écrivain</a></Link></li>
                             }
 
-                            <li style={{cursor:'pointer'}} onClick={() => getRandomBook()}>Aléatoire</li>
+                            <li style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
 
                             <li><Link href="/"><a
                                 className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link></li>
@@ -83,13 +86,11 @@ GetRandomBookService()
 
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>
-                <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
+                    <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
 
                     <p></p>
                 </div>
             </div>
-
-
         </div>
     )
 }

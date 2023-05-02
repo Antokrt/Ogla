@@ -6,8 +6,6 @@ import {HorizontalCard} from "./HorizontalCard";
 export const ListCard = ({books,seeMore}) => {
     return (
         <div className={styles.container}>
-
-
             <div className={styles.list}>
                 {
                     books &&
@@ -28,7 +26,6 @@ export const ListCard = ({books,seeMore}) => {
                     })
                 }
             </div>
-
         </div>
     )
 }

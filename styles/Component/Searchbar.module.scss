@@ -17,7 +17,7 @@
       transition: 0.3s;
       box-shadow: $shadow;
     }
-    transition: 0.3s;
+    transition: box-shadow 0.3s;
     padding-left: 15px;
     width: 100%;
     background-color: white;
@@ -26,6 +26,53 @@
     font-size: 14px;
     font-family: "Rebond Grotesque", sans-serif;
     color: $dark;
+    letter-spacing: 1px;
+
+  }
+
+  input:focus {
+    outline: none !important;
+  }
+}
+
+.homeSearch{
+  &::placeholder{
+    color: white;
+    font-family: 'Montserrat',sans-serif;
+    font-size: 12px;
+  }
+  border-color: rgba(255, 255, 255, 0.11) !important;
+  background-color: #311959 !important;
+  caret-color: white;
+  color: white!important;
+  font-family: 'Montserrat',sans-serif!important;
+}
+
+/* Theme sombre */
+.darkContainer {
+  ::placeholder {
+    font-family: "Rebond Grotesque", sans-serif;
+    color: #7b7b7d;
+  }
+
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  input {
+
+    &:focus{
+      border: solid 2px #67676b;
+    }
+    padding-left: 15px;
+    width: 100%;
+    background-color: #18181b;
+    border-radius: 10px;
+    border: solid 1px #67676b;
+    font-size: 14px;
+    font-family: "Rebond Grotesque", sans-serif;
+    color: hsla(0, 100%, 100%, 0.88);;
     letter-spacing: 1px;
 
   }
