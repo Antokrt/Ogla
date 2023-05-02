@@ -1,25 +1,30 @@
 @import "styles/utils/var";
-.container{
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 2vh;
   height: 40vh;
-  .content{
+
+  .content {
     width: 30%;
-    h4{
-      &:after{
+
+    h4 {
+      &:after {
         content: attr(data-after);
         position: absolute;
-        left:-18%;
-      bottom: -10%;
+        left: -6%;
+        bottom: -10%;
 
         opacity: 0.08;
         font-size: 15vh;
       }
+
       position: relative;
       font-size: 10vh;
-      font-family: "Branch", sans-serif;
+      font-family: "Branch",
+      sans-serif;
       font-weight: bold;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
@@ -28,7 +33,7 @@
 
 
 
-    p{
+    p {
       text-align: center;
       font-size: 1.6vh;
       font-family: "Rebond Grotesque", sans-serif;
@@ -36,91 +41,134 @@
     }
   }
 
-  .image{
+  .image {
     height: 40vh;
   }
 
 
 }
 
+.darkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2vh;
+  height: 40vh;
 
-@media screen and (max-width: 1500px){
-  .container{
+  .content {
+    width: 30%;
+
+    h4 {
+      &:after {
+        content: attr(data-after);
+        position: absolute;
+        left: -6%;
+        bottom: -10%;
+        opacity: 0.03;
+        font-size: 15vh;
+      }
+
+      position: relative;
+      font-size: 10vh;
+      font-family: "Branch",
+      sans-serif;
+      font-weight: bold;
+      white-space: pre;
+      -webkit-text-stroke-width: 1px;
+      text-align: center;
+      color: white;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.6vh;
+      font-family: "Rebond Grotesque", sans-serif;
+      color: rgb(84, 89, 95);
+    }
+  }
+
+  .image {
+    height: 40vh;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .container {
     gap: 100px;
   }
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1200px) {
 
-  .container{
+  .container {
     gap: 20px;
   }
-  .content{
+
+  .content {
     width: 50% !important;
 
-    h4{
-      &:after{
+    h4 {
+      &:after {
         left: 0% !important;
       }
     }
   }
 
-  .image{
+  .image {
     object-fit: contain;
     width: 400px;
   }
 }
 
-@media screen and (max-width: 900px){
-  .container{
+@media screen and (max-width: 900px) {
+  .container {
     padding-left: 5vw;
   }
 }
 
-@media screen and (max-width: 750px){
-  .container{
+@media screen and (max-width: 750px) {
+  .container {
     flex-direction: column-reverse;
     height: auto;
   }
 
-  .image{
-    height: 20vh!important;
+  .image {
+    height: 20vh !important;
   }
 
-  .content{
+  .content {
     width: 500px !important;
   }
 }
 
-@media screen and (max-width: 600px){
-  .content{
-    h4{
-      &:after{
+@media screen and (max-width: 600px) {
+  .content {
+    h4 {
+      &:after {
         left: -10% !important;
-        font-size: 22vw!important;
+        font-size: 22vw !important;
       }
-      font-size: 15vw!important;
+
+      font-size: 15vw !important;
     }
   }
 }
 
-@media screen and (max-width: 550px){
-  .content{
-    padding: 0 30px!important;
+@media screen and (max-width: 550px) {
+  .content {
+    padding: 0 30px !important;
     width: 100% !important;
   }
 }
 
-@media screen and (max-width: 500px){
-  .content{
-    h4{
-    }
+@media screen and (max-width: 500px) {
+  .content {
+    h4 {}
   }
 }
 
-@media screen and (max-width: 400px){
-  .content{
-    h4{
-    }
+@media screen and (max-width: 400px) {
+  .content {
+    h4 {}
   }
 }

@@ -63,6 +63,11 @@ color: white;
 
 
 .containerGoogleBtn{
+  &:hover {
+    background-color: rgb(243, 243, 243) !important;
+    transition: 0.3s;
+  }
+  transition: 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,13 +75,14 @@ color: white;
   padding-right: 10px;
   font-family: 'Poppins',sans-serif;
   font-size: 12px;
-  width: 250px;
+  width: 100%;
+  border: 1px solid rgba(28, 35, 43, 0.14);
   background-color: white!important;
   span{
     font-weight: bold;
   }
   svg{
-    border-right: solid 1px rgba(28, 35, 43, 0.06);
+    // border-right: solid 1px rgba(28, 35, 43, 0.06);
     height: 100%!important;
     margin-right: 5px;
     width: 30px;

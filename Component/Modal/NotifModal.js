@@ -9,13 +9,15 @@ import { allDel, allReadReducer, selectNotifs } from '../../store/slices/notifSl
 import { useDispatch, useSelector } from 'react-redux';
 import Notif from './Notif';
 import { DeleteAllNotifs, readAll } from '../../service/Notifications/NotificationsService';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 export const NotifModal = ({ close }) => {
     const router = useRouter();
     const { data: session } = useSession();
     const allNotifs = useSelector(selectNotifs);
-    const notifs = useSelector(state => state.notif.notifs);
+    // const notifs = useSelector(state => state.notif.notifs);
     const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
 
     const openSidebar = () => {
         return new Promise((resolve, reject) => {
@@ -45,7 +47,7 @@ export const NotifModal = ({ close }) => {
                 })
     }
 
-    return <div className={styles.container}>
+    return <div className={theme? styles.container : styles.darkContainer}>
         <div className={styles.containerContent + ' ' + anim.scaleInModal}>
             <div className={styles.header}>
                 <p></p>
@@ -64,7 +66,14 @@ export const NotifModal = ({ close }) => {
                         }
                     </div> :
                     <div className={styles.empty}>
-                        <img src={'/assets/jim/smile7.png'} />
+                        {
+                            !theme &&
+                            <img src={'/assets/diapo/old.png'} />
+                        }
+                        {
+                            theme &&
+                            <img src={'/assets/jim/smile7.png'} />
+                        }
                         <p>Vous n'avez pas de notifications</p>
                     </div>
             }

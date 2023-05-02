@@ -4,16 +4,18 @@ import Link from "next/link";
 import {Capitalize} from "../../utils/String";
 import {useRouter} from "next/router";
 import {GetCategory} from "../../utils/CategoryUtils";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 const CategoryHeader = () => {
 
     const router = useRouter();
     const {
         query: {cat},
     } = router
-
+    const theme = useSelector(selectTheme);
 
     return (
-        <div className={styles.container}>
+        <div className={theme? styles.container : styles.darkContainer}>
             {
                 GetCategory().map((item)=>{
                     return  (

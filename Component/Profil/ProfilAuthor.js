@@ -88,18 +88,18 @@ const ProfilAuthor = ({ type, content }) => {
                                 {link}
                             </a>
                             <div className={styles.options}>
-                                <ArrowPathIcon onClick={() => setChange(true)} />
-                                <TrashIcon onClick={supprLink} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <ArrowPathIcon className={styles.leftOption} onClick={() => setChange(true)} />
+                                <TrashIcon className={styles.rightOption} onClick={supprLink} />
                             </div>
                         </div>
                     }
                     {
                         change &&
                         <div className={styles.changed}>
-                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue="@" />
+                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
                             <div className={styles.options} >
-                                <CheckIcon onClick={changeLink}/>
-                                <ArrowUturnLeftIcon onClick={() => setChange(false)} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <CheckIcon className={styles.leftOption} onClick={changeLink}/>
+                                <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
                     }
@@ -116,18 +116,18 @@ const ProfilAuthor = ({ type, content }) => {
                                 {link}
                             </a>
                             <div className={styles.options}>
-                                <ArrowPathIcon onClick={() => setChange(true)} />
-                                <TrashIcon onClick={supprLink} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <ArrowPathIcon className={styles.leftOption} onClick={() => setChange(true)} />
+                                <TrashIcon className={styles.rightOption} onClick={supprLink} />
                             </div>
                         </div>
                     }
                     {
                         change &&
                         <div className={styles.changed}>
-                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue="@" />
+                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
                             <div className={styles.options} >
-                                <CheckIcon onClick={changeLink} />
-                                <ArrowUturnLeftIcon onClick={() => setChange(false)} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <CheckIcon className={styles.leftOption} onClick={changeLink} />
+                                <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
                     }
@@ -144,8 +144,8 @@ const ProfilAuthor = ({ type, content }) => {
                                 {link}
                             </a>
                             <div className={styles.options}>
-                                <ArrowPathIcon onClick={() => setChange(true)} />
-                                <TrashIcon onClick={supprLink} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <ArrowPathIcon className={styles.leftOption} onClick={() => setChange(true)} />
+                                <TrashIcon className={styles.rightOption} onClick={supprLink} />
                             </div>
                         </div>
                     }
@@ -154,8 +154,8 @@ const ProfilAuthor = ({ type, content }) => {
                         <div className={styles.changed}>
                             <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"url"} defaultValue="https://" />
                             <div className={styles.options} >
-                                <CheckIcon onClick={changeLink} />
-                                <ArrowUturnLeftIcon onClick={() => setChange(false)} style={{ backgroundColor: "#9337e9", color: "white" }} />
+                                <CheckIcon className={styles.leftOption} onClick={changeLink} />
+                                <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
                     }

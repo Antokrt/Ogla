@@ -19,6 +19,8 @@ import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
 import { BellAlertIcon } from "@heroicons/react/24/outline";
 import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
 import { openAll } from "../service/Notifications/NotificationsService";
+import DarkLight from "./layouts/Btn/DarkLight";
+import { selectTheme } from "../store/slices/themeSlice";
 
 export default function Header() {
     const router = useRouter();
@@ -60,7 +62,6 @@ export default function Header() {
 
     useEffect(() => {
         var nb = 0;
-        console.log("status = " + statusNotif);
         if (statusNotif && Notifs.length > 0)
             openAll(Notifs[0].date_creation, session?.user.id)
         else {
@@ -72,11 +73,10 @@ export default function Header() {
         setNbNotifs(nb);
     }, [Notifs])
 
-    const comments = useSelector(selectComments);
-    const notifState = useSelector(selectNotifStatus);
     const dispatch = useDispatch();
+    const light = useSelector(selectTheme); 
     return (
-        <div className={styles.container}>
+        <div className={light? styles.container : styles.darkContainer}>
             <div className={styles.mainA}>
                 <h3 onClick={() => router.push('/')}> OGLA </h3>
                 <nav>
@@ -111,7 +111,7 @@ export default function Header() {
                     </ul>
                 </nav>
             </div>
-            <div className={styles.mainLog}>
+            <div className={light? styles.mainLog : styles.darkMainLog}>
                 {
                     router.pathname !== '/rechercher' && !router.pathname.startsWith('/chapitre') &&
                     <div className={styles.containerSearchBarHeader}>
@@ -166,7 +166,7 @@ export default function Header() {
                 <div className={styles.bell}>
                     {
                         nbNotifs === 0 &&
-                        <BellAlertIcon onClick={() => {
+                        <BellAlertIcon className={router.pathname !== '/' && styles.activeNavDark} onClick={() => {
                             dispatch(setActiveModalNotif(true));
                         }} />
                     }
@@ -251,6 +251,10 @@ export default function Header() {
 
                         </>
 
+                }
+                {
+                    // router.pathname !== '/' &&
+                    <DarkLight />
                 }
             </div>
         </div>
