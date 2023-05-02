@@ -23,10 +23,10 @@ const SuccessVerificationEmailPage = ({profilData}) => {
     const router = useRouter();
 
     const updateSession = async () => {
-        const verifMail = instance.get('http://localhost:3000/api/auth/session?email-verified');
+        await instance.get('http://localhost:3000/api/auth/session?email-verified');
     }
 
-  /*  useEffect(() =>  {
+   useEffect(() =>  {
         updateSession()
             .then(() => {
                 const timer = setTimeout(() => {
@@ -34,11 +34,11 @@ const SuccessVerificationEmailPage = ({profilData}) => {
                 },5000);
                 return () => clearTimeout(timer);
             })
-    },[])*/
+    },[])
 
     return (
         <div className={styles.container}>
-            <img src={'/assets/jim/smile6.png'}/>
+            <img src={'/assets/diapo/mountain.png'}/>
             <h1>Email vérifiée !</h1>
             <p>Félicitations <span>{profilData?.pseudo} !</span> <br/> Votre e-mail a été vérifié avec succès </p>
             <p>Vous allez être redirigé vers l'accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>

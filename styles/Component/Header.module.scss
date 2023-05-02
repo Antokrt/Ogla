@@ -12,9 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: transparent;
   padding-top: 2%;
-  padding-left: 5%;
+  padding-left: 4%;
   padding-right: 5%;
   width: 100%;
   height: 10vh;
@@ -23,6 +22,7 @@
   color: white;
   .mainA{
     display: flex;
+
 
     h3{
       cursor: pointer;
@@ -42,8 +42,10 @@
         li{
           font-weight: bold;
           z-index: 2;
-          font-size: 14px;
-          font-family: 'Montserrat',sans-serif;
+          font-size: 16px;
+          font-family: 'Rebond Grotesque',sans-serif;
+          padding-bottom: 4px;
+          border-bottom: solid 3px transparent;
         }
       }
     }
@@ -52,7 +54,7 @@
 
   .mainLog{
     display: flex;
-    gap: 50px;
+    gap: 30px;
     z-index: 2;
     .containerSearchBarHeader{
       display: flex;
@@ -62,17 +64,17 @@
       width: 25vw;
       gap: 230px;
       z-index: 202;
-
     }
     .containerResultSearchBar{
       position: absolute;
       top: 8vh;
       background-color: $grey;
-      width: 100%;
+      width: 80%;
       max-height: 50vh;
       height: auto;
       box-shadow: 5px 10px 4px 2px rgba(100, 96, 96, 0.44);
       border-radius: 15px;
+      padding-right: 2px;
 
       .containerBtnSearch{
         display: flex;
@@ -81,6 +83,7 @@
         background-color: white;
         z-index: 2;
         padding: 10px 15px;
+        border-radius: 15px;
 
         p{
           display: flex;
@@ -104,21 +107,15 @@
     .accountContainer{
       display: flex;
       svg {
-        &:hover {
-          color: #e94f37;
-        }
         cursor: pointer;
         width: 25px;
         z-index: 2;
-        color: #1C232B;
+        // color: #1C232B;
+        color: white;
       }
     }
 
     .headphone{
-
-      iframe{
-        visibility: hidden;
-      }
     }
 
     .bell{
@@ -130,26 +127,60 @@
       svg{
         &:hover{
           transition: 0.1s;
-          color: #1C232B;
+          color: #e94f37;
         }
         cursor: pointer;
-        color: rgba(28, 35, 43, 0.76);
+        // color: rgba(28, 35, 43, 0.76);
+        color: white;
         transition: 0.1s;
         width: 30px;
       }
     }
 
-    .imgProfil{
-      &:hover {
-        filter: brightness(0.95);
+    .bellActive {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      svg {
+        &:hover{
+          transition: 0.1s;
+          color: #e94f37;
+        }
+        cursor: pointer;
+        // color: rgba(28, 35, 43, 0.76);
+        color: white;
+        transition: 0.1s;
+        width: 30px;
       }
+
+      p {
+          display: flex;
+          justify-content: center;
+          width: 14px;
+          background-color: #e94f37;
+          color: white;
+          border-radius: 50%;
+          position: absolute;
+          bottom: 8px;
+          right: -2px;
+          font-size: 11px;
+          text-align: center;
+      }
+
+    }
+
+    .imgProfil{
+      transition: 0.2s;
       z-index: 2;
       cursor: pointer;
       width: 50px;
       height: 50px;
-      border-radius: 25px;
-      // clip-path: circle();
-      margin-right: 20px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 30px;
 
     }
     .account{
@@ -164,7 +195,7 @@
       height: 50px;
       border-radius: 50px;
       z-index: 2;
-      p{
+      p {
         color: white;
         font-family:"Montserrat Alternates" ,sans-serif;
         font-weight: bold;
@@ -177,6 +208,7 @@
       padding-left: 20px;
       padding-right: 20px;
       background-color: #1C232B;
+      border-radius: 5px;
       height: 50px;
       z-index: 200;
       button {
@@ -193,10 +225,30 @@
 }
 
 .activeNav {
-  color: #e94f37 !important;
-  // color: $purpleLight !important;
+  color: white !important;
+}
+
+.activeNavDark{
+  color: #9844AD!important;
 }
 
 .bNone{
   border-right: none!important;
+}
+
+.colorW{
+  li{
+    color: white;
+  }
+  color: white!important;
+  svg{
+    color: white!important;
+  }
+}
+
+.colorDark{
+  li{
+    color: #1C232B;
+  }
+  color: white!important;
 }

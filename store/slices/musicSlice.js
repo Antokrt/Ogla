@@ -16,7 +16,7 @@ export const musicSlice = createSlice({
         },
         setIndexMusic:(state,action) => {
             if(state.index >= 7){
-             state.index = 1;
+                state.index = 1;
             }
             else  state.index = action.payload;
         }

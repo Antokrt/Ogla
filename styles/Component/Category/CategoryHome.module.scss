@@ -1,42 +1,106 @@
 @import "styles/utils/var";
-.container{
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-height: 50vh;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  min-height: 40vh;
+  padding-bottom: 2%;
   box-shadow: 5px 0px 21px #1C232B;
   height: auto;
   width: 100%;
-  background-color: #16191c;
+  background-color: #1C232B;
 
-  .header{
-    width: 100%;
+  .parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .header {
+    width: 1100px;
     display: flex;
     justify-content: space-between;
-    h4{
+
+    h4 {
       color: white;
-      font-family: "Montserrat Alternates",sans-serif;
+      font-family: "Montserrat Alternates", sans-serif;
       font-weight: bold;
       font-size: 15px;
     }
-    div{
-      display: flex;
-      gap: 30px;
 
-      svg{
+    div {
+      p {
+        font-family: "Rebond Grotesque", sans-serif;
+        font-weight: bold;
         cursor: pointer;
-        width: 20px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        border-bottom: solid 1px white;
+        color: white;
+      }
+
+      svg {
+        cursor: pointer;
+        width: 14px;
         color: white;
       }
     }
   }
 
-  .listContainer{
-    display: flex;
+  .listContainer {
+    &::-webkit-scrollbar {
+      width: 3px;
+      height: 5px;
+      cursor: pointer;
+      box-shadow: $shadow;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: #5a6673;
+    }
+    display: inline-block;
+    white-space: nowrap;
+    overflow-y: hidden;
     gap: 25px;
+    padding-top: 10px;
+    z-index: 1;
     margin-top: 40px;
+    width: 1100px;
+    height: 200px;
   }
 }
+
+@media screen and (max-width: 1150px) {
+  .listContainer {
+
+    width: 80vw !important;
+  }
+
+  .container {
+    padding: 5vh 0 !important;
+  }
+
+  .header {
+    width: 80vw !important;
+  }
+}
+
+@media screen and (max-width: 300px){
+  .header{
+    flex-direction: column!important;
+    align-items: center!important;
+    gap: 20px;
+
+  }
+}
+

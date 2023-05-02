@@ -37,14 +37,15 @@
   justify-content: center;
   gap: 5px;
   background-color: white;
-  border: $divBorder;
-  padding: 5px 10px;
-  font-family: 'Montserrat',sans-serif;
-  font-size: 10px;
+  border: rgba(28, 35, 43, 0.09) solid 1px;
+  padding: 8px 10px;
+  font-family: 'Rebond Grotesque',sans-serif;
+  font-size: 12px;
+  font-weight: bold;
   border-radius: 5px;
   svg{
-    width: 10px;
-    color: #54595F;
+    width: 14px;
+    color: #1C232B;
   }
 }
 
@@ -125,4 +126,12 @@ font-size: 11px;
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
   100% { transform: scale(1); }
+}
+
+
+.home{
+  background-color: #e94f37!important;
+  svg{
+    color: white;
+  }
 }

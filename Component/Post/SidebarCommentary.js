@@ -157,7 +157,7 @@ const SidebarCommentary = ({
                                 newAnswerPage={() => newPageAnswer(item._id)}
                                 authorId={item.userId}
                                 hasLikeData={item.hasLike}
-                                content={item.content}
+                                content={Capitalize(item.content)}
                                 authorHasLike={item.authorHasLike}
                                 authorImg={authorImg}
                                 authorPseudo={author}
@@ -174,7 +174,7 @@ const SidebarCommentary = ({
                 }
 
                 {
-                    commentList && commentList.length <= 0 &&
+                    commentList && commentList.length <= 0 && !loadingScroll &&
                     <div className={styles.empty}>
                         <img src={'/assets/jim/angry2.png'}/>
                         <p>C'est bien silencieux ici ! <br/> <span onClick={() => {

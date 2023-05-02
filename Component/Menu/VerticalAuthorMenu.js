@@ -9,6 +9,8 @@ import {
 } from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {useDispatch} from "react-redux";
+import {setActiveModalNotif} from "../../store/slices/notifSlice";
 
 export default function VerticalAuthorMenu() {
 
@@ -20,6 +22,8 @@ export default function VerticalAuthorMenu() {
     const goToProfil = () => {
         return router.push('/profil');
     }
+
+    const dispatch = useDispatch()
 
 
     return (
@@ -36,13 +40,13 @@ export default function VerticalAuthorMenu() {
                         <li onClick={() => router.push('/')}> <HomeIcon/> Accueil  </li>
                         <li className={ isActiveMenuBooks  && styles.activeMenu} onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon/>Livres</li>
                         <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon/>Nouveau</li>
-                        <li onClick={() => router.push('/dashboard/notifications')} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
+                        <li onClick={() => dispatch(setActiveModalNotif(true))} className={styles.notification}><BellAlertIcon className={styles.bell}/>Notifications <span></span></li>
                     </ul>
                 </div>
             </div>
 
             <div className={styles.imgContainer}>
-                <img src={'/assets/jim/cool2.png'}/>
+                <img src={'/assets/diapo/mountain.png'}/>
             </div>
 
             <div className={styles.sContainer}>

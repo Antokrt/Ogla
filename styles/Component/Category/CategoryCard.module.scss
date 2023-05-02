@@ -3,40 +3,61 @@
   &:hover{
     transform: translateY(-10px);
     transition: 0.2s;
+    border-color: rgba(255, 255, 255, 0.18);
+    opacity: 1;
   }
   transition: 0.2s;
-  display: flex;
+  opacity: 0.8;
+  display: inline-flex;
+  margin: 0px 20px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  padding-top: 2%;
+  flex-direction: column;
   position: relative;
-  height: 280px;
-  width: 250px;
-  box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.38);
+  height: 180px;
+  width: 180px;
+
+  border: solid 1px transparent;
   cursor: pointer;
   border-radius: 10px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  img{
-    &:hover{
-      filter: brightness(1);
-      transition: 0.2s;
-    }
-    transition: 0.2s;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-    filter: brightness(0.75);
-    object-fit: cover;
-    z-index: 0;
+
+  svg{
+    fill: white;
+    margin-bottom: 2%;
+    width: 60px;
+    object-fit: contain;
   }
   h5{
     margin-top: 10%;
     z-index: 1;
-    text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.53);
     color: white;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Rebond Grotesque',sans-serif;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
   }
+}
+
+
+.action{
+  background-color: #9844AD;
+}
+
+.horror{
+  background-color: #e94f37;
+}
+.drama{
+  background-color: #9844AD;
+}
+
+.fantaisie{
+  background-color: #e94f37;
+}
+.sf1{
+background-color: #9844AD;
+}
+
+
+.null{
+  background-color: #9844AD;
 }

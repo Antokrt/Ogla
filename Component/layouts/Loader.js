@@ -25,3 +25,10 @@ export const LoaderCommentary = () => {
         </div>
     )
 }
+
+export const LoaderImg = () => {
+    return (
+        <div className={styles.loaderImg}>
+        </div>
+    )
+}

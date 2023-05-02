@@ -225,6 +225,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                 </div>
 
                                 <div className={styles.statsPresentation}>
+                                    <img src={'/assets/jim/cool2.png'}/>
                                     <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide d'écriture...</h6>
                                     <p>Cliquez ici pour en savoir plus !</p>
                                 </div>

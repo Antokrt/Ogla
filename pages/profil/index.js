@@ -2,40 +2,34 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    ArrowDownIcon,
-    CalendarIcon,
-    ChatBubbleBottomCenterIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckIcon,
+    BellAlertIcon,CheckBadgeIcon, MusicalNoteIcon,
 } from "@heroicons/react/24/outline";
-
-import {useEffect, useRef, useState} from "react";
+import { useRef, useState } from "react";
 import {
-    ArrowTrendingUpIcon, ChartBarIcon,
-    ChatBubbleLeftIcon,
-    CheckCircleIcon, HeartIcon,
-    PencilIcon,
-    StarIcon, XCircleIcon
+    ChartBarIcon, CheckCircleIcon, HeartIcon,XCircleIcon
 } from "@heroicons/react/20/solid";
-import Category from "../../json/category.json";
-import {Capitalize} from "../../utils/String";
-import Facebook from "../../Component/layouts/Icons/Social/facebook";
-import Instagram from "../../Component/layouts/Icons/Social/instagram";
-import Twitter from "../../Component/layouts/Icons/Social/twitter";
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import {GetPrivateProfilApi} from "../api/user";
-import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
+import { Capitalize } from "../../utils/String";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { GetPrivateProfilApi } from "../api/user";
+import { DeleteUserProfilPictureService, UpdateUserProfilPictureService } from "../../service/User/Profil.service";
 import axios from "axios";
-import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg} from "../../utils/ImageUtils";
-import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {ChangePasswordService} from "../../service/User/Password.service";
-import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {BookmarkIcon} from "@heroicons/react/24/solid";
-import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
+import { ReloadSession } from "../../utils/ReloadSession";
+import { GetDefaultUserImg, renderPrediction } from "../../utils/ImageUtils";
+import { DeleteAccountService, VerifyEmailService } from "../../service/User/Account.service";
+import { FormatDateNb, FormatDateStr } from "../../utils/Date";
+import { ChangePasswordService } from "../../service/User/Password.service";
+import { DeleteAccountModal } from "../../Component/Modal/DeleteAccountModal";
+import { BookmarkIcon } from "@heroicons/react/24/solid";
+import { UpdateAuthorDescriptionService, UpdateUserDescriptionService } from "../../service/Author";
+import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
+import Footer from "../../Component/Footer";
+import {useDispatch} from "react-redux";
+import {setActiveModalNotif} from "../../store/slices/notifSlice";
+import {LoaderImg} from "../../Component/layouts/Loader";
+import {toastDisplayError} from "../../utils/Toastify";
 
-
-export async function getServerSideProps({req}) {
+export async function getServerSideProps({ req }) {
 
     const data = await GetPrivateProfilApi(req);
     return {
@@ -46,22 +40,22 @@ export async function getServerSideProps({req}) {
     }
 }
 
-const Profil = ({profilData, err}) => {
+const Profil = ({ profilData, err }) => {
     const router = useRouter();
     const [isCreator, setIsCreator] = useState(true);
     const [activeLink, setActiveLink] = useState('profil');
     const [hasChanged, setHasChanged] = useState(false);
     const [wantToDelete, setWantToDelete] = useState(false);
     const [profil, setProfil] = useState(profilData);
-
     const [newProfil, setNewProfil] = useState(profil);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session, status} = useSession();
+    const { data: session, status } = useSession();
     const [password, setPassword] = useState('');
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
     const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
+    const [loadingImg,setLoadingImg] = useState(false);
     const [errMsgModifyPassword, setErrMsgModifyPassword] = useState({
         msg: '',
         show: false
@@ -70,7 +64,10 @@ const Profil = ({profilData, err}) => {
     const [localImg, setLocalImg] = useState(null);
     const [file, setFile] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
+    const [notifState,setNotifState] = useState(false);
+    const [musicState,setMusicState] = useState(false);
     const imgRef = useRef();
+    const dispatch = useDispatch()
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -83,25 +80,40 @@ const Profil = ({profilData, err}) => {
         imgRef.current.click();
     }
 
-    const updatePic = () => {
+    const updatePic = async () => {
         if (file) {
-            UpdateUserProfilPictureService(file)
-                .then((res) => {
-                    setProfil((prevState) => ({
-                        ...prevState,
-                        img: res.data
-                    }))
-                    setLocalImg(null);
-                    setFile(null);
-                })
-                .then(() => {
-                    axios.get('/api/auth/session?update-picture')
-                        .then(() => ReloadSession())
-                        .catch((err) => console.log(err));
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
+            setLoadingImg(true);
+            const data = await renderPrediction(file,'user');
+            if(data){
+                UpdateUserProfilPictureService(file)
+                    .then((res) => {
+                        setProfil((prevState) => ({
+                            ...prevState,
+                            img: res.data
+                        }))
+                        setLocalImg(null);
+                        setFile(null);
+                    })
+                    .then(() => {
+                        axios.get('/api/auth/session?update-picture')
+                            .then(() => {
+                                ReloadSession();
+                                setLoadingImg(false)
+                            })
+                            .catch((err) => {
+                                setLoadingImg(false);
+                            });
+                    })
+                    .catch((err) => {
+                        setLoadingImg(false);
+                        toastDisplayError("Impossible de modifier l'image.");
+                    })
+            }
+            else {
+                setLoadingImg(false);
+                toastDisplayError('Image non conforme.')
+            }
+
         }
     }
 
@@ -152,19 +164,26 @@ const Profil = ({profilData, err}) => {
             <div className={styles.profil}>
                 <div className={styles.imgContainer}>
                     {
+                        loadingImg &&
+                        <div className={styles.loaderImg}>
+                            <LoaderImg/>
+                        </div>
+                    }
+
+                    {
                         localImg && file ?
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Profil Pic'}/>
+                                    src={localImg} alt={'Profil Pic'} />
                             </>
                             :
                             <img
                                 onClick={() => imgClick()}
-                                src={profil.img} alt={'Profil Pic'}/>
+                                src={profil.img} alt={'Profil Pic'} />
                     }
                     <input
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                         type={'file'}
                         ref={imgRef}
                         accept={"image/png , image/jpeg , image/jpg"}
@@ -187,14 +206,14 @@ const Profil = ({profilData, err}) => {
                                 <>
                                     <CheckCircleIcon
                                         onClick={() => updatePic()}
-                                        className={styles.check}/>
+                                        className={styles.check} />
                                     <XCircleIcon
                                         onClick={() => {
                                             setLocalImg(null);
                                             setFile(null);
                                         }
                                         }
-                                        className={styles.off}/>
+                                        className={styles.off} />
                                 </>
 
                             }
@@ -206,40 +225,37 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.form}>
                     <label>Pseudo</label>
                     <input disabled={true} type={"text"} value={profilData.pseudo}/>
-                    <label className={styles.emailLabel}>Email <span>{session.user.verified ?
+                    <label className={styles.emailLabel}>Email <span>{profilData.verified ?
                         <CheckBadgeIcon/> :
                         <span className={styles.verify} onClick={() => {
-                            if (!session.user?.verified) {
+                            if (!profilData.verified) {
                                 verifyEmail();
                             }
                         }}>Vérifier maintenant</span>}</span></label>
-                    <input disabled={true} type={"text"} value={profilData.email}/>
+                    <input disabled={true} type={"text"} value={profilData.email} />
                     {
                         session.user.provider === 'ogla' &&
                         <>
                             <label>Modifier votre mot de passe</label>
                             <input value={oldPassword}
-                                   onChange={(e) => setOldPassword(e.target.value)}
-                                   type={"password"} placeholder={'Ancien mot de passe'}/>
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                type={"password"} placeholder={'Ancien mot de passe'} />
                             <input value={newPassword}
-                                   onChange={(e) => setNewPassowrd(e.target.value)}
-                                   type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                onChange={(e) => setNewPassowrd(e.target.value)}
+                                type={"password"} placeholder={'Nouveau mot de passe'} />
                             {
                                 errMsgModifyPassword.show &&
                                 <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
                             }
 
                             <button onClick={(e) => changePassword(e)}
-                                    className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
                             </button>
                         </>
 
                     }
 
 
-                    <button className={styles.deleteAccount}
-                            onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
-                    </button>
 
                 </div>
             </div>
@@ -258,7 +274,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={styles.formWriter}>
                         <div className={styles.hWriter}>
-                            <img src={'/assets/jim/cool2.png'}/>
+                            <img src={'/assets/jim/cool2.png'} />
                             <h5>Quelques statistiques</h5>
 
                         </div>
@@ -282,12 +298,12 @@ const Profil = ({profilData, err}) => {
 
 
                         <div className={styles.writerItem}>
-                            <p className={styles.label}>Livre le plus liké <HeartIcon/></p>
+                            <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
                             <p className={styles.value}>La quete du maitre <span>21201</span></p>
                         </div>
 
                         <div className={styles.writerItem}>
-                            <p className={styles.label}>Chapitre le plus liké <ChartBarIcon/></p>
+                            <p className={styles.label}>Chapitre le plus liké <ChartBarIcon /></p>
                             <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
                         </div>
 
@@ -295,7 +311,6 @@ const Profil = ({profilData, err}) => {
                 </div>
                 <div className={styles.rContainerWriter}>
                     <h5 className={styles.title}>Éditer le profil</h5>
-
                     <div className={styles.containerPresentation}>
                         <div className={styles.headerPresentation}>
                             <h6>Présentation</h6>
@@ -304,7 +319,7 @@ const Profil = ({profilData, err}) => {
                                     updateDescription();
                                 }
                             }}
-                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
                             </button>
                         </div>
 
@@ -314,12 +329,12 @@ const Profil = ({profilData, err}) => {
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "}/>
+                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
                                 :
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    value={newPresentation}/>
+                                    value={newPresentation} />
                         }
 
 
@@ -333,12 +348,14 @@ const Profil = ({profilData, err}) => {
                         </div>
 
                         <div className={styles.socialForm}>
-                            <label>Instagram <Instagram/></label>
-                            <input type={"text"} placeholder={'Instagram'}/>
-                            <label>Twitter <Twitter/></label>
-                            <input type={"text"} placeholder={'Twitter'}/>
-                            <label>Facebook <Facebook/></label>
-                            <input type={"text"} placeholder={'Facebook'}/>
+                            <div className={styles.socialLinks}>
+                                <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
+                                <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
+                                <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
+                            </div>
+                            <div className={styles.socialImg}>
+                                <img src={"/assets/other/manReading2.png"} alt="author reading"/>
+                            </div>
                         </div>
                     </div>
 
@@ -352,13 +369,66 @@ const Profil = ({profilData, err}) => {
     const becameWriter = () => {
         return (
             <div className={styles.becameWriter}>
-                <img src={'/assets/jim/smile8.png'}/>
+                <img src={'/assets/jim/smile8.png'} />
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
-                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier ! <br/>
+                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
+                    ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d'être entendue"</p>
 
                 <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
+            </div>
+        )
+    }
+
+    const settingComponent = () => {
+        return (
+            <div className={styles.settings}>
+                <h5>Réglages</h5>
+                <div className={styles.itemSetting}>
+                    <div className={styles.fSetting}>
+                        <BellAlertIcon/>
+                        <div>
+                            <p className={styles.labelSetting}>Notifications </p>
+                            <p className={styles.valueSetting}>Désactiver les notifications en temps réelle </p>
+                        </div>
+
+
+                    </div>
+
+                    <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn} onClick={() => setNotifState(!notifState)}>
+                        <input checked={notifState}  type="checkbox" id="toggle1"/>
+                            <label htmlFor="toggle1"></label>
+                    </div>
+
+                </div>
+
+                <div className={styles.itemSetting} style={{
+                    borderBottom:'solid 1px rgba(84, 89, 95, 0.13)'
+                }}>
+                    <div className={styles.fSetting}>
+
+                        <MusicalNoteIcon/>
+                        <div>
+                            <p className={styles.labelSetting}>Musique </p>
+                            <p className={styles.valueSetting}>Désactiver la musique</p>
+                        </div>
+                    </div>
+
+                    <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle} onClick={() => {
+                        console.log('click music')
+                        setMusicState(!musicState)
+                    }}>
+                        <input checked={musicState}  type="checkbox" id="toggle2"/>
+                        <label htmlFor="toggle2"></label>
+                    </div>
+
+
+                </div>
+
+                <button className={styles.deleteAccount}
+                        onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                </button>
             </div>
         )
     }
@@ -368,18 +438,15 @@ const Profil = ({profilData, err}) => {
             case 'profil':
                 return profilComponent();
 
-            case 'writer' :
+            case 'writer':
                 if (profil.is_author) {
                     return writerComponent();
                 } else {
                     return becameWriter();
                 }
 
-            case 'notif':
-                return (
-                    <p>notifs</p>
-                )
-
+            case 'settings':
+                return settingComponent();
             default:
                 return profilComponent();
         }
@@ -390,7 +457,7 @@ const Profil = ({profilData, err}) => {
             {
                 err &&
                 <div>
-                    <Header/>
+                    <Header />
                     <p>Impossible de récupérer le profil</p>
                 </div>
             }
@@ -398,7 +465,7 @@ const Profil = ({profilData, err}) => {
             {
                 !err && profilData && session &&
                 <div className={styles.container}>
-                    <Header/>
+                    <Header />
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
                             <div className={styles.headerTitle}>
@@ -407,12 +474,15 @@ const Profil = ({profilData, err}) => {
                             </div>
                             <div className={styles.menuLink}>
                                 <button onClick={() => setActiveLink('profil')}
-                                        className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                    className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
                                 </button>
                                 <button onClick={() => setActiveLink('writer')}
-                                        className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                    className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
                                 </button>
-                                <button onClick={() => setActiveLink('notifications')}
+                                <button onClick={() => setActiveLink('settings')}
+                                        className={activeLink === 'settings' && styles.activeMenu}>Réglages
+                                </button>
+                                <button onClick={() => dispatch(setActiveModalNotif(true))}
                                         className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications
                                 </button>
 
@@ -425,11 +495,12 @@ const Profil = ({profilData, err}) => {
                             </div>
                         </div>
                     </div>
-
+                        {/* <Footer></Footer> */}
+                        
                     {
                         openModalDeleteAccount && session &&
-                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
-                    }
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)} />
+                  }
                 </div>
             }
         </>

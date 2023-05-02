@@ -20,8 +20,12 @@ import {GetBooksWithCategoryService} from "../../service/Book/BookService";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ErrMsg from "../../Component/ErrMsg";
-import HotPost from "../../Component/Post/HotPost";
+import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
 import {ListCard} from "../../Component/Card/ListCard";
+import {BannerCategory} from "../../Component/Category/BannerCategory";
+import {GetPresentationOfCategory} from "../../utils/CategoryUtils";
+import ScreenSize from "../../utils/Size";
+import {ScrollDownUtils} from "../../utils/Scroll";
 
 export async function getServerSideProps({req,params}){
 
@@ -49,6 +53,9 @@ export default function CatPage({cat,err,bookListData}) {
     const [bookList,setBookList] = useState(bookListData);
     const [canSeeMore,setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] =useState(false);
+    const [width, height] = ScreenSize();
+
+    const topBook = bookListData[0];
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
@@ -63,6 +70,7 @@ export default function CatPage({cat,err,bookListData}) {
             })
             .catch((err) => console.log(err))
     }
+
 
     const loadMoreBooks = () => {
         setLoadingScroll(true);
@@ -82,6 +90,7 @@ export default function CatPage({cat,err,bookListData}) {
                 }
             })
             .then(() => setLoadingScroll(false))
+            .then(() => ScrollDownUtils(104))
             .catch((err) => setLoadingScroll(false));
     }
 
@@ -90,9 +99,42 @@ export default function CatPage({cat,err,bookListData}) {
         <div className={styles.container}>
             <Header/>
             <CategoryHeader/>
+            <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)}/>
             {
-                !err && bookListData &&
+                !err && bookListData && bookList && bookList.length > 0 &&
                 <div className={styles.containerM}>
+                    {
+                        topBook &&
+                        <div className={styles.hotContainer}>
+                            {
+                                width > 450 ?
+                                    <HotPost className={styles.hotItem}
+                                             likes={topBook.likes}
+                                             title={topBook.title} author={topBook.author_pseudo}
+                                             img={topBook.img} category={topBook.category}
+                                             nbChapter={topBook.nbChapters}
+                                             slug={topBook.slug}
+                                             id={topBook._id}
+                                             top={true}
+                                             description={topBook.summary}
+                                    />
+                                    :
+                                    <HotPostPhone className={styles.hotItem}
+                                             likes={topBook.likes}
+                                             title={topBook.title} author={topBook.author_pseudo}
+                                             img={topBook.img} category={topBook.category}
+                                             nbChapter={topBook.nbChapters}
+                                             slug={topBook.slug}
+                                             id={topBook._id}
+                                             top={true}
+                                             description={topBook.summary}
+                                    />
+                            }
+
+                        </div>
+
+                    }
+
 
                     <div className={styles.containerCategory}>
                         <div className={styles.rankingContainer}>
@@ -142,6 +184,7 @@ export default function CatPage({cat,err,bookListData}) {
                                 <div className={styles.containerSeeMore}>
                                     <TextSeeMore onclick={() => {
                                         loadMoreBooks();
+
                                     }}/>
                                 </div>
                             }
@@ -163,6 +206,15 @@ export default function CatPage({cat,err,bookListData}) {
             }
 
             <Footer/>
+
+
+       {/*     <div className={styles.emailTest}>
+                <h1>Bienvenue chez Ogla</h1>
+                <p className={styles.thanks}>Merci de nous avoir rejoins, validez votre email en cliquant sur le <span>lien de confirmation. </span> </p>
+                <p className={styles.citation}>Ogla est une plateforme d’écriture et de lecture ouverte à tous.  <br/>Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.
+</p>
+            </div>
+*/}
         </div>
     )
 }

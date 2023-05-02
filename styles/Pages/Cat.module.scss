@@ -9,14 +9,13 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-bottom: 50px;
   background-image: url("/assets/blurry.svg");
   background-size: 100%;
   background-repeat: no-repeat;
 }
 
 .containerCategory{
-  width: 80%;
+  width: 1300px;
   margin-top: 5vh;
 }
 
@@ -351,28 +350,56 @@
 }
 
 .containerSeeMore{
-  margin-top: 5%;
+  margin-top: 8%;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-@media screen and (max-width: 1700px) {
-  .card {
-    grid-template-columns: 1fr 1fr !important;
+.hotContainer{
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(28, 35, 43, 0.21);
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media screen and (max-width: 1600px){
+.containerCategory{
+  width: 90%;
+}
+}
+
+@media screen and (max-width: 1400px){
+  .containerCategory{
+    width: 90% !important;
   }
 }
 
-@media screen and (max-width: 1400px) {
-  .card {
-    width: 80% !important;
+@media screen and (max-width: 1150px){
+  .containerCategory{
+    width: 95% !important;
   }
-}
-
-@media screen and (max-width: 1200px) {
-  .card {
+  .hot{
+    padding-left: 2%;
+    margin-top: 80px!important;
+  }
+  .headerHot{
+    padding-right: 2%;
     width: 100% !important;
+  }
+
+  .hotContainer{
+    width: 95% !important;
   }
 }
 
@@ -387,11 +414,27 @@
   .card {
     grid-template-columns: 1fr 1fr !important;
   }
+
+  .hotContainer{
+    padding-top: 2%;
+    width: 100% !important;
+    display: flex!important;
+    overflow-x: scroll!important;
+    white-space: nowrap;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 610px){
+  .containerCategory{
+    width: 90% !important;
+  }
 }
 
 @media screen and (max-width: 550px) {
   .card {
     width: 100% !important;
+    color: #5a6673;
   }
 }
 
@@ -400,4 +443,39 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+
+
+/*
+.emailTest{
+  min-height: 200px;
+  text-align: center;
+  width: 100%;
+
+  h1{
+    font-family: 'Inter',sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  .thanks{
+    font-family: 'Inter',sans-serif;
+  }
+  span{
+    cursor: pointer;
+    color: #9844AD;
+    text-decoration: underline;
+    font-family: 'Arial',sans-serif;
+    font-weight: bold;
+  }
+
+  .citation{
+    font-size: 14px;
+    margin-top: 30px;
+    font-style: italic;
+    color: #9844AD;
+  }
+}*/
+
 

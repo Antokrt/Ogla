@@ -90,3 +90,11 @@ export const UpdateLinksProfilAuthor = (social, link) => {
             .catch((err) => reject(err))
     })
 }
+
+export const deleteLink = (type) => {
+    return new Promise((resolve, reject) => {
+        instance.put("/author/social/" + type)
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err));
+    })
+}

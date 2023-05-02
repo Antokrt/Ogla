@@ -27,10 +27,17 @@ import {
 import {Capitalize} from "../../../utils/String";
 import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
 import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
-import {Loader1, Loader2, LoaderCommentary} from "../../../Component/layouts/Loader";
+import {Loader1, Loader2, LoaderCommentary, LoaderImg} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
 import {FilterBtn, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn/ActionBtn";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+
+import {renderPrediction} from "../../../utils/ImageUtils";
+import {toastDisplayError} from "../../../utils/Toastify";
+import CardCategory from "../../../Component/Card/CardCategory";
+import ScreenSize from "../../../utils/Size";
+import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
+
 
 
 export async function getServerSideProps({req, params}) {
@@ -68,25 +75,27 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const lastChapter = bookData.lastChapter;
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
+    const [loadingImg,setLoadingImg] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
     const imgRef = useRef();
     const divRef = useRef(null);
     const [file, setFile] = useState(true);
     const [localImg, setLocalImg] = useState(null);
-    const [errImg, setErrImg] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const router = useRouter();
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [loadingChapter, setLoadingChapter] = useState(false);
     const [errListChapter, setErrChapter] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
+    const [width, height] = ScreenSize();
 
 
-    const handleFileSelect = (event) => {
+
+    const handleFileSelect = async (event) => {
         if (event?.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
-            setLocalImg(URL.createObjectURL(event.target.files[0]));
-        }
+                setFile(event.target.files[0]);
+                setLocalImg(URL.createObjectURL(event.target.files[0]));
+            }
     }
 
     const getMoreChapter = () => {
@@ -131,23 +140,34 @@ const OneBook = ({bookData, chapterListData, err}) => {
             })
     }
 
-    const updatePic = () => {
+    const updatePic = async () => {
         if (file) {
-            UpdateBookPictureService(file, book._id)
-                .then((res) => {
-                    setBook((prevState) => ({
-                        ...prevState,
-                        img: res.data.img
-                    }))
-                })
-                .then(() => {
-                    setLocalImg(null);
-                    setFile(null);
-                    setErrImg(false);
-                })
-                .catch((err) => {
-                    setErrImg(true);
-                })
+            setLoadingImg(true);
+            const data = await renderPrediction(file,'book');
+            if(data){
+                UpdateBookPictureService(file, book._id)
+                    .then((res) => {
+                        setBook((prevState) => ({
+                            ...prevState,
+                            img: res.data.img
+                        }))
+                    })
+                    .then(() => {
+                        setLocalImg(null);
+                        setFile(null);
+                        setLoadingImg(false);
+                    })
+                    .catch((err) => {
+                        setLoadingImg(false);
+                        toastDisplayError("Impossible de modifier l'image.");
+                    })
+            }
+            else {
+                setLoadingImg(false);
+                toastDisplayError('Image non conforme.')
+            }
+
+
         }
     }
 
@@ -178,24 +198,25 @@ const OneBook = ({bookData, chapterListData, err}) => {
         }
     }
 
-    useEffect(() => {
-       console.log(book)
-    },[])
-
     return (
         <div className={styles.container}>
-            <div className={styles.verticalMenuContainer}>
-                <VerticalAuthorMenu/>
-            </div>
+            {
+                width > 700 ?
+                    <div className={styles.verticalMenuContainer}>
+                        <VerticalAuthorMenu/>
+                    </div> :
+                  <VerticalPhoneMenu/>
+            }
+
 
             <div className={styles.containerData}>
-                <div className={styles.containerHeader}>
-                    <SmHeaderDashboard title={bookData.title}/>
-                </div>
                 {
-                    loading &&
-                    <p>Loading...</p>
+                    !err.book &&
+                    <div className={styles.containerHeader}>
+                        <SmHeaderDashboard title={bookData.title}/>
+                    </div>
                 }
+
                 {
                     !loading && err.book &&
                     <ErrorDashboard
@@ -206,7 +227,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                             router.push('/dashboard/books')
                         }
                         }
-                        img={'/assets/chara/chara5.png'}
+                        img={'/assets/diapo/mountain.png'}
                     />
                 }
                 {
@@ -226,6 +247,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 <div className={styles.imgADescription}>
                                     <div className={styles.containerImg}>
                                         {
+                                            loadingImg &&
+                                            <div className={styles.loaderImg}>
+                                                <LoaderImg/>
+                                            </div>
+                                        }
+                                        {
                                             localImg && file ?
                                                 <>
                                                     <img src={localImg} className={styles.darkImg}/>
@@ -234,7 +261,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <CheckCircleIcon
                                                             onClick={() => updatePic()}
                                                             className={styles.check}/>
-                                                        <XCircleIcon
+                                                      f  <XCircleIcon
                                                             onClick={() => {
                                                                 setLocalImg(null);
                                                                 setFile(null);
@@ -250,11 +277,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             imgClick();
                                                         }}
                                                         src={book.img}/>
-                                                    {
-                                                        errImg &&
-                                                        <p className={styles.errMsgSummary + " " + styles.errImg}>Impossible
-                                                            de modifier l'image</p>
-                                                    }
+
+
                                                     <input
                                                         type={'file'}
                                                         ref={imgRef}
@@ -265,6 +289,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             if (!file?.type.match(imageMimeType)) {
                                                                 return null;
                                                             }
+
+
                                                             handleFileSelect(e);
                                                         }}
                                                     />
@@ -317,13 +343,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 </div>
 
                                 <div className={styles.presentationContainer}>
+                                    <img className={styles.mountain} src={'/assets/diapo/mountain4.png'}/>
                                     <div className={styles.statsLabelContainer}>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>{book.likes}</p>
+                                            <p>{book.likes}</p>
                                             <h6>like(s)</h6>
                                         </div>
                                         <div className={styles.chapterNbLabel}>
-                                            <p className={styles.length}>{book.chapter_list.length}</p>
+                                            <p>{book.chapter_list.length}</p>
                                             <h6>chapitre(s)</h6>
                                         </div>
                                         <div className={styles.dateLabel}>
@@ -333,9 +360,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                     </div>
                                     <div className={styles.contentContainer}>
-                                        <div>
-                                            <span className={styles[book.category] + ' ' + styles.cat}>{Capitalize(book.category)}</span>
-                                        </div>
+
+                              <CardCategory category={book.category}/>
                                         {
                                             lastChapter &&
                                             <div>
@@ -400,6 +426,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             book.chapter_list.length === 0 ?
                                                 <div className={styles.emptyContainer}>
                                                     <h6>Oups !</h6>
+                                                    <img src={'/assets/jim/smile6.png'}/>
                                                     <p>C'est bien vide ici, écrivez votre prochain chapitre dès
                                                         maintenant</p>
                                                     <button
