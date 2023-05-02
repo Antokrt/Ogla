@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,6 +220,34 @@
       <workItem from="1679218687935" duration="8392000" />
       <workItem from="1679230094079" duration="5227000" />
       <workItem from="1679302668224" duration="18473000" />
+      <workItem from="1680886819691" duration="1498000" />
+      <workItem from="1680980864948" duration="72000" />
+      <workItem from="1681026431522" duration="1220000" />
+      <workItem from="1681064360593" duration="382000" />
+      <workItem from="1681117079732" duration="19610000" />
+      <workItem from="1681160752762" duration="1243000" />
+      <workItem from="1681203678834" duration="292000" />
+      <workItem from="1681203978441" duration="7262000" />
+      <workItem from="1681240348190" duration="1456000" />
+      <workItem from="1681253050061" duration="141000" />
+      <workItem from="1681295288197" duration="13044000" />
+      <workItem from="1681480577960" duration="3798000" />
+      <workItem from="1681551733043" duration="10000" />
+      <workItem from="1681805443090" duration="15084000" />
+      <workItem from="1681893858735" duration="22348000" />
+      <workItem from="1681979047250" duration="26004000" />
+      <workItem from="1682065859857" duration="24560000" />
+      <workItem from="1682154170397" duration="17561000" />
+      <workItem from="1682245293842" duration="12526000" />
+      <workItem from="1682323793552" duration="28211000" />
+      <workItem from="1682363054419" duration="27521000" />
+      <workItem from="1682498558233" duration="14113000" />
+      <workItem from="1682537754755" duration="1936000" />
+      <workItem from="1682589875632" duration="3939000" />
+      <workItem from="1682599271211" duration="128000" />
+      <workItem from="1682610435416" duration="4746000" />
+      <workItem from="1682672379930" duration="19343000" />
+      <workItem from="1683015904489" duration="8242000" />
     </task>
     <servers />
   </component>
