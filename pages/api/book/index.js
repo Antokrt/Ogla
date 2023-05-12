@@ -1,7 +1,17 @@
-export async function GetOneBookApi(id) {
+import {VerifLikeApi} from "../like";
+
+export async function GetOneBookApi(id,req) {
     const book = await fetch('http://localhost:3008/book-render/one/' + id + '/order/' + 1);
     const bookErrData = !book.ok;
     let booksJson = await book.json();
+    let hasLikeJson;
+    if(req){
+         hasLikeJson = await VerifLikeApi(req, 'book', id);
+    }
+
+
+
+    console.log(booksJson)
 
     if (booksJson.statusCode === 404) {
         booksJson.book = null;
@@ -12,6 +22,7 @@ export async function GetOneBookApi(id) {
         book: booksJson.book,
         chapter: booksJson.chapter,
         author: booksJson.author,
+        hasLike:hasLikeJson,
         err: bookErrData
     };
 }

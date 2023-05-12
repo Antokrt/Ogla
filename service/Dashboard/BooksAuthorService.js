@@ -1,4 +1,5 @@
 import {instance} from "../config/Interceptor";
+import axios from "axios";
 
 export const GetMoreBookService = (filter,page) => {
     return new Promise((resolve, reject) => {
@@ -39,7 +40,10 @@ export const NewBookService = (data, file) => {
                 }
 
             })
-            .catch((err) => reject(err))
+            .catch((err) => {
+                console.log('err')
+                reject(err)
+            })
     })
 }
 
@@ -64,6 +68,8 @@ export const UpdateBookSummaryService = (bookId, newSummary) => {
             .catch((err) => reject(err));
     })
 }
+
+
 
 export const UpdateBookPictureService = (file,bookId) => {
     if(file){

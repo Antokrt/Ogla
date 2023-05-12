@@ -8,6 +8,7 @@ import {
 import {useRouter} from "next/router";
 import {LikeBtnSidebar} from "../layouts/Btn/Like";
 import {ref} from "yup";
+import {ReduceString} from "../../utils/String";
 
 
 const FooterOnChapter = ({
@@ -32,7 +33,7 @@ const FooterOnChapter = ({
         <div className={styles.titleContainer}>
             <img src={img}/>
             <div>
-                <h7>Chapitre {index} : {title}</h7>
+                <h7>{ReduceString(title,80)} ({index})</h7>
                 <p>{likes} likes - {author}</p>
             </div>
 

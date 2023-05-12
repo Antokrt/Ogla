@@ -135,11 +135,18 @@
     overflow-y: auto;
     display: block;
     scroll-behavior: smooth;
+
+    .chapterTitleResp{
+      font-size: 16px;
+      font-family: 'Santral-Regular',sans-serif;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
 .item{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 50px;
+  min-height: 60px;
   padding: 0px 10px 10px;
   border-bottom: solid 2px $grey;
   margin-bottom: 10px;
@@ -149,14 +156,9 @@
     display: flex;
     align-items: center;
     font-size: 10px;
-    font-family: "Poppins",sans-serif;
+    font-family: "Santral-Regular",sans-serif;
     font-weight: bold;
-    svg{
-      margin-left: 5px;
-      cursor: pointer;
-      color: $darkBrown;
-      width: 13px;
-    }
+    color: #9844AD;
   }
 }
 
@@ -164,26 +166,25 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-
+      gap: 4px;
       .title{
         &:first-letter{
           font-size: 13px;
         }
-font-size: 12px;
-        font-family: "Montserrat Alternates",sans-serif;
+        font-family: "Santral-Regular", sans-serif;
+        color: rgb(66, 60, 53);
+        font-size: 12px;
         font-weight: bold;
-        margin-bottom: 5px;
-        color: #1C232B;
-        span{
-        }
       }
 
-      .date{
-        font-size: 11px;
-        color: rgba(28, 35, 43, 0.84);
-        font-family: "Montserrat",sans-serif;
 
+      span{
+        font-family: 'Santral-Regular',sans-serif;
+        font-weight: initial;
+        font-size: 12px;
+        opacity: 0.8;
       }
+
     }
   }
 
@@ -318,5 +319,59 @@ font-size: 12px;
     font-family: 'Montserrat',sans-serif;
     color: rgba(28, 35, 43, 0.83);
     font-size: 14px;
+  }
+}
+
+
+@media screen and (max-width: 900px){
+  .headerComment,.titleSection{
+    display: none!important;
+  }
+
+  .chapterList{
+    display: flex!important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item{
+    width: 80%;
+    min-height: 80px!important;
+  }
+
+  .titleChapter{
+    p{
+      &:first-letter{
+        font-size: initial!important;
+      }
+      font-size: 15px!important;
+    }
+    span{
+      font-size: 14px!important;
+    }
+  }
+}
+
+
+@media screen and (max-width: 450px){
+  .titleChapter{
+    p{
+      &:first-letter{
+        font-size: 13px!important;
+      }
+      font-size: 13px!important;
+    }
+    span{
+      font-size: 12px!important;
+    }
+  }
+}
+
+@media screen and (max-width: 300px){
+  .item{
+    flex-direction: column;
+    text-align: center;
+    margin: 20px 0;
   }
 }

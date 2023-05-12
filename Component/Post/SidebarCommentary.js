@@ -1,4 +1,5 @@
 import styles from "../../styles/Component/Post/SidebarCommentary.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {createRef, useEffect, useRef, useState} from "react";
 import {CheckBadgeIcon} from "@heroicons/react/20/solid";
@@ -14,6 +15,9 @@ import {Loader2, LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
+import ScreenSize from "../../utils/Size";
+import useOrientation from "../../utils/Orientation";
+import {FilterBtn, FilterBtn3} from "../layouts/Btn/ActionBtn";
 
 
 const SidebarCommentary = ({
@@ -39,20 +43,31 @@ const SidebarCommentary = ({
                                changeFilter,
                                activeFilter,
                                likeAnswer,
-                               newPageAnswer
+                               newPageAnswer,
+    isEmpty
                            }) => {
     const router = useRouter();
     const [commentList, setCommentList] = useState(comments);
     const [newComment, setNewComment] = useState('');
     const divRef = useRef(null);
-
+    const [endRefresh,setEndRefresh] = useState(true);
+    const [load,setLoad] = useState(false);
     const {data: session} = useSession();
+    const orientation = useOrientation();
     const inputRef = useRef(null);
     const dispatch = useDispatch();
+    const [width, height] = ScreenSize();
+
 
     useEffect(() => {
-        setCommentList(comments)
+        setCommentList(comments);
+        setEndRefresh(false)
+        setTimeout(() => {
+            setEndRefresh(true);
+        },200)
     }, [comments])
+
+
 
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
@@ -94,7 +109,6 @@ const SidebarCommentary = ({
             .catch((err) => console.log(err))
     }
 
-
     useEffect(() => {
         setCommentList(comments);
     }, [comments])
@@ -120,7 +134,11 @@ const SidebarCommentary = ({
         };
     }, [canScroll, loadingScroll]);
 
-    return (
+    if(width > 600 && height > 500 && orientation !== 'landscape'){
+
+    }
+
+        return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
@@ -130,20 +148,39 @@ const SidebarCommentary = ({
                 <h5>Commentaire(s) <span>({nbCommentary})</span></h5>
 
                 <div>
-                    <p onClick={() => changeFilter('popular')}
+                    <p onClick={() => {
+                        changeFilter('popular');
+                    }}
                        className={activeFilter === 'popular' && styles.filterActive}>Populaire(s)</p>
-                    <p onClick={() => changeFilter('recent')}
+                    <p onClick={() => {
+                        changeFilter('recent');
+                    }}
                        className={activeFilter === 'recent' && styles.filterActive}>Récent(s)</p>
                 </div>
             </div>
 
             <div
                 ref={divRef}
-                className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar}>
+                className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar + ' ' + anim.fadeIn}>
+
+                {
+                    width <= 600 &&
+                    <div className={styles.filterPhone}>
+                        <FilterBtn3 filter={activeFilter} onclick={() => {
+                        if(activeFilter === 'recent'){
+                            changeFilter('popular');
+                        }
+                        else {
+                            changeFilter('recent');
+                        }
+                        }
+                        }/>
+                    </div>
+                }
 
 
                 {
-                    commentList && commentList.length > 0 && commentList.map((item, index) => {
+                    commentList && comments.length > 0 && commentList.map((item, index) => {
                         return (
                             <Commentary
                                 seeMoreAnswers={item.seeMoreAnswers}
@@ -173,9 +210,11 @@ const SidebarCommentary = ({
                     })
                 }
 
+
+
                 {
-                    commentList && commentList.length <= 0 && !loadingScroll &&
-                    <div className={styles.empty}>
+                     comments.length <= 0 && !loadingScroll && endRefresh &&
+                    <div className={styles.empty + ' ' + anim.fadeIn}>
                         <img src={'/assets/jim/angry2.png'}/>
                         <p>C'est bien silencieux ici ! <br/> <span onClick={() => {
                             if (session) {
@@ -186,52 +225,55 @@ const SidebarCommentary = ({
                         }}>Écris le premier commentaire dès maintenant... </span></p>
                     </div>
                 }
-
-            </div>
-
-
-            <div className={styles.commentaryContainer}>
-
-
-                <div className={styles.formContainer}>
-                    {
-                        session ?
-                            <textarea
-                                ref={inputRef}
-                                value={newComment}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {
-                                        e.preventDefault();
-                                        sendNewComment();
-                                    }
-                                }}
-                                onChange={(e) => setNewComment(e.target.value)}
-                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
-                            :
-                            <textarea
-                                className={scroll.scrollbar}
-                                type={"textarea"}
-                                onClick={() => dispatch(setActiveModalState(true))}
-                                placeholder={"Connectez vous pour pouvoir commenter..."}
-                                readOnly={true}
-                            />
-                    }
-                </div>
                 {
-                    loadingScroll &&
-                    <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                    loadingScroll && width <= 800 &&
+                    <div className={styles.loaderContainerPhone}><LoaderCommentary/></div>
                 }
 
-                <div
-                    onClick={() => {
-                        if (newComment !== "") {
-                            sendNewComment();
-                        }
-                    }}
-                    className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
-                    <PaperAirplaneIcon/>
-                </div>
             </div>
+
+
+                <div className={styles.commentaryContainer}>
+
+                    <div className={styles.formContainer}>
+                        {
+                            session ?
+                                <textarea
+                                    ref={inputRef}
+                                    value={newComment}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {
+                                            e.preventDefault();
+                                            sendNewComment();
+                                        }
+                                    }}
+                                    onChange={(e) => setNewComment(e.target.value)}
+                                    className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                                :
+                                <textarea
+                                    className={scroll.scrollbar}
+                                    type={"textarea"}
+                                    onClick={() => dispatch(setActiveModalState(true))}
+                                    placeholder={"Connectez vous pour pouvoir commenter..."}
+                                    readOnly={true}
+                                />
+                        }
+                    </div>
+                    {
+                        loadingScroll && commentList.length >= 1 &&
+                        <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                    }
+
+                    <div
+                        onClick={() => {
+                            if (newComment !== "") {
+                                sendNewComment();
+                            }
+                        }}
+                        className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
+                        <PaperAirplaneIcon/>
+                    </div>
+                </div>
         </div>
     )
 }

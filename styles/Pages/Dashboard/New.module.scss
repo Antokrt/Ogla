@@ -458,8 +458,30 @@ width: 100% !important;
     justify-content: center!important;
   }
 
+  .fileContainer{
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+    img{
+      width: 30vw!important;
+      max-height: 30vh;
+    }
+
+    .loaderImg{
+left: 50% !important;
+    }
+  }
+
   .fileLabel{
     text-align: center!important;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .fileContainer{
+    img{
+      width: 50vw!important;
+    }
   }
 }
 

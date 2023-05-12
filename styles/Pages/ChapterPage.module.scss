@@ -1,11 +1,9 @@
 @import "styles/utils/var.scss";
 
 .container {
-  background-image: url("/assets/blurry.svg");
   background-size: 100%;
   background-repeat: no-repeat;
   scroll-behavior: smooth;
-  background-color: #f6f4f4;
   height: auto;
   min-height: 100vh;
 }
@@ -40,6 +38,24 @@
   flex-direction: column;
   position: relative;
 
+  .title{
+    text-align: center;
+    p{
+      font-size: 15px;
+      font-family: 'Santral-Regular',sans-serif;
+      opacity: 0.7;
+      font-weight: bold;
+    }
+    h3 {
+      &:first-letter {
+        font-size: 30px;
+      }
+      font-size: 25px;
+      color: $darkBrown;
+      font-family: "Santral-Regular", sans-serif;
+      font-weight: bold;
+    }
+  }
 
   .thumbnailContainer {
     display: none;
@@ -74,20 +90,7 @@
     }
   }
 
-  h3 {
-    &:first-letter {
-      font-size: 40px;
-    }
 
-    margin-bottom: 10px;
-    text-align: center;
-    font-size: 25px;
-    color: $darkBrown;
-    letter-spacing: 1px;
-    font-family: "Branch", sans-serif;
-    font-weight: bold;
-    -webkit-text-stroke-width: 1px;
-  }
 
   h5 {
     font-size: 16px;
@@ -263,4 +266,201 @@
   }
 }
 
+
+.containerPhone{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  height: auto;
+  padding-bottom: 150px;
+
+
+}
+
+.bookMenuVerticalPhone{
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-top: solid 1px rgba(28, 35, 43, 0.25);
+  height: 140px;
+  background-color: white;
+  box-shadow: $shadow;
+  width: 100%;
+  z-index: 200;
+  bottom: 0;
+
+  .fMenuPhone{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    img{
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      z-index: 1;
+      object-fit: cover;
+    }
+
+    .labelChapterPhone{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+
+      h4{
+        &:first-letter{
+          text-transform: uppercase;
+        }
+        font-size: 15px;
+        font-family: 'Santral-Regular',serif;
+        font-weight: bold;
+        opacity: 0.8;
+      }
+      p{
+        font-size: 12px;
+        font-family: 'Santral-Regular',serif;
+        font-weight: bold;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .sMenuPhone{
+    height: 50%;
+    display: flex;
+    gap: 35px;
+    flex: 1;
+  }
+
+  .itemMenuBookPhone{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p{
+      font-size: 12px;
+      font-family: 'Santral-Regular',serif;
+    }
+    svg{
+      width: 20px;
+    }
+  }
+
+  .like{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+}
+
+.titlePhone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  p{
+    font-family: 'Santral-Regular',sans-serif;
+    font-size: 15px;
+    opacity: 0.8;
+  }
+
+  h2{
+    &:first-letter{
+      text-transform: uppercase;
+    }
+    font-size: 20px;
+    font-family: 'Santral-Regular',sans-serif;
+    font-weight: bold;
+    opacity: 0.9;
+    text-align: center;
+  }
+}
+
+.containerCommentary{
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.navBlock{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  gap: 10px;
+  svg{
+    width: 20px;
+  }
+  p{
+    font-size: 14px;
+    font-family: 'Santral-Regular',serif;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+}
+
+.contentChapterPhone{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.editorPhone{
+  p{
+    font-family: "Branch", sans-serif;
+    font-weight: bold;
+    color: rgb(66, 60, 53);
+    line-height: 30px;
+  }
+  width: 90%;
+}
+
+@media screen and (max-width: 1500px){
+  .headerContent,.textContainer{
+    width: 70% !important;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .sidebar{
+    position: initial!important;
+    height: auto;
+    box-shadow: none;
+    width: 100%;
+    margin-top: 4vh;
+  }
+}
+
+@media screen and (max-width: 700px){
+   .headerContent,.textContainer{
+     width: 90% !important;
+   }
+
+  .bannerChapter{
+    height: 10vh;
+    h3{
+      font-size: 18px;
+    }
+  }
+}
 

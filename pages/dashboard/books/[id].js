@@ -1,7 +1,7 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {
-    DeleteBookService, GetMoreChapterService,
+    DeleteBookService, GetMoreChapterService, TestService,
     UpdateBookPictureService, UpdateBookSummaryService,
 } from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
@@ -204,7 +204,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     }))
                     setNewSummary(res.summary);
                 })
-                .catch((err) => setErrSummary(true));
+                .catch((err) => {
+                    console.log(err)
+                    setErrSummary(true);
+                });
         } else {
             return null;
         }

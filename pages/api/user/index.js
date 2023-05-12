@@ -7,7 +7,7 @@ export async function GetPrivateProfilApi(req){
     const profilErrData = !profil.ok;
     let profilJson = await profil.json();
 
-    if(profilJson.statusCode){
+    if(profilJson.statusCode === 401){
         profilJson = null;
     }
 

@@ -22,10 +22,11 @@ height: 100%;
 width: 50px;
       height: 100%;
       img{
-        width: 100%;
         object-fit: cover;
-        clip-path: circle();
+        object-position: center;
         height: 40px;
+        width: 40px;
+        border-radius: 50%;
       }
     }
 
@@ -245,9 +246,7 @@ color: $darkBrown;
   &::-webkit-scrollbar-thumb:hover {
     background: $grey;
   }
-
-  max-height: 500px;
-  overflow-y: scroll!important;
+  height: auto;
 }
 
 .cutCommentary{
@@ -272,5 +271,17 @@ background-color: #9844AD!important;
     color: #9844AD;
     font-size: 11px;
     font-family: 'Montserrat',sans-serif;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .container{
+    padding-left: 0;
+  }
+
+  .contentCommentContainer{
+    svg{
+      right: 0!important;
+    }
   }
 }

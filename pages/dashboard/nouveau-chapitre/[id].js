@@ -55,8 +55,23 @@ const NouveauChapitre = ({bookData, err}) => {
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
 
+    const onPageChange = () => {
+        const object = {
+            bookId: bookData?._id,
+            text: text,
+            content: content,
+            title: title
+        }
+        localStorage.setItem('new', JSON.stringify(object))
+    }
 
+    useEffect(() => {
+        router.events.on('routeChangeStart', onPageChange);
 
+        return () => {
+            router.events.off('routeChangeStart', onPageChange);
+        };
+    }, [router]);
 
     useEffect(() => {
         if (router.isReady) {
@@ -72,6 +87,22 @@ const NouveauChapitre = ({bookData, err}) => {
         }
     }, [content, title])
 
+    const renderContent = () => {
+        if(typeof window !== 'undefined'){
+            const localObject = localStorage.getItem('book-' + bookData._id);
+            if(localObject){
+                const parseLocalObject = JSON.parse(localStorage.getItem('book-' + bookData._id));
+                return parseLocalObject.content
+            }
+            else {
+                return '<p></p>'
+            }
+        }
+        else{
+            return '<p></p>'
+        }
+    }
+
 
     const editor = useEditor({
         extensions: [
@@ -84,8 +115,10 @@ const NouveauChapitre = ({bookData, err}) => {
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());
+            updateTextInLocal(editor?.getText());
+            updateContentInLocal(editor?.getJSON());
         },
-        content: '<p></p>'
+        content: renderContent()
     })
 
     const bold = () => {
@@ -115,11 +148,59 @@ const NouveauChapitre = ({bookData, err}) => {
             }
 
             newChapter(data)
-                .then((res) => router.push('/dashboard/books/' + book._id))
+                .then((res) => {
+                    localStorage.removeItem('book-'+bookData._id);
+                    router.push('/dashboard/books/' + book._id);
+                })
                 .catch((err) => console.log(err));
         }
 
     }
+
+    const updateTitleInLocal = (value) => {
+        if (typeof window !== 'undefined') {
+            let bookInLocal = JSON.parse(localStorage.getItem('book-' + bookData._id));
+            bookInLocal.title = value;
+            localStorage.setItem('book-' + bookData._id, JSON.stringify(bookInLocal));
+        }
+    }
+
+    const updateTextInLocal = (value) => {
+        if (typeof window !== 'undefined') {
+            let bookInLocal = JSON.parse(localStorage.getItem('book-' + bookData._id));
+            bookInLocal.text = value;
+            localStorage.setItem('book-' + bookData._id, JSON.stringify(bookInLocal));
+        }
+    }
+
+    const updateContentInLocal = (content) => {
+        if (typeof window !== 'undefined') {
+            let bookInLocal = JSON.parse(localStorage.getItem('book-' + bookData._id));
+            bookInLocal.content = content;
+            localStorage.setItem('book-' + bookData._id, JSON.stringify(bookInLocal));
+        }
+    }
+
+    useEffect(() => {
+        if(typeof window !== 'undefined'){
+            let localObject = localStorage.getItem('book-' + bookData._id);
+            if (!localObject) {
+                const object = {
+                    title: '',
+                    content: {},
+                    text: ''
+                }
+                localStorage.setItem('book-' + bookData._id, JSON.stringify(object));
+            }
+            else {
+                const parseLocalObject = JSON.parse(localObject);
+                setTitle(parseLocalObject.title);
+                setText(parseLocalObject.text);
+                setContent(parseLocalObject.content);
+            }
+        }
+
+    }, [editor])
 
     return (
         <div className={styles.container}>
@@ -132,7 +213,7 @@ const NouveauChapitre = ({bookData, err}) => {
                         :
                         <>
                             {
-                                width  >= 700 && width <= 1050 ?
+                                width >= 700 && width <= 1050 ?
                                     <div className={styles.verticalTabContainer}>
                                         <VerticalTabMenu/>
                                     </div>
@@ -198,43 +279,42 @@ const NouveauChapitre = ({bookData, err}) => {
                         }
                         {
                             width >= 700 && width <= 1200 &&
-                                <div className={styles.headerResp}>
-                                    <div className={styles.list}>
-                                        <HomeIcon className={styles.homeHResp}/>
-                                        <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
-                                        <h6
-                                            onClick={() => router.push('/dashboard/books/' + book._id)}
-                                        >{book.title}</h6>
-                                        <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
+                            <div className={styles.headerResp}>
+                                <div className={styles.list}>
+                                    <HomeIcon className={styles.homeHResp}/>
+                                    <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
+                                    <h6
+                                        onClick={() => router.push('/dashboard/books/' + book._id)}
+                                    >{book.title}</h6>
+                                    <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
 
-                                        {
-                                            width >= 1100 &&
-                                            <>
-                                                <p className={styles.newPad}>Nouveau chapitre</p>
-                                            </>
-                                        }
-
-                                    </div>
-                                    <div className={styles.btnList}>
-                                        <button
-                                            className={canSend ? styles.activeSaveBtn : ''}
-                                            onClick={() => sendData(false)}
-                                        >Brouillon <ArrowPathIcon/>
-                                        </button>
-
-
-                                        <button
-                                            className={canSend ? styles.activePublishBtn : ''}
-                                            onClick={() => sendData(true)}
-                                        >Publier <CursorArrowRaysIcon/>
-                                        </button>
-                                    </div>
-
+                                    {
+                                        width >= 1100 &&
+                                        <>
+                                            <p className={styles.newPad}>Nouveau chapitre</p>
+                                        </>
+                                    }
 
                                 </div>
+                                <div className={styles.btnList}>
+                                    <button
+                                        className={canSend ? styles.activeSaveBtn : ''}
+                                        onClick={() => sendData(false)}
+                                    >Brouillon <ArrowPathIcon/>
+                                    </button>
+
+
+                                    <button
+                                        className={canSend ? styles.activePublishBtn : ''}
+                                        onClick={() => sendData(true)}
+                                    >Publier <CursorArrowRaysIcon/>
+                                    </button>
+                                </div>
+
+
+                            </div>
 
                         }
-
 
 
                         {
@@ -245,7 +325,11 @@ const NouveauChapitre = ({bookData, err}) => {
                                             <div className={styles.titleL}>
                                                 <p>Chapitre {book.chapter_list.length + 1}</p>
                                                 <input
-                                                    onChange={(e) => setTitle(e.target.value)}
+                                                    onChange={(e) => {
+                                                        setTitle(e.target.value);
+                                                        updateTitleInLocal(e.target.value)
+                                                    }}
+                                                    value={title}
                                                     name={"title"}
                                                     type={'text'}
                                                     placeholder={'Ajoutez un titre ici'}
@@ -304,7 +388,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                         <div onClick={() => router.push('/dashboard/books/' + book._id)}
                                              className={styles.headPresentation}>
                                             <img src={book.img}/>
-                                            <h3>La quete du maitre</h3>
+                                            <h3>{bookData?.title}</h3>
                                         </div>
 
                                         <div className={styles.summary}>
@@ -313,7 +397,8 @@ const NouveauChapitre = ({bookData, err}) => {
 
                                         <div className={styles.statsPresentation}>
                                             <img src={'/assets/jim/cool2.png'}/>
-                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide d'écriture...</h6>
+                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à
+                                                notre guide d'écriture...</h6>
                                             <p>Cliquez ici pour en savoir plus !</p>
                                         </div>
                                     </div>
@@ -337,9 +422,13 @@ const NouveauChapitre = ({bookData, err}) => {
                                         </div>
 
                                         <input
-                                            onChange={(e) => setTitle(e.target.value)}
+                                            onChange={(e) => {
+                                                setTitle(e.target.value);
+                                                updateTitleInLocal(e.target.value);
+                                            }}
                                             name={"title"}
                                             type={'text'}
+                                            value={title}
                                             placeholder={'Ajoutez un titre ici'}
                                         />
                                     </div>
@@ -365,18 +454,30 @@ const NouveauChapitre = ({bookData, err}) => {
                                     </div>
 
                                     <div className={styles.containerBtnPhone}>
-                                            <button
-                                                className={canSend ? styles.activeSaveBtn : ''}
-                                                onClick={() => sendData(false)}
-                                            >Brouillon <ArrowPathIcon/>
-                                            </button>
+                                        <button
+                                            className={canSend ? styles.activeSaveBtn : ''}
+                                            onClick={() => sendData(false)}
+                                        >Brouillon <ArrowPathIcon/>
+                                        </button>
 
 
-                                            <button
-                                                className={canSend ? styles.activePublishBtn : ''}
-                                                onClick={() => sendData(true)}
-                                            >Publier <CursorArrowRaysIcon/>
-                                            </button>
+                                        <button
+                                            className={canSend ? styles.activePublishBtn : ''}
+                                            onClick={() => sendData(true)}
+                                        >Publier <CursorArrowRaysIcon/>
+                                        </button>
+                                        <button onClick={() => {
+                                            const object = {
+                                                bookId: bookData?._id,
+                                                text: text,
+                                                content: JSON.stringify(content),
+                                                title: title
+                                            }
+                                            localStorage.setItem('new', JSON.stringify(object))
+                                        }
+                                        }>
+
+                                        </button>
                                     </div>
                                 </div>
 

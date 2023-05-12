@@ -1,16 +1,27 @@
+@import "../../../styles/utils/var";
 .container{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #1C232B;
+  box-shadow: 0 2px 5px 0px rgb(64 60 67 / 16%);
   padding: 20px 0px;
 
   h6{
-    text-transform: uppercase;
-    font-family: 'Poppins',sans-serif;
-    color: white;
+    &:first-letter{
+      text-transform: uppercase;
+    }
+    font-family: 'Santral-Regular',sans-serif;
+    color: #1C232B;
     font-weight: bold;
-    letter-spacing: 1px;
-    font-size: 12px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 1050px){
+  .container{
+    background-color: #1C232B;
+    h6{
+      color: white;
+    }
   }
 }

@@ -5,6 +5,7 @@ import {PlusCircleIcon,BookmarkSquareIcon} from "@heroicons/react/24/outline";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {HeartIcon} from "@heroicons/react/20/solid";
+import {useEffect} from "react";
 
 export default function VerticalPhoneMenu() {
 
@@ -20,23 +21,29 @@ export default function VerticalPhoneMenu() {
     const dispatch = useDispatch()
 
 
+
     return (
         <div className={styles.container}>
             <div className={styles.containerMain}>
-                <div className={styles.item}>
+                <div className={styles.item} onClick={() => router.push('/')}>
                     <HomeIcon/>
                     <p>Accueil</p>
                 </div>
-                <div className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
-                    {
-
+                <div onClick={() => {
+                    if(router.pathname !== '/dashboard/books'){
+                        router.push('/dashboard/books');
                     }
+                }} className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
                     <BookmarkSquareIcon/>
                     <p>Mes livres</p>
                 </div>
 
 
-                <div className={styles.item}>
+                <div onClick={() => {
+                    if(router.pathname !== '/dashboard/nouveau-livre'){
+                        router.push('/dashboard/nouveau-livre');
+                    }
+                }} className={styles.item}>
                     <PlusCircleIcon/>
                     <p>Nouveau</p>
                 </div>

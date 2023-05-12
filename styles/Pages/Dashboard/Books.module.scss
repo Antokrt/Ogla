@@ -269,6 +269,23 @@ img{
   }
 }
 
+@media screen and (max-width: 560px){
+  .listContainer{
+    height: auto!important;
+    overflow-y: initial!important;
+  }
+
+  .containerMain{
+    min-height: 90vh!important;
+    padding-bottom: 14vh;
+    height: auto;
+  }
+
+  .seeMoreContainer{
+    margin-bottom: 0!important;
+  }
+}
+
 
 
 @media screen and (max-width: 300px){

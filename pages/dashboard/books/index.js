@@ -36,6 +36,8 @@ export async function getServerSideProps({context, req}) {
     const nbBooks = await fetch('http://localhost:3008/author/books-number', config)
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
+    console.log(booksJson)
+
     const nbBooksJson = await nbBooks.json();
     return {
         props: {
@@ -62,6 +64,10 @@ const Books = ({booksData, err, nbBooks}) => {
     const scrollBottom = () => {
         divRef.current.scrollTop = divRef.current.scrollHeight
     }
+
+    useEffect(() => {
+       console.log(session)
+    },[])
 
     const getMoreBooks = () => {
         setSeeMore(false);
@@ -234,16 +240,20 @@ const Books = ({booksData, err, nbBooks}) => {
                             </div>
 
 
-                            <div className={styles.seeMoreContainer}>
-                                {
-                                    seeMore && !loadingScroll &&
-                                    <TextSeeMore onclick={() => getMoreBooks()}/>
-                                }
-                                {
-                                    loadingScroll &&
-                                    <LoaderCommentary/>
-                                }
-                            </div>
+                            {
+                                nbBooks > books.length &&
+                                <div className={styles.seeMoreContainer}>
+                                    {
+                                        seeMore && !loadingScroll &&
+                                        <TextSeeMore onclick={() => getMoreBooks()}/>
+                                    }
+                                    {
+                                        loadingScroll &&
+                                        <LoaderCommentary/>
+                                    }
+                                </div>
+                            }
+
                         </div>
                     }
 

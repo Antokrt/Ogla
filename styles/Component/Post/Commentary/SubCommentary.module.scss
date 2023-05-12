@@ -1,6 +1,10 @@
 @import "styles/utils/var";
 
+
 .container{
+  &:first-of-type{
+    margin-top: 10px;
+  }
   width: 100%;
   height: auto;
   min-height: 70px;
@@ -21,10 +25,10 @@
       width: 50px;
       height: 100%;
       img{
-        width: 100%;
         object-fit: cover;
-        clip-path: circle();
+        width: 35px;
         height: 35px;
+        border-radius: 50%;
       }
     }
 

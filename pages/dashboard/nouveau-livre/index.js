@@ -61,7 +61,10 @@ const New = () => {
                     router.push('/dashboard/books/'+ res.data._id);
                 }
             })
-            .catch((err) => setSeeErrMsg(true));
+            .catch((err) => {
+                console.log('testtt')
+                setSeeErrMsg(true);
+            });
 
     }
     const previous = () => {
@@ -262,7 +265,6 @@ const New = () => {
                 return thirdStep();
         }
     }
-
     const titleStep = () => {
         switch (step){
             case 1:

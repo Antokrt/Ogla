@@ -21,6 +21,7 @@ import CardCategory from "../../Component/Card/CardCategory";
 import {ListCard} from "../../Component/Card/ListCard";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ScreenSize from "../../utils/Size";
+import Link from "next/link";
 
 
 export async function getServerSideProps({params}) {
@@ -41,6 +42,7 @@ export async function getServerSideProps({params}) {
 const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
 
     const [profilAuthor, setProfilAuthor] = useState(profilData);
+    const social = profilAuthor.author.social;
     const router = useRouter();
     const [page, setPage] = useState(2);
     const [activeFilter, setActiveFilter] = useState('popular');
@@ -134,11 +136,36 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
                                 <img referrerPolicy={'no-referrer'} src={profilAuthor?.img}/>
                             </div>
 
-                            <div className={styles.profil}>
-                                <Instagram/>
-                                <Facebook/>
-                                <Twitter/>
-                            </div>
+
+                            {
+                                (social.instagram !== '' || social.twitter !== '' || social.facebook !== '') &&
+
+                                <div className={styles.profil}>
+                                    {
+                                        social.instagram && social.instagram !== '' &&
+                                        <a href={'https://www.instagram.com/'+social.instagram} target={'_blank'}>
+                                            <Instagram/>
+                                        </a>
+                                    }
+
+                                    {
+                                        social.facebook && social.facebook !== '' &&
+                                        <a href={social.facebook} target={'_blank'}>
+                                            <Facebook/>
+                                        </a>
+                                    }
+
+                                    {
+                                        social.twitter && social.twitter !== '' &&
+                                        <a href={'https://twitter.com/'+ social.twitter} target={'_blank'}>
+                                            <Twitter/>
+                                        </a>
+                                    }
+                                </div>
+                            }
+
+
+
 
                             {/*
                     <div className={styles.listCommentary}>
@@ -161,7 +188,7 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
                                 <p className={styles.absoText}>{profilAuthor?.pseudo}assasaasa</p>
                                 <div className={styles.pseudo_date}>
                                     <h3>{profilAuthor?.pseudo}</h3>
-                                    <p>Devenu auteur le : 18/02/29 {profilAuthor.author.became_author} </p>
+                                    <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
                                 </div>
 
                                 <h6>Écrivain <span>OGLA</span> </h6>

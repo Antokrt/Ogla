@@ -16,6 +16,7 @@ async function refreshAccessToken(tokenObject) {
         };
 
         const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
+        console.log('tokenObject');
 
         return {
             ...tokenObject,

@@ -81,7 +81,7 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
 
             <div>
                 <Header />
-                {/* <HeaderResponsive /> */}
+                {/*{<HeaderResponsive />}*/}
             </div>
             <Banner />
             <CategoryHome />

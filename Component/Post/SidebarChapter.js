@@ -8,6 +8,7 @@ import {Capitalize} from "../../utils/String";
 import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
 import {TextSeeMore} from "../layouts/Btn/ActionBtn";
 import ErrMsg from "../ErrMsg";
+import ScreenSize from "../../utils/Size";
 
 
 const SidebarChapter = ({
@@ -30,6 +31,8 @@ const SidebarChapter = ({
     const [chapterList, setChapterList] = useState(chapters);
     const [seeBtnAddMore, setSeeBtnAddMore] = useState(false);
     const divRef = useRef(null);
+    const [width, height] = ScreenSize();
+
     const router = useRouter();
 
     /*    useEffect(() => {
@@ -126,6 +129,11 @@ const SidebarChapter = ({
         }
         <div className={styles.chapterList} ref={divRef}>
 
+            {
+                width <= 900 &&
+                <h3 className={styles.chapterTitleResp}>Chapitres ({nbChapters})</h3>
+
+            }
 
             {chapterList && chapterList.map((item, index) => {
                 let chapterNumber;
@@ -149,10 +157,9 @@ const SidebarChapter = ({
                         }}
                     >
                         <div className={styles.titleChapter}>
-                            <p className={styles.title}>
-                                <span>Chapitre {chapterNumber} :</span> {Capitalize(item.title)}
-                            </p>
-                            <p className={styles.date}>{FormatDateStr(item.date_creation)}</p>
+
+                            <p className={styles.title}>Chapitre {chapterNumber}</p>
+                            <span>                                 {Capitalize(item.title)}</span>
                         </div>
 
                         <p className={styles.likes}>
@@ -165,16 +172,16 @@ const SidebarChapter = ({
                 );
             })}
 
-                <div className={styles.seeMore}>
-                    {
-                        canSeeMore && !loadingScroll && !chapterList &&
-                        <TextSeeMore onclick={() => getMoreChapter()}/>
-                    }
-                    {
-                        loadingScroll && !chapterList &&
-                        <LoaderCommentary/>
-                    }
-                </div>
+            <div className={styles.seeMore}>
+                {
+                    canSeeMore && !loadingScroll && !chapterList &&
+                    <TextSeeMore onclick={() => getMoreChapter()}/>
+                }
+                {
+                    loadingScroll && !chapterList &&
+                    <LoaderCommentary/>
+                }
+            </div>
         </div>
 
     </div>)

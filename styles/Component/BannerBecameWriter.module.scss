@@ -49,9 +49,9 @@
   }
 
   ul {
-    height: 70px;
+    height: 100%;
     overflow: hidden;
-    font-size: 5vh;
+    font-size: 45px;
     font-family: 'Branch', sans-serif;
     font-weight: bold;
     white-space: pre;
@@ -85,7 +85,7 @@
 }
 
 .btnContainer {
-  margin-top: 4vh;
+  margin-top: 40px;
 
   button {
     &:active {
@@ -187,12 +187,12 @@
   }
   .content{
     h5{
-      font-size: 4vh!important;
+      font-size: 37px!important;
       margin-left: 20px !important;
     }
 
     ul {
-      font-size: 4vh !important;
+      font-size: 37px !important;
     }
     li {
       animation: writtingMoreResponsive 21s steps(7) infinite;
@@ -241,18 +241,18 @@
 
 @keyframes writting {
   100% {
-    top: -488px;
+    top: -473px;
   }
 }
 
 @keyframes writtingResponsive {
   100% {
-    top: -415px;
+    top: -413px;
   }
 }
 
 @keyframes writtingMoreResponsive {
   100% {
-    top: -455px;
+    top: -452px;
   }
 }

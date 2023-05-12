@@ -483,6 +483,16 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             onClick={() => publishThis()}
                                         >Publier <CursorArrowRaysIcon/>
                                         </button>
+
+                                        <button
+                                            onClick={() => {
+                                                setSeeConfirmModal(true);
+                                            }
+                                            }
+                                            className={styles.iconDiv}>
+                                            <TrashIcon/>
+                                        </button>
+
                                     </div>
                                 </div>
 
