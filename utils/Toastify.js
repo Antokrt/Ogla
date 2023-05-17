@@ -15,7 +15,7 @@ export const toastDisplaySuccess = (msg) => {
 
 export const toastDisplayError = (msg) => {
 	toast.error(<div>{msg}</div>, {
-		position: "top-right",
+		position: "top-center",
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,

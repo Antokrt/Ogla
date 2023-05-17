@@ -1,5 +1,6 @@
 @import "styles/utils/var";
 
+
 .container {
   display: flex;
   height: 100vh;
@@ -50,8 +51,8 @@
       margin-bottom: 10px;
       svg{
         cursor: pointer;
-        margin-top: -30px;
         width: 16px;
+        height: min-content;
         color: #e94f37;
         opacity: 0.8;
       }
@@ -714,18 +715,26 @@
     }
 
     button {
+      &:active{
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
+      &:hover{
+        transition: 0.2s;
+        filter: brightness(98%);
+      }
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: $shadow;
       transition: 0.1s;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       background-color: #9844AD;
       color: white;
-      font-family: 'Rebond Grotesque', sans-serif;
-      border-radius: 5px;
+      font-family: 'Santral-Regular', sans-serif;
       font-weight: bold;
+      border-radius: 5px;
       padding: 10px 20px;
       svg {
         margin-left: 10px;
@@ -1075,13 +1084,25 @@
   height: auto;
 }
   .containerImg{
+    display: flex;
     flex: initial!important;
     margin-bottom: 20px;
-
-    height: 220px!important;
     img{
-
       width: 220px!important;
+    }
+  }
+
+  .imgCheck{
+    margin-top: -3%;
+    margin-left: -7.5%;
+    height: 40px;
+    z-index: 2;
+    transform: none!important;
+    position: initial!important;
+    padding: initial!important;
+    svg{
+      background-color: white!important;
+      width: 30px!important;
     }
   }
 
@@ -1154,6 +1175,8 @@
 
 
 
+
+
 @media screen and (max-height: 500px) and (orientation: landscape){
   .container{
     height: auto;
@@ -1212,6 +1235,12 @@
     height: 140px!important;
     img{
       width: 150px!important;
+    }
+    .imgCheck{
+      margin-left: 5%!important;
+      svg{
+        width: 20px!important;
+      }
     }
   }
   .listStats{

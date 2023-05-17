@@ -1,4 +1,5 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboard.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
 
 import {useRouter} from "next/router";
@@ -11,7 +12,7 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date,
 
     const catClassName = 'style.'+category;
     return (
-        <div className={styles.container} onClick={() => {
+        <div className={styles.container + ' ' + anim.fadeIn} onClick={() => {
             router.push({
                 pathname: '/dashboard/books/' + id,
             })

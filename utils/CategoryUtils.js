@@ -1,5 +1,5 @@
 export const GetCategory = () => {
-    const list = ['action', 'drama', 'horreur', 'comédie', 'fantaisie', 'sf'];
+    const list = ['action', 'drama', 'horreur', 'comédie', 'fantaisie', 'sf','autre'];
     return list;
 }
 
@@ -28,6 +28,11 @@ export const GetPresentationOfCategory = (cat) => {
 
         case 'comédie': {
             return 'Si vous cherchez à vous divertir et à vous détendre, notre collection de comédies est là pour vous ! Découvrez des histoires drôles et légères, des personnages attachants et des situations cocasses qui vous feront passer un moment de lecture inoubliable.\n' +
+                '\n'
+        }
+
+        case 'autre':{
+            return 'Explorez un monde de créativité sans limites. Découvrez des récits uniques et des écrits avant-gardistes qui défient les conventions. Laissez votre imagination s\'évader à travers des histoires captivantes où chaque page réserve une surprise. Bienvenue dans l\'univers littéraire sans frontières où la seule limite est votre imagination.\n' +
                 '\n'
         }
 

@@ -32,6 +32,14 @@
 
 
 .filter{
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  &:hover{
+    transition: 0.2s;
+    filter: brightness(98%);
+  }
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,7 +77,6 @@
 }
 
 .seeMoreText{
-  position: absolute;
   width: 100px;
   z-index: 2;
   background-color: white;
@@ -185,6 +192,24 @@
   }
 }
 
+@media screen and (max-width: 700px){
+  .headphone{
+    border: none;
+    box-shadow: none;
+    padding: initial;
+    height: initial;
+    width: initial;
+
+    .animation{
+      background-color: rgba(152, 68, 173, 0.5);
+    }
+    svg{
+      opacity: 1;
+      color: initial;
+    }
+  }
+
+}
 
 @media screen and (max-width: 300px){
   .filter{

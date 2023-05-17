@@ -20,7 +20,7 @@ import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 import {DateNow} from "../../../utils/Date";
 import {LoaderCommentary} from "../../../Component/layouts/Loader";
 import {GetBooksWithCategoryService} from "../../../service/Book/BookService";
-import ErrMsg from "../../../Component/ErrMsg";
+import {ErrMsg} from "../../../Component/ErrMsg";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
@@ -36,7 +36,6 @@ export async function getServerSideProps({context, req}) {
     const nbBooks = await fetch('http://localhost:3008/author/books-number', config)
     const booksErrData = books.ok ? false : books.status;
     const booksJson = await books.json();
-    console.log(booksJson)
 
     const nbBooksJson = await nbBooks.json();
     return {
@@ -64,10 +63,6 @@ const Books = ({booksData, err, nbBooks}) => {
     const scrollBottom = () => {
         divRef.current.scrollTop = divRef.current.scrollHeight
     }
-
-    useEffect(() => {
-       console.log(session)
-    },[])
 
     const getMoreBooks = () => {
         setSeeMore(false);
@@ -154,11 +149,11 @@ const Books = ({booksData, err, nbBooks}) => {
                 }
 
                 <div className={styles.containerData}>
-                    <SmHeaderDashboard title={'Tableau de bord'}/>
+                    <SmHeaderDashboard title={'Mes livres'}/>
                     {
                         err &&
                         <div className={styles.errContainer}>
-                            <ErrMsg textBtn={"Retour à l'accueil"} click={() => router.push('/')}
+                            <ErrMsg textBtn={"Retour"} click={() => router.back()}
                                     text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
                         </div>
 
@@ -167,9 +162,7 @@ const Books = ({booksData, err, nbBooks}) => {
                     {
                         books && booksData && !err && books.length !== 0 &&
                         <div className={styles.listContainer} ref={divRef}>
-                            <div className={styles.headerList}>
-                                <h4>Mes livres <BookmarkSquareIcon/></h4>
-                            </div>
+
                             <div className={styles.sortContainer}>
                                 <FilterBtn3 onclick={() => {
                                     activeFilter === 'recent' ? setActiveFilter('popular') : setActiveFilter('recent');

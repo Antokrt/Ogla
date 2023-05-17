@@ -26,7 +26,7 @@ import {Capitalize, ReduceString} from "../../utils/String";
 import { setActiveModalState } from "../../store/slices/modalSlice";
 import { useDispatch } from "react-redux";
 import { AddViewToChapterApi } from "../api/book";
-import ErrMsg from "../../Component/ErrMsg";
+import ErrMsg, {ErrMsgOnChapter} from "../../Component/ErrMsg";
 import { sendNotif } from "../../service/Notifications/NotificationsService";
 import ScreenSize from "../../utils/Size";
 import {
@@ -38,6 +38,8 @@ import {
 } from "@heroicons/react/24/outline";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import {HeadPhoneBtn} from "../../Component/layouts/Btn/ActionBtn";
+import useOrientation from "../../utils/Orientation";
+import Footer from "../../Component/Footer";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -105,6 +107,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const { data: session } = useSession();
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
+    const orientation = useOrientation();
+
 
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
@@ -509,10 +513,17 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                 <>
                                     <div
                                         className={styles.containerC}>
+
+                                        <div className={styles.music}>
+
+                                            <HeadPhoneBtn/>
+                                        </div>
+
                                         <div
                                             className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                                             ref={headerFixed}
                                         >
+
                                             <div className={styles.title}>
                                                 <p>Chapitre {index}</p>
                                                 <h3>{Capitalize(chapterData.title)}</h3>
@@ -527,7 +538,10 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                         <div
                                             className={styles.contentChapter}>
                                             <div className={styles.headerContent}>
-                                                <h5>{bookData.title}</h5>
+                                                <h5 onClick={() => router.push({
+                                                    pathname:'/livre/'+ bookData?._id,
+                                                    query:bookData?.slug
+                                                })}>{bookData.title}</h5>
                                                 <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
                                                                                                                      referrerPolicy={'no-referrer'} />{authorData.pseudo}
                                                 </h6>
@@ -554,29 +568,33 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                             i: index + 1
                                                         },
                                                     })
-                                                }}>Suivant ({chapterData.navChapter.next.title})</button>
+                                                }}>Suivant ({Capitalize(chapterData.navChapter.next.title)})</button>
                                             }
                                         </div>
 
                                     </div>
-                                    <FooterOnChapter
-                                        likeChapter={() => likeChapter()}
-                                        hasLike={hasLike}
-                                        title={chapterData?.title}
-                                        likes={likes}
-                                        refresh={() => refreshChapter()}
-                                        index={index}
-                                        navChapters={chapterData.navChapter}
-                                        author={bookData?.author_pseudo}
-                                        nbChapter={bookData?.nbChapters}
-                                        nbCommentary={nbCommentary}
-                                        openList={() => {
-                                            ToogleSidebar("List", sidebarSelect, setSidebarSelect);
-                                        }}
-                                        openCommentary={() => {
-                                            ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
-                                        }}
-                                        img={bookData?.img} />
+                                    {
+                                        width > 600 && orientation === 'landscape' &&
+                                        <FooterOnChapter
+                                            likeChapter={() => likeChapter()}
+                                            hasLike={hasLike}
+                                            title={chapterData?.title}
+                                            likes={likes}
+                                            refresh={() => refreshChapter()}
+                                            index={index}
+                                            navChapters={chapterData.navChapter}
+                                            author={bookData?.author_pseudo}
+                                            nbChapter={bookData?.nbChapters}
+                                            nbCommentary={nbCommentary}
+                                            openList={() => {
+                                                ToogleSidebar("List", sidebarSelect, setSidebarSelect);
+                                            }}
+                                            openCommentary={() => {
+                                                ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
+                                            }}
+                                            img={bookData?.img} />
+                                    }
+
                                 </>
                                 // LINE RESPONSIVE \\
                                 :
@@ -614,7 +632,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                 <ChatBubbleBottomCenterTextIcon/>
                                             </div>
 
-                                            <div className={styles.itemMenuBookPhone} onClick={() => setActiveLinkPhone('chapters')}>
+                                            <div className={styles.itemMenuBookPhone} >
                                                 <HeadPhoneBtn/>
                                             </div>
                                         </div>
@@ -691,7 +709,10 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
                     </>
                     :
-                    <ErrMsg click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'} />
+                    <>
+                        <ErrMsgOnChapter click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'} />
+<Footer/>
+                    </>
             }
 
 

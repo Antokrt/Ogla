@@ -1,4 +1,5 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {
     DeleteBookService, GetMoreChapterService, TestService,
@@ -47,6 +48,10 @@ import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import useOrientation from "../../../utils/Orientation";
 import {CardStats, CardStatsDashboard} from "../../../Component/Dashboard/Card/CardStats";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
+import {CardChapterDashboard} from "../../../Component/Card/CardChapterPublic";
+import 'tippy.js/dist/tippy.css'
+import Tippy from "@tippyjs/react";
+
 
 
 
@@ -99,7 +104,9 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
     const [phoneMenuLinkActive,setPhoneMenuLinkActive] = useState('infos');
     const [width, height] = ScreenSize();
-    const orientation = useOrientation()
+    const orientation = useOrientation();
+    const closeRef = useRef(null);
+
 
 
 
@@ -282,7 +289,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                 <div className={styles.labelContainer}>
 
                                     <div className={styles.containerTitle}>
-                                        <h2> {Capitalize(book.title)} <XCircleIcon           onClick={() => {
+                                        {/*here*/}
+                                        <h2> {Capitalize(book.title)} <XCircleIcon onClick={() => {
                                             setSeeConfirmModal(true);
                                         }}/></h2>
                                         <span></span>
@@ -396,10 +404,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             <div className={styles.listItem}>
                                                 <div className={styles.itemStats}>
 
-                                                    <img src={'/assets/stats/heart.png'}/>
+                                                    <img src={'/assets/stats/likes.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}> {book.likes}</p>
-                                                        <p className={styles.labelStats}>like(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                        <p className={styles.labelStats}>j'aime(s) <ChatBubbleBottomCenterTextIcon/></p>
                                                     </div>
 
                                                 </div>
@@ -423,7 +431,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/stats/comments.png'}/>
 
                                                     <div>
-                                                        <p className={styles.valueStats}>{book.stats.nbCommentary}</p>
+                                                        <p className={styles.valueStats}>{book?.stats?.nbCommentary}</p>
 
                                                         <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/></p>
                                                     </div>
@@ -457,7 +465,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                         <div className={styles.chapterContainer}>
                                             {
                                                 !errListChapter && !loadingChapter && chapterList.length > 0 &&
-                                                <>
+                                                <div className={anim.fadeIn}>
                                                     <div className={styles.headerChapter}>
                                                         <h4>  {book.chapter_list.length} chapitre(s)</h4>
                                                         <div>
@@ -485,7 +493,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                     </div>
 
-                                                </>
+                                                </div>
 
 
                                             }
@@ -542,17 +550,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                         like={item.likes}
                                                                                         publish={item.publish}
                                                                                     />
-
-                                                                                    <CardChapter
-                                                                                        id={item._id}
-                                                                                        date={item.date_creation}
-                                                                                        title={item.title}
-                                                                                        index={chapterNumber}
-                                                                                        like={item.likes}
-                                                                                        publish={item.publish}
-                                                                                    />
-
-
                                                                                 </>
 
                                                                             )
@@ -629,11 +626,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                     <div className={styles.labelContainer}>
 
                                         <div className={styles.containerTitle}>
-                                            <h2> {Capitalize(book.title)} <XCircleIcon           onClick={() => {
-                                                setSeeConfirmModal(true);
-                                            }}/></h2>
+                                            <h2> {Capitalize(book.title)} <Tippy trigger={'mouseenter'} content={'Supprimer le livre'}>
+                                                <XCircleIcon         onClick={() => {
+                                                    setSeeConfirmModal(true);
+                                                }}/>
+                                            </Tippy>  </h2>
                                             <span></span>
+
                                         </div>
+
 
 
                                         <div className={styles.imgADescription}>
@@ -650,16 +651,22 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             <img src={localImg} className={styles.darkImg}/>
 
                                                             <div className={styles.imgCheck}>
-                                                                <CheckCircleIcon
-                                                                    onClick={() => updatePic()}
-                                                                    className={styles.check}/>
-                                                                <XCircleIcon
-                                                                    onClick={() => {
-                                                                        setLocalImg(null);
-                                                                        setFile(null);
-                                                                    }
-                                                                    }
-                                                                    className={styles.off}/>
+                                                                {
+                                                                    !loadingImg &&
+                                                                    <>
+                                                                        <CheckCircleIcon
+                                                                            onClick={() => updatePic()}
+                                                                            className={styles.check}/>
+                                                                        <XCircleIcon
+                                                                            onClick={() => {
+                                                                                setLocalImg(null);
+                                                                                setFile(null);
+                                                                            }
+                                                                            }
+                                                                            className={styles.off}/>
+                                                                    </>
+                                                                }
+
                                                             </div>
                                                         </>
                                                         :
@@ -743,10 +750,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 <div className={styles.listItem}>
                                                     <div className={styles.itemStats}>
 
-                                                        <img src={'/assets/stats/heart.png'}/>
+                                                        <img src={'/assets/stats/likes.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book.likes}</p>
-                                                            <p className={styles.labelStats}>like(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.labelStats}>j'aimes <ChatBubbleBottomCenterTextIcon/></p>
                                                         </div>
 
                                                     </div>
@@ -754,8 +761,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <img src={'/assets/stats/bar.png'}/>
 
                                                         <div>
-                                                            <p className={styles.valueStats}>{book.stats.view}</p>
-                                                            <p className={styles.labelStats}>vue(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.valueStats}>{book?.stats?.view}</p>
+                                                            <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/></p>
                                                         </div>
 
 
@@ -772,7 +779,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <div>
                                                             <p className={styles.valueStats}>{book.stats.nbCommentary}</p>
 
-                                                            <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/></p>
 </div>
 
 
@@ -780,7 +787,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                     <div className={styles.itemStats}>
 
-                                                        <img src={'/assets/diapo/book.png'}/>
+                                                        <img src={'/assets/diapo/chapter.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book.chapter_list.length}</p>
                                                             <p className={styles.labelStats}>chapitre(s) <ChatBubbleBottomCenterTextIcon/></p>
@@ -802,7 +809,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             <div className={styles.chapterContainer}>
                                                 {
                                                     !errListChapter && !loadingChapter && chapterList.length > 0 &&
-                                                    <>
+                                                    <div className={anim.fadeIn}>
                                                         <div className={styles.headerChapter}>
                                                             <h4>{book.chapter_list.length} chapitre(s)</h4>
                                                             <div>
@@ -830,7 +837,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                         </div>
 
-                                                    </>
+                                                    </div>
 
 
                                                 }
@@ -878,12 +885,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                                                 return (
                                                                                     <>
-                                                                                        <CardChapter
+                                                                                        <CardChapterDashboard
                                                                                             id={item._id}
                                                                                             date={item.date_creation}
                                                                                             title={item.title}
                                                                                             index={chapterNumber}
-                                                                                            like={item.likes}
+                                                                                            likes={item.likes}
                                                                                             publish={item.publish}
                                                                                         />
 

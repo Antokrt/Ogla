@@ -274,6 +274,12 @@ background-color: #9844AD!important;
   }
 }
 
+.deleteModal{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
 @media screen and (max-width: 600px){
   .container{
     padding-left: 0;

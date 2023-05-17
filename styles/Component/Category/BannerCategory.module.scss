@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40vh;
+  height: 300px;
   margin-bottom: 3vh;
   .content{
     width: 30%;
@@ -34,14 +34,14 @@
 
     p {
       text-align: center;
-      font-size: 1.6vh;
+      font-size: 15px;
       font-family: "Rebond Grotesque", sans-serif;
       color: rgb(84, 89, 95);
     }
   }
 
   .image {
-    height: 40vh;
+    height: 30vh;
   }
 
 
@@ -51,10 +51,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2vh;
-  height: 40vh;
-
-  .content {
+  height: 300px;
+  margin-bottom: 3vh;
+  .content{
     width: 30%;
 
     h4 {
@@ -63,7 +62,7 @@
         position: absolute;
         left: -6%;
         bottom: -10%;
-        opacity: 0.03;
+        opacity: 0.08;
         font-size: 15vh;
       }
 
@@ -72,24 +71,27 @@
       font-family: "Branch",
       sans-serif;
       font-weight: bold;
+      color: white;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
       text-align: center;
-      color: white;
     }
+
+
 
     p {
       text-align: center;
-      font-size: 1.6vh;
+      font-size: 15px;
       font-family: "Rebond Grotesque", sans-serif;
-      color: rgb(84, 89, 95);
+      color: white;
     }
   }
 
   .image {
-    height: 40vh;
+    height: 30vh;
   }
 }
+
 
 @media screen and (max-width: 1500px) {
   .container {

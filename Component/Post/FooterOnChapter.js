@@ -56,7 +56,7 @@ const FooterOnChapter = ({
                         }}
                     >
                         <BackwardIcon/>
-                        <p>Précédent (Ch.{index - 1})</p>
+                        <p>Précédent ({index - 1})</p>
                     </div>
             </div>
 
@@ -79,7 +79,7 @@ const FooterOnChapter = ({
 
                     >
                         <ForwardIcon/>
-                        <p>Suivant (Ch.{index + 1})</p>
+                        <p>Suivant ({index + 1})</p>
                     </div>
             </div>
         </div>

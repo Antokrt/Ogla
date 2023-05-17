@@ -63,7 +63,7 @@ const ResultSearchBar = ({destroy, query, data}) => {
                                         <div
                                             onClick={() => {
                                                 router.push({
-                                                    pathname: '/auteur/' + item._id,
+                                                    pathname: '/auteur/' + item.pseudo,
                                                 })
                                             }}
                                             className={styles.itemResult}>

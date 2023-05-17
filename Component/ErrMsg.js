@@ -1,7 +1,9 @@
 import styles from '../styles/Component/Err/Err.module.scss';
 import {useRouter} from "next/router";
+import {ArrowLeftIcon} from "@heroicons/react/24/solid";
+import {ArrowLeftCircleIcon} from "@heroicons/react/24/outline";
 
-const ErrMsg = ({text,textBtn,click}) => {
+export const ErrMsg = ({text,textBtn,click}) => {
 
     const router = useRouter();
 
@@ -11,9 +13,22 @@ const ErrMsg = ({text,textBtn,click}) => {
             <img src={'/assets/jim/angry4.png'}/>
             <h4>Oups !</h4>
             <p>{text}</p>
-            <button onClick={click} >{textBtn}</button>
+            <button onClick={click} ><ArrowLeftCircleIcon/> {textBtn}</button>
         </div>
     )
 }
 
-export default ErrMsg;
+export const ErrMsgOnChapter = ({text,textBtn,click}) => {
+
+    const router = useRouter();
+
+    return (
+        <div className={styles.containerChapter}>
+
+            <img src={'/assets/jim/angry4.png'}/>
+            <h4>Oups !</h4>
+            <p>{text}</p>
+            <button onClick={click} > <ArrowLeftCircleIcon/> {textBtn}</button>
+        </div>
+    )
+}

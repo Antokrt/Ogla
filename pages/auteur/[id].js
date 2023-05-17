@@ -2,46 +2,58 @@ import styles from '../../styles/Pages/User/ByUser.module.scss';
 
 import {useRouter} from "next/router";
 import React, {useEffect, useState} from "react";
-import {getData, getPost, getPostByUser} from "../../services/Post";
 import Header from "../../Component/Header";
-import {FireIcon,} from "@heroicons/react/24/outline";
-import MainSearchBar from "../../Component/MainSearchBar";
-import FeaturedCategoryPostList from "../../Component/Post/FeaturedCategoryPostList";
-import PreviewPost from "../../Component/Post/PreviewPost";
+
 import Instagram from "../../Component/layouts/Icons/Social/instagram";
 import Facebook from "../../Component/layouts/Icons/Social/facebook";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {GetAuthorProfilAPI} from "../api/Author";
 import {FormatDateNb} from "../../utils/Date";
 import {GetBooksByAuthorService} from "../../service/Author";
-import {CardBookPublic} from "../../Component/Card/CardBook";
 import Footer from "../../Component/Footer";
 import {Snippet} from "../../Component/Snippet";
-import CardCategory from "../../Component/Card/CardCategory";
 import {ListCard} from "../../Component/Card/ListCard";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import ScreenSize from "../../utils/Size";
-import Link from "next/link";
+import {
+    ChevronDoubleUpIcon,
+    ClockIcon,
+    HeartIcon as HeartSolid,
+    HandThumbUpIcon,
+    HeartIcon
+} from "@heroicons/react/24/solid";
+import {HeartIcon as HeartOutline} from "@heroicons/react/24/outline";
+import {Capitalize} from "../../utils/String";
+import {toastDisplayError} from "../../utils/Toastify";
+import {useSession} from "next-auth/react";
+import {LikeAuthorService} from "../../service/Like/LikeService";
+import {setActiveModalState} from "../../store/slices/modalSlice";
+import {useDispatch} from "react-redux";
+import {sendNotif} from "../../service/Notifications/NotificationsService";
 
 
-export async function getServerSideProps({params}) {
+export async function getServerSideProps({params,req}) {
 
     const pseudo = params.id;
-    const profil = await GetAuthorProfilAPI(pseudo);
+    const profil = await GetAuthorProfilAPI(pseudo,req);
+
+    console.log(profil.hasLike)
 
     return {
         props: {
             profilData: profil.profil,
             booksData: profil.books,
+            hasLikeData: profil.hasLike,
             errProfil: profil.errProfil,
-            errBooks: profil.errBook
+            errBooks: profil.errBook,
         }
     }
 }
 
-const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
+const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks}) => {
 
     const [profilAuthor, setProfilAuthor] = useState(profilData);
+    const [likes,setLikes] = useState(profilAuthor.author.likes);
     const social = profilAuthor.author.social;
     const router = useRouter();
     const [page, setPage] = useState(2);
@@ -51,12 +63,16 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
     const [loading,setLoading] = useState(false);
     const [canSeeMorePopular, setCanSeeMorePopular] = useState(true);
     const [pagePopular, setPagePopular] = useState(2);
+    const [hasLike,setHasLike] = useState(hasLikeData);
     const [pageRecent, setPageRecent] = useState(1);
     const [popular, setPopular] = useState(booksData);
     const [line,setLine] = useState(12);
     const [recent, setRecent] = useState([]);
-    const [maxSize, setMaxSize] = useState(1600);
+    const [maxSize, setMaxSize] = useState(600);
     const [width, height] = ScreenSize();
+    const {data:session} = useSession();
+    const dispatch = useDispatch();
+
 
 
     const fetchRecentBooks = () => {
@@ -121,6 +137,25 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
         }
     },[width])
 
+    const likeAuthor = () => {
+    if(session){
+        LikeAuthorService(profilData._id)
+            .then(() => setHasLike(!hasLike))
+            .then(() => {
+                if(hasLike){
+                    setLikes(likes - 1);
+                }
+                else {
+                    setLikes(likes + 1);
+                }
+            })
+            .then(() => sendNotif(session.user.id,3,profilAuthor._id))
+            .catch(() => toastDisplayError("Impossible d'aimer ce profil !"))
+    }
+    else {
+        dispatch(setActiveModalState(true));
+    }
+    }
 
     return (
         <div className={styles.container}>
@@ -131,69 +166,67 @@ const AuthorProfil = ({profilData, booksData, errProfil, errBooks}) => {
                 <>
                     <div className={styles.containerF}>
 
-                        <div className={styles.imgContainer}>
-                            <div className={styles.img}>
-                                <img referrerPolicy={'no-referrer'} src={profilAuthor?.img}/>
-                            </div>
+                        <div className={styles.chapterContainer}>
+                            <div className={styles.infoContainer}>
+                                <p className={styles.absoText}>{profilAuthor?.pseudo}</p>
+                                <div className={styles.pseudo_date}>
+                                    <div className={styles.imgPseudo}>
+                                        <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = 'https://dt9eqvlch6exv.cloudfront.net/default.png'}/>
+                                        <div>
+                                            <h3>{profilAuthor?.pseudo}</h3>
+                                            <p>{likes} <span><HeartIcon/></span></p>
+                                        </div>
+                                    </div>
 
+                                    {
+                                        hasLike ?
+                                            <button onClick={() => {
+                                                likeAuthor();
+                                            }}>J'aime <HeartSolid/></button> :
+                                            <button onClick={() => likeAuthor()}>J'aime <HeartOutline/></button>
+                                    }
+                                </div>
 
-                            {
-                                (social.instagram !== '' || social.twitter !== '' || social.facebook !== '') &&
+                                <div className={styles.lab}>
+                                    <h6>Écrivain <span>OGLA</span> </h6>
+                                    <p>Devenu auteur le {FormatDateNb(profilAuthor?.author.became_author)}</p>
+                                </div>
 
-                                <div className={styles.profil}>
+                                <div className={styles.social}>
                                     {
                                         social.instagram && social.instagram !== '' &&
-                                        <a href={'https://www.instagram.com/'+social.instagram} target={'_blank'}>
+                                        <a className={styles.itemSocial} href={'https://www.instagram.com/'+social.instagram.slice(1,social.instagram.length)} target={'_blank'}>
                                             <Instagram/>
-                                        </a>
-                                    }
-
-                                    {
-                                        social.facebook && social.facebook !== '' &&
-                                        <a href={social.facebook} target={'_blank'}>
-                                            <Facebook/>
+                                            <span><span className={styles.dat}>@</span>{Capitalize(social.instagram.slice(1,social.instagram.length))}</span>
                                         </a>
                                     }
 
                                     {
                                         social.twitter && social.twitter !== '' &&
-                                        <a href={'https://twitter.com/'+ social.twitter} target={'_blank'}>
+                                        <a className={styles.itemSocial} href={'https://twitter.com/'+ social.twitter} target={'_blank'}>
                                             <Twitter/>
+                                            <span><span className={styles.dat}>@</span>{Capitalize(social.twitter.slice(1,social.twitter.length))}</span>
                                         </a>
                                     }
-                                </div>
-                            }
+                                    {
+                                        social.facebook && social.facebook !== '' &&
+                                        <a className={styles.itemSocial} href={social.facebook} target={'_blank'}>
+                                            <Facebook/>
+                                            <span>Facebook</span>
+                                        </a>
+                                    }
 
-
-
-
-                            {/*
-                    <div className={styles.listCommentary}>
-                        <form className={styles.form}>
-                            <input type={"text"} placeholder={"Laissez votre avis sur "+ dataAuthor?.name + "..."}/>
-                        </form>
-
-                        <div className={styles.contentListCommentary}>
-<CommentaryByUser commentary={"J'aime beaucoup cet auteur qui est très bon mais pas comme j'imaginais blablabla"}/>
-                            <CommentaryByUser commentary={"J'aime beaucoup cet auteur qui est très bon"}/>
-                            <CommentaryByUser commentary={"J'aime beaucoup cet auteur qui est très bon"}/>
-                        </div>
-                    </div>
-*/}
-                        </div>
-
-
-                        <div className={styles.chapterContainer}>
-                            <div className={styles.infoContainer}>
-                                <p className={styles.absoText}>{profilAuthor?.pseudo}assasaasa</p>
-                                <div className={styles.pseudo_date}>
-                                    <h3>{profilAuthor?.pseudo}</h3>
-                                    <p>Devenu auteur le : {FormatDateNb(profilAuthor.author.became_author)} </p>
                                 </div>
 
-                                <h6>Écrivain <span>OGLA</span> </h6>
+                                {
+                                    profilAuthor.author.description !== '' &&
+                                    <div className={styles.description}>
+                                        <div className={styles.containerD}>
+                                            <Snippet line={line} maxSize={maxSize} content={profilAuthor.author.description}/>
+                                        </div>
+                                    </div>
+                                }
 
-                                <Snippet line={line} maxSize={maxSize} content={profilAuthor.author.description}/>
                             </div>
                         </div>
 

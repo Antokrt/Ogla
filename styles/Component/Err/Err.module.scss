@@ -10,7 +10,7 @@
   img{
     margin-top: -6%;
     padding: 1%;
-    height: 20vh;
+    height: 220px;
     width: 220px;
     border-radius: 24px;
     object-fit: contain;
@@ -29,9 +29,21 @@
     font-family: 'Santral-Regular',sans-serif;
     color: rgb(28, 35, 43);
 font-size: 14px;
+    padding: 0px 10px;
   }
 
   button{
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(98%);
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     font-family: 'Poppins',sans-serif;
     background-color: #9844AD;
@@ -39,7 +51,89 @@ font-size: 14px;
     font-size: 10px;
     border-radius: 4px;
     box-shadow: $shadow;
-    padding: 10px 30px;
+    padding: 10px 20px;
+    gap: 8px;
+    svg{
+      width: 15px;
+      color: white;
+    }
   }
 
+}
+
+
+.containerChapter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 60vh;
+  width: 100%;
+
+  img{
+    margin-top: -6%;
+    padding: 1%;
+    height: 20vh;
+    width: 220px;
+    border-radius: 24px;
+    object-fit: contain;
+  }
+
+  h4{
+    font-size: 24px;
+    font-family: 'Santral-Regular',sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  p{
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Santral-Regular',sans-serif;
+    letter-spacing: -0.5px;
+    color: rgb(28, 35, 43);
+    padding: 0px 10px;
+    font-size: 16px;
+  }
+
+  button{
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(98%);
+    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-family: 'Santral-Regular',sans-serif;
+    background-color: #9844AD;
+    font-weight: bold;
+    font-size: 10px;
+    border-radius: 4px;
+    box-shadow: $shadow;
+    padding: 10px 20px;
+    svg{
+      width: 15px;
+      color: white;
+    }
+  }
+
+}
+
+
+@media screen and (max-width: 300px){
+  .containerChapter{
+    img{
+      width: 160px;
+    }
+    p{
+      font-size: 14px;
+      padding: 0px 10px;
+    }
+  }
 }

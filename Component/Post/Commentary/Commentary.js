@@ -11,6 +11,7 @@ import {FormatDateFrom, FormatDateStr} from "../../../utils/Date";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../../store/slices/modalSlice";
 import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
+import {ConfirmModal} from "../../Modal/ConfirmModal";
 
 const Commentary = ({pseudo,
                         img,
@@ -205,7 +206,7 @@ const Commentary = ({pseudo,
                                             return (
                                                 <SubCommentary
                                                     hasLike={item.hasLike}
-                                                    deleteAnswer={() => deleteAanswer(item._id)}
+                                                    deleteAnswer={() => deleteAanswer(item._id,item.content)}
                                                     likeAnswer={() => likeAanswer(item._id)}
                                                     id={item._id}
                                                     authorId={item.userId}
@@ -233,6 +234,8 @@ const Commentary = ({pseudo,
                         }
 
                     </div>
+
+
 
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import styles from '../../../styles/Pages/Dashboard/New.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
@@ -156,7 +157,6 @@ const New = () => {
                         )
                     })
                 }
-                <option value={"other"}>Autre</option>
             </select>
         </div>
     </div>

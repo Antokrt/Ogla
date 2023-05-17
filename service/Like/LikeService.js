@@ -18,6 +18,14 @@ export const LikeChapterService = (id) => {
     })
 }
 
+export const LikeAuthorService = (id) => {
+    return new Promise((resolve, reject) => {
+        instance.post('like/author',{id})
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+    })
+}
+
 export const LikeService = (type,id) => {
     return new Promise((resolve, reject) => {
         instance.post('like/'+ type, {id})

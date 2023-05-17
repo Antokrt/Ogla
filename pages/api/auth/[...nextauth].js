@@ -8,22 +8,26 @@ import {getToken} from "next-auth/jwt";
 import {getConfigOfProtectedRoute} from "../utils/Config";
 
 
-
 async function refreshAccessToken(tokenObject) {
     try {
         const config = {
             headers: { Authorization: `Bearer ${tokenObject.refreshToken}` }
         };
 
-        const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
-        console.log('tokenObject');
-
-        return {
-            ...tokenObject,
-            accessToken: tokenResponse.data.accessToken,
-            refreshToken: tokenResponse.data.refreshToken
+        if(config){
+            const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
+            return {
+                ...tokenObject,
+                accessToken: tokenResponse.data.accessToken,
+                refreshToken: tokenResponse.data.refreshToken
+            }
         }
+
+
+
     } catch (error) {
+        console.log('herrre')
+        console.log(error);
         return {
             ...tokenObject,
             error: "RefreshAccessTokenError",

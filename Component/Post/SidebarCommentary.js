@@ -12,12 +12,13 @@ import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "
 import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
-import {Capitalize} from "../../utils/String";
+import {Capitalize, ReduceString} from "../../utils/String";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 import ScreenSize from "../../utils/Size";
 import useOrientation from "../../utils/Orientation";
 import {FilterBtn, FilterBtn3} from "../layouts/Btn/ActionBtn";
+import {ConfirmModal, ConfirmModalCommentary} from "../Modal/ConfirmModal";
 
 
 const SidebarCommentary = ({
@@ -49,9 +50,20 @@ const SidebarCommentary = ({
     const router = useRouter();
     const [commentList, setCommentList] = useState(comments);
     const [newComment, setNewComment] = useState('');
+    const [openConfirmModalForDeleteComment,setOpenConfirmModalForDeleteComment] = useState(false);
+    const [openConfirmModalForDeleteAnswer,setOpenConfirmModalForDeleteAnswer] = useState(false);
+
     const divRef = useRef(null);
     const [endRefresh,setEndRefresh] = useState(true);
     const [load,setLoad] = useState(false);
+    const [activeCommentaryToDelete, setActiveCommentaryToDelete] = useState({
+        content:null,
+        id:null
+    });
+    const [activeAnswersToDelete, setActiveAnswersToDelete] = useState({
+        content:null,
+        id:null
+    });
     const {data: session} = useSession();
     const orientation = useOrientation();
     const inputRef = useRef(null);
@@ -79,9 +91,15 @@ const SidebarCommentary = ({
             .catch((err) => console.log(err));
     }
 
+
+
     const deleteComment = (id) => {
         DeleteCommentaryService(id)
             .then(() => deleteAComment(id))
+            .then(() => {
+                setActiveCommentaryToDelete({id: null,content: null})
+                setOpenConfirmModal(false);
+            })
             .catch((err) => console.log(err));
     }
 
@@ -100,6 +118,10 @@ const SidebarCommentary = ({
     const deleteAanswer = (id) => {
         DeleteAnswerService(id, session)
             .then(() => deleteAnswer(id))
+            .then(() => {
+                setActiveAnswersToDelete({id: null,content: null})
+                setOpenConfirmModalForDeleteAnswer(false);
+            })
             .catch((err) => console.log(err))
     }
 
@@ -179,14 +201,30 @@ const SidebarCommentary = ({
                 }
 
 
+
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
                         return (
                             <Commentary
                                 seeMoreAnswers={item.seeMoreAnswers}
                                 id={item._id}
-                                deleteComment={() => deleteComment(item._id)}
-                                deleteAanswer={(id) => deleteAanswer(id)}
+                                deleteComment={() => {
+                                    setOpenConfirmModalForDeleteAnswer(false);
+                                    setActiveCommentaryToDelete({
+                                        content: ReduceString(item.content,40),
+                                        id:item._id
+                                    })
+                                    setOpenConfirmModalForDeleteComment(true);
+                                }}
+                                deleteAanswer={(id,content) => {
+                                    setOpenConfirmModalForDeleteComment(false);
+
+                                    setActiveAnswersToDelete({
+                                        content: ReduceString(content,40),
+                                        id:id
+                                    })
+                                    setOpenConfirmModalForDeleteAnswer(true);
+                                }}
                                 likeAanswer={(id) => likeAanswer(id)}
                                 likeComment={() => likeComment(item._id)}
                                 sendNewAnswer={(data) => sendNewAnswer(data)}
@@ -274,6 +312,26 @@ const SidebarCommentary = ({
                         <PaperAirplaneIcon/>
                     </div>
                 </div>
+
+
+            {
+                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
+                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => deleteComment(activeCommentaryToDelete.id)}  close={() => {
+                    setActiveCommentaryToDelete({id: null,content: null})
+                    setOpenConfirmModalForDeleteComment(false);
+                }} title={'Supprimer votre commentaire'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
+            }
+
+            {
+                openConfirmModalForDeleteAnswer && activeAnswersToDelete.id &&
+                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
+                    deleteAanswer(activeAnswersToDelete.id);
+                }}  close={() => {
+                    setActiveAnswersToDelete({id: null,content: null})
+                    setOpenConfirmModalForDeleteAnswer(false);
+                }} title={'Supprimer votre réponse'} subTitle={Capitalize(activeAnswersToDelete.content)} />
+            }
+
         </div>
     )
 }

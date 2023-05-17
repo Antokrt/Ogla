@@ -2,14 +2,15 @@
 .container{
   display: flex;
   width: 100%;
+  height: 100vh;
   overflow-y: hidden;
   overflow-x: hidden;
-  background-color: white;
 }
 .containerMain{
   display: flex;
   height: 100vh;
   width: 100%;
+
 }
 .verticalMenuContainer{
   height: 100%;
@@ -19,7 +20,11 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  overflow-y: scroll;
+  scroll-behavior: smooth;
   gap: 2%;
+
 }
 .errContainer{
   display: flex;
@@ -70,10 +75,8 @@ button{
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
   gap: 10px;
-  flex: 1;
+  padding-bottom: 20px;
 }
 .list{
   display: flex;

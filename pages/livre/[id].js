@@ -37,7 +37,7 @@ import {
 } from "../../utils/CommentaryUtils";
 import {GetChapterListService} from "../../service/Chapter/ChapterService";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {FilterBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
+import {FilterBtn, HeadPhoneBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoginModal} from "../../Component/Modal/LoginModal";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
@@ -50,6 +50,8 @@ import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
 import CategoryCard from "../../Component/Category/CategoryCard";
 import {Capitalize} from "../../utils/String";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
+import Footer from "../../Component/Footer";
+import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
@@ -406,8 +408,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     if (err) {
         return (
             <div className={styles.containerErr}>
-                <ErrorDashboard title={'err'} img={'/assets/diapo/mountain.png'} link={() => router.back()}
-                                btn={'Retour en arrière'}/>
+                <Header/>
+                <ErrMsgOnChapter click={() => router.back()} textBtn={'Retour'} text={'Impossible de récupérer ce livre, veuillez réessayer.'} />
+
+                <Footer/>
             </div>
         )
     } else {
@@ -420,6 +424,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             {checkSide()}
 
                             <div className={styles.containerC}>
+
+
                                 <div className={styles.imgContainer}>
                                     <div className={styles.img}>
                                         <img src={bookData?.img}/>
@@ -447,12 +453,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                                 <div className={styles.chapterContainer}>
                                     <div className={styles.infoContainer}>
-                                        <div className={styles.infosBook} onClick={() => router.push({
-                                            pathname: '/auteur/' + authorData.pseudo
-                                        })}>
-                                            <div className={styles.authorInfos}>
-                                                <p>Par <span>{Capitalize(authorData.pseudo)}</span></p>
-                                                <img src={authorData.img} onError={(e) => {
+                                        <div className={styles.infosBook}>
+                                            <div className={styles.authorInfos}  >
+                                                <p onClick={() => router.push({
+                                                    pathname: '/auteur/' + authorData.pseudo
+                                                })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
+                                                <img onClick={() => router.push({
+                                                    pathname: '/auteur/' + authorData.pseudo
+                                                })} src={authorData.img} onError={(e) => {
                                                 e.target.src = 'https://dt9eqvlch6exv.cloudfront.net/default.png'
                                                 }
                                                 }/>
@@ -567,21 +575,27 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         <HomeIcon/>
                                     </div>
 
-                                    <div className={styles.itemMenuBookPhone}>
-                                        <ChatBubbleOvalLeftIcon onClick={() =>setActiveLinkPhone('description') }/>
-                                    </div>
-                                    <div className={styles.like}>
-                                        <LikeBtnSidebarPhone onLike={() => likeBook()} isLike={hasLike}/>
-                                    </div>
                                     <div className={styles.itemMenuBookPhone} onClick={() => setActiveLinkPhone('chapters')}>
                                         <ListBulletIcon/>
                                     </div>
+
+                                    <div className={styles.like}>
+                                        <LikeBtnSidebarPhone onLike={() => likeBook()} isLike={hasLike}/>
+                                    </div>
+
+
+
+
                                     <div className={styles.itemMenuBookPhone} onClick={() => {
                                         setSidebarSelect('Commentary');
                                         setActiveLinkPhone('comments');
                                     }
                                     }>
                                         <ChatBubbleBottomCenterTextIcon/>
+                                    </div>
+
+                                    <div className={styles.itemMenuBookPhone}>
+                                        <HeadPhoneBtn/>
                                     </div>
                                 </div>
 

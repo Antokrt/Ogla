@@ -26,3 +26,28 @@ export const ConfirmModal = ({close,title, btnConfirm, subTitle, img, confirm}) 
         </div>
     )
 }
+
+export const ConfirmModalCommentary = ({close,title, btnConfirm, subTitle, img, confirm}) => {
+
+    return (
+        <div className={styles.containerCommentary}>
+            <div className={styles.containerContent + ' ' + anim.fadeIn}>
+                <div className={styles.headerModal}>
+                    <h5>{title}</h5>
+                    <p>{subTitle}</p>
+                    {
+                        img &&
+                        <img src={img}/>
+                    }
+                    <div className={styles.containerBtn}>
+                        <button onClick={close}>Annuler</button>
+                        <button onClick={confirm} className={styles.red}>{btnConfirm}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+

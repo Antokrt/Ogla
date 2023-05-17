@@ -6,6 +6,7 @@
   scroll-behavior: smooth;
   height: auto;
   min-height: 100vh;
+
 }
 
 .sidebar{
@@ -14,7 +15,7 @@
   justify-content: space-around;
   flex-direction: column;
   height: 76vh;
-  bottom: 8.2%;
+  bottom: 10%;
   right: -10px;
   z-index: 6;
   width: 400px;
@@ -24,7 +25,14 @@
 
 
 .containerC {
+  position: relative;
   padding-bottom: 50px;
+}
+
+.music{
+  position: fixed;
+  right: 5%;
+  bottom: 14%;
 }
 
 
@@ -145,6 +153,7 @@
       text-transform: uppercase;
       font-size: 25px;
     }
+    cursor: pointer;
     font-family: "Branch", sans-serif;
     font-weight: bold;
     font-size: 20px;
@@ -177,6 +186,7 @@
     letter-spacing: 1px;
     text-decoration: underline;
     color: #54595F;
+
   }
 }
 
@@ -344,6 +354,11 @@
   }
 
   .itemMenuBookPhone{
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    transition: 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -441,6 +456,31 @@
   }
 }
 
+
+
+@media screen and (max-width: 900px) and (max-height: 800px) {
+   .contentChapter{
+     padding-bottom: 0px!important;
+   }
+}
+
+@media screen and (max-width: 900px) and (max-height: 800px) and (orientation: landscape){
+  .contentChapter{
+    padding-bottom: 0px!important;
+  }
+}
+
+@media screen and (max-height: 500px) and (max-width: 1200px) and (orientation: landscape){
+  .contentChapter{
+    padding-bottom: 0px!important;
+  }
+}
+
+@media screen and (max-width: 900px) and (max-height: 1100px) and (orientation: portrait){
+  .contentChapter{
+    padding-bottom: 120px!important;
+  }
+}
 @media screen and (max-width: 900px){
   .sidebar{
     position: initial!important;
@@ -455,6 +495,10 @@
    .headerContent,.textContainer{
      width: 90% !important;
    }
+
+  .music{
+    display: none;
+  }
 
   .bannerChapter{
     height: 10vh;

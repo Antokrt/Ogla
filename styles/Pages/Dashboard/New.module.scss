@@ -184,6 +184,15 @@
           margin: 20px 0;
         }
         .labelFile{
+          &:active{
+            transform: scale(0.8);
+            transition: 0.2s;
+          }
+          &:hover{
+            transition: 0.2s;
+            filter: brightness(98%);
+          }
+          transition: 0.2s;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -274,6 +283,15 @@ gap: 8px;
       gap: 10px;
       width: 100%;
       button{
+        &:active{
+          transform: scale(0.8);
+          transition: 0.2s;
+        }
+        &:hover{
+          transition: 0.2s;
+          filter: brightness(98%);
+        }
+        transition: 0.2s;
         display: flex;
         justify-content: center;
         align-items: center;

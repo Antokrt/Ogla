@@ -31,6 +31,7 @@
   height: auto;
   border-radius: 5px;
   width: 100% !important;
+  z-index: 200!important;
 
   h7 {
     font-family: "Montserrat", sans-serif;
@@ -56,7 +57,7 @@
     border-bottom: solid 1px rgba(233, 235, 236, 0.62);
     display: flex;
     justify-content: center;
-
+    background-color: white;
     flex-direction: column;
     padding: 12px 15px;
     overflow: hidden;

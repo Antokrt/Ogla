@@ -4,7 +4,7 @@
   position: relative;
   cursor: pointer;
   gap: 15px;
-  height: 200px;
+  height: 180px;
   width: 100%;
   background-color: white;
   box-shadow: $shadow;
@@ -50,15 +50,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
+  width: 180px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   background-color: rgba(28, 35, 43, 0.05);
   margin-right: 2%;
 
   img{
-    height: 70%;
-    width: 70%;
+    height: 60%;
+    width: 60%;
     border-radius: 15px;
     object-fit: cover;
   }
@@ -97,7 +97,7 @@ display: flex;
     }
     color: rgba(28, 35, 43, 0.83);
     margin-right: 20px;
-    font-size: 17px;
+    font-size: 16px;
     font-family: "Rebond Grotesque",sans-serif;
     font-weight: bold;
   }

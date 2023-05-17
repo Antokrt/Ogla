@@ -15,9 +15,8 @@ export const CardChapter = ({id,title,index,like,date, publish}) => {
             })}
             className={styles.chapter}>
             <div className={styles.headerChapter}>
-                <h6>Chapitre {index} : <span>{Capitalize(title)}</span> {!publish && <span className={styles.schema}>(Brouillon)</span>}
-                </h6>
-                <h7>{FormatDateFrom(date)}</h7>
+                <h6>Chapitre {index} </h6>
+                <h7>{Capitalize(title)} {!publish && <span className={styles.schema}>(Brouillon) </span>}</h7>
 
             </div>
 

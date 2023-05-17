@@ -8,7 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  min-height: 100vh;
   width: 100vw;
 }
 .sidebar {
@@ -17,7 +18,7 @@
   justify-content: space-around;
   flex-direction: column;
   height: 76vh;
-  bottom: 8.2%;
+  bottom: 10%;
   right: 0px;
   z-index: 6;
   width: 400px;
@@ -25,10 +26,12 @@
 }
 
 .containerC {
+  position: relative;
   display: flex;
   justify-content: center;
   margin-top: 2vh;
 }
+
 
 .imgContainer {
   display: flex;
@@ -56,14 +59,14 @@
 }
 
 .authorInfos{
-  cursor: pointer;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  width: 100%;
+  width: 200px;
   gap: 10px;
 
   img{
+    cursor: pointer;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -71,6 +74,7 @@
   }
 
   p{
+    cursor: pointer;
     font-size: 14px;
     font-family: 'Santral-Regular',sans-serif;
     span{
@@ -86,6 +90,14 @@
   width: 100%;
 
   button {
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(92%);
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,6 +143,9 @@ h4{
   }
 }
     h3{
+      &:first-letter{
+        text-transform: uppercase;
+      }
       margin-top: 10px;
 color: $darkBrown;
       font-size: 20px;
@@ -182,13 +197,13 @@ color: $darkBrown;
     align-items: center;
 
     img{
-      width: 70px;
+      width: 50px;
     }
 
     p {
       margin-right: 10px;
       font-family: "Santral-Regular", sans-serif;
-      font-size: 12px;
+      font-size: 11px;
     }
   }
 
@@ -389,6 +404,11 @@ width: 180px;
   bottom: 0;
 
   .itemMenuBookPhone{
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    transition: 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -756,7 +776,7 @@ flex-direction: column;
   }
 
   .btnFilter,.contentChapterList{
-    width: 80% !important;
+    width: 90% !important;
   }
 }
 

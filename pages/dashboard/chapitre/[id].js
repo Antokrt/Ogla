@@ -345,7 +345,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             <div className={styles.titleR}>
                                                 <p>{DateNow()}</p>
                                                 <div className={styles.containerImgBook}>
-                                                    <img src={'/assets/diapo/book.png'}/>
+                                                    <img src={'/assets/diapo/chapter.png'}/>
                                                 </div>
                                             </div>
 

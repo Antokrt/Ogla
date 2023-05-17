@@ -14,12 +14,11 @@ export const BannerCategory = ({category,presentation}) => {
                         <h4 data-after={category}>{category}</h4>
                 }
                 <p>{presentation}</p>
-
             </div>
             {
                 category === 'Comédie' ?
                     <img className={styles.image} src={'/assets/category/banner/comedy.png'}/>
-:
+ :
                     <img className={styles.image} src={'/assets/category/banner/'+  category+ '.png'}/>
 
             }
