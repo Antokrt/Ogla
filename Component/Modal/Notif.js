@@ -8,7 +8,10 @@ import { GetOneBook } from "../../service/Book/BookService";
 import { useDispatch } from "react-redux";
 import { deleteOne, setActiveModalNotif, setRead } from "../../store/slices/notifSlice";
 import { GetChapterById } from "../../service/Chapter/ChapterService";
-import { ReadNotif, deleteMyNotif } from "../../service/Notifications/NotificationsService";
+import {
+DeleteMyNotifsService,
+    DeleteAllNotifsService, ReadNotifService
+} from "../../service/Notifications/NotificationsService";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 const Notif = (element) => {
@@ -32,7 +35,7 @@ const Notif = (element) => {
                 dispatch(setRead(element.element._id))
                 GetOneBook(element.element.targetDocumentId)
                     .then((res) => {
-                        ReadNotif(element.element._id);
+                        ReadNotifService(element.element._id);
                         router.push({
                             pathname: '/livre/' + element.element.targetDocumentId,
                             query: res.slug
@@ -48,7 +51,7 @@ const Notif = (element) => {
                 dispatch(setRead(element.element._id))
                 GetChapterById(element.element.targetDocumentId)
                     .then((res) => {
-                        ReadNotif(element.element._id);
+                        ReadNotifService(element.element._id);
                         router.push({
                             pathname: '/chapitre/' + element.element.targetDocumentId,
                             query: { name: res.title, slug: res.slug, i: 1 },
@@ -84,7 +87,7 @@ const Notif = (element) => {
                 GetOneBook(element.element.targetDocumentId)
                     .then((res) => {
                         // Ouvrir les commentaires
-                        ReadNotif(element.element._id);
+                        ReadNotifService(element.element._id);
                         router.push({
                             pathname: '/livre/' + element.element.targetDocumentId,
                             query: res.slug
@@ -101,7 +104,7 @@ const Notif = (element) => {
                 GetChapterById(element.element.targetDocumentId)
                     .then((res) => {
                         // Ouvrir les commentaires
-                        ReadNotif(element.element._id);
+                        ReadNotifService(element.element._id);
                         router.push({
                             pathname: '/chapitre/' + element.element.targetDocumentId,
                             query: { name: res.title, slug: res.slug, i: 1 },
@@ -125,7 +128,7 @@ const Notif = (element) => {
     }
 
     function DeleteOneNotif() {
-        deleteMyNotif(element.element._id)
+        DeleteAllNotifsService(element.element._id)
             .then(() => dispatch(deleteOne(element.element._id)))
             .catch((err) => console.log(err))
     }

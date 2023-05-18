@@ -1,6 +1,6 @@
 import {instance} from "../config/Interceptor";
 
-export const sendNotif = (id, code, targetId) => {
+export const SendNotifService = (id, code, targetId) => {
     return new Promise((resolve, reject) => {
         instance.post('notification/new/' + id + '/' + code + '/' + targetId)
             .then((res) => resolve(res))
@@ -8,7 +8,7 @@ export const sendNotif = (id, code, targetId) => {
     })
 }
 
-export const ReadNotif = (id) => {
+export const ReadNotifService = (id) => {
     return new Promise((resolve, reject) => {
         instance.put('notification/read/' + id)
             .then((res) => resolve(res))
@@ -16,7 +16,7 @@ export const ReadNotif = (id) => {
     })
 }
 
-export const openAll = (date, userId) => {
+export const OpenAllService = (date, userId) => {
     return new Promise((resolve, reject) => {
         instance.put('/notification/open/' + date + "/" + userId)
             .then((res) => resolve(res))
@@ -24,7 +24,7 @@ export const openAll = (date, userId) => {
     })
 }
 
-export const DeleteAllNotifs = () => {
+export const DeleteAllNotifsService = () => {
     return new Promise((resolve, reject) => {
         instance.delete('notification/deleteAll')
             .then((res) => resolve(res))
@@ -32,7 +32,7 @@ export const DeleteAllNotifs = () => {
     })
 }
 
-export const readAll = (date) => {
+export const ReadAllService = (date) => {
     return new Promise((resolve, reject) => {
         instance.put('/notification/readAll/' + date)
             .then((res) => resolve(res))
@@ -40,7 +40,7 @@ export const readAll = (date) => {
     })
 }
 
-export const deleteMyNotif = (id) => {
+export const DeleteMyNotifsService = (id) => {
     return new Promise((resolve, reject) => {
         instance.delete('/notification/deleteOne/' + id)
             .then(() => resolve())

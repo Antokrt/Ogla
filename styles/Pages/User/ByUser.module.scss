@@ -439,6 +439,26 @@ display: flex;
   }
 }
 
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  img{
+    width: 180px;
+  }
+  p{
+    padding: 0px 10px;
+    font-family: 'Santral-Regular',sans-serif;
+    color: rgba(28, 35, 43, 0.65);
+    text-align: center;
+    span{
+      font-weight: bold;
+    }
+  }
+}
+
 
 .containerS {
   display: flex;

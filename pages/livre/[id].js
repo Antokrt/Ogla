@@ -44,7 +44,7 @@ import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/mo
 import CardCategory from "../../Component/Card/CardCategory";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import {Snippet} from "../../Component/Snippet";
-import {sendNotif} from "../../service/Notifications/NotificationsService";
+import { SendNotifService} from "../../service/Notifications/NotificationsService";
 import {CardChapterPublic, CardChapterPublicPhone} from "../../Component/Card/CardChapterPublic";
 import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
 import CategoryCard from "../../Component/Category/CategoryCard";
@@ -332,7 +332,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         setLikes(likes - 1);
                     } else {
                         setLikes(likes + 1);
-                        sendNotif(authorData._id, 1, bookData._id)
+                        SendNotifService(authorData._id, 1, bookData._id)
                     }
                 })
                 .catch((err) => console.log(err));
@@ -355,7 +355,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             setTimeout(() => setHasToScroll(!hasToScroll), 10);
         }
         setNoComments(false);
-        sendNotif(authorData._id, 10, bookData._id);
+        SendNotifService(authorData._id, 10, bookData._id);
     }
 
     const deleteComment = (id) => {
@@ -371,9 +371,9 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         comments.forEach((elem) => {
             if (elem._id === data.target_id) {
                 if (authorData._id != session.user.id)
-                    sendNotif(elem.userId, 20, data._id)
+                    SendNotifService(elem.userId, 20, data._id)
                 else
-                    sendNotif(elem.userId, 21, data._id)
+                    SendNotifService(elem.userId, 21, data._id)
                 return;
             }
         })

@@ -27,6 +27,28 @@ export const ConfirmModal = ({close,title, btnConfirm, subTitle, img, confirm}) 
     )
 }
 
+export const ConfirmModalDeleteAccountCustomProvider = ({close,title, btnConfirm, subTitle,confirm}) => {
+
+    return (
+        <div className={styles.containerDeleteAccountCustomProvider}>
+            <div className={styles.containerContent + ' ' + anim.scaleInModal}>
+                <XMarkIcon onClick={close} className={styles.close}/>
+                <div className={styles.headerModal}>
+                    <h5>{title}</h5>
+                    <p>{subTitle}</p>
+
+                    <div className={styles.containerBtn}>
+                        <button onClick={close}>Annuler</button>
+                        <button onClick={confirm} className={styles.red}>{btnConfirm}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+
 export const ConfirmModalCommentary = ({close,title, btnConfirm, subTitle, img, confirm}) => {
 
     return (

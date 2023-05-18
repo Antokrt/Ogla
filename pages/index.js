@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { activeOrDisable, selectLoginModalStatus, setActiveModalState } from "../store/slices/modalSlice";
 import HeaderResponsive from '../Component/HeaderResponsive';
 import MusicHome from '../Component/MusicHome';
-import { DeleteAll } from '../service/Notifications/NotificationsService';
+import { DeleteAllNotifsService} from '../service/Notifications/NotificationsService';
 import ScreenSize from "../utils/Size";
 import { ReCAPTCHA } from "react-google-recaptcha";
 
@@ -65,7 +65,7 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
 
     function deleteNotifs() {
         console.log(session)
-        DeleteAll(session.user.id)
+        DeleteAllNotifsService(session.user.id)
             .then((res) => console.log("good"))
             .catch((err) => console.log(err))
     }

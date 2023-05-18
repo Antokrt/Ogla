@@ -1,4 +1,4 @@
-import { sendNotif } from "../service/Notifications/NotificationsService";
+import {SendNotifService} from "../service/Notifications/NotificationsService";
 
 export const LikeCommentReduce = (id, arr, authorId, userId) => {
     const newArr = [...arr];
@@ -10,9 +10,9 @@ export const LikeCommentReduce = (id, arr, authorId, userId) => {
             else {
                 item.likes += 1;
                 if (authorId != userId)
-                    sendNotif(item.userId, 4, id);
+                    SendNotifService(item.userId, 4, id);
                 else
-                    sendNotif(item.userId, 6, id);
+                    SendNotifService(item.userId, 6, id);
             }
             item.hasLike = !item.hasLike;
         }
@@ -62,9 +62,9 @@ export const LikeAnswerReduce = (comments, replyId, authorId, userId) => {
                 else {
                     reply.likes += 1;
                     if (authorId != userId)
-                        sendNotif(reply.userId, 5, replyId);
+                        SendNotifService(reply.userId, 5, replyId);
                     else
-                        sendNotif(reply.userId, 7, replyId);
+                        SendNotifService(reply.userId, 7, replyId);
                 }
                 reply.hasLike = !reply.hasLike;
             }

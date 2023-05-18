@@ -29,7 +29,8 @@ import {useSession} from "next-auth/react";
 import {LikeAuthorService} from "../../service/Like/LikeService";
 import {setActiveModalState} from "../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
-import {sendNotif} from "../../service/Notifications/NotificationsService";
+import {sendNotif, SendNotifService} from "../../service/Notifications/NotificationsService";
+import {ErrMsg} from "../../Component/ErrMsg";
 
 
 export async function getServerSideProps({params,req}) {
@@ -53,8 +54,8 @@ export async function getServerSideProps({params,req}) {
 const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks}) => {
 
     const [profilAuthor, setProfilAuthor] = useState(profilData);
-    const [likes,setLikes] = useState(profilAuthor.author.likes);
-    const social = profilAuthor.author.social;
+    const [likes,setLikes] = useState(profilAuthor?.author?.likes);
+    const social = profilAuthor?.author?.social;
     const router = useRouter();
     const [page, setPage] = useState(2);
     const [activeFilter, setActiveFilter] = useState('popular');
@@ -147,9 +148,9 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                 }
                 else {
                     setLikes(likes + 1);
+                    SendNotifService(profilAuthor._id,3,profilAuthor._id)
                 }
             })
-            .then(() => sendNotif(session.user.id,3,profilAuthor._id))
             .catch(() => toastDisplayError("Impossible d'aimer ce profil !"))
     }
     else {
@@ -161,6 +162,10 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
         <div className={styles.container}>
             <Header/>
 
+            {
+                errProfil &&
+                <ErrMsg text={'Impossible de récupérer ce profil !'} textBtn={'Retour'} click={() => router.back()}/>
+            }
             {
                 profilData && !errProfil &&
                 <>
@@ -232,65 +237,82 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
 
                     </div>
 
-                    <div className={styles.containerS}>
-                        <div className={styles.sortContainer}>
-                            <div>
-                                <button
-                                    className={activeFilter === 'popular' && styles.activeBtn}
-                                    onClick={() => {
-                                        if (activeFilter !== 'popular') {
-                                            setActiveFilter('popular');
-                                        }
-                                    }}>Populaire(s)
-                                </button>
-                                <button
-                                    className={activeFilter === 'recent' && styles.activeBtn}
-                                    onClick={() => {
-                                        if (activeFilter !== 'recent') {
-                                            if (recent.length === 0) {
-                                                fetchRecentBooks();
-                                            }
-                                            setActiveFilter('recent');
-                                            setPage(2);
-                                        }
-                                    }}>Récent(s)
-                                </button>
+                    {
+                        profilAuthor.nbBooks <= 0 ?
+                            <div className={styles.empty}>
+                                <img src={'/assets/jim/smile8.png'}/>
+                                <p><span>{profilAuthor.pseudo}</span> n'a pas encore écrit de livres !</p>
                             </div>
-                        </div>
-                        {
-                            !errBooks &&
-                            <>
-                                {
-                                    activeFilter === 'recent' && recent.length !== 0 &&
-                                    <ListCard books={recent}/>
-                                }
-                                {
-                                    activeFilter === 'popular' && popular.length !== 0 &&
-                                    <ListCard books={popular}/>
-                                }
-                                <div className={styles.seeMore}>
-
-                                    {
-                                        loading &&
-                                        <LoaderCommentary/>
-                                    }
-
-                                    {
-                                        activeFilter === 'popular' && canSeeMorePopular && !loading &&
-                                        <p onClick={() => fetchMorePopularBooks()}>Voir plus</p>
-                                    }
-
-                                    {
-                                        activeFilter === 'recent' && canSeeMoreRecent && !loading &&
-                                        <p onClick={() => fetchMoreRecentBooks()}>Voir plus</p>
-                                    }
+                            :
+                            <div className={styles.containerS}>
+                                <div className={styles.sortContainer}>
+                                    <div>
+                                        <button
+                                            className={activeFilter === 'popular' && styles.activeBtn}
+                                            onClick={() => {
+                                                if (activeFilter !== 'popular') {
+                                                    setActiveFilter('popular');
+                                                }
+                                            }}>Populaire(s)
+                                        </button>
+                                        <button
+                                            className={activeFilter === 'recent' && styles.activeBtn}
+                                            onClick={() => {
+                                                if (activeFilter !== 'recent') {
+                                                    if (recent.length === 0) {
+                                                        fetchRecentBooks();
+                                                    }
+                                                    setActiveFilter('recent');
+                                                    setPage(2);
+                                                }
+                                            }}>Récent(s)
+                                        </button>
+                                    </div>
                                 </div>
+                                {
+                                    !errBooks &&
+                                    <>
+                                        {
+                                            activeFilter === 'recent' && recent.length !== 0 &&
+                                            <ListCard books={recent}/>
+                                        }
+                                        {
+                                            activeFilter === 'popular' && popular.length !== 0 &&
+                                            <ListCard books={popular}/>
+                                        }
+                                        <div className={styles.seeMore}>
+
+                                            {
+                                                loading &&
+                                                <LoaderCommentary/>
+                                            }
+
+                                            {
+                                                profilAuthor.nbBooks > 10 &&
+                                                <>
+                                                    {
+                                                        activeFilter === 'popular' && canSeeMorePopular && !loading &&
+                                                        <p onClick={() => fetchMorePopularBooks()}>Voir plus</p>
+                                                    }
+
+                                                    {
+                                                        activeFilter === 'recent' && canSeeMoreRecent && !loading &&
+                                                        <p onClick={() => fetchMoreRecentBooks()}>Voir plus</p>
+                                                    }
+                                                </>
+                                            }
 
 
-                            </>
-                        }
+                                        </div>
 
-                    </div>
+
+                                    </>
+                                }
+
+                            </div>
+
+
+                    }
 
                 </>
             }

@@ -17,7 +17,7 @@ import { LogoutService } from "../service/User/Account.service";
 import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
 import { BellAlertIcon } from "@heroicons/react/24/outline";
 import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
-import { openAll } from "../service/Notifications/NotificationsService";
+import {openAll, OpenAllService} from "../service/Notifications/NotificationsService";
 import DarkLight from "./layouts/Btn/DarkLight";
 import { selectTheme } from "../store/slices/themeSlice";
 import {setActiveModalState} from "../store/slices/modalSlice";
@@ -65,7 +65,7 @@ export default function Header() {
     useEffect(() => {
         var nb = 0;
         if (statusNotif && Notifs.length > 0)
-            openAll(Notifs[0].date_creation, session?.user.id)
+            OpenAllService(Notifs[0].date_creation, session?.user.id)
         else {
             Notifs.forEach((elem) => {
                 if (!elem.open)
@@ -187,7 +187,7 @@ export default function Header() {
                         nbNotifs > 0 &&
                         <div className={styles.bellActive}>
                             <BellAlertIcon onClick={() => {
-                                openAll(Notifs[0].date_creation, session.user.id)
+                                OpenAllService(Notifs[0].date_creation, session.user.id)
                                     .then((res) => console.log('res'))
                                     .catch((err) => console.log('err'));
                                 dispatch(setActiveModalNotif(true));

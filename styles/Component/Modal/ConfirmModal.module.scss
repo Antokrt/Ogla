@@ -120,6 +120,120 @@
 
 }
 
+.containerDeleteAccountCustomProvider {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 9999 !important;
+  background-color: rgba(28, 35, 43, 0.77);
+
+  .containerContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: auto;
+    padding: 50px 30px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: $shadow;
+  }
+
+  .close {
+    position: absolute;
+    width: 20px;
+    right: 4%;
+    top: 6%;
+    cursor: pointer;
+  }
+
+  .headerModal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+    align-items: center;
+    h5{
+      font-size: calc(12px + 0.2vw);
+      font-family: 'Santral-Regular',sans-serif;
+      font-weight: bold;
+      text-align: center;
+      padding: 0px 10px;
+    }
+    p{
+      padding: 0px 10px;
+      text-align: center;
+      color: #6b7077;
+      font-family: 'Santral-Regular',sans-serif;
+      font-size: 12px;
+    }
+  }
+
+  .containerBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    button{
+      &:active {
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
+
+      &:hover {
+        transition: 0.2s;
+        filter: brightness(92%);
+      }
+
+      transition: 0.2s;
+      background-color: #1C232B;
+      color: white;
+      font-family: 'Rebond Grotesque',sans-serif;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border-radius: 5px;
+      font-size: 10px;
+      box-shadow: $shadow;
+      padding: 10px 20px;
+    }
+    .red{
+      background-color: #e04444;
+    }
+  }
+
+  .errMsg {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 10px;
+    font-family: "Poppins", sans-serif;
+    font-style: italic;
+    color: red;
+  }
+
+
+  .disabled {
+    cursor: initial;
+    transition: 0.1s;
+    background-color: #54595F !important;
+  }
+
+  .active {
+    cursor: pointer;
+    transition: 0.1s;
+    background-color: #e04444;
+  }
+
+}
+
 
 
 .containerCommentary{
@@ -228,7 +342,23 @@
 }
 
 @media screen and (max-width: 700px){
-  .container{
+  .containerDeleteAccountCustomProvider{
+    .containerContent{
+      padding: 55px 55px ;
+    }
+    .close{
+      display: none;
+    }
+    .containerBtn{
+      flex-direction: column;
+      margin-top: 10px;
+      button{
+        width: 160px;
+        font-size: 9px!important;
+      }
+    }
+  }
+  .container,{
     .close{
       display: none;
     }
@@ -258,6 +388,23 @@
   .containerCommentary{
     .containerContent{
       width: 90% !important;
+    }
+  }
+}
+
+@media screen and (max-width: 400px){
+  .containerDeleteAccountCustomProvider{
+    .containerContent{
+      width: 90%;
+      padding: 25px 5px ;
+    }
+    .containerBtn{
+      flex-direction: column;
+      margin-top: 10px;
+      button{
+        width: 160px;
+        font-size: 9px!important;
+      }
     }
   }
 }

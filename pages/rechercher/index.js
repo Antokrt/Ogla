@@ -11,7 +11,7 @@ import {MagnifyingGlassIcon} from "@heroicons/react/24/outline";
 import {CardBookPublic} from "../../Component/Card/CardBook";
 import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
-import ErrMsg from "../../Component/ErrMsg";
+import {ErrMsg} from "../../Component/ErrMsg";
 import {ListCard} from "../../Component/Card/ListCard";
 import {ScrollDownUtils} from "../../utils/Scroll";
 

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { allDel, allReadReducer, selectNotifs } from '../../store/slices/notifSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Notif from './Notif';
-import { DeleteAllNotifs, readAll } from '../../service/Notifications/NotificationsService';
+import {DeleteAllNotifsService, ReadAllService} from '../../service/Notifications/NotificationsService';
 import { selectTheme } from '../../store/slices/themeSlice';
 
 export const NotifModal = ({ close }) => {
@@ -32,7 +32,7 @@ export const NotifModal = ({ close }) => {
 
     function DeleteAll() {
         if (allNotifs.length > 0)
-            DeleteAllNotifs(allNotifs[0].date_creation)
+            DeleteAllNotifsService(allNotifs[0].date_creation)
                 .then(() => {
                     dispatch(allDel())
                 })
@@ -40,7 +40,7 @@ export const NotifModal = ({ close }) => {
 
     function readAllNotifs() {
         if (allNotifs.length > 0)
-            readAll(allNotifs[0].date_creation)
+            ReadAllService(allNotifs[0].date_creation)
                 .then(() => {
                     dispatch(allReadReducer())
                 })

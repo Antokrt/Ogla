@@ -493,9 +493,17 @@
   }
 
   button {
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    &:hover{
+      transition: 0.2s;
+      filter: brightness(98%);
+    }
     box-shadow: $shadow;
     background-color: #9844AD;
-    padding: 15px 40px;
+    padding: 10px 40px;
     border-radius: 15px;
     font-family: 'Rebond Grotesque', sans-serif;
     font-weight: bold;
