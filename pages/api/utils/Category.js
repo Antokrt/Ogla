@@ -1,3 +1,3 @@
 export const GetCategory = () => {
-    return ['action','drama','horreur','comedie','comédie','com%C3%A9die','fantaisie','sf','autre'];
+    return ['action','new-romance','horreur','humour','fantaisie','sf', 'romance', 'science-fiction','autre'];
 }

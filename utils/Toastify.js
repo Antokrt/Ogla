@@ -32,10 +32,11 @@ export const toastDisplayInfo = (msg) => {
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,
-		pauseOnHover: true,
+		pauseOnHover: false,
 		draggable: false,
 		progress: undefined,
 		theme: "light",
+		icon:false
 	});
 }
 

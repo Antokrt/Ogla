@@ -20,10 +20,21 @@ import { io } from "socket.io-client";
 import { selectSocketStatus, setActiveSocket } from '../store/slices/socketSlice';
 import notifSlice from '../store/slices/notifSlice';
 import { useCallback } from 'react';
+import {addCategory, selectCategories} from "../store/slices/categorySlice";
+import axios from "axios";
+import {instance} from "../service/config/Interceptor";
+import {toastDisplayInfo} from "../utils/Toastify";
 
 function MyApp({ Component, pageProps }) {
 
     const { store } = wrapper.useWrappedStore(pageProps);
+
+
+    useEffect(() => {
+        console.log('lel')
+    },[])
+
+
 
     return (
         <SessionProvider session={pageProps.session}>
@@ -32,8 +43,11 @@ function MyApp({ Component, pageProps }) {
                 <Modal />
                 <Component {...pageProps} />
                 <Socket />
-                <ToastContainer limit={3} />
+                <ToastContainer toastStyle={{
+                    fontFamily:'Poppins',
+                }} limit={3} />
                 <Lofi />
+                <GetCategories/>
             </Provider>
         </SessionProvider>
     )
@@ -50,6 +64,23 @@ function Modal() {
         )
     }
 }
+
+function GetCategories(){
+    const categories = useSelector(selectCategories);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (categories.length <= 0) {
+            instance.get('category')
+                .then((res) => {
+                    dispatch(addCategory(res.data));
+                })
+        }
+    },[categories])
+
+    return <></>
+}
+
 
 function Notif() {
     const notifState = useSelector(selectNotifStatus);

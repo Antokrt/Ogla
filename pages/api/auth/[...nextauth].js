@@ -297,6 +297,11 @@ export default function (req,res){
                     return session;
                 }
 
+                if(req.url === '/api/auth/session?update-google-provider'){
+                    const res = await getProfil(token?.accessToken);
+                    session.user.provider = res.data.provider;
+                    return session;
+                }
                 session.user.accessToken = token?.accessToken;
                 return session;
 

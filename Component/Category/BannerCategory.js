@@ -9,18 +9,20 @@ export const BannerCategory = ({category,presentation}) => {
         <div className={theme? styles.container + ' ' + anim.fadeIn  : styles.darkContainer}>
             <div className={styles.content}>
                 {
-                    category === 'Sf' ?
+                    category.toLowerCase() === 'science-fiction' ?
                         <h4 data-after={'Science-Fiction'}>SF</h4> :
                         <h4 data-after={category}>{category}</h4>
                 }
                 <p>{presentation}</p>
             </div>
             {
-                category === 'Comédie' ?
+                category.toLowerCase() === 'humour' ?
                     <img className={styles.image} src={'/assets/category/banner/comedy.png'}/>
  :
-                    <img className={styles.image} src={'/assets/category/banner/'+  category+ '.png'}/>
-
+                        category.toLowerCase() === 'science-fiction' ?
+                            <img className={styles.image} src={'/assets/category/banner/sf.png'}/>
+:
+                            <img className={styles.image} src={'/assets/category/banner/'+  category+ '.png'}/>
             }
         </div>
     )

@@ -59,9 +59,6 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
     const [width, height] = ScreenSize();
 
     const router = useRouter();
-    useEffect(() => {
-        console.log(width)
-    }, [width])
 
     function deleteNotifs() {
         console.log(session)

@@ -24,6 +24,8 @@ import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
 import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import {PhotoIcon} from "@heroicons/react/20/solid";
+import {useSelector} from "react-redux";
+import {selectCategories} from "../../../store/slices/categorySlice";
 
 
 const New = () => {
@@ -40,6 +42,7 @@ const New = () => {
     const router = useRouter();
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
+    const categories = useSelector(selectCategories);
 
     const handleFileSelect = (event) => {
         if(event?.target.files && event.target.files[0]){
@@ -148,9 +151,9 @@ const New = () => {
                 value={category}
                 name="genres"
                     onChange={(e) => setCategory(e.target.value)}
-                    id="pet-select" >
+                    id="cat-select" >
                 {
-                    Category.category.map((item) => {
+                    categories.map((item) => {
                         return (
                             <option
                                 value={Capitalize(item.name)}>{Capitalize(item.name)}</option>

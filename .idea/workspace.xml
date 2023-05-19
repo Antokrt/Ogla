@@ -2,24 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/store/slices/categorySlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/ConfirmModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/ConfirmModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/BannerCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/BannerCategory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/ResetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/Notif.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/Notif.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/NotifModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/NotifModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/utils/Category.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/utils/Category.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/cat/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/cat/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Notifications/NotificationsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Notifications/NotificationsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/reset-password/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/reset-password/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/category/banner/drama.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/Login.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/CommentaryUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/CommentaryUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/CategoryUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/CategoryUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/Toastify.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/Toastify.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +284,8 @@
       <workItem from="1684139873512" duration="21755000" />
       <workItem from="1684228772904" duration="15429000" />
       <workItem from="1684314558877" duration="15020000" />
-      <workItem from="1684398396168" duration="9559000" />
+      <workItem from="1684398396168" duration="9586000" />
+      <workItem from="1684485707140" duration="15820000" />
     </task>
     <servers />
   </component>

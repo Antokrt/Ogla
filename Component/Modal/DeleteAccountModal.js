@@ -27,7 +27,7 @@ export const DeleteAccountModal = ({close}) => {
             })
     }
 
-    if(session.user.provider === 'ogla'){
+    if(session.user.provider !== 'google'){
         return (
             <div className={styles.container}>
                 <div className={styles.containerContent + ' ' + anim.scaleInModal}>

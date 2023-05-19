@@ -8,6 +8,8 @@ import {useSession, signIn, signOut} from "next-auth/react";
 import {useEffect, useRef, useState} from "react";
 import {router, useRouter} from "next/router";
 import {SendNewPasswordWhenForgot} from "../../service/User/Password.service";
+import {instance} from "../../service/config/Interceptor";
+import {ReloadSession} from "../../utils/ReloadSession";
 
 const ResetPasswordForm = ({email,token,id}) => {
 
@@ -33,10 +35,15 @@ const ResetPasswordForm = ({email,token,id}) => {
                 newPassword
             }
             SendNewPasswordWhenForgot(data)
+                .then( async () => {
+                    await instance.get('http://localhost:3000/api/auth/session?update-google-provider');
+                })
+                .then(() => ReloadSession())
                 .then(() => router.replace({
                     pathname:'/auth',
                     query:'login'
                 }))
+
                 .catch((err) => setSubmitErr({
                     msg: 'Impossible de modifier le mot de passe',
                     show: true

@@ -1,3 +1,4 @@
+/*
 export const GetCategory = () => {
     const list = ['action', 'drama', 'horreur', 'comédie', 'fantaisie', 'sf','autre'];
     return list;
@@ -40,4 +41,4 @@ export const GetPresentationOfCategory = (cat) => {
             return 'Découvrez notre sélection de catégories de livres pour tous les goûts et tous les âges. Plongez dans des histoires passionnantes, explorez des mondes imaginaires et découvrez des personnages inoubliables dans notre vaste collection de livres. Que vous soyez fan de romans d\'aventure, de thrillers, de romances ou de science-fiction, nous avons quelque chose pour vous. Parcourez notre sélection et laissez-vous emporter par des histoires qui captiveront votre imagination et éveilleront votre curiosité.';
         }
     }
-}
+}*/

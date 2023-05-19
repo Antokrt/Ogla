@@ -34,9 +34,7 @@ const ResetPassword = ({ressources}) => {
             <div className={styles.container}>
                 <div className={styles.purple}></div>
                 <div className={styles.block}>
-                    <div className={styles.imgContainer}>
-                        <img src={"/assets/gon.png"}/>
-                    </div>
+
                     <ResetPasswordForm
                         id={ressources.id}
                         email={ressources.email}

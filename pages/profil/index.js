@@ -18,16 +18,16 @@ import {ReloadSession} from "../../utils/ReloadSession";
 import {GetDefaultUserImg, renderPrediction} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {ChangePasswordService} from "../../service/User/Password.service";
+import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
 import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {BookmarkIcon} from "@heroicons/react/24/solid";
+import {BookmarkIcon, LockClosedIcon} from "@heroicons/react/24/solid";
 import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
 import {useDispatch} from "react-redux";
 import {setActiveModalNotif} from "../../store/slices/notifSlice";
 import {LoaderImg} from "../../Component/layouts/Loader";
-import {toastDisplayError} from "../../utils/Toastify";
+import {toastDisplayError, toastDisplayPromiseSendMail} from "../../utils/Toastify";
 import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
 import {instance} from "../../service/config/Interceptor";
 
@@ -193,6 +193,11 @@ const Profil = ({profilData, err}) => {
             .catch((err) => console.log(err));
     }
 
+    const sendEmailResetPassword = () => {
+        toastDisplayPromiseSendMail(SendResetPasswordEmailService(profilData.email)
+        )
+    }
+
     const profilComponent = () => {
         return (
             <div className={styles.profil}>
@@ -268,7 +273,7 @@ const Profil = ({profilData, err}) => {
                         }}>Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
                     {
-                        session.user.provider === 'ogla' &&
+                        session.user.provider !== 'google' ?
                         <>
                             <label>Modifier votre mot de passe</label>
                             <input value={oldPassword}
@@ -286,6 +291,8 @@ const Profil = ({profilData, err}) => {
                                     className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
                             </button>
                         </>
+                            :
+                            <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un mot de passe <LockClosedIcon/></button>
 
                     }
 

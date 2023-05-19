@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import {GetCategory} from "../../utils/CategoryUtils";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
+import {selectCategories} from "../../store/slices/categorySlice";
 const CategoryHeader = () => {
 
     const router = useRouter();
@@ -13,20 +14,21 @@ const CategoryHeader = () => {
         query: {cat},
     } = router
     const theme = useSelector(selectTheme);
+    const categories = useSelector(selectCategories);
 
     return (
         <div className={theme? styles.container : styles.darkContainer}>
             {
-                GetCategory().map((item)=>{
+                categories.map((item)=>{
                     return  (
                         <div
                      onClick={() => {
-                         router.push('/cat/' + item)
+                         router.push('/cat/' + item.name.toLowerCase())
                      }}
                             key={item}
                             className={Capitalize(cat) === item ? styles.active +" " + styles.book : styles.book}>
                             <img src="/assets/category/icons/drama.svg"/>
-                        <p>{item}</p>
+                        <p>{item.name}</p>
                         </div>
                     )
                 })

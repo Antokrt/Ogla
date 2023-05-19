@@ -6,6 +6,7 @@ import {musicSlice} from "./slices/musicSlice";
 import {notifSlice} from "./slices/notifSlice";
 import {socketSlice} from "./slices/socketSlice";
 import {themeSlice} from "./slices/themeSlice";
+import {categorySlice} from "./slices/categorySlice";
 
 const makeStore = () =>
     configureStore({
@@ -16,6 +17,8 @@ const makeStore = () =>
             [musicSlice.name]: musicSlice.reducer,
             [socketSlice.name]: socketSlice.reducer,
             [themeSlice.name]: themeSlice.reducer,
+            [categorySlice.name]: categorySlice.reducer,
+
         },
         devTools: true
     })

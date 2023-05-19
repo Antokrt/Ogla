@@ -19,7 +19,7 @@ import { Capitalize } from "../../utils/String";
 import { GetBooksWithCategoryService } from "../../service/Book/BookService";
 import { TextSeeMore } from "../../Component/layouts/Btn/ActionBtn";
 import { LoaderCard, LoaderCommentary } from "../../Component/layouts/Loader";
-import ErrMsg from "../../Component/ErrMsg";
+import {ErrMsg} from "../../Component/ErrMsg";
 import { HotPost, HotPostPhone } from "../../Component/Post/HotPost";
 import { ListCard } from "../../Component/Card/ListCard";
 import { BannerCategory } from "../../Component/Category/BannerCategory";
@@ -28,6 +28,7 @@ import ScreenSize from "../../utils/Size";
 import { ScrollDownUtils } from "../../utils/Scroll";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
+import {selectCategories} from "../../store/slices/categorySlice";
 
 export async function getServerSideProps({ req, params }) {
 
@@ -57,7 +58,20 @@ export default function CatPage({ cat, err, bookListData }) {
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [width, height] = ScreenSize();
     const theme = useSelector(selectTheme);
+    const [activeCat,setActiveCat] = useState(cat);
     const topBook = bookListData[0];
+    const categories = useSelector(selectCategories);
+
+
+
+    useEffect(() => {
+        for(const category of categories){
+            if(cat === category.name.toLowerCase()){
+                setActiveCat(category);
+            }
+        }
+    },[categories])
+
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
@@ -100,7 +114,7 @@ export default function CatPage({ cat, err, bookListData }) {
         <div className={theme ? styles.container : styles.darkContainer}>
             <Header />
             <CategoryHeader />
-            <BannerCategory presentation={GetPresentationOfCategory(cat)} category={Capitalize(cat)} />
+            <BannerCategory presentation={activeCat.description} category={Capitalize(cat)} />
             {
                 width < 530 &&
                 <h5 className={styles.thisMonthPhone}>Ce mois ci :</h5>

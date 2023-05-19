@@ -11,6 +11,7 @@ import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {setActiveModalNotif} from "../../store/slices/notifSlice";
+import {Capitalize} from "../../utils/String";
 
 export default function VerticalAuthorMenu() {
 
@@ -61,7 +62,7 @@ export default function VerticalAuthorMenu() {
     <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}/>
     <span></span>
     <div className={styles.infos} onClick={() => goToProfil()}>
-        <p className={styles.name}>{session?.user.author.firstName} {session?.user.author.lastName}</p>
+        <p className={styles.name}>{Capitalize(session?.user.author.firstName)} {Capitalize(session?.user.author.lastName)}</p>
         <p className={styles.pseudo}>@{session?.user.pseudo}</p>
     </div>
 </div>

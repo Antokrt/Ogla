@@ -24,7 +24,6 @@ export async function middleware(req){
 
 
     if (req.nextUrl.pathname.startsWith('/cat/') && !GetCategory().includes(req.nextUrl.pathname.split('/cat/')[1])) {
-        console.log(req.nextUrl.pathname.split('/cat/')[1])
         return NextResponse.redirect(new URL('/cat/', req.url));
     }
 
