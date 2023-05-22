@@ -30,7 +30,7 @@ export default function Footer() {
     }
 
     return (
-        <div className={theme? styles.container : styles.darkContainer}>
+        <div className={theme ? styles.container : styles.darkContainer}>
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>
@@ -76,7 +76,7 @@ export default function Footer() {
                             <li>Données personnelles</li>
                             <li>Conditions générales</li>
                             <li>Support</li>
-                            <li>© OGLA Tous droits réservés 2022
+                            <li>© OGLA Tous droits réservés 2023
                             </li>
 
                         </ul>
@@ -87,7 +87,6 @@ export default function Footer() {
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>
                     <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
-
                     <p></p>
                 </div>
             </div>

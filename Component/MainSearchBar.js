@@ -48,8 +48,6 @@ export default function MainSearchBar({data,submit,width,height,query,search}) {
                 }
             </form>
         </div>
-
-
     )
 }
 

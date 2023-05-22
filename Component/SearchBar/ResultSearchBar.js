@@ -10,7 +10,7 @@ const ResultSearchBar = ({destroy, query, data}) => {
 
     const router = useRouter();
     const light = useSelector(selectTheme);
-
+    console.log(data)
     const titleHeader = (type, number) => {
         return (
             <div className={styles.titleHeader}>
@@ -18,7 +18,6 @@ const ResultSearchBar = ({destroy, query, data}) => {
             </div>
         )
     }
-
 
     return (
         <div className={light? styles.resultContainer : styles.blackResultContainer}>

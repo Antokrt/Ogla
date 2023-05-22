@@ -8,6 +8,8 @@ import { AuthorSchema, AuthorSchemaLog } from "../../Component/Form/Schema/Autho
 import axios from "axios";
 import { instance } from "../../service/config/Interceptor";
 import { toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail } from "../../utils/Toastify";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
+import ScreenSize from "../../utils/Size";
 
 const DevenirAuteur = () => {
 
@@ -20,7 +22,7 @@ const DevenirAuteur = () => {
     const [activeSchema, setActiveSchema] = useState(AuthorSchema);
     const ref = useRef(null);
     const router = useRouter();
-
+    const [width, height] = ScreenSize();
     /// SI L'UTILISATEUR EST CONNECTÉ \\\
     const [userObject, setUserObject] = useState({});
     const [initialValues, setInitialValues] = useState({
@@ -73,7 +75,9 @@ const DevenirAuteur = () => {
                 {
                     session &&
                     <>
-                        <label htmlFor={"email"}>Email</label>
+                        <label htmlFor={"email"}>Email
+
+                        </label>
                         <p className={styles.errMsgItem}>
                         </p>
                         <input
@@ -88,7 +92,11 @@ const DevenirAuteur = () => {
                 }
 
                 {/* LAST-NAME */}
-                <label htmlFor={"lastName"}>Nom</label>
+                <label htmlFor={"lastName"}>Nom
+                    <span>
+                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                    </span>
+                </label>
                 <p className={styles.errMsgItem}>
                     <ErrorMessage name={"lastName"} />
                 </p>
@@ -101,7 +109,11 @@ const DevenirAuteur = () => {
 
 
                 {/* FIRST-NAME */}
-                <label htmlFor={"firstName"}>Prénom</label>
+                <label htmlFor={"firstName"}>Prénom
+                    <span>
+                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                    </span>
+                </label>
                 <p className={styles.errMsgItem}>
                     <ErrorMessage name={"firstName"} />
                 </p>
@@ -113,7 +125,11 @@ const DevenirAuteur = () => {
                 {/* FIRST-NAME */}
 
                 {/* AGE */}
-                <label htmlFor={"age"}>Date de naissance</label>
+                <label htmlFor={"age"}>Date de naissance
+                    <span>
+                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                    </span>
+                </label>
                 <p className={styles.errMsgItem}>
                     <ErrorMessage name={"age"} />
                 </p>
@@ -140,7 +156,11 @@ const DevenirAuteur = () => {
                     !session &&
                     <>
                         {/* EMAIL */}
-                        <label htmlFor={"email"}>Email</label>
+                        <label htmlFor={"email"}>Email
+                            <span>
+                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                            </span>
+                        </label>
                         <p className={styles.errMsgItem}>
                             <ErrorMessage name={"email"} />
                         </p>
@@ -153,7 +173,11 @@ const DevenirAuteur = () => {
 
 
                         {/* PASSWORD */}
-                        <label htmlFor={"password"}>Mot de passe</label>
+                        <label htmlFor={"password"}>Mot de passe
+                            <span>
+                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                            </span>
+                        </label>
                         <p className={styles.errMsgItem}>
                             <ErrorMessage name={"password"} />
                         </p>
@@ -166,10 +190,12 @@ const DevenirAuteur = () => {
 
 
                         {/* CONFIRMATION PASSWORD */}
-                        <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe</label>
-                        <p className={styles.errMsgItem}>
-                            <ErrorMessage name={"confirmPassword"} />
-                        </p>
+                        <label htmlFor={"confirmPassword"}>Confirmez votre mot de passe
+                            <span>
+                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                            </span>
+                        </label>
+
                         <Field
                             id={'confirmPassword'}
                             type={"password"}
@@ -185,6 +211,9 @@ const DevenirAuteur = () => {
                     !session &&
                     loginLink()
                 }
+                <p className={styles.errMsgItem}>
+                    <ErrorMessage name={"confirmPassword"} />
+                </p>
             </div>
         )
     }
@@ -195,7 +224,11 @@ const DevenirAuteur = () => {
                 {
                     session ?
                         <>
-                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <label htmlFor={"pseudo"}>Nom d'auteur
+                                <span>
+                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                </span>
+                            </label>
                             <p className={styles.errMsgItem}>
                                 Votre nom d'auteur remplacera votre pseudo
                             </p>
@@ -209,7 +242,11 @@ const DevenirAuteur = () => {
                         </>
                         :
                         <>
-                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <label htmlFor={"pseudo"}>Nom d'auteur
+                                <span>
+                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                </span>
+                            </label>
                             <p className={styles.errMsgItem}>
                                 <ErrorMessage name={"pseudo"} />
                             </p>
@@ -238,7 +275,11 @@ const DevenirAuteur = () => {
                         <option value={"none"}>Pas de préférence</option>
                     </select>
                 </div>*/}
-                <label htmlFor={"description"}>Une petite présentation</label>
+                <label htmlFor={"description"}>Une petite présentation
+                    <span>
+                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                    </span>
+                </label>
                 <p className={styles.errMsgItem}>
                     <ErrorMessage name={"description"} />
                 </p>
@@ -250,7 +291,10 @@ const DevenirAuteur = () => {
                     className={styles.textareaForm}
                 />
 
-
+                {
+                    // seeErr &&
+                    <p className={styles.errMsgItem} ref={testRef} style={{}}>{errMsg} </p>
+                }
                 <div className={styles.conditions}>
                     <label htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA </strong>, j'accepte les <span>conditions d'utilisation</span></label>
                 </div>
@@ -261,13 +305,12 @@ const DevenirAuteur = () => {
                     loginLink()
                 }
 
-                {
-                    seeErr &&
-                    <p className={styles.errMsgItem}>{errMsg} </p>
-                }
+
             </div>
         )
     }
+
+    const testRef = useRef(null);
 
     const displayForm = (param) => {
         if (!session) {
@@ -340,10 +383,16 @@ const DevenirAuteur = () => {
         return (
             <div className={styles.stepBtnContainer}>
                 {
-                    stepActiveForm !== 1 &&
+                    stepActiveForm !== 1 && width > 360 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
                         setStepActiveForm(stepActiveForm - 1)
-                    }}>Précédent</span>
+                    }}> <ChevronDoubleLeftIcon /> Précédent</span>
+                }
+                {
+                    stepActiveForm !== 1 && width <= 360 &&
+                    <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
+                        setStepActiveForm(stepActiveForm - 1)
+                    }}> Précédent</span>
                 }
                 <button
                     onClick={() => {
@@ -358,14 +407,25 @@ const DevenirAuteur = () => {
                             data.description === ""
                         ) {
                             setSeeErr(true);
-                            //toastDisplayError("Une erreur c'est produite.")
+                            testRef.current.style.opacity = 1;
+                            setTimeout(() => {
+                                testRef.current.style.opacity = 0;
+                            }, 1000)
                         }
                         else {
                             setSeeErr(false);
                         }
                     }}
                     type={'submit'}
-                    className={styles.stepBtn}>Envoyez</button>
+                    className={styles.stepBtn}>Envoyer
+                    {
+                        width > 360 &&
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                    }
+
+                </button>
             </div>
         )
     }
@@ -374,20 +434,36 @@ const DevenirAuteur = () => {
         return (
             <div className={styles.stepBtnContainer}>
                 {
-                    stepActiveForm !== 1 &&
+                    stepActiveForm !== 1 && width > 360 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
                         setStepActiveForm(stepActiveForm - 1)
-                    }}>Précédent</span>
+                    }}> <ChevronDoubleLeftIcon /> Précédent</span>
+                }
+                {
+                    stepActiveForm !== 1 && width <= 360 &&
+                    <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
+                        setStepActiveForm(stepActiveForm - 1)
+                    }}> Précédent</span>
                 }
 
-
-                <span className={styles.stepBtn} onClick={() => {
-                    if (stepActiveForm !== 3) {
-                        setStepActiveForm(stepActiveForm + 1)
-                    }
-                }}>Suivant</span>
-
-
+                {
+                    width > 360 &&
+                    <span className={styles.stepBtn} onClick={() => {
+                        if (stepActiveForm !== 3) {
+                            setStepActiveForm(stepActiveForm + 1)
+                        }
+                    }}>
+                        Suivant <ChevronDoubleRightIcon />
+                    </span>
+                }
+                {
+                    width <= 360 &&
+                    <span className={styles.stepBtn} onClick={() => {
+                        if (stepActiveForm !== 3) {
+                            setStepActiveForm(stepActiveForm + 1)
+                        }
+                    }}> Suivant </span>
+                }
             </div>
         )
     }
@@ -396,63 +472,65 @@ const DevenirAuteur = () => {
         <div className={styles.container}>
             <div className={styles.LogoHead}>
                 <h1 onClick={() => router.push("/")}> OGLA </h1>
-            </div> 
-            <div className={styles.purple}></div>
-
-            <div className={styles.block}>
-                <div className={styles.imgContainer}>
-                    <img src={"/assets/gon.png"} />
-                </div>
-
-                <div className={styles.formContainer}>
-                    <div className={styles.header}>
-                        <h1>Deviens écrivain </h1>
-                        {
-                            stepActiveForm !== 3 ?
-                                <p> {activeText} </p>
-                                :
-                                <p> Votre inscription sera traitée le plus rapidement possible par l'équipe d'OGLA ! </p>
-                        }
-                    </div>
-                    <div className={styles.form}>
-                        {
-                            formReady &&
-                            <Formik
-                                innerRef={ref}
-                                initialValues={initialValues}
-                                validationSchema={activeSchema}
-                                onSubmit={(values, actions) => {
-                                    submit(values)
-                                }}
-                            >
-                                {({ setFieldValue }) =>
-                                (
-                                    <Form>
-                                        {
-                                            displayForm(stepActiveForm)
-                                        }
-                                        {
-                                            stepActiveForm !== 3 && !session &&
-                                            nextPreviousBtn()
-                                        }
-                                        {
-                                            stepActiveForm !== 2 && session &&
-                                            nextPreviousBtn()
-                                        }
-                                        {
-                                            stepActiveForm === 3 && !session &&
-                                            btn()
-                                        }
-                                        {
-                                            stepActiveForm === 2 && session &&
-                                            btn()
-                                        }
-                                    </Form>
-                                )}
-                            </Formik>
-                        }
+            </div>
+            <div className={styles.content}>
+                <div className={styles.leftBlock}>
+                    <div className={styles.formContainer}>
+                        <div className={styles.header}>
+                            <h1>Deviens écrivain </h1>
+                            {
+                                stepActiveForm !== 3 ?
+                                    <p> {activeText} </p>
+                                    :
+                                    <p> Votre inscription sera traitée le plus rapidement possible par l'équipe d'OGLA ! </p>
+                            }
+                        </div>
+                        <div className={styles.form}>
+                            {
+                                formReady &&
+                                <Formik
+                                    innerRef={ref}
+                                    initialValues={initialValues}
+                                    validationSchema={activeSchema}
+                                    onSubmit={(values, actions) => {
+                                        submit(values)
+                                    }}
+                                >
+                                    {({ setFieldValue }) =>
+                                    (
+                                        <Form>
+                                            {
+                                                displayForm(stepActiveForm)
+                                            }
+                                            {
+                                                stepActiveForm !== 3 && !session &&
+                                                nextPreviousBtn()
+                                            }
+                                            {
+                                                stepActiveForm !== 2 && session &&
+                                                nextPreviousBtn()
+                                            }
+                                            {
+                                                stepActiveForm === 3 && !session &&
+                                                btn()
+                                            }
+                                            {
+                                                stepActiveForm === 2 && session &&
+                                                btn()
+                                            }
+                                        </Form>
+                                    )}
+                                </Formik>
+                            }
+                        </div>
                     </div>
                 </div>
+                {
+                    width > 1150 &&
+                    <div className={styles.rightBlock}>
+                        <img src={"/assets/diapo/3.png"} />
+                    </div>
+                }
             </div>
 
         </div>

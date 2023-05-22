@@ -73,7 +73,7 @@ export const NotifModal = ({ close }) => {
                             theme &&
                             <img src={'/assets/jim/smile7.png'} />
                         }
-                        <p>Vous n'avez pas de notifications</p>
+                        <p> Vous n'avez pas de notifications </p>
                     </div>
             }
             {

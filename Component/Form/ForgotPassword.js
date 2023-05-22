@@ -72,15 +72,15 @@ const ForgotPassword = ({ login }) => {
                                     <p className={styles.submitErr + ' ' + styles.fadeIn}>{submitErr.msg}</p>
                                 }
 
-                                <div className={styles.stepBtnContainer}>
-                                    <button type={'submit'} className={styles.stepBtn}>Envoyer</button>
-                                </div>
-                                <div className={styles.otherOption}>
+                                {/* <div className={styles.otherOption}>
                                     <div className={styles.trait}> </div>
                                     <h3> Un oubli est si vite arrivé </h3>
-                                </div>
+                                </div> */}
                                 <div className={styles.conditions} onClick={login}>
                                     <p> Retour à la connexion </p>
+                                </div>
+                                <div className={styles.stepBtnContainer}>
+                                    <button type={'submit'} className={styles.stepBtn}>Envoyer</button>
                                 </div>
                             </form>
                             :

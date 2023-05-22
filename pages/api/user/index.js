@@ -10,7 +10,6 @@ export async function GetPrivateProfilApi(req){
     if(profilJson.statusCode === 401){
         profilJson = null;
     }
-
     return {
         profilJson,
         err:profilErrData

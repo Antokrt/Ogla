@@ -96,9 +96,28 @@
 }
 
 .notification{
+  position: relative;
   display: flex;
   justify-content: left;
   align-items: center;
+
+  span {
+    position: absolute;
+    bottom: 15px;
+    right: 23px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #a326c2;
+  }
+}
+
+.activeMenu{
+  background-color: #9844AD!important;
+  color: white;
+  svg{
+    color: white;
+  }
 }
 
 .bell{
@@ -106,36 +125,19 @@
   color: #54595F;
 }
 
-.activeMenu{
-  background-color: #9844AD!important;
-  color: white!important;
-  svg{
-    color: white!important;
-  }
-
-}
-
-
-
-
 @media screen and (max-width: 900px){
   .container{
     li {
       font-size: 0!important;
-      span{
-        display: none;
-      }
+      // span{
+      //   display: none;
+      // }
     }
   }
 }
-
-
-
 
 @media screen and (max-height: 500px) and (orientation: landscape){
   .container{
     display: none;
   }
 }
-
-

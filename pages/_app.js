@@ -130,7 +130,6 @@ function Socket() {
                 socket.on("status", (notif) => {
                     dispatch(setAllNotifs(notif));
                 })
-
                 socket.removeAllListeners("new");
                 socket.on("new", (notif) => {
                     dispatch(addNotif(notif));
@@ -144,7 +143,7 @@ function Socket() {
     }, [initializeSocket]);
 
     return (
-        <h1 style={{ fontSize: "1px", zIndex: "-1", display: "none" }}>. </h1>
+        <h1 style={{ fontSize: "1px", zIndex: "-1", display: "none" }}>.</h1>
     )
 }
 

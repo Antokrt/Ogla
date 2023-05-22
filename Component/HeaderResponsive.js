@@ -1,24 +1,58 @@
-import { AcademicCapIcon, ArrowLeftOnRectangleIcon, ArrowPathIcon, Bars3CenterLeftIcon, Bars3Icon, BellAlertIcon, BookOpenIcon, ChevronDownIcon, HomeIcon, KeyIcon, PencilIcon, Squares2X2Icon, StarIcon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useSession, signOut} from "next-auth/react";
+import { AcademicCapIcon, ArrowLeftOnRectangleIcon, ArrowPathIcon, Bars3CenterLeftIcon, Bars3Icon, BellIcon, BookOpenIcon, ChevronDownIcon, HomeIcon, KeyIcon, MagnifyingGlassIcon, PencilIcon, Squares2X2Icon, StarIcon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useState } from "react";
 import styles from "../styles/Component/HeaderResponsive.module.scss";
 import anim from "../styles/utils/anim.module.scss"
 import { LogoutService } from "../service/User/Account.service";
 import { useRouter } from "next/router";
+import DarkLight from "./layouts/Btn/DarkLight";
+import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
+import { useRef } from "react";
+import { GetRandomBookService } from "../service/Book/BookService";
+import MainSearchBar from "./MainSearchBar";
+import ResultSearchBar from "./SearchBar/ResultSearchBar";
+import { SearchBarService } from "../service/Search/SearchService";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import { OpenAllService, openAll } from "../service/Notifications/NotificationsService";
+import { selectTheme } from "../store/slices/themeSlice";
 
 const HeaderResponsive = () => {
-    const [open, setOpen] = useState(false);
-    const [close, setClose] = useState(false);
-    const [closeOgla, setCloseOgla] = useState("not");
-    const [openOgla, setOpenOgla] = useState(true);
-    const [openAuthor, setOpenAuthor] = useState(false);
-    const [closeAuthor, setCloseAuthor] = useState("not");
-    const [animMouseUp, setAnimMouseUp] = useState("");
-    const [query, setQuery] = useState("");
+    const [openMenu, setOpenMenu] = useState(false);
+    const [query, setQuery] = useState('');
     const { data: session } = useSession();
-
     const router = useRouter()
+    const menuRef = useRef();
+    const [searchValue, setSearchValue] = useState('');
+    const [data, setData] = useState();
+    const dispatch = useDispatch()
+    const Notifs = useSelector(selectNotifs)
+    const [isOpen, setIsOpen] = useState(false);
+    const [nbNotifs, setNbNotifs] = useState(0);
+    const theme = useSelector(selectTheme);
+
+    useEffect(() => {
+        var nb = 0;
+        Notifs.forEach((elem) => {
+            if (elem.open === false) {
+                setIsOpen(true);
+                nb++;
+            }
+        })
+        if (nb === 0)
+            setIsOpen(false);
+        setNbNotifs(nb);
+    }, [Notifs])
+
+    useEffect(() => {
+        search();
+    }, [query]);
+
+    useEffect(() => {
+        setQuery('');
+        setSearchValue('');
+    }, [router])
 
     function SubmitForm(e) {
         e.preventDefault();
@@ -35,85 +69,114 @@ const HeaderResponsive = () => {
     }
 
     function OpenMenu() {
-        setOpen(true);
-        setClose(false);
+        menuRef.current.className = styles.OpenContent
+        setOpenMenu(true);
     }
 
     async function CloseMenu() {
-        setClose(true);
-        setCloseOgla(true);
-        setCloseOgla("not");
-        setCloseAuthor("not");
-        setTimeout(() => {
-            setOpen(false);
-        }, 150);
-    }
-
-    async function StateMenuOgla() {
-        if (openOgla) {
-            setOpenOgla(false);
-            setCloseOgla("");
-        }
-        else {
-            setOpenOgla(true);
-        }
-    }
-
-    function StateMenuAuthor() {
-        if (openAuthor) {
-            setOpenAuthor(false);
-            setCloseAuthor("");
-        }
-        else
-            setOpenAuthor(true);
-    }
-
-    useEffect(() => {
-        console.log(session?.user);
-    }, [session])
-
-    function handleMouseUp() {
-        setAnimMouseUp("animMouseUp")
-        setTimeout(() => {
-            setAnimMouseUp("")
-        }, 500)
+        menuRef.current.className = styles.close
+        setOpenMenu(false);
     }
 
     function NavProfil() {
         if (session)
             router.push('/profil')
         else
-            router.push({pathname: "/auth", query: "login"})
+            router.push({ pathname: "/auth", query: "login" })
+    }
+
+    function getRandom() {
+        GetRandomBookService()
+            .then((res) => {
+                console.log(res);
+                router.push({
+                    pathname: '/livre/' + res._id,
+                    query: res.slug
+                })
+            })
+    }
+
+    const search = () => {
+        if (query.length > 0) {
+            SearchBarService(query)
+                .then((res) => {
+                    setData(res);
+                })
+                .catch((err) => console.log('err'));
+        }
     }
 
     return (
-        <div className={styles.HeaderResponsive}>
+        <div className={theme? styles.HeaderResponsive : styles.darkHeaderResponsive}>
             {
-                !open &&
+                !openMenu &&
                 <div className={styles.HeaderResponsiveClosed}>
                     <h1 onClick={() => router.push("/")}> OGLA </h1>
-                    <form className={styles.HeaderResponsiveOpenForm} onSubmit={(e) => SubmitForm(e)}>
+                    <div className={styles.containerSearchBarHeader}>
+                        <MainSearchBar
+                            data={(value) => setData(value)}
+                            query={(e) => {
+                                setQuery(e)
+                            }}
+                            search={query}
+                            submit={() => {
+                                setSearchValue('');
+                            }}
+                            height={35}
+                            width={100} />
+
+                        {
+                            query !== '' && data &&
+                            <div className={styles.containerResultSearchBar}>
+                                <ResultSearchBar
+                                    searchBtn={() => setSearchValue('')}
+                                    destroy={() => {
+                                        setSearchValue('')
+                                    }}
+                                    search={searchValue}
+                                    query={query}
+                                    data={data}
+                                />
+                                <div className={styles.containerBtnSearch}>
+                                    <p
+                                        onClick={() => router.push({
+                                            pathname: "/rechercher",
+                                            query: { search: query }
+                                        })}
+                                        className={styles.searchP}>Chercher <MagnifyingGlassIcon /></p>
+                                    <p onClick={() => {
+                                        setSearchValue('')
+                                        setQuery('')
+                                    }}>Fermer <XMarkIcon/> </p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    {/* <form className={styles.HeaderResponsiveOpenForm} onSubmit={(e) => SubmitForm(e)}>
                         <input
                             autoComplete={'off'}
                             onChange={(e) => setQuery(e.target.value)}
                             type="text"
                             name={"searchbar"}
-                            placeholder="Cherchez un livre"
+                            placeholder="Chercher un livre"
                         />
-                    </form>
+                    </form> */}
                     <Bars3Icon onClick={OpenMenu} />
                 </div>
             }
-
             {
-                open && !close &&
-                <div className={styles.HeaderResponsiveOpen + " " + anim.fadeIn}>
-                    <div className={styles.HeaderResponsiveOpenContent + " " + anim.slideInRight}>
-                        <div  className={styles.otherDiv}>
+                <div className={styles.HeaderResponsiveOpen} >
+                    <div className={styles.close} ref={menuRef}>
+                        <div className={styles.otherDiv}>
                             <div className={styles.HeaderTop}>
+                                <img src={"/assets/diapo/book.png"} alt="Logo" />
                                 <h1 onClick={() => router.push("/")}> OGLA </h1>
                                 <XMarkIcon onClick={CloseMenu} />
                             </div>
+                            <div className={styles.utilsBtn}>
+                                <HeadPhoneBtn />
+                                <DarkLight />
+                            </div>
                             <form className={styles.HeaderResponsiveOpenForm} onSubmit={(e) => SubmitForm(e)}>
                                 <input
                                     autoComplete={'off'}
@@ -123,221 +186,106 @@ const HeaderResponsive = () => {
                                     placeholder="Chercher un livre"
                                 />
                             </form>
-                            <div className={styles.HeaderResponsiveTitle}>
-                                <div className={styles.HeaderResponsiveOpenSubject} onClick={StateMenuOgla}>
+                            <div className={styles.menu}>
+                                <div className={styles.HeaderResponsiveTitle}>
                                     <p> Ogla </p>
-                                    <ChevronDownIcon className={openOgla ? styles.HeaderResponsiveOpenActive : styles.HeaderResponsiveOpenInactive} />
                                 </div>
-                            </div>
-                            <div className={openOgla ? styles.HeaderResponsiveOpenMenu + ' ' + anim.scaleUpVerticalTop : `${styles["HeaderResponsiveOpenMenu" + closeOgla]} ${anim["scaleDownVerticalTop"]}`}>
-                                <ul>
-                                    <li onClick={() => router.push("/")} > <HomeIcon/> Accueil </li>
-                                    <li onClick={() => router.push("/Category")}> <Bars3CenterLeftIcon/> Catégories </li>
-                                    <li onClick={NavProfil}> <UserIcon/> Profil </li>
-                                    <li onClick={() => router.push("/profil")}> <StarIcon/> Favoris </li>
-                                    <li onClick={() => router.push("/profil")}> <ArrowPathIcon/> Aléatoire </li>
-                                </ul>
-                                {
-                                    session &&
+                                <div className={styles.HeaderResponsiveOpenMenu}>
                                     <ul>
-                                        <li onClick={() => router.push("/devenir-auteur")}> <BellAlertIcon/> Notifications </li>
+                                        <li onClick={() => router.push("/")} className={router.pathname === '/' && styles.active}> <HomeIcon /> Accueil </li>
+                                        <li onClick={() => router.push("/cat")} className={router.pathname === '/cat' && styles.active}> <Bars3CenterLeftIcon /> Catégories </li>
+                                        <li onClick={NavProfil} className={router.pathname === '/profil' && styles.active}> <UserIcon /> Profil </li>
+                                        <li onClick={() => router.push("/profil")}> <StarIcon /> Favoris </li>
+                                        <li onClick={(getRandom)}> <ArrowPathIcon /> Aléatoire </li>
                                     </ul>
+                                    {
+                                        session &&
+                                        <ul>
+                                            <li onClick={() => {
+                                                if (Notifs.lenght > 0) {
+                                                    OpenAllService(Notifs[0].date_creation, session.user.id)
+                                                }
+                                                dispatch(setActiveModalNotif(true));
+                                                dispatch(setOpen());
+                                            }}> <BellIcon /> Notifications {isOpen && <span> {nbNotifs} </span>} </li>
+                                        </ul>
+                                    }
+                                </div>
+
+                                <div className={styles.trait}> </div>
+
+                                <div className={styles.HeaderResponsiveTitle}>
+                                    <p> Author </p>
+                                </div>
+                                {
+                                    <div className={styles.HeaderResponsiveOpenMenu} style={{ marginBottom: "0px" }}>
+                                        {
+                                            !session?.user?.is_author &&
+                                            <ul>
+                                                <li onClick={() => router.push("/devenir-auteur")}> <PencilIcon /> Devenir autheur </li>
+                                            </ul>
+                                        }
+                                        {
+                                            session && session?.user?.is_author &&
+                                            <ul>
+                                                <li onClick={() => router.push('/dashboard')} className={router.pathname === '/dashboard' && styles.active}> <Squares2X2Icon /> Dashboard </li>
+                                                <li onClick={() => router.push('/dashboard/books')}> <BookOpenIcon /> Mes livres </li>
+                                                <li onClick={() => router.push('/dashboard/nouveau-livre')}> <PencilIcon /> Écrire </li>
+                                            </ul>
+                                        }
+
+                                    </div>
                                 }
                             </div>
-
-                            <div className={styles.HeaderResponsiveTitle}>
-                                <div className={styles.HeaderResponsiveOpenSubject} onClick={StateMenuAuthor}>
-                                    <p> Author </p>
-                                    <ChevronDownIcon className={openAuthor ? styles.HeaderResponsiveOpenActive : styles.HeaderResponsiveOpenInactive} />
-                                </div>
-                            </div>
-
-                            {
-                                <div className={openAuthor ? styles.HeaderResponsiveOpenMenu + ' ' + anim.scaleUpVerticalTop : `${styles["HeaderResponsiveOpenMenu" + closeAuthor]} ${anim["scaleDownVerticalTop"]}`}>
-                                    {
-                                        !session?.user?.is_author &&
-                                        <ul>
-                                            <li onClick={() => router.push("/devenir-auteur")}> <PencilIcon/> Devenir autheur </li>
-                                        </ul>
-                                    }
-                                    {
-                                        session && session?.user?.is_author &&
-                                        <ul>
-                                            <li onClick={() => router.push('/dashboard')}> <Squares2X2Icon/> Dashboard </li>
-                                            <li onClick={() => router.push('/dashboard/books')}> <BookOpenIcon/> Mes livres </li>
-                                            <li onClick={() => router.push('/dashboard/nouveau-livre')}> <PencilIcon/> Ecrire </li>
-                                        </ul>
-                                    }
-
-                                </div>
-                            }
-
                         </div>
-
                         {
                             session &&
                             <div className={styles.HeaderResponsiveOpenAccount}>
-                                <div className={styles.HeaderBottomLeft}>                                
-                                    <div className={styles.HeaderResponsiveOpenAccountImg} onClick={() => router.push('/profil')}>
-                                        <img src={session?.user.image} alt="Photo de profil" />
+                                <div className={styles.trait}> </div>
+
+                                <div className={styles.footer}>
+                                    <div className={styles.footerLeft} onClick={() => router.push("/profil")}>
+                                        <img src={session.user.image} alt="Photo de profil" />
+                                        <div className={styles.footerInfos}>
+                                            <h3> {session.user.pseudo} </h3>
+                                            {
+                                                !session.user.is_author &&
+                                                <p> Lecteur </p>
+                                            }
+                                            {
+                                                session.user.is_author &&
+                                                <p> Écrivain </p>
+                                            }
+                                        </div>
                                     </div>
-                                    {
-                                        session?.user.is_author &&
-                                        <div className={styles.testpenAnim}>
-                                            <h2> {session?.user.author.firstName} {session?.user.author.lastName} </h2>
-                                            <div style={{display: "flex"}}>
-                                                <p> @{session?.user.pseudo} </p>
-                                                <PencilIcon />
-                                            </div>
-                                        </div>
-                                    }
+                                    <ArrowLeftOnRectangleIcon
+                                        onClick={() => {
+                                            LogoutService()
+                                                .then(() => signOut()
+                                                    .then(() => router.push('/')))
+                                                .catch(() => signOut()
+                                                    .then(() => router.push('/')))
+                                        }}
+                                        title={'Se déconnecter'} />
                                 </div>
-                                <div>
-                                    {
-                                        !session?.user.is_author &&
-                                        <div>
-                                            <h2> @{session?.user.pseudo} </h2>
-                                            <p> Lecteur - Lectrice </p>
-                                        </div>
-                                    }
-                                </div>
-                                <ArrowLeftOnRectangleIcon onClick={() => {
-                                    LogoutService()
-                                        .then(() => signOut()
-                                            .then(() => router.push('/')))
-                                        .catch(() => signOut()
-                                            .then(() => router.push('/')))
-                                }}
-                                title={'Se déconnecter'} />
                             </div>
                         }
                         {
                             !session &&
                             <div className={styles.HeaderResponsiveOpenAccountNoConnect}>
-                                <div className={styles.HeaderSeConnecter} onClick={() => router.push({pathname: "/auth", query: "login"})}>
+                                <div className={styles.trait}> </div>
+                                <div className={styles.HeaderSeConnecter} onClick={() => router.push({ pathname: "/auth", query: "login" })}>
                                     <h3> Se connecter  </h3>
                                     <KeyIcon />
                                 </div>
-                                <div className={styles.HeaderSinscrire /* + " " + `${anim[animMouseUp  + "1"]}`*/} onClick={() => router.push({pathname: "/auth", query: "login"})} onMouseUp={handleMouseUp} >
+                                <div className={styles.HeaderSinscrire} onClick={() => router.push({ pathname: "/auth", query: "register" })}  >
                                     <h3> S'inscrire   </h3>
                                     <AcademicCapIcon />
                                 </div>
-                            
                             </div>
                         }
-
                     </div>
                     <div className={styles.HeaderVide} onClick={CloseMenu}>
-                    </div>
-                </div>
-            }
-
-            {
-                open && close &&
-                <div className={styles.HeaderResponsiveOpen + " " + anim.FadeOut}>
-                    <div className={styles.HeaderResponsiveOpenContent + " " + anim.slideInLeft}>
-                    <div  className={styles.otherDiv}>
-                            <div className={styles.HeaderTop}>
-                                <h1> OGLA </h1>
-                                <XMarkIcon onClick={CloseMenu} />
-                            </div>
-                            <form className={styles.HeaderResponsiveOpenForm} onSubmit={(e) => SubmitForm(e)}>
-                                <input
-                                    autoComplete={'off'}
-                                    onChange={(e) => setQuery(e.target.value)}
-                                    type="text"
-                                    name={"searchbar"}
-                                    placeholder="Chercher un livre"
-                                />
-                            </form>
-                            <div className={styles.HeaderResponsiveTitle}>
-                                <div className={styles.HeaderResponsiveOpenSubject} onClick={StateMenuOgla}>
-                                    <p> Ogla </p>
-                                    <ChevronDownIcon className={openOgla ? styles.HeaderResponsiveOpenActive : styles.HeaderResponsiveOpenInactive} />
-                                </div>
-                            </div>
-                            <div className={openOgla ? styles.HeaderResponsiveOpenMenu + ' ' + anim.scaleUpVerticalTop : `${styles["HeaderResponsiveOpenMenu" + closeOgla]} ${anim["scaleDownVerticalTop"]}`}>
-                                <ul>
-                                    <li> Accueil </li>
-                                    <li> Catégories </li>
-                                    <li> Profil </li>
-                                    <li> Favoris </li>
-                                    <li> Aléatoire </li>
-                                </ul>
-                                {
-                                    session &&
-                                    <ul>
-                                        <li> Notifications </li>
-                                    </ul>
-                                }
-                            </div>
-
-                            <div className={styles.HeaderResponsiveTitle}>
-                                <div className={styles.HeaderResponsiveOpenSubject} onClick={StateMenuAuthor}>
-                                    <p> Author </p>
-                                    <ChevronDownIcon className={openAuthor ? styles.HeaderResponsiveOpenActive : styles.HeaderResponsiveOpenInactive} />
-                                </div>
-                            </div>
-
-                            {
-                                <div className={openAuthor ? styles.HeaderResponsiveOpenMenu + ' ' + anim.scaleUpVerticalTop : `${styles["HeaderResponsiveOpenMenu" + closeAuthor]} ${anim["scaleDownVerticalTop"]}`}>
-                                    {
-                                        !session?.user?.is_author &&
-                                        <ul>
-                                            <li> Devenir autheur </li>
-                                        </ul>
-                                    }
-                                    {
-                                        session && session?.user?.is_author &&
-                                        <ul>
-                                            <li> Dashboard </li>
-                                            <li> Mes livres </li>
-                                            <li> Ecrire </li>
-                                        </ul>
-                                    }
-
-                                </div>
-                            }
-
-                        </div>
-
-                        {
-                            session &&
-                            <div className={styles.HeaderResponsiveOpenAccount}>
-                                <div className={styles.HeaderBottomLeft}>                                
-                                    <div className={styles.HeaderResponsiveOpenAccountImg}>
-                                        <img src={session?.user.image} alt="Photo de profil" />
-                                    </div>
-                                    {
-                                        session?.user.is_author &&
-                                        <div className={styles.testpenAnim}>
-                                            <h2> {session?.user.author.firstName} {session?.user.author.lastName} </h2>
-                                            <div style={{display: "flex"}}>
-                                                <p> @{session?.user.pseudo} </p>
-                                                <PencilIcon />
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        !session?.user.is_author &&
-                                        <div>
-                                            <h2> @{session?.user.pseudo} </h2>
-                                            <p> Lecteur - Lectrice </p>
-                                        </div>
-                                    }
-                                </div>
-                                <ArrowLeftOnRectangleIcon />
-                            </div>
-                        }
-                        {
-                            !session &&
-                            <div className={styles.HeaderResponsiveOpenAccountNoConnect}>
-                                <h3> Se connecter </h3>
-                                <h3> S'inscrire </h3>
-                            </div>
-                        }
                     </div>
                 </div>
             }

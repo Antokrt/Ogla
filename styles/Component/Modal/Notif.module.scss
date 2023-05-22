@@ -2,6 +2,7 @@
 
 .container {
   position: relative;
+
   svg {
     &:hover {
       color: #9844AD;
@@ -25,10 +26,6 @@
 
 .itemNotif,
 .itemNotifOpen {
-  // &:hover {
-  //   background-color: rgb(224, 224, 224);
-  //   transition: 0.3s;
-  // }
 
   position: relative;
   cursor: pointer;
@@ -78,7 +75,9 @@
       &::first-letter {
         text-transform: uppercase;
       }
-      font-family: 'Montserrat', sans-serif;
+
+      font-family: 'Montserrat',
+      sans-serif;
       font-size: 12px;
       word-break: break-word;
       width: 300px;
@@ -119,4 +118,22 @@
 
 .notRead {
   font-weight: bold;
+}
+
+@media screen and (max-width: 450px) {
+
+  .itemNotif,
+  .itemNotifOpen {
+    h6 {
+      width: 200px !important;
+    }
+
+    p {
+      width: 200px !important;
+    }
+  }
+
+  .options {
+    right: 5px !important;
+  }
 }
