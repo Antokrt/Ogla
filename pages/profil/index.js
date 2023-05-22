@@ -2,37 +2,39 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    BellAlertIcon, CheckBadgeIcon, MusicalNoteIcon,
+    BellAlertIcon, CheckBadgeIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
 } from "@heroicons/react/24/outline";
-import {useRef, useState} from "react";
+import { useRef, useState } from "react";
 import {
     ChartBarIcon, CheckCircleIcon, HeartIcon, XCircleIcon
 } from "@heroicons/react/20/solid";
-import {Capitalize} from "../../utils/String";
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import {GetPrivateProfilApi} from "../api/user";
-import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
+import { Capitalize } from "../../utils/String";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { GetPrivateProfilApi } from "../api/user";
+import { DeleteUserProfilPictureService, UpdateUserProfilPictureService } from "../../service/User/Profil.service";
 import axios from "axios";
-import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg, renderPrediction} from "../../utils/ImageUtils";
-import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {ChangePasswordService} from "../../service/User/Password.service";
-import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {BookmarkIcon} from "@heroicons/react/24/solid";
-import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
+import { ReloadSession } from "../../utils/ReloadSession";
+import { GetDefaultUserImg, renderPrediction } from "../../utils/ImageUtils";
+import { DeleteAccountService, VerifyEmailService } from "../../service/User/Account.service";
+import { FormatDateNb, FormatDateStr } from "../../utils/Date";
+import { ChangePasswordService } from "../../service/User/Password.service";
+import { DeleteAccountModal } from "../../Component/Modal/DeleteAccountModal";
+import { BookmarkIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { UpdateAuthorDescriptionService, UpdateUserDescriptionService } from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
-import {useDispatch} from "react-redux";
-import {setActiveModalNotif} from "../../store/slices/notifSlice";
-import {LoaderImg} from "../../Component/layouts/Loader";
-import {toastDisplayError} from "../../utils/Toastify";
-import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
-import {instance} from "../../service/config/Interceptor";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
+import { LoaderImg } from "../../Component/layouts/Loader";
+import { toastDisplayError } from "../../utils/Toastify";
+import { UpdateSettings, UpdateSettingsService } from "../../service/User/Settings.service";
+import { instance } from "../../service/config/Interceptor";
+import ScreenSize from "../../utils/Size";
+import { openAll } from "../../service/Notifications/NotificationsService";
+import { useEffect } from "react";
 
-export async function getServerSideProps({req}) {
-
+export async function getServerSideProps({ req }) {
     const data = await GetPrivateProfilApi(req);
     return {
         props: {
@@ -42,27 +44,20 @@ export async function getServerSideProps({req}) {
     }
 }
 
-const Profil = ({profilData, err}) => {
+const Profil = ({ profilData, err }) => {
     const router = useRouter();
-    const [isCreator, setIsCreator] = useState(true);
     const [activeLink, setActiveLink] = useState('profil');
-    const [hasChanged, setHasChanged] = useState(false);
-    const [wantToDelete, setWantToDelete] = useState(false);
     const [profil, setProfil] = useState(profilData);
-    const [newProfil, setNewProfil] = useState(profil);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session, status} = useSession();
-    const [password, setPassword] = useState('');
+    const { data: session, status } = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
-    const [wrongPasswordErr, setWrongPasswordErr] = useState(false);
     const [loadingImg, setLoadingImg] = useState(false);
     const [errMsgModifyPassword, setErrMsgModifyPassword] = useState({
         msg: '',
         show: false
     })
-    const [errMsgPassword, setErrMsgPassword] = useState('Mot de passe incorect');
     const [localImg, setLocalImg] = useState(null);
     const [file, setFile] = useState(false);
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
@@ -70,6 +65,22 @@ const Profil = ({profilData, err}) => {
     const [musicState, setMusicState] = useState(profil?.settings?.music);
     const imgRef = useRef();
     const dispatch = useDispatch()
+    const [width, height] = ScreenSize();
+
+    const Notifs = useSelector(selectNotifs)
+    const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        var nb = 0;
+        Notifs.forEach((elem) => {
+            if (elem.open === false) {
+                setIsOpen(true);
+                nb++;
+            }
+        })
+        if (nb === 0)
+            setIsOpen(false);
+    }, [Notifs])
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -84,12 +95,12 @@ const Profil = ({profilData, err}) => {
 
     const updateSettingsOfSession = () => {
         return new Promise((resolve, reject) => {
-             instance.get('http://localhost:3000/api/auth/session?new-settings')
-                 .then(() => resolve())
-                 .catch((err) => {
-                     console.log(err)
-                     reject()
-                 })
+            instance.get('http://localhost:3000/api/auth/session?new-settings')
+                .then(() => resolve())
+                .catch((err) => {
+                    console.log(err)
+                    reject()
+                })
         })
     }
 
@@ -200,7 +211,7 @@ const Profil = ({profilData, err}) => {
                     {
                         loadingImg &&
                         <div className={styles.loaderImg}>
-                            <LoaderImg/>
+                            <LoaderImg />
                         </div>
                     }
 
@@ -209,15 +220,15 @@ const Profil = ({profilData, err}) => {
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Profil Pic'}/>
+                                    src={localImg} alt={'Profil Pic'} />
                             </>
                             :
                             <img
                                 onClick={() => imgClick()}
-                                src={profil.img} alt={'Profil Pic'}/>
+                                src={profil.img} alt={'Profil Pic'} />
                     }
                     <input
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                         type={'file'}
                         ref={imgRef}
                         accept={"image/png , image/jpeg , image/jpg"}
@@ -230,60 +241,64 @@ const Profil = ({profilData, err}) => {
                             handleFileSelect(e);
                         }}
                     />
-                    <div className={styles.labelImg}>
-                        <h5>Avatar</h5>
-                        <p>.png .jpg jpeg </p>
+                    {
 
-                        <div className={styles.imgCheck}>
-                            {
-                                localImg && file &&
-                                <>
-                                    <CheckCircleIcon
-                                        onClick={() => updatePic()}
-                                        className={styles.check}/>
-                                    <XCircleIcon
-                                        onClick={() => {
-                                            setLocalImg(null);
-                                            setFile(null);
-                                        }
-                                        }
-                                        className={styles.off}/>
-                                </>
+                        width > 800 &&
+                        <div className={styles.labelImg}>
+                            <h5>Avatar</h5>
+                            <p>.png .jpg jpeg </p>
 
-                            }
+                            <div className={styles.imgCheck}>
+                                {
+                                    localImg && file &&
+                                    <>
+                                        <CheckCircleIcon
+                                            onClick={() => updatePic()}
+                                            className={styles.check} />
+                                        <XCircleIcon
+                                            onClick={() => {
+                                                setLocalImg(null);
+                                                setFile(null);
+                                            }
+                                            }
+                                            className={styles.off} />
+                                    </>
 
+                                }
+
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <div className={styles.form}>
                     <label>Pseudo</label>
-                    <input disabled={true} type={"text"} value={profilData.pseudo}/>
+                    <input disabled={true} type={"text"} value={profilData.pseudo} />
                     <label className={styles.emailLabel}>Email <span>{profilData.verified ?
-                        <CheckBadgeIcon/> :
+                        <CheckBadgeIcon /> :
                         <span className={styles.verify} onClick={() => {
                             if (!profilData.verified) {
                                 verifyEmail();
                             }
                         }}>Vérifier maintenant</span>}</span></label>
-                    <input disabled={true} type={"text"} value={profilData.email}/>
+                    <input disabled={true} type={"text"} value={profilData.email} />
                     {
                         session.user.provider === 'ogla' &&
                         <>
                             <label>Modifier votre mot de passe</label>
                             <input value={oldPassword}
-                                   onChange={(e) => setOldPassword(e.target.value)}
-                                   type={"password"} placeholder={'Ancien mot de passe'}/>
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                type={"password"} placeholder={'Ancien mot de passe'} />
                             <input value={newPassword}
-                                   onChange={(e) => setNewPassowrd(e.target.value)}
-                                   type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                onChange={(e) => setNewPassowrd(e.target.value)}
+                                type={"password"} placeholder={'Nouveau mot de passe'} />
                             {
                                 errMsgModifyPassword.show &&
                                 <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
                             }
 
                             <button onClick={(e) => changePassword(e)}
-                                    className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
                             </button>
                         </>
 
@@ -291,6 +306,9 @@ const Profil = ({profilData, err}) => {
 
 
                 </div>
+                {/* <div className={styles.imgContainer}>
+                    <img src={'/assets/diapo/WalkRead.png'}/>
+                </div> */}
             </div>
 
         )
@@ -303,43 +321,77 @@ const Profil = ({profilData, err}) => {
 
                     <h5 className={styles.title}>Devenu écrivain
                         le <span>{FormatDateStr(profilData.register_date)}</span></h5>
-
-
                     <div className={styles.formWriter}>
-                        <div className={styles.hWriter}>
-                            <img src={'/assets/jim/cool2.png'}/>
-                            <h5>Quelques statistiques</h5>
+                        {
+                            width > 1150 &&
+                            <div className={styles.hWriter}>
+                                <img src={profil.img} />
+                                <h5>Quelques statistiques</h5>
+                            </div>
+                        }
+                        {
+                            width > 1150 &&
+                            <div className={styles.headerWriter}>
+                                <div className={styles.itemWriter}>
+                                    <p>{profil?.author?.stats?.nbBooks}</p>
+                                    <h6>livre(s)</h6>
 
-                        </div>
-
-                        <div className={styles.headerWriter}>
-                            <div className={styles.itemWriter}>
-                                <p>{profil?.author?.stats?.nbBooks}</p>
-                                <h6>livre(s)</h6>
+                                </div>
+                                <div className={styles.itemWriter}>
+                                    <p>{profil?.author?.stats?.nbChapters}</p>
+                                    <h6>chapitre(s)</h6>
+                                </div>
+                                <div className={styles.itemWriter}>
+                                    <p>{profil?.author?.stats?.totalLikes}</p>
+                                    <h6>like(s) reçus</h6>
+                                </div>
 
                             </div>
-                            <div className={styles.itemWriter}>
-                                <p>{profil?.author?.stats?.nbChapters}</p>
-                                <h6>chapitre(s)</h6>
+                        }
+                        {
+                            width <= 1150 &&
+                            <div className={styles.phoneHeaderAuthor}>
+                                <img src={profil.img} />
+                                <div className={styles.phoneHeaderStats}>
+                                    <div className={styles.phonehWriter}>
+                                        <h5>Quelques statistiques</h5>
+                                    </div>
+                                    <div className={styles.headerWriter}>
+                                        <div className={styles.itemWriter}>
+                                            <p>{profil?.author?.stats?.nbBooks}</p>
+                                            <h6>livre(s)</h6>
+
+                                        </div>
+                                        <div className={styles.itemWriter}>
+                                            <p>{profil?.author?.stats?.nbChapters}</p>
+                                            <h6>chapitre(s)</h6>
+                                        </div>
+                                        <div className={styles.itemWriter}>
+                                            <p>{profil?.author?.stats?.totalLikes}</p>
+                                            <h6>like(s) reçus</h6>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                            <div className={styles.itemWriter}>
-                                <p>{profil?.author?.stats?.totalLikes}</p>
-                                <h6>like(s) reçus</h6>
+                        }
+
+                        <div className={styles.stats}>
+                            <div className={styles.writerItem}>
+                                <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
+                                <p className={styles.value}>La quete du maitre <span>21201</span></p>
                             </div>
 
+                            <div className={styles.writerItem}>
+                                <p className={styles.label}>Chapitre le plus liké <ChartBarIcon /></p>
+                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
+                            </div>
+
+                            <div className={styles.writerItem}>
+                                <p className={styles.label}>Chapitre le plus vue <EyeIcon /> </p>
+                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
+                            </div>
                         </div>
-
-
-                        <div className={styles.writerItem}>
-                            <p className={styles.label}>Livre le plus liké <HeartIcon/></p>
-                            <p className={styles.value}>La quete du maitre <span>21201</span></p>
-                        </div>
-
-                        <div className={styles.writerItem}>
-                            <p className={styles.label}>Chapitre le plus liké <ChartBarIcon/></p>
-                            <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                        </div>
-
                     </div>
                 </div>
                 <div className={styles.rContainerWriter}>
@@ -352,7 +404,7 @@ const Profil = ({profilData, err}) => {
                                     updateDescription();
                                 }
                             }}
-                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
                             </button>
                         </div>
 
@@ -362,12 +414,12 @@ const Profil = ({profilData, err}) => {
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "}/>
+                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
                                 :
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    value={newPresentation}/>
+                                    value={newPresentation} />
                         }
 
 
@@ -382,19 +434,18 @@ const Profil = ({profilData, err}) => {
 
                         <div className={styles.socialForm}>
                             <div className={styles.socialLinks}>
-                                <ProfilAuthor type={1} content={profilData?.author.social.instagram}/>
-                                <ProfilAuthor type={2} content={profilData?.author.social.twitter}/>
-                                <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
+                                <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
+                                <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
+                                <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
                             </div>
                             <div className={styles.socialImg}>
-                                <img src={"/assets/other/manReading2.png"} alt="author reading"/>
+                                <img src={"/assets/other/manReading2.png"} alt="author reading" />
                             </div>
                         </div>
                     </div>
 
 
                 </div>
-
             </div>
         )
     }
@@ -402,10 +453,10 @@ const Profil = ({profilData, err}) => {
     const becameWriter = () => {
         return (
             <div className={styles.becameWriter}>
-                <img src={'/assets/jim/smile8.png'}/>
+                <img src={'/assets/jim/smile8.png'} />
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
-                    ! <br/>
+                    ! <br />
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d'être entendue"</p>
 
@@ -417,21 +468,29 @@ const Profil = ({profilData, err}) => {
     const settingComponent = () => {
         return (
             <div className={styles.settings}>
-                <h5>Réglages</h5>
+                {
+                    width > 800 &&
+                    <h5>Réglages</h5>
+                }
                 <div className={styles.itemSetting}>
                     <div className={styles.fSetting}>
-                        <BellAlertIcon/>
+                        <BellAlertIcon />
                         <div>
                             <p className={styles.labelSetting}>Notifications </p>
-                            <p className={styles.valueSetting}>Activer les notifications en temps réelle </p>
+                            {
+                                width > 420 &&
+                                <p className={styles.valueSetting}>Activer les notifications en temps réelle </p>
+                            }
+                            {
+                                width <= 420 &&
+                                <p className={styles.valueSetting}>Notifications en temps réelle </p>
+                            }
                         </div>
-
-
                     </div>
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
-                         onClick={() => setNotifState(!notifState)}>
-                        <input checked={notifState} type="checkbox" id="toggle1"/>
+                        onClick={() => setNotifState(!notifState)}>
+                        <input checked={notifState} type="checkbox" id="toggle1" />
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -442,7 +501,7 @@ const Profil = ({profilData, err}) => {
                 }}>
                     <div className={styles.fSetting}>
 
-                        <MusicalNoteIcon/>
+                        <MusicalNoteIcon />
                         <div>
                             <p className={styles.labelSetting}>Musique </p>
                             <p className={styles.valueSetting}>Activer la musique</p>
@@ -450,25 +509,21 @@ const Profil = ({profilData, err}) => {
                     </div>
 
                     <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle}
-                         onClick={() => {
-                             setMusicState(!musicState)
-                         }}>
-                        <input checked={musicState} type="checkbox" id="toggle2"/>
+                        onClick={() => {
+                            setMusicState(!musicState)
+                        }}>
+                        <input checked={musicState} type="checkbox" id="toggle2" />
                         <label htmlFor="toggle2"></label>
                     </div>
-
-
                 </div>
-
                 <div className={styles.modifySettingsBtn}>
                     <button
                         onClick={() => updateSettings()}
                         className={musicState !== profil?.settings?.music || notifState !== profil?.settings?.notif ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
                     </button>
                 </div>
-
                 <button className={styles.deleteAccount}
-                        onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                    onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
                 </button>
             </div>
         )
@@ -493,42 +548,119 @@ const Profil = ({profilData, err}) => {
         }
     }
 
+    const phoneMenu = () => {
+        return (
+            <div className={styles.menuContainer}>
+                <div className={styles.containerMain}>
+                    <div className={activeLink === 'profil' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('profil')}>
+                        <UserIcon />
+                        <p> Profil </p>
+                    </div>
+                    <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('writer')}>
+                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin" class="jam jam-pen">
+                            <path d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z" />
+                        </svg>
+                        <p> Ecrivain </p>
+                    </div>
+                    <div className={activeLink === 'settings' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('settings')}>
+                        <WrenchIcon />
+                        <p> Réglages </p>
+                    </div>
+                    <div className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => {
+                        if (Notifs.lenght > 0) {
+                            openAll(Notifs[0].date_creation, session.user.id)
+                        }
+                        dispatch(setActiveModalNotif(true));
+                        dispatch(setOpen());
+                    }}>
+                        <BellAlertIcon />
+                        <p> Notifications </p>
+                        {
+                            isOpen &&
+                            <div className={styles.haveNotif}></div>
+                        }
+                    </div>
+                    {
+                        width > 380 &&
+                        <div className={styles.item}>
+                            {
+                                session && session.user.image &&
+                                <>
+                                    <img src={session.user.image} />
+                                    <span className={styles.circle}></span>
+                                </>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        )
+    }
+
     return (
         <>
             {
                 err &&
                 <div>
-                    <Header/>
+                    <Header />
                     <p>Impossible de récupérer le profil</p>
                 </div>
             }
-
             {
                 !err && profilData && session &&
                 <div className={styles.container}>
-                    <Header/>
+                    <Header />
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
-                            <div className={styles.headerTitle}>
-                                <h1>Bonjour {session.user.pseudo} !</h1>
-                                <p>Gérer vos informations personnelles et personnaliser votre profil ici </p>
-                            </div>
-                            <div className={styles.menuLink}>
-                                <button onClick={() => setActiveLink('profil')}
+                            {
+                                width > 800 &&
+                                <div className={styles.headerTitle}>
+                                    <h1>Bonjour {session.user.pseudo} !</h1>
+                                    <p>Gérer vos informations personnelles et personnaliser votre profil ici </p>
+                                </div>
+                            }
+                            {
+                                width > 800 &&
+                                <div className={styles.menuLink}>
+                                    <button onClick={() => setActiveLink('profil')}
                                         className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
-                                </button>
-                                <button onClick={() => setActiveLink('writer')}
+                                    </button>
+                                    <button onClick={() => setActiveLink('writer')}
                                         className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
-                                </button>
-                                <button onClick={() => setActiveLink('settings')}
+                                    </button>
+                                    <button onClick={() => setActiveLink('settings')}
                                         className={activeLink === 'settings' && styles.activeMenu}>Réglages
-                                </button>
-                                <button onClick={() => dispatch(setActiveModalNotif(true))}
-                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>Notifications
-                                </button>
-
-                            </div>
-
+                                    </button>
+                                    <button onClick={() => {
+                                        if (Notifs.lenght > 0) {
+                                            openAll(Notifs[0].date_creation, session.user.id)
+                                        }
+                                        dispatch(setActiveModalNotif(true));
+                                        dispatch(setOpen());
+                                    }}
+                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
+                                        Notifications
+                                        {isOpen && <span></span>}
+                                    </button>
+                                </div>
+                            }
+                            {
+                                width <= 800 &&
+                                <div className={styles.headerTitlePhone}>
+                                    {
+                                        activeLink === "profil" &&
+                                        <h2> Profil </h2>
+                                    }
+                                    {
+                                        activeLink === "writer" &&
+                                        <h2> Ecrivain </h2>
+                                    }
+                                    {
+                                        activeLink === "settings" &&
+                                        <h2> Réglages </h2>
+                                    }
+                                </div>
+                            }
                             <div className={styles.containerItem}>
                                 {
                                     checkSide()
@@ -536,25 +668,18 @@ const Profil = ({profilData, err}) => {
                             </div>
                         </div>
                     </div>
-                    {/* <Footer></Footer> */}
-
+                    {
+                        width <= 800 &&
+                        phoneMenu()
+                    }
                     {
                         openModalDeleteAccount && session &&
-                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)} />
                     }
                 </div>
             }
         </>
-
     )
-
-
 }
 
-
 export default Profil;
-
-
-
-
-

@@ -152,10 +152,6 @@ const Register = ({ login }) => {
                         <h1> Rejoins nous !</h1>
                         <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tout.
                             Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
-                        {/* <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
-                        Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire votre
-                        histoire parce que nous croyons au pouvoir des mots.
-                    </p> */}
                     </div>
                     <div className={styles.form}>
                         <Formik
@@ -220,13 +216,13 @@ const Register = ({ login }) => {
                                         submitErr.show &&
                                         <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
                                     }
+                                    <div className={styles.lastOptions}>
+                                        {loginLink()}
+                                        <p className={styles.registerGoogle} onClick={() => router.push("/")}> S'inscrire avec Google </p>
+                                    </div>
                                     <div className={styles.stepBtnContainer}>
                                         <button type={'submit'} className={styles.stepBtn}> S'inscrire
                                         </button>
-                                    </div>
-                                    <div className={styles.lastOptions}>
-                                        {loginLink()}
-                                        <p onClick={() => router.push("/")}> Accueil </p>
                                     </div>
                                 </Form>
                             )}

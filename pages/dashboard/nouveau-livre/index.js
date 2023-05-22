@@ -2,46 +2,44 @@ import styles from '../../../styles/Pages/Dashboard/New.module.scss';
 import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
-import {useEffect, useRef, useState} from "react";
+import { useRef, useState } from "react";
 import {
     ArrowDownIcon,
-    ArrowLeftCircleIcon,
-    ArrowRightCircleIcon, ArrowRightOnRectangleIcon, ArrowSmallRightIcon,
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
 import Category from "../../../json/category.json";
-import {Capitalize} from "../../../utils/String";
-import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
-import {useRouter} from "next/router";
-import {renderPrediction} from "../../../utils/ImageUtils";
-import {toastDisplayError} from "../../../utils/Toastify";
-import {LoaderImg} from "../../../Component/layouts/Loader";
+import { Capitalize } from "../../../utils/String";
+import { newBook, NewBookService } from "../../../service/Dashboard/BooksAuthorService";
+import { useRouter } from "next/router";
+import { renderPrediction } from "../../../utils/ImageUtils";
+import { toastDisplayError } from "../../../utils/Toastify";
+import { LoaderImg } from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
-import {PhotoIcon} from "@heroicons/react/20/solid";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
+import { PhotoIcon } from "@heroicons/react/20/solid";
 
 
 const New = () => {
-    const [step,setStep] = useState(1);
+    const [step, setStep] = useState(1);
     const [title, setTitle] = useState("");
     const [summary, setSummary] = useState('');
     const [category, setCategory] = useState('Action');
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const [selectedFile, setSelectedFile] = useState(null);
     const fileRef = useRef(null);
-    const [seeErrMsg,setSeeErrMsg] = useState(false);
+    const [seeErrMsg, setSeeErrMsg] = useState(false);
     const [localImg, setLocalImg] = useState(null);
-    const [loadingImg,setLoadingImg] = useState(false);
+    const [loadingImg, setLoadingImg] = useState(false);
     const router = useRouter();
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
 
     const handleFileSelect = (event) => {
-        if(event?.target.files && event.target.files[0]){
+        if (event?.target.files && event.target.files[0]) {
             setLocalImg(URL.createObjectURL(event.target.files[0]));
         }
     }
@@ -51,14 +49,14 @@ const New = () => {
     const sendData = () => {
         const form = {
             title: title,
-            summary:summary,
-            category:category.toLowerCase(),
-            img:'none'
+            summary: summary,
+            category: category.toLowerCase(),
+            img: 'none'
         }
         NewBookService(form, selectedFile)
             .then((res) => {
-                if(res.data._id){
-                    router.push('/dashboard/books/'+ res.data._id);
+                if (res.data._id) {
+                    router.push('/dashboard/books/' + res.data._id);
                 }
             })
             .catch((err) => setSeeErrMsg(true));
@@ -78,88 +76,91 @@ const New = () => {
             summary.length <= 2000 &&
             category !== "";
     }
+
     const btn = () => {
         return (
-                <div className={styles.btnContainer}>
-                    {
-                        step <= 1 &&
-                        <>
-                            {
-                               validFirst()
-                                   ?
-                                <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button> :
-                                    <button className={styles.disabledBtn}>Suivant <ChevronDoubleRightIcon/></button>
+            <div className={styles.btnContainer}>
+                {
+                    step <= 1 &&
+                    <>
+                        {
+                            validFirst()
+                                ?
+                                <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon /></button> :
+                                <button className={styles.disabledBtn}>Suivant <ChevronDoubleRightIcon /></button>
 
-                            }
-                        </>
-                    }
-                    {
-                        step === 2 &&
-                        <>
-                            <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
-                            <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button>
-                        </>
-                    }
-                    {
-                        step >= 3 && !loadingImg &&
-                        <>
-                            <button onClick={() => previous()}><ChevronDoubleLeftIcon/>  Précédent</button>
-                            <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon/></button>
-                        </>
-                    }
-                </div>
+                        }
+                    </>
+                }
+                {
+                    step === 2 &&
+                    <>
+                        <button onClick={() => previous()}><ChevronDoubleLeftIcon /> Précédent</button>
+                        <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon /></button>
+                    </>
+                }
+                {
+                    step >= 3 && !loadingImg &&
+                    <>
+                        <button onClick={() => previous()}><ChevronDoubleLeftIcon />  Précédent</button>
+                        <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon /></button>
+                    </>
+                }
+            </div>
         )
     }
+
     const firstStep = () => {
 
         return (
-<>
-    <h5>Commençons par les informations de base de votre livre ! <br/> Entrez un titre <span>accrocheur</span>, un résumé <span>concis </span>  pour donner un aperçu de l'histoire et choisir une <span> catégorie </span>  pour aider les lecteurs à trouver votre livre dans la bibliothèque <span className={styles.purple}>OGLA</span></h5>
-    <div className={styles.inputContainer}>
-        <label>Titre</label>
-        <input
-            value={title}
-            placeholder={'Entrez le titre de votre livre ici...'}
-            type='text'
-            onChange={(e) => {
-                console.log(title.length)
-                setTitle(e.target.value);
-            }}
-        />
+            <>
+                <h5>Commençons par les informations de base de votre livre ! <br /> Entrez un titre <span>accrocheur</span>, un résumé <span>concis </span>  pour donner un aperçu de l'histoire et choisir une <span> catégorie </span>  pour aider les lecteurs à trouver votre livre dans la bibliothèque <span className={styles.purple}>OGLA</span></h5>
+                <div className={styles.inputContainer}>
+                    <label>Titre</label>
+                    <input
+                        value={title}
+                        placeholder={'Entrez le titre de votre livre ici...'}
+                        type='text'
+                        onChange={(e) => {
+                            console.log(title.length)
+                            setTitle(e.target.value);
+                        }}
+                    />
 
-        <label>Résumé</label>
-        <textarea
-            placeholder={'Donnez un aperçu de l\'histoire en quelques phrases...'}
-            className={scrollbar.scrollbar}
-            value={summary}
-            type='text'
-            onChange={(e) => {
-                setSummary(e.target.value);
-            }}
-        />
-        <label>Catégorie</label>
-        <div className={styles.selectCategory}>
-            <ArrowDownIcon/>
-            <select
-                value={category}
-                name="genres"
-                    onChange={(e) => setCategory(e.target.value)}
-                    id="pet-select" >
-                {
-                    Category.category.map((item) => {
-                        return (
-                            <option
-                                value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
-                        )
-                    })
-                }
-                <option value={"other"}>Autre</option>
-            </select>
-        </div>
-    </div>
-</>
+                    <label>Résumé</label>
+                    <textarea
+                        placeholder={'Donnez un aperçu de l\'histoire en quelques phrases...'}
+                        className={scrollbar.scrollbar}
+                        value={summary}
+                        type='text'
+                        onChange={(e) => {
+                            setSummary(e.target.value);
+                        }}
+                    />
+                    <label>Catégorie</label>
+                    <div className={styles.selectCategory}>
+                        <ArrowDownIcon />
+                        <select
+                            value={category}
+                            name="genres"
+                            onChange={(e) => setCategory(e.target.value)}
+                            id="pet-select" >
+                            {
+                                Category.category.map((item) => {
+                                    return (
+                                        <option
+                                            value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
+                                    )
+                                })
+                            }
+                            <option value={"other"}>Autre</option>
+                        </select>
+                    </div>
+                </div>
+            </>
         )
     }
+
     const secondStep = () => {
         return (
             <>
@@ -175,67 +176,68 @@ const New = () => {
                             {
                                 loadingImg &&
                                 <div className={styles.loaderImg}>
-                                    <LoaderImg/>
+                                    <LoaderImg />
                                 </div>
                             }
                             <img
                                 onClick={openFileUpload}
                                 src={localImg}
-                                 alt={'Selected'}
-                                 width={'200px'}
-                                 className={styles.fileName}/>
+                                alt={'Selected'}
+                                width={'200px'}
+                                className={styles.fileName} />
                         </div>
                     }
                     <div className={styles.addFileContainer}>
                         {
                             loadingImg && !localImg && !selectedFile &&
                             <div className={styles.load}>
-                                <LoaderImg/>
+                                <LoaderImg />
                             </div>
                         }
-                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image <PhotoIcon/></label>
+                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image <PhotoIcon /></label>
 
                     </div>
                     <input
                         id={"file"}
                         name={'file'}
                         className={styles.fileInput}
-                           accept={"image/png , image/jpeg , image/jpg" }
-                           type='file'
-                           ref={fileRef}
-                           onChange={ async (e) => {
-                               setLoadingImg(true);
-                               const file = e.target.files[0];
-                               if(!file?.type.match(imageMimeType)){
-                                   setLoadingImg(false);
-                                   return null;
-                               }
-                               const data = await renderPrediction(file,'book');
-                               if(data){
-                                   handleFileSelect(e);
-                                   setSelectedFile(e.target.files[0]);
-                                   setLoadingImg(false);
-                               }
-                               else {
-                                   setLoadingImg(false);
-                                   toastDisplayError("Image non conforme");
-                               }
-                           }}
+                        accept={"image/png , image/jpeg , image/jpg"}
+                        type='file'
+                        ref={fileRef}
+                        onChange={async (e) => {
+                            setLoadingImg(true);
+                            const file = e.target.files[0];
+                            if (!file?.type.match(imageMimeType)) {
+                                setLoadingImg(false);
+                                return null;
+                            }
+                            const data = await renderPrediction(file, 'book');
+                            if (data) {
+                                handleFileSelect(e);
+                                setSelectedFile(e.target.files[0]);
+                                setLoadingImg(false);
+                            }
+                            else {
+                                setLoadingImg(false);
+                                toastDisplayError("Image non conforme");
+                            }
+                        }}
                     />
                 </div>
 
 
             </>
-            )
+        )
     }
+
     const thirdStep = () => {
         return (
             <div className={styles.finalContainer}>
                 {
                     localImg &&
-                    <img src={localImg}/>
+                    <img src={localImg} />
                 }
-                    <h4>{title}</h4>
+                <h4>{title}</h4>
                 <p>{category}</p>
 
                 <textarea
@@ -250,8 +252,9 @@ const New = () => {
             </div>
         )
     }
+
     const checkStep = () => {
-        switch (step){
+        switch (step) {
             case 1:
                 return firstStep();
 
@@ -264,13 +267,13 @@ const New = () => {
     }
 
     const titleStep = () => {
-        switch (step){
+        switch (step) {
             case 1:
-               return <h3>Création</h3>
+                return <h3>Création</h3>
                 break;
 
             case 2:
-               return <h3>Personnalisation</h3>
+                return <h3>Personnalisation</h3>
                 break;
 
             case 3:
@@ -282,27 +285,24 @@ const New = () => {
         }
     }
 
-
-    return(
+    return (
         <div className={styles.container}>
-
             {
-                width < 700 && orientation === 'portrait' ?
-                    <VerticalPhoneMenu/>
+                width < 700/* && orientation === 'portrait' */?
+                    <VerticalPhoneMenu />
                     :
                     <>
                         {
-                            width  >= 700 && width <= 1050 ?
+                            width >= 700 && width <= 1050 ?
                                 <div className={styles.verticalTabContainer}>
-                                    <VerticalTabMenu/>
+                                    <VerticalTabMenu />
                                 </div>
                                 :
                                 <div className={styles.verticalMenuContainer}>
-                                    <VerticalAuthorMenu/>
+                                    <VerticalAuthorMenu />
                                 </div>
                         }
                     </>
-
             }
 
             <div className={styles.containerData}>
@@ -316,12 +316,12 @@ const New = () => {
                             <p>1</p>
                         </div>
                         <div className={styles.label}>
-                      <h6>Création</h6>
+                            <h6>Création</h6>
                             {
-                                    validFirst()
+                                validFirst()
                                     ?
-                                <p className={styles.completed}>Complétée <CheckBadgeIcon/> </p>
-:
+                                    <p className={styles.completed}>Complétée <CheckBadgeIcon /> </p>
+                                    :
                                     <p>En cours...</p>
                             }
                         </div>
@@ -334,7 +334,7 @@ const New = () => {
                             <h6>Personnalisation </h6>
                             {
                                 step > 2 ?
-                                    <p className={styles.completed}>Complétée <CheckBadgeIcon/> </p>
+                                    <p className={styles.completed}>Complétée <CheckBadgeIcon /> </p>
                                     :
                                     <p>En cours</p>
                             }
@@ -356,10 +356,10 @@ const New = () => {
                 <div className={styles.newContainer}>
                     <div className={styles.titleABook}>
                         {titleStep()}
-                        <img src={'/assets/diapo/book.png'}/>
+                        <img src={'/assets/diapo/book.png'} />
                     </div>
-                    { checkStep() }
-                    { btn() }
+                    {checkStep()}
+                    {btn()}
                     {
                         step === 3 && seeErrMsg &&
                         <p className={styles.errMsg}>Impossible de créer le livre</p>

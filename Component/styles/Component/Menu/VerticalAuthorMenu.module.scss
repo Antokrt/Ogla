@@ -195,7 +195,7 @@
 }
 
 
-@media screen and (max-height: 500px) and (orientation: landscape){
+@media screen and (max-height: 500px) and (max-width: 700px) and (orientation: landscape){
   .container{
     display: none;
   }

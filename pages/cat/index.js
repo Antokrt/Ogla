@@ -29,6 +29,7 @@ import ScreenSize from "../../utils/Size";
 import {ScrollDownUtils} from "../../utils/Scroll";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
+import HeaderResponsive from "../../Component/HeaderResponsive";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
@@ -99,7 +100,14 @@ export default function CatPage({cat, err, bookListData,topData}) {
 
     return (
         <div className={theme? styles.container : styles.darkContainer}>
-            <Header/>
+            {
+                width > 800 &&
+                <Header/>
+            }
+            {
+                width <= 800 &&
+                <HeaderResponsive />
+            }
             <CategoryHeader/>
             {
                 !err && bookListData &&
