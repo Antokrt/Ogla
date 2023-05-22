@@ -19,13 +19,13 @@ const CategoryHeader = () => {
     return (
         <div className={theme? styles.container : styles.darkContainer}>
             {
-                categories.map((item)=>{
+                categories.map((item,index)=>{
                     return  (
                         <div
                      onClick={() => {
                          router.push('/cat/' + item.name.toLowerCase())
                      }}
-                            key={item}
+                            key={item._id}
                             className={Capitalize(cat) === item ? styles.active +" " + styles.book : styles.book}>
                             <img src="/assets/category/icons/drama.svg"/>
                         <p>{item.name}</p>

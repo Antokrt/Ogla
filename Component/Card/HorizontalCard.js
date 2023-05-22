@@ -8,7 +8,7 @@ import {Capitalize} from "../../utils/String";
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../store/slices/themeSlice';
 
-export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters}) => {
+export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters,keys}) => {
     const router = useRouter();
     const theme = useSelector(selectTheme);
 

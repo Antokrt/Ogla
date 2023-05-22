@@ -11,17 +11,20 @@ export const ListCard = ({books,seeMore}) => {
                     books &&
                     books.map((item) => {
                         return(
-                            <HorizontalCard
-                                title={item.title}
-                                category={item.category}
-                                author={item.author_pseudo}
-                                snippet={item.summary}
-                                id={item._id}
-                                nbChapters={item.nbChapters}
-                                like={item.likes}
-                                img={item.img}
-                                slug={item.slug}
-                            />
+                            <div key={item._id}>
+                                <HorizontalCard
+                                    title={item.title}
+                                    category={item.category}
+                                    author={item.author_pseudo}
+                                    snippet={item.summary}
+                                    id={item._id}
+                                    nbChapters={item.nbChapters}
+                                    like={item.likes}
+                                    img={item.img}
+                                    slug={item.slug}
+                                />
+                            </div>
+
                         )
                     })
                 }
