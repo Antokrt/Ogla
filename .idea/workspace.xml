@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Lofi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Card/ListCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/ListCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/DarkLight.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/DarkLight.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/wave-haikei.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/wave-haikei.svg" afterDir="false" />
-    </list>
+    <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -275,7 +264,7 @@
       <workItem from="1684398396168" duration="9586000" />
       <workItem from="1684485707140" duration="16610000" />
       <workItem from="1684747712111" duration="3434000" />
-      <workItem from="1684751200573" duration="6000000" />
+      <workItem from="1684751200573" duration="6390000" />
     </task>
     <servers />
   </component>
