@@ -3,8 +3,8 @@
     content: attr(data-placeholder);
     float: left;
     font-size: 14px;
-    color: rgba(28, 35, 43, 0.87);
-    font-family: "Montserrat", sans-serif;
+    color: rgba(28, 35, 43, 0.96);
+    font-family: "Open sans", sans-serif;
     pointer-events: none;
     height: 0;
 }

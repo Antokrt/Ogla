@@ -29,19 +29,19 @@ object-fit: cover;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-h7{
+.titleBook{
   &:first-letter{
     text-transform: uppercase;
   }
   color: $white;
-  font-family: "Rebond Grotesque",sans-serif;
+  font-family: $primaryFont;
   font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-size: 11px;
 }
     p{
-font-size: 10px;
-      font-family: "Montserrat",sans-serif;
+font-size: 11px;
+      font-family: $primaryFont;
       color: $white;
       span{
         cursor: pointer;
@@ -94,7 +94,8 @@ font-size: 10px;
     p{
       color: white;
       font-size: 11px;
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $primaryFont;
+      letter-spacing: 0.2px;
     }
   }
 }
@@ -105,13 +106,20 @@ display: flex;
   justify-content: center;
   align-items: center;
 
-
   div{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+
+  .b{
     &:active{
       transform: scale(0.8);
       transition: 0.2s;
     }
-    margin-left: 55px;
+    margin-left: 35px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,8 +133,8 @@ display: flex;
   }
   p{
     color: $grey;
-    font-size: 9px;
-    font-family: "Montserrat Alternates",sans-serif;
+    font-size: 10px;
+    font-family: $primaryFont;
   }
 }
 
@@ -174,7 +182,7 @@ display: flex;
       font-weight: bold;
       color: $grey;
       font-size: 9px;
-      font-family: "Santral-Regular",sans-serif;
+      font-family: $primaryFont;
     }
   }
 

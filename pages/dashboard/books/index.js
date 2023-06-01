@@ -1,4 +1,5 @@
 import styles from '../../../styles/Pages/Dashboard/Books.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import {useSession} from "next-auth/react";
 import {
     ArrowDownCircleIcon,
@@ -8,7 +9,7 @@ import {
     PencilIcon, QueueListIcon, Square3Stack3DIcon
 } from "@heroicons/react/24/outline";
 import CardBook, {CardBookDashboard} from "../../../Component/Dashboard/Card/CardBook";
-import {useEffect, useRef, useState} from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
@@ -102,7 +103,7 @@ const Books = ({booksData, err, nbBooks}) => {
 
     const hasNoBooks = () => {
         return (
-            <div className={styles.mainHasNoBooks}>
+            <div className={styles.mainHasNoBooks + ' ' + anim.fadeIn}>
                 <div className={styles.hasNotWriteContainer}>
                     <div className={styles.contentNoBooks}>
                         <h3>OUPS...</h3>
@@ -152,7 +153,7 @@ const Books = ({booksData, err, nbBooks}) => {
                     <SmHeaderDashboard title={'Mes livres'}/>
                     {
                         err &&
-                        <div className={styles.errContainer}>
+                        <div className={styles.errContainer + ' ' + anim.fadeIn}>
                             <ErrMsg textBtn={"Retour"} click={() => router.back()}
                                     text={'Impossible de récupérer les données de vos livres, veuillez réessayer.'}/>
                         </div>
@@ -173,13 +174,14 @@ const Books = ({booksData, err, nbBooks}) => {
                             <div className={styles.list}>
 
                                 {
+                                    books &&
                                     books.map((item, index) => {
                                         let isTop = false;
                                         if (item.top && nbBooks > 1) {
                                             isTop = true;
                                         }
                                         return (
-                                            <>
+                                            <Fragment key={item._id}>
                                                 {
                                                     width > 1300 &&
                                                     <CardBookDashboard
@@ -224,7 +226,7 @@ const Books = ({booksData, err, nbBooks}) => {
                                                         nbView={item.stats.view}
                                                     />
                                                 }
-                                            </>
+                                            </Fragment>
 
                                         )
                                     })

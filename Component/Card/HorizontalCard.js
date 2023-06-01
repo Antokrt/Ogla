@@ -7,6 +7,7 @@ import Header from "../Header";
 import {Capitalize} from "../../utils/String";
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../store/slices/themeSlice';
+import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 
 export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,nbChapters,keys}) => {
     const router = useRouter();
@@ -22,7 +23,7 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
             }}
             className={theme? styles.container : styles.darkContainer}>
             <div className={styles.containerImg}>
-                <img src={img}/>
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             </div>
 
 

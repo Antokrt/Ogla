@@ -5,6 +5,7 @@ import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} fr
 import {useRouter} from "next/router";
 import {Capitalize} from "../../../utils/String";
 import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
+import {GetDefaultBookImgWhenError} from "../../../utils/ImageUtils";
 
 
 export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date, nbView,top}) => {
@@ -19,7 +20,7 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date,
         }}>
             <div
                 className={styles.containerImg}>
-                <img src={img}/>
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             </div>
 
             {
@@ -47,8 +48,8 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date,
                         <img src={'/assets/diapo/book.png'}/>
 
                     </div>
-                    <h7>{nbChapter} chapitre(s)</h7>
-                    <p><span>{nbView}221</span> vue(s) totale(s) | <span>221{likes}</span> like(s) |  <strong>{Capitalize(category)}</strong></p>
+                    <h7 is={'h7'}>{nbChapter} chapitre(s)</h7>
+                    <p><span>{nbView}</span> vue(s) totale(s) | <span>{likes}</span> like(s) |  <strong>{Capitalize(category)}</strong></p>
                 </div>
             </div>
         </div>

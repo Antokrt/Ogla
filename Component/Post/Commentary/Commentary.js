@@ -1,6 +1,7 @@
 import styles from "../../../styles/Component/Post/Commentary/Commentary.module.scss";
+import anim from '../../../styles/utils/anim.module.scss';
 import scroll from "../../../styles/utils/scrollbar.module.scss";
-import {useEffect, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import {HeartIcon} from "@heroicons/react/24/solid";
 import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon, TrashIcon} from "@heroicons/react/24/outline";
 import SubCommentary from "./SubCommentary";
@@ -12,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../../store/slices/modalSlice";
 import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
+import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 
 const Commentary = ({pseudo,
                         img,
@@ -67,11 +69,11 @@ const Commentary = ({pseudo,
     }, [])
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container + ' ' + anim.fadeIn}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
-                    <img referrerPolicy="no-referrer" src={img}/>
+                    <img referrerPolicy="no-referrer" src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                 </div>
 
 
@@ -96,8 +98,6 @@ const Commentary = ({pseudo,
                         {content}
                     </p>
 
-                    {}
-
                     {
                         tooLong &&
                         <p
@@ -116,14 +116,14 @@ const Commentary = ({pseudo,
                     }
 
                     <div className={styles.likeCommentaryContainer}>
-                        <p className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
+                        <div className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
                             if(session){
                                 likeComment(id);
                             }
                             else {
                                 dispatch(setActiveModalState(true))
                             }
-                        }}/> </p>
+                        }}/> </div>
 
                         <p className={styles.replyCount}> {nbAnswers} réponse(s)</p>
                     </div>
@@ -151,7 +151,7 @@ const Commentary = ({pseudo,
                                 authorHasLike && session.user.pseudo !== authorPseudo &&
                                 <div className={styles.likeAuthor}>
 
-                                    <img src={authorImg} referrerPolicy={'no-referrer'}/>
+                                    <img src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
                                     <HeartIcon className={styles.like}/>
 
                                 </div>
@@ -198,23 +198,26 @@ const Commentary = ({pseudo,
                                             setNewAnswer('');
                                         }
                                     }
-                                    } className={newAnswer !== "" && styles.activeBtn} >Envoyer</button>
+                                    } className={newAnswer !== "" ? styles.activeBtn : ''} >Envoyer</button>
                                 </div>
                                 <div className={styles.listReply}>
                                     {
                                         answersList?.map((item,index) => {
                                             return (
-                                                <SubCommentary
-                                                    hasLike={item.hasLike}
-                                                    deleteAnswer={() => deleteAanswer(item._id,item.content)}
-                                                    likeAnswer={() => likeAanswer(item._id)}
-                                                    id={item._id}
-                                                    authorId={item.userId}
-                                                    img={item.img}
-                                                    pseudo={item.pseudo}
-                                                    date={item.date_creation}
-                                                    likes={item.likes}
-                                                    content={item.content}/>
+                                                <Fragment key={item._id}>
+                                                    <SubCommentary
+                                                        hasLike={item.hasLike}
+                                                        deleteAnswer={() => deleteAanswer(item._id,item.content)}
+                                                        likeAnswer={() => likeAanswer(item._id)}
+                                                        id={item._id}
+                                                        authorId={item.userId}
+                                                        img={item.img}
+                                                        pseudo={item.pseudo}
+                                                        date={item.date_creation}
+                                                        likes={item.likes}
+                                                        content={item.content}/>
+                                                </Fragment>
+
                                             )
                                         })
 

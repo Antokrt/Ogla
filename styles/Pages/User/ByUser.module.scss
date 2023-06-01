@@ -42,7 +42,7 @@
     }
 
     button{
-      font-family: 'Santral-Regular',sans-serif;
+      font-family: $primaryFont;
       border: solid 1px rgba(90, 102, 115, 0.47);
       opacity: 0.7;
       border-radius: 25px;
@@ -187,10 +187,9 @@ display: flex;
 
       h6 {
         color: $darkBrown;
-        font-family: "Santral-Regular", sans-serif;
+        font-family: $primaryFont;
         font-weight: bold;
         font-size: 13px;
-        letter-spacing: -0.5px;
 
         span {
           text-transform: capitalize;
@@ -199,7 +198,7 @@ display: flex;
         }
       }
       p{
-        font-family: 'Santral-Regular',sans-serif;
+        font-family: $primaryFont;
         opacity: 0.8;
         font-size: 13px;
         font-weight: bold;
@@ -229,37 +228,28 @@ display: flex;
           justify-content: start;
           align-items: start;
           p{
+            color: #1C232B;
             font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
             span{
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 20px;
-              width: 20px;
-              border-radius: 50%;
-              background-color: #9844AD;
-            }
-            svg{
-              color: white;
-              width: 11px;
+              color: #9844AD;
             }
           }
         }
 
         h3 {
+          &:first-letter{
+            text-transform: uppercase;
+          }
           font-size: 20px;
           color: $darkBrown;
-          font-family: "Santral-Regular", sans-serif;
+          font-family: $primaryFont;
           font-weight: bold;
         }
 
         p {
           font-size: 12px;
           font-weight: bold;
-          font-family: "Montserrat", sans-serif;
+          font-family: $primaryFont;
         }
       }
 
@@ -476,7 +466,7 @@ display: flex;
     margin-top: 30px;
     margin-bottom: 30px;
     h3 {
-      font-family: "Montserrat Alternates", sans-serif;
+      font-family: $primaryFont;
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 30px;
@@ -500,7 +490,7 @@ display: flex;
         border-radius: 20px;
         font-size: 11px;
         padding: 10px 20px;
-        font-family: "Montserrat Alternates", sans-serif;
+        font-family: $primaryFont;
         color: #1C232B;
         transition: 0.1s;
         font-weight: bold;

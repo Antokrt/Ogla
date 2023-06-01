@@ -8,7 +8,9 @@ import {
 import {useRouter} from "next/router";
 import {LikeBtnSidebar} from "../layouts/Btn/Like";
 import {ref} from "yup";
-import {ReduceString} from "../../utils/String";
+import {DeleteSpace, MinimizeStr, ReduceString} from "../../utils/String";
+import {HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
+import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 
 
 const FooterOnChapter = ({
@@ -31,9 +33,9 @@ const FooterOnChapter = ({
 
     return (<div className={styles.container}>
         <div className={styles.titleContainer}>
-            <img src={img}/>
+            <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             <div>
-                <h7>{ReduceString(title,80)} ({index})</h7>
+                <p className={styles.titleBook}>{ReduceString(title,80)} ({index})</p>
                 <p>{likes} likes - {author}</p>
             </div>
 
@@ -49,7 +51,7 @@ const FooterOnChapter = ({
                             if(navChapters.prev){
                                 router.push({
                                     pathname: "/chapitre/" + navChapters.prev._id, query: {
-                                        name: navChapters.prev.title, slug: navChapters.prev.slug, i: index - 1,
+                                        slug: MinimizeStr(navChapters.prev.slug), i: index - 1,
                                     }
                                 })
                             }
@@ -71,7 +73,7 @@ const FooterOnChapter = ({
                             if(navChapters.next){
                                 router.push({
                                     pathname: "/chapitre/" + navChapters.next._id, query: {
-                                        name: navChapters.next.title, slug: navChapters.next.slug, i: index + 1
+                                       slug: navChapters.next.slug, i: index + 1
                                     },
                                 })
                             }
@@ -86,12 +88,14 @@ const FooterOnChapter = ({
 
         <div className={styles.commentAndListContainer}>
 
-            <div onClick={openCommentary}>
+            <HeadPhoneBtnOnFooter/>
+
+            <div className={styles.b} onClick={openCommentary}>
                 <ChatBubbleBottomCenterTextIcon/>
                 <p>Commentaires ({nbCommentary})</p>
             </div>
 
-            <div onClick={openList}>
+            <div className={styles.b} onClick={openList}>
                 <QueueListIcon/>
                 <p>Chapitres ({nbChapter})</p>
             </div>

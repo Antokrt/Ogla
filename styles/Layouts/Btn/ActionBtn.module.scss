@@ -47,7 +47,8 @@
   background-color: white;
   border: rgba(28, 35, 43, 0.04) solid 1px;
   padding: 8px 10px;
-  font-family: 'Santral-Regular',sans-serif!important;
+  opacity: 0.9;
+  font-family: $primaryFont;
   font-size: 11px;
   font-weight: bold;
   border-radius: 5px;
@@ -66,7 +67,7 @@
   button{
     background-color: #e04444;
     color: white;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: $primaryFont;
     font-size: 12px;
     padding: 10px 20px;
     border-radius: 25px;
@@ -80,9 +81,11 @@
   width: 100px;
   z-index: 2;
   background-color: white;
-  font-size: 11px;
+  font-size: 12px;
   color: #9844AD;
-  font-family: 'Montserrat Alternates',sans-serif;
+  font-family: $primaryFont;
+  font-weight: bold;
+  text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
 }
 
 .darkSeeMoreText{
@@ -92,7 +95,7 @@
   background-color: #0e0e10;
   font-size: 11px;
   color: hsla(0deg, 100%, 100%, 0.88);
-  font-family: 'Montserrat Alternates',sans-serif;
+  font-family: $primaryFont;
 }
 
 .headphone{
@@ -131,6 +134,74 @@
 }
 
 .darkHeadphone{
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  transition: 0.2s;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: $shadow;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: #e94f37 solid 1px;
+  cursor: pointer;
+
+  svg{
+    color:#e94f37;
+    width: 22px;
+  }
+
+  .animation{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #e94f37;
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+}
+
+.headphoneOnFooterBook{
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  transition: 0.2s;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: rgba(28, 35, 43, 0.15) solid 1px;
+  cursor: pointer;
+
+  svg{
+    color: white;
+    width: 22px;
+  }
+
+
+  .animation{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.31);
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+}
+
+.darkHeadphoneOnFooterBook{
   &:active{
     transform: scale(0.8);
     transition: 0.2s;

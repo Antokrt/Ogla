@@ -1,5 +1,6 @@
+@import "../../../styles/utils/var";
 .container{
-  font-family: "Rebond Grotesque", sans-serif;
+  font-family: $primaryFont;
   font-weight: bold;
   font-size: 12px;
   border-radius: 5px;

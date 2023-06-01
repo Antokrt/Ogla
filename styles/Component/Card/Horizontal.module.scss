@@ -13,6 +13,7 @@
   height: 124px;
   border-radius: 15px;
   padding: 10px;
+  gap: 20px;
 
   .thumbnailLike {
     position: absolute;
@@ -23,7 +24,7 @@
     top: 5%;
 
     p {
-      font-family: "Poppins", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-weight: bold;
       font-size: 10px;
       letter-spacing: 1px;
@@ -41,13 +42,13 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    padding: 4%;
 
     img {
       border-radius: 5px;
       width: 78px;
       height: 104px;
       object-fit: cover;
+      box-shadow: $shadow;
     }
   }
 
@@ -64,29 +65,14 @@
       text-align: left;
       width: auto;
       font-size: 15px;
-      font-family: "Rebond Grotesque", sans-serif;
-      -webkit-text-stroke-width: 0.8px;
+      font-weight: bold;
+      font-family: "Pt Sans", sans-serif;
       text-overflow: ellipsis;
       overflow: hidden;
       -webkit-line-clamp: 2;
       display: -webkit-box;
       word-break: break-word;
       -webkit-box-orient: vertical;
-    }
-
-    .summary {
-      text-align: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 4;
-      display: -webkit-box;
-      font-style: italic;
-      word-break: break-word;
-      -webkit-box-orient: vertical;
-      font-size: 11px;
-      min-height: 50px;
-      color: rgba(28, 35, 43, 0.87);
-      font-family: "Montserrat", sans-serif;
     }
 
     .stats {
@@ -111,15 +97,11 @@
       justify-content: center;
       align-items: center;
       gap: 2px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: bold;
-      -webkit-text-stroke-width: 0.4px;
-      opacity: 0.9;
-      letter-spacing: 1px;
-      font-family: "Branch", sans-serif;
+      font-family: "Pt Sans", sans-serif;
 
       svg {
-        margin-bottom: 1px;
         margin-left: 2px;
         width: 15px;
         color: #9844AD;
@@ -129,9 +111,9 @@
     .nbChapters {
       display: flex;
       align-items: center;
-      font-size: 10px;
+      font-size: 12px;
       color: rgba(28, 35, 43, 0.8);
-      font-family: "Montserrat", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-weight: bold;
 
       svg {
@@ -144,9 +126,9 @@
     .author {
       display: flex;
       align-items: center;
-      font-size: 10px;
+      font-size: 12px;
       color: rgba(28, 35, 43, 0.8);
-      font-family: "Montserrat", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-weight: bold;
     }
   }

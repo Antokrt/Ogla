@@ -129,7 +129,6 @@ const New = () => {
                         placeholder={'Entrez le titre de votre livre ici...'}
                         type='text'
                         onChange={(e) => {
-                            console.log(title.length)
                             setTitle(e.target.value);
                         }}
                     />
@@ -155,7 +154,7 @@ const New = () => {
                             {
                                 categories.map((item) => {
                                     return (
-                                        <option
+                                        <option key={item._id}
                                             value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
                                     )
                                 })

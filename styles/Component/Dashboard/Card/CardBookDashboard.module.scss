@@ -1,5 +1,10 @@
 @import "styles/utils/var";
 .container{
+  &:active{
+    transform: scale(0.9);
+    transition: 0.2s;
+  }
+  transition: 0.2s;
   display: flex;
   position: relative;
   cursor: pointer;
@@ -10,7 +15,6 @@
   box-shadow: $shadow;
   border-radius: 10px;
   border: solid 2px rgba(84, 89, 95, 0.08);
-
 }
 
 .back{
@@ -37,7 +41,7 @@
   padding: 5px 10px;
   font-size: 10px;
   font-weight: bold;
-  font-family: "Poppins",sans-serif;
+  font-family: $primaryFont;
   background-color: #e94f37;
   color: white;
   gap: 5px;
@@ -88,25 +92,23 @@ display: flex;
     justify-content: center;
     align-items: center;
   }
-  .date{
-    font-weight: initial;
-  }
+
   h6{
     &:first-letter{
       text-transform: uppercase;
     }
     color: rgba(28, 35, 43, 0.83);
     margin-right: 20px;
-    font-size: 16px;
-    font-family: "Rebond Grotesque",sans-serif;
+    font-size: 14px;
+    font-family: $primaryFont;
     font-weight: bold;
   }
 
   p{
-    font-family: 'Montserrat',sans-serif;
-    font-weight: bold;
+    font-family: $primaryFont;
+    font-weight: 500;
+    opacity: 0.7;
     font-size: 12px;
-    color: #54595F;
   }
 }
 
@@ -117,10 +119,9 @@ display: flex;
   h7{
     text-align: right;
     color: #9844AD;
-    font-size: 13px;
-    font-family: 'Montserrat',sans-serif;
+    font-size: 12px;
+    font-family: $primaryFont;
     font-weight: bold;
-
   }
 
   .containerImgBook{
@@ -129,7 +130,6 @@ display: flex;
     align-items: center;
     img{
 width: 3vw;
-
     }
 
   }
@@ -137,12 +137,11 @@ width: 3vw;
 
   p{
     font-size: 13px;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: $primaryFont;
     text-align: right;
-    color: rgba(84, 89, 95, 0.84);
+    color: rgba(84, 89, 95, 0.87);
     border-radius: 5px;
     span{
-      font-family: 'Lato',sans-serif;
       font-weight: bold;
     }
   }

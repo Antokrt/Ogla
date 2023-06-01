@@ -16,23 +16,18 @@
     align-items: center;
     justify-content: space-between;
     h4 {
-      font-family: "Rebond Grotesque", sans-serif;
-      font-size: 20px;
-      -webkit-text-stroke-width: 1px;
-      stroke-width: 1px;
-      -webkit-text-stroke-color: #1C232B;
-      stroke: #1C232B;
+      font-family: "Pt Sans", sans-serif;
+      font-weight: bold;
+      font-size: 18px;
       color: #1C232B;
-      letter-spacing: 1px;
     }
     h5{
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      text-decoration: underline;
-font-size: 12px;
+font-size: 14px;
       color: $purpleLight;
       svg{
         margin-left: 5px;
@@ -58,8 +53,8 @@ font-size: 12px;
 
   .trendTitle{
     margin-top: 5vh;
-    font-family: 'Rebond Grotesque',sans-serif;
-    font-size: 15px;
+    font-family: 'Pt Sans',sans-serif;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
 

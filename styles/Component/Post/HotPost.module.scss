@@ -11,16 +11,13 @@
   border: solid 1px $border;
   background-color: white;
   border-radius: 10px;
-  z-index: 212 !important;
   position: relative;
 
   .imgContainer {
     width: 185px;
     height: 100%;
     padding: 15px;
-
     img {
-      box-shadow: $shadow;
       border-radius: 10px;
       object-fit: cover;
       width: 100%;
@@ -38,9 +35,9 @@
     justify-content: center;
     align-items: center;
     padding: 10px 10px;
-    font-size: 10px;
-    font-family: "Rebond Grotesque", sans-serif;
-    font-weight: 550;
+    font-size: 11px;
+    font-family: "Pt Sans", sans-serif;
+    font-weight: bold;
     border-radius: 25px;
     color: white;
   }
@@ -58,7 +55,6 @@
     padding: 5px 10px;
     border-radius: 15px;
     font-weight: bold;
-    font-family: "Poppins", sans-serif;
     margin-left: 5px;
     letter-spacing: 1px;
     box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
@@ -68,7 +64,7 @@
       font-size: 12px;
     }
     svg{
-      width: 14px;
+      width: 12px;
       color: white;
       margin-left: 2px;
     }
@@ -81,63 +77,47 @@
     justify-content: center;
     flex-direction: column;
     padding: 5px;
-    padding-left: 10px;
+    padding-right: 15px;
 
-    h6 {
-      &:first-letter {
-        text-transform: uppercase;
-      }
 
-      font-size: 18px;
-      font-family: "Rebond Grotesque",sans-serif;
-      -webkit-text-stroke-width: 1px;
-      text-transform: capitalize;
-      color: #1C232B;
-    }
 
     .header {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       position: relative;
-      margin-bottom: 10px;
-      p {
+      margin-bottom: 20px;
 
-        display: flex;
-        flex-direction: column;
-        font-size: 12px;
-        color: hsla(0deg, 100%, 100%, 0.88);
-        font-family: "Rebond Grotesque",sans-serif;
-
-        .category {
-          position: absolute;
-          min-width: 50px;
-          right: 10px;
-          top: 30px;
-          display: flex;
-          justify-content: center;
-          background-color: white;
-          border: 1px solid #54595f;
-          // box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          // -webkit-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          // -moz-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          padding: 5px 10px;
-          border-radius: 10px;
-          text-transform: capitalize;
-          font-weight: bold;
-          color: #54595f;
-          margin-right: 5px;
+      h6 {
+        &:first-letter {
+          text-transform: uppercase;
         }
 
-        .author {
-          font-weight: bold;
+        font-size: 18px;
+        font-family: "Pt Sans",sans-serif;
+        font-weight: bold;
+        color: #1C232B;
+      }
+
+      .labelList{
+        display: flex;
+        justify-content: space-between;
+
+        .catHeader{
           color: #9844AD;
         }
+        p{
+          &:first-letter{
+            text-transform: uppercase;
+          }
+          font-family: 'Pt Sans',sans-serif;
+          font-size: 13px;
+          font-weight: bold;
 
-        .nbChapter {
-          color: #54595f;
 
         }
       }
 
-      margin-bottom: 20px;
     }
 
     .Tdescription {
@@ -145,7 +125,7 @@
       content: "";
       width: 100%;
       height: 1px;
-      background-color:#54595f9d;
+      background-color: rgba(84, 89, 95, 0.34);
       margin-bottom: 15px;
     }
     .Tdescription::after {
@@ -157,9 +137,10 @@
       display: flex;
       justify-content: center;
       transform: translate(-50%, -50%);
-      font-size: 11px;
+      font-size: 13px;
       background: white;
       color: #54595fde;
+      font-family: $primaryFont;
     }
 
     .description {
@@ -170,13 +151,12 @@
         word-break: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
-        -webkit-line-clamp: 6;
+        -webkit-line-clamp: 5;
         display: -webkit-box;
-        font-style: italic;
         -webkit-box-orient: vertical;
-        font-size: 11px;
-        color: rgba(28, 35, 43, 0.87);
-        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        opacity: 0.8;
+        font-family: "Pt Sans", sans-serif;
       }
     }
   }
@@ -234,7 +214,7 @@ p{
     gap: 5px;
 
     p {
-      font-family: 'Poppins', sans-serif !important;
+      font-family: $primaryFont !important;
       font-weight: bold !important;
       color: #1C232B !important;
     }
@@ -261,7 +241,7 @@ p{
     gap: 5px;
 
     p {
-      font-family: 'Rebond Grotesque', sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       font-size: 12px;
       text-align: right;
@@ -274,20 +254,22 @@ p{
   }
 
   h6 {
-    font-size: 18px;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-size: 16px;
+    font-family: $primaryFont;
     font-weight: 700;
     color: #1C232B;
     margin-top: 30px;
   }
 
   .descriptionPhone {
+    &:first-letter{
+      text-transform: uppercase;
+    }
     margin-top: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 5;
     display: -webkit-box;
-    font-style: italic;
     -webkit-box-orient: vertical;
     white-space: initial;
     text-align: justify;
@@ -295,7 +277,7 @@ p{
     padding: 0 4%;
     font-size: 14px;
     color: rgba(28, 35, 43, 0.71);
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $primaryFontItalic;
   }
 
   button {
@@ -306,7 +288,7 @@ p{
     margin-top: 30px;
     background-color: #e94f37;
     transition: 0.2s;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
     color: white;
     font-size: 10px;
@@ -363,7 +345,7 @@ p{
     align-items: center;
     padding: 10px 10px;
     font-size: 10px;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $primaryFont;
     font-weight: 700;
     border-radius: 25px;
   }

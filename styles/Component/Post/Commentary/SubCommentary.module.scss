@@ -46,7 +46,7 @@
 
         h8{
           color: $darkBrown;
-          font-family: "Montserrat",sans-serif;
+          font-family: $primaryFont;
           font-size: 12px;
           font-weight: bold;
           span{
@@ -62,19 +62,22 @@
           text-transform: uppercase;
         }
 padding-right: 20px;
-        font-family: "Montserrat Alternates", sans-serif;
-        color: rgba(28, 35, 43, 0.84);
-        font-size: calc(11px + 0.01vw);
+        font-family: $primaryFont;
+        color: rgb(66, 60, 53);
+        font-size: 13px;
+        opacity: 0.8;
         word-wrap: anywhere;
-
       }
 
       .seeMore{
+
         cursor: pointer;
         margin-top: 5px;
-        color: $purple;
-        font-family: "Rubik",sans-serif;
-        font-size: 11px;
+        font-size: 10px;
+        color: #9844AD;
+        font-family: $primaryFont;
+        -webkit-text-stroke-width: 0.2px;
+        text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
       }
     }
 

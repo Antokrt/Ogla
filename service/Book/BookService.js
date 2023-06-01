@@ -13,7 +13,6 @@ export const GetBooksWithCategoryService = (category,filter,page) => {
     return new Promise((resolve, reject) => {
         instance.get('/book-render/by-cat/'+ category +'/'+filter + '/'+ page)
             .then((res) => {
-                console.log(res.data)
                 resolve(res.data)
             })
             .catch((err) => reject(err));

@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 
@@ -52,6 +52,7 @@ import {Capitalize} from "../../utils/String";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import Footer from "../../Component/Footer";
 import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
+import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
@@ -425,57 +426,60 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                             <div className={styles.containerC}>
 
-
-                                <div className={styles.imgContainer}>
-                                    <div className={styles.img}>
-                                        <img src={bookData?.img}/>
-                                    </div>
-
-
-                                    <div className={styles.btnRead}>
-                                        {
-                                            chapterData && chapterData?.length !== 0 &&
-                                            <button
-                                                onClick={() => {
-                                                    router.push({
-                                                        pathname: "/chapitre/" + chapterData[0]._id, query: {
-                                                            name: chapterData[0].title, slug: chapterData[0].slug, i: 1
-                                                        },
-                                                    })
-                                                }}
-                                            >Lire le chapitre 1 <CursorArrowRaysIcon/>
-                                            </button>
-                                        }
-
-                                    </div>
-                                </div>
+                                <div className={styles.labelPresentation}>
+                                    <div className={styles.imgContainer}>
+                                        <div className={styles.img}>
+                                            <img src={bookData?.img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
+                                        </div>
 
 
-                                <div className={styles.chapterContainer}>
-                                    <div className={styles.infoContainer}>
-                                        <div className={styles.infosBook}>
-                                            <div className={styles.authorInfos}  >
-                                                <p onClick={() => router.push({
-                                                    pathname: '/auteur/' + authorData.pseudo
-                                                })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
-                                                <img onClick={() => router.push({
-                                                    pathname: '/auteur/' + authorData.pseudo
-                                                })} src={authorData.img} onError={(e) => {
-                                                e.target.src = 'https://dt9eqvlch6exv.cloudfront.net/default.png'
-                                                }
-                                                }/>
-                                            </div>
-
-                                            <CardCategory category={bookData?.category}/>
+                                        <div className={styles.btnRead}>
+                                            {
+                                                chapterData && chapterData?.length !== 0 &&
+                                                <button
+                                                    onClick={() => {
+                                                        router.push({
+                                                            pathname: "/chapitre/" + chapterData[0]._id, query: {
+                                                                name: chapterData[0].title, slug: chapterData[0].slug, i: 1
+                                                            },
+                                                        })
+                                                    }}
+                                                >Lire le chapitre 1 <CursorArrowRaysIcon/>
+                                                </button>
+                                            }
 
                                         </div>
-                                        <h3>{bookData?.title}</h3>
-
-                                        <Snippet line={3} maxSize={500} content={bookData?.summary}/>
-
                                     </div>
 
+
+                                    <div className={styles.chapterContainer}>
+                                        <div className={styles.infoContainer}>
+                                            <div className={styles.infosBook}>
+                                                <div className={styles.authorInfos}  >
+                                                    <p onClick={() => router.push({
+                                                        pathname: '/auteur/' + authorData.pseudo
+                                                    })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
+                                                    <img onClick={() => router.push({
+                                                        pathname: '/auteur/' + authorData.pseudo
+                                                    })} src={authorData.img} referrerPolicy={'no-referrer'} onError={(e) => {
+                                                        e.target.src = GetDefaultUserImgWhenError()
+                                                    }
+                                                    }/>
+                                                </div>
+
+                                                <CardCategory category={bookData?.category}/>
+
+                                            </div>
+                                            <h3>{bookData?.title}</h3>
+
+                                            <Snippet line={3} maxSize={500} content={bookData?.summary}/>
+
+                                        </div>
+
+                                    </div>
                                 </div>
+
+
 
                             </div>
 
@@ -509,6 +513,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                             <p><span>{authorData.pseudo}</span> n'a pas encore écrit de chapitres !</p>
                                         </div>
                                     }
+
                                     {chapterData && chapterList?.length > 0 && chapterList.map((item, index) => {
                                         let chapterNumber;
                                         if (activeFilterList === "recent") {
@@ -517,19 +522,23 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                             chapterNumber = index + 1;
                                         }
                                         return (
-                                            <>
+                                            <div className={styles.list} key={item._id}>
                                                 <CardChapterPublic id={item._id} title={item.title}
                                                                    date_creation={item.date_creation} likes={item.likes}
                                                                    index={chapterNumber} bookTitle={bookData.title}/>
-                                            </>
+                                            </div>
                                         )
                                     })}
                                     {
-                                        canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
+                                        canSeeMoreChapter  && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
                                         <div className={styles.seeMoreContainer}>
-                                            <TextSeeMore
-                                                onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
                                             {
+                                                !loadingScrollChapterList &&
+                                                <TextSeeMore
+                                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
+
+                                            }
+                                                {
                                                 loadingScrollChapterList &&
                                                 <LoaderCommentary/>
                                             }
@@ -565,8 +574,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
 
                             <div className={styles.headerBookPhone}>
-                                <img className={styles.absoImg} src={bookData?.img}/>
-                                <img className={styles.imgBookPhone} src={bookData?.img}/>
+                                <img className={styles.absoImg} src={bookData?.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                                <img className={styles.imgBookPhone} src={bookData?.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
                             </div>
 
                             <div className={styles.contentContainerBookPhone}>
@@ -609,7 +618,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 <div className={styles.authorInfosContainerPhone} onClick={() => router.push({
                                                     pathname: '/auteur/' + authorData.pseudo
                                                 })}>
-                                                    <img src={authorData?.img}/>
+                                                    <img src={authorData?.img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                                     <p><span>{authorData?.pseudo}</span></p>
                                                 </div>
 
@@ -695,14 +704,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                                 chapterNumber = index + 1;
                                                             }
                                                             return (
-                                                                <>
+                                                                <Fragment key={item._id}>
                                                                     <CardChapterPublicPhone id={item._id}
                                                                                             title={item.title}
                                                                                             date_creation={item.date_creation}
                                                                                             likes={item.likes}
                                                                                             index={chapterNumber}
                                                                                             bookTitle={bookData.title}/>
-                                                                </>
+                                                                </Fragment>
                                                             )
                                                         })}
                                                         {
@@ -730,23 +739,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             </div>
 
 
-                    {/*        <FooterOnBook
-                                likeBook={() => likeBook()}
-                                title={bookData?.title}
-                                like={likes}
-                                img={bookData?.img}
-                                nbCommentary={nbCommentary}
-                                author={bookData?.author_pseudo}
-                                nbChapter={bookData?.nbChapters}
-                                hasLike={hasLike}
-                                openList={() => {
-                                    ToogleSidebar("List", sidebarSelect, setSidebarSelect);
-                                }}
-                                openCommentary={() => {
-                                    setSidebarSelect('Commentary')
-                                    setActiveLinkPhone('comments');
-                                }}
-                            />*/}
 
                         </div>
                 }

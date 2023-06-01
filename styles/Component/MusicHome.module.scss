@@ -35,11 +35,12 @@
     }
 
     p {
+        margin-top: 10px;
         text-align: center;
-        font-size: 1.6vh;
-        font-family: 'Rebond Grotesque', sans-serif;
-        color: rgb(84, 89, 95);
-        width: 70%;
+        font-size: 1.9vh;
+        font-family: 'Pt Sans', sans-serif;
+        opacity: 0.8;
+        width: 80%;
 
         strong {
             color: #9844AD;
@@ -64,12 +65,12 @@
         }
 
         transition: 0.2s;
-        font-family: 'Rebond Grotesque', sans-serif;
+        font-family: 'Pt Sans', sans-serif;
         font-weight: bold;
         background-color: #e94f37;
         color: white;
         padding: 15px 3vw;
-        font-size: 12px;
+        font-size: 13px;
         border-radius: 25px;
     }
 }

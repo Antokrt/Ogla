@@ -28,11 +28,11 @@ export const FilterBtn = ({filter, onclick}) => {
             {
                 filter === 'recent' ?
                     <button onClick={onclick} className={styles.filter}>
-                        Récent(s)
+                        Récents
                         <ArrowsUpDownIcon/>
                     </button> :
                     <button onClick={onclick} className={styles.filter}>
-                        Plus ancien(s)
+                        Plus anciens
                         <ArrowsUpDownIcon/>
                     </button>
             }
@@ -84,6 +84,26 @@ export const HeadPhoneBtn = ({onclick}) => {
     const theme = useSelector(selectTheme);
 
     return <div className={router.pathname === '/' ? styles.headphone + ' ' + styles.home : theme? styles.headphone : styles.darkHeadphone} onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
+        <MusicalNoteIcon/>
+        {
+            selectMusicState &&
+            <div className={styles.animation}></div>
+        }
+
+    </div>
+
+}
+
+
+export const HeadPhoneBtnOnFooter = ({onclick}) => {
+
+    const selectMusicState = useSelector(selectActiveMusicStatus);
+    const selectIndex = useSelector(selectIndexStateMusic);
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
+
+    return <div className={theme ? styles.headphoneOnFooterBook : styles.darkHeadphoneOnFooterBook} onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
         <MusicalNoteIcon/>
         {
             selectMusicState &&

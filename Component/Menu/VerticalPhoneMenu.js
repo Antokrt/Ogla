@@ -1,5 +1,5 @@
 import styles from "../styles/Component/Menu/VerticalAuthorMenuPhone.module.scss";
-import { BellAlertIcon, HomeIcon } from "@heroicons/react/24/outline";
+import {BellAlertIcon, BookOpenIcon, HomeIcon} from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { PlusCircleIcon, BookmarkSquareIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/n
 import { useState } from "react";
 import { useEffect } from "react";
 import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 export default function VerticalPhoneMenu() {
 
@@ -50,7 +51,7 @@ export default function VerticalPhoneMenu() {
                         router.push('/dashboard/books');
                     }
                 }} className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
-                    <BookmarkSquareIcon/>
+                    <BookOpenIcon/>
                     <p>Mes livres</p>
                 </div>
 
@@ -77,7 +78,7 @@ export default function VerticalPhoneMenu() {
                     {
                         session && session.user.image &&
                         <>
-                            <img src={session.user.image} />
+                            <img alt={'Profil image Ogla'} src={session.user.image}  onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                             <span className={styles.circle}></span>
                         </>
                     }

@@ -2,7 +2,7 @@ import {instance} from "../config/Interceptor";
 
 export const SendNotifService = (id, code, targetId) => {
     return new Promise((resolve, reject) => {
-        instance.post('notification/new/' + id + '/' + code + '/' + targetId)
+        instance.post('notification/new/' + id + '/' + code + '/' + targetId+ '/646e2c631b6c4de170826ad2')
             .then((res) => resolve(res))
             .catch((err) => reject(err));
     })

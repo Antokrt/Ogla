@@ -29,8 +29,9 @@ import {useSession} from "next-auth/react";
 import {LikeAuthorService} from "../../service/Like/LikeService";
 import {setActiveModalState} from "../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
-import {sendNotif, SendNotifService} from "../../service/Notifications/NotificationsService";
+import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {ErrMsg} from "../../Component/ErrMsg";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 
 export async function getServerSideProps({params,req}) {
@@ -38,10 +39,9 @@ export async function getServerSideProps({params,req}) {
     const pseudo = params.id;
     const profil = await GetAuthorProfilAPI(pseudo,req);
 
-    console.log(profil.hasLike)
-
     return {
         props: {
+            key:pseudo,
             profilData: profil.profil,
             booksData: profil.books,
             hasLikeData: profil.hasLike,
@@ -176,10 +176,10 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                                 <p className={styles.absoText}>{profilAuthor?.pseudo}</p>
                                 <div className={styles.pseudo_date}>
                                     <div className={styles.imgPseudo}>
-                                        <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = 'https://dt9eqvlch6exv.cloudfront.net/default.png'}/>
+                                        <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                                         <div>
                                             <h3>{profilAuthor?.pseudo}</h3>
-                                            <p>{likes} <span><HeartIcon/></span></p>
+                                            <p>{likes} <span>j'aimes </span></p>
                                         </div>
                                     </div>
 
@@ -194,7 +194,10 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
 
                                 <div className={styles.lab}>
                                     <h6>Écrivain <span>OGLA</span> </h6>
-                                    <p>Devenu auteur le {FormatDateNb(profilAuthor?.author.became_author)}</p>
+                                    {
+                                        profilAuthor?.author.became_author &&
+                                        <p>Devenu auteur le {FormatDateNb(profilAuthor?.author.became_author)}</p>
+                                    }
                                 </div>
 
                                 <div className={styles.social}>

@@ -32,6 +32,7 @@ const ResultSearchBar = ({destroy, query, data}) => {
                                 data.books.map((item, index) => {
                                     return (
                                         <div
+                                            key={item._id}
                                             onClick={() => {
                                                 router.push({
                                                     pathname: '/livre/' + item._id,
@@ -60,6 +61,7 @@ const ResultSearchBar = ({destroy, query, data}) => {
                                 data?.authors.map((item, index) => {
                                     return (
                                         <div
+                                            key={item._id}
                                             onClick={() => {
                                                 router.push({
                                                     pathname: '/auteur/' + item.pseudo,

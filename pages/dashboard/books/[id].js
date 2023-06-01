@@ -1,6 +1,6 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
-import {useEffect, useRef, useState} from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import {
     DeleteBookService, GetMoreChapterService, TestService,
     UpdateBookPictureService, UpdateBookSummaryService,
@@ -18,7 +18,7 @@ import {
 } from "@heroicons/react/24/solid";
 import {useSession} from "next-auth/react";
 import {BookOpenIcon} from "@heroicons/react/24/solid";
-import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon} from "@heroicons/react/20/solid";
+import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon, ShareIcon} from "@heroicons/react/20/solid";
 import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
 import chapter from "../../../Component/layouts/Icons/Chapter";
 import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
@@ -41,7 +41,7 @@ import {FilterBtn, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
 
 import {renderPrediction} from "../../../utils/ImageUtils";
-import {toastDisplayError} from "../../../utils/Toastify";
+import {toastDisplayError, toastDisplayInfo} from "../../../utils/Toastify";
 import CardCategory from "../../../Component/Card/CardCategory";
 import ScreenSize from "../../../utils/Size";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
@@ -51,8 +51,6 @@ import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import {CardChapterDashboard} from "../../../Component/Card/CardChapterPublic";
 import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
-
-
 
 
 export async function getServerSideProps({req, params}) {
@@ -70,7 +68,8 @@ export async function getServerSideProps({req, params}) {
     return {
         props: {
             err: {
-                book: bookErrData
+                book: bookErrData,
+                chapter: chapterErrData
             },
             bookData: booksJson,
             chapterListData: chapterJson
@@ -90,7 +89,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const lastChapter = bookData.lastChapter;
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
-    const [loadingImg,setLoadingImg] = useState(false);
+    const [loadingImg, setLoadingImg] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
     const imgRef = useRef();
     const divRef = useRef(null);
@@ -102,19 +101,31 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [loadingChapter, setLoadingChapter] = useState(false);
     const [errListChapter, setErrChapter] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
-    const [phoneMenuLinkActive,setPhoneMenuLinkActive] = useState('infos');
+    const [phoneMenuLinkActive, setPhoneMenuLinkActive] = useState('infos');
     const [width, height] = ScreenSize();
     const orientation = useOrientation();
     const closeRef = useRef(null);
+    const [tippyCopy, setTippyCopy] = useState(false);
 
 
+    const copyLink = () => {
+        navigator.clipboard.writeText(process.env.NEXT_PUBLIC_URL + 'livre/' + book._id + '?' + book.slug)
+            .then(() => {
+                if(!tippyCopy){
+                    setTippyCopy(true);
+                    setTimeout(() => {
+                        setTippyCopy(false);
+                    }, 1000);
+                }
+            })
+    };
 
 
     const handleFileSelect = async (event) => {
         if (event?.target.files && event.target.files[0]) {
-                setFile(event.target.files[0]);
-                setLocalImg(URL.createObjectURL(event.target.files[0]));
-            }
+            setFile(event.target.files[0]);
+            setLocalImg(URL.createObjectURL(event.target.files[0]));
+        }
     }
 
     const getMoreChapter = () => {
@@ -162,8 +173,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const updatePic = async () => {
         if (file) {
             setLoadingImg(true);
-            const data = await renderPrediction(file,'book');
-            if(data){
+            const data = await renderPrediction(file, 'book');
+            if (data) {
                 UpdateBookPictureService(file, book._id)
                     .then((res) => {
                         setBook((prevState) => ({
@@ -180,8 +191,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                         setLoadingImg(false);
                         toastDisplayError("Impossible de modifier l'image.");
                     })
-            }
-            else {
+            } else {
                 setLoadingImg(false);
                 toastDisplayError('Image non conforme.')
             }
@@ -220,19 +230,17 @@ const OneBook = ({bookData, chapterListData, err}) => {
         }
     }
 
-    useEffect(() => {
-       console.log(bookData)
-    },[])
 
     return (
-        <div className={width < 500 && phoneMenuLinkActive === 'infos' ? styles.container + ' ' + styles.scrollO : styles.container }>
+        <div
+            className={width < 500 && phoneMenuLinkActive === 'infos' ? styles.container + ' ' + styles.scrollO : styles.container}>
             {
                 width < 700 && orientation === 'portrait' ?
                     <VerticalPhoneMenu/>
                     :
                     <>
                         {
-                            width  >= 700 && width <= 1050 ?
+                            width >= 700 && width <= 1050 ?
                                 <div className={styles.verticalTabContainer}>
                                     <VerticalTabMenu/>
                                 </div>
@@ -247,6 +255,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
 
             <div className={styles.containerData}>
+
                 {
                     !err.book &&
                     <div className={styles.containerHeader}>
@@ -254,10 +263,42 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     </div>
                 }
 
+
+                {/*ERR MSG*/}
+                <>
+                    {
+                        !loading && err.book && !err.chapter &&
+                        <ErrorDashboard
+                            title={'Impossible de récupérer les données du livre (ERR-001) !'}
+                            subTitle={"Réessayer ou contacter le support pour obtenir de l'aide..."}
+                            btn={'Retour à la liste'}
+                            link={() => {
+                                router.push('/dashboard/books')
+                            }
+                            }
+                            img={'/assets/diapo/mountain.png'}
+                        />
+                    }
+
+                    {
+                        !loading && err.chapter && !err.book &&
+                        <ErrorDashboard
+                            title={'Impossible de récupérer les données du livre (ERR-002) !'}
+                            subTitle={"Réessayer ou contacter le support pour obtenir de l'aide..."}
+                            btn={'Retour à la liste'}
+                            link={() => {
+                                router.push('/dashboard/books')
+                            }
+                            }
+                            img={'/assets/diapo/mountain.png'}
+                        />
+                    }
+                </>
+
                 {
-                    !loading && err.book &&
+                    !loading && err.chapter && err.book &&
                     <ErrorDashboard
-                        title={'Impossible de récupérer les données du livre !'}
+                        title={'Impossible de récupérer les données du livre (ERR-003) !'}
                         subTitle={"Réessayer ou contacter le support pour obtenir de l'aide..."}
                         btn={'Retour à la liste'}
                         link={() => {
@@ -268,7 +309,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     />
                 }
                 {
-                    !loading && !err.book && book.length !== 0 &&
+                    !loading && !err.book && !err.chapter && book.length !== 0 &&
                     <>
                         {/*      <div className={styles.menuContainer}>
                             <p onClick={() => setActive('chapter')}
@@ -279,8 +320,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                             {
                                 width <= 1300 &&
                                 <div className={styles.containerBtnPhone}>
-                                    <button className={phoneMenuLinkActive === 'infos' && styles.activeBtnPhone} onClick={() => setPhoneMenuLinkActive('infos')}>Informations <CursorArrowRaysIcon/></button>
-                                    <button className={phoneMenuLinkActive === 'chapters' && styles.activeBtnPhone} onClick={() => setPhoneMenuLinkActive('chapters')}>Chapitre(s)</button>
+                                    <button className={phoneMenuLinkActive === 'infos' ? styles.activeBtnPhone : ''}
+                                            onClick={() => setPhoneMenuLinkActive('infos')}>Informations <CursorArrowRaysIcon/>
+                                    </button>
+                                    <button className={phoneMenuLinkActive === 'chapters' ? styles.activeBtnPhone : ''}
+                                            onClick={() => setPhoneMenuLinkActive('chapters')}>Chapitres
+                                    </button>
                                 </div>
                             }
 
@@ -357,18 +402,36 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                             <div className={styles.headerTextarea}>
                                                 <h5>Résumé</h5>
                                                 <div className={styles.btn}>
-                                                    <div
-                                                        onClick={() => router.push({
-                                                            pathname: '/livre/' + book._id,
-                                                            query: book.slug
-                                                        })}
-                                                        className={styles.seeBtn}><EyeSolid/>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => sumUpdate()}
-                                                        className={newSummary !== book.summary ? styles.activeBtn : ''}
-                                                    >Modifier
-                                                    </button>
+
+                                                    <Tippy visible={tippyCopy}  content={'Url copiée !'}>
+                                                        <div
+                                                            onClick={() => {copyLink()}
+                                                            }
+                                                            className={styles.seeBtn}><ShareIcon/>
+                                                        </div>
+
+                                                    </Tippy>
+
+
+                                                    <Tippy trigger={'mouseenter'} content={'Voir'}>
+                                                        <div
+                                                            onClick={() => router.push({
+                                                                pathname: '/livre/' + book._id,
+                                                                query: book.slug
+                                                            })}
+                                                            className={styles.seeBtn}><EyeSolid/>
+                                                        </div>
+                                                    </Tippy>
+
+
+                                                        <button
+                                                            onClick={() => sumUpdate()}
+                                                            className={newSummary !== book.summary ? styles.activeBtn : ''}
+                                                        >Modifier
+                                                        </button>
+
+
+
                                                 </div>
 
                                             </div>
@@ -379,17 +442,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                             {
                                                 book?.summary?.length !== 0 ?
-                                                    <textarea onChange={(e) => setNewSummary(e.target.value)}>
-                                                    {newSummary}
-                                            </textarea>
+                                                    <textarea onChange={(e) => setNewSummary(e.target.value)}
+                                                              value={newSummary}/>
 
                                                     :
                                                     <textarea
                                                         placeholder={"Ajoutez un résumé pour donnez envie à vos lecteurs."}
                                                         onChange={(e) => setNewSummary(e.target.value)}
-                                                    >
+                                                    />
 
-                                                    </textarea>
                                             }
 
                                         </div>
@@ -407,7 +468,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/stats/likes.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}> {book.likes}</p>
-                                                        <p className={styles.labelStats}>j'aime(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                        <p className={styles.labelStats}>j'aime(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        </p>
                                                     </div>
 
                                                 </div>
@@ -416,7 +478,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                     <div>
                                                         <p className={styles.valueStats}>{book?.stats?.view}</p>
-                                                        <p className={styles.labelStats}>vue(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                        <p className={styles.labelStats}>vue(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        </p>
                                                     </div>
 
 
@@ -433,7 +496,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <div>
                                                         <p className={styles.valueStats}>{book?.stats?.nbCommentary}</p>
 
-                                                        <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                        <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        </p>
                                                     </div>
 
 
@@ -444,7 +508,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/diapo/book.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}>{book.chapter_list.length}</p>
-                                                        <p className={styles.labelStats }>chapitre(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                        <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon/>
+                                                        </p>
 
                                                     </div>
 
@@ -467,7 +532,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 !errListChapter && !loadingChapter && chapterList.length > 0 &&
                                                 <div className={anim.fadeIn}>
                                                     <div className={styles.headerChapter}>
-                                                        <h4>  {book.chapter_list.length} chapitre(s)</h4>
+                                                        <h4>  {book.chapter_list.length} chapitres</h4>
                                                         <div>
                                                             <FilterBtn filter={activeFilter} onclick={() => {
                                                                 if (activeFilter === 'order') {
@@ -482,7 +547,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                             <button
                                                                 className={styles.newChapter}
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-
                                                             >
                                                                 Nouveau chapitre
                                                                 <CursorArrowRaysIcon/>
@@ -541,7 +605,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                             }
 
                                                                             return (
-                                                                                <>
+                                                                                <Fragment key={item._id}>
                                                                                     <CardChapter
                                                                                         id={item._id}
                                                                                         date={item.date_creation}
@@ -550,7 +614,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                         like={item.likes}
                                                                                         publish={item.publish}
                                                                                     />
-                                                                                </>
+                                                                                </Fragment>
 
                                                                             )
                                                                         }) :
@@ -626,15 +690,15 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                     <div className={styles.labelContainer}>
 
                                         <div className={styles.containerTitle}>
-                                            <h2> {Capitalize(book.title)} <Tippy trigger={'mouseenter'} content={'Supprimer le livre'}>
-                                                <XCircleIcon         onClick={() => {
+                                            <h2> {Capitalize(book.title)} <Tippy trigger={'mouseenter'}
+                                                                                 content={'Supprimer le livre'}>
+                                                <XCircleIcon onClick={() => {
                                                     setSeeConfirmModal(true);
                                                 }}/>
-                                            </Tippy>  </h2>
+                                            </Tippy></h2>
                                             <span></span>
 
                                         </div>
-
 
 
                                         <div className={styles.imgADescription}>
@@ -672,10 +736,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         :
                                                         <>
                                                             <img className={styles.imgOriginal}
-                                                                onClick={() => {
-                                                                    imgClick();
-                                                                }}
-                                                                src={book.img}/>
+                                                                 onClick={() => {
+                                                                     imgClick();
+                                                                 }}
+                                                                 src={book.img}/>
 
 
                                                             <input
@@ -703,39 +767,51 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 <div className={styles.headerTextarea}>
                                                     <h5>Résumé</h5>
                                                     <div className={styles.btn}>
-                                                        <div
-                                                            onClick={() => router.push({
-                                                                pathname: '/livre/' + book._id,
-                                                                query: book.slug
-                                                            })}
-                                                            className={styles.seeBtn}><EyeSolid/>
-                                                        </div>
+                                                        <Tippy visible={tippyCopy} content={'Url copiée !'}>
+                                                            <div
+                                                                onClick={() => {copyLink()}
+                                                                }
+                                                                className={styles.seeBtn}><ShareIcon/>
+                                                            </div>
+
+                                                        </Tippy>
+
+                                                        <Tippy trigger={'mouseenter'} content={'Voir'}>
+                                                            <div
+                                                                onClick={() => router.push({
+                                                                    pathname: '/livre/' + book._id,
+                                                                    query: book.slug
+                                                                })}
+                                                                className={styles.seeBtn}><EyeSolid/>
+                                                            </div>
+                                                        </Tippy>
+
                                                         <button
                                                             onClick={() => sumUpdate()}
                                                             className={newSummary !== book.summary ? styles.activeBtn : ''}
                                                         >Modifier
                                                         </button>
+
                                                     </div>
 
                                                 </div>
                                                 {
                                                     errSummary &&
-                                                    <p className={styles.errMsgSummary}>Impossible de modifier le résumé</p>
+                                                    <p className={styles.errMsgSummary}>Impossible de modifier le
+                                                        résumé</p>
                                                 }
 
                                                 {
                                                     book?.summary?.length !== 0 ?
-                                                        <textarea onChange={(e) => setNewSummary(e.target.value)}>
-                                                    {newSummary}
-                                            </textarea>
+                                                        <textarea onChange={(e) => setNewSummary(e.target.value)}
+                                                                  value={newSummary}/>
 
                                                         :
                                                         <textarea
                                                             placeholder={"Ajoutez un résumé pour donnez envie à vos lecteurs."}
                                                             onChange={(e) => setNewSummary(e.target.value)}
-                                                        >
+                                                        />
 
-                                                    </textarea>
                                                 }
 
                                             </div>
@@ -753,7 +829,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <img src={'/assets/stats/likes.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book.likes}</p>
-                                                            <p className={styles.labelStats}>j'aimes <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.labelStats}>j'aimes <ChatBubbleBottomCenterTextIcon/>
+                                                            </p>
                                                         </div>
 
                                                     </div>
@@ -762,7 +839,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                         <div>
                                                             <p className={styles.valueStats}>{book?.stats?.view}</p>
-                                                            <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/>
+                                                            </p>
                                                         </div>
 
 
@@ -779,8 +857,9 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <div>
                                                             <p className={styles.valueStats}>{book.stats.nbCommentary}</p>
 
-                                                            <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/></p>
-</div>
+                                                            <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/>
+                                                            </p>
+                                                        </div>
 
 
                                                     </div>
@@ -790,7 +869,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <img src={'/assets/diapo/chapter.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book.chapter_list.length}</p>
-                                                            <p className={styles.labelStats}>chapitre(s) <ChatBubbleBottomCenterTextIcon/></p>
+                                                            <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon/>
+                                                            </p>
 
                                                         </div>
 
@@ -808,10 +888,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                         {
                                             <div className={styles.chapterContainer}>
                                                 {
-                                                    !errListChapter && !loadingChapter && chapterList.length > 0 &&
+                                                    !errListChapter && !err.book && !loadingChapter && chapterList.length > 0 &&
                                                     <div className={anim.fadeIn}>
                                                         <div className={styles.headerChapter}>
-                                                            <h4>{book.chapter_list.length} chapitre(s)</h4>
+                                                            <h4>{book.chapter_list.length} chapitres</h4>
                                                             <div>
                                                                 <FilterBtn filter={activeFilter} onclick={() => {
                                                                     if (activeFilter === 'order') {
@@ -852,19 +932,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
                                                             >Commencez à écrire <CursorArrowRaysIcon/>
                                                             </button>
-                                                        </div> :
-
-                                                        errListChapter ?
-
-                                                            <div className={styles.emptyContainer}>
-                                                                <h6>Oups !</h6>
-                                                                <p>Impossible de récupérer les chapitres</p>
-                                                                <button
-                                                                    onClick={() => router.reload()}
-                                                                >Rafraîchir <ArrowUturnLeftIcon/>
-                                                                </button>
-                                                            </div>
-                                                            :
+                                                        </div>
+                                                        :
 
                                                             loadingChapter ?
                                                                 <div className={styles.loadingChapter}><Loader1/></div>
@@ -884,7 +953,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                 }
 
                                                                                 return (
-                                                                                    <>
+                                                                                    <Fragment key={item._id}>
                                                                                         <CardChapterDashboard
                                                                                             id={item._id}
                                                                                             date={item.date_creation}
@@ -895,7 +964,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                                         />
 
 
-                                                                                    </>
+                                                                                    </Fragment>
 
                                                                                 )
                                                                             }) :
@@ -905,7 +974,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                                     <div className={styles.seeMoreContainer}>
                                                                         {
-                                                                            seeMoreChapter && chapterList && !loadingScroll  &&
+                                                                            seeMoreChapter && chapterList && !loadingScroll &&
                                                                             <TextSeeMore
                                                                                 onclick={() => getMoreChapter()}
                                                                             />
@@ -922,7 +991,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                             <img src={'/assets/diapo/moon.png'}/>
                                                                         </div>
                                                                     }
-
 
 
                                                                 </div>

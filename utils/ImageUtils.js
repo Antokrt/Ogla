@@ -6,6 +6,15 @@ export const GetDefaultUserImg = () => {
 }
 
 
+export const GetDefaultUserImgWhenError = () => {
+    return process.env.NEXT_PUBLIC_DEFAULT_USER_IMG;
+}
+
+export const GetDefaultBookImgWhenError = () => {
+    return process.env.NEXT_PUBLIC_DEFAULT_BOOK_IMG;
+}
+
+
 export const renderPrediction = (img,type) => {
     return new Promise(async (resolve, reject) => {
         if(!img){

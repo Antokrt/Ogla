@@ -6,11 +6,11 @@
 
 .pseudo{
   &::before{
-    content: '@';
+    content: 'Par ';
   }
-font-family: 'Montserrat Alternates',sans-serif;
-  color: rgba(111, 114, 117, 0.87);
-  font-size: 11px;
+font-family: 'Pt Sans',sans-serif;
+  opacity: 0.7;
+  font-size: 12px;
   font-weight: bold;
 }
 

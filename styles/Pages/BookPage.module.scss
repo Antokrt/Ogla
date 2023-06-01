@@ -29,7 +29,17 @@
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
   margin-top: 2vh;
+
+  .labelPresentation{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 1300px;
+  }
+
 }
 
 
@@ -42,9 +52,10 @@
   margin-right: 50px;
   gap: 10px;
   .img{
-    height: 200px;
+    height: 220px;
+    width: 220px;
     img{
-      border-radius: 25px;
+      border-radius: 15px;
       width: 100%;
       object-fit: cover;
       height: 100%;
@@ -67,8 +78,8 @@
 
   img{
     cursor: pointer;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     object-fit: cover;
   }
@@ -76,12 +87,9 @@
   p{
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Santral-Regular',sans-serif;
-    span{
-
-      font-weight: bold;
-      color: rgba(28, 35, 43, 0.84);
-    }
+    font-weight: bold;
+    font-family: 'Pt Sans',sans-serif;
+    opacity: 0.8;
   }
 }
 
@@ -98,6 +106,7 @@
       transition: 0.2s;
       filter: brightness(92%);
     }
+    transition: 0.2s;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,8 +116,8 @@
     background-color: $purpleLight;
     color: white;
     border-radius: 10px;
-    font-size: 11px;
-    font-family: "Santral-Regular",sans-serif;
+    font-size: 12px;
+    font-family: "Pt Sans",sans-serif;
     font-weight: bold;
 
     svg{
@@ -145,13 +154,14 @@ h4{
     h3{
       &:first-letter{
         text-transform: uppercase;
+        font-size: 22px;
       }
       margin-top: 10px;
 color: $darkBrown;
-      font-size: 20px;
-      font-family: "Santral-Regular",sans-serif;
+      font-size: 19px;
       font-weight: bold;
-      -webkit-text-stroke-width: 0.2px;
+      font-family: $primaryFont;
+
     }
 
     .snippet{
@@ -161,7 +171,7 @@ color: $darkBrown;
       font-size: 11px;
       color: rgba(28, 35, 43, 0.87);
       font-style: italic;
-      font-family: "Santral-Regular",sans-serif;
+      font-family: "Pt Sans",sans-serif;
     }
 
     .seeMore{
@@ -179,7 +189,7 @@ color: $darkBrown;
 }
 
 .btnFilter{
-  width: 50vw;
+  width: 1000px;
   height: auto;
   display: flex;
   align-items: center;
@@ -202,7 +212,7 @@ color: $darkBrown;
 
     p {
       margin-right: 10px;
-      font-family: "Santral-Regular", sans-serif;
+      font-family: $primaryFont;
       font-size: 11px;
     }
   }
@@ -235,9 +245,12 @@ color: $darkBrown;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 70%;
   height: auto;
   padding-bottom: 12vh;
+  .list{
+    display: flex;
+    width: 1000px;
+  }
 }
 
 .cursor {
@@ -254,8 +267,9 @@ color: $darkBrown;
 width: 180px;
   }
   p{
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: $primaryFont;
     color: rgba(28, 35, 43, 0.65);
+    font-weight: 500;
     padding: 0px 10px;
     span{
       font-weight: bold;
@@ -374,6 +388,8 @@ width: 180px;
   .imgBookPhone{
     z-index: 2;
     width: 200px;
+    max-height: 230px;
+    object-fit: cover;
     border-radius: 15px;
   }
 }
@@ -478,7 +494,6 @@ background-color: white;
     }
 
     h3{
-      text-transform: capitalize;
       font-family: 'Santral-Regular',sans-serif;
       font-weight: bold;
       font-size: 18px;
@@ -619,7 +634,7 @@ p{
   .linkPhone{
     cursor: pointer;
     font-size: 12px;
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: $primaryFont;
     border-bottom: solid 2px transparent;
     padding-bottom: 5px;
     transition: 0.1s;
@@ -650,7 +665,8 @@ p{
   padding-bottom: 20px;
   p{
     font-size: 15px;
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: $primaryFont;
+    font-weight: 500;
     font-style: italic;
     text-align: justify;
     word-break: break-word;
@@ -704,29 +720,18 @@ p{
 
 
 @media screen and (max-width: 1500px){
-  .btnFilter{
-    width:70% !important;
-  }
 
-  .contentChapterList{
-    width: 70%;
-  }
 }
 
 @media screen and (max-width: 1100px){
-  .chapterContainer{
-    width: 500px;
-  }
+.labelPresentation, .btnFilter, .list{
+  width: 800px!important;
+}
 }
 
 
 @media screen and (max-width: 900px){
-  .btnFilter{
-    width: 70% !important;
-  }
-  .contentChapterList{
-    width: 70% !important;
-  }
+
 }
 
 @media screen and (max-width: 800px){
@@ -735,7 +740,20 @@ p{
 flex-direction: column;
   }
 
+  .labelPresentation{
+    flex-direction: column;
+  }
+
+  .labelPresentation, .btnFilter,{
+    width: 90%!important;
+  }
+
+  .list{
+    width: 100% !important;
+  }
+
   .contentChapterList{
+    width: 90%;
     margin-top: 0!important;
   }
 
@@ -776,9 +794,6 @@ flex-direction: column;
     padding-right: 4%;
   }
 
-  .btnFilter,.contentChapterList{
-    width: 90% !important;
-  }
 }
 
 @media screen and (max-width: 600px){
@@ -798,7 +813,7 @@ flex-direction: column;
       white-space: pre;
     }
     .link{
-      gap: 10px!important;
+      gap: 15px!important;
       white-space: pre;
     }
     p{

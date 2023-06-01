@@ -1,4 +1,5 @@
 import styles from "../../../styles/Component/Dashboard/Card/CardChapter.module.scss";
+import anim from '../../../styles/utils/anim.module.scss';
 import Like from "../../layouts/Icons/Like";
 import {useRouter} from "next/router";
 import {Capitalize} from "../../../utils/String";
@@ -11,12 +12,12 @@ export const CardChapter = ({id,title,index,like,date, publish}) => {
         <div
             onClick={() => router.push({
                 pathname:'/dashboard/chapitre/'+ id,
-                query: {index}
+                query: {i:index}
             })}
-            className={styles.chapter}>
+            className={styles.chapter + ' ' + anim.fadeIn}>
             <div className={styles.headerChapter}>
                 <h6>Chapitre {index} </h6>
-                <h7>{Capitalize(title)} {!publish && <span className={styles.schema}>(Brouillon) </span>}</h7>
+                <h7 is={'h7'}>{Capitalize(title)} {!publish && <span className={styles.schema}>(Brouillon) </span>}</h7>
 
             </div>
 
