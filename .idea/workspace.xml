@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
