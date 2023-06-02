@@ -45,9 +45,9 @@
       gap: 15px;
       position: relative;
       text-align: left;
-      font-family: 'Lato', sans-serif;
-      -webkit-text-stroke-width: 1px;
-      font-size: 20px;
+      font-family: $primaryFont;
+      font-weight: bold;
+      font-size: 18px;
       margin-bottom: 10px;
       svg{
         cursor: pointer;
@@ -118,7 +118,7 @@
       cursor: pointer;
       position: relative;
       height: 30vh;
-      width: 30%;
+      width: 40%;
 
       .loaderImg{
         position: absolute;
@@ -132,7 +132,6 @@
       }
 
       img {
-
         transition: 0.2s;
         height: 100%;
         width: 100%;
@@ -194,9 +193,9 @@
           gap: 10px;
 
           .seeBtn {
-            &:hover{
+            &:active{
+              transform: scale(0.8);
               transition: 0.2s;
-              filter: brightness(95%);
             }
             transition: 0.2s;
             cursor: pointer;
@@ -207,13 +206,13 @@
             display: flex;
             justify-content: center;align-items: center;
             padding: 10px;
-            border-radius: 15px;
+            border-radius: 5px;
             background-color: #9844AD;
           }
 
           button {
-            box-shadow: $shadow;
 
+            box-shadow: $shadow;
             transition: 0.1s;
             cursor: initial;
             font-size: 10px;
@@ -221,7 +220,7 @@
             color: white;
             -webkit-text-stroke-width: 0.5px;
             letter-spacing: 1px;
-            font-family: 'Rebond Grotesque', sans-serif;
+            font-family: $primaryFont;
             padding: 8px 15px;
           }
         }
@@ -230,7 +229,8 @@
           margin-top: 2%;
           text-align: left;
           font-size: 12px;
-          font-family: 'Montserrat', sans-serif;
+          opacity: 0.8;
+          font-family: $primaryFont;
           padding-bottom: 5px;
           border-bottom: 1px solid rgba(90, 102, 115, 0.11);
           width: 100px;
@@ -260,12 +260,11 @@
         }
         padding: 2%;
         font-size: 13px;
-        color: rgba(28, 35, 43, 0.87);
-        font-family: "Montserrat", sans-serif;
+        font-family: $primaryFont;
         height: 100%;
         width: 100%;
+        opacity: 0.8;
         border: solid 1px rgba(90, 102, 115, 0.13);
-
         outline: none;
         resize: none;
         border-radius: 5px;
@@ -300,11 +299,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        align-items: center;
-        gap: 5px;
+        gap: 10px;
         width: 100%;
-        font-size: 16px;
-        font-family: 'Rebond Grotesque',sans-serif;
+        font-size: 15px;
+        font-family: $primaryFont;
         font-weight: bold;
         margin: 20px 0;
         svg{
@@ -337,9 +335,9 @@
             align-items: center;
             gap: 5px;
             font-size: 11px;
-            color: #5a6673;
-            font-family: 'Montserrat',sans-serif;
-
+            font-family: $primaryFont;
+            color: rgba(28, 35, 43, 0.82);
+            -webkit-text-stroke-width: 0.4px;
             svg{
               width: 12px;
             }
@@ -347,9 +345,9 @@
 
           .valueStats{
             text-align: right;
-            font-family: 'Lato',sans-serif;
+            font-family: $primaryFont;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
           }
         }
       }
@@ -653,7 +651,7 @@
       width: 100%;
       font-size: 0.8vw;
       color: #1C232B;
-      font-family: 'Montserrat', sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       margin-bottom: 20px;
     }
@@ -673,12 +671,12 @@
       justify-content: center;
       align-items: center;
       gap: 5px;
-      padding: 10px 20px;
+      padding: 8px 20px;
       background-color: #9844AD;
       color: white;
-      font-size: 10px;
+      font-size: 9px;
       border-radius: 15px;
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       letter-spacing: 1px;
       box-shadow: $shadow;
@@ -702,16 +700,17 @@
     }
 
     h6 {
-      font-family: 'Montserrat Alternates', sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       font-size: 18px;
     }
 
     p {
-      font-family: 'Rebond Grotesque', sans-serif;
+      font-family: $primaryFont;
       text-align: center;
       margin-bottom: 20px;
       font-size: 15px;
+      font-weight: 500;
     }
 
     button {
@@ -732,7 +731,7 @@
       font-size: 11px;
       background-color: #9844AD;
       color: white;
-      font-family: 'Santral-Regular', sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       border-radius: 5px;
       padding: 10px 20px;
@@ -800,7 +799,7 @@
 
 .potta {
   color: rgba(28, 35, 43, 0.58);
-  font-family: 'Open sans', sans-serif;
+  font-family: $primaryFont;
 }
 
 .activeBtn {
@@ -865,8 +864,8 @@
     border-radius: 5px;
     background-color: rgba(180, 185, 190, 0.13);
     padding: 1vh 2vw;
-    font-size: 12px;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-size: 11px;
+    font-family: $secondaryFont;
     color: rgba(28, 35, 43, 0.98);
     svg{
       width: 20px;

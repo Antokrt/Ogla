@@ -1,7 +1,7 @@
 import styles from '../styles/Component/Err/Err.module.scss';
 import {useRouter} from "next/router";
 import {ArrowLeftIcon} from "@heroicons/react/24/solid";
-import {ArrowLeftCircleIcon} from "@heroicons/react/24/outline";
+import {ArrowLeftCircleIcon} from "@heroicons/react/24/solid";
 
 export const ErrMsg = ({text,textBtn,click}) => {
 

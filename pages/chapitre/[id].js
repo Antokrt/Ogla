@@ -40,6 +40,7 @@ import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import {HeadPhoneBtn} from "../../Component/layouts/Btn/ActionBtn";
 import useOrientation from "../../utils/Orientation";
 import Footer from "../../Component/Footer";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -495,6 +496,15 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     }
 
+    const disableCopy = (e) => {
+        if(session && session.user.id === bookData?.author_id){
+            return null;
+        }
+        if(typeof window !== 'undefined'){
+            navigator.clipboard.writeText('Ogla ne permet ');
+        }
+    }
+
     return (
         <div className={styles.container}>
 
@@ -521,11 +531,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                     <div
                                         className={styles.containerC}>
 
-                                        <div className={styles.music}>
-
-                                            <HeadPhoneBtn/>
-                                        </div>
-
                                         <div
                                             className={hasToBeFixed ? styles.fixedActive + " " + styles.bannerChapter : styles.fixedInitial + " " + styles.bannerChapter}
                                             ref={headerFixed}
@@ -534,11 +539,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                             <div className={styles.title}>
                                                 <p>Chapitre {index}</p>
                                                 <h3>{Capitalize(chapterData.title)}</h3>
-                                            </div>
-                                            <div className={styles.thumbnailContainer}>
-                                                <p className={styles.category}><span>{bookData.category}</span></p>
-                                                <p className={styles.mSide}>{likes} like(s)</p>
-                                                <p>{bookData.chapter_list.length} chapitre(s) <BookOpenIcon /></p>
                                             </div>
                                         </div>
 
@@ -549,8 +549,9 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                     pathname:'/livre/'+ bookData?._id,
                                                     query:bookData?.slug
                                                 })}>{bookData.title}</h5>
-                                                <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}><img src={authorData.img}
-                                                                                                                     referrerPolicy={'no-referrer'} />{authorData.pseudo}
+                                                <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}>
+                                                    <img src={authorData.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                                         referrerPolicy={'no-referrer'} />{authorData.pseudo}
                                                 </h6>
                                             </div>
                                             <div className={styles.nextChapterContainer}>
@@ -560,9 +561,12 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                             <div className={styles.textContainer}>
                                                 {
                                                     chapterData &&
-                                                    <EditorContent editor={editorReadOnly}>
+                                                    <div onCopy={(e) => disableCopy(e)} >
+                                                        <EditorContent editor={editorReadOnly}>
 
-                                                    </EditorContent>
+                                                        </EditorContent>
+                                                    </div>
+
                                                 }
                                             </div>
                                             {
@@ -575,7 +579,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                             i: index + 1
                                                         },
                                                     })
-                                                }}>Suivant ({Capitalize(chapterData.navChapter.next.title)})</button>
+                                                }}>Suivant (<span>{Capitalize(chapterData.navChapter.next.title)}</span>)</button>
                                             }
                                         </div>
 

@@ -57,10 +57,9 @@
       transition: 0.1s;
       text-align: center;
       text-decoration: none;
-      color: rgba(28, 35, 43, 0.68);
+      color: rgba(28, 35, 43, 0.88);
       font-weight: bold;
-      font-family: "Lobster",
-      sans-serif;
+      font-family: "Branch", sans-serif;
     }
   }
 
@@ -71,6 +70,7 @@
   a,
   p {
     color: $darkBrown !important;
+    -webkit-text-stroke-width: 0.5px;
   }
 }
 

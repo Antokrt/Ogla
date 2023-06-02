@@ -13,8 +13,12 @@ const ReduceString = (str,limit) => {
     return str;
 }
 
+const MinimizeStr = (str) => {
+    return str.replace(/[-\s]/g, '').toLowerCase();
+}
+
 
 export {
-    Capitalize,ReduceString
+    Capitalize,ReduceString, MinimizeStr
 }
 

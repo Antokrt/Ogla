@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from "../../styles/Component/Category/CategoryHeader.module.scss";
 import Link from "next/link";
 import {Capitalize} from "../../utils/String";
@@ -11,11 +11,10 @@ import {selectCategories} from "../../store/slices/categorySlice";
 const CategoryHeader = () => {
 
     const router = useRouter();
-    const {
-        query: {cat},
-    } = router
     const theme = useSelector(selectTheme);
     const categories = useSelector(selectCategories);
+
+    const cat = router.query.id;
 
     return (
         <div className={theme? styles.container : styles.darkContainer}>
@@ -24,10 +23,10 @@ const CategoryHeader = () => {
                     return  (
                         <div
                      onClick={() => {
-                         router.push('/cat/' + item.name.toLowerCase())
+                         router.push('/cat/' + item.name.toLowerCase());
                      }}
                             key={item._id}
-                            className={Capitalize(cat) === item ? styles.active +" " + styles.book : styles.book}>
+                            className={cat && cat.toLowerCase() === item.name.toLowerCase() ? styles.active +" " + styles.book : styles.book}>
                             <img src="/assets/category/icons/drama.svg"/>
                         <p>{item.name}</p>
                         </div>

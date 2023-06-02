@@ -112,6 +112,7 @@ const NouveauChapitre = ({bookData, err}) => {
                 placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
+        enableInputRules:false,
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());
@@ -231,7 +232,7 @@ const NouveauChapitre = ({bookData, err}) => {
                     err.chapter && !loading &&
                     <div className={styles.errContainer}>
                         <ErrorDashboard
-                            title={'Impossible de récupérer ce chapitre'}
+                            title={'Impossible de récupérer ce chapitre (ERR-001)'}
                             img={'/assets/jim/angry2.png'}
                             link={() => router.push('/dashboard/books/')}
                             btn={'Retour'}
@@ -239,7 +240,6 @@ const NouveauChapitre = ({bookData, err}) => {
                                 '\n'}
                         />
                     </div>
-
                 }
 
 
@@ -466,18 +466,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                             onClick={() => sendData(true)}
                                         >Publier <CursorArrowRaysIcon/>
                                         </button>
-                                        <button onClick={() => {
-                                            const object = {
-                                                bookId: bookData?._id,
-                                                text: text,
-                                                content: JSON.stringify(content),
-                                                title: title
-                                            }
-                                            localStorage.setItem('new', JSON.stringify(object))
-                                        }
-                                        }>
 
-                                        </button>
                                     </div>
                                 </div>
 

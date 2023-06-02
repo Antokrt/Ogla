@@ -9,19 +9,20 @@ import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
 import { GetRandomBookService } from "../service/Book/BookService";
 import { useSession } from "next-auth/react";
-import { useSelector } from 'react-redux';
-import { selectTheme } from '../store/slices/themeSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {changeTheme, selectTheme} from '../store/slices/themeSlice';
+import {LockClosedIcon, MoonIcon, SunIcon} from "@heroicons/react/24/outline";
 
 
 export default function Footer() {
     const router = useRouter();
     const { data: session } = useSession();
-    const theme = useSelector(selectTheme)
+    const theme = useSelector(selectTheme);
+    const dispatch = useDispatch();
 
     const getRandomBook = () => {
         GetRandomBookService()
             .then((res) => {
-                console.log(res);
                 router.push({
                     pathname: '/livre/' + res._id,
                     query: res.slug
@@ -30,7 +31,7 @@ export default function Footer() {
     }
 
     return (
-        <div className={theme ? styles.container : styles.darkContainer}>
+        <div className={styles.container}>
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>
@@ -64,8 +65,14 @@ export default function Footer() {
 
                             <li style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
 
-                            <li><Link href="/"><a
-                                className={router.pathname === "/contact" ? styles.activeNav : ""}>Contact</a></Link></li>
+                            <li>
+                                {
+                                    theme ?
+                                        <SunIcon onClick={() => dispatch(changeTheme())}  className={styles.svgTheme}/>
+:
+<MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                }
+                            </li>
                         </ul>
                     </div>
 
@@ -75,7 +82,7 @@ export default function Footer() {
                             <li>Mentions légales</li>
                             <li>Données personnelles</li>
                             <li>Conditions générales</li>
-                            <li>Support</li>
+                            <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
                             <li>© OGLA Tous droits réservés 2023
                             </li>
 

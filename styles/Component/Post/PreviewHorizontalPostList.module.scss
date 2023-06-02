@@ -12,8 +12,8 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
-    font-family: 'Rebond Grotesque',sans-serif;
-    font-size: 14px;
+    font-family: 'Pt Sans',sans-serif;
+    font-size: 15px;
     font-weight: bold;
   }
   .title{
@@ -22,7 +22,7 @@
     justify-content: flex-start;
     font-size: 14px;
     width: 70%;
-    font-family: "Rebond Grotesque",sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
     border-bottom: solid 1px rgba(84, 89, 95, 0.09);
     padding-bottom: 5px;

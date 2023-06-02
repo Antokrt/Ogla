@@ -16,13 +16,11 @@ import { GetActiveMonthlyCateoryApi } from "./api/Category";
 import { Capitalize } from "../utils/String";
 import { useRouter } from "next/router";
 import { BannerBecameWriter } from "../Component/BannerBecameWriter";
-import { useDispatch, useSelector } from "react-redux";
-import { activeOrDisable, selectLoginModalStatus, setActiveModalState } from "../store/slices/modalSlice";
-import HeaderResponsive from '../Component/HeaderResponsive';
+
 import MusicHome from '../Component/MusicHome';
 import { DeleteAllNotifsService } from '../service/Notifications/NotificationsService';
 import ScreenSize from "../utils/Size";
-import { ReCAPTCHA } from "react-google-recaptcha";
+import HeaderResponsive from '../Component/HeaderResponsive';
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -154,7 +152,7 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
             }
             <BannerBecameWriter />
             <MusicHome />
-            <Footer></Footer>
+            <Footer/>
         </div>
     )
 }

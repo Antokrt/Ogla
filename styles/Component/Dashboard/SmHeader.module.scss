@@ -10,10 +10,10 @@
     &:first-letter{
       text-transform: uppercase;
     }
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: $primaryFont;
     color: #1C232B;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 

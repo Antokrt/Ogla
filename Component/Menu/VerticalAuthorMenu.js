@@ -19,6 +19,7 @@ import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 export default function VerticalAuthorMenu() {
 
@@ -33,7 +34,7 @@ export default function VerticalAuthorMenu() {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        var nb = 0;
+        let nb = 0;
         Notifs.forEach((elem) => {
             if (elem.open === false) {
                 setIsOpen(true);
@@ -56,8 +57,8 @@ export default function VerticalAuthorMenu() {
                 <div className={styles.navContainer}>
                     <ul>
                         <li onClick={() => router.push('/')}> <HomeIcon /> Accueil  </li>
-                        <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}> <BookOpenIcon /> Livres</li>
-                        <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon />Nouveau</li>
+                        <li className={isActiveMenuBooks ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/books')}><BookOpenIcon />Livres</li>
+                        <li className={router.pathname.startsWith('/dashboard/nouveau-livre') ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon />Nouveau</li>
                         <li onClick={() => {
                             if (Notifs.length > 0) {
                                 OpenAllService(Notifs[0].date_creation, session.user.id)
@@ -89,7 +90,8 @@ export default function VerticalAuthorMenu() {
 
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
-                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} />
+                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} 
+                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                         <Tippy
                             trigger="mouseenter"
                             content={"En ligne"}

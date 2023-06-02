@@ -14,14 +14,24 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 2% 2%;
-  min-width: 20vw;
+  height: 400px;
+  width: 500px;
   border-radius: 15px;
   background-color: white;
   box-shadow: $shadow;
 }
 
 .close {
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  &:hover{
+    transition: 0.2s;
+    filter: brightness(98%);
+  }
   position: absolute;
   width: 20px;
   right: 4%;
@@ -41,19 +51,28 @@
   }
   h5{
     font-size: calc(15px + 0.2vw);
-    font-family: 'Montserrat',sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
   }
   p{
+    text-align: center;
     color: #6b7077;
-    font-family: 'Poppins',sans-serif;
-    font-size: 12px;
+    font-family: $primaryFont;
+    font-size: 13px;
   }
 
 
 }
 
 .google{
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  &:hover{
+    transition: 0.2s;
+    filter: brightness(98%);
+  }
   margin-top: 2%;
   display: flex;
   justify-content: center;
@@ -74,7 +93,7 @@
   p{
     font-size: 12px;
     color: rgba(28, 35, 43, 0.8);
-    font-family: 'Poppins',sans-serif;
+    font-family:$primaryFont;
   }
 }
 
@@ -88,10 +107,10 @@
   label{
     text-align: left;
     width: 90%;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px;
-    font-family: "Montserrat",sans-serif;
+    font-family:$primaryFont;
   }
 
 
@@ -104,9 +123,9 @@
     }
     transition: 0.1s;
     outline: none!important;
-    font-family: "Montserrat",sans-serif;
+    font-family:$primaryFont;
     border-radius: 5px;
-    font-size: 11px;
+    font-size: 12px;
     border: solid 1px $border;
     margin-bottom: 10px;
     padding: 5px 10px;
@@ -120,18 +139,24 @@
   }
 
   .register{
+    font-family:$primaryFont;
+    opacity: 0.8;
+    font-weight: 400;
     cursor: pointer;
-    font-family: "Montserrat", sans-serif;
     text-decoration: underline;
-    color: rgb(66, 60, 53);
     font-size: 13px;
   }
 
 }
 
 .loginBtn{
-  &:hover {
-    color: black !important;
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  &:hover{
+    transition: 0.2s;
+    filter: brightness(98%);
   }
   margin-top: 20px;
   background-color: #9844AD;
@@ -140,7 +165,8 @@
   padding: 12px 5px;
   border-radius: 5px;
   font-weight: bold;
-  font-family: 'Montserrat Alternates',sans-serif;
+  letter-spacing: 0.5px;
+  font-family: $primaryFont;
 }
 
 .errMsg {
@@ -152,4 +178,59 @@
   font-family: "Poppins", sans-serif;
   font-style: italic;
   color: red;
+}
+
+
+@media screen and (max-width: 500px){
+  .container{
+    padding: 0% 2%;
+  }
+  .containerContent{
+    border-radius: 10px;
+    width: 400px;
+    height: auto;
+    padding: 5% 8%;
+  }
+}
+
+@media screen and (max-width: 350px){
+  .container{
+    padding: 0% 2%;
+    label,input{
+      font-size: 10px;
+    }
+    .register{
+      font-size: 11px;
+    }
+  }
+  .containerContent{
+    border-radius: 5px;
+
+    .loginBtn{
+      font-size: 10px;
+      padding: 10px 3px;
+    }
+
+    .headerModal{
+      p{
+        font-size: 11px;
+      }
+    }
+    .google{
+      margin: 5% 0%;
+      button{
+        font-size: 10px;
+        svg{
+          margin-right: 10px;
+          width: 20px;
+          padding: 12px 0px;
+        }
+      }
+    }
+    .btn{
+      gap: 10px;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
 }

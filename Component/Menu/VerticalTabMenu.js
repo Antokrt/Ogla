@@ -18,6 +18,7 @@ import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 export default function VerticalTabMenu() {
 
@@ -65,7 +66,7 @@ export default function VerticalTabMenu() {
                             animation={'scale'}
                             placement={'right'}
                             delay={[300, 0]}>
-                            <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}>
+                            <li className={isActiveMenuBooks ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/books')}>
                                 <BookOpenIcon />
                             </li>
                         </Tippy>
@@ -75,7 +76,7 @@ export default function VerticalTabMenu() {
                             animation={'scale'}
                             placement={'right'}
                             delay={[300, 0]}>
-                            <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon /></li>
+                            <li className={router.pathname.startsWith('/dashboard/nouveau-livre') ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon /></li>
                         </Tippy>
                         <Tippy
                             trigger="mouseenter"
@@ -128,7 +129,8 @@ export default function VerticalTabMenu() {
 
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
-                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} />
+                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}
+                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                         <Tippy
                             trigger="mouseenter"
                             content={"En ligne"}

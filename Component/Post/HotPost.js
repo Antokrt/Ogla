@@ -10,19 +10,19 @@ import {Capitalize} from "../../utils/String";
 import {ArrowsPointingInIcon, ForwardIcon, HeartIcon,ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 import BookSvg from "../layouts/Icons/BookSvg";
 import {useEffect} from "react";
+import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 
 export const HotPost = ({ img, title, category, author, nbChapter, description, likes, top, slug, id }) => {
     const router = useRouter();
     const theme = useSelector(selectTheme);
-    const [option, setOption] = useState(false);
 
     return (
         <div className={theme ? styles.container : styles.darkContainer} onClick={() => router.push({
             pathname: '/livre/' + id,
             query: slug
-        })} onMouseEnter={() => setOption(true)} onMouseLeave={() => setOption(false)}>
+        })}>
             <div className={styles.imgContainer}>
-                <img src={img} />
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
             </div>
             <div className={styles.thumbnail}>
                 <CountLike like={likes} />
@@ -36,19 +36,12 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
             <div className={styles.contentContainer}>
                 <div className={styles.header}>
                     <h6>{title}</h6>
-                    <p>
-                        <span className={styles.author}>
-                            {author}
-                        </span>
-                        <span className={styles.category}>
-                            {category}
-                        </span>
-                        <span className={styles.nbChapter}>
-                            Chapitre n°{nbChapter}
-                        </span>
-                    </p>
+                    <div className={styles.labelList}>
+                        <p>Par {Capitalize(author)}</p>
+                        <p className={styles.catHeader}>{category}</p>
+                    </div>
                 </div>
-                {
+          {/*      {
                     theme &&
                     <div className={styles.Tdescription}>
                     </div>
@@ -60,18 +53,13 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
                         <h4>Résumé</h4>
                         <div className={styles.aft}> </div>
                     </div>
-                }
+                }*/}
                 <div className={styles.description}>
-                    <p>{description} {description} </p>
+                    <p>{description}  </p>
                 </div>
                 <div></div>
             </div>
-            {
-                option &&
-                <div className={styles.option}>
-                    <BookOpenIcon /> Lire
-                </div>
-            }
+
         </div>
     )
 }
@@ -80,7 +68,7 @@ export const HotPostPhone = ({ img, title, category, author, nbChapter, descript
     return (
         <div data-after={Capitalize(category)} className={styles.containerPhone}>
             <div className={styles.headerPhone}>
-                <img src={img} />
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                 <div className={styles.likeThumbnailPhone}>
                     <p>{likes} like(s)</p>
                 </div>
@@ -90,7 +78,7 @@ export const HotPostPhone = ({ img, title, category, author, nbChapter, descript
                 </div>
             </div>
             <h6>{title}</h6>
-            <p className={styles.descriptionPhone}> {description}           </p>
+            <p className={styles.descriptionPhone}> {Capitalize(description)}           </p>
             <button className={styles.discoverPhone}>Découvrir <CursorArrowRaysIcon/></button>
         </div>
     )

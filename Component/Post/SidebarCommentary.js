@@ -1,7 +1,7 @@
 import styles from "../../styles/Component/Post/SidebarCommentary.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 import scroll from "../../styles/utils/scrollbar.module.scss";
-import {createRef, useEffect, useRef, useState} from "react";
+import {createRef, Fragment, useEffect, useRef, useState} from "react";
 import {CheckBadgeIcon} from "@heroicons/react/20/solid";
 import {BookOpenIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
@@ -169,11 +169,11 @@ const SidebarCommentary = ({
                     <p onClick={() => {
                         changeFilter('popular');
                     }}
-                       className={activeFilter === 'popular' && styles.filterActive}>Populaire(s)</p>
+                       className={activeFilter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
                     <p onClick={() => {
                         changeFilter('recent');
                     }}
-                       className={activeFilter === 'recent' && styles.filterActive}>Récent(s)</p>
+                       className={activeFilter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
                 </div>
             </div>
 
@@ -201,44 +201,47 @@ const SidebarCommentary = ({
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
                         return (
-                            <Commentary
-                                seeMoreAnswers={item.seeMoreAnswers}
-                                id={item._id}
-                                deleteComment={() => {
-                                    setOpenConfirmModalForDeleteAnswer(false);
-                                    setActiveCommentaryToDelete({
-                                        content: ReduceString(item.content,40),
-                                        id:item._id
-                                    })
-                                    setOpenConfirmModalForDeleteComment(true);
-                                }}
-                                deleteAanswer={(id,content) => {
-                                    setOpenConfirmModalForDeleteComment(false);
+                            <Fragment key={item._id}>
+                                <Commentary
+                                    seeMoreAnswers={item.seeMoreAnswers}
+                                    id={item._id}
+                                    deleteComment={() => {
+                                        setOpenConfirmModalForDeleteAnswer(false);
+                                        setActiveCommentaryToDelete({
+                                            content: ReduceString(item.content,40),
+                                            id:item._id
+                                        })
+                                        setOpenConfirmModalForDeleteComment(true);
+                                    }}
+                                    deleteAanswer={(id,content) => {
+                                        setOpenConfirmModalForDeleteComment(false);
 
-                                    setActiveAnswersToDelete({
-                                        content: ReduceString(content,40),
-                                        id:id
-                                    })
-                                    setOpenConfirmModalForDeleteAnswer(true);
-                                }}
-                                likeAanswer={(id) => likeAanswer(id)}
-                                likeComment={() => likeComment(item._id)}
-                                sendNewAnswer={(data) => sendNewAnswer(data)}
-                                answerPage={item.answersPage}
-                                newAnswerPage={() => newPageAnswer(item._id)}
-                                authorId={item.userId}
-                                hasLikeData={item.hasLike}
-                                content={Capitalize(item.content)}
-                                authorHasLike={item.authorHasLike}
-                                authorImg={authorImg}
-                                authorPseudo={author}
-                                nbAnswers={item.nbAnswers}
-                                likes={item.likes}
-                                img={item.img}
-                                date={item.date_creation}
-                                pseudo={item.pseudo}
-                                answers={item.answers}
-                            />
+                                        setActiveAnswersToDelete({
+                                            content: ReduceString(content,40),
+                                            id:id
+                                        })
+                                        setOpenConfirmModalForDeleteAnswer(true);
+                                    }}
+                                    likeAanswer={(id) => likeAanswer(id)}
+                                    likeComment={() => likeComment(item._id)}
+                                    sendNewAnswer={(data) => sendNewAnswer(data)}
+                                    answerPage={item.answersPage}
+                                    newAnswerPage={() => newPageAnswer(item._id)}
+                                    authorId={item.userId}
+                                    hasLikeData={item.hasLike}
+                                    content={Capitalize(item.content)}
+                                    authorHasLike={item.authorHasLike}
+                                    authorImg={authorImg}
+                                    authorPseudo={author}
+                                    nbAnswers={item.nbAnswers}
+                                    likes={item.likes}
+                                    img={item.img}
+                                    date={item.date_creation}
+                                    pseudo={item.pseudo}
+                                    answers={item.answers}
+                                />
+                            </Fragment>
+
 
                         )
                     })

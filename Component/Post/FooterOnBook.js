@@ -17,6 +17,8 @@ import SidebarPost from "./SidebarCommentary";
 import {LikeBtn, LikeBtnSidebar, LikeBtnSidebarPhone} from "../layouts/Btn/Like";
 import ScreenSize from "../../utils/Size";
 import useOrientation from "../../utils/Orientation";
+import {HeadPhoneBtn, HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
+import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 
 
 
@@ -31,9 +33,9 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
 
                 <div className={styles.titleContainer + ' ' + styles.child}>
-                    <img src={img}/>
+                    <img src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
                     <div>
-                        <h7>{title}</h7>
+                        <p className={styles.titleBook}>{title}</p>
                         <p>{like} like(s) - <span>{author}</span></p>
                     </div>
 
@@ -44,12 +46,17 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
                     <LikeBtnSidebar onLike={likeBook} isLike={hasLike}/>
                 </div>
 
+
                 <div className={styles.commentAndListContainer + ' ' + styles.child}>
 
-                    <div onClick={openCommentary}>
+                    <HeadPhoneBtnOnFooter/>
+
+
+                    <div className={styles.b} onClick={openCommentary}>
                         <ChatBubbleBottomCenterTextIcon/>
                         <p>{nbCommentary} commentaire(s) </p>
                     </div>
+
 
                 </div>
 

@@ -32,6 +32,7 @@ import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
+import Tippy from "@tippyjs/react";
 
 
 export async function getServerSideProps({req, params}) {
@@ -53,6 +54,7 @@ export async function getServerSideProps({req, params}) {
 
     return {
         props: {
+            key:params.id,
             err: {
                 chapter: chapterErrData,
                 book: bookErrData
@@ -70,24 +72,24 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [loading, setLoading] = useState(true);
     const [chapter, setChapter] = useState([]);
     const [book, setBook] = useState();
-    const [title, setTitle] = useState(chapterData.title);
-    const [content, setContent] = useState(JSON.parse(chapterData.content));
-    const [text, setText] = useState(chapterData.text);
+    const [title, setTitle] = useState(chapterData?.title);
+    const [content, setContent] = useState(JSON.parse(chapterData?.content));
+    const [text, setText] = useState(chapterData?.text);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
-    const index = router.query.index
+    const index = router.query.i
 
     useEffect(() => {
         setChapter(chapterData);
         setBook(bookData);
         setLoading(false);
-    }, [])
+    }, []);
 
 
     useEffect(() => {
-        if (JSON.stringify(content) !== chapterData.content || title !== chapterData.title) {
+        if (JSON.stringify(content) !== chapterData?.content || title !== chapterData.title) {
             setHasChange(true);
         } else {
             setHasChange(false);
@@ -103,6 +105,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
+        enableInputRules:false,
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());
@@ -189,12 +192,51 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 }
 
 
+                <>
+                    {
+                        err.chapter && !err.book &&
+                        <div className={styles.errContainer}>
+                            <ErrorDashboard
+                                title={'Impossible de récupérer ce chapitre (ERR-001)'}
+                                img={'/assets/jim/angry2.png'}
+                                link={() => router.push('/dashboard/books/')}
+                                btn={'Retour'}
+                                subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
+                                    '\n'}
+                            />
+                        </div>                    }
+
+                    {
+                        err.book && !err.chapter &&
+                        <div className={styles.errContainer}>
+                            <ErrorDashboard
+                                title={'Impossible de récupérer ce chapitre (ERR-002)'}
+                                img={'/assets/jim/angry2.png'}
+                                link={() => router.push('/dashboard/books/')}
+                                btn={'Retour'}
+                                subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
+                                    '\n'}
+                            />
+                        </div>                    }
+                    {
+                        err.book && err.chapter &&
+                        <div className={styles.errContainer}>
+                            <ErrorDashboard
+                                title={'Impossible de récupérer ce chapitre (ERR-003)'}
+                                img={'/assets/jim/angry2.png'}
+                                link={() => router.push('/dashboard/books/')}
+                                btn={'Retour'}
+                                subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
+                                    '\n'}
+                            />
+                        </div>                    }
+                </>
 
                 {
                     err.chapter || err.book && !loading &&
                     <div className={styles.errContainer}>
                         <ErrorDashboard
-                            title={'Impossible de récupérer ce chapitre'}
+                            title={'Impossible de récupérer ce chapitre (ERR-001)'}
                             img={'/assets/jim/angry2.png'}
                             link={() => router.push('/dashboard/books/')}
                             btn={'Retour'}
@@ -216,7 +258,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             onClick={() => router.push('/dashboard/books/' + book._id)}
                                         >{book.title}</h6>
                                         <ChevronRightIcon className={styles.arrow}/>
-                                        <p>{chapter.title} ({index})</p>
+                                        <p>{chapter?.title} ({index})</p>
                                     </div>
                                     <div className={styles.btnList}>
                                         {
@@ -240,26 +282,34 @@ export default function ChapitrePage({chapterData, bookData, err}) {
 
                                         {
                                             chapterData?.publish &&
-                                            <div
-                                                onClick={() => router.push({
-                                                    pathname: "/chapitre/" + chapterData._id, query: {
-                                                        name: chapterData?.title, slug: chapterData?.slug, i: index
-                                                    },
-                                                })}
-                                                className={styles.eyeDiv}>
-                                                <EyeIcon/>
-                                            </div>
+                                            <Tippy trigger={'mouseenter'} content={'Voir'}>
+                                                <div
+                                                    onClick={() => router.push({
+                                                        pathname: "/chapitre/" + chapterData._id, query: {
+                                                            name: chapterData?.title, slug: chapterData?.slug, i: index
+                                                        },
+                                                    })}
+                                                    className={styles.eyeDiv}>
+                                                    <EyeIcon/>
+                                                </div>
+                                            </Tippy>
+
                                         }
 
 
-                                        <div
-                                            onClick={() => {
-                                                setSeeConfirmModal(true);
-                                            }
-                                            }
-                                            className={styles.iconDiv}>
-                                            <TrashIcon/>
-                                        </div>
+                                        <Tippy trigger={'mouseenter'} content={'Supprimer'}>
+
+
+                                            <div
+                                                onClick={() => {
+                                                    setSeeConfirmModal(true);
+                                                }
+                                                }
+                                                className={styles.iconDiv}>
+                                                <TrashIcon/>
+                                            </div>
+                                        </Tippy>
+
 
 
                                     </div>
@@ -413,9 +463,13 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             <img src={book.img}/>
                                             <h3>{bookData?.title}</h3>
                                         </div>
-                                        <div className={styles.summary}>
-                                            <p>"{Capitalize(bookData?.summary)}"</p>
-                                        </div>
+                                        {
+                                            bookData?.summary.length > 0 &&
+                                            <div className={styles.summary}>
+                                                <p>"{Capitalize(bookData?.summary)}"</p>
+                                            </div>
+                                        }
+
 
                                         <div className={styles.statsPresentation}>
                                             <img src={'/assets/jim/cool2.png'}/>
@@ -504,7 +558,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
             {
                 seeConfirmModal &&
                 <ConfirmModal confirm={() => deleteThis()} btnConfirm={'Supprimer'}
-                              close={() => setSeeConfirmModal(false)} title={'Supprimer le chapitre'} subTitle={'Êtes-vous sûr de vouloir supprimer "'+chapter.title +'" ?'}/>
+                              close={() => setSeeConfirmModal(false)} img={book?.img} title={'Supprimer le chapitre'} subTitle={'Êtes-vous sûr de vouloir supprimer "'+chapter.title +'" ?'}/>
             }
         </div>
     )

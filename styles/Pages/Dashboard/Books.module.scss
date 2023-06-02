@@ -62,12 +62,13 @@ button{
   padding: 10px 15px;
 }
   p{
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: $primaryFont;
+    font-weight: bold;
     border-radius: 5px;
     padding: 6px 10px;
     background-color: rgba(152, 68, 173, 0.21);
     color: #9844AD;
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 .listContainer{
@@ -142,13 +143,13 @@ button{
     width: 70%;
     color: rgba(28, 35, 43, 0.87);
     h3{
-      font-size: 22px;
+      font-size: 24px;
       color: #1C232B!important;
-      font-family: 'Montserrat Alternates',sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
     }
     p{
-      font-family: 'Montserrat',sans-serif;
+      font-family: $primaryFont;
       font-size: 15px;
       text-align: left;
       line-height: 25px;
@@ -178,15 +179,19 @@ button{
     }
 
     button{
+      &:active{
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
       margin-top: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
       box-shadow: $shadow;
       padding: 15px 15px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
-      font-family: 'Poppins',sans-serif;
+      font-family: $primaryFont;
       background-color: #9844AD;
       width: 160px;
       color: white;

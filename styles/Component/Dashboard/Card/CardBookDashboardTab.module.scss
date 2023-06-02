@@ -35,7 +35,7 @@
   padding: 5px 10px;
   font-size: 10px;
   font-weight: bold;
-  font-family: "Poppins",sans-serif;
+  font-family: $primaryFont;
   background-color: #e94f37;
   color: white;
   gap: 5px;
@@ -94,8 +94,8 @@
       text-transform: uppercase;
     }
     color: rgba(28, 35, 43, 0.83);
-    font-size: 17px;
-    font-family: "Rebond Grotesque",sans-serif;
+    font-size: 15px;
+    font-family: $primaryFont;
     font-weight: bold;
     width: 300px;
   }
@@ -116,11 +116,8 @@
     text-align: right;
     color: #9844AD;
     font-size: 13px;
-    font-family: 'Lato',sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
-    span{
-      font-family: 'Rebond Grotesque',sans-serif;
-    }
   }
 
   .containerImgBook{
@@ -128,7 +125,7 @@
     justify-content: end;
     align-items: center;
     img{
-      width: 6vw;
+      width: 5vw;
 
     }
 
@@ -137,8 +134,9 @@
 
   p{
     font-size: 13px;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: $primaryFont;
     text-align: right;
+    -webkit-text-stroke-width: 0.2px;
     color: rgba(84, 89, 95, 0.84);
     border-radius: 5px;
     white-space: pre;

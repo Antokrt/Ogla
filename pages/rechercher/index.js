@@ -159,7 +159,8 @@ const SearchPage = ({ queryData, data, err }) => {
                                         setFilter('recent');
                                         searchNewBooks('recent');
                                     }}
-                                    className={filter === "recent" && styles.activeBtn}>Récent(s)</button>
+                                    className={filter === "recent" && styles.activeBtn}>Récent(s)
+                                </button>
                             </div>
                         </div>
                         <div className={styles.containerList}>

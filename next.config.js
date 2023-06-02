@@ -3,6 +3,8 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   env: {
+    maintenance: false,
+    NEXT_PUBLIC_URL:"http://localhost:3000/",
     NEXTAUTH_URL:"http://localhost:3000",
     NEXT_PUBLIC_SECRET:'secretcode',
     NEXT_PUBLIC_BASE_IMG_BOOK:'https://d1yqxmx1xam6ok.cloudfront.net/',
@@ -11,6 +13,8 @@ const nextConfig = {
     GOOGLE_CLIENT_ID:'1092772885175-pr1v5209i6c07o52utevpt9q0hp37g3d.apps.googleusercontent.com',
     GOOGLE_SECRET:'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',
     CALLBACK_URL: 'http://localhost:3008/auth/google/redirect',
+    NEXT_PUBLIC_DEFAULT_USER_IMG:'/assets/default/user/default.png',
+    NEXT_PUBLIC_DEFAULT_BOOK_IMG:'/assets/default/book/default.png',
     NEXT_PUBLIC_GOOGLE_SECRET_DELETE: 'Kg6Opr0HHPtufd8',
     NEXT_PUBLIC_SIGHTENGINE_BOOK_API_USER: '380892233',
     NEXT_PUBLIC_SIGHTENGINE_BOOK_API_SECRET: 'ZeyDv4MRrF58dsHEDXha',

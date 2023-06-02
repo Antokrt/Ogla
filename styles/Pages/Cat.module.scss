@@ -8,9 +8,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-image: url("/assets/blurry.svg");
-  background-size: 100%;
-  background-repeat: no-repeat;
 }
 
 .containerCategory{
@@ -27,21 +24,18 @@
     display: flex;
     justify-content: space-between;
     p{
-      color: rgba(28, 35, 43, 0.87);
-      font-size: 12px;
-      font-family: "Montserrat Alternates",sans-serif;
+      &:first-letter{
+        text-transform: uppercase;
+      }
+      font-size: 14px;
+      font-weight: bolder;
+      font-family: "Pt Sans",sans-serif;
     }
     h3 {
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-size: 16px;
-      -webkit-text-stroke-width: 1px;
-      stroke-width: 1px;
-      letter-spacing: 1px;
-      -webkit-text-stroke-color: #1C232B;
-      stroke: #1C232B;
       color: #1C232B;
-      letter-spacing: 1px;
-
+      font-weight: bold;
     }
   }
 
@@ -285,7 +279,7 @@
   align-items: center;
   width: 100%;
   margin: 50px 0px 0px 0px;
-  font-family: 'Rebond Grotesque',sans-serif;
+  font-family: $primaryFont;
   font-weight: bold;
 }
 
@@ -307,7 +301,7 @@
     margin-bottom: 30px;
 
     h3 {
-      font-family: "Montserrat Alternates", sans-serif;
+      font-family: "Pt Sans", sans-serif;
       font-size: 14px;
       font-weight: bold;
       border-bottom: 1px solid rgba(84, 89, 95, 0.22);
@@ -328,9 +322,9 @@
         cursor: pointer;
         // margin-right: 5px;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 12px;
         padding: 10px 20px;
-        font-family: "Montserrat Alternates", sans-serif;
+        font-family: "Pt Sans", sans-serif;
         color: #1C232B;
         transition: 0.1s;
         font-weight: bold;
@@ -363,14 +357,6 @@
   align-items: center;
   width: 100%;
   margin-bottom: 50px;
-}
-
-.containerSeeMore::after {
-  position: relative;
-  content: "";
-  width: 100%;
-  height: 1px;
-  background-color: #9844AD;
 }
 
 .hotContainer{

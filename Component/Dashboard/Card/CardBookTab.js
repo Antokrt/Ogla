@@ -45,7 +45,7 @@ export const CardBookDashboardTab = ({id, img, title,nbChapter,likes,category,da
                     <div className={styles.containerImgBook}>
                         <img src={'/assets/diapo/book.png'}/>
                     </div>
-                    <h7>{nbChapter}  <span>chapitre(s)</span></h7>
+                    <h7 is={'h7'}>{nbChapter}  <span>chapitre(s)</span></h7>
                     <div>
                         <p><span>{nbView}221</span> vue(s) totale(s)</p>
                         <p><span>221{likes}</span> like(s)</p>

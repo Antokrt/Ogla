@@ -1,4 +1,5 @@
-import styles from "../../styles/Component/Profil/ProfilAuthor.module.scss"
+import styles from "../../styles/Component/Profil/ProfilAuthor.module.scss";
+import anim from "../../styles/utils/anim.module.scss";
 import { useEffect, useState } from "react";
 
 import Instagram from "../layouts/Icons/Social/instagram";
@@ -8,6 +9,7 @@ import Facebook from "../layouts/Icons/Social/facebook";
 import { UpdateLinksProfilAuthor, deleteLink } from "../../service/Dashboard/BooksAuthorService";
 import { useSession } from "next-auth/react";
 import { toastDisplayError } from "../../utils/Toastify";
+import {CheckCircleIcon, PlusCircleIcon} from "@heroicons/react/24/solid";
 
 const ProfilAuthor = ({ type, content }) => {
 
@@ -18,9 +20,6 @@ const ProfilAuthor = ({ type, content }) => {
 
     useEffect(() => {
         setLink(content);
-        console.log(type);
-        console.log(content);
-        console.log(session.user.id)
     }, [content])
 
     function isValidFacebookUrl(url) {
@@ -48,7 +47,7 @@ const ProfilAuthor = ({ type, content }) => {
 
             case 2:
                 if (isValidTwitterUsername(social) === false)
-                    return toastDisplayError("Votre pseudonyme twitter doit commencer par '@'. Il doit également être un pseudonyme valide.");
+                    return toastDisplayError("Votre pseudo twitter doit commencer par '@'. Il doit également être un pseudonyme valide.");
                 UpdateLinksProfilAuthor(type, social)
                     .then(() => setLink(social))
                     .catch(() => toastDisplayError("Une erreur c'est produite."))
@@ -84,7 +83,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a href={"https://www.instagram.com/" + (link.substr(1))} target="_blank" style={{ color: "#fb3958" }}>
+                            <a title={link} href={"https://www.instagram.com/" + (link.substr(1))} target="_blank" style={{ color: "#fb3958" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -95,10 +94,10 @@ const ProfilAuthor = ({ type, content }) => {
                     }
                     {
                         change &&
-                        <div className={styles.changed}>
-                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
+                        <div className={styles.changed + ' ' + anim.fadeIn}>
+                            <input className={anim.fadeIn} onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
                             <div className={styles.options} >
-                                <CheckIcon className={styles.leftOption} onClick={changeLink}/>
+                                <CheckCircleIcon className={styles.leftOption} onClick={changeLink}/>
                                 <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
@@ -112,7 +111,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a href={"https://www.twitter.com/" + link} target="_blank" style={{ color: "#1Da1f2" }}>
+                            <a title={link} href={"https://www.twitter.com/" + link} target="_blank" style={{ color: "#1Da1f2" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -123,10 +122,10 @@ const ProfilAuthor = ({ type, content }) => {
                     }
                     {
                         change &&
-                        <div className={styles.changed}>
-                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
+                        <div className={styles.changed + ' ' + anim.fadeIn}>
+                            <input className={anim.fadeIn} onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"@"} defaultValue={"@" + link.substr(1)} />
                             <div className={styles.options} >
-                                <CheckIcon className={styles.leftOption} onClick={changeLink} />
+                                <CheckCircleIcon className={styles.leftOption} onClick={changeLink} />
                                 <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
@@ -140,7 +139,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a href={link} target="_blank" style={{ color: "#3b5998" }}>
+                            <a title={link} href={link} target="_blank" style={{ color: "#3b5998" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -151,10 +150,10 @@ const ProfilAuthor = ({ type, content }) => {
                     }
                     {
                         change &&
-                        <div className={styles.changed}>
-                            <input onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"url"} defaultValue="https://" />
+                        <div className={styles.changed + ' ' + anim.fadeIn}>
+                            <input className={anim.fadeIn} onChange={(e) => setSocial(e.target.value)} type={"text"} placeholder={"url"} defaultValue="https://" />
                             <div className={styles.options} >
-                                <CheckIcon className={styles.leftOption} onClick={changeLink} />
+                                <CheckCircleIcon className={styles.leftOption} onClick={changeLink} />
                                 <ArrowUturnLeftIcon className={styles.rightOption} onClick={() => setChange(false)} />
                             </div>
                         </div>
@@ -165,9 +164,7 @@ const ProfilAuthor = ({ type, content }) => {
                 link.length === 0 && !change &&
                 <div className={styles.empty}>
                     <h4> C'est vide...  </h4>
-                    <div className={styles.add} onClick={() => setChange(true)}>
-                        <PlusSmallIcon />
-                    </div>
+                        <PlusCircleIcon  onClick={() => setChange(true)}/>
                 </div>
             }
         </div>

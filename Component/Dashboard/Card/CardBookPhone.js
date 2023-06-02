@@ -36,11 +36,11 @@ export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbV
 
             <div className={styles.containerLabel}>
                 <div className={styles.chapters}>
-                    <p className={styles.ch}><span> 120 </span> chapitres</p>
+                    <p className={styles.ch}><span> {nbChapter} </span> chapitres</p>
                     <p className={styles.cat}>{Capitalize(category)}</p>
                 </div>
 
-                <p className={styles.likes}><span>382{likes}</span> like(s)</p>
+                <p className={styles.likes}><span>{likes}</span> like(s)</p>
             </div>
 
             <button className={styles.btn} onClick={() => {

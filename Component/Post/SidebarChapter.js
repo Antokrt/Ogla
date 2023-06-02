@@ -74,11 +74,11 @@ const SidebarChapter = ({
                 pathname: '/livre/' + bookId,
                 query: bookSlug
             })}>{Capitalize(bookTitle)} </span>  &nbsp; ({nbChapters} chapitre(s))</p>
-            <p onClick={() => router.push('/auteur/' + 'Judy McLaren')}><span>{author}</span></p>
+            <p onClick={() => router.push('/auteur/' + 'Judy McLaren')}><span>logo</span></p>
         </div>
 
         <div className={styles.titleSection}>
-            <h5>{title}</h5>
+            <h5>Tous les chapitres</h5>
             <div>
 
                 <BarsArrowDownIcon onClick={() => {

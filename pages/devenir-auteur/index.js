@@ -233,6 +233,7 @@ const DevenirAuteur = () => {
                                 Votre nom d'auteur remplacera votre pseudo
                             </p>
                             <Field
+                                autoComplete={'off'}
                                 className={styles.pseudoChange}
                                 id={'pseudo'}
                                 type={"text"}
@@ -284,6 +285,7 @@ const DevenirAuteur = () => {
                     <ErrorMessage name={"description"} />
                 </p>
                 <Field
+                    autoComplete={'off'}
                     id={'description'}
                     type={"text"}
                     name={"description"}

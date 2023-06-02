@@ -22,8 +22,7 @@
 
       position: relative;
       font-size: 10vh;
-      font-family: "Branch",
-      sans-serif;
+      font-family: "Branch", sans-serif;
       font-weight: bold;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
@@ -35,8 +34,8 @@
     p {
       text-align: center;
       font-size: 15px;
-      font-family: "Rebond Grotesque", sans-serif;
-      color: rgb(84, 89, 95);
+      opacity: 0.8;
+      font-family: $primaryFont;
     }
   }
 

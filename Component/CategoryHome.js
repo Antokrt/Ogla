@@ -1,6 +1,7 @@
 import styles from '../styles/Component/Category/CategoryHome.module.scss';
 import {ArrowSmallLeftIcon, ArrowSmallRightIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/outline";
 import CategoryCard from "./Category/CategoryCard";
+import {useSelector} from "react-redux";
 
 const CategoryHome = () => {
 return (
@@ -13,9 +14,10 @@ return (
                 </div>
             </div>
             <div className={styles.listContainer}>
+
                 <CategoryCard title={'Action'} category={'action'}/>
                 <CategoryCard title={'Horreur'} category={'horror'}/>
-                <CategoryCard title={'Drama'} category={'drama'}/>
+                <CategoryCard title={'Romance'} category={'romance'}/>
                 <CategoryCard title={'Fantaisie'} category={'fantaisie'}/>
                 <CategoryCard title={'Science Fiction'} category={'sf1'}/>
             </div>

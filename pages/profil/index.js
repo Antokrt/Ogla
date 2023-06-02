@@ -311,7 +311,7 @@ const Profil = ({ profilData, err }) => {
                             }
 
                             <button onClick={(e) => changePassword(e)}
-                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Modifier
+                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
                             </button>
                         </>
                             :
@@ -334,17 +334,51 @@ const Profil = ({ profilData, err }) => {
             <div className={styles.writer}>
                 <div className={styles.lContainerWriter}>
 
-                    <h5 className={styles.title}>Devenu écrivain
-                        le <span>{FormatDateStr(profilData.register_date)}</span></h5>
-                    <div className={styles.formWriter}>
+                    <div className={styles.containerImg}>
+                        <img src={profilData?.img}/>
+                        <h5>Ecrivain <span>OGLA</span></h5>
+                    </div>
+
+                    <div className={styles.headerWriterStats}>
+                        <h5>Devenu écrivain
+                            le <span>{FormatDateStr(profilData?.register_date)}</span></h5>
+
+                        <p>{profilData.author.likes} j'aimes</p>
+                    </div>
+
+                    <div className={styles.containerPresentation}>
+                        <div className={styles.headerPresentation}>
+                            <h6>Présentation
+                            </h6>
+                            <button onClick={() => {
+                                if (profil.author.description !== newPresentation) {
+                                    updateDescription();
+                                }
+                            }}
+                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                            </button>
+                        </div>
+
+
                         {
-                            width > 1150 &&
-                            <div className={styles.hWriter}>
-                                <img src={profil.img} />
-                                <h5>Quelques statistiques</h5>
-                            </div>
+                            profil.author.description === "" || !profil.author.description ?
+                                <textarea
+                                    onChange={(e) => setNewPresentation(e.target.value)}
+                                    className={scroll.scrollbar}
+                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
+                                :
+                                <textarea
+                                    onChange={(e) => setNewPresentation(e.target.value)}
+                                    className={scroll.scrollbar}
+                                    value={newPresentation} />
                         }
-                        {
+
+
+                    </div>
+
+                    <div className={styles.formWriter}>
+
+             {/*           {
                             width > 1150 &&
                             <div className={styles.headerWriter}>
                                 <div className={styles.itemWriter}>
@@ -362,8 +396,8 @@ const Profil = ({ profilData, err }) => {
                                 </div>
 
                             </div>
-                        }
-                        {
+                        }*/}
+                  {/*      {
                             width <= 1150 &&
                             <div className={styles.phoneHeaderAuthor}>
                                 <img src={profil.img} />
@@ -389,9 +423,9 @@ const Profil = ({ profilData, err }) => {
                                     </div>
                                 </div>
                             </div>
-                        }
+                        }*/}
 
-                        <div className={styles.stats}>
+     {/*                   <div className={styles.stats}>
                             <div className={styles.writerItem}>
                                 <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
                                 <p className={styles.value}>La quete du maitre <span>21201</span></p>
@@ -406,39 +440,11 @@ const Profil = ({ profilData, err }) => {
                                 <p className={styles.label}>Chapitre le plus vue <EyeIcon /> </p>
                                 <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
                             </div>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
                 <div className={styles.rContainerWriter}>
-                    <h5 className={styles.title}>Éditer le profil</h5>
-                    <div className={styles.containerPresentation}>
-                        <div className={styles.headerPresentation}>
-                            <h6>Présentation</h6>
-                            <button onClick={() => {
-                                if (profil.author.description !== newPresentation) {
-                                    updateDescription();
-                                }
-                            }}
-                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
-                            </button>
-                        </div>
 
-
-                        {
-                            profil.author.description === "" || !profil.author.description ?
-                                <textarea
-                                    onChange={(e) => setNewPresentation(e.target.value)}
-                                    className={scroll.scrollbar}
-                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
-                                :
-                                <textarea
-                                    onChange={(e) => setNewPresentation(e.target.value)}
-                                    className={scroll.scrollbar}
-                                    value={newPresentation} />
-                        }
-
-
-                    </div>
 
                     <div className={styles.containerSocial}>
                         <div className={styles.headSocial}>
@@ -660,20 +666,9 @@ const Profil = ({ profilData, err }) => {
                                 </div>
                             }
                             {
-                                width <= 800 &&
+                                width <= 800 && activeLink === 'settings' &&
                                 <div className={styles.headerTitlePhone}>
-                                    {
-                                        activeLink === "profil" &&
-                                        <h2> Profil </h2>
-                                    }
-                                    {
-                                        activeLink === "writer" &&
-                                        <h2> Ecrivain </h2>
-                                    }
-                                    {
-                                        activeLink === "settings" &&
                                         <h2> Réglages </h2>
-                                    }
                                 </div>
                             }
                             <div className={styles.containerItem}>

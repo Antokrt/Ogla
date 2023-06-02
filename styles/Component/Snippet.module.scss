@@ -1,3 +1,4 @@
+@import "styles/utils/var";
 .container{
   display: flex;
   flex-direction: column;
@@ -10,9 +11,9 @@
     cursor: pointer;
     color: #9844AD;
     margin-left: 5px;
-    font-style: initial;
-    font-family: "Santral-Regular", sans-serif;
-    font-size: 12px;
+    font-family: 'Pt Sans',sans-serif;
+    font-weight: bold;
+    font-size: 11px;
     margin-bottom: 10px;
     text-align: left;
     width: 100%;
@@ -20,15 +21,18 @@
 }
 
 .snippet{
+  &:first-letter{
+    text-transform: uppercase;
+  }
+  font-weight: 500;
   width: 100%;
   margin: 10px 0px;
   overflow: hidden;
   word-break: break-word;
-  font-size: 14px;
-  color: rgba(28, 35, 43, 0.87);
-  font-style: italic;
+  font-size: 15px;
+  opacity: 0.6;
   text-align: justify;
-  font-family: "Montserrat", sans-serif;
+  font-family: $primaryFont;
   padding: 0px 1px;
 }
 

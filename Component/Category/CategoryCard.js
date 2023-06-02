@@ -19,7 +19,7 @@ const CategoryCard = (props) =>{
             case 'horror':
                 return <HorrorSvg/>
 
-            case 'drama':
+            case 'romance':
                 return <DramaSvg/>
 
             case 'fantaisie':

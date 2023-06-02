@@ -15,7 +15,7 @@
     justify-content: space-between;
     height: auto;
     padding: 15px 15px;
-    background-color: #1C232B;
+    background-color: #9844AD;
     span{
       cursor: pointer;
     }
@@ -26,7 +26,7 @@
       align-items: center;
       font-size: 10px;
       color: white;
-      font-family: "Montserrat", sans-serif;
+      font-family: $primaryFont;
 
       svg {
         width: 15px;
@@ -136,6 +136,7 @@
     display: block;
     scroll-behavior: smooth;
 
+
     .chapterTitleResp{
       font-size: 16px;
       font-family: 'Santral-Regular',sans-serif;
@@ -171,15 +172,13 @@
         &:first-letter{
           font-size: 13px;
         }
-        font-family: "Santral-Regular", sans-serif;
+        font-family: $primaryFont;
         color: rgb(66, 60, 53);
         font-size: 12px;
         font-weight: bold;
       }
-
-
       span{
-        font-family: 'Santral-Regular',sans-serif;
+        font-family: $primaryFont;
         font-weight: initial;
         font-size: 12px;
         opacity: 0.8;
@@ -197,7 +196,7 @@
     padding-left: 15px;
     padding-bottom: 10px;
     border-bottom: solid 1px $grey;
-    background-color: #1C232B;
+    background-color: #9844AD;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 5px;
     h5 {
@@ -205,7 +204,8 @@
         text-transform: uppercase;
       }
       color: white;
-      font-family: "Montserrat Alternates", sans-serif;
+      font-family: $primaryFont;
+      font-size: 13px;
       font-weight: bold;
       margin-bottom: 10px;
     }

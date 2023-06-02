@@ -36,10 +36,10 @@ export const CardChapterDashboard = ({id,index,title,likes,publish}) => {
             onClick={() => {
                 router.push({
                     pathname: "/dashboard/chapitre/" + id,
-                    query:index
+                    query:{i:index}
                 })
             }}
-            className={styles.containerDashboard}>
+            className={styles.containerDashboard + ' '}>
 
             <div className={styles.headerChapter}>
                 <h6>Chapitre {index} <span>{Capitalize(title)} {!publish && <>(brouillon)</>}  </span></h6>
