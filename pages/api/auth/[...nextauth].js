@@ -26,7 +26,6 @@ async function refreshAccessToken(tokenObject) {
 
 
     } catch (error) {
-        console.log('herrre')
         console.log(error);
         return {
             ...tokenObject,

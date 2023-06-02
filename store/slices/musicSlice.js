@@ -11,8 +11,8 @@ export const musicSlice = createSlice({
     name: 'music',
     initialState,
     reducers: {
-        setActiveMusic: (state, action) => {
-            state.active = action.payload
+        setActiveMusic: (state) => {
+            state.active = !state.active
         },
         setIndexMusic:(state,action) => {
             if(state.index >= 7){

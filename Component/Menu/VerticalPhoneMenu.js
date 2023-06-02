@@ -1,5 +1,5 @@
 import styles from "../styles/Component/Menu/VerticalAuthorMenuPhone.module.scss";
-import { BellAlertIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { BellAlertIcon, BookOpenIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { PlusCircleIcon, BookmarkSquareIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
@@ -50,7 +50,7 @@ export default function VerticalPhoneMenu() {
                         router.push('/dashboard/books');
                     }
                 }} className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
-                    <BookmarkSquareIcon/>
+                    <BookOpenIcon />
                     <p>Mes livres</p>
                 </div>
 
@@ -59,12 +59,12 @@ export default function VerticalPhoneMenu() {
                     if(router.pathname !== '/dashboard/nouveau-livre'){
                         router.push('/dashboard/nouveau-livre');
                     }
-                }} className={styles.item}>
+                }} className={router.pathname === ('/dashboard/nouveau-livre') ? styles.item + ' ' + styles.activeItem : styles.item}>
                     <PlusCircleIcon/>
                     <p>Nouveau</p>
                 </div>
                 <div className={isOpen ? styles.item + ' ' + styles.notifItem : styles.item} onClick={() => {
-                    if (Notifs.lenght > 0) {
+                    if (Notifs.length > 0) {
                         OpenAllService(Notifs[0].date_creation, session.user.id)
                     }
                     dispatch(setActiveModalNotif(true));

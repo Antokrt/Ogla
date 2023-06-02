@@ -24,6 +24,7 @@ import { ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@
 import { PhotoIcon } from "@heroicons/react/20/solid";
 import { useSelector } from "react-redux";
 import { selectCategories } from "../../../store/slices/categorySlice";
+import { useEffect } from 'react';
 
 
 const New = () => {
@@ -293,7 +294,7 @@ const New = () => {
     return (
         <div className={styles.container}>
             {
-                width < 700/* && orientation === 'portrait' */ ?
+                width < 700 && height < 600 /* && orientation === 'portrait' */ ?
                     <VerticalPhoneMenu />
                     :
                     <>

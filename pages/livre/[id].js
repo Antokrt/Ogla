@@ -332,7 +332,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         setLikes(likes - 1);
                     } else {
                         setLikes(likes + 1);
-                        SendNotifService(authorData._id, 1, bookData._id)
+                        SendNotifService(authorData._id, 1, bookData._id, "null")
                     }
                 })
                 .catch((err) => console.log(err));
@@ -342,7 +342,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     }
 
     const likeComment = (id) => {
-        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id));
+        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id, bookData._id, "null"));
     }
 
     const newComment = (res) => {
@@ -355,7 +355,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             setTimeout(() => setHasToScroll(!hasToScroll), 10);
         }
         setNoComments(false);
-        SendNotifService(authorData._id, 10, bookData._id);
+        SendNotifService(authorData._id, 10, bookData._id, "null");
     }
 
     const deleteComment = (id) => {
@@ -371,9 +371,9 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         comments.forEach((elem) => {
             if (elem._id === data.target_id) {
                 if (authorData._id != session.user.id)
-                    SendNotifService(elem.userId, 20, data._id)
+                    SendNotifService(elem.userId, 20, bookData._id, "null")
                 else
-                    SendNotifService(elem.userId, 21, data._id)
+                    SendNotifService(elem.userId, 21, bookData._id, "null")
                 return;
             }
         })
@@ -384,7 +384,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     };
 
     const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id));
+        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id, bookData._id, "null"));
     }
 
     const loadMoreAnswer = (id) => {

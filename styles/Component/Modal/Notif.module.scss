@@ -1,7 +1,21 @@
 @import "styles/utils/var";
 
 .container {
+  &:hover {
+    background-color: rgba(184, 184, 184, 0.3764705882);
+    transition: 0.3s;
+
+    .itemNotif,
+    .itemNotifOpen {
+      transform: scale(1.05);
+    }
+  }
+
   position: relative;
+  transition: 0.3s;
+  border-top: solid 1px rgba(84, 89, 95, 0.09);
+  border-bottom: solid 1px rgba(84, 89, 95, 0.09);
+  overflow: hidden;
 
   svg {
     &:hover {
@@ -11,6 +25,8 @@
     height: 16px;
     color: rgba(28, 35, 43, 0.44);
   }
+
+
 
   .options {
     display: flex;
@@ -26,7 +42,6 @@
 
 .itemNotif,
 .itemNotifOpen {
-
   position: relative;
   cursor: pointer;
   transition: 0.3s;
@@ -36,8 +51,7 @@
   padding: 0% 14px;
   width: 100%;
   // margin-bottom: 20px;
-  border-top: solid 1px rgba(84, 89, 95, 0.09);
-  border-bottom: solid 1px rgba(84, 89, 95, 0.09);
+
 
   .cntImg {
     width: 50px;

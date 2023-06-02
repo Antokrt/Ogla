@@ -148,7 +148,7 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                 }
                 else {
                     setLikes(likes + 1);
-                    SendNotifService(profilAuthor._id,3,profilAuthor._id)
+                    SendNotifService(profilAuthor._id, 3, profilAuthor._id, "null")
                 }
             })
             .catch(() => toastDisplayError("Impossible d'aimer ce profil !"))

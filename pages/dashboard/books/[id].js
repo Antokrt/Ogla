@@ -52,9 +52,6 @@ import {CardChapterDashboard} from "../../../Component/Card/CardChapterPublic";
 import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 
-
-
-
 export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
@@ -106,9 +103,6 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [width, height] = ScreenSize();
     const orientation = useOrientation();
     const closeRef = useRef(null);
-
-
-
 
     const handleFileSelect = async (event) => {
         if (event?.target.files && event.target.files[0]) {

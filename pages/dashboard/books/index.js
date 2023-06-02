@@ -238,7 +238,10 @@ const Books = ({booksData, err, nbBooks}) => {
                                 <div className={styles.seeMoreContainer}>
                                     {
                                         seeMore && !loadingScroll &&
-                                        <TextSeeMore onclick={() => getMoreBooks()}/>
+                                        <button className={styles.seeMoreText} onClick={() => getMoreBooks()}>
+                                            Voir plus
+                                        </button>
+                                        // <TextSeeMore onclick={() => getMoreBooks()}/>
                                     }
                                     {
                                         loadingScroll &&

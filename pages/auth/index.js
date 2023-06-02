@@ -15,7 +15,7 @@ const Auth = () => {
     const [choice, setChoice] = useState("disable");
 
         useEffect(() => {
-            if(router.isReady){
+            if (router.isReady) {
                 if(query === "login" || query === "register" || query === 'forgotPassword'){
                     setChoice(query);
                 }
@@ -23,7 +23,6 @@ const Auth = () => {
                     setChoice('login')
                 }
             }
-
         }, [router.isReady]);
 
         if(session && !session?.error){
@@ -65,42 +64,6 @@ const Auth = () => {
                             />
                         }
                     </div>
-                    {/* <div className={styles.purple}></div> */}
-                    {/* <div className={styles.block}>
-                        <div className={styles.imgContainer}>
-                            <img src={"/assets/other/manStanding3.png"} />
-                        </div>
-                        {
-                            choice === "register" &&
-                            <Register login={() => {
-                                setChoice("login");
-                                setQuery("login");
-                            }}/>
-                        }
-                        {
-                            choice === "login" &&
-                                <Login register={() => {
-                                    setChoice("register");
-                                    setQuery("register");
-                                }}
-                                forgotPassword={() => {
-                                setChoice("forgotPassword");
-                                setQuery("forgotPassword")
-                                }
-                                }
-                                />
-                        }
-                        {
-                            choice === "forgotPassword" &&
-                            <ForgotPassword
-                            login={() => {
-                            setChoice("login");
-                            setQuery("login");
-                            }
-                            }
-                            />
-                        }
-                    </div> */}
                 </div>
             )
         }

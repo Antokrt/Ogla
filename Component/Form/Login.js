@@ -6,6 +6,7 @@ import { router } from "next/router";
 import { GoogleLoginBtn } from "../layouts/Btn/Link";
 import { ReCAPTCHA } from "react-google-recaptcha";
 import ScreenSize from "../../utils/Size";
+import { UserIcon } from "@heroicons/react/24/outline";
 
 const Login = ({ register, forgotPassword }) => {
 
@@ -70,7 +71,7 @@ const Login = ({ register, forgotPassword }) => {
                             width > 230 &&
                             <h1> Bon retour parmi nous !</h1>
                         }
-                                                {
+                        {
                             width <= 230 &&
                             <h1 className={styles.h1Connexion}> Connexion </h1>
                         }
@@ -78,23 +79,28 @@ const Login = ({ register, forgotPassword }) => {
                             Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
                             Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire.
                         </p>
-                        {/* <h1>Connexion </h1> */}
-
                     </div>
                     <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
                         <div className={styles.selectItem + " " + "fadeIn"}>
-                            <label htmlFor={"pseudo"}>Identifiant
-                                <span>
-                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
-                                </span>
-                            </label>
-                            <input type={"text"} name={"pseudo"} placeholder={"Email ou pseudo"}></input>
-                            <label htmlFor={"password"}>Mot de passe
-                                <span>
-                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
-                                </span>
-                            </label>
-                            <input value={'azerty'} type={"password"} name={"password"} placeholder={"Mot de passe"} />
+                            <div className={styles.inputContainer}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
+                                </svg>
+                                <input className={styles.inputId} type={"text"} name={"pseudo"} placeholder={" "}></input>
+                                <label htmlFor={"pseudo"} className={styles.labelId}>
+                                    Identifiant
+                                </label>
+                            </div>
+                            <div className={styles.inputContainer}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
+                                </svg>
+                                <input className={styles.inputPW} /*value={'azerty'}*/ type={"password"} name={"password"} placeholder={" "} />
+                                <label htmlFor={"password"} className={styles.labelPW}>
+                                    Mot de passe
+                                </label>
+                            </div>
+
                             {
                                 submitErr.show &&
                                 <p className={styles.submitErr + ' ' + styles.fadeIn}>{submitErr.msg}</p>

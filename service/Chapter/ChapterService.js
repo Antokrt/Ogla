@@ -10,7 +10,7 @@ export const GetChapterListService = (id,filter,page) => {
 
 export const GetChapterById = (id) => {
     return new Promise((resolve, reject) => {
-        instance.get('/chapter/' + id)
+        instance.get('/chapter/label/' + id)
         .then((res) => resolve(res.data))
         .catch((err) => reject(err));
     })

@@ -7,6 +7,7 @@ import {GetCategory} from "../../utils/CategoryUtils";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
 import {selectCategories} from "../../store/slices/categorySlice";
+
 const CategoryHeader = () => {
 
     const router = useRouter();

@@ -1,6 +1,6 @@
 import {SendNotifService} from "../service/Notifications/NotificationsService";
 
-export const LikeCommentReduce = (id, arr, authorId, userId) => {
+export const LikeCommentReduce = (id, arr, authorId, userId, targetDocumentId, secondTargetDocumentId) => {
     const newArr = [...arr];
     newArr.map((item) => {
         if (item._id === id) {
@@ -10,9 +10,9 @@ export const LikeCommentReduce = (id, arr, authorId, userId) => {
             else {
                 item.likes += 1;
                 if (authorId != userId)
-                    SendNotifService(item.userId, 4, id);
+                    SendNotifService(item.userId, 4, targetDocumentId, secondTargetDocumentId);
                 else
-                    SendNotifService(item.userId, 6, id);
+                    SendNotifService(item.userId, 6, targetDocumentId, secondTargetDocumentId);
             }
             item.hasLike = !item.hasLike;
         }
@@ -51,7 +51,7 @@ export const DeleteAnswerReduce = (prevComments, id) => {
     });
 };
 
-export const LikeAnswerReduce = (comments, replyId, authorId, userId) => {
+export const LikeAnswerReduce = (comments, replyId, authorId, userId, targetDocumentId, secondTargetDocumentId) => {
     const newArr = [...comments];
     newArr.map((comment) => {
         comment.answers.map((reply) => {
@@ -62,9 +62,9 @@ export const LikeAnswerReduce = (comments, replyId, authorId, userId) => {
                 else {
                     reply.likes += 1;
                     if (authorId != userId)
-                        SendNotifService(reply.userId, 5, replyId);
+                        SendNotifService(reply.userId, 5, targetDocumentId, secondTargetDocumentId);
                     else
-                        SendNotifService(reply.userId, 7, replyId);
+                        SendNotifService(reply.userId, 7, targetDocumentId, secondTargetDocumentId);
                 }
                 reply.hasLike = !reply.hasLike;
             }

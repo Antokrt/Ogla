@@ -149,7 +149,7 @@
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1030px) {
   .container {
     gap: 4vh !important;
     justify-content: center;
@@ -159,6 +159,15 @@
     gap: 4vh !important;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    padding-top: 80px;
+  }
+
+  .darkContainer {
   }
 }
 

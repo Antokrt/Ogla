@@ -2,18 +2,23 @@ import styles from "../styles/Component/Menu/VerticalAuthorMenu.module.scss";
 import {
     ArrowLeftOnRectangleIcon,
     BellAlertIcon,
+    BookOpenIcon,
     BookmarkSquareIcon,
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
 import { useEffect, useState } from "react";
 import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
 import { Capitalize } from "../../utils/String";
+import 'tippy.js/dist/tippy.css'
+import Tippy from "@tippyjs/react";
+import 'tippy.js/animations/scale.css';
+import { LogoutService } from "../../service/User/Account.service";
 
 export default function VerticalAuthorMenu() {
 
@@ -51,10 +56,10 @@ export default function VerticalAuthorMenu() {
                 <div className={styles.navContainer}>
                     <ul>
                         <li onClick={() => router.push('/')}> <HomeIcon /> Accueil  </li>
-                        <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon />Livres</li>
+                        <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}> <BookOpenIcon /> Livres</li>
                         <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon />Nouveau</li>
                         <li onClick={() => {
-                            if (Notifs.lenght > 0) {
+                            if (Notifs.length > 0) {
                                 OpenAllService(Notifs[0].date_creation, session.user.id)
                             }
                             dispatch(setActiveModalNotif(true));
@@ -72,14 +77,27 @@ export default function VerticalAuthorMenu() {
                 <div className={styles.navContainer}>
                     <ul>
                         <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon /> Support  </li>
-                        <li> <ArrowLeftOnRectangleIcon /> Déconnexion  </li>
+                        <li onClick={() => {
+                            LogoutService()
+                                .then(() => signOut()
+                                    .then(() => router.push('/')))
+                                .catch(() => signOut()
+                                    .then(() => router.push('/')))
+                        }}> <ArrowLeftOnRectangleIcon /> Déconnexion  </li>
                     </ul>
                 </div>
 
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
                         <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} />
-                        <span></span>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"En ligne"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <span></span>
+                        </Tippy>
                         <div className={styles.infos} onClick={() => goToProfil()}>
                             <p className={styles.name}>{Capitalize(session?.user.author.firstName)} {Capitalize(session?.user.author.lastName)}</p>
                             <p className={styles.pseudo}>@{session?.user.pseudo}</p>

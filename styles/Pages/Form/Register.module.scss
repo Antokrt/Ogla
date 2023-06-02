@@ -61,82 +61,142 @@
 }
 
 .form {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
+    // margin-top: 10px;
+    // display: flex;
+    // justify-content: center;
+    // flex-direction: column;
+    // width: 100%;
 
-    .date {
-        font-family: "Montserrat", sans-serif;
-    }
+    // .date {
+    //     font-family: "Montserrat", sans-serif;
+    // }
 
-    label {
-        position: relative;
-        text-align: left;
-        width: 100%;
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-family: "Montserrat", sans-serif;
+    // label {
+    //     position: relative;
+    //     text-align: left;
+    //     width: 100%;
+    //     font-size: 14px;
+    //     font-weight: bold;
+    //     margin-bottom: 5px;
+    //     font-family: "Montserrat", sans-serif;
 
-        span {
-            position: absolute;
-            right: -10px;
-            top: 5%;
-            color: red;
-            font-size: 8px;
-        }
-    }
+    //     span {
+    //         position: absolute;
+    //         right: -10px;
+    //         top: 5%;
+    //         color: red;
+    //         font-size: 8px;
+    //     }
+    // }
 
-    textarea {
-        &:focus {
-            box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-            transition: 0.1s;
-        }
+    // textarea {
+    //     &:focus {
+    //         box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    //         transition: 0.1s;
+    //     }
 
-        transition: 0.1s;
-        outline: none;
-        resize: none;
-        border: solid 1px $border;
-        padding: 8px 8px 50px 8px;
-        border-radius: 5px;
-        width: 100%;
-        font-size: 12px;
-        font-family: "Montserrat",
-        sans-serif;
-    }
+    //     transition: 0.1s;
+    //     outline: none;
+    //     resize: none;
+    //     border: solid 1px $border;
+    //     padding: 8px 8px 50px 8px;
+    //     border-radius: 5px;
+    //     width: 100%;
+    //     font-size: 12px;
+    //     font-family: "Montserrat",
+    //     sans-serif;
+    // }
 
-    input {
-        &:focus {
-            box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-            transition: 0.1s;
-        }
+    // input {
+    //     &:focus {
+    //         box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    //         transition: 0.1s;
+    //     }
 
-        &::placeholder {}
+    //     &::placeholder {}
 
-        cursor: text;
-        transition: 0.1s;
-        outline: none !important;
-        font-family: "Montserrat",
-        sans-serif;
-        border-radius: 5px;
-        font-size: 13px;
-        border: solid 1px $border;
-        margin-bottom: 10px;
-        margin-top: 7px;
-        padding: 14px 24px;
-        width: 100%;
-    }
+    //     cursor: text;
+    //     transition: 0.1s;
+    //     outline: none !important;
+    //     font-family: "Montserrat",
+    //     sans-serif;
+    //     border-radius: 5px;
+    //     font-size: 13px;
+    //     border: solid 1px $border;
+    //     margin-bottom: 10px;
+    //     margin-top: 7px;
+    //     padding: 14px 24px;
+    //     width: 100%;
+    // }
 
     .selectItem {
         width: 100%;
 
-        label {
+        // label {
+        //     svg {
+        //         height: 5px;
+        //         width: 7px;
+        //         fill: #e94f37;
+        //     }
+        // }
+
+        .inputContainer {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.479);
+            margin-bottom: 20px;
+
             svg {
-                height: 5px;
-                width: 7px;
-                fill: #e94f37;
+                height: 23px;
+            }
+
+            .labelEmail, .labelPseudo, .labelPW, .labelConfirm {
+                position: absolute;
+                left: 36px;
+                top: 15px;
+                z-index: 1;
+                text-align: left;
+                width: 100%;
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 5px;
+                font-family: "Montserrat", sans-serif;
+                transition: 0.4s;
+            }
+
+            .inputEmail, .inputPseudo, .inputPW, .inputConfirm {
+                position: relative;
+                z-index: 2;
+                cursor: text;
+                background: none;
+                outline: none !important;
+                font-family: "Montserrat",
+                    sans-serif;
+                border-radius: 5px;
+                font-size: 15px;
+                margin-left: 10px;
+                padding: 14px 5px;
+                width: 100%;
+            }
+
+            .inputEmail:focus+.labelEmail,
+            .inputPseudo:focus+.labelPseudo,
+            .inputPW:focus+.labelPW,
+            .inputConfirm:focus+.labelConfirm
+            {
+                top: -13px;
+                font-size: 10px;
+            }
+
+            .inputEmail:not(:placeholder-shown).inputEmail:not(:focus)+.labelEmail,
+            .inputPseudo:not(:placeholder-shown).inputPseudo:not(:focus)+.labelPseudo,
+            .inputPW:not(:placeholder-shown).inputPW:not(:focus)+.labelPW,
+            .inputConfirm:not(:placeholder-shown).inputConfirm:not(:focus)+.labelConfirm
+            {
+                top: -13px;
+                font-size: 10px;
             }
         }
     }
@@ -149,7 +209,6 @@
             right: 5px;
             transform: translate(-50%, -50%);
             color: #54595F;
-
         }
 
         margin-bottom: 10px;
@@ -189,13 +248,18 @@
 }
 
 .errMsgItem {
-    display: block;
+    position: absolute;
+    right: 0px;
+    top: -13px;
+    z-index: 1;
+    // display: block;
     text-align: left;
     font-size: 10px;
     font-family: "Poppins", sans-serif;
     font-style: italic;
     color: red;
-    margin-bottom: 5px;
+    // margin-bottom: 10px;
+    // margin-top: -20px;
 }
 
 .submitErr {
@@ -302,8 +366,23 @@
     }
 }
 
+@media screen and (max-width: 330px) {
+    .errMsgItem {
+        left: 0px;
+        bottom: 0px;
+        right: unset;
+        top: unset;
+    }
+}
+
+@media screen and (max-width: 260px) {
+    .lastOptions {
+        flex-direction: column;
+    }
+}
+
 @media screen and (max-height: 850px) {
       .containerImg {
-        min-height: 850px;
+        min-height: 740px;
       }
   }

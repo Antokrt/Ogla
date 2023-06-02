@@ -47,7 +47,7 @@ export async function getServerSideProps({ req }) {
 
 const Profil = ({ profilData, err }) => {
     const router = useRouter();
-    const [activeLink, setActiveLink] = useState('profil');
+    const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
     const { data: session, status } = useSession();
@@ -67,7 +67,6 @@ const Profil = ({ profilData, err }) => {
     const imgRef = useRef();
     const dispatch = useDispatch()
     const [width, height] = ScreenSize();
-
     const Notifs = useSelector(selectNotifs)
     const [isOpen, setIsOpen] = useState(false);
 
@@ -82,6 +81,14 @@ const Profil = ({ profilData, err }) => {
         if (nb === 0)
             setIsOpen(false);
     }, [Notifs])
+
+    useEffect(() => {
+        if (localStorage.getItem('side')) {
+            setActiveLink(localStorage.getItem('side'));
+            localStorage.removeItem('side');
+            checkSide();
+        }
+    }, []);
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -231,7 +238,7 @@ const Profil = ({ profilData, err }) => {
                             :
                             <img
                                 onClick={() => imgClick()}
-                                src={profil.img} alt={'Profil Pic'} />
+                                src={profil?.img} alt={'Profil Pic'} />
                     }
                     <input
                         style={{ display: 'none' }}
@@ -575,7 +582,7 @@ const Profil = ({ profilData, err }) => {
                         <p> Réglages </p>
                     </div>
                     <div className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => {
-                        if (Notifs.lenght > 0) {
+                        if (Notifs.length > 0) {
                             OpenAllService(Notifs[0].date_creation, session.user.id)
                         }
                         dispatch(setActiveModalNotif(true));
@@ -640,7 +647,7 @@ const Profil = ({ profilData, err }) => {
                                         className={activeLink === 'settings' && styles.activeMenu}>Réglages
                                     </button>
                                     <button onClick={() => {
-                                        if (Notifs.lenght > 0) {
+                                        if (Notifs.length > 0) {
                                             OpenAllService(Notifs[0].date_creation, session.user.id)
                                         }
                                         dispatch(setActiveModalNotif(true));

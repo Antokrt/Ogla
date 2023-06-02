@@ -11,7 +11,7 @@ export async function GetOneBookApi(id,req) {
 
 
 
-    console.log(booksJson)
+    // console.log(booksJson)
 
     if (booksJson.statusCode === 404) {
         booksJson.book = null;

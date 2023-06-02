@@ -20,11 +20,12 @@ import { io } from "socket.io-client";
 import { selectSocketStatus, setActiveSocket } from '../store/slices/socketSlice';
 import notifSlice from '../store/slices/notifSlice';
 import { useCallback } from 'react';
-import {addCategory, selectCategories} from "../store/slices/categorySlice";
+import { addCategory, selectCategories } from "../store/slices/categorySlice";
 import axios from "axios";
-import {instance} from "../service/config/Interceptor";
-import {toastDisplayInfo} from "../utils/Toastify";
+import { instance } from "../service/config/Interceptor";
+import { toastDisplayInfo } from "../utils/Toastify";
 import dynamic from "next/dynamic";
+import { GetAllNotifs } from '../service/Notifications/NotificationsService';
 
 function MyApp({ Component, pageProps }) {
 
@@ -33,7 +34,7 @@ function MyApp({ Component, pageProps }) {
 
     useEffect(() => {
         console.log('lel')
-    },[])
+    }, [])
 
 
 
@@ -45,10 +46,10 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} />
                 <Socket />
                 <ToastContainer toastStyle={{
-                    fontFamily:'Poppins',
+                    fontFamily: 'Poppins',
                 }} limit={3} />
-                <DynamicHeader/>
-                <GetCategories/>
+                {/* <DynamicHeader/> */}
+                <GetCategories />
             </Provider>
         </SessionProvider>
     )
@@ -66,7 +67,7 @@ function Modal() {
     }
 }
 
-function GetCategories(){
+function GetCategories() {
     const categories = useSelector(selectCategories);
     const dispatch = useDispatch();
 
@@ -77,11 +78,10 @@ function GetCategories(){
                     dispatch(addCategory(res.data));
                 })
         }
-    },[categories])
+    }, [categories])
 
     return <></>
 }
-
 
 function Notif() {
     const notifState = useSelector(selectNotifStatus);
@@ -104,7 +104,7 @@ function Notif() {
     }
 }
 
-const DynamicHeader = dynamic(() => import('../Component/Lofi'),{ssr:false})
+const DynamicHeader = dynamic(() => import('../Component/Lofi'), { ssr: false })
 
 function Socket() {
     const selectSocketState = useSelector(selectSocketStatus);
@@ -112,8 +112,18 @@ function Socket() {
     const dispatch = useDispatch();
     const { data: session } = useSession();
 
+
     const initializeSocket = useCallback(() => {
-        if (session) {
+        if (session && !session.user.settings.notif) {
+            GetAllNotifs()
+                .then((res) => {
+                    dispatch(setAllNotifs(res.data));
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+        else if (session && session.user.settings.notif) {
             let socket;
             if (!selectSocketState) {
                 socket = io("http://localhost:3008/notifications", {
@@ -138,9 +148,9 @@ function Socket() {
         }
     }, [dispatch, selectNotifsState, selectSocketState, session])
 
-    useEffect(() => {
-        initializeSocket();
-    }, [initializeSocket]);
+   useEffect(() => {
+       initializeSocket();
+   }, [session]);
 
     return (
         <h1 style={{ fontSize: "1px", zIndex: "-1", display: "none" }}>.</h1>

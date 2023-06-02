@@ -89,12 +89,13 @@
         width: 80%;
         span{
           position: absolute;
-          bottom: 4%;
-          left: 30px;
+          bottom: 10%;
+          left: 29px;
           height: 12px;
           width: 12px;
           border-radius: 50%;
-          background-color: #97fd97;
+          background-color: #1bce1b;
+          border: 2px solid white;
         }
         img{
           cursor: pointer;

@@ -4,11 +4,13 @@ import {router, useRouter} from "next/router";
 import { SearchBarService} from "../service/Search/SearchService";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../store/slices/themeSlice";
+import ScreenSize from "../utils/Size";
 
 export default function MainSearchBar({data,submit,width,height,query,search}) {
 
     const router = useRouter();
     const light = useSelector(selectTheme);
+    const [widthPage] = ScreenSize();
 
     return (
         <div style={{
@@ -29,9 +31,9 @@ export default function MainSearchBar({data,submit,width,height,query,search}) {
                 return null;
             }}>
                 {
-                    router.pathname === '/' &&
+                    router.pathname === '/' && widthPage > 1200 &&
                     <input
-                    className={router.pathname === '/' && styles.homeSearch}
+                    className={styles.homeSearch}
                     autoComplete={'off'}
                     onChange={(e) => {
                         query(e.target.value);

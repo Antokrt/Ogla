@@ -11,8 +11,9 @@
   border: solid 1px $border;
   background-color: white;
   border-radius: 10px;
-  z-index: 212 !important;
   position: relative;
+
+
 
   .imgContainer {
     width: 185px;
@@ -87,7 +88,7 @@
       &:first-letter {
         text-transform: uppercase;
       }
-
+      overflow: hidden;
       font-size: 18px;
       font-family: "Rebond Grotesque",sans-serif;
       -webkit-text-stroke-width: 1px;
@@ -98,8 +99,8 @@
     .header {
       position: relative;
       margin-bottom: 10px;
-      p {
 
+      p {
         display: flex;
         flex-direction: column;
         font-size: 12px;
@@ -127,6 +128,8 @@
         }
 
         .author {
+          width: 300px;
+          overflow: hidden;
           font-weight: bold;
           color: #9844AD;
         }
@@ -177,6 +180,7 @@
         font-size: 11px;
         color: rgba(28, 35, 43, 0.87);
         font-family: "Montserrat", sans-serif;
+        text-align: justify;
       }
     }
   }
@@ -274,6 +278,7 @@ p{
   }
 
   h6 {
+    overflow: hidden;
     font-size: 18px;
     font-family: "Rebond Grotesque", sans-serif;
     font-weight: 700;
@@ -331,7 +336,6 @@ p{
   box-shadow: $shadow;
   background: linear-gradient(180deg, #9533ad, #311959);
   border-radius: 10px;
-  z-index: 2;
   position: relative;
 
   .imgContainer {
@@ -409,6 +413,7 @@ p{
         text-transform: uppercase;
       }
 
+      overflow: hidden;
       font-size: 18px;
       font-family: "Rebond Grotesque",
       sans-serif;
@@ -560,6 +565,7 @@ p{
     }
 
     h6 {
+      overflow: hidden;
       font-size: 18px;
       font-family: "Rebond Grotesque", sans-serif;
       font-weight: 700;
@@ -616,21 +622,13 @@ p{
   }
 }
 
-// @media screen and (max-width: 700px) {
-//   .container {
-//     width: 500px;
-//   }
-
-//   .darkContainer {
-//     width: 500px;
-//   }
-//   .imgContainer{
-//     width: 40% !important;
-//   }
-//   .contentContainer{
-//     width: 60% !important;
-//   }
-// }
+@media screen and (max-width: 850px) {
+  .container {
+    flex-shrink: 0;
+    white-space:normal;
+    width: 500px;
+  }
+}
 
 // @media screen and (max-width: 600px) {
 //   .container {

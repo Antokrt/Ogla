@@ -13,7 +13,7 @@ export const ErrMsg = ({text,textBtn,click}) => {
             <img src={'/assets/jim/angry4.png'}/>
             <h4>Oups !</h4>
             <p>{text}</p>
-            <button onClick={click} ><ArrowLeftCircleIcon/> {textBtn}</button>
+            <button onClick={click}> <ArrowLeftCircleIcon/> {textBtn}</button>
         </div>
     )
 }
@@ -26,9 +26,9 @@ export const ErrMsgOnChapter = ({text,textBtn,click}) => {
         <div className={styles.containerChapter}>
 
             <img src={'/assets/jim/angry4.png'}/>
-            <h4>Oups !</h4>
-            <p>{text}</p>
-            <button onClick={click} > <ArrowLeftCircleIcon/> {textBtn}</button>
+            <h4> Oups !</h4>
+            <p> {text} </p>
+            <button onClick={click}> <ArrowLeftCircleIcon/> {textBtn}</button>
         </div>
     )
 }

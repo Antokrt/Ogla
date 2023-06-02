@@ -1,20 +1,23 @@
 @import "styles/utils/var";
-.container{
+
+.container {
   width: 100%;
 }
 
-.hot{
+.hot {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   align-items: center;
   margin-top: 50px;
+
   .headerHot {
     width: 1050px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     h4 {
       font-family: "Rebond Grotesque", sans-serif;
       font-size: 20px;
@@ -25,57 +28,60 @@
       color: #1C232B;
       letter-spacing: 1px;
     }
-    h5{
+
+    h5 {
       font-family: "Rebond Grotesque", sans-serif;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       text-decoration: underline;
-font-size: 12px;
+      font-size: 12px;
       color: $purpleLight;
-      svg{
+
+      svg {
         margin-left: 5px;
         width: 14px;
       }
     }
   }
-    .hotContainer{
-      &::-webkit-scrollbar {
-        height: 3px;
-      }
 
-      /* Handle */
-      &::-webkit-scrollbar-thumb {
-        background: rgba(28, 35, 43, 0.21);
-      }
-
-      display: flex;
-      justify-content: space-between;
-      width: 1050px;
-      margin-top: 50px;
+  .hotContainer {
+    &::-webkit-scrollbar {
+      height: 3px;
     }
 
-  .trendTitle{
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(28, 35, 43, 0.21);
+    }
+
+    display: flex;
+    justify-content: space-between;
+    width: 1050px;
+    margin-top: 50px;
+  }
+
+  .trendTitle {
     margin-top: 5vh;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: 'Rebond Grotesque', sans-serif;
     font-size: 15px;
     font-weight: bold;
     text-align: center;
 
-    strong{
+    strong {
       color: #9844AD;
     }
   }
 
-  .previewPostListContainer{
+  .previewPostListContainer {
     display: flex;
     align-items: center;
     gap: 10vh;
     border-radius: 10px;
     padding: 4vh;
 
-    .sep{
+    .sep {
       height: 330px;
       width: 1px;
       background-color: rgba(28, 35, 43, 0.1);
@@ -83,57 +89,61 @@ font-size: 12px;
   }
 }
 
-@media screen and (max-width: 1150px){
-  .hot{
-    margin-top: 80px!important;
+@media screen and (max-width: 1150px) {
+  .hot {
+    margin-top: 80px !important;
   }
-  .headerHot{
+
+  .headerHot {
     padding-right: 2%;
+    padding-left: 2%;
     width: 100% !important;
   }
 
-  .hotContainer{
+  .hotContainer {
     width: 95% !important;
   }
 }
 
-
-@media screen and (max-width: 850px){
-  .headerHot{
+@media screen and (max-width: 850px) {
+  .headerHot {
     padding-left: 5%;
     padding-right: 5%;
   }
-  .hotContainer{
-    margin-top: 40px!important;
+
+  .hotContainer {
+    margin-top: 40px !important;
     padding-bottom: 50px;
     padding-left: 5%;
+    padding-right: 5%;
     padding-top: 2%;
     width: 100% !important;
-    display: flex!important;
-    overflow-x: scroll!important;
+    display: flex !important;
+    overflow-x: scroll !important;
     white-space: nowrap;
     height: auto;
   }
 
-  .previewPostListContainer{
-    gap: 5vh!important;
+  .previewPostListContainer {
+    gap: 5vh !important;
   }
 }
 
-@media screen and (max-width: 700px){
-  .previewPostListContainer{
+@media screen and (max-width: 700px) {
+  .previewPostListContainer {
     flex-direction: column;
   }
-  .sep{
+
+  .sep {
     display: none;
   }
 }
 
-@media screen and (max-width: 450px){
-  .hot{
-  }
-  .hotContainer{
-    overflow-x: hidden!important;
+@media screen and (max-width: 450px) {
+  .hot {}
+
+  .hotContainer {
+    overflow-x: hidden !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;

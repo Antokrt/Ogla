@@ -6,27 +6,27 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  height: auto;                             
+  height: auto;
   background-color: white;
 
   .content {
     width: 100%;
     height: 100%;
   }
-  
+
   .containerImg {
     width: 50%;
     height: 100vh;
     display: flex;
     justify-content: flex-end;
-  
+
     img {
       height: 100%;
       width: 100%;
       object-fit: cover;
     }
   }
-  
+
   .formContainer {
     width: 100%;
     height: 100%;
@@ -34,7 +34,7 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .imgAbs {
     position: absolute;
     top: 10px;
@@ -55,21 +55,21 @@
     padding-top: 40px;
     padding-bottom: 10px;
   }
-  
+
   .leftBlock {
     width: 70%;
     max-width: 450px;
   }
-  
+
   .header {
     width: 100%;
     margin-bottom: 30px;
-  
+
     // img {
     //   height: 150px;
     //   margin-bottom: 10px;
     // }
-  
+
     h1 {
       font-size: 30px;
       margin-bottom: 10px;
@@ -80,7 +80,7 @@
       -webkit-text-stroke-color: #1C232B;
       stroke: #1C232B;
     }
-  
+
     p {
       color: #848095;
       text-align: justify;
@@ -92,42 +92,51 @@
       justify-content: center;
     }
   }
-  
+
   .form {
     margin-top: 10px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-  
+
     .date {
       font-family: "Montserrat", sans-serif;
     }
-  
-    label {
+
+    .inputContainer {
       position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border-bottom: 1px solid black;
+      margin-bottom: 30px;
+
+      svg {
+        height: 23px;
+      }
+    }
+
+    .labelId, .labelPW {
+      position: absolute;
+      left: 36px;
+      top: 15px;
+      z-index: 1;
       text-align: left;
       width: 100%;
       font-size: 14px;
       font-weight: bold;
       margin-bottom: 5px;
       font-family: "Montserrat", sans-serif;
-  
-      span {
-        position: absolute;
-        right: -10px;
-        top: 5%;
-        color: red;
-        font-size: 8px;
-      }
+      transition: 0.4s;
     }
-  
+
     textarea {
       &:focus {
         box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
         transition: 0.1s;
       }
-  
+
       transition: 0.1s;
       outline: none;
       resize: none;
@@ -139,31 +148,37 @@
       font-family: "Montserrat",
       sans-serif;
     }
-  
-    input {
-      &:focus {
-        box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-        transition: 0.1s;
-      }
-  
-      &::placeholder {}
-  
+
+    .inputId, .inputPW {
+      position: relative;
+      z-index: 2;
       cursor: text;
-      transition: 0.1s;
+      background: none;
       outline: none !important;
       font-family: "Montserrat",
-      sans-serif;
+        sans-serif;
       border-radius: 5px;
-      font-size: 13px;
-      border: solid 1px $border;
-      margin-bottom: 5px;
-      margin-top: 7px;
-      padding: 14px 24px;
+      font-size: 15px;
+      margin-left: 10px;
+      padding: 14px 5px;
       width: 100%;
     }
-    
-    .selectItem{
+
+    .inputId:focus+.labelId,
+    .inputPW:focus+.labelPW {
+      top: -13px;
+      font-size: 10px;
+    }
+
+    .inputId:not(:placeholder-shown).inputId:not(:focus)+.labelId,
+    .inputPW:not(:placeholder-shown).inputPW:not(:focus)+.labelPW {
+      top: -13px;
+      font-size: 10px;
+    }
+
+    .selectItem {
       width: 100%;
+      position: relative;
       label {
         svg {
           height: 5px;
@@ -172,7 +187,7 @@
         }
       }
     }
-  
+
     .selectCategory {
       svg {
         width: 10px;
@@ -181,18 +196,18 @@
         right: 5px;
         transform: translate(-50%, -50%);
         color: #54595F;
-  
+
       }
-  
+
       margin-bottom: 10px;
       position: relative;
-  
+
       select {
         &:focus {
           box-shadow: $shadow;
           transition: 0.1s;
         }
-  
+
         transition: 0.1s;
         width: 100%;
         background-color: white;
@@ -208,40 +223,42 @@
         appearance: none;
         -webkit-appearance: none;
         font-size: 12px;
-  
+
         option {
           &:first-letter {
             text-transform: capitalize;
           }
-  
+
           color: #1C232B;
         }
       }
     }
   }
-  
-  .submitErr{
+
+  .submitErr {
+    position: absolute;
+    bottom: 8px;
     margin-top: 5px;
     margin-bottom: 20px;
     font-size: 10px;
-    font-family: "Poppins",sans-serif;
+    font-family: "Poppins", sans-serif;
     font-style: italic;
     color: red;
   }
-  
+
   .conditions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
     width: 100%;
-  
+
     p {
       &:hover {
         color: rgb(118, 10, 145);
         transition: 0.3s;
       }
-  
+
       transition: 0.3s;
       cursor: pointer;
       text-align: right;
@@ -251,59 +268,58 @@
       font-weight: bold;
       font-size: 13px;
     }
-  
+
     label {
       margin: 0 !important;
       color: $darkBrown;
-  
+
       span {
         cursor: pointer;
         text-decoration: underline;
         color: $purpleLight;
       }
     }
-  
+
     input {
       cursor: pointer;
       margin-right: 10px;
       margin-bottom: 0;
       width: auto;
     }
-  
+
     .rememberMe {
       display: flex;
       align-items: center;
-  
+
       input[type="checkbox"] {
         margin-top: 0px;
       }
     }
   }
-  
+
   .logBtnContainer {
     margin-top: 20px;
     gap: 20px;
-  
+
     .logInBtn {
       width: 100%;
       font-family: 'Montserrat Alternates', sans-serif;
       font-weight: bold;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
-  
     }
   }
-  
+
   .stepBtnContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 100%;
-  
+
     .pre {
       margin-right: 20px;
     }
-  
+
     .newPassBtn {
       background-color: #9844AD;
       color: white;
@@ -317,13 +333,17 @@
       font-family: "Potta One", sans-serif;
     }
   }
-  
+
   .stepBtn {
-    &:hover {
-      background-color: #901aad;
-      transition: 0.3s;
+    &:active{
+      transform: scale(0.8);
+      transition: 0.2s;
     }
-  
+    &:hover{
+      transition: 0.2s;
+      background-color: #901aad;
+    }
+
     transition: 0.3s;
     cursor: pointer;
     text-align: center;
@@ -335,7 +355,7 @@
     font-family: "Potta One",
     sans-serif;
   }
-  
+
   .otherOption {
     position: relative;
     display: flex;
@@ -343,14 +363,14 @@
     width: 100%;
     margin-bottom: 10px;
     margin-top: 10px;
-  
+
     .trait {
       content: "";
       width: 100%;
       height: 1px;
       background-color: rgba(28, 35, 43, 0.14);
     }
-  
+
     h3 {
       position: absolute;
       min-width: 155px;
@@ -365,14 +385,14 @@
       font-weight: bold;
     }
   }
-  
+
   .register {
     p {
       &:hover {
         color: #261874;
         transition: 0.3s;
       }
-  
+
       text-decoration: underline;
       transition: 0.3s;
       color: #5844c3;
@@ -380,37 +400,39 @@
       cursor: pointer;
     }
   }
-  
+
   @media screen and (max-width: 970px) {
     .ctn {
       width: 70% !important;
     }
   }
-  
+
   @media screen and (max-width: 700px) {
     .ctn {
       width: 90% !important;
     }
   }
-  
+
   @media screen and (max-width: 540px) {
     .ctn {
       width: 100% !important;
       padding-top: 60px !important;
     }
+
     .leftBlock {
       width: 90% !important;
     }
   }
-  
+
   @media screen and (max-width: 380px) {
     .ctn {
       width: 100% !important;
     }
+
     .leftBlock {
       width: 95% !important;
     }
-  
+
     .header {
       h1 {
         font-size: 20px !important;
@@ -423,7 +445,7 @@
       position: absolute;
       top: 0px;
       left: 0px;
-  
+
       img {
         width: 100px;
         height: 100px;
@@ -436,11 +458,21 @@
       position: absolute;
       top: 0px;
       left: 0px;
-  
+
       img {
         width: 70px;
         height: 70px;
       }
+    }
+  }
+
+  @media screen and (max-width: 285px) {
+    .submitErr {
+      bottom: 20px;
+    }
+
+    .conditions {
+      flex-direction: column;
     }
   }
 }

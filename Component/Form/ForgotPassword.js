@@ -37,7 +37,6 @@ const ForgotPassword = ({ login }) => {
         <div className={styles.formContainer}>
             <div className={styles.leftBlock}>
                 <div className={styles.container}>
-
                     <div className={styles.header}>
                         {
                             !hasSendEmail ?
@@ -58,24 +57,19 @@ const ForgotPassword = ({ login }) => {
                     {
                         !hasSendEmail ?
                             <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
-                                <div className={styles.selectItem + " " + "fadeIn"}>
-                                    <label htmlFor={"email"}> Email
-                                        <span>
-                                            <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
-                                        </span>
+                                <div className={styles.inputContainer + " " + "fadeIn"}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M21 3C21.5523 3 22 3.44772 22 4V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V19H20V7.3L12 14.5L2 5.5V4C2 3.44772 2.44772 3 3 3H21ZM8 15V17H0V15H8ZM5 10V12H0V10H5ZM19.5659 5H4.43414L12 11.8093L19.5659 5Z"></path>
+                                    </svg>
+                                    <input className={styles.inputEmail} onChange={(e) => setEmail(e.target.value)} required={true} type="email" name="email" placeholder=" "></input>
+                                    <label htmlFor={"email"} className={styles.labelEmail}>
+                                        Email
                                     </label>
-                                    <input onChange={(e) => setEmail(e.target.value)} required={true} type={"email"} name={"email"} placeholder={"Email"}></input>
-
                                 </div>
                                 {
                                     submitErr.show &&
                                     <p className={styles.submitErr + ' ' + styles.fadeIn}>{submitErr.msg}</p>
                                 }
-
-                                {/* <div className={styles.otherOption}>
-                                    <div className={styles.trait}> </div>
-                                    <h3> Un oubli est si vite arrivé </h3>
-                                </div> */}
                                 <div className={styles.conditions} onClick={login}>
                                     <p> Retour à la connexion </p>
                                 </div>

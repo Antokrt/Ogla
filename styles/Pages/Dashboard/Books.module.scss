@@ -87,12 +87,18 @@ button{
 .seeMoreContainer{
   margin-top: 10px;
   display: flex;
-  padding: 20px 0;
+  padding: 15px 0;
   justify-content: center;
   align-items: center;
   z-index: 2;
-  button{
-    font-size: 12px!important;
+
+  .seeMoreText {
+    width: 100px;
+    z-index: 2;
+    background-color: white;
+    font-size: 12px;
+    color: #9844AD;
+    font-family: 'Montserrat Alternates', sans-serif;
   }
 }
 .scrollbar{
@@ -204,6 +210,8 @@ img{
   }
 }
 
+
+
 @media screen and (max-width: 1400px){
   .verticalMenuContainer{
     width: 20%;
@@ -252,8 +260,8 @@ img{
   .mainHasNoBooks{
     margin-top: -10%;
   }
-  .seeMoreContainer{
-    margin-bottom: 10vh;
+  .listContainer {
+    margin-bottom: 60px;
   }
   .containerData{
     gap: 0%;
@@ -280,8 +288,11 @@ img{
 
   .containerMain{
     min-height: 90vh!important;
-    padding-bottom: 14vh;
     height: auto;
+  }
+
+  .containerData {
+    padding-bottom: 70px
   }
 
   .seeMoreContainer{

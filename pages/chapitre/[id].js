@@ -109,7 +109,13 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const [width, height] = ScreenSize();
     const orientation = useOrientation();
 
-
+    useEffect(() => {
+        const openSidebar = localStorage.getItem('openSidebar');
+        if (openSidebar && typeof window !== 'undefined') {
+            setSidebarSelect('Commentary');
+            localStorage.removeItem('openSidebar');
+        }
+    }, [])
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
 
@@ -133,7 +139,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                         setLikes(likes - 1);
                     } else {
                         setLikes(likes + 1);
-                        SendNotifService(authorData._id, 2, chapterData._id);
+                        SendNotifService(authorData._id, 2, chapterData._id, bookData._id);
                     }
                 })
                 .catch((err) => console.log('err'));
@@ -385,7 +391,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     }
 
     const likeComment = (id) => {
-        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id));
+        console.log(chapterData._id)
+        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id, chapterData._id, bookData._id));
     }
 
     const newComment = (res) => {
@@ -403,7 +410,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         setNbCommentary(nbCommentary + 1);
 
         setTimeout(() => setHasToScroll(!hasToScroll), 10)
-        SendNotifService(authorData._id, 11, chapterData._id)
+        SendNotifService(authorData._id, 11, chapterData._id, bookData._id)
     }
 
     const deleteComment = (id) => {
@@ -416,9 +423,9 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         comments.forEach((elem) =>  {
             if (elem._id === data.target_id) {
                 if (authorData._id != session.user.id)
-                    SendNotifService(elem.userId, 20, data._id)
+                    SendNotifService(elem.userId, 20, chapterData._id, bookData._id)
                 else
-                    SendNotifService(elem.userId, 21, data._id)
+                    SendNotifService(elem.userId, 21, chapterData._id, bookData._id)
                 return;
             }
         })
@@ -429,7 +436,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     };
 
     const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id));
+        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id, chapterData._id, bookData._id));
     }
 
     const loadMoreAnswer = (id) => {

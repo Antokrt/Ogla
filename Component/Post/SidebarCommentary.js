@@ -79,8 +79,6 @@ const SidebarCommentary = ({
         },200)
     }, [comments])
 
-
-
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
             .then((res) => {
@@ -90,8 +88,6 @@ const SidebarCommentary = ({
             })
             .catch((err) => console.log(err));
     }
-
-
 
     const deleteComment = (id) => {
         DeleteCommentaryService(id)

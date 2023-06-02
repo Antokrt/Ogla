@@ -2,17 +2,22 @@ import styles from "../styles/Component/Menu/VerticalTabMenu.module.scss";
 import {
     ArrowLeftOnRectangleIcon,
     BellAlertIcon,
+    BookOpenIcon,
     BookmarkSquareIcon,
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
 } from "@heroicons/react/24/solid";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
 import { useEffect, useState } from "react";
 import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
+import 'tippy.js/dist/tippy.css'
+import Tippy from "@tippyjs/react";
+import 'tippy.js/animations/scale.css';
+import { LogoutService } from "../../service/User/Account.service";
 
 export default function VerticalTabMenu() {
 
@@ -42,22 +47,53 @@ export default function VerticalTabMenu() {
         <div className={styles.container}>
             <div className={styles.fContainer}>
                 <div className={styles.logo}>
-
                 </div>
 
                 <div className={styles.navContainer}>
                     <ul>
-                        <li onClick={() => router.push('/')}> <HomeIcon />   </li>
-                        <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}><BookmarkSquareIcon /></li>
-                        <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon /></li>
-                        <li onClick={() => {
-                            if (Notifs.lenght > 0) {
-                                OpenAllService(Notifs[0].date_creation, session.user.id)
-                            }
-                            dispatch(setActiveModalNotif(true));
-                            dispatch(setOpen());
-                        }} className={styles.notification}>
-                            <BellAlertIcon className={styles.bell} /> {isOpen && <span></span>} </li>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Accueil"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li onClick={() => router.push('/')}> <HomeIcon />   </li>
+                        </Tippy>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Livres"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li className={isActiveMenuBooks && styles.activeMenu} onClick={() => router.push('/dashboard/books')}>
+                                <BookOpenIcon />
+                            </li>
+                        </Tippy>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Nouveau"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li className={router.pathname.startsWith('/dashboard/nouveau-livre') && styles.activeMenu} onClick={() => router.push('/dashboard/nouveau-livre')}><PlusCircleIcon /></li>
+                        </Tippy>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Notifications"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li onClick={() => {
+                                if (Notifs.length > 0) {
+                                    OpenAllService(Notifs[0].date_creation, session.user.id)
+                                }
+                                dispatch(setActiveModalNotif(true));
+                                dispatch(setOpen());
+                            }} className={styles.notification}>
+                                <BellAlertIcon className={styles.bell} /> {isOpen && <span></span>}
+                            </li>
+                        </Tippy>
+
                     </ul>
                 </div>
             </div>
@@ -65,15 +101,42 @@ export default function VerticalTabMenu() {
             <div className={styles.sContainer}>
                 <div className={styles.navContainer}>
                     <ul>
-                        <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon />   </li>
-                        <li> <ArrowLeftOnRectangleIcon />   </li>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Support"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon />   </li>
+                        </Tippy>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Déconnexion"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <li onClick={() => {
+                                LogoutService()
+                                    .then(() => signOut()
+                                        .then(() => router.push('/')))
+                                    .catch(() => signOut()
+                                        .then(() => router.push('/')))
+                            }}> <ArrowLeftOnRectangleIcon />   </li>
+                        </Tippy>
                     </ul>
                 </div>
 
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
                         <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} />
-                        <span></span>
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"En ligne"}
+                            animation={'scale'}
+                            placement={'right'}
+                            delay={[300, 0]}>
+                            <span></span>
+                        </Tippy>
                     </div>
                 </div>
             </div>

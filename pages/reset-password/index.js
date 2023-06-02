@@ -32,9 +32,7 @@ const ResetPassword = ({ressources}) => {
 
         return (
             <div className={styles.container}>
-                <div className={styles.purple}></div>
-                <div className={styles.block}>
-
+                <div className={styles.content}>
                     <ResetPasswordForm
                         id={ressources.id}
                         email={ressources.email}

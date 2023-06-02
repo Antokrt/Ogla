@@ -134,47 +134,12 @@
                 }
             }
 
-            .HeaderResponsiveOpenForm {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                margin-bottom: 15px;
-                margin-top: 15px;
-
-                input {
-                    padding: 7px;
-                    padding-left: 15px;
-                    width: 90%;
-                    background-color: rgb(236, 236, 236);
-                    border-radius: 20px;
-                    font-size: 14px;
-                    font-family: "Montserrat", sans-serif;
-                    color: $dark;
-                    border: solid 1px transparent;
-                }
-
-                input::placeholder {
-                    font-family: "Montserrat Alternates", sans-serif;
-                    color: $brown
-                }
-
-                input:focus {
-                    outline: none !important;
-                    border: 1px solid rgba(0, 0, 0, 0.288);
-                    color: black;
-                }
-
-                input:hover {
-                    border: 1px solid rgba(0, 0, 0, 0.288);
-                }
-            }
-
             .utilsBtn {
                 width: 100%;
                 display: flex;
                 padding: 0 15px;
                 justify-content: space-between;
+                margin-bottom: 10px;
             }
 
             .menu {
@@ -266,6 +231,42 @@
                         height: 18px;
                         margin-right: 20px;
                     }
+                }
+            }
+
+            .search {
+                &:hover {
+                    background-color: #e2341a;
+                    transition: 0.3s;
+                }
+                &:active {
+                    transform: scale(0.8);
+                    transition: 0.3s;
+                }
+                width: 50%;
+                min-width: 160px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: 0.3s;
+                box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
+                background-color: #e94f37;
+                border-radius: 10px;
+                color: white;
+                cursor: pointer;
+                margin-bottom: 10px;
+                margin-top: 10px;
+                padding: 8px 0px;
+                font-family: 'Poppins';
+                h3 {
+                    color: white;
+                    margin-right: 10px;
+                    font-size: 12px;
+                }
+
+                svg {
+                    fill: white;
+                    height: 23px;
                 }
             }
         }
@@ -361,6 +362,7 @@
                 }
 
                 width: 90%;
+                min-width: 160px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -632,6 +634,7 @@
                 display: flex;
                 padding: 0 15px;
                 justify-content: space-between;
+                margin-bottom: 10px;
             }
 
             .menu {

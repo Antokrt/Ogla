@@ -1,8 +1,8 @@
 import {instance} from "../config/Interceptor";
 
-export const SendNotifService = (id, code, targetId) => {
+export const SendNotifService = (targetId, code, targetDocumentId, secondTargetDocumentId) => {
     return new Promise((resolve, reject) => {
-        instance.post('notification/new/' + id + '/' + code + '/' + targetId)
+        instance.post('notification/new/' + targetId + '/' + code + '/' + targetDocumentId + '/' + secondTargetDocumentId)
             .then((res) => resolve(res))
             .catch((err) => reject(err));
     })
@@ -44,6 +44,14 @@ export const DeleteMyNotifsService = (id) => {
     return new Promise((resolve, reject) => {
         instance.delete('/notification/deleteOne/' + id)
             .then(() => resolve())
+            .catch((err) => reject(err));
+    })
+}
+
+export const GetAllNotifs = () => {
+    return new Promise((resolve, reject) => {
+        instance.get('/notification')
+            .then((res) => resolve(res))
             .catch((err) => reject(err));
     })
 }

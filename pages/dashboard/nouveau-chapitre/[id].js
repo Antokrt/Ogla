@@ -208,7 +208,7 @@ const NouveauChapitre = ({bookData, err}) => {
             <div className={styles.containerMain}>
 
                 {
-                    width < 700 && orientation === 'portrait' ?
+                    width < 700 && /*height <= 600 ?*/ orientation === 'portrait' ?
                         <VerticalPhoneMenu/>
                         :
                         <>

@@ -1,6 +1,6 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -9,7 +9,7 @@
   z-index: 20;
 }
 
-.containerMain{
+.containerMain {
   height: 100%;
   width: 100%;
   display: flex;
@@ -21,37 +21,41 @@
   padding: 15px;
   z-index: 3000;
 
-  .item{
+  .item {
     position: relative;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 5px;
     align-items: center;
-    img{
+
+    img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       object-fit: cover;
     }
-    .circle{
+
+    .circle {
       position: absolute;
       bottom: 5%;
       right: 0%;
-      background-color: #97fd97;
-      height: 12px;
-      width: 12px;
+      background-color: #1bce1b;
+      height: 13px;
+      width: 13px;
       border-radius: 50%;
+      border: 2px solid #1C232B;
     }
-    svg{
+
+    svg {
       width: 20px;
       color: white;
     }
 
-    p{
+    p {
       font-weight: bold;
       letter-spacing: 1px;
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: 'Rebond Grotesque', sans-serif;
       font-size: 12px;
       color: white;
     }
@@ -72,51 +76,67 @@
 }
 
 .activeItem {
-p{
-  border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-  padding-bottom: 5px;
-}
-}
-
-@media screen and (max-width: 600px){
-  .containerMain{
-    gap: 40px!important;
+  p {
+    border-bottom: solid 2px rgba(255, 255, 255, 0.91);
+    padding-bottom: 5px;
   }
 }
 
-@media screen and (max-width: 500px){
-  .containerMain{
-    gap: 30px!important;
+@media screen and (max-width: 600px) {
+  .containerMain {
+    gap: 40px !important;
   }
 }
 
-@media screen and (max-width: 460px){
-  .containerMain{
-    gap: 0px!important;
+@media screen and (max-width: 500px) {
+  .containerMain {
+    gap: 30px !important;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .containerMain {
+    gap: 0px !important;
     justify-content: space-around;
   }
 }
 
-@media screen and (max-width: 430px){
-  .item{
-    img{
-      width: 40px!important;
-      height: 40px!important;
+@media screen and (max-width: 430px) {
+  .item {
+    img {
+      width: 40px !important;
+      height: 40px !important;
     }
-    svg{
-      width: 18px!important;
+
+    svg {
+      width: 18px !important;
     }
-    p{
-      font-size: 2.5vw!important;
+
+    p {
+      font-size: 2.5vw !important;
     }
   }
 }
 
-@media screen and (max-width: 300px){
-  .item{
-    img{
-      width: 30px!important;
-      height: 30px!important;
+@media screen and (max-width: 400px) {
+  .item {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    p {
+      display: none;
     }
+    svg {
+      width: 20px !important;
+    }
+    img {
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
+
+  .activeItem {
+    margin-top: 5px;
+    border-bottom: solid 2px rgba(255, 255, 255, 0.91);
   }
 }
