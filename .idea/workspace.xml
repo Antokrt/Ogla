@@ -2,110 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Maintenance.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Modal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Notif.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/categories/Categories.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/404.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/_error.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/socket/Socket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Maintenance.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Pages/404.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/HorizontalCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/CategoryCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/CategoryCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/CategoryHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/CategoryHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookPhone.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookPhone.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookTab.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/ErrorDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/ErrorDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/ErrMsg.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/ErrMsg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Lofi.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Lofi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalAuthorMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalPhoneMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalPhoneMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Menu/VerticalTabMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Menu/VerticalTabMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenuPhone.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenuPhone.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Book/BookService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Book/BookService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Dashboard/BooksAuthorService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Notifications/NotificationsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/Notifications/NotificationsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Banner.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Banner.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/Horizontal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/Horizontal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Category/BannerCategory.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/BannerCategory.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryHeader.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryHeader.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryHome.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryHome.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboardPhone.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboardPhone.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboardTab.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardBookDashboardTab.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/ErrorDashboard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/ErrorDashboard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/SmHeader.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/SmHeader.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Footer.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/LoginModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/LoginModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/MusicHome.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/MusicHome.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/SubCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/SubCommentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPost.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/PreviewHorizontalPostList.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/Like.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/Link.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/Link.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Text.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Text.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Cat.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Cat.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Books.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/editor.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/editor.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/tippy.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/tippy.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/font.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/font.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/var.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/var.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/ImageUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/ImageUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/String.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/String.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +282,8 @@
       <workItem from="1685049254014" duration="192000" />
       <workItem from="1685440164667" duration="9352000" />
       <workItem from="1685522751724" duration="15911000" />
-      <workItem from="1685610430284" duration="18259000" />
+      <workItem from="1685610430284" duration="18936000" />
+      <workItem from="1685694804997" duration="15540000" />
     </task>
     <servers />
   </component>

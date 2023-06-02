@@ -54,6 +54,7 @@ export async function getServerSideProps({req, params}) {
 
     return {
         props: {
+            key:params.id,
             err: {
                 chapter: chapterErrData,
                 book: bookErrData
@@ -104,6 +105,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
+        enableInputRules:false,
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());

@@ -489,6 +489,15 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     }
 
+    const disableCopy = (e) => {
+        if(session && session.user.id === bookData?.author_id){
+            return null;
+        }
+        if(typeof window !== 'undefined'){
+            navigator.clipboard.writeText('Ogla ne permet ');
+        }
+    }
+
     return (
         <div className={styles.container}>
 
@@ -545,9 +554,12 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                             <div className={styles.textContainer}>
                                                 {
                                                     chapterData &&
-                                                    <EditorContent editor={editorReadOnly}>
+                                                    <div onCopy={(e) => disableCopy(e)} >
+                                                        <EditorContent editor={editorReadOnly}>
 
-                                                    </EditorContent>
+                                                        </EditorContent>
+                                                    </div>
+
                                                 }
                                             </div>
                                             {

@@ -112,6 +112,7 @@ const NouveauChapitre = ({bookData, err}) => {
                 placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
+        enableInputRules:false,
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());
