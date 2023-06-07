@@ -2,7 +2,7 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    BellAlertIcon, CheckBadgeIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
+    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
 } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 import {
@@ -15,7 +15,7 @@ import { GetPrivateProfilApi } from "../api/user";
 import { DeleteUserProfilPictureService, UpdateUserProfilPictureService } from "../../service/User/Profil.service";
 import axios from "axios";
 import { ReloadSession } from "../../utils/ReloadSession";
-import { GetDefaultUserImg, renderPrediction } from "../../utils/ImageUtils";
+import {GetDefaultUserImg, GetDefaultUserImgWhenError, renderPrediction} from "../../utils/ImageUtils";
 import { DeleteAccountService, VerifyEmailService } from "../../service/User/Account.service";
 import { FormatDateNb, FormatDateStr } from "../../utils/Date";
 import { ChangePasswordService, SendResetPasswordEmailService } from "../../service/User/Password.service";
@@ -34,6 +34,7 @@ import ScreenSize from "../../utils/Size";
 import { openAll } from "../../service/Notifications/NotificationsService";
 import { useEffect } from "react";
 import { OpenAllService } from "../../service/Notifications/NotificationsService";
+import Tippy from "@tippyjs/react";
 
 export async function getServerSideProps({ req }) {
     const data = await GetPrivateProfilApi(req);
@@ -121,12 +122,13 @@ const Profil = ({ profilData, err }) => {
 
             UpdateSettingsService(newSettings)
                 .then(() => updateSettingsOfSession()
-                    .then((res) => setProfil({
+                    .then((res) => setProfil( prevState => ({
+                        ...prevState,
                         settings: {
                             notif: newSettings.notif,
                             music: newSettings.music
                         }
-                    }))
+                    })))
                     .then(() => ReloadSession())
                     .catch(() => toastDisplayError('Impossible de modifier les réglages'))
                 )
@@ -206,7 +208,6 @@ const Profil = ({ profilData, err }) => {
                         description: res
                     }
                 }));
-                console.log(profil)
                 setNewPresentation(res);
             })
             .catch((err) => console.log(err));
@@ -236,10 +237,13 @@ const Profil = ({ profilData, err }) => {
                                     src={localImg} alt={'Profil Pic'} />
                             </>
                             :
-                            <img
-                                onClick={() => imgClick()}
-                                src={profil?.img} alt={'Profil Pic'} />
-                    }
+                            <Tippy trigger={'mouseenter'} content={'Modifier'}>
+                                <img
+                                    onClick={() => imgClick()}
+                                    src={profil?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Profil Pic'} />
+
+                            </Tippy>
+                                         }
                     <input
                         style={{ display: 'none' }}
                         type={'file'}
@@ -296,7 +300,7 @@ const Profil = ({ profilData, err }) => {
                         }}>Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email} />
                     {
-                        session.user.provider !== 'google' ?
+                        session?.user?.provider !== 'google' ?
                         <>
                             <label>Modifier votre mot de passe</label>
                             <input value={oldPassword}
@@ -584,7 +588,7 @@ const Profil = ({ profilData, err }) => {
                         <p> Ecrivain </p>
                     </div>
                     <div className={activeLink === 'settings' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('settings')}>
-                        <WrenchIcon />
+                        <Cog8ToothIcon />
                         <p> Réglages </p>
                     </div>
                     <div className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => {

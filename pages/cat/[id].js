@@ -201,21 +201,19 @@ export default function CatPage({ cat, err, bookListData }) {
                                 !err && bookListData &&
                                 <ListCard books={bookList} />
                             }
-                            {
-                                canSeeMore && !loadingScroll && bookList.length !== 0 &&
                                 <div className={styles.containerSeeMore}>
-                                    <TextSeeMore onclick={() => {
-                                        loadMoreBooks();
-                                    }} />
-                                </div>
-                            }
-                            {
-                                loadingScroll &&
-                                <div className={styles.containerSeeMore}>
-                                    <LoaderCard />
-                                </div>
-                            }
+                                    {
+                                        canSeeMore && !loadingScroll && bookList.length !== 0 &&
+                                        <TextSeeMore onclick={() => {
+                                            loadMoreBooks();
+                                        }}/>
+                                    }
 
+                                    {
+                                        loadingScroll &&
+                                        <LoaderCard />
+                                    }
+                                </div>
                         </div>
                     </div>
                 </div>

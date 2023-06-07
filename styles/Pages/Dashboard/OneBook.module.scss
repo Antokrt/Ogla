@@ -52,7 +52,7 @@
       svg{
         cursor: pointer;
         width: 16px;
-        height: min-content;
+        height: 15px;
         color: #e94f37;
         opacity: 0.8;
       }
@@ -864,6 +864,7 @@
     border-radius: 5px;
     background-color: rgba(180, 185, 190, 0.13);
     padding: 1vh 2vw;
+    height: 40px;
     font-size: 11px;
     font-family: $secondaryFont;
     color: rgba(28, 35, 43, 0.98);

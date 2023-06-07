@@ -5,6 +5,7 @@ import {HeartIcon as HeartOutline} from "@heroicons/react/24/outline";
 import {ChevronDoubleUpIcon, HandThumbUpIcon as NotLikeIcon} from "@heroicons/react/24/outline";
 import {HandThumbUpIcon as LikeIcon} from "@heroicons/react/24/solid";
 import {useEffect, useState} from "react";
+import {FormatCount} from "../../../utils/NbUtils";
 
 export const LikeBtn = ({isLike, onLike}) => {
     return (
@@ -80,7 +81,7 @@ export const LikeBtnSidebarPhone = ({isLike, onLike}) => {
 export const CountLike = ({like}) => {
     return (
         <div className={styles.containerCount}>
-            <p>{like}</p>
+            <p>{FormatCount(like)}</p>
             <HeartIcon/>
         </div>
 

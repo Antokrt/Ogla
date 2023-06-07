@@ -21,7 +21,8 @@ export const DeleteAccountModal = ({close}) => {
                 const statusCode = err.response.data.statusCode;
                 if (statusCode === 401) {
                     setErrMsg({msg: 'Mot de passe incorrect', show: true});
-                } else {
+                }
+                else {
                     setErrMsg({msg: 'Impossible de supprimer le compte', show: true});
                 }
             })
@@ -72,7 +73,7 @@ export const DeleteAccountModal = ({close}) => {
     }
     else {
         return (
-            <ConfirmModalDeleteAccountCustomProvider img={'/assets/google.png'} confirm={'Supprimer'} close={close} btnConfirm={'Supprimer mon compte'} title={'Êtes-vous sûr de vouloir nous quitter ?'} subTitle={
+            <ConfirmModalDeleteAccountCustomProvider err={errMsg.show} img={'/assets/google.png'} confirm={() => deleteAccount(process.env.NEXT_PUBLIC_GOOGLE_SECRET_DELETE)} close={close} btnConfirm={'Supprimer mon compte'} title={'Êtes-vous sûr de vouloir nous quitter ?'} subTitle={
                 session.user.is_author ?
                     <p>Attention ! Tous vos livres seront supprimés et ne pourront être récupérés.</p>
                     :

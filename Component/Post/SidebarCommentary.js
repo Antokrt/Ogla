@@ -52,7 +52,6 @@ const SidebarCommentary = ({
     const [newComment, setNewComment] = useState('');
     const [openConfirmModalForDeleteComment,setOpenConfirmModalForDeleteComment] = useState(false);
     const [openConfirmModalForDeleteAnswer,setOpenConfirmModalForDeleteAnswer] = useState(false);
-
     const divRef = useRef(null);
     const [endRefresh,setEndRefresh] = useState(true);
     const [load,setLoad] = useState(false);
@@ -79,6 +78,8 @@ const SidebarCommentary = ({
         },200)
     }, [comments])
 
+
+
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
             .then((res) => {
@@ -86,6 +87,7 @@ const SidebarCommentary = ({
                 createNewComment(res);
                 setNewComment('');
             })
+            .then(() => scrollToTop())
             .catch((err) => console.log(err));
     }
 
@@ -133,6 +135,12 @@ const SidebarCommentary = ({
 
     const scrollBottom = () => {
         divRef.current.scrollTop = divRef.current.scrollHeight
+    }
+
+    const scrollToTop = () => {
+        return setTimeout(() => {
+            divRef.current.scrollTop = 0;
+        },10)
     }
 
     useEffect(() => {

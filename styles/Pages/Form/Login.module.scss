@@ -41,6 +41,7 @@
     left: 10px;
 
     img {
+      cursor: pointer;
       width: 100px;
       height: 100px;
     }
@@ -71,20 +72,23 @@
     // }
 
     h1 {
-      font-size: 30px;
+      font-size: 32px;
       margin-bottom: 10px;
-      font-weight: 500;
       text-align: center;
-      -webkit-text-stroke-width: 2px;
-      stroke-width: 2px;
-      -webkit-text-stroke-color: #1C232B;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1.5px;
+      letter-spacing: 0.5px;
       stroke: #1C232B;
+      font-family: $branch;
     }
 
     p {
-      color: #848095;
-      text-align: justify;
-      font-size: 14px;
+      font-family: $primaryFont;
+      color: #1c232b;
+      text-align: left;
+      font-size: 13px;
+      font-weight:bold;
+      opacity: 0.9;
     }
 
     .h1Connexion {
@@ -101,7 +105,7 @@
     width: 100%;
 
     .date {
-      font-family: "Montserrat", sans-serif;
+      font-family: $primaryFont;
     }
 
     .inputContainer {
@@ -109,11 +113,12 @@
       display: flex;
       align-items: center;
       width: 100%;
-      border-bottom: 1px solid black;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
       margin-bottom: 30px;
 
       svg {
-        height: 23px;
+        fill:#1c232b;
+        height: 20px;
       }
     }
 
@@ -124,10 +129,11 @@
       z-index: 1;
       text-align: left;
       width: 100%;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       margin-bottom: 5px;
-      font-family: "Montserrat", sans-serif;
+      color: #1c232b;
+      font-family: $primaryFont;
       transition: 0.4s;
     }
 
@@ -145,8 +151,7 @@
       border-radius: 5px;
       width: 100%;
       font-size: 12px;
-      font-family: "Montserrat",
-      sans-serif;
+      font-family: $primaryFont;
     }
 
     .inputId, .inputPW {
@@ -155,10 +160,11 @@
       cursor: text;
       background: none;
       outline: none !important;
-      font-family: "Montserrat",
-        sans-serif;
+      font-family: $primaryFont;
+      font-weight: bold;
+      opacity: 0.9;
       border-radius: 5px;
-      font-size: 15px;
+      font-size: 14px;
       margin-left: 10px;
       padding: 14px 5px;
       width: 100%;
@@ -217,8 +223,7 @@
         padding-top: 12px;
         padding-bottom: 12px;
         padding-left: 10px;
-        font-family: "Montserrat",
-        sans-serif;
+        font-family: $primaryFont;
         color: rgba(28, 35, 43, 1);
         appearance: none;
         -webkit-appearance: none;
@@ -236,14 +241,12 @@
   }
 
   .submitErr {
-    position: absolute;
-    bottom: 8px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    font-size: 10px;
-    font-family: "Poppins", sans-serif;
-    font-style: italic;
-    color: red;
+    margin-top: -20px;
+    font-size: 12px;
+    font-family: $primaryFont;
+    color: #e94f37;
+    font-weight: 500;
+    opacity: 0.9;
   }
 
   .conditions {
@@ -262,11 +265,10 @@
       transition: 0.3s;
       cursor: pointer;
       text-align: right;
-      font-family: "Montserrat",
-      sans-serif;
+      font-family: $primaryFont;
       color: $purpleLight;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     label {
@@ -303,7 +305,7 @@
 
     .logInBtn {
       width: 100%;
-      font-family: 'Montserrat Alternates', sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
     }
@@ -330,7 +332,7 @@
       padding: 10px 20px;
       border-radius: 5px;
       font-size: 12px;
-      font-family: "Potta One", sans-serif;
+      font-family: $primaryFont;
     }
   }
 
@@ -352,8 +354,6 @@
     border-radius: 5px;
     font-size: 12px;
     color: white;
-    font-family: "Potta One",
-    sans-serif;
   }
 
   .otherOption {
@@ -373,7 +373,7 @@
 
     h3 {
       position: absolute;
-      min-width: 155px;
+      min-width: 50px;
       display: flex;
       justify-content: center;
       top: 50%;
@@ -389,14 +389,15 @@
   .register {
     p {
       &:hover {
-        color: #261874;
+        color: #1c232b;
         transition: 0.3s;
       }
 
       text-decoration: underline;
       transition: 0.3s;
-      color: #5844c3;
-      font-size: 13px;
+      font-family: $primaryFont;
+      color: #1c232b!important;
+      font-size: 12px;
       cursor: pointer;
     }
   }

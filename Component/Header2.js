@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "../styles/Component/Header.module.scss";
+import styles from "../styles/Component/Header2.module.scss";
 import Link from "next/link";
 import { router, useRouter } from "next/router";
 import {
-    ArrowLeftOnRectangleIcon, BellIcon, Cog8ToothIcon, MagnifyingGlassIcon,
+    ArrowLeftOnRectangleIcon, BellIcon, MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
 import MainSearchBar from "./MainSearchBar";
@@ -28,9 +28,8 @@ import 'tippy.js/animations/scale.css';
 import ScreenSize from "../utils/Size";
 import { selectCategories } from "../store/slices/categorySlice";
 import CategorieHead from "./Header/CategorieHead";
-import {Cog6ToothIcon} from "@heroicons/react/20/solid";
 
-export default function Header() {
+export default function Header2() {
     const router = useRouter();
     const { data: session } = useSession();
     const [searchValue, setSearchValue] = useState('');
@@ -68,7 +67,7 @@ export default function Header() {
     }, [router])
 
     useEffect(() => {
-        var nb = 0;
+        let nb = 0;
         Notifs.forEach((elem) => {
             if (elem.open === false) {
                 setIsOpen(true);
@@ -119,62 +118,26 @@ export default function Header() {
                 <h3 onClick={() => router.push('/')}> OGLA </h3>
                 <nav>
                     <ul className={styles.colorDark}>
-                        <li>
-                            <div></div>
-                            <h4 onClick={() => router.push("/")}> Accueil </h4>
-                            {
-                                router.pathname !== "/" &&
-                                <div></div>
-                            }
-                            {
-                                router.pathname === "/" &&
-                                <div className={styles.activeNav}> </div>
-                            }
-                        </li>
-                        <li>
-                            <div></div>
-                            <div className={styles.contentNav}>
-                                <h4 onClick={() => router.push('/cat')}> Catégorie </h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ref={svgCatRef} onClick={categorieOC}>
-                                    <path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758L12 15.0006Z"></path>
-                                </svg>
-                            </div>
-                            {
-                                router.pathname !== "/cat" &&
-                                <div></div>
-                            }
-                            {
-                                router.pathname === "/cat" &&
-                                <div className={styles.activeNav}> </div>
-                            }
+                        <li className={router.pathname === '/' && styles.activeNav} onClick={() => router.push("/")}>Accueil</li>
+                        <li onClick={() => router.push('/cat')} className={ router.pathname === '/cat' ? styles.contentNav + ' ' + styles.activeNav : styles.contentNav}>
+                            Catégorie
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ref={svgCatRef} onClick={categorieOC}>
+                                <path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758L12 15.0006Z"></path>
+                            </svg>
                         </li>
                         {
                             session && session.user.is_author ?
                                 <>
-                                    <li>
-                                        <div></div>
-                                        <h4 onClick={() => { localStorage.setItem('dashboard', 'new'); router.push('/dashboard/nouveau-livre') }}>
-                                            Nouveau livre
-                                        </h4>
-                                        <div></div>
-                                    </li>
-                                    <li>
-                                        <div></div>
-                                        <h4 onClick={() => { localStorage.setItem('dashboard', 'books'); router.push('/dashboard/books') }}>
+                                    <li onClick={() => { localStorage.setItem('dashboard', 'new'); router.push('/dashboard/nouveau-livre') }}>Nouveau livre</li>
+                                        <li onClick={() => { localStorage.setItem('dashboard', 'books'); router.push('/dashboard/books') }}>
                                             Mes livres
-                                        </h4>
-                                        <div></div>
-                                    </li>
+                                        </li>
                                 </>
 
                                 :
-                                <li>
-                                    <div></div>
-                                    <h4 onClick={() => router.push('/devenir-auteur')}>
+                                    <li onClick={() => router.push('/devenir-auteur')}>
                                         Deviens écrivain
-                                    </h4>
-                                    <div></div>
-                                </li>
+                                    </li>
                         }
                     </ul>
                     <div className={styles.categorieClose} ref={categorieRef}>
@@ -188,52 +151,54 @@ export default function Header() {
                     </div>
                 </nav>
             </div>
-            {
-                width > 1000 && router.pathname !== '/rechercher' && /*!router.pathname.startsWith('/chapitre') &&*/
-                <div className={styles.containerSearchBarHeader}>
-                    <MainSearchBar
-                        data={(value) => setData(value)}
-                        query={(e) => {
-                            setQuery(e)
-                        }}
-                        search={query}
-                        submit={() => {
-                            setSearchValue('');
-                        }}
-                        height={40}
-                        width={100} />
 
-                    {
-                        query !== '' && data &&
-                        <div className={styles.containerResultSearchBar}>
-                            <ResultSearchBar
-                                searchBtn={() => setSearchValue('')}
-                                destroy={() => {
-                                    setSearchValue('')
-                                }}
-                                search={searchValue}
-                                query={query}
-                                data={data}
-                            />
-                            <div className={styles.containerBtnSearch}>
-                                <p
-                                    onClick={() => router.push({
-                                        pathname: "/rechercher",
-                                        query: { search: query }
-                                    })}
-                                    className={styles.searchP}>Chercher <MagnifyingGlassIcon /></p>
-                                <p onClick={() => {
-
-                                    setSearchValue('')
-                                    setQuery('')
-                                }}>Fermer</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
             <div className={styles.rightBlock}>
                 <div className={styles.rightContent}>
+
+                    {
+                        width > 1000 && router.pathname !== '/rechercher' && /*!router.pathname.startsWith('/chapitre') &&*/
+                        <div className={styles.containerSearchBarHeader}>
+                            <MainSearchBar
+                                data={(value) => setData(value)}
+                                query={(e) => {
+                                    setQuery(e)
+                                }}
+                                search={query}
+                                submit={() => {
+                                    setSearchValue('');
+                                }}
+                                height={50}
+                                width={100} />
+
+                            {
+                                query !== '' && data &&
+                                <div className={styles.containerResultSearchBar}>
+                                    <ResultSearchBar
+                                        searchBtn={() => setSearchValue('')}
+                                        destroy={() => {
+                                            setSearchValue('')
+                                        }}
+                                        search={searchValue}
+                                        query={query}
+                                        data={data}
+                                    />
+                                    <div className={styles.containerBtnSearch}>
+                                        <p
+                                            onClick={() => router.push({
+                                                pathname: "/rechercher",
+                                                query: { search: query }
+                                            })}
+                                            className={styles.searchP}>Chercher <MagnifyingGlassIcon /></p>
+                                        <p onClick={() => {
+
+                                            setSearchValue('')
+                                            setQuery('')
+                                        }}>Fermer</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
                     {
                         !session &&
                         <h4 className={styles.connexion} onClick={() => {
@@ -270,14 +235,8 @@ export default function Header() {
                                     </svg>
                                 </Tippy>
                             }
-                            <Tippy
-                                trigger="mouseenter"
-                                content={"Réglages"}
-                                animation={'scale'}
-                                // arrow={roundArrow} 
-                                delay={[300, 0]}>
-                                <Cog8ToothIcon  onClick={() => { localStorage.setItem('side', 'settings'); router.push('/profil') }}/>
-                            </Tippy>
+
+                            <HeadPhoneBtn/>
                             <Tippy
                                 trigger="mouseenter"
                                 content={"Notifications"}
@@ -307,9 +266,9 @@ export default function Header() {
                             {
                                 session.user.image === '' ?
                                     <div className={styles.account}
-                                        onClick={() => {
-                                            router.push('/profil')
-                                        }}
+                                         onClick={() => {
+                                             router.push('/profil')
+                                         }}
                                     >
 
                                         <div>
@@ -394,13 +353,13 @@ export default function Header() {
                                 <div className={styles.trait}> </div>
 
                                 <div className={styles.logout}
-                                    onClick={() => {
-                                        LogoutService()
-                                            .then(() => signOut()
-                                                .then(() => router.push('/')))
-                                            .catch(() => signOut()
-                                                .then(() => router.push('/')))
-                                    }}
+                                     onClick={() => {
+                                         LogoutService()
+                                             .then(() => signOut()
+                                                 .then(() => router.push('/')))
+                                             .catch(() => signOut()
+                                                 .then(() => router.push('/')))
+                                     }}
                                 >
                                     <ArrowLeftOnRectangleIcon />
                                     <p> Déconnexion </p>
@@ -451,7 +410,7 @@ export default function Header() {
                                 {
                                     router.pathname === '/' || router.pathname === '/devenir-auteur' ?
                                         <div onClick={() => router.push({ pathname: "/auth", query: "login" })}
-                                            className={styles.login}>
+                                             className={styles.login}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                 <path d="M10 11V8L15 12L10 16V13H1V11H10ZM2.4578 15H4.58152C5.76829 17.9318 8.64262 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C8.64262 4 5.76829 6.06817 4.58152 9H2.4578C3.73207 4.94289 7.52236 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C7.52236 22 3.73207 19.0571 2.4578 15Z"></path>
                                             </svg>

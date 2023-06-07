@@ -15,3 +15,11 @@ export const GetChapterById = (id) => {
         .catch((err) => reject(err));
     })
 }
+
+export const CountNbOfChaptersService = (id) => {
+    return new Promise((resolve, reject) => {
+        instance.get('/chapter/number-of-chapter/'+ id)
+            .then((res) => resolve(res.data))
+            .catch((err) => reject(err));
+    })
+}

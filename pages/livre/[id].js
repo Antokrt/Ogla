@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import {Fragment, useEffect, useState} from "react";
+import {Fragment, useCallback, useEffect, useRef, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 
@@ -35,7 +35,7 @@ import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
-import {GetChapterListService} from "../../service/Chapter/ChapterService";
+import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {FilterBtn, HeadPhoneBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {LoginModal} from "../../Component/Modal/LoginModal";
@@ -93,6 +93,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [myComments, setMyComments] = useState([]);
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
+    const [nbChapters,setNbChapters] = useState(bookData?.nbChapters);
     const [noComments, setNoComments] = useState(false);
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [pageChapter, setPageChapter] = useState(2);
@@ -114,7 +115,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         }
     }, [])
 
-    const modalState = useSelector(selectLoginModalStatus);
+    useEffect(() => {console.log(session)},[])
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -133,6 +134,23 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         setComments([]);
         setMyComments([]);
     }
+
+
+    const countNbOfChapters = useCallback(async () => {
+        const nb = await CountNbOfChaptersService(bookData?._id);
+        return setNbChapters(nb);
+    },[]);
+
+    useEffect(() => {console.log(session?.user?.accessToken)},[]);
+
+
+    useEffect(() => {
+        countNbOfChapters()
+            .catch(() => console.log('err callback'))
+
+    },[chapterList]);
+
+
 
     const openCommentaryOnPhone = () => {
         if (err) {
@@ -192,7 +210,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                 comments={comments}
                 select={sidebarSelect}/>
         </div>)
-
     }
 
     const checkSide = () => {
@@ -223,7 +240,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         isEmpty={noComments}
                         createNewComment={(res) => newComment(res)}
                         deleteAComment={(id) => deleteComment(id)}
-                        seeMore={() => getComment(pageComment)}
+                        seeMore={() => {
+                            if(!loadingScroll){
+                                getComment(pageComment);
+                            }
+                        }}
                         sendANewAnswer={(data) => sendAnswer(data)}
                         deleteAnswer={(id) => deleteAnswer(id)}
                         authorImg={authorData?.img}
@@ -309,10 +330,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch((err) => console.log('err'))
     }
 
-    const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
+    const GetMoreChapters =  (state, setState, filter, page, setPage, setCanSeeMore) => {
         setLoadingScrollChapterList(true);
         GetChapterListService(bookData._id, filter, page)
-            .then((res) => {
+            .then( async (res) => {
                 if (res.length !== 0) {
                     setState(prevState => [...prevState, ...res]);
                     setPage(page + 1);
@@ -433,6 +454,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         </div>
 
 
+
+
                                         <div className={styles.btnRead}>
                                             {
                                                 chapterData && chapterData?.length !== 0 &&
@@ -445,6 +468,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                         })
                                                     }}
                                                 >Lire le chapitre 1 <CursorArrowRaysIcon/>
+                                                    <p>{nbChapters}</p>
+
                                                 </button>
                                             }
 
@@ -517,7 +542,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     {chapterData && chapterList?.length > 0 && chapterList.map((item, index) => {
                                         let chapterNumber;
                                         if (activeFilterList === "recent") {
-                                            chapterNumber = bookData?.nbChapters - index;
+                                            chapterNumber = nbChapters - index;
                                         } else {
                                             chapterNumber = index + 1;
                                         }
@@ -580,7 +605,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                             <div className={styles.contentContainerBookPhone}>
                                 <div className={styles.bookMenuVerticalPhone}>
-                                    <div className={styles.itemMenuBookPhone}>
+                                    <div className={styles.itemMenuBookPhone} onClick={() => router.push('/')}>
                                         <HomeIcon/>
                                     </div>
 

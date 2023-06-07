@@ -32,6 +32,7 @@ import {useDispatch} from "react-redux";
 import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {ErrMsg} from "../../Component/ErrMsg";
 import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import {FormatCount} from "../../utils/NbUtils";
 
 
 export async function getServerSideProps({params,req}) {
@@ -179,7 +180,7 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                                         <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                                         <div>
                                             <h3>{profilAuthor?.pseudo}</h3>
-                                            <p>{likes} <span>j'aimes </span></p>
+                                            <p>{FormatCount(likes)} <span>j'aimes </span></p>
                                         </div>
                                     </div>
 

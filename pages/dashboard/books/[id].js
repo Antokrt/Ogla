@@ -369,13 +369,12 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     </>
                                                     :
                                                     <>
-                                                        <img
-                                                            onClick={() => {
-                                                                imgClick();
-                                                            }}
-                                                            src={book.img}/>
 
-
+                                                            <img
+                                                                onClick={() => {
+                                                                    imgClick();
+                                                                }}
+                                                                src={book.img}/>
                                                         <input
                                                             type={'file'}
                                                             ref={imgRef}
@@ -734,11 +733,14 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         </>
                                                         :
                                                         <>
-                                                            <img className={styles.imgOriginal}
-                                                                 onClick={() => {
-                                                                     imgClick();
-                                                                 }}
-                                                                 src={book.img}/>
+                                                            <Tippy trigger={'mouseenter'} content={'Modifier'} placement={'bottom'} >
+                                                                <img className={styles.imgOriginal}
+                                                                     onClick={() => {
+                                                                         imgClick();
+                                                                     }}
+                                                                     src={book.img}/>
+
+                                                            </Tippy>
 
 
                                                             <input

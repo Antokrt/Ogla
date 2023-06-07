@@ -20,7 +20,7 @@ import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {Loader1, Loader2, LoaderCard} from "../../Component/layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {ErrModal} from "../../Component/Modal/ErrModal";
-import ErrMsg from "../../Component/ErrMsg";
+import {ErrMsg} from "../../Component/ErrMsg";
 import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
 import {HorizontalCard} from "../../Component/Card/HorizontalCard";
 
@@ -29,6 +29,7 @@ import ScreenSize from "../../utils/Size";
 import {ScrollDownUtils} from "../../utils/Scroll";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
+import Header2 from "../../Component/Header2";
 import HeaderResponsive from "../../Component/HeaderResponsive";
 
 export async function getServerSideProps({req, params}) {
@@ -102,7 +103,7 @@ export default function CatPage({cat, err, bookListData,topData}) {
         <div className={theme? styles.container : styles.darkContainer}>
             {
                 width > 800 &&
-                <Header/>
+                <Header2/>
             }
             {
                 width <= 800 &&
@@ -184,15 +185,16 @@ export default function CatPage({cat, err, bookListData,topData}) {
                                 <>
                                     <ListCard books={bookList}/>
                                     {
-                                        canSeeMore && !loadingScroll &&
+
                                         <div className={styles.containerSeeMore}>
-                                            <TextSeeMore onclick={() => loadMoreBooks()}/>
-                                        </div>
-                                    }
-                                    {
-                                        loadingScroll &&
-                                        <div className={styles.containerSeeMore}>
-                                            <LoaderCard/>
+                                            {
+                                                canSeeMore && !loadingScroll &&
+                                                <TextSeeMore onclick={() => loadMoreBooks()}/>
+                                            }
+                                            {
+                                                loadingScroll &&
+                                                <LoaderCard/>
+                                            }
                                         </div>
                                     }
                                 </>

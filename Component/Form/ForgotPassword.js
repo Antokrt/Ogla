@@ -1,9 +1,9 @@
 import styles from "../../styles/Pages/Form/ResetPassword.module.scss"
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SendResetPasswordEmailService } from "../../service/User/Password.service";
 import { toastDisplayPromiseSendMail } from "../../utils/Toastify";
-import { useRouter } from "next/router";
+import {router, useRouter} from "next/router";
 import ScreenSize from "../../utils/Size";
 
 const ForgotPassword = ({ login }) => {
@@ -31,23 +31,23 @@ const ForgotPassword = ({ login }) => {
         }
     }
 
-    const sendEmail = () => { }
 
     return (
         <div className={styles.formContainer}>
+            <div className={styles.imgAbs} onClick={() => router.push("/")}>
+                <img src="/assets/bookOrange2.png" />
+            </div>
             <div className={styles.leftBlock}>
                 <div className={styles.container}>
                     <div className={styles.header}>
                         {
                             !hasSendEmail ?
                                 <>
-                                    <img src="/assets/bookOrange2.png" />
-                                    <h1>Mot de passe oublié? </h1>
+                                    <h1>Mot de passe oublié <span>?</span></h1>
                                     <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un mail de réinitialisation.
                                     </p>
                                 </> :
                                 <>
-                                    <img src="/assets/bookOrange2.png" />
                                     <h1>Email envoyé ! </h1>
                                     <p> Nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
                                     </p>
@@ -71,7 +71,7 @@ const ForgotPassword = ({ login }) => {
                                     <p className={styles.submitErr + ' ' + styles.fadeIn}>{submitErr.msg}</p>
                                 }
                                 <div className={styles.conditions} onClick={login}>
-                                    <p> Retour à la connexion </p>
+                                    <p> Se connecter </p>
                                 </div>
                                 <div className={styles.stepBtnContainer}>
                                     <button type={'submit'} className={styles.stepBtn}>Envoyer</button>

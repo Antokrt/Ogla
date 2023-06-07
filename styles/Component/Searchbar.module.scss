@@ -2,7 +2,7 @@
 
 .container {
   ::placeholder {
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $primaryFont;
     color: $brown;
   }
 
@@ -22,13 +22,11 @@
     padding-left: 15px;
     width: 100%;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     border: solid 1px rgba(90, 102, 115, 0.12);
     font-size: 14px;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $primaryFont;
     color: $dark;
-    letter-spacing: 1px;
-
   }
 
   input:focus {

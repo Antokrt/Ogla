@@ -87,8 +87,8 @@
       }
       overflow: hidden;
       font-size: 18px;
-      font-family: "Rebond Grotesque",sans-serif;
-      -webkit-text-stroke-width: 1px;
+      font-family: $primaryFont;
+      font-weight: bold;
       text-transform: capitalize;
       color: #1C232B;
     }
@@ -106,8 +106,8 @@
         }
 
         font-size: 18px;
-        font-family: "Pt Sans",sans-serif;
-        font-weight: bold;
+        font-family: $primaryFont;
+        font-weight: bold!important;
         color: #1C232B;
       }
 
@@ -404,8 +404,7 @@ p{
 
       overflow: hidden;
       font-size: 18px;
-      font-family: "Rebond Grotesque",
-      sans-serif;
+      font-family: $primaryFont;
       font-weight: 700;
       color: hsla(0deg, 100%, 100%, 0.88);
     }

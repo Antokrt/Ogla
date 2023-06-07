@@ -99,7 +99,9 @@ button{
     background-color: white;
     font-size: 12px;
     color: #9844AD;
-    font-family: 'Montserrat Alternates', sans-serif;
+    font-family: $primaryFont;
+    font-weight: bold;
+    text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
   }
 }
 .scrollbar{

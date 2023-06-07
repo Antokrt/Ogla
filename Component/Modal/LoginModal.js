@@ -59,7 +59,7 @@ export const LoginModal = ({close}) => {
                     <div className={styles.headerModal}>
                         <img src={'assets/chara/chara1.png'}/>
                         <h5>Connexion</h5>
-                        <p>Connectez-vous pour accéder à toutes les fonctionnalités d'Ogla !</p>
+                        <p>Connectez vous pour accéder à toutes les fonctionnalités d'Ogla !</p>
                     </div>
 
                     <div className={styles.google}>

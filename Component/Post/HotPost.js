@@ -11,6 +11,7 @@ import {ArrowsPointingInIcon, ForwardIcon, HeartIcon,ChatBubbleLeftRightIcon} fr
 import BookSvg from "../layouts/Icons/BookSvg";
 import {useEffect} from "react";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
+import {FormatCount, FormatLikesCount} from "../../utils/NbUtils";
 
 export const HotPost = ({ img, title, category, author, nbChapter, description, likes, top, slug, id }) => {
     const router = useRouter();
@@ -70,11 +71,11 @@ export const HotPostPhone = ({ img, title, category, author, nbChapter, descript
             <div className={styles.headerPhone}>
                 <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                 <div className={styles.likeThumbnailPhone}>
-                    <p>{likes} like(s)</p>
+                    <p>{FormatCount(likes)} j'aimes</p>
                 </div>
                 <div>
                     <p> Par <span className={styles.author}>{Capitalize(author)}</span>  </p>
-                    <p>{nbChapter}1222 chapitre(s)</p>
+                    <p>{FormatCount(nbChapter)} chapitres</p>
                 </div>
             </div>
             <h6>{title}</h6>

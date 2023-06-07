@@ -45,7 +45,7 @@ const Login = ({ register, forgotPassword }) => {
             .then((res) => {
                 if (res?.status === 401) {
                     setSubmitErr(prevState => ({
-                        msg: 'Identifiant ou mot de passe incorrect!',
+                        msg: 'Identifiant ou mot de passe incorrect.',
                         show: true
                     }))
                 } else {
@@ -88,7 +88,7 @@ const Login = ({ register, forgotPassword }) => {
                                 </svg>
                                 <input className={styles.inputId} type={"text"} name={"pseudo"} placeholder={" "}></input>
                                 <label htmlFor={"pseudo"} className={styles.labelId}>
-                                    Identifiant
+                                    Pseudo
                                 </label>
                             </div>
                             <div className={styles.inputContainer}>
@@ -107,7 +107,7 @@ const Login = ({ register, forgotPassword }) => {
                             }
                             <div className={styles.conditions}>
                                 <div className={styles.register}>
-                                    <p onClick={register}> Créez un compte ici</p>
+                                    <p onClick={register}> Créer un compte ici</p>
                                 </div>
                                 <p onClick={forgotPassword}>Mot de passe oublié?</p>
                             </div>
@@ -116,13 +116,13 @@ const Login = ({ register, forgotPassword }) => {
                             <button type={'submit'} className={styles.stepBtn + ' ' + styles.logInBtn}>Se connecter</button>
                             <div className={styles.otherOption}>
                                 <div className={styles.trait}> </div>
-                                <h3> Se connecter autrement </h3>
+                                <h3> Ou </h3>
                             </div>
                             <GoogleLoginBtn click={() => signIn('google')} />
                         </div>
 
                         <ReCAPTCHA ref={captchaRef} size={'normal'}
-                            sitekey={'6LdQPrQlAAAAAMw_TQ02hrA9145W96nGWFUZTQPL'} onChange={token}>
+                            sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITEKEY} onChange={token}>
                         </ReCAPTCHA>
 
 

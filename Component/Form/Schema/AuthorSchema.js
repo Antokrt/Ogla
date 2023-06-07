@@ -3,67 +3,66 @@ import * as Yup from 'yup';
 export const AuthorSchema = Yup.object().shape({
     firstName: Yup.string()
         .required(" ")
-        .min(2, "2 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .min(2, "2 caractères min")
+        .max(15, "15 caractères max"),
 
     lastName: Yup.string()
         .required(" ")
         .min(2, "2 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .max(15, "15 caractères max"),
 
     age: Yup.string()
         .required(" "),
 
-
     email: Yup.string()
         .email("Email invalide")
-        .required('Email requis'),
+        .required('Requis'),
 
     password: Yup.string()
         .required("")
-        .min(5, "Mot de passe doit être plus grand que 5 caractères")
-        .max(50, "Mot de passe doit être plus petit que 50 caractères"),
+        .min(5, "5 caractères min")
+        .max(50, "50 caractères max"),
 
     confirmPassword: Yup.string()
         .required("")
         .oneOf(
             [Yup.ref("password"), null],
-            "Les mots de passe ne correspondent pas"
+            "Non correspondant"
         ),
 
     pseudo: Yup.string()
         .required(" ")
-        .min(5, "5 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .min(5, "5 caractères min")
+        .max(15, "15 caractères max"),
 
     description: Yup.string()
         .required(" ")
-        .min(10, "10 caractères minimum")
-        .max(500, "500 caractères maximum"),
+        .min(10, "10 caractères min")
+        .max(500, "500 caractères max"),
 })
 
 export const AuthorSchemaLog = Yup.object().shape({
     firstName: Yup.string()
         .required(" ")
-        .min(2, "2 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .min(2, "2 caractères min")
+        .max(15, "30 caractères max"),
 
     lastName: Yup.string()
         .required(" ")
-        .min(2, "2 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .min(2, "2 caractères min")
+        .max(15, "15 caractères max"),
 
     age: Yup.string()
         .required(" "),
 
     pseudo: Yup.string()
         .required(" ")
-        .min(5, "5 caractères minimum")
-        .max(15, "15 caractères maximum"),
+        .min(5, "5 caractères min")
+        .max(15, "15 caractères max"),
 
     description: Yup.string()
         .required(" ")
-        .min(10, "10 caractères minimum")
-        .max(500, "500 caractères maximum"),
+        .min(10, "10 caractères min")
+        .max(500, "500 caractères max"),
 })
 
