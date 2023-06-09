@@ -22,7 +22,6 @@ export async function middleware(req){
     }
 
 
-
     if (req.nextUrl.pathname.startsWith('/cat/') && !GetCategory().includes(req.nextUrl.pathname.split('/cat/')[1])) {
         return NextResponse.redirect(new URL('/cat/', req.url));
     }
@@ -33,6 +32,10 @@ export async function middleware(req){
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && token && !token.is_author) {
         return NextResponse.redirect(new URL('/', req.url))
+    }
+
+    if(req.nextUrl.pathname === '/dashboard'){
+        return NextResponse.redirect(new URL('/dashboard/books',req.url))
     }
 
 }

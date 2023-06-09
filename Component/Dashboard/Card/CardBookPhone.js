@@ -1,4 +1,5 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboardPhone.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
 
 import {useRouter} from "next/router";
@@ -12,12 +13,12 @@ export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbV
 
     const catClassName = 'style.'+category;
     return (
-        <div className={styles.container} >
+        <div className={styles.container + ' ' + anim.fadeIn} >
 
             {
                 top &&
                 <div className={styles.thumbnail}>
-                    <p>Top</p>
+                    <p>Top livre</p>
                     <HeartIcon/>
                 </div>
             }

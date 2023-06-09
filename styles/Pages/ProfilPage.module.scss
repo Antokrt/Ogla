@@ -888,6 +888,7 @@
       gap: 5px;
       align-items: center;
 
+
       img {
         width: 50px;
         height: 50px;
@@ -912,9 +913,10 @@
 
       p {
         font-weight: bold;
-        letter-spacing: 1px;
         font-family: $primaryFont;
-        font-size: 10px;
+        font-size: 8px;
+        border: solid 2px transparent;
+        padding-bottom: 5px;
         color: white;
       }
 
@@ -931,9 +933,9 @@
   }
 
   .activeItem {
+    display: flex;
     p {
-      border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-      padding-bottom: 5px;
+      border-bottom-color: rgba(255, 255, 255, 0.91) !important;
     }
   }
 }
@@ -948,7 +950,6 @@
 
   h2 {
     letter-spacing: 1px;
-
   }
 }
 
@@ -981,6 +982,35 @@
         font-size: 15px;
       }
     }
+  }
+}
+
+.containerBtnImgPhone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 20px;
+  button{
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+
+    box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
+    transition: 0.1s;
+    cursor: initial;
+    font-size: 8px;
+    background-color: #e94f37;
+    border-radius: 5px;
+    color: white;
+    -webkit-text-stroke-width: 0.5px;
+    font-family: "Open Sans", sans-serif;
+    padding: 8px 15px;
+  }
+
+  .darkBtn{
+    background-color: #54595F;
   }
 }
 
@@ -1067,6 +1097,10 @@
       justify-content: center;
 
       img {
+        &:active {
+          transform: scale(0.8);
+          transition: 0.2s;
+        }
         width: 90px;
         height: 90px;
       }
@@ -1075,8 +1109,8 @@
     .form {
       label {
         width: 100%;
-        color: #a5a5a5;
-        letter-spacing: 0.8px;
+        color: #1c232b;
+        font-family: $primaryFont;
         font-size: 12px;
       }
 

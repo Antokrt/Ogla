@@ -15,8 +15,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 10vh;
-  margin: 4vh 0;
+  gap: 5vw;
+  margin: 40px 0;
 
   .list {
     display: inline-flex;
@@ -151,12 +151,10 @@
 
 @media screen and (max-width: 1030px) {
   .container {
-    gap: 4vh !important;
     justify-content: center;
     align-items: center;
   }
   .darkContainer {
-    gap: 4vh !important;
     justify-content: center;
     align-items: center;
   }

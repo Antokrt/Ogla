@@ -15,13 +15,6 @@ export default function Banner() {
             <div className={styles.HomeCenterBlock}>
                 <div className={styles.HomeTextBlock}>
                     <div className={styles.HomeCenterTitle}>
-                        <button onClick={() => {
-                            axios.get('https://192.168.0.29:3008/book')
-                                .then((res) => {
-                                    alert(res.data[0].author)
-                                })
-                                .catch((err) => alert('err'))
-                        }}>Test</button>
                         <h1> Commencez votre voyage avec <span>OGLA</span> ! </h1>
                         <p> Découvrez des histoires captivantes et des
                             aventures passionantes qui vous ferons voyager au-delà de votre imagination... </p>
