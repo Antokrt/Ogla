@@ -79,9 +79,7 @@ export default function Footer() {
                     <div className={styles.plan}>
                         <h6>A propos</h6>
                         <ul>
-                            <li>Mentions légales</li>
-                            <li>Données personnelles</li>
-                            <li>Conditions générales</li>
+                            <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales d'utilisation </Link></li>
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
                             <li>© OGLA Tous droits réservés 2023
                             </li>
