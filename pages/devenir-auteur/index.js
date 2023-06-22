@@ -338,8 +338,9 @@ const DevenirAuteur = () => {
                     <span className={styles.acceptCondition}
                           htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j&apos;accepte l&apos;ensemble des <a
                         target={'_blank'}
-                        href={('/conditions-generales-d\'utilisation')} rel={'noreferrer'}>conditions d&apos;utilisation</a>.</span>
+                        href={('/conditions-generales-d\'utilisation')} rel={'noreferrer '}>conditions d&apos;utilisation</a>.</span>
                 </div>
+
 
 
                 {

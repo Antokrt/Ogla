@@ -2,45 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/BannerBecameWriter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/BannerBecameWriter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/ForgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/ForgotPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMain.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderResponsive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/MusicHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/MusicHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/Btn/ActionBtn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/404.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/404.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/EntryChoice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/EntryChoice/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_error.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_error.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/conditions-generales-d'utilisation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/conditions-generales-d'utilisation/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/profil/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/email-verification/success/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email-verification/success/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,7 +319,7 @@
       <workItem from="1687252085460" duration="6999000" />
       <workItem from="1687334015927" duration="16137000" />
       <workItem from="1687422804974" duration="3020000" />
-      <workItem from="1687449317482" duration="6700000" />
+      <workItem from="1687449317482" duration="6993000" />
     </task>
     <servers />
   </component>
