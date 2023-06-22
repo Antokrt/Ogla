@@ -166,7 +166,7 @@ export const HeaderMain = () => {
                             :
                             <>
                                 <button className={styles.register}
-                                        onClick={() => router.push({pathname: "/auth", query: "register"})}>S'inscrire
+                                        onClick={() => router.push({pathname: "/auth", query: "register"})}>S&apos;inscrire
                                 </button>
                                 <button className={styles.login} onClick={() => {
                                     if (router.pathname === '/')

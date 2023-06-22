@@ -48,7 +48,7 @@ const Support = () => {
                         <img src={'/assets/diapo/old.png'}/>
                         <h3>Contactez nous</h3>
                         <p>Pour toute question ou problème technique, contactez notre équipe de support sur <span
-                            className={styles.discord}>Discord</span> ou à l'adresse suivante : <strong><a
+                            className={styles.discord}>Discord</span> ou à l&apos;adresse suivante : <strong><a
                             href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>support@ogla.fr</a> </strong></p>
                     </div>
                 </div>

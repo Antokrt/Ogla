@@ -158,14 +158,14 @@ const SearchPage = ({ queryData, data, err }) => {
                                         setFilter('popular');
                                         searchNewBooks('popular');
                                     }}
-                                    className={filter === "popular" && styles.activeBtn}>Populaire(s)</button>
+                                    className={filter === "popular" && styles.activeBtn}>Populaires</button>
 
                                 <button
                                     onClick={() => {
                                         setFilter('recent');
                                         searchNewBooks('recent');
                                     }}
-                                    className={filter === "recent" && styles.activeBtn}>Récent(s)
+                                    className={filter === "recent" && styles.activeBtn}>Récents
                                 </button>
                             </div>
                         </div>

@@ -168,7 +168,7 @@ export const HeaderMainResponsive = () => {
                                 </>
                                 :
                                 <>
-                                    <li className={anim.slideInLeft3}><a href={'/auth?register'}>S'inscrire</a></li>
+                                    <li className={anim.slideInLeft3}><a href={'/auth?register'}>S&apos;inscrire</a></li>
                                     <li className={anim.slideInLeft4}><a href={'/devenir-auteur'} className={styles.purple}>Deviens écrivain</a>
                                     </li>
                                 </>

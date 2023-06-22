@@ -37,8 +37,8 @@ export default function Footer() {
                 <div className={styles.social}>
                     <Facebook />
                     <Instagram />
-                    <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noopener'} >
-                        <a target={'_blank'}>
+                    <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noreferrer'} >
+                        <a target={'_blank'} rel={'noreferrer'}>
                             <Twitter />
                         </a>
 
@@ -78,7 +78,7 @@ export default function Footer() {
                     <div className={styles.plan}>
                         <h6>A propos</h6>
                         <ul>
-                            <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales d'utilisation </Link></li>
+                            <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales d&apos;utilisation </Link></li>
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
                             <li>© OGLA Tous droits réservés 2023
                             </li>
@@ -90,7 +90,7 @@ export default function Footer() {
 
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>
-                    <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
+                    <p>Ogla est une plateforme d&apos;écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d&apos;écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
                     <p></p>
                 </div>
             </div>

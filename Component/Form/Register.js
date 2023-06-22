@@ -152,7 +152,7 @@ const Register = ({ login }) => {
                 <div className={styles.content}>
                     <div className={styles.header}>
                         <h1> Rejoins nous !</h1>
-                        <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tout.
+                        <p> Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de romans ouverte à tout.
                            <br/> Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
                     </div>
                     <div className={styles.form}>
@@ -260,11 +260,11 @@ const Register = ({ login }) => {
                                     }
 
                                     <div className={styles.conditions}>
-                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En rejoignant <strong>OGLA</strong>, j'accepte l'ensemble des <a target={'_blank'} href={("/conditions-generales-d'utilisation")} className={styles.spanCondition}>conditions d'utilisation</a>.</p>
+                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En rejoignant <strong>OGLA</strong>, j&apos;accepte l'ensemble des <a target={'_blank'} rel={'noreferrer'} href={("/conditions-generales-d'utilisation")} className={styles.spanCondition}>conditions d&apos;utilisation</a>.</p>
                                     </div>
                                     <div className={styles.lastOptions}>
                                         {loginLink()}
-                                        <p className={styles.registerGoogle} onClick={() => signIn('google')}> S'inscrire avec Google </p>
+                                        <p className={styles.registerGoogle} onClick={() => signIn('google')}> S&apos;inscrire avec Google </p>
                                     </div>
                                     <div className={styles.stepBtnContainer}>
                                         <button type={'submit'} className={styles.stepBtn}> Envoyer

@@ -19,7 +19,7 @@ import {AuthorConditionsModal} from "../../Component/Modal/AuthorConditionsModal
 const DevenirAuteur = () => {
 
     const [stepActiveForm, setStepActiveForm] = useState(1);
-    const [seeConditionsModal,setSeeConditionsModal] = useState(false);
+    const [seeConditionsModal, setSeeConditionsModal] = useState(false);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
     const {data: session} = useSession();
     const [seeErr, setSeeErr] = useState(false);
@@ -254,14 +254,14 @@ const DevenirAuteur = () => {
                 {
                     session ?
                         <>
-                            <label htmlFor={"pseudo"}>Nom d'auteur
+                            <label htmlFor={"pseudo"}>Nom d&apos;auteur
                                 <span>
                                     <svg viewBox="-16 0 512 512"><path
                                         d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                                 </span>
                             </label>
                             <p className={styles.errMsgItem}>
-                                Votre nom d'auteur remplacera votre pseudo
+                                Votre nom d&apos;auteur remplacera votre pseudo
                             </p>
                             <Field
                                 autoComplete={'off'}
@@ -276,7 +276,7 @@ const DevenirAuteur = () => {
                         <>
                             <label htmlFor={"pseudo"}>
                                 <span>
-                                    Nom d'auteur
+                                    Nom d&apos;auteur
                                     <svg viewBox="-16 0 512 512"><path
                                         d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                                 </span>
@@ -336,8 +336,9 @@ const DevenirAuteur = () => {
                 }
                 <div className={styles.conditions}>
                     <span className={styles.acceptCondition}
-                          htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j'accepte l'ensemble des <a
-                     target={'_blank'}   href={('/conditions-generales-d\'utilisation')}>conditions d'utilisation</a>.</span>
+                          htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j&apos;accepte l&apos;ensemble des <a
+                        target={'_blank'}
+                        href={('/conditions-generales-d\'utilisation')} rel={'noreferrer'}>conditions d&apos;utilisation</a>.</span>
                 </div>
 
 
@@ -422,7 +423,7 @@ const DevenirAuteur = () => {
                         .then(() => router.push('/'))
                         .then(() => router.reload());
                 })
-                .catch((err) => setStepActiveForm(1));
+                .catch(() => setStepActiveForm(1));
             /*)*/
         } else {
             setStepActiveForm(4);
@@ -563,7 +564,8 @@ const DevenirAuteur = () => {
                                     <p> {activeText} </p>
                                     :
                                     <p> Avant de continuer, il est vivement recommandé de prendre le temps de lire
-                                        attentivement les <span onClick={() => setSeeConditionsModal(!seeConditionsModal)}> conditions spécifiques aux écrivains </span>.
+                                        attentivement les <span
+                                            onClick={() => setSeeConditionsModal(!seeConditionsModal)}> conditions spécifiques aux écrivains </span>.
                                     </p>
                             }
                         </div>

@@ -47,8 +47,8 @@ const SuccessVerificationEmailPage = ({profilData}) => {
             </Head>
             <img src={'/assets/diapo/mountain.png'}/>
             <h1>Email vérifiée !</h1>
-            <p>Félicitations <span>{profilData?.pseudo} !</span> <br/> Votre e-mail a été vérifié avec succès </p>
-            <p>Vous allez être redirigé vers l'accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>
+            <p>Félicitations <span>{profilData?.pseudo} !</span> <br/> Votre email a été vérifié avec succès </p>
+            <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>
             <button onClick={() => router.replace('/')}>Accueil</button>
         </div>
     )

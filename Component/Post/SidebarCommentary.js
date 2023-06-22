@@ -261,7 +261,7 @@ const SidebarCommentary = ({
                      comments.length <= 0 && !loadingScroll && endRefresh &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
                         <img src={'/assets/jim/angry2.png'}/>
-                        <p>C'est bien silencieux ici ! <br/> <span onClick={() => {
+                        <p>C&apos;est bien silencieux ici ! <br/> <span onClick={() => {
                             if (session) {
                                 inputRef.current.focus();
                             } else {

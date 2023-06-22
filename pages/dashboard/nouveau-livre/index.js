@@ -3,28 +3,28 @@ import anim from '../../../styles/utils/anim.module.scss';
 import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
 import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 import {
     ArrowDownIcon,
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
 import Category from "../../../json/category.json";
-import { Capitalize } from "../../../utils/String";
-import { newBook, NewBookService } from "../../../service/Dashboard/BooksAuthorService";
-import { useRouter } from "next/router";
-import { renderPrediction } from "../../../utils/ImageUtils";
-import { toastDisplayError } from "../../../utils/Toastify";
-import { LoaderImg } from "../../../Component/layouts/Loader";
+import {Capitalize} from "../../../utils/String";
+import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
+import {useRouter} from "next/router";
+import {renderPrediction} from "../../../utils/ImageUtils";
+import {toastDisplayError} from "../../../utils/Toastify";
+import {LoaderImg} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import { ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
-import { PhotoIcon } from "@heroicons/react/20/solid";
-import { useSelector } from "react-redux";
-import { selectCategories } from "../../../store/slices/categorySlice";
-import { useEffect } from 'react';
+import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import {PhotoIcon} from "@heroicons/react/20/solid";
+import {useSelector} from "react-redux";
+import {selectCategories} from "../../../store/slices/categorySlice";
+import {useEffect} from 'react';
 import Head from "next/head";
 
 
@@ -66,8 +66,8 @@ const New = () => {
                 }
             })
             .catch((err) => {
-                console.log('testtt')
                 setSeeErrMsg(true);
+                console.log('err send data')
             });
 
     }
@@ -95,8 +95,8 @@ const New = () => {
                         {
                             validFirst()
                                 ?
-                                <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon /></button> :
-                                <button className={styles.disabledBtn}>Suivant <ChevronDoubleRightIcon /></button>
+                                <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button> :
+                                <button className={styles.disabledBtn}>Suivant <ChevronDoubleRightIcon/></button>
 
                         }
                     </>
@@ -104,15 +104,16 @@ const New = () => {
                 {
                     step === 2 &&
                     <>
-                        <button onClick={() => previous()}><ChevronDoubleLeftIcon /> Précédent</button>
-                        <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon /></button>
+                        <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
+                        <button onClick={() => next()}>Suivant <ChevronDoubleRightIcon/></button>
                     </>
                 }
                 {
                     step >= 3 && !loadingImg &&
                     <>
-                        <button onClick={() => previous()}><ChevronDoubleLeftIcon />  Précédent</button>
-                        <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon /></button>
+                        <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
+                        <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon/>
+                        </button>
                     </>
                 }
             </div>
@@ -123,7 +124,10 @@ const New = () => {
 
         return (
             <>
-                <h5>Commençons par les informations de base de votre livre ! <br /> Entrez un titre <span>accrocheur</span>, un résumé <span>concis </span>  pour donner un aperçu de l'histoire et choisir une <span> catégorie </span>  pour aider les lecteurs à trouver votre livre dans la bibliothèque <span className={styles.purple}>OGLA</span></h5>
+                <h5>Commençons par les informations de base de votre livre ! <br/> Entrez un
+                    titre <span>accrocheur</span>, un résumé <span>concis </span> pour donner un aperçu de
+                    l&apos;histoire et choisir une <span> catégorie </span> pour aider les lecteurs à trouver votre
+                    livre dans la bibliothèque <span className={styles.purple}>OGLA</span></h5>
                 <div className={styles.inputContainer}>
                     <label>Titre</label>
                     <input
@@ -147,17 +151,17 @@ const New = () => {
                     />
                     <label>Catégorie</label>
                     <div className={styles.selectCategory}>
-                        <ArrowDownIcon />
+                        <ArrowDownIcon/>
                         <select
                             value={category}
                             name="genres"
                             onChange={(e) => setCategory(e.target.value)}
-                            id="cat-select" >
+                            id="cat-select">
                             {
                                 categories.map((item) => {
                                     return (
                                         <option key={item._id}
-                                            value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
+                                                value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
                                     )
                                 })
                             }
@@ -172,7 +176,10 @@ const New = () => {
         return (
             <>
                 <h5 className={styles.titleImg}>
-                    Choisissez une image qui mettra en valeur votre livre et attirera l'attention des lecteurs. Cette image sera utilisée pour la couverture de votre livre et pour promouvoir votre livre sur les réseaux sociaux. Assurez-vous que l'image est de haute résolution et représente bien l'ambiance de votre histoire.
+                    Choisissez une image qui mettra en valeur votre livre et attirera l&apos;attention des lecteurs. Cette
+                    image sera utilisée pour la couverture de votre livre et pour promouvoir votre livre sur les réseaux
+                    sociaux. Assurez-vous que l&apos;image est de haute résolution et représente bien l&apos;ambiance de votre
+                    histoire.
                 </h5>
 
                 <div className={styles.inputContainer}>
@@ -183,7 +190,7 @@ const New = () => {
                             {
                                 loadingImg &&
                                 <div className={styles.loaderImg}>
-                                    <LoaderImg />
+                                    <LoaderImg/>
                                 </div>
                             }
                             <img
@@ -191,17 +198,17 @@ const New = () => {
                                 src={localImg}
                                 alt={'Selected'}
                                 width={'200px'}
-                                className={styles.fileName} />
+                                className={styles.fileName}/>
                         </div>
                     }
                     <div className={styles.addFileContainer}>
                         {
                             loadingImg && !localImg && !selectedFile &&
                             <div className={styles.load}>
-                                <LoaderImg />
+                                <LoaderImg/>
                             </div>
                         }
-                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image <PhotoIcon /></label>
+                        <label className={styles.labelFile} htmlFor={'file'}>Choisir une image <PhotoIcon/></label>
 
                     </div>
                     <input
@@ -223,8 +230,7 @@ const New = () => {
                                 handleFileSelect(e);
                                 setSelectedFile(e.target.files[0]);
                                 setLoadingImg(false);
-                            }
-                            else {
+                            } else {
                                 setLoadingImg(false);
                                 toastDisplayError("Image non conforme");
                             }
@@ -242,7 +248,7 @@ const New = () => {
             <div className={styles.finalContainer}>
                 {
                     localImg &&
-                    <img src={localImg} />
+                    <img src={localImg}/>
                 }
                 <h4>{title}</h4>
                 <p>{category}</p>
@@ -296,21 +302,21 @@ const New = () => {
 
             <Head>
                 <title>Ogla - Nouveau livre</title>
-                <meta name="description" content="Generated by create next app" />
+                <meta name="description" content="Generated by create next app"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
             {
                 width > 1050 && height > 600 ?
                     <div className={styles.verticalMenuContainer}>
-                        <VerticalAuthorMenu />
+                        <VerticalAuthorMenu/>
                     </div>
                     :
                     <>
                         {
                             width >= 700 && width <= 1050 ?
                                 <div className={styles.verticalTabContainer}>
-                                    <VerticalTabMenu />
+                                    <VerticalTabMenu/>
                                 </div>
                                 :
                                 <VerticalPhoneMenu/>
@@ -334,7 +340,7 @@ const New = () => {
                             {
                                 validFirst()
                                     ?
-                                    <p className={styles.completed}>Complétée <CheckBadgeIcon /> </p>
+                                    <p className={styles.completed}>Complétée <CheckBadgeIcon/></p>
                                     :
                                     <p>En cours...</p>
                             }
@@ -348,7 +354,7 @@ const New = () => {
                             <h6>Personnalisation </h6>
                             {
                                 step > 2 ?
-                                    <p className={styles.completed}>Complétée <CheckBadgeIcon /> </p>
+                                    <p className={styles.completed}>Complétée <CheckBadgeIcon/></p>
                                     :
                                     <p>En cours</p>
                             }
@@ -360,7 +366,7 @@ const New = () => {
                             <p>3</p>
                         </div>
                         <div className={styles.label}>
-                            <h6>C'est parti !</h6>
+                            <h6>C&apos;est parti !</h6>
                         </div>
                     </div>
 
@@ -370,7 +376,7 @@ const New = () => {
                 <div className={styles.newContainer}>
                     <div className={styles.titleABook}>
                         {titleStep()}
-                        <img src={'/assets/diapo/book.png'} />
+                        <img src={'/assets/diapo/book.png'}/>
                     </div>
                     {checkStep()}
                     {btn()}

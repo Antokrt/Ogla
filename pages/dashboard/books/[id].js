@@ -222,7 +222,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     setNewSummary(res.summary);
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log('err update summary')
                     setErrSummary(true);
                 });
         } else {
@@ -503,7 +503,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <img src={'/assets/stats/likes.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}> {book.likes}</p>
-                                                        <p className={styles.labelStats}>j'aime(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
@@ -513,7 +513,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                     <div>
                                                         <p className={styles.valueStats}>{book?.stats?.view}</p>
-                                                        <p className={styles.labelStats}>vue(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
@@ -531,7 +531,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <div>
                                                         <p className={styles.valueStats}>{book?.stats?.nbCommentary}</p>
 
-                                                        <p className={styles.labelStats}>commentaire(s) <ChatBubbleBottomCenterTextIcon/>
+                                                        <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
@@ -602,7 +602,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     <div className={styles.emptyContainer}>
                                                         <h6>Oups !</h6>
                                                         <img src={'/assets/diapo/moon.png'}/>
-                                                        <p>C'est bien vide ici, écrivez votre prochain chapitre dès
+                                                        <p>C&apos;est bien vide ici, écrivez votre prochain chapitre dès
                                                             maintenant</p>
                                                         <button
                                                             onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
@@ -654,7 +654,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                             )
                                                                         }) :
 
-                                                                        <p>C'est vide ici</p>
+                                                                        <p>C&apos;est vide ici</p>
                                                                 }
 
 
@@ -870,7 +870,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <img src={'/assets/stats/likes.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book.likes}</p>
-                                                            <p className={styles.labelStats}>j'aimes <ChatBubbleBottomCenterTextIcon/>
+                                                            <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon/>
                                                             </p>
                                                         </div>
 
@@ -967,7 +967,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                     book.chapter_list.length === 0 ?
                                                         <div className={styles.emptyContainer}>
                                                             <img src={'/assets/diapo/moon.png'}/>
-                                                            <p>C'est bien vide ici, écrivez votre prochain chapitre dès
+                                                            <p>C&apos;est bien vide ici, écrivez votre prochain chapitre dès
                                                                 maintenant</p>
                                                             <button
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
@@ -1010,7 +1010,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                             )
                                                                         }) :
 
-                                                                        <p>C'est vide ici</p>
+                                                                        <p>C&apos;est vide ici</p>
                                                                 }
 
                                                                 <div className={styles.seeMoreContainer}>
@@ -1097,7 +1097,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                     DeleteBookService(book._id)
                         .then(() =>  toastDisplayInfo('Livre supprimé avec succès !'))
                         .then(() => router.push('/dashboard/books'))
-                        .catch((err) => console.log('err'))
+                        .catch((err) => console.log('err delete book'))
                 }
                 } img={bookData?.img} btnConfirm={'Supprimer'}
                               subTitle={'Supprimer ' + bookData.title + ' et ses chapitres.'}

@@ -10,7 +10,7 @@ const MusicHome = () => {
         <div className={styles.content}>
             <h5>La musique accompagne <span>OGLA </span></h5>
             <p> Cette fonctionnalié est conçue pour vous accompagner dans vos moments de lecture.
-                Elle vous permet d'écouter des morceaux de musique relaxants et apaisants,
+                Elle vous permet d&apos;écouter des morceaux de musique relaxants et apaisants,
                 spécialement conçus pour favoriser la concentration et la détente..
             </p>
             <div className={styles.btnContainer}>

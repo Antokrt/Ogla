@@ -175,7 +175,6 @@ const Profil = ({profilData, err}) => {
 
     const verifyEmail = () => {
         VerifyEmailService()
-            .then((res) => console.log('send'))
             .catch((err) => console.log('err to send email'));
     }
 
@@ -211,7 +210,7 @@ const Profil = ({profilData, err}) => {
                 }));
                 setNewPresentation(res);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log('err update description'));
     }
 
     const sendEmailResetPassword = () => {
@@ -374,7 +373,7 @@ const Profil = ({profilData, err}) => {
                         <h5>Devenu écrivain
                             le <span>{FormatDateStr(profilData?.register_date)}</span></h5>
 
-                        <p>{profilData.author.likes} j'aimes</p>
+                        <p>{profilData.author.likes} j&apos;aimes</p>
                     </div>
 
                     <div className={styles.containerPresentation}>
@@ -442,10 +441,10 @@ const Profil = ({profilData, err}) => {
             <div className={styles.becameWriter}>
                 <img src={'/assets/jim/smile8.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
-                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
+                <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
                     ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
-                    d'être entendue"</p>
+                    d&apos;être entendue</p>
 
                 <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
             </div>

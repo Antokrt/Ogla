@@ -142,7 +142,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => console.log('err save chapter'))
         }
     }
 
@@ -164,14 +164,14 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => console.log('err publish chapter'))
         }
     }
 
     const deleteThis = () => {
         DeleteChapterService(chapterData._id)
             .then((res) => router.replace('/dashboard/books/' + bookData._id))
-            .catch((err) => console.log(err));
+            .catch((err) => console.log('err delete this'));
     }
     return (
         <div className={styles.container}>
@@ -332,7 +332,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <HomeIcon className={styles.homeHResp}/>
                                         <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
                                         <h6
-                                        >{book.title} et d'autres filouteries ({index})</h6>
+                                        >{book.title} ({index})</h6>
                                     </div>
                                     <div className={styles.btnList}>
                                         {
@@ -476,7 +476,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         {
                                             bookData?.summary.length > 0 &&
                                             <div className={styles.summary}>
-                                                <p>"{Capitalize(bookData?.summary)}"</p>
+                                                <p>{Capitalize(bookData?.summary)}</p>
                                             </div>
                                         }
 
@@ -484,7 +484,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <div className={styles.statsPresentation}>
                                             <img src={'/assets/jim/cool2.png'}/>
                                             <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
-                                                d'écriture...</h6>
+                                                d&apos;écriture...</h6>
                                             <p>Cliquez ici pour en savoir plus !</p>
                                         </div>
                                     </div>

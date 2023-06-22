@@ -41,7 +41,7 @@ const ProfilAuthor = ({ type, content }) => {
                     return toastDisplayError("Votre nom d'utilisateur instagram doit être valide et commencer par un '@'.");
                 UpdateLinksProfilAuthor(type, social.replace(/\s/g, ""))
                     .then(() => setLink(social.replace(/\s/g, "")))
-                    .catch(() => toastDisplayError("Une erreur c'est produite."))
+                    .catch(() => toastDisplayError("Une erreur s'est produite."))
                 setChange(false);
                 break;
 
@@ -50,7 +50,7 @@ const ProfilAuthor = ({ type, content }) => {
                     return toastDisplayError("Votre pseudo twitter doit commencer par '@'. Il doit également être un pseudonyme valide.");
                 UpdateLinksProfilAuthor(type, social)
                     .then(() => setLink(social))
-                    .catch(() => toastDisplayError("Une erreur c'est produite."))
+                    .catch(() => toastDisplayError("Une erreur s'est produite."))
                 setChange(false);
                 break;
 
@@ -59,7 +59,7 @@ const ProfilAuthor = ({ type, content }) => {
                     return toastDisplayError("Veuillez fournir un lien valide.");
                 UpdateLinksProfilAuthor(type, social)
                     .then(() => setLink(social))
-                    .catch(() => toastDisplayError("Une erreur c'est produite."))
+                    .catch(() => toastDisplayError("Une erreur s'est produite."))
                 setChange(false);
                 break;
 
@@ -71,7 +71,7 @@ const ProfilAuthor = ({ type, content }) => {
     function supprLink() {
         deleteLink(type, session.user.id)
         .then(() => setLink(""))
-        .catch(() => toastDisplayError("Une erreur c'est produite."));
+        .catch(() => toastDisplayError("Une erreur s'est produite."));
     }
 
     return (
@@ -83,7 +83,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a title={link} href={"https://www.instagram.com/" + (link.substr(1))} target="_blank" style={{ color: "#fb3958" }}>
+                            <a title={link} href={"https://www.instagram.com/" + (link.substr(1))} rel={'noreferrer'} target="_blank" style={{ color: "#fb3958" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -111,7 +111,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a title={link} href={"https://www.twitter.com/" + link} target="_blank" style={{ color: "#1Da1f2" }}>
+                            <a title={link} href={"https://www.twitter.com/" + link} rel={'noreferrer'} target="_blank" style={{ color: "#1Da1f2" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -139,7 +139,7 @@ const ProfilAuthor = ({ type, content }) => {
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
-                            <a title={link} href={link} target="_blank" style={{ color: "#3b5998" }}>
+                            <a title={link} rel={'noreferrer'} href={link} target="_blank" style={{ color: "#3b5998" }}>
                                 {link}
                             </a>
                             <div className={styles.options}>
@@ -163,7 +163,7 @@ const ProfilAuthor = ({ type, content }) => {
             {
                 link.length === 0 && !change &&
                 <div className={styles.empty}>
-                    <h4> C'est vide...  </h4>
+                    <h4> C&apos;est vide...  </h4>
                         <PlusCircleIcon  onClick={() => setChange(true)}/>
                 </div>
             }

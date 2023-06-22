@@ -1,3 +1,4 @@
+/*
 import React, { useEffect, useState } from "react";
 import Style from "../../../styles/Pages/Dashboard/ProfilAuthor.module.scss";
 import { GetPrivateProfilApi } from "../../api/user";
@@ -66,7 +67,6 @@ const DashboardProfil = ({ profilData, err }) => {
             case 'instagram':
                 if (tampIs.length <= 1 || tampIs.length > 31 || tampIs[0] !== '@')
                     return toastDisplayError("Votre nom d'utilisateur instagram doit être valide et commencer par un '@'.");
-                console.log(tampIs);
                 UpdateLinksProfilAuthor(type, tampIs.replace(/\s/g, ""))
                 .then((res) => {
                     setInstagramLink(res.author.social.instagram)
@@ -204,7 +204,7 @@ const DashboardProfil = ({ profilData, err }) => {
                                     {
                                         !modifLinkTwitter && (profilData.author.social.twitter !== "" || TwitterLink !== "") &&
                                         <>
-                                            {/* <input type={"text"} value={TwitterLink} readOnly placeholder={"@"} style={{cursor:"default", backgroundColor:"rgb(172, 172, 172)"}} /> */}
+                                            {/!* <input type={"text"} value={TwitterLink} readOnly placeholder={"@"} style={{cursor:"default", backgroundColor:"rgb(172, 172, 172)"}} /> *!/}
                                             <a href={"https://www.twitter.com/" + TwitterLink} target="_blank" style={{color:"#1Da1f2"}} > {TwitterLink} </a>
                                             <button onClick={() => setModifLinkTwitter(true)} style={{color:"#1Da1f2", border:"1px solid #1da1f2"}} > Modifier </button>
                                         </>
@@ -220,7 +220,7 @@ const DashboardProfil = ({ profilData, err }) => {
                                         </>
                                     }
                                     </div>
-                                    <p /*className={styles.errMsg}*/></p>
+                                    <p /!*className={styles.errMsg}*!/></p>
                                 </div>
                             </form>
                         </div>
@@ -234,4 +234,4 @@ const DashboardProfil = ({ profilData, err }) => {
     )
 }
 
-export default DashboardProfil;
+export default DashboardProfil;*/

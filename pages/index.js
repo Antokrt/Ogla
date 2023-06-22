@@ -144,7 +144,7 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
                         {
                             firstTopBooks.length !== 0 && secondTopBooks.length !== 0 &&
                             <>
-                                <h7 className={styles.trendTitle}>Qu'est ce qu'on lit chez <strong>OGLA</strong> ?</h7>
+                                <h7 className={styles.trendTitle}>Qu&apos;est ce qu&apos;on lit chez <strong>OGLA</strong> ?</h7>
 
 
                                 <div className={styles.previewPostListContainer}>

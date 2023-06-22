@@ -115,9 +115,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
         }
-    }, [])
-
-    useEffect(() => {console.log(session)},[])
+    }, []);
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -143,13 +141,9 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         return setNbChapters(nb);
     },[]);
 
-    useEffect(() => {console.log(session?.user?.accessToken)},[]);
-
-
     useEffect(() => {
         countNbOfChapters()
-            .catch(() => console.log('err callback'))
-
+            .catch(() => console.log('err callback'));
     },[chapterList]);
 
 
@@ -359,7 +353,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         SendNotifService(authorData._id, 1, bookData._id, "null")
                     }
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log('err like book'));
         } else {
             dispatch(setActiveModalState(true));
         }
@@ -530,7 +524,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                             }
                                         }
                                         }/>
-                                        <div><p>{bookData.nbChapters} chapitre(s)</p>
+                                        <div><p>{bookData.nbChapters} chapitres</p>
                                         </div>
                                     </div>
                                 }
@@ -540,7 +534,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         chapterList?.length <= 0 &&
                                         <div className={styles.empty}>
                                             <img src={'/assets/jim/smile8.png'}/>
-                                            <p><span>{authorData.pseudo}</span> n'a pas encore écrit de chapitres !</p>
+                                            <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !</p>
                                         </div>
                                     }
 
@@ -653,7 +647,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 </div>
 
                                                 <div className={styles.likeBookPhone}>
-                                                    <p>{likes} j'aimes</p>
+                                                    <p>{likes} j&apos;aimes</p>
                                                 </div>
                                             </div>
 
@@ -686,7 +680,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 bookData?.summary === '' ?
                                                     <div className={styles.emptyContentPhone}>
                                                         <img src={'/assets/jim/smile8.png'}/>
-                                                        <p><span>{authorData.pseudo}</span> n'a pas encore écrit de
+                                                        <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             résumé !</p>
                                                     </div>
                                                     :
@@ -721,7 +715,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 bookData?.nbChapters <= 0 ?
                                                     <div className={styles.emptyContentPhone}>
                                                         <img src={'/assets/jim/smile8.png'}/>
-                                                        <p><span>{authorData.pseudo}</span> n'a pas encore écrit de
+                                                        <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             chapitres !</p>
                                                     </div>
                                                     :

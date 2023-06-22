@@ -47,11 +47,11 @@ export const FilterBtn3 = ({ filter, onclick }) => {
             {
                 filter === 'recent' ?
                     <button onClick={onclick} className={styles.filter}>
-                        Récent(s)
+                        Récents
                         <ArrowsUpDownIcon />
                     </button> :
                     <button onClick={onclick} className={styles.filter}>
-                        Populaire(s)
+                        Populaires
                         <ArrowsUpDownIcon />
                     </button>
             }

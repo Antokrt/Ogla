@@ -123,7 +123,7 @@ export default function CatPage({cat, err, bookListData, topData}) {
                 <img src={'/assets/diapo/5.png'}/>
                 <div>
                     <h1>Bibliothèque <span>OGLA</span></h1>
-                    <p>Plongez dans des histoires de fantaisie époustouflantes, où les rois et les reines, les chevaliers et les sorciers, les elfes et les dragons se côtoient dans des mondes étonnants remplis de dangers et de merveilles. Laissez-vous transporter dans des univers épiques où l'imagination n'a pas de limites.
+                    <p>Plongez dans des histoires de fantaisie époustouflantes, où les rois et les reines, les chevaliers et les sorciers, les elfes et les dragons se côtoient dans des mondes étonnants remplis de dangers et de merveilles. Laissez-vous transporter dans des univers épiques où l&apos;imagination n&apos;a pas de limites.
 
                     </p>
                 </div>

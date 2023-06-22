@@ -19,7 +19,7 @@ export default function Custom404(){
             </div>
             <img className={styles.img} src={'/assets/diapo/old.png'}/>
             <p>Oups ! La page est introuvable (404)</p>
-            <button onClick={() => router.push('/')}>Retour à l'accueil <HomeIcon/></button>
+            <button onClick={() => router.push('/')}>Retour à l&apos;accueil <HomeIcon/></button>
         </div>
     )
 }
