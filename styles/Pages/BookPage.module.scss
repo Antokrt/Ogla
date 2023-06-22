@@ -46,14 +46,15 @@
 .imgContainer {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
   width: 220px;
   height: auto;
   margin-right: 50px;
   gap: 10px;
   .img{
-    height: 220px;
-    width: 220px;
+    height: 190px;
+    width: 190px;
     img{
       border-radius: 15px;
       width: 100%;
@@ -113,11 +114,11 @@
     gap: 8px;
     width: 100%;
     padding: 12px 12px;
-    background-color: $purpleLight;
+    background-color: #9844AD;
     color: white;
     border-radius: 10px;
-    font-size: 12px;
-    font-family: "Pt Sans",sans-serif;
+    font-size: 10px;
+    font-family: $primaryFont;
     font-weight: bold;
 
     svg{

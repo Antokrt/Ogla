@@ -1,4 +1,5 @@
 import styles from "../../styles/Component/Post/SidebarChapter.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {ArrowDownIcon, BarsArrowDownIcon, ChevronDoubleUpIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {BookOpenIcon, HeartIcon} from "@heroicons/react/24/solid";
@@ -123,7 +124,7 @@ const SidebarChapter = ({
 
         {
             !chapterList &&
-            <div className={styles.err}>
+            <div className={styles.err + ' ' + anim.fadeIn}>
                 <img src={'/assets/jim/angry4.png'}/>
                 <h4>Oups !</h4>
                 <p>Impossible de récupérer les chapitres </p>
@@ -147,7 +148,7 @@ const SidebarChapter = ({
                 }
                 return (
                     <div
-                        className={styles.item}
+                        className={styles.item + ' ' + anim.fadeIn}
                         onClick={() => {
                             router.push({
                                 pathname: "/chapitre/" + item._id,
@@ -166,7 +167,7 @@ const SidebarChapter = ({
                         </div>
 
                         <p className={styles.likes}>
-                            {item.likes} like(s)
+                            {item.likes} <HeartIcon/>
                         </p>
 
                     </div>

@@ -30,6 +30,9 @@ import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
 import {selectCategories} from "../../store/slices/categorySlice";
 import Head from "next/head";
+import {GetTopUtils} from "../../utils/TopUtils";
+import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
 export async function getServerSideProps({ req, params }) {
 
@@ -119,8 +122,19 @@ export default function CatPage({ cat, err, bookListData }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header />
-            <CategoryHeader />
+
+            {
+                width > 950 ?
+                    <HeaderMain/> :
+                    <HeaderMainResponsive/>
+            }
+
+            {
+                width <= 950 &&
+                <div className={styles.catListContainer}>
+                    <CategoryHeader/>
+                </div>
+            }
             <BannerCategory presentation={activeCat.description} category={Capitalize(cat)} />
             {
                 width < 530 &&
@@ -190,7 +204,7 @@ export default function CatPage({ cat, err, bookListData }) {
                                             getBooksWithNewFilter('popular');
                                             setFilter('popular');
                                         }}
-                                        className={filter === 'popular' && styles.activeBtn}
+                                        className={filter === 'popular' ? styles.activeBtn : undefined}
                                     >Populaire(s)
                                     </button>
 
@@ -199,14 +213,14 @@ export default function CatPage({ cat, err, bookListData }) {
                                             setFilter('recent');
                                             getBooksWithNewFilter('recent');
                                         }}
-                                        className={filter === 'recent' && styles.activeBtn}
+                                        className={filter === 'recent' ? styles.activeBtn : undefined}
                                     >Récent(s)
                                     </button>
                                 </div>
                             </div>
                             {
                                 !err && bookListData &&
-                                <ListCard books={bookList} />
+                                <ListCard topId={filter === 'popular' ? GetTopUtils(bookList) : null} books={bookList} />
                             }
                                 <div className={styles.containerSeeMore}>
                                     {

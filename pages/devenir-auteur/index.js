@@ -1,24 +1,27 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
-import React, { useEffect, useRef, useState } from "react";
-import { Formik, Field, Form, ErrorMessage, useFormikContext, } from "formik";
+import React, {useEffect, useRef, useState} from "react";
+import {Formik, Field, Form, ErrorMessage, useFormikContext,} from "formik";
 
-import { router, useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
-import { AuthorSchema, AuthorSchemaLog } from "../../Component/Form/Schema/AuthorSchema";
+import {router, useRouter} from "next/router";
+import {signIn, useSession} from "next-auth/react";
+import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
-import { instance } from "../../service/config/Interceptor";
-import { toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail } from "../../utils/Toastify";
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
+import {instance} from "../../service/config/Interceptor";
+import {toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail} from "../../utils/Toastify";
+import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import ScreenSize from "../../utils/Size";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import Head from "next/head";
+import {ConfirmModal} from "../../Component/Modal/ConfirmModal";
+import {AuthorConditionsModal} from "../../Component/Modal/AuthorConditionsModal";
 
 const DevenirAuteur = () => {
 
     const [stepActiveForm, setStepActiveForm] = useState(1);
+    const [seeConditionsModal,setSeeConditionsModal] = useState(false);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     const [seeErr, setSeeErr] = useState(false);
     const [errMsg, setErrMsg] = useState('Champs incorrects ou manquants');
     const [formReady, setFormReady] = useState(false);
@@ -40,7 +43,6 @@ const DevenirAuteur = () => {
     })
 
 
-
     useEffect(() => {
         if (session && !session.user.is_author) {
             setUserObject(session.user);
@@ -51,8 +53,7 @@ const DevenirAuteur = () => {
         }
         if (session && session.user.is_author) {
             router.replace('/');
-        }
-        else {
+        } else {
             setFormReady(true);
         }
     }, [session])
@@ -90,7 +91,7 @@ const DevenirAuteur = () => {
                             type={"email"}
                             name={"email"}
                             value={session.user.email}
-                            placeholder={"Votre adresse mail"} />
+                            placeholder={"Votre adresse mail"}/>
                     </>
                 }
 
@@ -98,11 +99,12 @@ const DevenirAuteur = () => {
                 <label htmlFor={"lastName"}>
                     <span>
                         Nom
-                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                        <svg viewBox="-16 0 512 512"><path
+                            d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                     </span>
 
                     <p className={styles.errMsgItem}>
-                        <ErrorMessage name={"lastName"} />
+                        <ErrorMessage name={"lastName"}/>
                     </p>
                 </label>
 
@@ -110,7 +112,7 @@ const DevenirAuteur = () => {
                     id={'lastName'}
                     type={"text"}
                     name={"lastName"}
-                    placeholder={"Nom"} />
+                    placeholder={"Nom"}/>
                 {/* LAST-NAME */}
 
 
@@ -118,11 +120,12 @@ const DevenirAuteur = () => {
                 <label htmlFor={"firstName"}>
                     <span>
                         Prénom
-                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                        <svg viewBox="-16 0 512 512"><path
+                            d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                     </span>
 
                     <p className={styles.errMsgItem}>
-                        <ErrorMessage name={"firstName"} />
+                        <ErrorMessage name={"firstName"}/>
                     </p>
                 </label>
 
@@ -130,18 +133,19 @@ const DevenirAuteur = () => {
                     id={'firstName'}
                     type={"text"}
                     name={"firstName"}
-                    placeholder={"Prénom"} />
+                    placeholder={"Prénom"}/>
                 {/* FIRST-NAME */}
 
                 {/* AGE */}
                 <label htmlFor={"age"}>
                     <span>
                         Date de naissance
-                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                        <svg viewBox="-16 0 512 512"><path
+                            d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                     </span>
 
                     <p className={styles.errMsgItem}>
-                        <ErrorMessage name={"age"} />
+                        <ErrorMessage name={"age"}/>
                     </p>
                 </label>
 
@@ -174,11 +178,12 @@ const DevenirAuteur = () => {
                         <label htmlFor={"email"}>
                             <span>
                                 Email
-                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                <svg viewBox="-16 0 512 512"><path
+                                    d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                             </span>
 
                             <p className={styles.errMsgItem}>
-                                <ErrorMessage name={"email"} />
+                                <ErrorMessage name={"email"}/>
                             </p>
                         </label>
 
@@ -186,7 +191,7 @@ const DevenirAuteur = () => {
                             id={'email'}
                             type={"email"}
                             name={"email"}
-                            placeholder={"Votre adresse mail"} />
+                            placeholder={"Votre adresse mail"}/>
                         {/* EMAIL */}
 
 
@@ -194,11 +199,12 @@ const DevenirAuteur = () => {
                         <label htmlFor={"password"}>
                             <span>
                                 Mot de passe
-                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                <svg viewBox="-16 0 512 512"><path
+                                    d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                             </span>
 
                             <p className={styles.errMsgItem}>
-                                <ErrorMessage name={"password"} />
+                                <ErrorMessage name={"password"}/>
                             </p>
                         </label>
 
@@ -206,7 +212,7 @@ const DevenirAuteur = () => {
                             id={'password'}
                             type={"password"}
                             name={"password"}
-                            placeholder={"Mot de passe"} />
+                            placeholder={"Mot de passe"}/>
                         {/* PASSWORD */}
 
 
@@ -214,10 +220,11 @@ const DevenirAuteur = () => {
                         <label htmlFor={"confirmPassword"}>
                             <span>
                                 Confirmez votre mot de passe
-                                <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                <svg viewBox="-16 0 512 512"><path
+                                    d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                             </span>
                             <p className={styles.errMsgItem}>
-                                <ErrorMessage name={"confirmPassword"} />
+                                <ErrorMessage name={"confirmPassword"}/>
                             </p>
                         </label>
 
@@ -225,7 +232,7 @@ const DevenirAuteur = () => {
                             id={'confirmPassword'}
                             type={"password"}
                             name={"confirmPassword"}
-                            placeholder={"Mot de passe"} />
+                            placeholder={"Mot de passe"}/>
                         {/* CONFIRMATION PASSWORD */}
 
                     </>
@@ -249,7 +256,8 @@ const DevenirAuteur = () => {
                         <>
                             <label htmlFor={"pseudo"}>Nom d'auteur
                                 <span>
-                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                    <svg viewBox="-16 0 512 512"><path
+                                        d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                                 </span>
                             </label>
                             <p className={styles.errMsgItem}>
@@ -269,10 +277,11 @@ const DevenirAuteur = () => {
                             <label htmlFor={"pseudo"}>
                                 <span>
                                     Nom d'auteur
-                                    <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                                    <svg viewBox="-16 0 512 512"><path
+                                        d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                                 </span>
                                 <p className={styles.errMsgItem}>
-                                    <ErrorMessage name={"pseudo"} />
+                                    <ErrorMessage name={"pseudo"}/>
                                 </p>
                             </label>
 
@@ -304,10 +313,11 @@ const DevenirAuteur = () => {
                 <label htmlFor={"description"}>
                     <span>
                         Une petite présentation
-                        <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>
+                        <svg viewBox="-16 0 512 512"><path
+                            d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
                     </span>
                     <p className={styles.errMsgItem}>
-                        <ErrorMessage name={"description"} />
+                        <ErrorMessage name={"description"}/>
                     </p>
                 </label>
 
@@ -321,11 +331,13 @@ const DevenirAuteur = () => {
                 />
 
                 {
-                     seeErr &&
+                    seeErr &&
                     <p className={styles.errMsgItem + ' ' + anim.fadeIn} ref={testRef} style={{}}>{errMsg} </p>
                 }
                 <div className={styles.conditions}>
-                    <span className={styles.acceptCondition} htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j'accepte les <span>conditions d'utilisation</span></span>
+                    <span className={styles.acceptCondition}
+                          htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j'accepte l'ensemble des <a
+                     target={'_blank'}   href={('/conditions-generales-d\'utilisation')}>conditions d'utilisation</a>.</span>
                 </div>
 
 
@@ -361,15 +373,14 @@ const DevenirAuteur = () => {
                     )
 
                 default:
-                return (
-                    <div className={styles.load}>
-                        <LoaderCommentary/>
-                    </div>
+                    return (
+                        <div className={styles.load}>
+                            <LoaderCommentary/>
+                        </div>
                     )
 
             }
-        }
-        else {
+        } else {
             switch (param) {
                 case 1:
                     return firstStepForm();
@@ -404,7 +415,8 @@ const DevenirAuteur = () => {
                 description: values.description,
                 age: values.age
             }
-            /*toastDisplayPromiseSendMail(*/instance.put('http://localhost:3008/author/turn-author', formData)
+            /*toastDisplayPromiseSendMail(*/
+            instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
                     axios.get('/api/auth/session?update-author')
                         .then(() => router.push('/'))
@@ -412,8 +424,7 @@ const DevenirAuteur = () => {
                 })
                 .catch((err) => setStepActiveForm(1));
             /*)*/
-        }
-        else {
+        } else {
             setStepActiveForm(4);
             const formData = {
                 ...values,
@@ -423,7 +434,7 @@ const DevenirAuteur = () => {
             const register = await signIn('signupAuthor', formData)
                 .then((res) => {
                     setStepActiveForm(1);
-                    if(res.status === 401){
+                    if (res.status === 401) {
                         setErrMsg('Email ou pseudo déjà existant')
                         setSeeErr(true);
                     }
@@ -446,7 +457,7 @@ const DevenirAuteur = () => {
                     stepActiveForm !== 1 && width > 360 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
                         setStepActiveForm(stepActiveForm - 1)
-                    }}> <ChevronDoubleLeftIcon /> Précédent</span>
+                    }}> <ChevronDoubleLeftIcon/> Précédent</span>
                 }
                 {
                     stepActiveForm !== 1 && width <= 360 &&
@@ -467,14 +478,13 @@ const DevenirAuteur = () => {
                             data.description === ""
                         ) {
                             setSeeErr(true);
-                           testRef.current.style.opacity = 1;
+                            testRef.current.style.opacity = 1;
                             setTimeout(() => {
-                                if(testRef.current){
+                                if (testRef.current) {
                                     testRef.current.style.opacity = 0;
                                 }
                             }, 1000)
-                        }
-                        else {
+                        } else {
                             setSeeErr(false);
                         }
                     }}
@@ -482,8 +492,10 @@ const DevenirAuteur = () => {
                     className={styles.stepBtn}>Envoyer
                     {
                         width > 360 &&
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
                         </svg>
                     }
 
@@ -499,7 +511,7 @@ const DevenirAuteur = () => {
                     stepActiveForm !== 1 && width > 360 &&
                     <span className={styles.stepBtn + " " + styles.pre} onClick={() => {
                         setStepActiveForm(stepActiveForm - 1)
-                    }}> <ChevronDoubleLeftIcon /> Précédent</span>
+                    }}> <ChevronDoubleLeftIcon/> Précédent</span>
                 }
                 {
                     stepActiveForm !== 1 && width <= 360 &&
@@ -515,7 +527,7 @@ const DevenirAuteur = () => {
                             setStepActiveForm(stepActiveForm + 1)
                         }
                     }}>
-                        Suivant <ChevronDoubleRightIcon />
+                        Suivant <ChevronDoubleRightIcon/>
                     </span>
                 }
                 {
@@ -534,9 +546,9 @@ const DevenirAuteur = () => {
         <div className={styles.container}>
             <Head>
                 <title>Ogla - Devenir auteur</title>
-                <meta name="description" content="Generated by create next app" />
+                <meta name="description" content="Generated by create next app"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div className={styles.LogoHead}>
                 <h1 onClick={() => router.push("/")}> OGLA </h1>
@@ -550,7 +562,9 @@ const DevenirAuteur = () => {
                                 stepActiveForm !== 3 ?
                                     <p> {activeText} </p>
                                     :
-                                    <p> Votre inscription sera traitée le plus rapidement possible par l'équipe d'OGLA ! </p>
+                                    <p> Avant de continuer, il est vivement recommandé de prendre le temps de lire
+                                        attentivement les <span onClick={() => setSeeConditionsModal(!seeConditionsModal)}> conditions spécifiques aux écrivains </span>.
+                                    </p>
                             }
                         </div>
                         <div className={styles.form}>
@@ -564,30 +578,30 @@ const DevenirAuteur = () => {
                                         submit(values)
                                     }}
                                 >
-                                    {({ setFieldValue }) =>
-                                    (
-                                        <Form>
-                                            {
-                                                displayForm(stepActiveForm)
-                                            }
-                                            {
-                                                stepActiveForm !== 3 && !session &&
-                                                nextPreviousBtn()
-                                            }
-                                            {
-                                                stepActiveForm !== 2 && session &&
-                                                nextPreviousBtn()
-                                            }
-                                            {
-                                                stepActiveForm === 3 && !session &&
-                                                btn()
-                                            }
-                                            {
-                                                stepActiveForm === 2 && session &&
-                                                btn()
-                                            }
-                                        </Form>
-                                    )}
+                                    {({setFieldValue}) =>
+                                        (
+                                            <Form>
+                                                {
+                                                    displayForm(stepActiveForm)
+                                                }
+                                                {
+                                                    stepActiveForm !== 3 && !session &&
+                                                    nextPreviousBtn()
+                                                }
+                                                {
+                                                    stepActiveForm !== 2 && session &&
+                                                    nextPreviousBtn()
+                                                }
+                                                {
+                                                    stepActiveForm === 3 && !session &&
+                                                    btn()
+                                                }
+                                                {
+                                                    stepActiveForm === 2 && session &&
+                                                    btn()
+                                                }
+                                            </Form>
+                                        )}
                                 </Formik>
                             }
                         </div>
@@ -596,11 +610,14 @@ const DevenirAuteur = () => {
                 {
                     width > 1150 &&
                     <div className={styles.rightBlock}>
-                        <img src={"/assets/diapo/3.png"} />
+                        <img src={"/assets/diapo/3.png"}/>
                     </div>
                 }
             </div>
-
+            {
+                seeConditionsModal &&
+                <AuthorConditionsModal close={() => setSeeConditionsModal(false)}/>
+            }
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { RegisterSchema } from "./Schema/RegisterSchema";
 import {router, useRouter} from "next/router";
 import { signIn } from "next-auth/react";
 import ScreenSize from "../../utils/Size";
+import Link from "next/link";
 
 
 const Register = ({ login }) => {
@@ -257,12 +258,16 @@ const Register = ({ login }) => {
                                         submitErr.show &&
                                         <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
                                     }
+
+                                    <div className={styles.conditions}>
+                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En rejoignant <strong>OGLA</strong>, j'accepte l'ensemble des <a target={'_blank'} href={("/conditions-generales-d'utilisation")} className={styles.spanCondition}>conditions d'utilisation</a>.</p>
+                                    </div>
                                     <div className={styles.lastOptions}>
                                         {loginLink()}
                                         <p className={styles.registerGoogle} onClick={() => signIn('google')}> S'inscrire avec Google </p>
                                     </div>
                                     <div className={styles.stepBtnContainer}>
-                                        <button type={'submit'} className={styles.stepBtn}> S'inscrire
+                                        <button type={'submit'} className={styles.stepBtn}> Envoyer
                                         </button>
                                     </div>
                                 </Form>

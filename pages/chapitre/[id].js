@@ -42,6 +42,7 @@ import useOrientation from "../../utils/Orientation";
 import Footer from "../../Component/Footer";
 import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import Head from "next/head";
+import {HeaderMain} from "../../Component/HeaderMain";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -538,9 +539,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div>
-                <Header />
-            </div>
+
+            <HeaderMain/>
 
             {
                 chapterData && width > 900 &&

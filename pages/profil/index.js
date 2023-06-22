@@ -36,6 +36,8 @@ import {useEffect} from "react";
 import {OpenAllService} from "../../service/Notifications/NotificationsService";
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
+import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -108,7 +110,7 @@ const Profil = ({profilData, err}) => {
             instance.get('http://localhost:3000/api/auth/session?new-settings')
                 .then(() => resolve())
                 .catch((err) => {
-                    console.log(err)
+                    console.log('err settings')
                     reject()
                 })
         })
@@ -157,9 +159,7 @@ const Profil = ({profilData, err}) => {
                                 ReloadSession();
                                 setLoadingImg(false)
                             })
-                            .catch((err) => {
-                                setLoadingImg(false);
-                            });
+                            .catch((err) => {setLoadingImg(false)});
                     })
                     .catch((err) => {
                         setLoadingImg(false);
@@ -323,7 +323,7 @@ const Profil = ({profilData, err}) => {
                             if (!profilData.verified) {
                                 verifyEmail();
                             }
-                        }}>Vérifier maintenant</span>}</span></label>
+                        }}>(Vérifier maintenant)</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
                     {
                         session?.user?.provider !== 'google' ?
@@ -407,72 +407,7 @@ const Profil = ({profilData, err}) => {
 
                     </div>
 
-                    <div className={styles.formWriter}>
 
-                        {/*           {
-                            width > 1150 &&
-                            <div className={styles.headerWriter}>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbBooks}</p>
-                                    <h6>livre(s)</h6>
-
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbChapters}</p>
-                                    <h6>chapitre(s)</h6>
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.totalLikes}</p>
-                                    <h6>like(s) reçus</h6>
-                                </div>
-
-                            </div>
-                        }*/}
-                        {/*      {
-                            width <= 1150 &&
-                            <div className={styles.phoneHeaderAuthor}>
-                                <img src={profil.img} />
-                                <div className={styles.phoneHeaderStats}>
-                                    <div className={styles.phonehWriter}>
-                                        <h5>Quelques statistiques</h5>
-                                    </div>
-                                    <div className={styles.headerWriter}>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbBooks}</p>
-                                            <h6>livre(s)</h6>
-
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbChapters}</p>
-                                            <h6>chapitre(s)</h6>
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.totalLikes}</p>
-                                            <h6>like(s) reçus</h6>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        }*/}
-
-                        {/*                   <div className={styles.stats}>
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
-                                <p className={styles.value}>La quete du maitre <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus liké <ChartBarIcon /></p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus vue <EyeIcon /> </p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-                        </div>*/}
-                    </div>
                 </div>
                 <div className={styles.rContainerWriter}>
 
@@ -666,14 +601,22 @@ const Profil = ({profilData, err}) => {
             {
                 err &&
                 <div>
-                    <Header/>
+                    {
+                        width > 950 ?
+                            <HeaderMain/> :
+                            <HeaderMainResponsive/>
+                    }
                     <p>Impossible de récupérer le profil</p>
                 </div>
             }
             {
                 !err && profilData && session &&
                 <div className={styles.container}>
-                    <Header/>
+                    {
+                        width > 950 ?
+                            <HeaderMain/> :
+                            <HeaderMainResponsive/>
+                    }
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
                             {
@@ -730,6 +673,10 @@ const Profil = ({profilData, err}) => {
                         <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
                     }
                 </div>
+            }
+            {
+                width >= 800 &&
+                <Footer/>
             }
 
         </>

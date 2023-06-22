@@ -49,7 +49,7 @@ const ForgotPassword = ({ login }) => {
                                 </> :
                                 <>
                                     <h1>Email envoyé ! </h1>
-                                    <p> Nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
+                                    <p> Si cette adresse email existe, nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
                                     </p>
                                 </>
                         }
@@ -95,8 +95,8 @@ const ForgotPassword = ({ login }) => {
                                         <div className={styles.trait}> </div>
                                         <h3> Bonne lecture sur Ogla </h3>
                                     </div>
-                                    <div className={styles.homeBtn} onClick={() => router.push("/")}>
-                                        <p> Retour à l'accueil </p>
+                                    <div className={styles.homeBtn} onClick={() => login()}>
+                                        <p> Se connecter </p>
                                     </div>
                                 </div>
                             </>

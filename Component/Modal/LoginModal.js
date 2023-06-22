@@ -20,8 +20,8 @@ export const LoginModal = ({close}) => {
     const dispatch = useDispatch()
     const router = useRouter();
 
-    const handleSubmit = async () => {
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         if (password.length > 3) {
 
             const response = await signIn('login', {
@@ -37,10 +37,10 @@ export const LoginModal = ({close}) => {
                             show: true
                         }))
                     } else {
-                        close()
+                        close();
+                        router.reload();
                     }
                 })
-                .then(() => router.reload());
         } else {
             return null;
         }
@@ -51,7 +51,7 @@ export const LoginModal = ({close}) => {
         !session ?
             <div className={styles.container} onKeyPress={(event) => {
                 if (event.key === 'Enter') {
-                    handleSubmit();
+                    handleSubmit(event);
                 }
             }}>
                 <div className={styles.containerContent + ' ' + anim.scaleInModal}>
@@ -94,10 +94,10 @@ export const LoginModal = ({close}) => {
 
                     {
                         errMsg.show &&
-                        <p className={styles.errMsg}>Mot de passe incorrect</p>
+                        <p className={styles.errMsg}>{errMsg.msg}</p>
                     }
 
-                    <button className={styles.loginBtn} onClick={() => handleSubmit()}>Se connecter
+                    <button className={styles.loginBtn} onClick={(event) => handleSubmit(event)}>Se connecter
                     </button>
 
                 </div>

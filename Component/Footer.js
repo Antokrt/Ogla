@@ -55,22 +55,21 @@ export default function Footer() {
                         <ul>
                             <li><Link href="/"><a
                                 className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                            <li><Link href="/cat"><a className={router.pathname === "/cat" ? styles.activeNav : ""}>Derniers
-                                ouvrages</a></Link></li>
+                            <li><Link href="/bibliotheque"><a className={router.pathname === "/bibliotheque" ? styles.activeNav : ""}>Bibliothèque</a></Link></li>
                             {
                                 !session || !session.user.is_author &&
                                 <li><Link href="/"><a className={router.pathname === "/new-writer" ? styles.activeNav : ""}>Deviens
                                     écrivain</a></Link></li>
                             }
 
-                            <li style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
+                            <li tabIndex={0} style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
 
                             <li>
                                 {
                                     theme ?
-                                        <SunIcon onClick={() => dispatch(changeTheme())}  className={styles.svgTheme}/>
+                                        <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())}  className={styles.svgTheme}/>
 :
-<MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+<MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
                                 }
                             </li>
                         </ul>

@@ -11,7 +11,10 @@ import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
-import {deleteChapter, newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import {
+     DeleteChapterService, PublishChapterService,
+    SaveChapterService
+} from "../../../service/Dashboard/ChapterAuthorService";
 import {
     ArrowPathIcon,
     ChevronDoubleLeftIcon,
@@ -131,7 +134,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 text,
             }
 
-            saveChapter(data)
+            SaveChapterService(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
                     chapterData.title = res.data.title;
@@ -152,7 +155,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 text,
             }
 
-            publishChapter(data)
+            PublishChapterService(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
                     chapterData.title = res.data.title;
@@ -166,7 +169,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     }
 
     const deleteThis = () => {
-        deleteChapter(chapterData._id)
+        DeleteChapterService(chapterData._id)
             .then((res) => router.replace('/dashboard/books/' + bookData._id))
             .catch((err) => console.log(err));
     }

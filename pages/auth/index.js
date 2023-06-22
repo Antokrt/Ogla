@@ -60,6 +60,7 @@ const Auth = () => {
                             setChoice("login");
                             setQuery("login");
                             }
+
                             }
                             />
                         }

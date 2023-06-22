@@ -18,7 +18,7 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
     const theme = useSelector(selectTheme);
 
     return (
-        <div className={theme ? styles.container : styles.darkContainer} onClick={() => router.push({
+        <div tabIndex={0} className={theme ? styles.container : styles.darkContainer} onClick={() => router.push({
             pathname: '/livre/' + id,
             query: slug
         })}>
@@ -39,7 +39,7 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
                     <h6>{title}</h6>
                     <div className={styles.labelList}>
                         <p>Par {Capitalize(author)}</p>
-                        <p className={styles.catHeader}>{category}</p>
+                        <img src={'/assets/category/icons/'+category.toLowerCase()+'.svg'}/>
                     </div>
                 </div>
           {/*      {
@@ -56,7 +56,7 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
                     </div>
                 }*/}
                 <div className={styles.description}>
-                    <p>{description}  </p>
+                    <p>{Capitalize(description)}  </p>
                 </div>
                 <div></div>
             </div>

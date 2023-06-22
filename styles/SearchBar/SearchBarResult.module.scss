@@ -7,6 +7,7 @@
 
   /* Track */
   &::-webkit-scrollbar-track {
+    margin: 5px;
     background: transparent;
   }
 
@@ -25,27 +26,34 @@
   background-color: white;
   gap: 20px;
   overflow-y: scroll;
-  padding-top: 10px;
   max-height: 30vh;
   height: auto;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 100% !important;
   z-index: 200!important;
 
   .titleHeader {
-    padding: 4px 10px;
+    padding: 10px 10px;
 
     h5 {
-      font-family: 'Montserrat Alternates', sans-serif;
+      font-family: $primaryFont;
       color: rgba(28, 35, 43, 0.74);
-      font-size: 10px;
+      font-weight: 500;
+      font-size: 11px;
     }
   }
 
+  .itemAuthor{
+    display: flex;
+    justify-content: center;
+    flex-direction: row!important;
+    align-items: center!important;
+    height: 70px;
+  }
 
   .itemResult {
     &:hover {
-      background-color: #e0e0e06b;
+      background-color: rgba(224, 224, 224, 0.18);
       transition: 0.3s;
     }
     transition: 0.3s;
@@ -61,31 +69,69 @@
     align-items: flex-start;
 
     .title {
-      text-transform: capitalize;
-      display: flex;
-      justify-content: space-between;
+      &:first-letter{
+        text-transform: uppercase;
+      }
       padding-right: 10px;
       margin-bottom: 5px;
-      color: rgb(37, 36, 34);
-      font-weight: bold;
-      font-family: "Montserrat Alternates", sans-serif;
-      font-size: 11px;
+      letter-spacing: -0.3px;
+      -webkit-text-stroke-width: 0.4px;
+      font-family: $primaryFont;
+      font-size: 12px;
+    }
+
+    .author{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      img{
+        object-fit: cover;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
     }
 
     .subContainer {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
       gap: 5px;
+
 
       p {
         font-weight: bold;
+        font-family: $primaryFont;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 10px;
-        font-family: 'Montserrat Alternates', sans-serif;
+        gap: 4px;
+      }
+
+      svg {
+        width: 12px;
+        color: #9844AD;
       }
 
       .category {
         text-transform: capitalize;
         color: #9844AD;
       }
+
+      .likes{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        gap: 4px;
+        svg{
+          margin-top: 1px;
+        }
+      }
+
+
 
       svg {
         width: 12px;

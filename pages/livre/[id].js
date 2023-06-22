@@ -54,6 +54,7 @@ import Footer from "../../Component/Footer";
 import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
 import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import Head from "next/head";
+import {HeaderMain} from "../../Component/HeaderMain";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
@@ -449,7 +450,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                                 <link rel="icon" href="/favicon.ico" />
                             </Head>
-                            <Header/>
+                            <HeaderMain/>
                             {checkSide()}
 
                             <div className={styles.containerC}>
@@ -475,8 +476,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                         })
                                                     }}
                                                 >Lire le chapitre 1 <CursorArrowRaysIcon/>
-                                                    <p>{nbChapters}</p>
-
                                                 </button>
                                             }
 
@@ -532,7 +531,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         }
                                         }/>
                                         <div><p>{bookData.nbChapters} chapitre(s)</p>
-                                            <img src={'/assets/diapo/chapter.png'}/>
                                         </div>
                                     </div>
                                 }
@@ -655,7 +653,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 </div>
 
                                                 <div className={styles.likeBookPhone}>
-                                                    <p>{likes} like(s)</p>
+                                                    <p>{likes} j'aimes</p>
                                                 </div>
                                             </div>
 

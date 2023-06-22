@@ -30,8 +30,8 @@ export const Snippet = ({maxSize, line, content}) => {
                 <>
                     {
                         !seeAll && content.length ?
-                            <span className={styles.btn} onClick={() => setSeeAll(true)}>Voir le résumé complet</span> :
-                            <span className={styles.btn} onClick={() => setSeeAll(false)}>Masquer</span>
+                            <span className={styles.btn} tabIndex={0} onClick={() => setSeeAll(true)}>Voir le résumé complet</span> :
+                            <span className={styles.btn} tabIndex={0} onClick={() => setSeeAll(false)}>Masquer</span>
 
                     }
                 </>

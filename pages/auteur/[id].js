@@ -35,6 +35,9 @@ import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import {FormatCount} from "../../utils/NbUtils";
 import Head from "next/head";
 import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
+import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
+import {GetTopUtils} from "../../utils/TopUtils";
+import {HeaderMain} from "../../Component/HeaderMain";
 
 
 export async function getServerSideProps({params,req}) {
@@ -42,12 +45,14 @@ export async function getServerSideProps({params,req}) {
     const pseudo = params.id;
     const profil = await GetAuthorProfilAPI(pseudo,req);
 
+    console.log(profil.profil.topBook)
+
     return {
         props: {
             key:pseudo,
             profilData: profil.profil,
             booksData: profil.books,
-            topBookData:profil.profil.topBook,
+            topBookData:profil.profil.topBook ? profil.profil.topBook : null,
             hasLikeData: profil.hasLike,
             errProfil: profil.errProfil,
             errBooks: profil.errBook,
@@ -171,7 +176,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header/>
+            <HeaderMain/>
 
             {
                 errProfil &&
@@ -259,6 +264,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                             :
                             <>
                                 {
+                                    topBookData &&
                                     <div className={styles.hotContainer}>
                                         {
                                             width > 530 ?
@@ -321,11 +327,11 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                         <>
                                             {
                                                 activeFilter === 'recent' && recent.length !== 0 &&
-                                                <ListCard books={recent}/>
+                                                <ListCard topId={GetTopUtils(popular)} books={recent}/>
                                             }
                                             {
                                                 activeFilter === 'popular' && popular.length !== 0 &&
-                                                <ListCard books={popular}/>
+                                                <ListCard topId={GetTopUtils(popular)} books={popular}/>
                                             }
                                             <div className={styles.seeMore}>
 
@@ -339,12 +345,12 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                                     <>
                                                         {
                                                             activeFilter === 'popular' && canSeeMorePopular && !loading &&
-                                                            <p onClick={() => fetchMorePopularBooks()}>Voir plus</p>
+                                                            <TextSeeMore onclick={() => fetchMorePopularBooks()}></TextSeeMore>
                                                         }
 
                                                         {
                                                             activeFilter === 'recent' && canSeeMoreRecent && !loading &&
-                                                            <p onClick={() => fetchMoreRecentBooks()}>Voir plus</p>
+                                                            <TextSeeMore onclick={() => fetchMoreRecentBooks()}></TextSeeMore>
                                                         }
                                                     </>
                                                 }

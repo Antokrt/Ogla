@@ -342,6 +342,30 @@
     color: white;
 }
 
+.conditions {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    p {
+        &:hover {
+            color: #1c232b;
+            transition: 0.3s;
+        }
+
+        .spanCondition{
+            color: #9844AD;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        transition: 0.3s;
+        font-weight: bold;
+        font-family: $primaryFont;
+        color: #1c232b !important;
+        font-size: 12px;
+    }
+}
+
 .lastOptions {
     width: 100%;
     display: flex;

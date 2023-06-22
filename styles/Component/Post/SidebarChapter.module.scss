@@ -161,6 +161,12 @@
     font-family: "Santral-Regular",sans-serif;
     font-weight: bold;
     color: #9844AD;
+    gap: 5px;
+
+    svg{
+      width: 11px;
+      color: #9844AD;
+    }
   }
 }
 
@@ -211,6 +217,11 @@
     }
 
     svg{
+      &:active {
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
+      transition: 0.2s;
       cursor: pointer;
       width: 18px;
       color: white;

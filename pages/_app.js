@@ -1,6 +1,7 @@
 import '../styles/globals.scss';
 import '../styles/editor.css';
 import '../styles/tippy.css';
+import '../styles/toast.css';
 import {SessionProvider, useSession} from "next-auth/react";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +35,8 @@ import {Maintenance} from "../Component/Maintenance";
 import {AnimatePresence} from "framer-motion";
 import {useRouter} from "next/router";
 import {Loader} from "../Component/Loader";
+import {Darken} from "../Component/Darken";
+import CustomStyle from "../Component/CustomStyle";
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -59,7 +62,9 @@ function MyApp({Component, pageProps}) {
             router.events.off("routeChangeComplete", end)
             router.events.off("routeChangeError", end)
         }
+
     }, [])
+
 
     if (process.env.maintenance) {
         return (<Maintenance/>)
@@ -72,6 +77,7 @@ function MyApp({Component, pageProps}) {
             <Provider store={store}>
                 <Notif/>
                 <Modal/>
+                <Darken/>
                 {
                     loading &&
                     <Loader/>

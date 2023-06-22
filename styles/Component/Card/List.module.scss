@@ -5,6 +5,30 @@
   width: 100%;
 }
 
+/*
+.card {
+  width: auto;
+  height: auto;
+  position: relative; !* Ajoute une position relative à la carte *!
+}
+
+
+.card::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 100%; !* La hauteur de la bordure sera égale à la hauteur de la carte *!
+  background-color: rgba(0, 0, 0, 0.21); !* Couleur de la bordure *!
+  top: 0; !* Aligne la bordure avec le haut de la carte *!
+  right: -48px; !* Place la bordure tout à droite de la carte *!
+}
+
+.card:nth-child(3n)::after {
+  display: none; !* Masque la bordure après le troisième élément *!
+}
+*/
+
+
 .list{
   display: grid;
   justify-content: center;
@@ -16,9 +40,94 @@
   width: 100%;
 }
 
+@media screen and (max-width: 1400px){
+  .card::after {
+    right: -2.6vw;
+  }
+}
+
+@media screen and (max-width: 1380px){
+  .card::after{
+    right: -9%;
+  }
+}
+
+@media screen and (max-width: 1340px){
+.card::after{
+  right: -10%;
+}
+}
+
+@media screen and (max-width: 1320px){
+  .card::after{
+    right: -2vw;
+  }
+}
+
+@media screen and (max-width: 1300px){
+  .card::after{
+    right: -11%;
+  }
+}
+
+
+@media screen and (max-width: 1290px){
+  .card::after{
+    right: -11%;
+  }
+}
+
+
+
+
+@media screen and (max-width: 1240px){
+  .card::after{
+    right: -10%;
+  }
+}
+
+@media screen and (max-width: 1200px){
+  .card::after{
+    right: -8%;
+  }
+}
+
+
+@media screen and (max-width: 1130px){
+  .card::after{
+    right: -7%;
+  }
+}
+
+@media screen and (max-width: 1110px){
+  .card::after{
+    display: none;
+  }
+}
+
 @media screen and (max-width: 1040px){
   .list{
     grid-template-columns: 1fr 1fr;
+
+  }
+
+  .container{
+    width: 85%;
+  }
+  .card::after{
+display: none;
+  }
+}
+
+@media screen and (max-width: 900px){
+  .container{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 750px){
+  .container{
+    justify-content: space-between!important;
   }
 }
 

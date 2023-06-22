@@ -96,6 +96,25 @@ export const HeadPhoneBtn = ({ onclick }) => {
 
 }
 
+export const HeadPhoneBtnOnHeaderMain = ({ onclick }) => {
+
+    const selectMusicState = useSelector(selectActiveMusicStatus);
+    const selectIndex = useSelector(selectIndexStateMusic);
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
+
+    return <div className={router.pathname === '/' && styles.headphoneMain} onClick={() => dispatch(setActiveMusic())}>
+        <MusicalNoteIcon />
+        {
+            selectMusicState &&
+            <div className={styles.animationOnHeadPhoneMain}></div>
+        }
+
+    </div>
+
+}
+
 export const HeadPhoneBtnHeader = ({ onclick }) => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);

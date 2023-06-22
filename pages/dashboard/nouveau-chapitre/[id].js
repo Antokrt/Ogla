@@ -16,9 +16,7 @@ import {
 import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {DateNow} from "../../../utils/Date";
-import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
-import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
-import {newChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import { NewChapterService} from "../../../service/Dashboard/ChapterAuthorService";
 import {Capitalize} from "../../../utils/String";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
@@ -149,7 +147,7 @@ const NouveauChapitre = ({bookData, err}) => {
                 publish
             }
 
-            newChapter(data)
+            NewChapterService(data)
                 .then((res) => {
                     localStorage.removeItem('book-'+bookData._id);
                     router.push('/dashboard/books/' + book._id);

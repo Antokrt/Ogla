@@ -8,6 +8,7 @@ export const CardChapterPublic = ({id,index,title,date_creation,likes,bookTitle}
     const router = useRouter();
 return (
     <div
+        tabIndex={0}
         onClick={() => {
             router.push({
                 pathname: "/chapitre/" + id, query: {

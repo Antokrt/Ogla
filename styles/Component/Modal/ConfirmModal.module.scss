@@ -31,6 +31,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;
@@ -145,6 +149,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;
@@ -255,6 +263,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;

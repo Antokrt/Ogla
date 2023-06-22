@@ -1095,6 +1095,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                 seeConfirmModal &&
                 <ConfirmModal confirm={() => {
                     DeleteBookService(book._id)
+                        .then(() =>  toastDisplayInfo('Livre supprimé avec succès !'))
                         .then(() => router.push('/dashboard/books'))
                         .catch((err) => console.log('err'))
                 }

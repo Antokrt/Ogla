@@ -22,8 +22,8 @@ export async function middleware(req){
     }
 
 
-    if (req.nextUrl.pathname.startsWith('/cat/') && !GetCategory().includes(req.nextUrl.pathname.split('/cat/')[1])) {
-        return NextResponse.redirect(new URL('/cat/', req.url));
+    if (req.nextUrl.pathname.startsWith('/bibliotheque/') && !GetCategory().includes(req.nextUrl.pathname.split('/bibliotheque/')[1])) {
+        return NextResponse.redirect(new URL('/bibliotheque/', req.url));
     }
 
 /*    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {
@@ -38,5 +38,10 @@ export async function middleware(req){
         return NextResponse.redirect(new URL('/dashboard/books',req.url))
     }
 
+
+
+    if(req.nextUrl.pathname === '/devenir-auteur' && token && token.is_author){
+        return NextResponse.redirect(new URL('/cat',req.url))
+    }
 }
 

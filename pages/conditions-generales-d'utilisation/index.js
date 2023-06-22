@@ -4,6 +4,7 @@ import Header from "../../Component/Header";
 import {BackUp} from "../../Component/layouts/Btn/BackUp";
 import {useRef} from "react";
 import Footer from "../../Component/Footer";
+import {HeaderMain} from "../../Component/HeaderMain";
 
 const Cgu = () => {
     const divRef = useRef(null);
@@ -17,7 +18,7 @@ const Cgu = () => {
 
     return (
         <div className={styles.container} ref={divRef}>
-            <Header/>
+            <HeaderMain/>
 
             <div className={styles.titleContainer + ' ' + anim.fadeIn}>
                 <h1>Conditions générales d’utilisation</h1>

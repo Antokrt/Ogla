@@ -4,17 +4,15 @@
   &:hover {
     background-color: rgba(234, 229, 229, 0.32);
   }
-
   transition: 0.1s;
   position: relative;
   display: flex;
   cursor: pointer;
   width: 340px;
-  height: 124px;
-  border-radius: 15px;
+  height: 140px;
   padding: 10px;
+  border-bottom: solid 1px rgba(84, 89, 95, 0.09);
   gap: 20px;
-
   .thumbnailLike {
     position: absolute;
     display: flex;
@@ -34,6 +32,28 @@
     svg {
       color: #9844AD;
       width: 14px;
+    }
+  }
+
+  .topThumbnail{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e94f37;
+    top: 0;
+    right: 0;
+    p{
+      font-family: $primaryFont;
+      color: white;
+    }
+
+    svg{
+      width: 10px;
+      color: white;
     }
   }
 
@@ -285,6 +305,7 @@
   }
 }
 
+
 @media screen and (max-width: 680px) {
   .container {
     width: 280px;
@@ -388,7 +409,6 @@
     height: auto;
     text-align: center;
     flex-direction: column;
-
 
     img {
       height: 100px!important;
