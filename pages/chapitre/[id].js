@@ -421,7 +421,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     }
 
     const likeComment = (id) => {
-        console.log(chapterData._id)
         setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id, chapterData._id, bookData._id));
     }
 

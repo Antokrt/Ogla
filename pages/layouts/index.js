@@ -2,7 +2,7 @@ import styles from '../../styles/Pages/Layout.module.scss';
 import {useState} from "react";
 import {CountLike, LikeBtn, LikeBtnWithCount, TextLikeBtn} from "../../Component/layouts/Btn/Like";
 import {DeleteBtn, GoogleLoginBtn, LinkBtn, ReadBtn} from "../../Component/layouts/Btn/Link";
-import CardBookPublic from "../../Component/Card/CardBook";
+import {CardBookPublic} from "../../Component/Card/CardBook";
 import {Loader1, Loader2} from "../../Component/layouts/Loader";
 import {CheckBtn, CloseBtn} from "../../Component/layouts/Btn/ActionBtn";
 import HotPost from "../../Component/Post/HotPost";

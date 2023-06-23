@@ -194,7 +194,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                         <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                                         <div>
                                             <h3>{profilAuthor?.pseudo}</h3>
-                                            <p>{FormatCount(likes)} <span>j'aimes </span></p>
+                                            <p>{FormatCount(likes)} <span>j&apos;aimes </span></p>
                                         </div>
                                     </div>
 
@@ -202,8 +202,8 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                         hasLike ?
                                             <button onClick={() => {
                                                 likeAuthor();
-                                            }}>J'aime <HeartSolid/></button> :
-                                            <button onClick={() => likeAuthor()}>J'aime <HeartOutline/></button>
+                                            }}>J&apos;aime <HeartSolid/></button> :
+                                            <button onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
                                     }
                                 </div>
 
@@ -218,7 +218,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                 <div className={styles.social}>
                                     {
                                         social.instagram && social.instagram !== '' &&
-                                        <a className={styles.itemSocial} href={'https://www.instagram.com/'+social.instagram.slice(1,social.instagram.length)} target={'_blank'}>
+                                        <a className={styles.itemSocial} href={'https://www.instagram.com/'+social.instagram.slice(1,social.instagram.length)} rel={'noreferrer'} target={'_blank'}>
                                             <Instagram/>
                                             <span><span className={styles.dat}>@</span>{Capitalize(social.instagram.slice(1,social.instagram.length))}</span>
                                         </a>
@@ -226,14 +226,14 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
 
                                     {
                                         social.twitter && social.twitter !== '' &&
-                                        <a className={styles.itemSocial} href={'https://twitter.com/'+ social.twitter} target={'_blank'}>
+                                        <a className={styles.itemSocial} href={'https://twitter.com/'+ social.twitter} rel={'noreferrer'} target={'_blank'}>
                                             <Twitter/>
                                             <span><span className={styles.dat}>@</span>{Capitalize(social.twitter.slice(1,social.twitter.length))}</span>
                                         </a>
                                     }
                                     {
                                         social.facebook && social.facebook !== '' &&
-                                        <a className={styles.itemSocial} href={social.facebook} target={'_blank'}>
+                                        <a className={styles.itemSocial} href={social.facebook} rel={'noreferrer'} target={'_blank'}>
                                             <Facebook/>
                                             <span>Facebook</span>
                                         </a>
@@ -259,7 +259,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                         profilAuthor.nbBooks <= 0 ?
                             <div className={styles.empty}>
                                 <img src={'/assets/jim/smile8.png'}/>
-                                <p><span>{profilAuthor.pseudo}</span> n'a pas encore écrit de livres !</p>
+                                <p><span>{profilAuthor.pseudo}</span> n&apos;a pas encore écrit de livres !</p>
                             </div>
                             :
                             <>
@@ -306,7 +306,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                                     if (activeFilter !== 'popular') {
                                                         setActiveFilter('popular');
                                                     }
-                                                }}>Populaire(s)
+                                                }}>Populaires
                                             </button>
                                             <button
                                                 className={activeFilter === 'recent' && styles.activeBtn}
@@ -318,7 +318,7 @@ const AuthorProfil = ({profilData, booksData, topBookData,  hasLikeData,errProfi
                                                         setActiveFilter('recent');
                                                         setPage(2);
                                                     }
-                                                }}>Récent(s)
+                                                }}>Récents
                                             </button>
                                         </div>
                                     </div>

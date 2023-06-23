@@ -81,10 +81,7 @@ const Books = ({booksData, err, nbBooks}) => {
             })
             .then(() => setLoadingScroll(false))
             .then(() => setTimeout(() => scrollBottom()), 20)
-            .catch((err) => {
-                setLoadingScroll(false);
-                console.log(err)
-            })
+            .catch((err) => setLoadingScroll(false));
     }
 
     const getBooksWithNewFilter = (filter) => {
@@ -108,13 +105,13 @@ const Books = ({booksData, err, nbBooks}) => {
                 <div className={styles.hasNotWriteContainer}>
                     <div className={styles.contentNoBooks}>
                         <h3>OUPS...</h3>
-                        <p>Il n'y a pas encore de livres ici, mais ça ne veut pas dire que vous ne pouvez pas être le
+                        <p>Il n&apos;y a pas encore de livres ici, mais ça ne veut pas dire que vous ne pouvez pas être le
                             prochain Hemingway ou Zadie Smith !
                    </p>
-                        <p>       Commencez à écrire votre chef-d'œuvre dès
+                        <p>       Commencez à écrire votre chef-d&apos;œuvre dès
                             maintenant !</p>
 
-                        <button onClick={() => router.push('/dashboard/nouveau-livre')}>C'est parti ! <CursorArrowRaysIcon/></button>
+                        <button onClick={() => router.push('/dashboard/nouveau-livre')}>C&apos;est parti ! <CursorArrowRaysIcon/></button>
                     </div>
                     <div className={styles.imgNoBooks}>
                         <img src={'/assets/diapo/book.png'}/>
@@ -176,7 +173,7 @@ const Books = ({booksData, err, nbBooks}) => {
                                     activeFilter === 'recent' ? setActiveFilter('popular') : setActiveFilter('recent');
                                     activeFilter === 'recent' ? getBooksWithNewFilter('popular') : getBooksWithNewFilter('recent');
                                 }} filter={activeFilter}/>
-                                <p>{nbBooks} livre(s)</p>
+                                <p>{nbBooks} livres</p>
                             </div>
                             <div className={styles.list}>
 

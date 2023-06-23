@@ -185,7 +185,7 @@ export default function CatPage({ cat, err, bookListData }) {
                             <div className={styles.headerRanking}>
                                 {
                                     cat === undefined &&
-                                    <h3>Populaire(s) {cat} - <span className={styles.f}>Tout voir</span></h3>
+                                    <h3>Populaires {cat} - <span className={styles.f}>Tout voir</span></h3>
                                 }
                                 {
                                     cat !== undefined &&
@@ -205,7 +205,7 @@ export default function CatPage({ cat, err, bookListData }) {
                                             setFilter('popular');
                                         }}
                                         className={filter === 'popular' ? styles.activeBtn : undefined}
-                                    >Populaire(s)
+                                    >Populaires
                                     </button>
 
                                     <button
@@ -214,7 +214,7 @@ export default function CatPage({ cat, err, bookListData }) {
                                             getBooksWithNewFilter('recent');
                                         }}
                                         className={filter === 'recent' ? styles.activeBtn : undefined}
-                                    >Récent(s)
+                                    >Récents
                                     </button>
                                 </div>
                             </div>

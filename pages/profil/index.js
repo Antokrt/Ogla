@@ -175,7 +175,6 @@ const Profil = ({profilData, err}) => {
 
     const verifyEmail = () => {
         VerifyEmailService()
-            .then((res) => console.log('send'))
             .catch((err) => console.log('err to send email'));
     }
 
@@ -211,7 +210,7 @@ const Profil = ({profilData, err}) => {
                 }));
                 setNewPresentation(res);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log('err update description'));
     }
 
     const sendEmailResetPassword = () => {
@@ -374,7 +373,7 @@ const Profil = ({profilData, err}) => {
                         <h5>Devenu écrivain
                             le <span>{FormatDateStr(profilData?.register_date)}</span></h5>
 
-                        <p>{profilData.author.likes} j'aimes</p>
+                        <p>{profilData.author.likes} j&apos;aimes</p>
                     </div>
 
                     <div className={styles.containerPresentation}>
@@ -442,10 +441,10 @@ const Profil = ({profilData, err}) => {
             <div className={styles.becameWriter}>
                 <img src={'/assets/jim/smile8.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
-                <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
+                <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
                     ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
-                    d'être entendue"</p>
+                    d&apos;être entendue</p>
 
                 <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
             </div>
@@ -546,7 +545,7 @@ const Profil = ({profilData, err}) => {
                     </div>
                     <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item}
                          onClick={() => setActiveLink('writer')}>
-                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin" class="jam jam-pen">
+                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin" >
                             <path
                                 d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z"/>
                         </svg>

@@ -27,9 +27,9 @@ export const BannerBecameWriter = () => {
                         <h5> écrivain </h5>
                     }
                 </div>
-                <p>L'écriture est un voyage passionnant, et <strong>Ogla </strong> est votre guide. <br/> Rejoignez-nous et découvrez votre potentiel en tant qu'écrivain, tout en partageant vos histoires avec le monde entier.</p>
+                <p>L&apos;écriture est un voyage passionnant, et <strong>Ogla </strong> est votre guide. <br/> Rejoignez-nous et découvrez votre potentiel en tant qu&apos;écrivain, tout en partageant vos histoires avec le monde entier.</p>
                 <div className={styles.btnContainer}>
-                    <button>C'est parti !</button>
+                    <button>C&apos;est parti !</button>
                 </div>
             </div>
 

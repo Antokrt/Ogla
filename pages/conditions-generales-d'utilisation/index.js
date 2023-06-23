@@ -21,7 +21,7 @@ const Cgu = () => {
             <HeaderMain/>
 
             <div className={styles.titleContainer + ' ' + anim.fadeIn}>
-                <h1>Conditions générales d’utilisation</h1>
+                <h1>Conditions générales d&apos;utilisation</h1>
                 <p>Mis à jour le 09/06/23</p>
             </div>
             <div className={styles.containerMain + ' ' + anim.fadeIn}>

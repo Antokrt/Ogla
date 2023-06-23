@@ -10,8 +10,8 @@ import {HomeIcon} from "@heroicons/react/24/solid";
             <img className={styles.img} src={'/assets/diapo/old.png'}/>
             {
                 statusCode ?
-                    <p>Oups ! Une erreur s'est produite (Err-{statusCode})</p> :
-                    <p>Oups ! Une erreur s'est produite (Err-client)</p>
+                    <p>Oups ! Une erreur s&apos;est produite (Err-{statusCode})</p> :
+                    <p>Oups ! Une erreur s&apos;est produite (Err-client)</p>
             }
         </div>
     )

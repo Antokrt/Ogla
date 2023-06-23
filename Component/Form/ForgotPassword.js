@@ -44,12 +44,12 @@ const ForgotPassword = ({ login }) => {
                             !hasSendEmail ?
                                 <>
                                     <h1>Mot de passe oublié <span>?</span></h1>
-                                    <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un mail de réinitialisation.
+                                    <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un lien de réinitialisation.
                                     </p>
                                 </> :
                                 <>
                                     <h1>Email envoyé ! </h1>
-                                    <p> Si cette adresse email existe, nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
+                                    <p> Si cette adresse email existe, nous t&apos;avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
                                     </p>
                                 </>
                         }
@@ -89,7 +89,7 @@ const ForgotPassword = ({ login }) => {
                                         }
                                     }}>
                                         <p className={styles.notReceive}> Rien reçus ? </p>
-                                        <p className={styles.reSend}> Renvoyer le mail </p>
+                                        <p className={styles.reSend}> Renvoyer l&apos;email </p>
                                     </div>
                                     <div className={styles.otherOption}>
                                         <div className={styles.trait}> </div>

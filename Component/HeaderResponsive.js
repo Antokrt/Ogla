@@ -274,7 +274,7 @@ const HeaderResponsive = () => {
                                     <KeyIcon />
                                 </div>
                                 <div className={styles.HeaderSinscrire} onClick={() => router.push({ pathname: "/auth", query: "register" })}  >
-                                    <h3> S'inscrire   </h3>
+                                    <h3> S&apos;inscrire   </h3>
                                     <AcademicCapIcon />
                                 </div>
                             </div>

@@ -1,14 +1,13 @@
 import { NextResponse} from "next/server";
-import {getToken} from "next-auth/jwt";
-import {getSession} from "next-auth/react";
-import {GetCategory} from "./pages/api/utils/Category";
 
-export async function middleware(req){
+export async function middleware(){
 
     // const session = await getSession({
     //     req:req
     // })
-    const token = await getToken({
+
+
+    /*const token = await getToken({
         req,
         secret:'code'
     })
@@ -26,9 +25,9 @@ export async function middleware(req){
         return NextResponse.redirect(new URL('/bibliotheque/', req.url));
     }
 
-/*    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {
+/!*    if (req.nextUrl.pathname.startsWith('/profil') && token && token.is_author) {
         return NextResponse.redirect(new URL('/dashboard/profil', req.url))
-    }*/
+    }*!/
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && token && !token.is_author) {
         return NextResponse.redirect(new URL('/', req.url))
@@ -42,6 +41,6 @@ export async function middleware(req){
 
     if(req.nextUrl.pathname === '/devenir-auteur' && token && token.is_author){
         return NextResponse.redirect(new URL('/cat',req.url))
-    }
+    }*/
 }
 

@@ -76,8 +76,8 @@ const Login = ({ register, forgotPassword }) => {
                             <h1 className={styles.h1Connexion}> Connexion </h1>
                         }
                         <p>
-                            Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
-                            Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire.
+                            Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de romans ouverte à tous.
+                            Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d&apos;écrire.
                         </p>
                     </div>
                     <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
@@ -95,7 +95,7 @@ const Login = ({ register, forgotPassword }) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
                                 </svg>
-                                <input className={styles.inputPW} /*value={'azerty'}*/ type={"password"} name={"password"} placeholder={" "} />
+                                <input className={styles.inputPW}  type={"password"} name={"password"} placeholder={" "} />
                                 <label htmlFor={"password"} className={styles.labelPW}>
                                     Mot de passe
                                 </label>

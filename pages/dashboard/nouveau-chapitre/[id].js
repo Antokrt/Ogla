@@ -152,7 +152,7 @@ const NouveauChapitre = ({bookData, err}) => {
                     localStorage.removeItem('book-'+bookData._id);
                     router.push('/dashboard/books/' + book._id);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.log('err publish new chapter'));
         }
 
     }
@@ -398,13 +398,13 @@ const NouveauChapitre = ({bookData, err}) => {
                                         </div>
 
                                         <div className={styles.summary}>
-                                            <p>"{Capitalize(bookData?.summary)}"</p>
+                                            <p>{Capitalize(bookData?.summary)}</p>
                                         </div>
 
                                         <div className={styles.statsPresentation}>
                                             <img src={'/assets/jim/cool2.png'}/>
                                             <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à
-                                                notre guide d'écriture...</h6>
+                                                notre guide d&apos;écriture...</h6>
                                             <p>Cliquez ici pour en savoir plus !</p>
                                         </div>
                                     </div>

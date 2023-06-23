@@ -71,7 +71,7 @@ export const HotPostPhone = ({ img, title, category, author, nbChapter, descript
             <div className={styles.headerPhone}>
                 <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                 <div className={styles.likeThumbnailPhone}>
-                    <p>{FormatCount(likes)} j'aimes</p>
+                    <p>{FormatCount(likes)} j&apos;aimes</p>
                 </div>
                 <div>
                     <p> Par <span className={styles.author}>{Capitalize(author)}</span>  </p>
