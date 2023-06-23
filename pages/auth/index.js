@@ -5,10 +5,23 @@ import {useRouter} from "next/router";
 import Login from "../../Component/Form/Login";
 import {useSession} from "next-auth/react";
 import ForgotPassword from "../../Component/Form/ForgotPassword";
+import {GetActiveMonthlyCateoryApi} from "../api/Category";
+import {GetTopBooksOnHomeApi} from "../api/book";
+
+export async function getServerSideProps() {
 
 
+    const data = await fetch('http://127.0.0.1:3008/answer/');
 
-const Auth = () => {
+    return {
+        props: {
+            test:2
+        }
+    }
+}
+
+
+const Auth = ({test}) => {
 
     const {data: session, status} = useSession();
     const router = useRouter();
