@@ -7,6 +7,7 @@ import {useSession} from "next-auth/react";
 import ForgotPassword from "../../Component/Form/ForgotPassword";
 
 
+
 const Auth = () => {
 
     const {data: session, status} = useSession();

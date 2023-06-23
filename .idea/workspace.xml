@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/profil/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/layouts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/layouts/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,7 +31,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Ogla/DeployTest/Front&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Ogla/DeployTest4&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;C:/Dev/Ogla/Front/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -338,7 +330,8 @@
       <workItem from="1687334015927" duration="16137000" />
       <workItem from="1687422804974" duration="3020000" />
       <workItem from="1687449317482" duration="7044000" />
-      <workItem from="1687513923873" duration="1794000" />
+      <workItem from="1687513923873" duration="3097000" />
+      <workItem from="1687520901849" duration="2000" />
     </task>
     <servers />
   </component>
