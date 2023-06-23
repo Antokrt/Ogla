@@ -7,10 +7,11 @@
 }
 
 .container {
-  margin-top: 5vh;
   min-height: auto;
   height: auto;
   width: 100%;
+  z-index: 2;
+  margin-top: 20px;
   
   .socialLinks {
     display: flex;
@@ -40,7 +41,7 @@
   }
   
   .linkFooter {
-    padding: 50px;
+    padding: 30px;
     background-color: #1C232B;
     height: auto;
     display: flex;
@@ -66,8 +67,9 @@
           cursor: pointer;
           margin: 10px 0px;
           font-size: 12px;
-          font-weight: bold;
+          -webkit-text-stroke-width: 0.4px;
           font-family: $primaryFont;
+          letter-spacing: -0.6px;
           color: #7A7A7A;
           width: 100%;
   
@@ -93,7 +95,7 @@
       h6 {
         text-align: left;
         color: white;
-        font-size: 16px;
+        font-size: 16px!important;
         margin-bottom: 15px;
         font-weight: 600;
         font-family: $primaryFont;
@@ -106,7 +108,8 @@
         width: 260px;
         font-family: $primaryFont;
         font-size: 12px;
-        font-weight: bold;
+        -webkit-text-stroke-width: 0.4px;
+        letter-spacing: -0.4px;
         line-height: 20px;
         color: $purple;
       }

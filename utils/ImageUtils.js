@@ -69,6 +69,7 @@ export const renderPrediction = (img,type) => {
 }
 
 const validSightEngine = (analyzeObject) => {
+
     if (!analyzeObject) return false;
 
     const nudity = analyzeObject.nudity;
@@ -80,9 +81,14 @@ const validSightEngine = (analyzeObject) => {
         nudityCheck = true;
     }
 
-    if(offensive < 0.20){
+    if(offensive < 0.30){
         offensiveCheck = true;
     }
 
     return offensiveCheck && nudityCheck
+}
+
+
+export const GetLogoUtils = () => {
+     return process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png';
 }

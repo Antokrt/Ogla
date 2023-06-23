@@ -40,18 +40,24 @@ export const toastDisplayInfo = (msg) => {
 	});
 }
 
-export const toastDisplayPromise = (promise) => {
-	toast.promise(promise, {
-		pending: 'Promise is pending',
-		success: 'Promise resolved 👌',
-		error: 'Promise rejected 🤯'
-	  })
+export const toastDisplayTest = (msg) => {
+	toast.info(<div>{msg}</div>, {
+		position: "top-right",
+		closeOnClick: true,
+		autoClose:false,
+		pauseOnHover: false,
+		draggable: false,
+		progress: undefined,
+		theme: "light",
+		icon:false
+	});
 }
+
 
 export const toastDisplayPromiseSendMail = (promise) => {
 	toast.promise(promise, {
-		pending: "Préparation du mail",
-		success: "Le mail à bien été envoyé 👌",
-		error: "Le mail n'a pas pu être envoyé 🤯"
+		pending: "Préparation du mail...",
+		success: "Email envoyé !",
+		error: "Impossible d'envoyer l'email !"
 	  })
 }

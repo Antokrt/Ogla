@@ -54,9 +54,10 @@
 
     p {
       font-weight: bold;
-      letter-spacing: 1px;
       font-family: $primaryFont;
-      font-size: 10px;
+      font-size: 8px;
+      border: solid 2px transparent;
+      padding-bottom: 5px;
       color: white;
     }
   }
@@ -77,8 +78,7 @@
 
 .activeItem {
   p {
-    border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-    padding-bottom: 5px;
+    border-bottom-color: rgba(255, 255, 255, 0.91) !important;
   }
 }
 
@@ -123,12 +123,15 @@
     height: 100%;
     display: flex;
     justify-content: center;
+
     p {
       display: none;
     }
+
     svg {
       width: 20px !important;
     }
+
     img {
       width: 30px !important;
       height: 30px !important;
@@ -136,7 +139,6 @@
   }
 
   .activeItem {
-    margin-top: 5px;
     border-bottom: solid 2px rgba(255, 255, 255, 0.91);
   }
 }

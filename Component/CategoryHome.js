@@ -2,6 +2,7 @@ import styles from '../styles/Component/Category/CategoryHome.module.scss';
 import {ArrowSmallLeftIcon, ArrowSmallRightIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/outline";
 import CategoryCard from "./Category/CategoryCard";
 import {useSelector} from "react-redux";
+import Link from "next/link";
 
 const CategoryHome = () => {
 return (
@@ -10,7 +11,7 @@ return (
             <div className={styles.header}>
                 <h4>Catégories populaires :</h4>
                 <div>
-                    <p>Tout voir</p>
+                    <Link href={'/bibliotheque'}>Tout voir</Link>
                 </div>
             </div>
             <div className={styles.listContainer}>

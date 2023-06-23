@@ -123,6 +123,7 @@
 @media screen and (max-width: 900px) {
   .container {
     padding-left: 5vw;
+    margin-top: 30px;
   }
 }
 
@@ -130,6 +131,7 @@
   .container {
     flex-direction: column-reverse;
     height: auto;
+    padding-left: 0;
   }
 
   .image {

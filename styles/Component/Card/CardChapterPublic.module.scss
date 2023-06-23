@@ -30,7 +30,6 @@
       flex-direction: column;
       gap: 10px;
       font-family: $primaryFont;
-      color: $darkBrown;
       font-size: 13px;
       font-weight: bold;
       span{
@@ -104,13 +103,12 @@
       flex-direction: column;
       gap: 10px;
       font-family: $primaryFont;
-      color: $darkBrown;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
       span{
         font-weight: initial;
         -webkit-text-stroke-width: 0.2px;
-        font-size: 14px;
+        font-size: 13px;
       }
     }
 
@@ -160,10 +158,7 @@
     transform: scale(0.8);
     transition: 0.2s;
   }
-  &:hover{
-    transition: 0.2s;
-    filter: brightness(98%);
-  }
+
   transition: 0.1s;
   display: flex;
   justify-content: space-between;
@@ -183,8 +178,8 @@
       flex-direction: column;
       gap: 10px;
       font-family: $primaryFont;
+      -webkit-text-stroke-width: 0.1px;
       font-weight: bold;
-      color: $darkBrown;
       font-size: 13px;
       span{
         font-weight: 500;

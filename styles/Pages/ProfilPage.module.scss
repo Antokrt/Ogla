@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 100vh;
+  padding-bottom: 10vh;
   height: auto;
 }
 
@@ -14,11 +14,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 5vh;
+  padding-top: 2vh;
   flex: 1;
 }
 
 .containerM {
+  display: flex;
+  flex-direction: column;
   width: 70%;
   height: 100%;
   flex: 1;
@@ -182,8 +184,8 @@
       gap: 10px;
       margin-bottom: 20px;
       img{
-        width: 140px;
-        height: 140px;
+        width: 100px;
+        height: 100px;
         object-fit: cover;
         border-radius: 50%;
       }
@@ -481,14 +483,15 @@
   label {
     text-align: left;
     width: 80%;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px;
-    font-family: "Rebond Grotesque", sans-serif;
-
+    font-family: $primaryFont;
+    letter-spacing: -0.3px;
     .verify {
       cursor: pointer;
       font-size: 9px;
+      text-decoration: underline;
     }
   }
 
@@ -575,21 +578,20 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  gap: 20px;
 
   h5 {
-    font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-family: $primaryFont;
     font-weight: bold;
-    margin-bottom: 2vh;
+    margin-bottom: 10px;
   }
 
   .itemSetting {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-right: solid 1px rgba(84, 89, 95, 0.13);
-    border-left: solid 1px rgba(84, 89, 95, 0.13);
-    border-top: solid 1px rgba(84, 89, 95, 0.13);
+    border: solid 1px rgba(84, 89, 95, 0.1);
     border-radius: 8px;
     padding: 2% 2%;
     width: 600px;
@@ -608,9 +610,10 @@
       div {
         display: flex;
         flex-direction: column;
+        gap: 5px;
 
         .labelSetting {
-          font-size: 16px;
+          font-size: 14px;
           font-family: $primaryFont;
           font-weight: bold;
           color: #1C232B;
@@ -619,7 +622,7 @@
         .valueSetting {
           font-family: $primaryFont;
           color: #5a6673;
-          font-size: 13px;
+          font-size: 12px;
         }
       }
     }
@@ -747,10 +750,11 @@
 
 .deleteAccount {
   font-family: $primaryFont;
+  -webkit-text-stroke-width: 0.4px;
   font-size: 11px;
   padding: 5px 10px;
   color: #e04444 !important;
-  margin-top: 20px;
+  margin-top: 0px;
   width: 80%;
 }
 
@@ -840,8 +844,7 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  font-family: 'Santral-Regular',
-  sans-serif;
+  font-family: $primaryFont;
   font-size: 12px;
   color: white;
   background-color: #1C232B;
@@ -866,7 +869,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 10vh;
+  height: 70px;
   background-color: transparent;
   z-index: 2000;
 
@@ -888,6 +891,7 @@
       flex-direction: column;
       gap: 5px;
       align-items: center;
+
 
       img {
         width: 50px;
@@ -913,9 +917,10 @@
 
       p {
         font-weight: bold;
-        letter-spacing: 1px;
         font-family: $primaryFont;
-        font-size: 10px;
+        font-size: 8px;
+        border: solid 2px transparent;
+        padding-bottom: 5px;
         color: white;
       }
 
@@ -932,9 +937,9 @@
   }
 
   .activeItem {
+    display: flex;
     p {
-      border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-      padding-bottom: 5px;
+      border-bottom-color: rgba(255, 255, 255, 0.91) !important;
     }
   }
 }
@@ -949,7 +954,6 @@
 
   h2 {
     letter-spacing: 1px;
-
   }
 }
 
@@ -985,6 +989,35 @@
   }
 }
 
+.containerBtnImgPhone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 20px;
+  button{
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+
+    box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
+    transition: 0.1s;
+    cursor: initial;
+    font-size: 8px;
+    background-color: #e94f37;
+    border-radius: 5px;
+    color: white;
+    -webkit-text-stroke-width: 0.5px;
+    font-family: "Open Sans", sans-serif;
+    padding: 8px 15px;
+  }
+
+  .darkBtn{
+    background-color: #54595F;
+  }
+}
+
 @media screen and (max-width: 1530px) {
   .socialImg {
     display: none;
@@ -1001,11 +1034,41 @@
   }
 }
 
+@media screen and (max-width: 1400px){
+  .form{
+    input, label{
+      width: 100%;
+    }
+
+    label{
+      margin-top: 5px;
+    }
+  }
+}
+
 @media screen and (max-width: 1150px) {
   .writer {
     gap: 2vw !important;
     flex-direction: column !important;
     align-items: center;
+  }
+
+  .containerF{
+    h1{
+      font-size: 16px;
+    }
+  }
+
+  .profil{
+    min-width: 60%;
+  }
+
+  .menuLink{
+    margin-top: 2%;
+
+    button{
+      padding: 1vh 3vw;
+    }
   }
 
   .lContainerWriter,
@@ -1044,6 +1107,12 @@
   }
 }
 
+@media screen and (max-width: 950px){
+  .containerF{
+    padding-top: 140px!important;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .container {
     .containerF {
@@ -1058,12 +1127,20 @@
       width: 70%;
     }
 
+    .createPassword{
+      width: 100%;
+    }
+
     .imgContainer {
       margin-top: 30px;
       margin-bottom: 20px;
       justify-content: center;
 
       img {
+        &:active {
+          transform: scale(0.8);
+          transition: 0.2s;
+        }
         width: 90px;
         height: 90px;
       }
@@ -1072,8 +1149,8 @@
     .form {
       label {
         width: 100%;
-        color: #a5a5a5;
-        letter-spacing: 0.8px;
+        color: #1c232b;
+        font-family: $primaryFont;
         font-size: 12px;
       }
 

@@ -39,6 +39,7 @@
         text-align: center;
         font-size: 1.9vh;
         font-family: 'Pt Sans', sans-serif;
+        letter-spacing: -0.4px;
         opacity: 0.8;
         width: 80%;
 
@@ -94,6 +95,7 @@
 @media screen and (max-width: 1300px){
     .container{
         height: auto!important;
+        margin-bottom: 8vh;
     }
     .image{
         width: 50vh!important;

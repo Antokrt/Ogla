@@ -1,0 +1,127 @@
+@import "styles/utils/var";
+
+.container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 9999 !important;
+  background-color: rgba(28, 35, 43, 0.77);
+  font-family: $primaryFont;
+
+  .containerContent {
+    &::-webkit-scrollbar {
+      width: 3px;
+      border-radius: 20px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      margin: 5px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(28, 35, 43, 0.80);
+    }
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    height: 600px;
+    width: 530px;
+    border-radius: 2%;
+    background-color: white;
+    box-shadow: $shadow;
+    padding: 20px;
+    overflow-y: scroll;
+  }
+
+  .containerImg{
+    display: flex;
+
+    width: 100%;
+    img{
+      height: 50px;
+      object-fit: cover;
+    }
+  }
+
+  .containerTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    h3{
+font-size: 17px;
+      font-weight: bold;
+    }
+
+    p{
+      text-decoration: underline;
+      -webkit-text-stroke-width: 0.2px;
+font-size: 12px;
+      font-weight: 500;
+    }
+  }
+
+  h4{
+    margin: 10px 0;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .containerItem{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .item{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    h5{
+      padding: 0 10px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    p{
+      padding: 0 20px;
+      line-height: 24px;
+      font-size: 13px;
+      color: #54595F;
+      -webkit-text-stroke-width: 0.6px;
+    }
+  }
+}
+
+
+.close {
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  position: absolute;
+  width: 20px;
+  right: 4%;
+  top: 4%;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 560px){
+  .containerContent{
+    width: 96% !important;
+  }
+}

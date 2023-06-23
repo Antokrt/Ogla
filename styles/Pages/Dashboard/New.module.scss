@@ -533,6 +533,10 @@
 }
 
 @media screen and (max-width: 700px) {
+
+  .verticalMenuContainer{
+    width: initial;
+  }
   .container {
     padding-bottom: 70px;
 
@@ -555,6 +559,12 @@
 @media screen and (max-width: 250px) {
   .titleImg {
     display: none !important;
+  }
+}
+
+@media screen and (max-width: 1000px) and (max-height: 500px){
+  .verticalTabContainer{
+    display: none;
   }
 }
 

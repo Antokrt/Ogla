@@ -23,11 +23,11 @@ const CategoryHeader = () => {
                     return  (
                         <div
                      onClick={() => {
-                         router.push('/cat/' + item.name.toLowerCase());
+                         router.push('/bibliotheque/' + item.name.toLowerCase());
                      }}
                             key={item._id}
                             className={cat && cat.toLowerCase() === item.name.toLowerCase() ? styles.active +" " + styles.book : styles.book}>
-                            <img src="/assets/category/icons/drama.svg"/>
+                            <img src={"/assets/category/icons/"+ item.name.toLowerCase() + '.svg'}/>
                         <p>{item.name}</p>
                         </div>
                     )

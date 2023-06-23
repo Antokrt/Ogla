@@ -27,7 +27,8 @@ export const ConfirmModal = ({close,title, btnConfirm, subTitle, img, confirm}) 
     )
 }
 
-export const ConfirmModalDeleteAccountCustomProvider = ({close,title, btnConfirm, subTitle,confirm}) => {
+
+export const ConfirmModalDeleteAccountCustomProvider = ({close,title, btnConfirm, subTitle,confirm, err}) => {
 
     return (
         <div className={styles.containerDeleteAccountCustomProvider}>
@@ -36,6 +37,10 @@ export const ConfirmModalDeleteAccountCustomProvider = ({close,title, btnConfirm
                 <div className={styles.headerModal}>
                     <h5>{title}</h5>
                     <p>{subTitle}</p>
+                    {
+                        err &&
+                        <p className={styles.errMsgDelete + ' '+ anim.fadeIn}>Impossible de supprimer le compte</p>
+                    }
 
                     <div className={styles.containerBtn}>
                         <button onClick={close}>Annuler</button>

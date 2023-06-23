@@ -2,40 +2,44 @@ import styles from "../../styles/Pages/ProfilPage.module.scss";
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    BellAlertIcon, CheckBadgeIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
+    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
 } from "@heroicons/react/24/outline";
-import { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 import {
     ChartBarIcon, CheckCircleIcon, HeartIcon, XCircleIcon
 } from "@heroicons/react/20/solid";
-import { Capitalize } from "../../utils/String";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { GetPrivateProfilApi } from "../api/user";
-import { DeleteUserProfilPictureService, UpdateUserProfilPictureService } from "../../service/User/Profil.service";
+import {Capitalize} from "../../utils/String";
+import {signOut, useSession} from "next-auth/react";
+import {useRouter} from "next/router";
+import {GetPrivateProfilApi} from "../api/user";
+import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
-import { ReloadSession } from "../../utils/ReloadSession";
-import { GetDefaultUserImg, renderPrediction } from "../../utils/ImageUtils";
-import { DeleteAccountService, VerifyEmailService } from "../../service/User/Account.service";
-import { FormatDateNb, FormatDateStr } from "../../utils/Date";
-import { ChangePasswordService, SendResetPasswordEmailService } from "../../service/User/Password.service";
-import { DeleteAccountModal } from "../../Component/Modal/DeleteAccountModal";
-import { BookmarkIcon, EyeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import { UpdateAuthorDescriptionService, UpdateUserDescriptionService } from "../../service/Author";
+import {ReloadSession} from "../../utils/ReloadSession";
+import {GetDefaultUserImg, GetDefaultUserImgWhenError, renderPrediction} from "../../utils/ImageUtils";
+import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
+import {FormatDateNb, FormatDateStr} from "../../utils/Date";
+import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
+import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
+import {BookmarkIcon, EyeIcon, LockClosedIcon} from "@heroicons/react/24/solid";
+import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
-import { LoaderImg } from "../../Component/layouts/Loader";
-import { toastDisplayError, toastDisplayPromiseSendMail } from "../../utils/Toastify";
-import { UpdateSettings, UpdateSettingsService } from "../../service/User/Settings.service";
-import { instance } from "../../service/config/Interceptor";
+import {useDispatch, useSelector} from "react-redux";
+import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/notifSlice";
+import {LoaderImg} from "../../Component/layouts/Loader";
+import {toastDisplayError, toastDisplayPromiseSendMail} from "../../utils/Toastify";
+import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
+import {instance} from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
-import { openAll } from "../../service/Notifications/NotificationsService";
-import { useEffect } from "react";
-import { OpenAllService } from "../../service/Notifications/NotificationsService";
+import {openAll} from "../../service/Notifications/NotificationsService";
+import {useEffect} from "react";
+import {OpenAllService} from "../../service/Notifications/NotificationsService";
+import Tippy from "@tippyjs/react";
+import Head from "next/head";
+import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
     return {
         props: {
@@ -45,12 +49,12 @@ export async function getServerSideProps({ req }) {
     }
 }
 
-const Profil = ({ profilData, err }) => {
+const Profil = ({profilData, err}) => {
     const router = useRouter();
     const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const { data: session, status } = useSession();
+    const {data: session, status} = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
@@ -106,7 +110,7 @@ const Profil = ({ profilData, err }) => {
             instance.get('http://localhost:3000/api/auth/session?new-settings')
                 .then(() => resolve())
                 .catch((err) => {
-                    console.log(err)
+                    console.log('err settings')
                     reject()
                 })
         })
@@ -121,12 +125,13 @@ const Profil = ({ profilData, err }) => {
 
             UpdateSettingsService(newSettings)
                 .then(() => updateSettingsOfSession()
-                    .then((res) => setProfil({
+                    .then((res) => setProfil(prevState => ({
+                        ...prevState,
                         settings: {
                             notif: newSettings.notif,
                             music: newSettings.music
                         }
-                    }))
+                    })))
                     .then(() => ReloadSession())
                     .catch(() => toastDisplayError('Impossible de modifier les réglages'))
                 )
@@ -154,9 +159,7 @@ const Profil = ({ profilData, err }) => {
                                 ReloadSession();
                                 setLoadingImg(false)
                             })
-                            .catch((err) => {
-                                setLoadingImg(false);
-                            });
+                            .catch((err) => {setLoadingImg(false)});
                     })
                     .catch((err) => {
                         setLoadingImg(false);
@@ -206,7 +209,6 @@ const Profil = ({ profilData, err }) => {
                         description: res
                     }
                 }));
-                console.log(profil)
                 setNewPresentation(res);
             })
             .catch((err) => console.log(err));
@@ -222,9 +224,9 @@ const Profil = ({ profilData, err }) => {
             <div className={styles.profil}>
                 <div className={styles.imgContainer}>
                     {
-                        loadingImg &&
+                        loadingImg && width > 800 &&
                         <div className={styles.loaderImg}>
-                            <LoaderImg />
+                            <LoaderImg/>
                         </div>
                     }
 
@@ -233,15 +235,19 @@ const Profil = ({ profilData, err }) => {
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Profil Pic'} />
+                                    src={localImg} alt={'Profil Pic'}/>
                             </>
                             :
-                            <img
-                                onClick={() => imgClick()}
-                                src={profil?.img} alt={'Profil Pic'} />
+                            <Tippy trigger={'mouseenter'} content={'Modifier'}>
+                                <img
+                                    onClick={() => imgClick()}
+                                    src={profil?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                    alt={'Profil Pic'}/>
+
+                            </Tippy>
                     }
                     <input
-                        style={{ display: 'none' }}
+                        style={{display: 'none'}}
                         type={'file'}
                         ref={imgRef}
                         accept={"image/png , image/jpeg , image/jpg"}
@@ -254,68 +260,93 @@ const Profil = ({ profilData, err }) => {
                             handleFileSelect(e);
                         }}
                     />
-                    {
 
-                        width > 800 &&
-                        <div className={styles.labelImg}>
-                            <h5>Avatar</h5>
-                            <p>.png .jpg jpeg </p>
+                    <div className={styles.labelImg}>
+                        <h5>Avatar</h5>
+                        <p>.png .jpg jpeg </p>
 
-                            <div className={styles.imgCheck}>
-                                {
-                                    localImg && file &&
-                                    <>
-                                        <CheckCircleIcon
-                                            onClick={() => updatePic()}
-                                            className={styles.check} />
-                                        <XCircleIcon
-                                            onClick={() => {
-                                                setLocalImg(null);
-                                                setFile(null);
-                                            }
-                                            }
-                                            className={styles.off} />
-                                    </>
+                        <div className={styles.imgCheck}>
+                            {
+                                localImg && file &&
+                                <>
+                                    {
+                                        width < 800 ?
 
-                                }
+                                            <div className={styles.containerBtnImgPhone}>
+                                                {
+                                                    loadingImg ?
+                                                        <LoaderImg/>
+                                                        :
+                                                        <>
+                                                            <button onClick={() => updatePic()}
+                                                            >Modifier
+                                                            </button>
+                                                            <button onClick={() => {
+                                                                setLocalImg(null);
+                                                                setFile(null);
+                                                            }
+                                                            } className={styles.darkBtn}>Annuler
+                                                            </button>
+                                                        </>
 
-                            </div>
+                                                }
+
+                                            </div> :
+                                            <>
+                                                <CheckCircleIcon
+                                                    onClick={() => updatePic()}
+                                                    className={styles.check}/>
+                                                <XCircleIcon
+                                                    onClick={() => {
+                                                        setLocalImg(null);
+                                                        setFile(null);
+                                                    }
+                                                    }
+                                                    className={styles.off}/>
+                                            </>
+                                    }
+
+                                </>
+
+                            }
+
                         </div>
-                    }
+                    </div>
                 </div>
 
                 <div className={styles.form}>
                     <label>Pseudo</label>
-                    <input disabled={true} type={"text"} value={profilData.pseudo} />
+                    <input disabled={true} type={"text"} value={profilData.pseudo}/>
                     <label className={styles.emailLabel}>Email <span>{profilData.verified ?
-                        <CheckBadgeIcon /> :
+                        <CheckBadgeIcon/> :
                         <span className={styles.verify} onClick={() => {
                             if (!profilData.verified) {
                                 verifyEmail();
                             }
-                        }}>Vérifier maintenant</span>}</span></label>
-                    <input disabled={true} type={"text"} value={profilData.email} />
+                        }}>(Vérifier maintenant)</span>}</span></label>
+                    <input disabled={true} type={"text"} value={profilData.email}/>
                     {
-                        session.user.provider !== 'google' ?
-                        <>
-                            <label>Modifier votre mot de passe</label>
-                            <input value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                                type={"password"} placeholder={'Ancien mot de passe'} />
-                            <input value={newPassword}
-                                onChange={(e) => setNewPassowrd(e.target.value)}
-                                type={"password"} placeholder={'Nouveau mot de passe'} />
-                            {
-                                errMsgModifyPassword.show &&
-                                <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
-                            }
+                        session?.user?.provider !== 'google' ?
+                            <>
+                                <label>Modifier votre mot de passe</label>
+                                <input value={oldPassword}
+                                       onChange={(e) => setOldPassword(e.target.value)}
+                                       type={"password"} placeholder={'Ancien mot de passe'}/>
+                                <input value={newPassword}
+                                       onChange={(e) => setNewPassowrd(e.target.value)}
+                                       type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                {
+                                    errMsgModifyPassword.show &&
+                                    <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                }
 
-                            <button onClick={(e) => changePassword(e)}
-                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
-                            </button>
-                        </>
+                                <button onClick={(e) => changePassword(e)}
+                                        className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
+                                </button>
+                            </>
                             :
-                            <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un mot de passe <LockClosedIcon/></button>
+                            <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un
+                                mot de passe <LockClosedIcon/></button>
 
                     }
 
@@ -365,83 +396,18 @@ const Profil = ({ profilData, err }) => {
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
+                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "}/>
                                 :
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    value={newPresentation} />
+                                    value={newPresentation}/>
                         }
 
 
                     </div>
 
-                    <div className={styles.formWriter}>
 
-             {/*           {
-                            width > 1150 &&
-                            <div className={styles.headerWriter}>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbBooks}</p>
-                                    <h6>livre(s)</h6>
-
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbChapters}</p>
-                                    <h6>chapitre(s)</h6>
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.totalLikes}</p>
-                                    <h6>like(s) reçus</h6>
-                                </div>
-
-                            </div>
-                        }*/}
-                  {/*      {
-                            width <= 1150 &&
-                            <div className={styles.phoneHeaderAuthor}>
-                                <img src={profil.img} />
-                                <div className={styles.phoneHeaderStats}>
-                                    <div className={styles.phonehWriter}>
-                                        <h5>Quelques statistiques</h5>
-                                    </div>
-                                    <div className={styles.headerWriter}>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbBooks}</p>
-                                            <h6>livre(s)</h6>
-
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbChapters}</p>
-                                            <h6>chapitre(s)</h6>
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.totalLikes}</p>
-                                            <h6>like(s) reçus</h6>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        }*/}
-
-     {/*                   <div className={styles.stats}>
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
-                                <p className={styles.value}>La quete du maitre <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus liké <ChartBarIcon /></p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus vue <EyeIcon /> </p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-                        </div>*/}
-                    </div>
                 </div>
                 <div className={styles.rContainerWriter}>
 
@@ -455,12 +421,12 @@ const Profil = ({ profilData, err }) => {
 
                         <div className={styles.socialForm}>
                             <div className={styles.socialLinks}>
-                                <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
-                                <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
-                                <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
+                                <ProfilAuthor type={1} content={profilData?.author.social.instagram}/>
+                                <ProfilAuthor type={2} content={profilData?.author.social.twitter}/>
+                                <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
                             </div>
                             <div className={styles.socialImg}>
-                                <img src={"/assets/other/manReading2.png"} alt="author reading" />
+                                <img src={"/assets/other/manReading2.png"} alt="author reading"/>
                             </div>
                         </div>
                     </div>
@@ -474,10 +440,10 @@ const Profil = ({ profilData, err }) => {
     const becameWriter = () => {
         return (
             <div className={styles.becameWriter}>
-                <img src={'/assets/jim/smile8.png'} />
+                <img src={'/assets/jim/smile8.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>"Rejoignez notre communauté d'écrivains aujourd'hui et partagez votre histoire avec le monde entier
-                    ! <br />
+                    ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d'être entendue"</p>
 
@@ -495,7 +461,7 @@ const Profil = ({ profilData, err }) => {
                 }
                 <div className={styles.itemSetting}>
                     <div className={styles.fSetting}>
-                        <BellAlertIcon />
+                        <BellAlertIcon/>
                         <div>
                             <p className={styles.labelSetting}>Notifications </p>
                             {
@@ -510,8 +476,8 @@ const Profil = ({ profilData, err }) => {
                     </div>
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
-                        onClick={() => setNotifState(!notifState)}>
-                        <input checked={notifState} type="checkbox" id="toggle1" />
+                         onClick={() => setNotifState(!notifState)}>
+                        <input checked={notifState} type="checkbox" id="toggle1"/>
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -522,7 +488,7 @@ const Profil = ({ profilData, err }) => {
                 }}>
                     <div className={styles.fSetting}>
 
-                        <MusicalNoteIcon />
+                        <MusicalNoteIcon/>
                         <div>
                             <p className={styles.labelSetting}>Musique </p>
                             <p className={styles.valueSetting}>Activer la musique</p>
@@ -530,10 +496,10 @@ const Profil = ({ profilData, err }) => {
                     </div>
 
                     <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle}
-                        onClick={() => {
-                            setMusicState(!musicState)
-                        }}>
-                        <input checked={musicState} type="checkbox" id="toggle2" />
+                         onClick={() => {
+                             setMusicState(!musicState)
+                         }}>
+                        <input checked={musicState} type="checkbox" id="toggle2"/>
                         <label htmlFor="toggle2"></label>
                     </div>
                 </div>
@@ -544,7 +510,7 @@ const Profil = ({ profilData, err }) => {
                     </button>
                 </div>
                 <button className={styles.deleteAccount}
-                    onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                        onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
                 </button>
             </div>
         )
@@ -573,28 +539,34 @@ const Profil = ({ profilData, err }) => {
         return (
             <div className={styles.menuContainer}>
                 <div className={styles.containerMain}>
-                    <div className={activeLink === 'profil' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('profil')}>
-                        <UserIcon />
+                    <div className={activeLink === 'profil' ? styles.item + ' ' + styles.activeItem : styles.item}
+                         onClick={() => setActiveLink('profil')}>
+                        <UserIcon/>
                         <p> Profil </p>
                     </div>
-                    <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('writer')}>
+                    <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item}
+                         onClick={() => setActiveLink('writer')}>
                         <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin" class="jam jam-pen">
-                            <path d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z" />
+                            <path
+                                d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z"/>
                         </svg>
                         <p> Ecrivain </p>
                     </div>
-                    <div className={activeLink === 'settings' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => setActiveLink('settings')}>
-                        <WrenchIcon />
+                    <div className={activeLink === 'settings' ? styles.item + ' ' + styles.activeItem : styles.item}
+                         onClick={() => setActiveLink('settings')}>
+                        <Cog8ToothIcon/>
                         <p> Réglages </p>
                     </div>
-                    <div className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item} onClick={() => {
-                        if (Notifs.length > 0) {
-                            OpenAllService(Notifs[0].date_creation, session.user.id)
-                        }
-                        dispatch(setActiveModalNotif(true));
-                        dispatch(setOpen());
-                    }}>
-                        <BellAlertIcon />
+                    <div
+                        className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item}
+                        onClick={() => {
+                            if (Notifs.length > 0) {
+                                OpenAllService(Notifs[0].date_creation, session.user.id)
+                            }
+                            dispatch(setActiveModalNotif(true));
+                            dispatch(setOpen());
+                        }}>
+                        <BellAlertIcon/>
                         <p> Notifications </p>
                         {
                             isOpen &&
@@ -607,7 +579,7 @@ const Profil = ({ profilData, err }) => {
                             {
                                 session && session.user.image &&
                                 <>
-                                    <img src={session.user.image} />
+                                    <img src={session.user.image}/>
                                     <span className={styles.circle}></span>
                                 </>
                             }
@@ -620,17 +592,31 @@ const Profil = ({ profilData, err }) => {
 
     return (
         <>
+            <Head>
+                <title>Ogla - Profil</title>
+                <meta name="description" content="Generated by create next app" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             {
                 err &&
                 <div>
-                    <Header />
+                    {
+                        width > 950 ?
+                            <HeaderMain/> :
+                            <HeaderMainResponsive/>
+                    }
                     <p>Impossible de récupérer le profil</p>
                 </div>
             }
             {
                 !err && profilData && session &&
                 <div className={styles.container}>
-                    <Header />
+                    {
+                        width > 950 ?
+                            <HeaderMain/> :
+                            <HeaderMainResponsive/>
+                    }
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
                             {
@@ -644,13 +630,13 @@ const Profil = ({ profilData, err }) => {
                                 width > 800 &&
                                 <div className={styles.menuLink}>
                                     <button onClick={() => setActiveLink('profil')}
-                                        className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                            className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
                                     </button>
                                     <button onClick={() => setActiveLink('writer')}
-                                        className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                            className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
                                     </button>
                                     <button onClick={() => setActiveLink('settings')}
-                                        className={activeLink === 'settings' && styles.activeMenu}>Réglages
+                                            className={activeLink === 'settings' && styles.activeMenu}>Réglages
                                     </button>
                                     <button onClick={() => {
                                         if (Notifs.length > 0) {
@@ -659,7 +645,7 @@ const Profil = ({ profilData, err }) => {
                                         dispatch(setActiveModalNotif(true));
                                         dispatch(setOpen());
                                     }}
-                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
+                                            className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
                                         Notifications
                                         {isOpen && <span></span>}
                                     </button>
@@ -668,7 +654,7 @@ const Profil = ({ profilData, err }) => {
                             {
                                 width <= 800 && activeLink === 'settings' &&
                                 <div className={styles.headerTitlePhone}>
-                                        <h2> Réglages </h2>
+                                    <h2> Réglages </h2>
                                 </div>
                             }
                             <div className={styles.containerItem}>
@@ -684,9 +670,13 @@ const Profil = ({ profilData, err }) => {
                     }
                     {
                         openModalDeleteAccount && session &&
-                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)} />
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
                     }
                 </div>
+            }
+            {
+                width >= 800 &&
+                <Footer/>
             }
 
         </>

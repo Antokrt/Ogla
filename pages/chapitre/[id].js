@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import { useRouter } from "next/router";
 import Header from "../../Component/Header";
 import styles from "../../styles/Pages/ChapterPage.module.scss";
@@ -21,7 +21,7 @@ import { LikeBookService, LikeChapterService } from "../../service/Like/LikeServ
 import { GetCommentService, GetMyCommentsService } from "../../service/Comment/CommentService";
 import { GetAnswerByCommentService } from "../../service/Answer/AnswerService";
 import { DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce } from "../../utils/CommentaryUtils";
-import { GetChapterListService } from "../../service/Chapter/ChapterService";
+import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
 import {Capitalize, ReduceString} from "../../utils/String";
 import { setActiveModalState } from "../../store/slices/modalSlice";
 import { useDispatch } from "react-redux";
@@ -41,6 +41,8 @@ import {HeadPhoneBtn} from "../../Component/layouts/Btn/ActionBtn";
 import useOrientation from "../../utils/Orientation";
 import Footer from "../../Component/Footer";
 import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import Head from "next/head";
+import {HeaderMain} from "../../Component/HeaderMain";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -92,6 +94,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const [lastCommentId, setLastCommentId] = useState([]);
     const [canScroll, setCanScroll] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
+    const [nbChapters,setNbChapters] = useState(bookData?.nbChapters);
     const [contentChapter, setContentChapter] = useState(chapterData && JSON.parse(chapterData?.content));
     const [sidebarSelect, setSidebarSelect] = useState("Disable");
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
@@ -117,6 +120,17 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
             localStorage.removeItem('openSidebar');
         }
     }, [])
+
+
+    const countNbOfChapters = useCallback(async () => {
+        const nb = await CountNbOfChaptersService(bookData?._id);
+        return setNbChapters(nb);
+    },[]);
+
+    useEffect(() => {
+        countNbOfChapters()
+            .catch(() => console.log('err callback'))
+    },[chapterList,activeFilterChapterSidebar]);
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
 
@@ -163,13 +177,21 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         content: chapterData ? JSON.parse(chapterData?.content) : null
     })
 
-    const checkSide = () =>  {
+    const checkSide =  () =>  {
         switch (sidebarSelect) {
             case 'Commentary':
                 if (comments.length === 0 && canScroll) {
-                    getComment(pageComment, 1);
                     if (session) {
-                        getMyComments(1, 'popular');
+                        getMyComments(1, 'popular')
+                            .then(() => {
+                                getComment(pageComment, 1);
+                            })
+                            .catch(() => {
+                                getComment(pageComment, 1)
+                            })
+                    }
+                    else {
+                        getComment(pageComment,1);
                     }
                 }
                 return (
@@ -245,15 +267,14 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                             }}
                             loadingScroll={loadingScrollChapterSidebar}
                             canScroll={canScrollChapterSidebar}
-                            getMoreChapter={() => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
+                            getMoreChapter={ async () => GetMoreChaptersSidebar(chapterListSidebar, setChapterListSidebar, activeFilterChapterSidebar, pageChapterSideBar, setPageChapterSideBar, setCanSeeMoreChapterSidebar)}
                             bookTitle={bookData?.title}
                             title={chapterData?.title}
-                            nbChapters={bookData?.nbChapters}
+                            nbChapters={nbChapters}
                             bookId={bookData?._id}
                             bookSlug={bookData?.slug}
                             author={authorData?.pseudo}
                             filter={activeFilterChapterSidebar}
-                            maxChapter={bookData?.nbChapters}
                             canSeeMore={canSeeMoreChapterSidebar} chapters={chapterListSidebar} select={sidebarSelect} />
                     </div>
                 )
@@ -266,15 +287,22 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         }
     }
 
-    const openCommentaryPhone = () => {
+
+
+
+    const openCommentaryPhone = async () => {
         if (err) {
             return null;
         }
 
         if (comments.length === 0 && canScroll) {
-            getComment(pageComment, 1);
             if (session) {
-                getMyComments(1, 'popular');
+              await getMyComments(1, 'popular')
+                  .then(() =>                 getComment(pageComment, 1))
+                  .catch(() => getComment(pageComment,1))
+            }
+            else {
+                getComment(pageComment,1);
             }
         }
 
@@ -334,6 +362,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                 if (res.length !== 0) {
                     setState(prevState => [...prevState, ...res]);
                     setPage(page + 1);
+                    setCanSeeMoreChapterSidebar(true);
                 } else {
                     setCanSeeMoreChapterSidebar(false);
                 }
@@ -355,11 +384,11 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
             })
     }
 
-    const getMyComments = (page, filter) => {
+    const getMyComments =  async (page, filter) => {
         GetMyCommentsService('chapter', chapterData._id, page, filter)
             .then((res) => {
                 if (res.length !== 0) {
-                    setComments((prevState) => [...prevState, ...res]);
+                    setComments((prevState) => [ ...res, ...prevState]);
                 }
             })
             .catch((err) => console.log(err));
@@ -397,20 +426,14 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     }
 
     const newComment = (res) => {
-        setComments((prevState) => [
-            ...prevState,
-            res
-        ])
-
-        setLastCommentId(prevState => [
-            ...prevState,
-            res._id
-        ])
-
+        setComments((prevState) => [res, ...prevState]);
+        setLastCommentId(prevState => [...prevState, res._id])
         setPageComment((pageComment + 1));
         setNbCommentary(nbCommentary + 1);
 
-        setTimeout(() => setHasToScroll(!hasToScroll), 10)
+        if (res.userId !== session.user.id) {
+            setTimeout(() => setHasToScroll(!hasToScroll), 10);
+        }
         SendNotifService(authorData._id, 11, chapterData._id, bookData._id)
     }
 
@@ -501,16 +524,23 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
             return null;
         }
         if(typeof window !== 'undefined'){
-            navigator.clipboard.writeText('Ogla ne permet ');
+            navigator.clipboard.writeText('');
         }
     }
 
     return (
         <div className={styles.container}>
 
-            <div>
-                <Header />
-            </div>
+
+            <Head>
+                <title>{'Ogla - ' + !err ? Capitalize(chapterData.title) : 'Erreur'}</title>
+                <meta name="description" content="Generated by create next app" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+
+            <HeaderMain/>
 
             {
                 chapterData && width > 900 &&

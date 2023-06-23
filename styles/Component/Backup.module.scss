@@ -1,0 +1,23 @@
+@import "../../styles/utils/var";
+
+.container{
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  transition: 0.2s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  box-shadow: $shadow;
+  background-color: white;
+
+  svg{
+    transform: rotateY(180deg);
+    width: 15px;
+  }
+}

@@ -75,6 +75,8 @@ export const TextSeeMore = ({ onclick }) => {
     )
 }
 
+
+
 export const HeadPhoneBtn = ({ onclick }) => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
@@ -88,6 +90,25 @@ export const HeadPhoneBtn = ({ onclick }) => {
         {
             selectMusicState &&
             <div className={styles.animation}></div>
+        }
+
+    </div>
+
+}
+
+export const HeadPhoneBtnOnHeaderMain = ({ onclick }) => {
+
+    const selectMusicState = useSelector(selectActiveMusicStatus);
+    const selectIndex = useSelector(selectIndexStateMusic);
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
+
+    return <div className={router.pathname === '/' && styles.headphoneMain} onClick={() => dispatch(setActiveMusic())}>
+        <MusicalNoteIcon />
+        {
+            selectMusicState &&
+            <div className={styles.animationOnHeadPhoneMain}></div>
         }
 
     </div>

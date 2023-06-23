@@ -72,7 +72,7 @@ const CategorieHead = ({ cat }) => {
     }
 
     return (
-        <div className={styles.CategorieHead} onClick={() => router.push('/cat/' + cat.toLowerCase())}>
+        <div className={styles.CategorieHead} onClick={() => router.push('/bibliotheque/' + cat.toLowerCase())}>
             {
                 checksvg()
             }

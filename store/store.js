@@ -7,6 +7,7 @@ import {notifSlice} from "./slices/notifSlice";
 import {socketSlice} from "./slices/socketSlice";
 import {themeSlice} from "./slices/themeSlice";
 import {categorySlice} from "./slices/categorySlice";
+import {darkenSlice} from "./slices/darkenSlice";
 
 const makeStore = () =>
     configureStore({
@@ -18,7 +19,7 @@ const makeStore = () =>
             [socketSlice.name]: socketSlice.reducer,
             [themeSlice.name]: themeSlice.reducer,
             [categorySlice.name]: categorySlice.reducer,
-
+            [darkenSlice.name]: darkenSlice.reducer
         },
         devTools: true
     })

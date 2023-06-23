@@ -1,4 +1,5 @@
 import styles from "../../styles/Component/Post/SidebarChapter.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {ArrowDownIcon, BarsArrowDownIcon, ChevronDoubleUpIcon, QueueListIcon} from "@heroicons/react/24/outline";
 import {BookOpenIcon, HeartIcon} from "@heroicons/react/24/solid";
@@ -6,7 +7,7 @@ import {useRouter} from "next/router";
 import {LoaderCommentary} from "../layouts/Loader";
 import {Capitalize} from "../../utils/String";
 import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
-import {TextSeeMore} from "../layouts/Btn/ActionBtn";
+import {TextSeeMore, TextSeeMoreSidebarChapter} from "../layouts/Btn/ActionBtn";
 import ErrMsg from "../ErrMsg";
 import ScreenSize from "../../utils/Size";
 
@@ -16,7 +17,6 @@ const SidebarChapter = ({
                             title,
                             changeFilter,
                             filter,
-                            maxChapter,
                             canSeeMore,
                             getMoreChapter,
                             author,
@@ -59,11 +59,17 @@ const SidebarChapter = ({
         setChapterList(chapters);
     }, [chapters])
 
+    const scrollToBottom = () => {
+        return setTimeout(() => {
+            divRef.current.scrollTop = divRef.current.scrollHeight;
+        },100)
+    }
+
+
     const scrollToTop = () => {
-        return new Promise((resolve, reject) => {
+        return setTimeout(() => {
             divRef.current.scrollTop = 0;
-            resolve();
-        })
+        },10)
     }
 
 
@@ -73,8 +79,8 @@ const SidebarChapter = ({
             <p><QueueListIcon/> <span onClick={() => router.push({
                 pathname: '/livre/' + bookId,
                 query: bookSlug
-            })}>{Capitalize(bookTitle)} </span>  &nbsp; ({nbChapters} chapitre(s))</p>
-            <p onClick={() => router.push('/auteur/' + 'Judy McLaren')}><span>logo</span></p>
+            })}>{Capitalize(bookTitle)} </span>  &nbsp;({nbChapters} chapitres)</p>
+            <p><span>logo</span></p>
         </div>
 
         <div className={styles.titleSection}>
@@ -84,9 +90,7 @@ const SidebarChapter = ({
                 <BarsArrowDownIcon onClick={() => {
                     setSeeBtnAddMore(false);
                     changeFilter();
-                    scrollToTop()
-                        .then(() => setSeeBtnAddMore(true))
-                        .catch(() => setSeeBtnAddMore(true));
+                    scrollToTop();
                 }}/>
             </div>
         </div>
@@ -120,7 +124,7 @@ const SidebarChapter = ({
 
         {
             !chapterList &&
-            <div className={styles.err}>
+            <div className={styles.err + ' ' + anim.fadeIn}>
                 <img src={'/assets/jim/angry4.png'}/>
                 <h4>Oups !</h4>
                 <p>Impossible de récupérer les chapitres </p>
@@ -138,13 +142,13 @@ const SidebarChapter = ({
             {chapterList && chapterList.map((item, index) => {
                 let chapterNumber;
                 if (filter === "recent") {
-                    chapterNumber = maxChapter - index;
+                    chapterNumber = nbChapters - index;
                 } else {
                     chapterNumber = index + 1;
                 }
                 return (
                     <div
-                        className={styles.item}
+                        className={styles.item + ' ' + anim.fadeIn}
                         onClick={() => {
                             router.push({
                                 pathname: "/chapitre/" + item._id,
@@ -163,7 +167,7 @@ const SidebarChapter = ({
                         </div>
 
                         <p className={styles.likes}>
-                            {item.likes} like(s)
+                            {item.likes} <HeartIcon/>
                         </p>
 
                     </div>
@@ -173,12 +177,18 @@ const SidebarChapter = ({
             })}
 
             <div className={styles.seeMore}>
+
+
                 {
-                    canSeeMore && !loadingScroll && !chapterList &&
-                    <TextSeeMore onclick={() => getMoreChapter()}/>
+                    canSeeMore && !loadingScroll && chapterList && nbChapters > chapterList.length &&
+                   <button onClick={() => {
+                       getMoreChapter().then(() => {
+                           scrollToBottom();
+                       })
+                   }}>Voir plus</button>
                 }
                 {
-                    loadingScroll && !chapterList &&
+                    loadingScroll && chapterList &&
                     <LoaderCommentary/>
                 }
             </div>

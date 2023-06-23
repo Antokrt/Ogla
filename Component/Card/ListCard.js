@@ -2,9 +2,9 @@ import styles from '../../styles/Component/Card/List.module.scss';
 import {CardBookPublic} from "./CardBook";
 import React, {useRef} from "react";
 import {HorizontalCard} from "./HorizontalCard";
-import { useEffect } from 'react';
+import { useEffect,Fragment } from 'react';
 
-export const ListCard = ({books,seeMore}) => {
+export const ListCard = ({books,seeMore,topId}) => {
     return (
         <div className={styles.container}>
             <div className={styles.list}>
@@ -12,19 +12,23 @@ export const ListCard = ({books,seeMore}) => {
                     books &&
                     books.map((item) => {
                         return(
-                            <div key={item._id}>
-                                <HorizontalCard
-                                    title={item.title}
-                                    category={item.category}
-                                    author={item.author_pseudo}
-                                    snippet={item.summary}
-                                    id={item._id}
-                                    nbChapters={item.nbChapters}
-                                    like={item.likes}
-                                    img={item.img}
-                                    slug={item.slug}
-                                />
-                            </div>
+                            <Fragment key={item._id}>
+                                <div className={styles.card}>
+                                    <HorizontalCard
+                                        top={topId === item._id && item.likes > 0}
+                                        title={item.title}
+                                        category={item.category}
+                                        author={item.author_pseudo}
+                                        snippet={item.summary}
+                                        id={item._id}
+                                        nbChapters={item.nbChapters}
+                                        like={item.likes}
+                                        img={item.img}
+                                        slug={item.slug}
+                                    />
+                                </div>
+                            </Fragment>
+
 
                         )
                     })

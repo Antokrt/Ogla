@@ -143,6 +143,41 @@
 
 }
 
+.headphoneMain{
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+
+  transition: 0.2s;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: $shadow;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 222;
+
+  svg {
+    color: #e94f37;
+    width: 18px;
+  }
+
+
+  .animationOnHeadPhoneMain {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #9844AD;
+    border-radius: 50%;
+    z-index: 2;
+    opacity: 0;
+    animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+}
+
 .darkHeadphone {
   &:active {
     transform: scale(0.8);

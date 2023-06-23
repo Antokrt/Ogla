@@ -1,11 +1,12 @@
 import styles from "../../styles/Pages/Form/Register.module.scss";
 
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RegisterSchema } from "./Schema/RegisterSchema";
-import { useRouter } from "next/router";
+import {router, useRouter} from "next/router";
 import { signIn } from "next-auth/react";
 import ScreenSize from "../../utils/Size";
+import Link from "next/link";
 
 
 const Register = ({ login }) => {
@@ -66,7 +67,6 @@ const Register = ({ login }) => {
         }
         const register = await signIn('signup', formData)
             .then((res) => {
-                console.log(res)
                 if (res.status === 401) {
                     let errMsg = res.error;
                     switch (errMsg) {
@@ -145,13 +145,15 @@ const Register = ({ login }) => {
 
     return (
         <div className={styles.formContainer}>
+            <div className={styles.imgAbs} onClick={() => router.push("/")}>
+                <img src="/assets/bookOrange2.png" />
+            </div>
             <div className={styles.leftBlock}>
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <img src="/assets/bookOrange2.png" />
                         <h1> Rejoins nous !</h1>
                         <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tout.
-                            Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
+                           <br/> Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
                     </div>
                     <div className={styles.form}>
                         <Formik
@@ -256,12 +258,16 @@ const Register = ({ login }) => {
                                         submitErr.show &&
                                         <p className={styles.submitErr + " " + styles.fadeIn}>{submitErr.msg}</p>
                                     }
+
+                                    <div className={styles.conditions}>
+                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En rejoignant <strong>OGLA</strong>, j'accepte l'ensemble des <a target={'_blank'} href={("/conditions-generales-d'utilisation")} className={styles.spanCondition}>conditions d'utilisation</a>.</p>
+                                    </div>
                                     <div className={styles.lastOptions}>
                                         {loginLink()}
                                         <p className={styles.registerGoogle} onClick={() => signIn('google')}> S'inscrire avec Google </p>
                                     </div>
                                     <div className={styles.stepBtnContainer}>
-                                        <button type={'submit'} className={styles.stepBtn}> S'inscrire
+                                        <button type={'submit'} className={styles.stepBtn}> Envoyer
                                         </button>
                                     </div>
                                 </Form>

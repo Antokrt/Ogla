@@ -168,17 +168,7 @@ display: flex;
     justify-content: start;
     border-bottom: solid 1px rgba(84, 89, 95, 0.07);
 
-    .absoText{
-      top: -10%;
-      font-family: 'Branch',sans-serif;
-      font-size: 8vh;
-      right: 0%;
-      opacity: 0.06;
-      word-wrap: break-word;
 
-      color: #9844AD;
-      position: absolute;
-    }
 
     .lab{
       display: flex;
@@ -426,12 +416,27 @@ display: flex;
   }
 }
 
+.hotContainer{
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(28, 35, 43, 0.21);
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
 .empty{
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 80px;
+  padding-bottom: 80px;
   img{
     width: 180px;
   }
@@ -513,6 +518,7 @@ display: flex;
   align-items: center;
   width: 100%;
   margin-top: 4vh;
+  margin-bottom: 4vh;
   p{
     cursor: pointer;
     color: #9844AD;

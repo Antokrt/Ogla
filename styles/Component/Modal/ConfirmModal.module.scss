@@ -31,6 +31,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;
@@ -145,6 +149,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;
@@ -161,7 +169,7 @@
     align-items: center;
     h5{
       font-size: calc(12px + 0.2vw);
-      font-family: 'Santral-Regular',sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       text-align: center;
       padding: 0px 10px;
@@ -170,7 +178,7 @@
       padding: 0px 10px;
       text-align: center;
       color: #6b7077;
-      font-family: 'Santral-Regular',sans-serif;
+      font-family: $primaryFont;
       font-size: 12px;
     }
   }
@@ -195,7 +203,7 @@
       transition: 0.2s;
       background-color: #1C232B;
       color: white;
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $primaryFont;
       letter-spacing: 1px;
       font-weight: bold;
       border-radius: 5px;
@@ -255,6 +263,10 @@
   }
 
   .close {
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
     position: absolute;
     width: 20px;
     right: 4%;
@@ -378,6 +390,13 @@
   }
 }
 
+
+.errMsgDelete{
+  text-align: center;
+  color: #e94f37!important;
+}
+
+
 @media screen and (max-width: 600px){
   .containerCommentary .containerContent{
     box-shadow: none!important;
@@ -387,7 +406,7 @@
 @media screen and (max-width: 500px){
   .containerCommentary{
     .containerContent{
-      width: 90% !important;
+      width: 100% !important;
     }
   }
 }

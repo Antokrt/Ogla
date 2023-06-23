@@ -1,0 +1,22 @@
+.Toastify__toast-theme--light {
+    font-family: 'Reem Kufi',sans-serif!important;
+}
+
+.Toastify__toast-theme--light{
+    color: white!important;
+    background-color: #1c232b !important;
+    border: solid 1px rgba(255, 255, 255, 0.26);
+}
+
+.Toastify__close-button {
+    color: white!important;
+    opacity: 1!important;
+}
+.Toastify__close-button--default {
+    color: white!important;
+}
+.Toastify__close-button > svg {
+    color: white!important;
+    fill: white!important;
+
+}
