@@ -11,7 +11,7 @@ import {GetTopBooksOnHomeApi} from "../api/book";
 export async function getServerSideProps() {
 
 
-    const data = await fetch('http://127.0.0.1:3008/answer/');
+    const data = await fetch('https://jsonplaceholder.typicode.com/todos/1');
 
     return {
         props: {
