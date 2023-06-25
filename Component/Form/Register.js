@@ -60,7 +60,7 @@ const Register = ({ login }) => {
     const submit = async (values) => {
         const formData = {
             email: values.email,
-            pseudo: values.pseudo,
+            pseudo: values.pseudo.replace(/\s+/g, ""),
             password: values.password,
             is_author: false,
             redirect: false
@@ -73,6 +73,20 @@ const Register = ({ login }) => {
                         case "Email & pseudo already exists":
                             setSubmitErr({
                                 msg: 'Email ou pseudo déjà existant',
+                                show: true
+                            })
+                            break;
+
+                        case "Email-120":
+                            setSubmitErr({
+                                msg:'Email incorrect.',
+                                show: true
+                            })
+                            break;
+
+                        case "Pseudo-120":
+                            setSubmitErr({
+                                msg: 'Pseudo incorrect.',
                                 show: true
                             })
                             break;

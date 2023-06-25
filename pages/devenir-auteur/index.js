@@ -338,9 +338,9 @@ const DevenirAuteur = () => {
                     <span className={styles.acceptCondition}
                           htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA</strong>, j&apos;accepte l&apos;ensemble des <a
                         target={'_blank'}
-                        href={('/conditions-generales-d\'utilisation')} rel={'noreferrer '}>conditions d&apos;utilisation</a>.</span>
+                        href={('/conditions-generales-d\'utilisation')}
+                        rel={'noreferrer '}>conditions d&apos;utilisation</a>.</span>
                 </div>
-
 
 
                 {
@@ -409,36 +409,127 @@ const DevenirAuteur = () => {
 
     const submit = async (values) => {
         if (session) {
-            setStepActiveForm(4);
             const formData = {
-                pseudo: values.pseudo,
+                pseudo: values.pseudo.replace(/\s+/g, ""),
                 firstName: values.firstName,
                 lastName: values.lastName,
                 description: values.description,
                 age: values.age
             }
-            /*toastDisplayPromiseSendMail(*/
             instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
+                    console.log('here')
                     axios.get('/api/auth/session?update-author')
                         .then(() => router.push('/'))
                         .then(() => router.reload());
                 })
-                .catch(() => setStepActiveForm(1));
+                .catch((res) => {
+                    setStepActiveForm(3);
+                    if (res.response.data.statusCode === 401) {
+                        let errMsg = res.response.data.message;
+                        setStepActiveForm(2);
+                        switch (errMsg) {
+                            case "Email & pseudo already exists":
+                                setStepActiveForm(3);
+                                setErrMsg('Email ou pseudo déjà existant.')
+                                setSeeErr(true);
+                                break;
+
+                            case "Email-120":
+                                setStepActiveForm(2)
+                                setErrMsg('Email incorrect.');
+                                setSeeErr(true);
+                                break;
+
+                            case "Pseudo-120":
+                                setStepActiveForm(3);
+                                setErrMsg("Nom d'auteur incorrect.");
+                                setSeeErr(true);
+                                break;
+
+                            case "Description-120":
+                                setStepActiveForm(3);
+                                setErrMsg("Description incorrecte.");
+                                setSeeErr(true);
+                                break;
+
+                            case "Email already exists":
+                                setStepActiveForm(2);
+                                setErrMsg('Email déjà existant.');
+                                setSeeErr(true);
+                                break;
+
+                            case "Pseudo already exists":
+                                setStepActiveForm(3);
+                                setSeeErr('Pseudo déjà existant.')
+                                setSeeErr(true);
+                                break;
+
+                            default:
+                                setSeeErr("Erreur lors de l'envoi du formulaire.")
+                                setSeeErr(true);
+                        }
+                    } else {
+                        setStepActiveForm(3);
+                        setErrMsg("Erreur lors de l'envoi du formulaire.")
+                        setSeeErr(true);
+                    }
+                });
             /*)*/
         } else {
             setStepActiveForm(4);
             const formData = {
                 ...values,
+                pseudo: values.pseudo.replace(/\s+/g, ""),
                 is_author: true,
                 redirect: false
             }
             const register = await signIn('signupAuthor', formData)
                 .then((res) => {
-                    setStepActiveForm(1);
                     if (res.status === 401) {
-                        setErrMsg('Email ou pseudo déjà existant')
-                        setSeeErr(true);
+                        let errMsg = res.error;
+                        setStepActiveForm(3);
+                        switch (errMsg) {
+                            case "Email & pseudo already exists":
+                                setStepActiveForm(3);
+                                setErrMsg('Email ou pseudo déjà existant.')
+                                setSeeErr(true);
+                                break;
+
+                            case "Email-120":
+                                setStepActiveForm(2)
+                                setErrMsg('Email incorrect.');
+                                setSeeErr(true);
+                                break;
+
+                            case "Pseudo-120":
+                                setStepActiveForm(3);
+                                setErrMsg("Nom d'auteur incorrect.");
+                                setSeeErr(true);
+                                break;
+
+                            case "Description-120":
+                                setStepActiveForm(3);
+                                setErrMsg("Description incorrecte.");
+                                setSeeErr(true);
+                                break;
+
+                            case "Email already exists":
+                                setStepActiveForm(2);
+                                setErrMsg('Email déjà existant.');
+                                setSeeErr(true);
+                                break;
+
+                            case "Pseudo already exists":
+                                setStepActiveForm(3);
+                                setSeeErr('Pseudo déjà existant.')
+                                setSeeErr(true);
+                                break;
+
+                            default:
+                                setSeeErr("Erreur lors de l'envoi du formulaire.")
+                                setSeeErr(true);
+                        }
                     }
 
                 })
@@ -480,12 +571,6 @@ const DevenirAuteur = () => {
                             data.description === ""
                         ) {
                             setSeeErr(true);
-                            testRef.current.style.opacity = 1;
-                            setTimeout(() => {
-                                if (testRef.current) {
-                                    testRef.current.style.opacity = 0;
-                                }
-                            }, 1000)
                         } else {
                             setSeeErr(false);
                         }

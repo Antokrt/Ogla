@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/auth/[...nextauth].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/utils/Config.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/utils/Config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-auteur/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/config/Interceptor.js" beforeDir="false" afterPath="$PROJECT_DIR$/service/config/Interceptor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,6 +341,7 @@
       <workItem from="1687449317482" duration="7044000" />
       <workItem from="1687513923873" duration="3097000" />
       <workItem from="1687520901849" duration="2000" />
+      <workItem from="1687686946484" duration="7984000" />
     </task>
     <servers />
   </component>
