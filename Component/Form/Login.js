@@ -2,7 +2,7 @@ import styles from "../../styles/Pages/Form/Login.module.scss";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import React, { createRef, useEffect, useRef, useState } from "react";
-import { router } from "next/router";
+import {router, useRouter} from "next/router";
 import { GoogleLoginBtn } from "../layouts/Btn/Link";
 import { ReCAPTCHA } from "react-google-recaptcha";
 import ScreenSize from "../../utils/Size";
@@ -14,6 +14,7 @@ const Login = ({ register, forgotPassword }) => {
     const formRef = useRef(null);
     const captchaRef = useRef(null);
     const [width, height] = ScreenSize();
+    const router = useRouter();
 
     const token = async () => {
         const captchaToken = await captchaRef.current.executeAsync();
@@ -49,10 +50,15 @@ const Login = ({ register, forgotPassword }) => {
                         show: true
                     }))
                 } else {
-                    setSubmitErr(prevState => ({
-                        msg: 'Erreur lors de la connexion',
-                        show: true
-                    }))
+                    if(res?.status === 200){
+                        router.push('/')
+                    }
+                    else {
+                        setSubmitErr(prevState => ({
+                            msg: 'Erreur lors de la connexion',
+                            show: true
+                        }))
+                    }
                 }
             })
 

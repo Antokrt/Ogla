@@ -15,7 +15,7 @@ import {GetPrivateProfilApi} from "../api/user";
 import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg, GetDefaultUserImgWhenError, renderPrediction} from "../../utils/ImageUtils";
+import {GetDefaultUserImg, GetDefaultUserImgWhenError, GetLogoUtils, renderPrediction} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
@@ -38,6 +38,8 @@ import Tippy from "@tippyjs/react";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import {ErrMsg} from "../../Component/ErrMsg";
+import Link from "next/link";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -598,14 +600,18 @@ const Profil = ({profilData, err}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {
-                err &&
+                err || !session &&
                 <div>
                     {
                         width > 950 ?
                             <HeaderMain/> :
                             <HeaderMainResponsive/>
                     }
-                    <p>Impossible de récupérer le profil</p>
+                    <div className={styles.errContainer}>
+                        <img src={GetLogoUtils()} onError={(e) => e.target.src = '/assets/diapo/mountain.png'}/>
+                        <h1>Session expirée !</h1>
+                        <Link href={'/auth'}>Connectez vous pour pouvoir avoir accès à votre profil</Link>
+                    </div>
                 </div>
             }
             {
@@ -674,9 +680,22 @@ const Profil = ({profilData, err}) => {
                 </div>
             }
             {
-                width >= 800 &&
-                <Footer/>
+                <>
+                    {
+                        width >= 800 ?
+                        <Footer/>
+                            :
+                            <>
+                                {
+                                    err || !session &&
+                                    <Footer/>
+                                }
+                            </>
+
+                    }
+                </>
             }
+
 
         </>
     )

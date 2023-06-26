@@ -24,6 +24,7 @@ import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
 import {ArrowPathIcon} from "@heroicons/react/24/solid";
 import Head from "next/head";
+import {toastDisplayError} from "../../../utils/Toastify";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -152,7 +153,14 @@ const NouveauChapitre = ({bookData, err}) => {
                     localStorage.removeItem('book-'+bookData._id);
                     router.push('/dashboard/books/' + book._id);
                 })
-                .catch((err) => console.log('err publish new chapter'));
+                .catch((err) => {
+                    if(err.response.data.message === 'Chapter-120'){
+                        toastDisplayError('Titre incorrect.');
+                    }
+                    else {
+                        toastDisplayError('Impossible de modifier le chapitre.')
+                    }
+                });
         }
 
     }

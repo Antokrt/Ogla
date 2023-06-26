@@ -33,6 +33,7 @@ export async function getServerSideProps() {
     let data;
     if (!cat.err) {
         data = await GetTopBooksOnHomeApi(cat.data.fCat, cat.data.sCat);
+        console.log(data)
     }
     else {
         data.err = true;
@@ -42,8 +43,6 @@ export async function getServerSideProps() {
             }
         }
     }
-
-
 
     return {
         props: {
@@ -144,13 +143,12 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
                         {
                             firstTopBooks.length !== 0 && secondTopBooks.length !== 0 &&
                             <>
-                                <h7 className={styles.trendTitle}>Qu&apos;est ce qu&apos;on lit chez <strong>OGLA</strong> ?</h7>
+                                <h5 className={styles.trendTitle}>Qu&apos;est ce qu&apos;on lit chez <strong>OGLA</strong> ?</h5>
 
 
                                 <div className={styles.previewPostListContainer}>
                                     <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance ' + cat1} />
                                     <div className={styles.sep}>
-
                                     </div>
                                     <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' + cat2} />
                                 </div>

@@ -19,7 +19,7 @@ export const toastDisplayError = (msg) => {
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,
-		pauseOnHover: true,
+		pauseOnHover: false,
 		draggable: false,
 		progress: undefined,
 		theme: "light",
@@ -58,6 +58,9 @@ export const toastDisplayPromiseSendMail = (promise) => {
 	toast.promise(promise, {
 		pending: "Préparation du mail...",
 		success: "Email envoyé !",
-		error: "Impossible d'envoyer l'email !"
-	  })
+		error: "Impossible d'envoyer l'email !",
+	},{
+		pauseOnHover: false,
+		draggable: false,
+	})
 }

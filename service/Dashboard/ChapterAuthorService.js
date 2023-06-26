@@ -23,7 +23,9 @@ export const PublishChapterService = (data) => {
     return new Promise((resolve, reject) => {
         instance.put('chapter/publish/'+ data.id, data)
             .then((res) => resolve(res))
-            .catch((err) => reject(err));
+            .catch((err) => {
+                reject(err);
+            });
     })
 }
 
