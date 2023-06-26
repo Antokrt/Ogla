@@ -37,6 +37,7 @@ import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
+import {toastDisplayError} from "../../../utils/Toastify";
 
 
 export async function getServerSideProps({req, params}) {
@@ -142,7 +143,10 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log('err save chapter'))
+                .catch((err) => {
+                    console.log(err)
+                    console.log('err save chapter');
+                })
         }
     }
 
@@ -164,7 +168,15 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log('err publish chapter'))
+                .catch((err) => {
+                    console.log(err);
+                    if(err.response.data.message === 'Chapter-120'){
+                        toastDisplayError('Titre incorrect.');
+                    }
+                    else {
+                        toastDisplayError('Impossible de modifier le chapitre.')
+                    }
+                })
         }
     }
 

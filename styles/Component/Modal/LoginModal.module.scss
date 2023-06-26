@@ -117,11 +117,9 @@
   input{
     &:focus{
       box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-      transition: 0.1s;
+      transition: 0.2s;
     }
-    &::placeholder{
-    }
-    transition: 0.1s;
+    transition: 0.2s;
     outline: none!important;
     font-family:$primaryFont;
     border-radius: 5px;

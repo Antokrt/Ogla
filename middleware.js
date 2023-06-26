@@ -1,5 +1,6 @@
 import { NextResponse} from "next/server";
 import {getToken} from "next-auth/jwt";
+import {GetCategory} from "./pages/api/utils/Category";
 
 export async function middleware(req){
 

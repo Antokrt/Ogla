@@ -26,10 +26,7 @@ const Auth = () => {
             }
         }, [router.isReady]);
 
-        if(session && !session?.error){
-            router.replace('/')
-        }
-        else {
+
             return (
                 <div className={styles.container}>
 
@@ -68,6 +65,5 @@ const Auth = () => {
                     </div>
                 </div>
             )
-        }
 }
 export default Auth;

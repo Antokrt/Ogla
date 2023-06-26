@@ -79,9 +79,7 @@ const DevenirAuteur = () => {
                 {
                     session &&
                     <>
-                        <label htmlFor={"email"}>Email
-
-                        </label>
+                        <label htmlFor={"email"}>Email</label>
                         <p className={styles.errMsgItem}>
                         </p>
                         <input
@@ -254,23 +252,21 @@ const DevenirAuteur = () => {
                 {
                     session ?
                         <>
-                            <label htmlFor={"pseudo"}>Nom d&apos;auteur
-                                <span>
-                                    <svg viewBox="-16 0 512 512"><path
-                                        d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"/></svg>
-                                </span>
-                            </label>
-                            <p className={styles.errMsgItem}>
-                                Votre nom d&apos;auteur remplacera votre pseudo
-                            </p>
-                            <Field
-                                autoComplete={'off'}
-                                className={styles.pseudoChange}
+                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <p className={styles.errMsgItem}></p>
+                            <input
+                                className={styles.disabledForm}
+                                value={userObject.pseudo}
                                 id={'pseudo'}
-                                type={"text"}
-                                name={"pseudo"}
-                                placeholder={userObject.pseudo}
-                            />
+                                onChange={(e) =>
+                                {
+                                    setUserObject((prevState) => ({
+                                        ...prevState,
+                                        pseudo:e.target.value
+                                    }))
+                                }
+                            }
+                               />
                         </>
                         :
                         <>
@@ -408,9 +404,16 @@ const DevenirAuteur = () => {
     }
 
     const submit = async (values) => {
+
         if (session) {
+            if(userObject.pseudo.length < 5 || userObject.pseudo.length > 15){
+                setSeeErr(true);
+                setErrMsg('Pseudo (min-5 max-15)');
+                return null;
+            }
+
             const formData = {
-                pseudo: values.pseudo.replace(/\s+/g, ""),
+                pseudo: userObject.pseudo.replace(/\s+/g, ""),
                 firstName: values.firstName,
                 lastName: values.lastName,
                 description: values.description,
@@ -418,10 +421,9 @@ const DevenirAuteur = () => {
             }
             instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
-                    console.log('here')
                     axios.get('/api/auth/session?update-author')
                         .then(() => router.push('/'))
-                        .then(() => router.reload());
+                        .then(() => router.reload())
                 })
                 .catch((res) => {
                     setStepActiveForm(3);
@@ -430,7 +432,7 @@ const DevenirAuteur = () => {
                         setStepActiveForm(2);
                         switch (errMsg) {
                             case "Email & pseudo already exists":
-                                setStepActiveForm(3);
+                                setStepActiveForm(2);
                                 setErrMsg('Email ou pseudo déjà existant.')
                                 setSeeErr(true);
                                 break;
@@ -442,13 +444,13 @@ const DevenirAuteur = () => {
                                 break;
 
                             case "Pseudo-120":
-                                setStepActiveForm(3);
+                                setStepActiveForm(2);
                                 setErrMsg("Nom d'auteur incorrect.");
                                 setSeeErr(true);
                                 break;
 
                             case "Description-120":
-                                setStepActiveForm(3);
+                                setStepActiveForm(2);
                                 setErrMsg("Description incorrecte.");
                                 setSeeErr(true);
                                 break;
@@ -460,7 +462,7 @@ const DevenirAuteur = () => {
                                 break;
 
                             case "Pseudo already exists":
-                                setStepActiveForm(3);
+                                setStepActiveForm(2);
                                 setSeeErr('Pseudo déjà existant.')
                                 setSeeErr(true);
                                 break;
@@ -470,12 +472,11 @@ const DevenirAuteur = () => {
                                 setSeeErr(true);
                         }
                     } else {
-                        setStepActiveForm(3);
+                        setStepActiveForm(2);
                         setErrMsg("Erreur lors de l'envoi du formulaire.")
                         setSeeErr(true);
                     }
                 });
-            /*)*/
         } else {
             setStepActiveForm(4);
             const formData = {
@@ -656,7 +657,7 @@ const DevenirAuteur = () => {
                                     initialValues={initialValues}
                                     validationSchema={activeSchema}
                                     onSubmit={(values, actions) => {
-                                        submit(values)
+                                        submit(values);
                                     }}
                                 >
                                     {({setFieldValue}) =>

@@ -113,10 +113,7 @@ const Register = ({ login }) => {
                     }
                 }
                 else {
-                    setSubmitErr({
-                        msg: 'Oups une erreur à eu lieu',
-                        show: true
-                    })
+                    router.push('/');
                 }
             })
             .catch((err) => setSubmitErr({

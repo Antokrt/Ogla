@@ -37,6 +37,7 @@ const New = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const fileRef = useRef(null);
     const [seeErrMsg, setSeeErrMsg] = useState(false);
+    const [errMsg,setErrMsg] = useState('');
     const [localImg, setLocalImg] = useState(null);
     const [loadingImg, setLoadingImg] = useState(false);
     const router = useRouter();
@@ -67,7 +68,12 @@ const New = () => {
             })
             .catch((err) => {
                 setSeeErrMsg(true);
-                console.log('err send data')
+                if(err.response.data.message === 'Book-120'){
+                    setErrMsg('Titre incorrect.');
+                }
+                else{
+                    setErrMsg('Impossible de créer le livre.')
+                }
             });
 
     }
@@ -382,9 +388,8 @@ const New = () => {
                     {btn()}
                     {
                         step === 3 && seeErrMsg &&
-                        <p className={styles.errMsg}>Impossible de créer le livre</p>
+                        <p className={styles.errMsg}>{errMsg}</p>
                     }
-
                 </div>
             </div>
         </div>
