@@ -252,7 +252,7 @@ const DevenirAuteur = () => {
                 {
                     session ?
                         <>
-                            <label htmlFor={"pseudo"}>Nom d'auteur</label>
+                            <label htmlFor={"pseudo"}>Nom d&apos;auteur</label>
                             <p className={styles.errMsgItem}></p>
                             <input
                                 className={styles.disabledForm}
