@@ -70,29 +70,35 @@ function MyApp({Component, pageProps}) {
         return (<Maintenance/>)
     }
 
+    if (process.env.NODE_ENV === "development") {
+        console.log('here dev')
+    } else if (process.env.NODE_ENV === "production") {
+        console.log('here prod')
+    }
+
 
     return (
-    <AnimatePresence mode={'wait'} initial={false}>
-        <SessionProvider session={pageProps.session}>
-            <Provider store={store}>
-                <Notif/>
-                <Modal/>
-                <Darken/>
-                {
-                    loading &&
-                    <Loader/>
-                }
-                <Component {...pageProps} />
+        <AnimatePresence mode={'wait'} initial={false}>
+            <SessionProvider session={pageProps.session}>
+                <Provider store={store}>
+                    <Notif/>
+                    <Modal/>
+                    <Darken/>
+                    {
+                        loading &&
+                        <Loader/>
+                    }
+                    <Component {...pageProps} />
 
-                <Socket/>
-                <ToastContainer toastStyle={{
-                    fontFamily: 'Poppins',
-                }} limit={3}/>
-                <DynamicHeader/>
-                <GetCategories/>
-            </Provider>
-        </SessionProvider>
-    </AnimatePresence>
+                    <Socket/>
+                    <ToastContainer toastStyle={{
+                        fontFamily: 'Poppins',
+                    }} limit={3}/>
+                    <DynamicHeader/>
+                    <GetCategories/>
+                </Provider>
+            </SessionProvider>
+        </AnimatePresence>
     )
 }
 
