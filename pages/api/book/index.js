@@ -61,7 +61,7 @@ export async function GetBookByCategoryApi(category, filter) {
 }
 
 export async function GetTopBooksOnHomeApi(cat1, cat2) {
-    const booksData = await fetch('http://localhost:3008/book-render/popular-home/' + cat1 + '/' + cat2)
+    const booksData = await fetch('https://ogla-api-4fca21bb1e56.herokuapp.com/book-render/popular-home/' + cat1 + '/' + cat2)
     const booksErrData = !booksData.ok;
     let booksDataJson = await booksData.json();
 
