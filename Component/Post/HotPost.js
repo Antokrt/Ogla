@@ -12,6 +12,7 @@ import BookSvg from "../layouts/Icons/BookSvg";
 import {useEffect} from "react";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 import {FormatCount, FormatLikesCount} from "../../utils/NbUtils";
+import Link from "next/link";
 
 export const HotPost = ({ img, title, category, author, nbChapter, description, likes, top, slug, id }) => {
     const router = useRouter();
@@ -66,12 +67,13 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
 }
 
 export const HotPostPhone = ({ img, title, category, author, nbChapter, description, likes, top, slug, id }) => {
+    const router = useRouter();
     return (
         <div data-after={Capitalize(category)} className={styles.containerPhone}>
             <div className={styles.headerPhone}>
                 <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                 <div className={styles.likeThumbnailPhone}>
-                    <p>{FormatCount(likes)} j&apos;aimes</p>
+                    <p>{FormatCount(likes)} <HeartIcon/></p>
                 </div>
                 <div>
                     <p> Par <span className={styles.author}>{Capitalize(author)}</span>  </p>
@@ -80,7 +82,10 @@ export const HotPostPhone = ({ img, title, category, author, nbChapter, descript
             </div>
             <h6>{title}</h6>
             <p className={styles.descriptionPhone}> {Capitalize(description)}           </p>
-            <button className={styles.discoverPhone}>Découvrir <CursorArrowRaysIcon/></button>
+            <button onClick={() => router.push({
+                pathname: '/livre/' + id,
+                query: slug
+            })} className={styles.discoverPhone}>Découvrir <CursorArrowRaysIcon/></button>
         </div>
     )
 }

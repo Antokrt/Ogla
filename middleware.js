@@ -34,7 +34,7 @@ export async function middleware(req){
 
 
     if(req.nextUrl.pathname === '/devenir-auteur' && token && token.is_author){
-        return NextResponse.redirect(new URL('/cat',req.url))
+        return NextResponse.redirect(new URL('/bibliotheque',req.url))
     }
 }
 

@@ -175,13 +175,29 @@ export const HeaderHome = () =>  {
                             }}/>
                         }
 
-                        <div className={styles.music} tabIndex={0} onClick={() => dispatch(setActiveMusic())}>
-                            <MusicalNoteIcon/>
-                            {
-                                selectMusicState &&
-                                <div className={styles.animation}></div>
-                            }
-                        </div>
+                        {
+                            !session ?
+                                <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
+                                    <MusicalNoteIcon tabIndex={0}/>
+                                    {
+                                        selectMusicState &&
+                                        <div className={styles.animation}></div>
+                                    }
+                                </div> :
+                                <>
+                                    {
+                                        session && session?.user?.settings?.music &&
+                                        <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
+                                            <MusicalNoteIcon tabIndex={0}/>
+                                            {
+                                                selectMusicState &&
+                                                <div className={styles.animation}></div>
+                                            }
+                                        </div>
+                                    }
+                                </>
+
+                        }
 
 
 

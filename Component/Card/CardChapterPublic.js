@@ -23,7 +23,7 @@ return (
         </div>
 
         <div className={styles.likeChapter}>
-            <p>{likes} like(s)</p>
+            <p>{likes} j'aimes</p>
         </div>
     </div>
 )

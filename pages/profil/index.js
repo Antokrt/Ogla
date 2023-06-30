@@ -1,4 +1,5 @@
 import styles from "../../styles/Pages/ProfilPage.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
@@ -27,7 +28,12 @@ import Footer from "../../Component/Footer";
 import {useDispatch, useSelector} from "react-redux";
 import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/notifSlice";
 import {LoaderImg} from "../../Component/layouts/Loader";
-import {toastDisplayError, toastDisplayPromiseSendMail} from "../../utils/Toastify";
+import {
+    toastDisplayError,
+    toastDisplayInfo,
+    toastDisplayPromiseSendMail,
+    toastDisplaySuccess
+} from "../../utils/Toastify";
 import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
 import {instance} from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
@@ -40,6 +46,7 @@ import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {ErrMsg} from "../../Component/ErrMsg";
 import Link from "next/link";
+import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -134,6 +141,11 @@ const Profil = ({profilData, err}) => {
                             music: newSettings.music
                         }
                     })))
+                    .then(() => {
+                        if(!newSettings.music){
+                            dispatch(stopMusic());
+                        }
+                    })
                     .then(() => ReloadSession())
                     .catch(() => toastDisplayError('Impossible de modifier les réglages'))
                 )
@@ -177,7 +189,8 @@ const Profil = ({profilData, err}) => {
 
     const verifyEmail = () => {
         VerifyEmailService()
-            .catch((err) => console.log('err to send email'));
+            .then((res) => toastDisplaySuccess('Email envoyé !'))
+            .catch((err) => toastDisplayError("Impossible d'envoyer l'email."));
     }
 
     const changePassword = (e) => {
@@ -222,7 +235,7 @@ const Profil = ({profilData, err}) => {
 
     const profilComponent = () => {
         return (
-            <div className={styles.profil}>
+            <div className={styles.profil + ' ' + anim.fadeIn}>
                 <div className={styles.imgContainer}>
                     {
                         loadingImg && width > 800 &&
@@ -363,7 +376,7 @@ const Profil = ({profilData, err}) => {
 
     const writerComponent = () => {
         return (
-            <div className={styles.writer}>
+            <div className={styles.writer + ' ' + anim.fadeIn}>
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
@@ -440,7 +453,7 @@ const Profil = ({profilData, err}) => {
 
     const becameWriter = () => {
         return (
-            <div className={styles.becameWriter}>
+            <div className={styles.becameWriter + ' ' + anim.fadeIn}>
                 <img src={'/assets/jim/smile8.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
@@ -455,7 +468,7 @@ const Profil = ({profilData, err}) => {
 
     const settingComponent = () => {
         return (
-            <div className={styles.settings}>
+            <div className={styles.settings +  ' ' + anim.fadeIn}>
                 {
                     width > 800 &&
                     <h5>Réglages</h5>
@@ -498,7 +511,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle}
                          onClick={() => {
-                             setMusicState(!musicState)
+                             setMusicState(!musicState);
                          }}>
                         <input checked={musicState} type="checkbox" id="toggle2"/>
                         <label htmlFor="toggle2"></label>
@@ -600,18 +613,22 @@ const Profil = ({profilData, err}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {
-                err || !session &&
+                err && session &&
                 <div>
                     {
                         width > 950 ?
                             <HeaderMain/> :
                             <HeaderMainResponsive/>
                     }
-                    <div className={styles.errContainer}>
-                        <img src={GetLogoUtils()} onError={(e) => e.target.src = '/assets/diapo/mountain.png'}/>
-                        <h1>Session expirée !</h1>
-                        <Link href={'/auth'}>Connectez vous pour pouvoir avoir accès à votre profil</Link>
+
+                    <div className={styles.err}>
+                        <ErrMsg text={'Impossible de récupérer votre profil'}/>
                     </div>
+
+                    {
+                        width < 800 &&
+                        <Footer/>
+                    }
                 </div>
             }
             {

@@ -9,6 +9,8 @@
 
 }
 
+
+
 .containerF {
   display: flex;
   justify-content: space-between;
@@ -549,6 +551,12 @@ display: flex;
     right: 0% !important;
     font-size: 6vh!important;
     word-break: initial!important;
+  }
+}
+
+@media screen and (max-width: 950px){
+  .err{
+    margin-top: 100px;
   }
 }
 

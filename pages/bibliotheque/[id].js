@@ -63,7 +63,7 @@ export default function CatPage({ cat, err, bookListData }) {
     const [width, height] = ScreenSize();
     const theme = useSelector(selectTheme);
     const [activeCat,setActiveCat] = useState(cat);
-    const topBook = bookListData[0];
+    const topBook = !err ? bookListData[0] : null;
     const categories = useSelector(selectCategories);
 
 
@@ -241,7 +241,7 @@ export default function CatPage({ cat, err, bookListData }) {
             }
             {
                 err &&
-                <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'} />
+                <ErrMsg click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'} />
             }
 
             <Footer />

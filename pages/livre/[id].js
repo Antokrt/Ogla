@@ -55,6 +55,7 @@ import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
 import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
@@ -92,6 +93,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [likes, setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [comments, setComments] = useState([]);
+    const [errCommentary,setErrCommentary] = useState(false);
     const [myComments, setMyComments] = useState([]);
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
@@ -161,50 +163,61 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         }
         return (<div
             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-            <SidebarCommentary
-                limit={sizeComment}
-                page={pageComment}
-                getMore={() => {
-                    getComment();
-                }}
-                nbCommentary={nbCommentary}
-                refresh={() => refresh()}
-                scrollChange={hasToScroll}
-                likeAComment={(id) => likeComment(id)}
-                createNewComment={(res) => newComment(res)}
-                deleteAComment={(id) => deleteComment(id)}
-                seeMore={() => getComment(pageComment)}
-                sendANewAnswer={(data) => sendAnswer(data)}
-                deleteAnswer={(id) => deleteAnswer(id)}
-                authorImg={authorData?.img}
-                likeAnswer={(id) => likeAnswer(id)}
-                newPageAnswer={(id) => loadMoreAnswer(id)}
-                type={'book'}
-                canScroll={canScroll}
-                loadingScroll={loadingScroll}
-                isEmpty={noComments}
-                activeFilter={activeFilterComments}
-                changeFilter={(e) => {
-                    setNoComments(false);
-                    if (e === 'recent' && activeFilterComments === 'popular') {
-                        setCanScroll(true);
-                        setActiveFilterComments('recent');
-                        setComments([]);
-                        setPageComment(1);
+            {
+                errCommentary ?
+                    <div className={styles.errContainer}>
+                        <h4>Erreur</h4>
+                        <p>Impossible de récupérer les commentaires.</p>
+                    </div>
 
-                    } else if (e === 'popular' && activeFilterComments === 'recent') {
-                        setCanScroll(true);
-                        setActiveFilterComments('popular');
-                        setComments([]);
-                        setPageComment(1);
-                    }
-                }}
-                typeId={bookData._id}
-                bookId={bookData._id}
-                title={bookData.title}
-                author={bookData.author_pseudo}
-                comments={comments}
-                select={sidebarSelect}/>
+                    :
+                    <SidebarCommentary
+                        limit={sizeComment}
+                        page={pageComment}
+                        getMore={() => {
+                            getComment();
+                        }}
+                        err={errCommentary}
+                        nbCommentary={nbCommentary}
+                        refresh={() => refresh()}
+                        scrollChange={hasToScroll}
+                        likeAComment={(id) => likeComment(id)}
+                        createNewComment={(res) => newComment(res)}
+                        deleteAComment={(id) => deleteComment(id)}
+                        seeMore={() => getComment(pageComment)}
+                        sendANewAnswer={(data) => sendAnswer(data)}
+                        deleteAnswer={(id) => deleteAnswer(id)}
+                        authorImg={authorData?.img}
+                        likeAnswer={(id) => likeAnswer(id)}
+                        newPageAnswer={(id) => loadMoreAnswer(id)}
+                        type={'book'}
+                        canScroll={canScroll}
+                        loadingScroll={loadingScroll}
+                        isEmpty={noComments}
+                        activeFilter={activeFilterComments}
+                        changeFilter={(e) => {
+                            setNoComments(false);
+                            if (e === 'recent' && activeFilterComments === 'popular') {
+                                setCanScroll(true);
+                                setActiveFilterComments('recent');
+                                setComments([]);
+                                setPageComment(1);
+
+                            } else if (e === 'popular' && activeFilterComments === 'recent') {
+                                setCanScroll(true);
+                                setActiveFilterComments('popular');
+                                setComments([]);
+                                setPageComment(1);
+                            }
+                        }}
+                        typeId={bookData._id}
+                        bookId={bookData._id}
+                        title={bookData.title}
+                        author={bookData.author_pseudo}
+                        comments={comments}
+                        select={sidebarSelect}/>
+            }
+
         </div>)
     }
 
@@ -229,6 +242,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         getMore={() => {
                             getComment();
                         }}
+                        errCommentary={errCommentary}
                         nbCommentary={nbCommentary}
                         refresh={() => refresh()}
                         scrollChange={hasToScroll}
@@ -323,7 +337,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                            setTimeout(() => setHasToScroll(!hasToScroll), 50);
                        }*/
             })
-            .catch((err) => console.log('err'))
+            .catch((err) => setErrCommentary(true))
     }
 
     const GetMoreChapters =  (state, setState, filter, page, setPage, setCanSeeMore) => {
@@ -426,8 +440,16 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     if (err) {
         return (
             <div className={styles.containerErr}>
-                <Header/>
-                <ErrMsgOnChapter click={() => router.back()} textBtn={'Retour'} text={'Impossible de récupérer ce livre, veuillez réessayer.'} />
+                {
+                    width > 950 ?
+                        <HeaderMain/> :
+                        <div style={{width:'100%'}}>
+                        <HeaderMainResponsive/>
+                        </div>
+                }
+
+
+                    <ErrMsg click={() => router.back()}  text={'Impossible de récupérer ce livre, veuillez réessayer.'} />
 
                 <Footer/>
             </div>

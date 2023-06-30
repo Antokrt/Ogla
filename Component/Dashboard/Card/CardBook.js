@@ -24,7 +24,7 @@ export const CardBookDashboard = ({id, img, title,nbChapter,likes,category,date,
             </div>
 
             {
-                top &&
+                top && likes > 0 &&
                 <div className={styles.thumbnail}>
                     <p>Top livre</p>
                     <HeartIcon/>

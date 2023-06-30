@@ -13,7 +13,6 @@ export const ListCard = ({books,seeMore,topId}) => {
                     books.map((item) => {
                         return(
                             <Fragment key={item._id}>
-                                <div className={styles.card}>
                                     <HorizontalCard
                                         top={topId === item._id && item.likes > 0}
                                         title={item.title}
@@ -26,7 +25,6 @@ export const ListCard = ({books,seeMore,topId}) => {
                                         img={item.img}
                                         slug={item.slug}
                                     />
-                                </div>
                             </Fragment>
 
 

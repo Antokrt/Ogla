@@ -144,6 +144,7 @@ export default function CatPage({cat, err, bookListData, topData}) {
                                 width > 530 ?
                                     <HotPost className={styles.hotItem}
                                              top={true}
+                                             id={topData._id}
                                              likes={topData.likes}
                                              title={topData.title} nbChapter={topData.nbChapters}
                                              author={topData.author_pseudo}
@@ -152,6 +153,7 @@ export default function CatPage({cat, err, bookListData, topData}) {
                                     />
                                     :
                                     <HotPostPhone className={styles.hotItem}
+                                                  id={topData._id}
                                                   likes={topData.likes}
                                                   title={topData.title} nbChapter={topData.nbChapters}
                                                   author={topData.author_pseudo}
@@ -230,7 +232,7 @@ export default function CatPage({cat, err, bookListData, topData}) {
             }
             {
                 err &&
-                <ErrMsg textBtn={'Retour'} click={() => router.back()}
+                <ErrMsg  click={() => router.reload()}
                         text={'Impossible de récupérer les livres, veuillez réessayer...'}/>
             }
             <Footer/>

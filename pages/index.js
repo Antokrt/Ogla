@@ -33,7 +33,6 @@ export async function getServerSideProps() {
     let data;
     if (!cat.err) {
         data = await GetTopBooksOnHomeApi(cat.data.fCat, cat.data.sCat);
-        console.log(data)
     }
     else {
         data.err = true;
@@ -159,6 +158,7 @@ export default function Home({ tops, firstTopBooks, secondTopBooks, cat1, cat2, 
                 <BannerBecameWriter />
                 <MusicHome />
                 <Footer/>
+
             </div>
     )
 }

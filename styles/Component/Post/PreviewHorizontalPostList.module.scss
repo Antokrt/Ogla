@@ -37,13 +37,13 @@
 
 @media screen and (max-width: 975px){
   .container{
-    width: 300px!important;
+    width: 90%;
   }
 }
 
 @media screen and (max-width: 700px){
   .container{
-    width: 400px !important;
+    width: 100% !important;
   }
 }
 
@@ -65,5 +65,13 @@
 @media screen and (max-width: 450px){
   .container{
     width: 110%!important;
+  }
+}
+
+@media screen and (max-width: 250px){
+  .container{
+    h7{
+      justify-content: center;
+    }
   }
 }

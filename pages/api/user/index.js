@@ -1,15 +1,17 @@
 import {getConfigOfProtectedRoute} from "../utils/Config";
+import {GetFetchPath} from "../utils/Instance";
 
 export async function GetPrivateProfilApi(req){
     const config = await getConfigOfProtectedRoute(req);
 
-    const profil = await fetch('http://localhost:3008/user/profil/', config);
+    const profil = await fetch(GetFetchPath() + 'user/profil/', config);
     const profilErrData = !profil.ok;
     let profilJson = await profil.json();
 
     if(profilJson.statusCode === 401){
         profilJson = null;
     }
+
     return {
         profilJson,
         err:profilErrData

@@ -35,6 +35,7 @@ const New = () => {
     const [category, setCategory] = useState('Action');
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const [selectedFile, setSelectedFile] = useState(null);
+    const [disableBtn,setDisableBtn] = useState(false);
     const fileRef = useRef(null);
     const [seeErrMsg, setSeeErrMsg] = useState(false);
     const [errMsg,setErrMsg] = useState('');
@@ -54,6 +55,10 @@ const New = () => {
         fileRef.current.click();
     }
     const sendData = () => {
+        if(disableBtn){
+            return null;
+        }
+        setDisableBtn(true);
         const form = {
             title: title,
             summary: summary,

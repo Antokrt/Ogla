@@ -228,9 +228,18 @@ p{
     gap: 5px;
 
     p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
       font-family: $primaryFont !important;
       font-weight: bold !important;
-      color: #1C232B !important;
+      color: #9844AD !important;
+      gap: 5px;
+      svg{
+        width: 14px;
+        color: #9844AD;
+      }
     }
 
     svg {

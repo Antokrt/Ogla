@@ -3,9 +3,6 @@
 .container {
   z-index: 1;
   min-height: 100vh;
-  background-image: url("/assets/blurry.svg");
-  background-size: 100%;
-  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,7 +33,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.22);
     margin-bottom: 30px;
 
     svg {
@@ -69,10 +66,10 @@
     z-index: 1;
     text-align: left;
     width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px;
-    font-family: "Montserrat", sans-serif;
+    font-family: $primaryFont;
     transition: 0.4s;
   }
 
@@ -146,8 +143,8 @@
     margin-bottom: 30px;
 
     h3 {
-      font-family: "Rebond Grotesque", sans-serif;
-      font-size: 16px;
+      font-family: $primaryFont;
+      font-size: 15px;
       font-weight: 900;
       border-bottom: 2px solid rgba(84, 89, 95, 0.12);
       padding-bottom: 10px;
@@ -166,7 +163,7 @@
         border-radius: 20px;
         font-size: 11px;
         padding: 10px 20px;
-        font-family: "Rebond Grotesque", sans-serif;
+        font-family: $primaryFont;
         color: #1C232B;
         transition: 0.1s;
         font-weight: bold;

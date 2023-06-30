@@ -19,13 +19,13 @@ import ScreenSize from "../../utils/Size";
 import useOrientation from "../../utils/Orientation";
 import {HeadPhoneBtn, HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
+import {useSession} from "next-auth/react";
 
 
 
 const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook, hasLike}) => {
 
     const [width, height] = ScreenSize();
-    const orientation = useOrientation();
 
     if(width > 600 && height > 500 ){
         return (
@@ -49,8 +49,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
                 <div className={styles.commentAndListContainer + ' ' + styles.child}>
 
-                    <HeadPhoneBtnOnFooter/>
-
+                        <HeadPhoneBtnOnFooter/>
 
                     <div className={styles.b} onClick={openCommentary}>
                         <ChatBubbleBottomCenterTextIcon/>
