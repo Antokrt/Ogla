@@ -6,15 +6,15 @@ import { useState } from "react";
 import {ChevronDoubleRightIcon, ChevronDoubleUpIcon, CursorArrowRaysIcon} from "@heroicons/react/24/outline";
 import {CountLike} from "../layouts/Btn/Like";
 import {useRouter} from "next/router";
-import {Capitalize} from "../../utils/String";
+import {Capitalize, ReduceString} from "../../utils/String";
 import {ArrowsPointingInIcon, ForwardIcon, HeartIcon,ChatBubbleLeftRightIcon} from "@heroicons/react/24/solid";
 import BookSvg from "../layouts/Icons/BookSvg";
 import {useEffect} from "react";
-import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
+import {GetDefaultBookImgWhenError, GetDefaultUserImg, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import {FormatCount, FormatLikesCount} from "../../utils/NbUtils";
 import Link from "next/link";
 
-export const HotPost = ({ img, title, category, author, nbChapter, description, likes, top, slug, id }) => {
+export const HotPost = ({ img, title, category, author, authorImg, nbChapter, description, likes, top, slug, id }) => {
     const router = useRouter();
     const theme = useSelector(selectTheme);
 
@@ -37,11 +37,14 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
             }
             <div className={styles.contentContainer}>
                 <div className={styles.header}>
-                    <h6>{title}</h6>
                     <div className={styles.labelList}>
-                        <p>Par {Capitalize(author)}</p>
-                        <img src={'/assets/category/icons/'+category.toLowerCase()+'.svg'}/>
+                        <div className={styles.authorPic}>
+                            <img className={styles.pic} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Author Picture'}/>
+                            <p>Par <span>{Capitalize(author)} </span></p></div>
+                        <p className={styles.likes}>{Capitalize(category)}</p>
                     </div>
+                    <h6>{ReduceString(title,60)}</h6>
+
                 </div>
           {/*      {
                     theme &&
@@ -57,7 +60,7 @@ export const HotPost = ({ img, title, category, author, nbChapter, description, 
                     </div>
                 }*/}
                 <div className={styles.description}>
-                    <p>{Capitalize(description)}  </p>
+                    <p>{Capitalize(description)}</p>
                 </div>
                 <div></div>
             </div>

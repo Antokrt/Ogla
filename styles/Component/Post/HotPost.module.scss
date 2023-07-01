@@ -4,19 +4,16 @@
   cursor: pointer;
   display: flex;
   width: 590px;
-  height: 245px;
+  height: 250px;
   margin-right: 5px;
   margin-left: 5px;
-  box-shadow: $shadow;
-  border: solid 1px $border;
   background-color: white;
-  border-radius: 10px;
   position: relative;
-
+  border-bottom: solid 1px rgba(52, 61, 70, 0.07);
 
 
   .imgContainer {
-    width: 185px;
+    width: 220px;
     height: 100%;
     padding: 15px;
     img {
@@ -30,7 +27,7 @@
   .sThumbnail {
     position: absolute;
     left: -6%;
-    top: -5%;
+    top: 0%;
     z-index: 2 !important;
     background-color: #e94f37;
     display: flex;
@@ -46,8 +43,8 @@
 
   .thumbnail {
     position: absolute;
-    top: -4%;
-    right: -2%;
+    top: 0%;
+    right: 0%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,33 +60,30 @@
 
     p {
       color: white;
-      font-size: 12px;
+      font-size: 11px;
     }
     svg{
-      width: 12px;
+      width: 11px;
       color: white;
       margin-left: 2px;
     }
   }
 
   .contentContainer {
-
     width: 70%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 5px;
-    padding-right: 15px;
 
     h6 {
       &:first-letter {
         text-transform: uppercase;
       }
       overflow: hidden;
-      font-size: 18px;
+      font-size: 16px;
       font-family: $primaryFont;
       font-weight: bold;
-      text-transform: capitalize;
       color: #1C232B;
     }
 
@@ -98,14 +92,13 @@
       flex-direction: column;
       gap: 5px;
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
 
       h6 {
         &:first-letter {
           text-transform: uppercase;
         }
-        font-size: 18px;
-        font-family: $primaryFont;
+        font-size: 17px;
         font-weight: bold!important;
         color: #1C232B;
       }
@@ -114,8 +107,35 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 10px;
 
-        img{
+        .authorPic{
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          img{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+          }
+          p{
+            span{
+              color: #9844AD;
+            }
+          }
+        }
+
+        .likes{
+          display: flex;
+          gap: 5px;
+          svg {
+            color: #9844AD;
+            width: 14px;
+          }
+        }
+
+
+        .cat{
           width: 30px;
         }
 
@@ -169,7 +189,9 @@
         display: -webkit-box;
         -webkit-box-orient: vertical;
         font-size: 14px;
-        opacity: 0.8;
+        color: rgba(62, 62, 62, 0.84);
+        -webkit-text-stroke-width: 0.2px;
+        opacity: 0.9;
         font-family: "Pt Sans", sans-serif;
       }
     }

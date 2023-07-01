@@ -1,0 +1,35 @@
+@import "styles/utils/var";
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8vh;
+  height: 200px;
+  width: 100%;
+  background-color: #343d46;
+
+  h4{
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: $branch;
+  }
+
+
+}
+
+.main{
+  position: relative;
+  width: 70%;
+  height: 220px;
+  border-radius: 25px;
+  img{
+    position: absolute;
+    width: 320px;
+    top: 50%;  /* position the top  edge of the element at the middle of the parent */
+    left: 50%; /* position the left edge of the element at the middle of the parent */
+
+    transform: translate(-50%, -50%);
+  }
+}
