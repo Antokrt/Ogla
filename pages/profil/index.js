@@ -461,7 +461,7 @@ const Profil = ({profilData, err}) => {
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d&apos;être entendue</p>
 
-                <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
+                <button onClick={() => router.push('/devenir-ecrivain')}>Je me lance !</button>
             </div>
         )
     }
@@ -491,7 +491,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
                          onClick={() => setNotifState(!notifState)}>
-                        <input checked={notifState} type="checkbox" id="toggle1"/>
+                        <input  checked={notifState} readOnly={true} type="checkbox" id="toggle1"/>
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -513,7 +513,7 @@ const Profil = ({profilData, err}) => {
                          onClick={() => {
                              setMusicState(!musicState);
                          }}>
-                        <input checked={musicState} type="checkbox" id="toggle2"/>
+                        <input checked={musicState} readOnly={true} type="checkbox" id="toggle2"/>
                         <label htmlFor="toggle2"></label>
                     </div>
                 </div>
@@ -655,10 +655,10 @@ const Profil = ({profilData, err}) => {
                                             className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
                                     </button>
                                     <button onClick={() => setActiveLink('writer')}
-                                            className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                            className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
                                     </button>
                                     <button onClick={() => setActiveLink('settings')}
-                                            className={activeLink === 'settings' && styles.activeMenu}>Réglages
+                                            className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
                                     </button>
                                     <button onClick={() => {
                                         if (Notifs.length > 0) {

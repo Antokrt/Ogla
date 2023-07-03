@@ -193,7 +193,7 @@ export const HeaderMain = () => {
                                 </>
                                 :
                                 <>
-                                    <Link href={"/devenir-auteur"}>Deviens écrivain</Link>
+                                    <Link href={"/devenir-ecrivain"}>Deviens écrivain</Link>
                                     <Link href={'/bibliotheque'}>Bibliothèque</Link>
                                 </>
                         }

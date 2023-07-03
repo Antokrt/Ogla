@@ -352,6 +352,36 @@
   }
 }
 
+.closeWriterContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+
+  img{
+    object-fit: contain;
+    width: 200px;
+  }
+
+  p{
+    text-align: center;
+    font-family: $primaryFont;
+    font-weight: bold;
+  }
+  .email{
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .twitter{
+    cursor: pointer;
+    color: #00acee;
+  }
+}
+
 @media screen and (max-width: 1500px) {
   .LogoHead {
     left: 10px;

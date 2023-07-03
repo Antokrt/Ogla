@@ -24,7 +24,7 @@ export const HotPost = ({ img, title, category, author, authorImg, nbChapter, de
             query: slug
         })}>
             <div className={styles.imgContainer}>
-                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} alt={'Book Picture Ogla'} />
             </div>
             <div className={styles.thumbnail}>
                 <CountLike like={likes} />
@@ -39,7 +39,7 @@ export const HotPost = ({ img, title, category, author, authorImg, nbChapter, de
                 <div className={styles.header}>
                     <div className={styles.labelList}>
                         <div className={styles.authorPic}>
-                            <img className={styles.pic} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Author Picture'}/>
+                            <img className={styles.pic} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Author Picture Ogla'}/>
                             <p>Par <span>{Capitalize(author)} </span></p></div>
                         <p className={styles.likes}>{Capitalize(category)}</p>
                     </div>

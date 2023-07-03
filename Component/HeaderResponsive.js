@@ -217,7 +217,7 @@ const HeaderResponsive = () => {
                                         {
                                             !session?.user?.is_author &&
                                             <ul>
-                                                <li onClick={() => router.push("/devenir-auteur")}> <PencilIcon /> Devenir autheur </li>
+                                                <li onClick={() => router.push("/devenir-ecrivain")}> <PencilIcon /> Devenir autheur </li>
                                             </ul>
                                         }
                                         {

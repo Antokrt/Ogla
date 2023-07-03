@@ -45,8 +45,6 @@ else {
         }
     }
 
-    console.log(data.tops[0].author)
-
 
     return {
         props: {

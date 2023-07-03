@@ -43,7 +43,7 @@ const EntryChoice = () => {
             </div>
 
             <button
-                onClick={() => router.push("/devenir-auteur/")}
+                onClick={() => router.push("/devenir-ecrivain/")}
                 className={value === "Disable" ? styles.invalid + " " + styles.btn : styles.valid + " " + styles.btn}>C&apos;est
                 parti !
             </button>

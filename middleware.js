@@ -33,7 +33,7 @@ export async function middleware(req){
 
 
 
-    if(req.nextUrl.pathname === '/devenir-auteur' && token && token.is_author){
+    if(req.nextUrl.pathname === '/devenir-ecrivain' && token && token.is_author){
         return NextResponse.redirect(new URL('/bibliotheque',req.url))
     }
 }

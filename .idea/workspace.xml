@@ -2,14 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Partner.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Partner.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/BannerBecameWriter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/BannerBecameWriter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Header2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeaderHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderHome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeaderMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMain.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeaderResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderResponsive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/layouts/LogCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/LogCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/EntryChoice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/EntryChoice/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/HotPost.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Maintenance.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Maintenance.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -346,7 +360,11 @@
       <workItem from="1687941993652" duration="121000" />
       <workItem from="1688029585358" duration="5026000" />
       <workItem from="1688113635797" duration="17095000" />
-      <workItem from="1688201250827" duration="8346000" />
+      <workItem from="1688201250827" duration="8990000" />
+      <workItem from="1688232411235" duration="8000" />
+      <workItem from="1688243419217" duration="1854000" />
+      <workItem from="1688373074933" duration="3610000" />
+      <workItem from="1688376773887" duration="10187000" />
     </task>
     <servers />
   </component>
