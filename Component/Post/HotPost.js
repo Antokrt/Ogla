@@ -39,7 +39,7 @@ export const HotPost = ({ img, title, category, author, authorImg, nbChapter, de
                 <div className={styles.header}>
                     <div className={styles.labelList}>
                         <div className={styles.authorPic}>
-                            <img className={styles.pic} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Author Picture Ogla'}/>
+                            <img referrerPolicy={'no-referrer'} className={styles.pic} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Author Picture Ogla'}/>
                             <p>Par <span>{Capitalize(author)} </span></p></div>
                         <p className={styles.likes}>{Capitalize(category)}</p>
                     </div>

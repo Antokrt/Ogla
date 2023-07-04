@@ -16,7 +16,13 @@ import {GetPrivateProfilApi} from "../api/user";
 import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg, GetDefaultUserImgWhenError, GetLogoUtils, renderPrediction} from "../../utils/ImageUtils";
+import {
+    GetDefaultUserImg,
+    GetDefaultUserImgWhenError,
+    GetImgPathOfAssets,
+    GetLogoUtils,
+    renderPrediction
+} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
@@ -249,14 +255,16 @@ const Profil = ({profilData, err}) => {
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Profil Pic'}/>
+                                    src={localImg} alt={'Nouvelle Image Ogla Profil'}/>
                             </>
                             :
                             <Tippy trigger={'mouseenter'} content={'Modifier'}>
                                 <img
                                     onClick={() => imgClick()}
                                     src={profil?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                    alt={'Profil Pic'}/>
+                                    alt={'Profil Ogla'}
+                                referrerPolicy={'no-referrer'}
+                                />
 
                             </Tippy>
                     }
@@ -366,9 +374,6 @@ const Profil = ({profilData, err}) => {
 
 
                 </div>
-                {/* <div className={styles.imgContainer}>
-                    <img src={'/assets/diapo/WalkRead.png'}/>
-                </div> */}
             </div>
 
         )
@@ -380,7 +385,7 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img}/>
+                        <img src={profilData?.img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
 
@@ -440,7 +445,7 @@ const Profil = ({profilData, err}) => {
                                 <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
                             </div>
                             <div className={styles.socialImg}>
-                                <img src={"/assets/other/manReading2.png"} alt="author reading"/>
+                                <img src={GetImgPathOfAssets() +"other/manReading2.png"} onError={(e) => e.target.src = '/assets/other/manReading2.png'} alt="Auteur lit un livre ogla"/>
                             </div>
                         </div>
                     </div>
@@ -454,7 +459,7 @@ const Profil = ({profilData, err}) => {
     const becameWriter = () => {
         return (
             <div className={styles.becameWriter + ' ' + anim.fadeIn}>
-                <img src={'/assets/jim/smile8.png'}/>
+                <img alt={'Image Castle Ogla'} src={GetImgPathOfAssets() +'diapo/castle.png'} onError={(e) => e.target.src = 'assets/diapo/castle.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
                     ! <br/>
@@ -593,7 +598,7 @@ const Profil = ({profilData, err}) => {
                             {
                                 session && session.user.image &&
                                 <>
-                                    <img src={session.user.image}/>
+                                    <img src={session.user.image} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                     <span className={styles.circle}></span>
                                 </>
                             }

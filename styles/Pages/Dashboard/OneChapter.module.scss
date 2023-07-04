@@ -247,6 +247,7 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
+            object-fit: cover;
           }
         }
       }
@@ -691,6 +692,10 @@
     }
 
     img{
+      &:active {
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
       width: 60px;
       height: 60px;
       border-radius: 50%;

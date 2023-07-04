@@ -1,6 +1,6 @@
 import styles from '../styles/Component/HeaderMainResponsive.module.scss';
 import anim from '../styles/utils/anim.module.scss';
-import {GetLogoUtils} from "../utils/ImageUtils";
+import {GetDefaultUserImgWhenError, GetLogoUtils} from "../utils/ImageUtils";
 import {useRouter} from "next/router";
 import {
     Bars3Icon, BellIcon,
@@ -86,9 +86,12 @@ export const HeaderMainResponsive = () => {
                     }}/>
                     {
                         width < 650 &&
-                        <img tabIndex={0} style={{marginLeft: '10px'}}
-                             onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))} className={styles.logo}
-                        alt={'Logo Ogla'} src={GetLogoUtils()}/>
+                        <img
+                            onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                            tabIndex={0} style={{marginLeft: '10px'}}
+                            onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
+                            className={styles.logo}
+                            alt={'Logo Ogla'} src={GetLogoUtils()}/>
                     }
                 </div>
 
@@ -96,8 +99,11 @@ export const HeaderMainResponsive = () => {
                 {
                     width >= 650 &&
                     <img tabIndex={0}
-                         onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))} className={styles.logo} alt={'Logo Ogla'}
-                    src={GetLogoUtils()}/>
+                         onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
+                         className={styles.logo} alt={'Logo Ogla'}
+                         src={GetLogoUtils()}
+                         onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                    />
 
                 }
 
@@ -111,34 +117,38 @@ export const HeaderMainResponsive = () => {
                                         pathname: "/auth",
                                         query: "login"
                                     }).then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))
-                                }else
-                                dispatch(setActiveModalState(true));
+                                } else
+                                    dispatch(setActiveModalState(true));
                             }}>Se connecter</button>
-                        :
-                        <div className={styles.imgContainer}>
-                        <div tabIndex={0} onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))} className={styles.containerImgProfil}>
-                        <img src={session?.user?.image} referrerPolicy={'no-referrer'}/>
-                        </div>
-                        <ChevronDownIcon tabIndex={0} onClick={() => {
-                        if (!openMenu) {
-                        BodyOverflowUtils('hidden');
-                        dispatch(setDarkenState(true));
-                        setOpenMenu('profil');
-                    }
-                        if (openMenu === 'profil') {
-                        BodyOverflowUtils('initial');
-                        dispatch(setDarkenState(false));
-                        setOpenMenu(null);
-                    }
+                            :
+                            <div className={styles.imgContainer}>
+                                <div tabIndex={0}
+                                     onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
+                                     className={styles.containerImgProfil}>
+                                    <img src={session?.user?.image} alt={'Ogla Image Profil'}
+                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                         referrerPolicy={'no-referrer'}/>
+                                </div>
+                                <ChevronDownIcon tabIndex={0} onClick={() => {
+                                    if (!openMenu) {
+                                        BodyOverflowUtils('hidden');
+                                        dispatch(setDarkenState(true));
+                                        setOpenMenu('profil');
+                                    }
+                                    if (openMenu === 'profil') {
+                                        BodyOverflowUtils('initial');
+                                        dispatch(setDarkenState(false));
+                                        setOpenMenu(null);
+                                    }
 
-                        if (openMenu === 'links') {
-                        BodyOverflowUtils('hidden');
-                        dispatch(setDarkenState(true));
-                        setOpenMenu('profil')
-                    }
+                                    if (openMenu === 'links') {
+                                        BodyOverflowUtils('hidden');
+                                        dispatch(setDarkenState(true));
+                                        setOpenMenu('profil')
+                                    }
 
-                    }} className={openMenu === 'profil' ? styles.rotate : undefined}/>
-                        </div>
+                                }} className={openMenu === 'profil' ? styles.rotate : undefined}/>
+                            </div>
                     }
                 </div>
             </div>
@@ -209,6 +219,7 @@ export const HeaderMainResponsive = () => {
                 <div className={styles.modalProfil + ' ' + anim.fadeIn}>
                     <div className={styles.containerImgOnModalProfil}>
                         <img
+                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
                             onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
                             src={session?.user?.image} referrerPolicy={'no-referrer'}/>
                         <p>{session?.user?.pseudo}</p>
@@ -239,7 +250,6 @@ export const HeaderMainResponsive = () => {
                                 </>
 
                         }
-
 
 
                         {

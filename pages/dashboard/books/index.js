@@ -32,6 +32,7 @@ import {CardBookDashboardTab} from "../../../Component/Dashboard/Card/CardBookTa
 import {CardBookPhone} from "../../../Component/Dashboard/Card/CardBookPhone";
 import Head from "next/head";
 import {GetFetchPath} from "../../api/utils/Instance";
+import {GetImgPathOfAssets} from "../../../utils/ImageUtils";
 
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
@@ -129,7 +130,7 @@ const Books = ({booksData, err, errNb, nbBooks}) => {
                         <button onClick={() => router.push('/dashboard/nouveau-livre')}>C&apos;est parti ! <CursorArrowRaysIcon/></button>
                     </div>
                     <div className={styles.imgNoBooks}>
-                        <img src={'/assets/diapo/book.png'}/>
+                        <img src={GetImgPathOfAssets()+'diapo/book.png'} alt={'Livre Défaut Ogla'} onError={(e) => e.target.src = '/assets/diapo/book.png'}/>
                     </div>
 
                 </div>

@@ -226,6 +226,7 @@ padding-left: 2%;
           margin-top: 10px;
 
           img{
+            transition: 0.2s;
             width: 70px;
             height: 70px;
             border-radius: 50%;
@@ -636,6 +637,11 @@ display: flex;
     }
 
     img{
+      &:active {
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
+      transition: 0.2s;
       width: 60px;
       height: 60px;
       border-radius: 50%;

@@ -752,7 +752,8 @@
       text-align: center;
       margin-bottom: 20px;
       font-size: 15px;
-      font-weight: 500;
+      -webkit-text-stroke-width: 0.2px;
+      opacity: 0.8;
     }
 
     button {

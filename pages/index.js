@@ -8,7 +8,6 @@ import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
 import React, {useContext, useEffect, useState} from "react";
-import {ConfigBearer, getAccessToken, GetBearerConfig, getConfigOfProtectedRoute} from "./api/utils/Config";
 import {useSession} from "next-auth/react";
 import {LoginModal} from "../Component/Modal/LoginModal";
 import {GetTopBooksOnHomeApi} from "./api/book";
@@ -21,22 +20,18 @@ import MusicHome from '../Component/MusicHome';
 import {DeleteAllNotifsService} from '../service/Notifications/NotificationsService';
 import ScreenSize from "../utils/Size";
 import HeaderResponsive from '../Component/HeaderResponsive';
-import {FormatLikesCount} from "../utils/NbUtils";
-import Layout from "../Component/Transition/Layout";
-import {HeaderMain} from "../Component/HeaderMain";
 import {HeaderHome} from "../Component/HeaderHome";
 import {toastDisplayTest} from "../utils/Toastify";
 import {HeaderMainResponsive} from "../Component/HeaderMainResponsive";
 import {Partner} from "../Component/Partner";
+import NewFeatured from "../Component/Category/New";
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
     let data;
     if (!cat.err) {
         data = await GetTopBooksOnHomeApi(cat.data.fCat, cat.data.sCat);
-    }
-
-else {
+    } else {
         data.err = true;
         return {
             props: {
@@ -44,7 +39,6 @@ else {
             }
         }
     }
-
 
     return {
         props: {
@@ -85,7 +79,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
             <Banner/>
             <CategoryHome/>
             {
-                !err && tops && tops.length !== 0 &&
+                !err && tops && tops.length === 1 &&
                 <div className={styles.hot}>
                     <div className={styles.headerHot}>
                         <h4>Populaires :</h4>
@@ -97,53 +91,43 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                         {
                             width > 450 ?
                                 <>
-                                    <HotPost className={styles.hotItem}
-                                             authorImg={tops[0].author.img}
-                                             id={tops[0]?._id}
-                                             slug={tops[0]?.slug}
-                                             likes={tops[0]?.likes}
-                                             top={true}
-                                             title={tops[0]?.title} nbChapter={tops[0]?.nbChapters}
-                                             author={tops[0]?.author_pseudo}
-                                             img={tops[0]?.img} category={tops[0]?.category}
-                                             description={tops[0]?.summary}
-                                    />
-                                    <HotPost
-                                        authorImg={tops[1].author.img}
-                                        className={styles.hotItem}
-                                        id={tops[1]?._id}
-                                        slug={tops[1]?.slug}
-                                        likes={tops[1]?.likes}
-                                        top={false}
-                                        title={tops[1]?.title} nbChapter={tops[1]?.nbChapters}
-                                        author={tops[1]?.author_pseudo}
-                                        img={tops[1]?.img} category={tops[1]?.category}
-                                        description={tops[1]?.summary}
-                                    />
+                                    {
+                                        tops.map((item, i) => {
+                                            return (
+                                                <HotPost className={styles.hotItem}
+                                                         authorImg={tops[i].author.img}
+                                                         id={tops[i]?._id}
+                                                         slug={tops[i]?.slug}
+                                                         likes={tops[i]?.likes}
+                                                         top={true}
+                                                         title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
+                                                         author={tops[i]?.author_pseudo}
+                                                         img={tops[i]?.img} category={tops[i]?.category}
+                                                         description={tops[i]?.summary}
+                                                />
+                                            )
+                                        })
+                                    }
+
                                 </>
                                 :
                                 <>
-                                    <HotPostPhone className={styles.hotItem}
-                                                  id={tops[0]?._id}
-                                                  slug={tops[0]?.slug}
-                                                  likes={tops[0]?.likes}
-                                                  top={true}
-                                                  title={tops[0]?.title} nbChapter={tops[0]?.nbChapters}
-                                                  author={tops[0]?.author_pseudo}
-                                                  img={tops[0]?.img} category={tops[0]?.category}
-                                                  description={tops[0]?.summary}
-                                    />
-                                    <HotPostPhone
-                                        className={styles.hotItem}
-                                        id={tops[1]?._id}
-                                        slug={tops[1]?.slug}
-                                        likes={tops[1]?.likes}
-                                        top={false}
-                                        title={tops[1]?.title} nbChapter={tops[1]?.nbChapters}
-                                        author={tops[1]?.author_pseudo}
-                                        img={tops[1]?.img} category={tops[1]?.category}
-                                        description={tops[1]?.summary}
-                                    />
+                                    {
+                                        tops.map((item, i) => {
+                                            return (
+                                                <HotPostPhone className={styles.hotItem}
+                                                              id={tops[i]?._id}
+                                                              slug={tops[i]?.slug}
+                                                              likes={tops[i]?.likes}
+                                                              top={true}
+                                                              title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
+                                                              author={tops[i]?.author_pseudo}
+                                                              img={tops[i]?.img} category={tops[i]?.category}
+                                                              description={tops[i]?.summary}
+                                                />
+                                            )
+                                        })
+                                    }
                                 </>
                         }
 

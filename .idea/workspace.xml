@@ -2,28 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/assets/logo/mountain.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Schema/AuthorSchema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Header2.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Header2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/BannerBecameWriter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/BannerBecameWriter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/CategoryHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/New.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/New.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookPhone.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookPhone.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardBookTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardStats.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/ErrorDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/ErrorDashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/HeaderHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMain.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderResponsive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/DeleteAccountModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Lofi.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Lofi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Modal/ConfirmModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/ConfirmModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/layouts/LogCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/layouts/LogCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/EntryChoice/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/EntryChoice/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/devenir-auteur/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-livre/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Maintenance.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Maintenance.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/DeleteAccountModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CardStatsDashboard.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Category/News.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/ErrorDashboard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/ErrorDashboard.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,24 +53,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Ogla/DeployTest4&quot;,
-    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Dev/Ogla/Front/node_modules/jest&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Dev\\Ogla\\Front\\node_modules\\typescript\\lib&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "javascript.nodejs.core.library.configured.version": "16.17.1",
+    "javascript.nodejs.core.library.typings.version": "16.11.66",
+    "last_opened_file_path": "C:/Dev/Ogla/Front/public/assets/logo",
+    "nodejs.jest.jest_package": "C:/Dev/Ogla/Front/node_modules/jest",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Dev\\Ogla\\Front\\node_modules\\typescript\\lib"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Front\public\assets\logo" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau\livre" />
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
@@ -364,7 +374,8 @@
       <workItem from="1688232411235" duration="8000" />
       <workItem from="1688243419217" duration="1854000" />
       <workItem from="1688373074933" duration="3610000" />
-      <workItem from="1688376773887" duration="10187000" />
+      <workItem from="1688376773887" duration="10806000" />
+      <workItem from="1688460278434" duration="19236000" />
     </task>
     <servers />
   </component>
