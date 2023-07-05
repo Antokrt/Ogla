@@ -33,7 +33,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
 
                 <div className={styles.titleContainer + ' ' + styles.child}>
-                    <img src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
+                    <img alt={'Image Livre Ogla'} src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
                     <div>
                         <p className={styles.titleBook}>{title}</p>
                         <p>{like} like(s) - <span>{author}</span></p>

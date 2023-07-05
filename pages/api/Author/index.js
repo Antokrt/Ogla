@@ -22,6 +22,7 @@ export const GetAuthorProfilAPI = async (pseudo,req) => {
         bookJson = null;
     }
 
+
     return {
         profil: dataJson,
         books: bookJson,

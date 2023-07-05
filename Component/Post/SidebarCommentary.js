@@ -20,6 +20,7 @@ import useOrientation from "../../utils/Orientation";
 import {FilterBtn, FilterBtn3} from "../layouts/Btn/ActionBtn";
 import {ConfirmModal, ConfirmModalCommentary} from "../Modal/ConfirmModal";
 import {ErrMsg} from "../ErrMsg";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 
 const SidebarCommentary = ({
@@ -295,7 +296,7 @@ const SidebarCommentary = ({
                 {
                      comments.length <= 0 && !loadingScroll && endRefresh &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
-                        <img src={'/assets/jim/angry2.png'}/>
+                        <img src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Jim Ogla'} onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
                         <p>C&apos;est bien silencieux ici ! <br/> <span onClick={() => {
                             if (session) {
                                 inputRef.current.focus();

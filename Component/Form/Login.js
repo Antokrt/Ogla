@@ -1,12 +1,12 @@
 import styles from "../../styles/Pages/Form/Login.module.scss";
-
+import anim from '../../styles/utils/anim.module.scss';
 import { useSession, signIn, signOut } from "next-auth/react";
 import React, { createRef, useEffect, useRef, useState } from "react";
-import {router, useRouter} from "next/router";
+import { useRouter} from "next/router";
 import { GoogleLoginBtn } from "../layouts/Btn/Link";
 import { ReCAPTCHA } from "react-google-recaptcha";
 import ScreenSize from "../../utils/Size";
-import { UserIcon } from "@heroicons/react/24/outline";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 const Login = ({ register, forgotPassword }) => {
 
@@ -66,10 +66,14 @@ const Login = ({ register, forgotPassword }) => {
 
 
     return (
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer + ' ' + anim.fadeIn}>
             <div className={styles.ctn}>
                 <div className={styles.imgAbs} onClick={() => router.push("/")}>
-                    <img src="/assets/bookOrange2.png" />
+                    <img
+                        src={GetLogoUtils()}
+                    alt={'Logo Ogla'}
+                        onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                    />
                 </div>
                 <div className={styles.leftBlock}>
                     <div className={styles.header}>
@@ -139,7 +143,10 @@ const Login = ({ register, forgotPassword }) => {
             {
                 width > 970 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/soldier.png"} />
+                    <img
+                        alt={'Bannière Connexion Ogla'}
+                        onError={(e) => e.target.src = "/assets/diapo/soldier.png"}
+                        src={GetImgPathOfAssets() + "diapo/soldier.png"} />
                 </div>
             }
         </div>

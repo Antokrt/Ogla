@@ -50,7 +50,8 @@ export const HeaderMainResponsive = () => {
         '/livre/',
         '/chapitre/',
         '/rechercher',
-        '/profil'
+        '/profil',
+        '/auteur'
     ]
 
 

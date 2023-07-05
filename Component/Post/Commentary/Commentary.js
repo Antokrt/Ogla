@@ -73,7 +73,7 @@ const Commentary = ({pseudo,
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
-                    <img referrerPolicy="no-referrer" src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                    <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                 </div>
 
 
@@ -151,7 +151,7 @@ const Commentary = ({pseudo,
                                 authorHasLike && session.user.pseudo !== authorPseudo &&
                                 <div className={styles.likeAuthor}>
 
-                                    <img src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
+                                    <img alt={'Image Ecrivain Ogla'} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
                                     <HeartIcon className={styles.like}/>
 
                                 </div>

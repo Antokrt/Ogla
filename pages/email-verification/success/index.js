@@ -6,6 +6,7 @@ import axios from "axios";
 import {instance} from "../../../service/config/Interceptor";
 import {ReloadSession} from "../../../utils/ReloadSession";
 import Head from "next/head";
+import {GetImgPathOfAssets} from "../../../utils/ImageUtils";
 
 export async function getServerSideProps({req, query}) {
 
@@ -27,7 +28,7 @@ const SuccessVerificationEmailPage = ({profilData}) => {
         await instance.get('http://localhost:3000/api/auth/session?email-verified');
     }
 
-   useEffect(() =>  {
+  useEffect(() =>  {
         updateSession()
             .then(() => {
                 const timer = setTimeout(() => {
@@ -45,11 +46,14 @@ const SuccessVerificationEmailPage = ({profilData}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <img src={'/assets/diapo/mountain.png'}/>
+            <img
+                alt={'Image Success Ogla'}
+                onError={(e) => e.target.src = '/assets/diapo/old.png'}
+                src={GetImgPathOfAssets() + 'diapo/old.png'}/>
+
             <h1>Email vérifiée !</h1>
-            <p>Félicitations <span>{profilData?.pseudo} !</span> <br/> Votre email a été vérifié avec succès </p>
+            <p> <span>{profilData?.pseudo}</span>, votre email a été vérifié avec succès. </p>
             <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>
-            <button onClick={() => router.replace('/')}>Accueil</button>
         </div>
     )
 

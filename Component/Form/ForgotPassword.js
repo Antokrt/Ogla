@@ -1,10 +1,12 @@
-import styles from "../../styles/Pages/Form/ResetPassword.module.scss"
+import styles from "../../styles/Pages/Form/ResetPassword.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import { useSession, signIn, signOut } from "next-auth/react";
 import React, { useEffect, useRef, useState } from "react";
 import { SendResetPasswordEmailService } from "../../service/User/Password.service";
 import { toastDisplayPromiseSendMail } from "../../utils/Toastify";
-import {router, useRouter} from "next/router";
+import { useRouter} from "next/router";
 import ScreenSize from "../../utils/Size";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 const ForgotPassword = ({ login }) => {
 
@@ -33,9 +35,12 @@ const ForgotPassword = ({ login }) => {
 
 
     return (
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer + ' ' + anim.fadeIn}>
             <div className={styles.imgAbs} onClick={() => router.push("/")}>
-                <img src="/assets/bookOrange2.png" />
+                <img
+                    alt={'Logo Ogla'}
+                    onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                    src={GetLogoUtils()} />
             </div>
             <div className={styles.leftBlock}>
                 <div className={styles.container}>
@@ -107,7 +112,10 @@ const ForgotPassword = ({ login }) => {
             {
                 width > 1000 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/knight.png"} />
+                    <img
+                        alt={'Bannière Mot de passe oublié Ogla'}
+                        onError={(e) => e.target.src = '/assets/diapo/knight.png'}
+                        src={GetImgPathOfAssets() + "diapo/knight.png"} />
                 </div>
             }
         </div>

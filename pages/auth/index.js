@@ -3,28 +3,13 @@ import {useEffect, useState} from "react";
 import Register from "../../Component/Form/Register";
 import {useRouter} from "next/router";
 import Login from "../../Component/Form/Login";
-import {useSession} from "next-auth/react";
 import ForgotPassword from "../../Component/Form/ForgotPassword";
 import {GetActiveMonthlyCateoryApi} from "../api/Category";
 import {GetTopBooksOnHomeApi} from "../api/book";
 import Head from "next/head";
 
-export async function getServerSideProps() {
+const Auth = ({}) => {
 
-
-    const data = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-
-    return {
-        props: {
-            test:2
-        }
-    }
-}
-
-
-const Auth = ({test}) => {
-
-    const {data: session, status} = useSession();
     const router = useRouter();
     const [query,setQuery] = useState(Object.keys(router.query)[0]);
     const [choice, setChoice] = useState("disable");

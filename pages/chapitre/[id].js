@@ -40,7 +40,7 @@ import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import {HeadPhoneBtn} from "../../Component/layouts/Btn/ActionBtn";
 import useOrientation from "../../utils/Orientation";
 import Footer from "../../Component/Footer";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
@@ -599,7 +599,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                     query:bookData?.slug
                                                 })}>{bookData?.title}</h5>
                                                 <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}>
-                                                    <img src={authorData.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                                    <img alt={'Image Ecrivain Ogla'} src={authorData.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
                                                          referrerPolicy={'no-referrer'} />{authorData.pseudo}
                                                 </h6>
                                             </div>
@@ -669,7 +669,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                 })}>{bookData?.title}</h4>
                                             </div>
 
-                                            <img src={bookData?.img} alt={'Image du livre'}/>
+                                            <img onError={(e) => GetDefaultBookImgWhenError()} src={bookData?.img} alt={'Image du livre'}/>
 
                                         </div>
                                         <div className={styles.sMenuPhone}>

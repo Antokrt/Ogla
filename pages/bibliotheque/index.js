@@ -35,12 +35,12 @@ import Head from "next/head";
 import {GetTopUtils} from "../../utils/TopUtils";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
 
     const data = await GetBookByCategoryApi(category, 'popular');
-
 
     return {
         props: {
@@ -120,11 +120,10 @@ export default function CatPage({cat, err, bookListData, topData}) {
             }
 
             <div className={styles.bannerContainer + ' ' + anim.fadeIn}>
-                <img src={'/assets/diapo/5.png'}/>
+                <img src={GetImgPathOfAssets() + 'diapo/5.png'} onError={(e) => e.target.src = '/assets/diapo/5.png'} alt={'Bibliothèque Ogla Livre'}/>
                 <div>
                     <h1>Bibliothèque <span>OGLA</span></h1>
                     <p>Plongez dans des histoires de fantaisie époustouflantes, où les rois et les reines, les chevaliers et les sorciers, les elfes et les dragons se côtoient dans des mondes étonnants remplis de dangers et de merveilles. Laissez-vous transporter dans des univers épiques où l&apos;imagination n&apos;a pas de limites.
-
                     </p>
                 </div>
 
@@ -144,6 +143,7 @@ export default function CatPage({cat, err, bookListData, topData}) {
                                 width > 530 ?
                                     <HotPost className={styles.hotItem}
                                              top={true}
+                                             authorImg={topData?.author?.img}
                                              id={topData._id}
                                              likes={topData.likes}
                                              title={topData.title} nbChapter={topData.nbChapters}
