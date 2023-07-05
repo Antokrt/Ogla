@@ -75,7 +75,6 @@ function MyApp({Component, pageProps}) {
             <>
                 <GoogleAnalytics/>
                 <Maintenance/>
-                <CookieAccept />
             </>
         )
     }
