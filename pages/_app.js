@@ -37,6 +37,7 @@ import {useRouter} from "next/router";
 import {Loader} from "../Component/Loader";
 import {Darken} from "../Component/Darken";
 import CustomStyle from "../Component/CustomStyle";
+import {CookieAccept} from "../Component/CookieAccept";
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -77,7 +78,7 @@ function MyApp({Component, pageProps}) {
         <AnimatePresence mode={'wait'} initial={false}>
             <SessionProvider session={pageProps.session}>
                 <Provider store={store}>
-
+                    <CookieAccept/>
                     <Notif/>
                     <Modal/>
                     <Darken/>
