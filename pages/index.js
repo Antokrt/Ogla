@@ -148,8 +148,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
                             <div className={styles.previewPostListContainer}>
                                 <PreviewHorizontalPostList list={firstTopBooks} title={'Tendance ' + cat1}/>
-                                <div className={styles.sep}>
-                                </div>
+                                <div className={styles.sep}></div>
                                 <PreviewHorizontalPostList list={secondTopBooks} title={'Tendance ' + cat2}/>
                             </div>
                         </>

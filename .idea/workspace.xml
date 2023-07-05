@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/hello.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/hello.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/ResetPassword.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/ResetPassword.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,7 +347,7 @@
       <workItem from="1688376773887" duration="10806000" />
       <workItem from="1688460278434" duration="19264000" />
       <workItem from="1688544502827" duration="9921000" />
-      <workItem from="1688555398261" duration="1271000" />
+      <workItem from="1688555398261" duration="1672000" />
     </task>
     <servers />
   </component>
