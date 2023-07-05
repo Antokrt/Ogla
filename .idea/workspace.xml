@@ -3,32 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/BannerCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/BannerCategory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/ForgotPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/ForgotPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Form/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/MusicHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/MusicHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/SubCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/PreviewHorizontalPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/Author/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/Author/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/chapter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/chapter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/email-verification/expire/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email-verification/expire/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/email-verification/success/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/email-verification/success/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Form/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Form/ResetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/reset-password/expire/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/reset-password/expire/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/DevenirAuteur.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Form/ResetPassword.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Form/ResetPassword.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Pages/email-verification/EmailError.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailError.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/email-verification/EmailSuccess.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailSuccess.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -372,7 +351,8 @@
       <workItem from="1688373074933" duration="3610000" />
       <workItem from="1688376773887" duration="10806000" />
       <workItem from="1688460278434" duration="19264000" />
-      <workItem from="1688544502827" duration="9435000" />
+      <workItem from="1688544502827" duration="9921000" />
+      <workItem from="1688555398261" duration="386000" />
     </task>
     <servers />
   </component>
