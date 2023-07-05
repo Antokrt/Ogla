@@ -15,6 +15,7 @@ const nextConfig = {
     GOOGLE_SECRET:'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',
     NEXT_PUBLIC_ASSETS:'https://d2vsr9v5fixcbm.cloudfront.net/',
     NEXT_PUBLIC_CAPTCHA_SITEKEY: '6LdQPrQlAAAAAMw_TQ02hrA9145W96nGWFUZTQPL',
+    NEXT_PUBLIC_GOOGLE_ANALYTICS:'G-935YGKYFC1',
     CALLBACK_URL: 'http://localhost:3008/auth/google/redirect',
     NEXT_PUBLIC_DEFAULT_USER_IMG:'/assets/default/user/default.png',
     NEXT_PUBLIC_DEFAULT_BOOK_IMG:'/assets/default/book/default.png',

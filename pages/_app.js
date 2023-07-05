@@ -36,6 +36,7 @@ import {AnimatePresence} from "framer-motion";
 import {useRouter} from "next/router";
 import {Loader} from "../Component/Loader";
 import {Darken} from "../Component/Darken";
+import Script from "next/script";
 import CustomStyle from "../Component/CustomStyle";
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
@@ -67,7 +68,25 @@ function MyApp({Component, pageProps}) {
 
 
     if (process.env.maintenance) {
-        return (<Maintenance/>)
+        const srcAnalytics = "https://www.googletagmanager.com/gtag/js?id="+process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
+        return (
+            <>
+                <Script
+                    src={srcAnalytics}
+                    strategy="afterInteractive"
+                />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');
+        `}
+                </Script>
+                <Maintenance/>
+            </>
+        )
     }
 
 
