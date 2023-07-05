@@ -7,7 +7,7 @@ import {HotPostPhone, HotPost} from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
-import React, {useContext, useEffect, useState} from "react";
+import React, {Fragment, useContext, useEffect, useState} from "react";
 import {useSession} from "next-auth/react";
 import {LoginModal} from "../Component/Modal/LoginModal";
 import {GetTopBooksOnHomeApi} from "./api/book";
@@ -94,17 +94,21 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                     {
                                         tops.map((item, i) => {
                                             return (
-                                                <HotPost className={styles.hotItem}
-                                                         authorImg={tops[i].author.img}
-                                                         id={tops[i]?._id}
-                                                         slug={tops[i]?.slug}
-                                                         likes={tops[i]?.likes}
-                                                         top={true}
-                                                         title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
-                                                         author={tops[i]?.author_pseudo}
-                                                         img={tops[i]?.img} category={tops[i]?.category}
-                                                         description={tops[i]?.summary}
-                                                />
+                                                <Fragment key={item._id}>
+                                                    <HotPost
+                                                        className={styles.hotItem}
+                                                        authorImg={tops[i].author.img}
+                                                        id={tops[i]?._id}
+                                                        slug={tops[i]?.slug}
+                                                        likes={tops[i]?.likes}
+                                                        top={true}
+                                                        title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
+                                                        author={tops[i]?.author_pseudo}
+                                                        img={tops[i]?.img} category={tops[i]?.category}
+                                                        description={tops[i]?.summary}
+                                                    />
+                                                </Fragment>
+
                                             )
                                         })
                                     }
@@ -115,16 +119,19 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                     {
                                         tops.map((item, i) => {
                                             return (
-                                                <HotPostPhone className={styles.hotItem}
-                                                              id={tops[i]?._id}
-                                                              slug={tops[i]?.slug}
-                                                              likes={tops[i]?.likes}
-                                                              top={true}
-                                                              title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
-                                                              author={tops[i]?.author_pseudo}
-                                                              img={tops[i]?.img} category={tops[i]?.category}
-                                                              description={tops[i]?.summary}
-                                                />
+                                                <Fragment key={item._id}>
+                                                    <HotPostPhone className={styles.hotItem}
+                                                                  id={tops[i]?._id}
+                                                                  slug={tops[i]?.slug}
+                                                                  likes={tops[i]?.likes}
+                                                                  top={true}
+                                                                  title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
+                                                                  author={tops[i]?.author_pseudo}
+                                                                  img={tops[i]?.img} category={tops[i]?.category}
+                                                                  description={tops[i]?.summary}
+                                                    />
+                                                </Fragment>
+
                                             )
                                         })
                                     }
