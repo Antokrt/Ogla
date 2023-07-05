@@ -23,6 +23,7 @@
     "@tiptap/react": "^2.0.0-beta.209",
     "@tiptap/starter-kit": "^2.0.0-beta.209",
     "axios": "^1.1.2",
+    "client-only": "^0.0.1",
     "formik": "^2.2.9",
     "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
