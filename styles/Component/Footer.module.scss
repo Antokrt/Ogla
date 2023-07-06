@@ -68,7 +68,7 @@
           margin: 10px 0px;
           font-size: 13px;
           font-family: $primaryFont;
-          letter-spacing: -0.6px;
+          font-weight: bold;
           color: #7A7A7A;
           width: 100%;
   
@@ -106,8 +106,8 @@
       p {
         width: 260px;
         font-family: $primaryFont;
+        font-weight: bold;
         font-size: 13px;
-        letter-spacing: -0.4px;
         line-height: 20px;
         color: $purple;
       }

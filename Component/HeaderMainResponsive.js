@@ -51,7 +51,8 @@ export const HeaderMainResponsive = () => {
         '/chapitre/',
         '/rechercher',
         '/profil',
-        '/auteur'
+        '/auteur',
+        "/conditions-generales-d'utilisation"
     ]
 
 

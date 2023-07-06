@@ -2,12 +2,16 @@ import styles from '../../styles/Pages/Cgu.module.scss';
 import anim from '../../styles/utils/anim.module.scss';
 import Header from "../../Component/Header";
 import {BackUp} from "../../Component/layouts/Btn/BackUp";
-import {useRef} from "react";
+import React, {useRef} from "react";
 import Footer from "../../Component/Footer";
 import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import ScreenSize from "../../utils/Size";
 
 const Cgu = () => {
     const divRef = useRef(null);
+    const [width, height] = ScreenSize();
+
 
     const scrollToTop = () => {
         if (typeof window !== 'undefined') {
@@ -18,8 +22,13 @@ const Cgu = () => {
 
     return (
         <div className={styles.container} ref={divRef}>
-            <HeaderMain/>
-
+            {
+                width > 950 ?
+                    <HeaderMain/> :
+                    <div style={{width: '100%'}}>
+                        <HeaderMainResponsive/>
+                    </div>
+            }
             <div className={styles.titleContainer + ' ' + anim.fadeIn}>
                 <h1>Conditions générales d&apos;utilisation</h1>
                 <p>Mis à jour le 09/06/23</p>

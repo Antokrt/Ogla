@@ -2,6 +2,7 @@ import '../styles/globals.scss';
 import '../styles/editor.css';
 import '../styles/tippy.css';
 import '../styles/toast.css';
+import '../styles/cookie.css';
 import {SessionProvider, useSession} from "next-auth/react";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -158,6 +158,8 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
             <BannerBecameWriter/>
             <MusicHome/>
+            <Partner/>
+
             <Footer/>
 
         </div>
