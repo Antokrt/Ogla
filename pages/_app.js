@@ -73,6 +73,7 @@ function MyApp({Component, pageProps}) {
         const srcAnalytics = "https://www.googletagmanager.com/gtag/js?id="+process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
         return (
             <>
+                <CookieAccept/>
                 <GoogleAnalytics/>
                 <Maintenance/>
             </>
