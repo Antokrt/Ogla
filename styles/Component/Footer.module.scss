@@ -56,7 +56,42 @@
       width: auto;
       margin: 0px 30px;
 
+      .btn{
+        display: flex;
+        position: relative;
+        justify-content: start;
+        align-items: center;
+        gap: 15px;
+        margin-left: -5px;
+      }
 
+.headphone{
+  position: relative;
+
+  svg{
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    transition: 0.2s;
+    cursor: pointer;
+    color: #7A7A7A;
+    width: 16px;
+  }
+
+  .animation {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    z-index: 0;
+    top: -5%;
+    left: -10%;
+    background-color: white;
+    opacity: 1;
+    animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+}
   
       ul {
         display: flex;
@@ -173,5 +208,16 @@
         font-size: 20px !important;
       }
     }
+  }
+}
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
   }
 }

@@ -49,6 +49,7 @@ export const HeaderMain = () => {
         '/chapitre/',
         "/conditions-generales-d'utilisation",
         '/profil',
+        '/news'
     ]
 
     const headerHasToBeWhite = [

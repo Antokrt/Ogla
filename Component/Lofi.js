@@ -31,7 +31,7 @@ export default function Lofi() {
 
     return (
         <>
-            <audio controls={true} ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC + 'lofi' + 10 + '.mp3'}>
+            <audio controls={false} ref={audioRef} onEnded={() => playNextMusic()} src={process.env.NEXT_PUBLIC_BASE_MUSIC + 'lofi' + 10 + '.mp3'}>
             </audio>
         </>
     )

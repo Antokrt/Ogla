@@ -2,20 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/styles/cookie.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/news/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Pages/NewsPage.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/CookieAccept.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/CookieAccept.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/BannerBecameWriter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/BannerBecameWriter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/HeaderMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMain.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMainResponsive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Lofi.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Lofi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/MusicHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/MusicHome.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Component/Partner.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Partner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/conditions-generales-d'utilisation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/conditions-generales-d'utilisation/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/other/manStanding2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Component/Footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Footer.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/HeaderMainResponsive.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/HeaderMainResponsive.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/MusicHome.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/MusicHome.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/Component/Partner.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Partner.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Searchbar.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/var.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/var.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/utils/font.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/font.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,6 +368,7 @@
       <workItem from="1688460278434" duration="19264000" />
       <workItem from="1688544502827" duration="9921000" />
       <workItem from="1688555398261" duration="2500000" />
+      <workItem from="1688714399539" duration="19993000" />
     </task>
     <servers />
   </component>

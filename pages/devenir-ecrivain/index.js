@@ -26,6 +26,10 @@ export async function getServerSideProps({req}) {
     const checkErrData = !check.ok;
     let checkJson = await check.json();
 
+    if(checkJson?.statusCode === 401){
+        checkJson = false;
+    }
+
     return {
         props: {
             isWhitelistData:checkJson
@@ -721,7 +725,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
                     :
                     <div className={styles.closeWriterContainer}>
                         <img src={GetImgPathOfAssets() + 'diapo/old.png'}/>
-                        <p>Cher lecteur, <br/>
+                        <p>Chers lecteurs, <br/>
                             Le formulaire pour devenir écrivain est fermé pour le moment mais ouvrira très rapidement.
                             <br/>
                             Pour faire parti des premiers écrivains OGLA, vous pouvez nous contacter par <a

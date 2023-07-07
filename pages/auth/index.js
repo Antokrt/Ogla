@@ -7,13 +7,14 @@ import ForgotPassword from "../../Component/Form/ForgotPassword";
 import {GetActiveMonthlyCateoryApi} from "../api/Category";
 import {GetTopBooksOnHomeApi} from "../api/book";
 import Head from "next/head";
+import {useSession} from "next-auth/react";
 
 const Auth = ({}) => {
 
     const router = useRouter();
     const [query,setQuery] = useState(Object.keys(router.query)[0]);
     const [choice, setChoice] = useState("disable");
-
+    const {data:session } = useSession();
         useEffect(() => {
             if (router.isReady) {
                 if(query === "login" || query === "register" || query === 'forgotPassword'){
@@ -25,6 +26,11 @@ const Auth = ({}) => {
             }
         }, [router.isReady]);
 
+        useEffect(() => {
+            if(session){
+                 router.push('/')
+            }
+        },[session])
 
             return (
                 <div className={styles.container}>

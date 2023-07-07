@@ -15,13 +15,13 @@ export const BannerBecameWriter = () => {
                     {
                         width > 500 &&
                         <ul>
-                            <li><span>  écrivain </span></li>
-                            <li><span>  romancier </span></li>
-                            <li><span>  créateur </span></li>
-                            <li><span>  poète </span></li>
-                            <li><span>  narrateur </span></li>
-                            <li><span>  rédacteur </span></li>
-                            <li><span>  rêveur </span></li>
+                            <li><span> écrivain </span></li>
+                            <li><span> romancier </span></li>
+                            <li><span> créateur </span></li>
+                            <li><span> poète </span></li>
+                            <li><span> narrateur </span></li>
+                            <li><span> rédacteur </span></li>
+                            <li><span> rêveur </span></li>
                         </ul>
                     }
                     {
