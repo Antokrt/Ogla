@@ -1,32 +1,35 @@
+@import "styles/utils/var";
+
 .container{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
   height: 100vh;
   width: 100%;
 
   img{
-    width: 300px;
+    width: 150px;
+    margin-bottom: 30px;
   }
 
   h1{
-    font-family: 'Branch',sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
-    font-size: 1.3vw;
-    color: #e94f37;
+    font-size: 22px;
+    margin-bottom: 10px;
   }
 
   p{
-    font-family: 'Rebond Grotesque',sans-serif;
-    font-size: 20px;
+    font-family: $primaryFont;
+    color: rgba(28, 35, 43, 0.8);
+    font-weight: 500;
+    padding: 0px 10px;
     text-align: center;
-    color: #1C232B;
     .retry{
+      font-weight: bold;
       color: #9844AD;
       text-decoration: underline;
-      font-weight: initial!important;
       cursor: pointer;
     }
     span{
@@ -35,12 +38,18 @@
   }
 
   button{
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+    transition: 0.2s;
+    margin-top: 20px;
     background-color: #9844AD;
     padding: 8px 20px;
-    font-family: 'Montserrat',sans-serif;
+    font-family: $primaryFont;
+    font-weight: bold;
     color: #ffffff;
     border-radius: 5px;
     font-size: 12px;
-    font-weight: 500;
   }
 }

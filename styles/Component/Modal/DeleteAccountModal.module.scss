@@ -16,8 +16,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 400px;
+  width: 400px;
+  height: auto;
+  min-height: 400px;
   border-radius: 15px;
   background-color: white;
   padding: 10px 15px;
@@ -37,18 +38,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   gap: 5px;
   h5{
     font-size: calc(12px + 0.2vw);
-    font-family: 'Montserrat',sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
     text-align: center;
     padding: 0px 10px;
 
   }
   p{
-    color: #6b7077;
-    font-family: 'Poppins',sans-serif;
+    font-family: $primaryFont;
+    font-weight: 500;
     padding: 0px 10px;
     text-align: center;
     font-size: 12px;
@@ -63,7 +65,7 @@
   gap: 15px;
   width: 100%;
   img{
-    width: 120px;
+    width: 90px;
   }
 
   .emailLabel{
@@ -78,11 +80,11 @@
   }
   label{
     text-align: left;
-    width: 50%;
+    width: 70%;
     font-size: 11px;
     font-weight: bold;
     margin-bottom: -10px;
-    font-family: "Montserrat",sans-serif;
+    font-family: $primaryFont;
 
     .verify{
       cursor: pointer;
@@ -100,32 +102,33 @@
     }
     transition: 0.1s;
     outline: none!important;
-    font-family: "Montserrat",sans-serif;
+    font-family: $primaryFont;
     border-radius: 5px;
     font-size: 11px;
     border: solid 1px $border;
     padding: 5px 10px;
-    width: 50%;
+    width: 70%;
   }
 
 }
 
 .deleteBtn{
+
+  transition: 0.2s;
   background-color: #1C232B;
   min-width: 30%;
   color: white;
-  font-size: 11px;
-  font-family: 'Montserrat',sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: $primaryFont;
   padding: 10px 30px;
 }
 
 .errMsg {
   display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
   text-align: left;
-  font-size: 10px;
-  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-family: $primaryFont;
   font-style: italic;
   color: red;
 }
@@ -138,11 +141,23 @@
 }
 
 .active {
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+
   cursor: pointer;
   transition: 0.1s;
   background-color: #e04444;
 }
 
+@media screen and (max-width: 1000px) and (max-height: 400px){
+  .container{
+    overflow-y: scroll;
+    padding-top: 6%;
+    padding-bottom: 2%;
+  }
+}
 
 @media screen and (max-width: 700px){
   .containerContent{
@@ -155,6 +170,26 @@
   .containerContent{
     width: 90%;
   }
+}
+
+@media screen and (max-width: 350px){
+  .containerContent{
+    height: auto;
+    min-height: auto;
+    padding: 50px 2%;
+    img{
+      display: none;
+    }
+
+    .headerModal{
+      margin-bottom: 20px;
+    }
+
+    label,input, button{
+      width: 70%;
+    }
+  }
+
 }
 
 @media screen and (max-width: 300px){

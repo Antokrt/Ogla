@@ -258,7 +258,8 @@ export default function (req, res) {
                     session.error = token.error;
                 }
                 session.user = token.user;
-                token.is_author = session.user.is_author
+                token.is_author = session.user.is_author;
+
 
                 if (req.url === '/api/auth/session?update-author') {
                     const config = await getConfigOfProtectedRoute(req);
@@ -304,7 +305,7 @@ export default function (req, res) {
             }
 
         },
-        secret: 'code',
+        secret: process.env.NEXT_AUTH_SECRET,
         session: {
             maxAge: 604800  // 7 jours
         }

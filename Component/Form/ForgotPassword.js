@@ -1,10 +1,12 @@
-import styles from "../../styles/Pages/Form/ResetPassword.module.scss"
+import styles from "../../styles/Pages/Form/ResetPassword.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SendResetPasswordEmailService } from "../../service/User/Password.service";
 import { toastDisplayPromiseSendMail } from "../../utils/Toastify";
-import { useRouter } from "next/router";
+import { useRouter} from "next/router";
 import ScreenSize from "../../utils/Size";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 const ForgotPassword = ({ login }) => {
 
@@ -31,25 +33,28 @@ const ForgotPassword = ({ login }) => {
         }
     }
 
-    const sendEmail = () => { }
 
     return (
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer + ' ' + anim.fadeIn}>
+            <div className={styles.imgAbs} onClick={() => router.push("/")}>
+                <img
+                    alt={'Logo Ogla'}
+                    onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                    src={GetLogoUtils()} />
+            </div>
             <div className={styles.leftBlock}>
                 <div className={styles.container}>
                     <div className={styles.header}>
                         {
                             !hasSendEmail ?
                                 <>
-                                    <img src="/assets/bookOrange2.png" />
-                                    <h1>Mot de passe oublié? </h1>
-                                    <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un mail de réinitialisation.
+                                    <h1>Mot de passe oublié <span>?</span></h1>
+                                    <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un lien de réinitialisation.
                                     </p>
                                 </> :
                                 <>
-                                    <img src="/assets/bookOrange2.png" />
                                     <h1>Email envoyé ! </h1>
-                                    <p> Nous t'avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
+                                    <p> Si cette adresse email existe, nous t&apos;avons envoyé un mail contenant un lien pour réinitialiser ton mot de passe, ce lien sera valide durant 30 minutes.
                                     </p>
                                 </>
                         }
@@ -71,7 +76,7 @@ const ForgotPassword = ({ login }) => {
                                     <p className={styles.submitErr + ' ' + styles.fadeIn}>{submitErr.msg}</p>
                                 }
                                 <div className={styles.conditions} onClick={login}>
-                                    <p> Retour à la connexion </p>
+                                    <p> Se connecter </p>
                                 </div>
                                 <div className={styles.stepBtnContainer}>
                                     <button type={'submit'} className={styles.stepBtn}>Envoyer</button>
@@ -89,14 +94,14 @@ const ForgotPassword = ({ login }) => {
                                         }
                                     }}>
                                         <p className={styles.notReceive}> Rien reçus ? </p>
-                                        <p className={styles.reSend}> Renvoyer le mail </p>
+                                        <p className={styles.reSend}> Renvoyer l&apos;email </p>
                                     </div>
                                     <div className={styles.otherOption}>
                                         <div className={styles.trait}> </div>
                                         <h3> Bonne lecture sur Ogla </h3>
                                     </div>
-                                    <div className={styles.homeBtn} onClick={() => router.push("/")}>
-                                        <p> Retour à l'accueil </p>
+                                    <div className={styles.homeBtn} onClick={() => login()}>
+                                        <p> Se connecter </p>
                                     </div>
                                 </div>
                             </>
@@ -107,7 +112,10 @@ const ForgotPassword = ({ login }) => {
             {
                 width > 1000 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/knight.png"} />
+                    <img
+                        alt={'Bannière Mot de passe oublié Ogla'}
+                        onError={(e) => e.target.src = '/assets/diapo/knight.png'}
+                        src={GetImgPathOfAssets() + "diapo/knight.png"} />
                 </div>
             }
         </div>

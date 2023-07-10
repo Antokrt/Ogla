@@ -9,15 +9,13 @@
   &::-webkit-scrollbar-thumb {
     background: rgba(152, 68, 173, 0.15);
   }
-
-
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 10vh;
-  margin: 4vh 0;
-
+  gap: 40px;
+  white-space: pre;
   .list {
     display: inline-flex;
     gap: 20px;
@@ -40,9 +38,11 @@
     justify-content: center;
     align-items: center;
     min-width: 60px;
+    width: auto;
+    margin: 2px;
 
     img {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       object-fit: cover;
       height: 60px;
       width: 60px;
@@ -151,25 +151,16 @@
 
 @media screen and (max-width: 1030px) {
   .container {
-    gap: 4vh !important;
     justify-content: center;
     align-items: center;
   }
   .darkContainer {
-    gap: 4vh !important;
     justify-content: center;
     align-items: center;
   }
 }
 
-@media screen and (max-width: 800px) {
-  .container {
-    padding-top: 80px;
-  }
 
-  .darkContainer {
-  }
-}
 
 @media screen and (max-width: 700px) {
   .container {

@@ -14,6 +14,9 @@ export const musicSlice = createSlice({
         setActiveMusic: (state) => {
             state.active = !state.active
         },
+        stopMusic:(state) => {
+          state.active = false;
+        },
         setIndexMusic:(state,action) => {
             if(state.index >= 7){
                 state.index = 1;
@@ -33,7 +36,7 @@ export const musicSlice = createSlice({
 
 export const {setActiveMusic} = musicSlice.actions;
 export const {setIndexMusic} = musicSlice.actions;
-
+export const {stopMusic} = musicSlice.actions;
 export const selectActiveMusicStatus = (state) => state.music.active;
 export const selectIndexStateMusic = (state) => state.music.index;
 

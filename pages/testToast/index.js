@@ -1,21 +1,13 @@
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
-import {useSession} from "next-auth/react";
 
 const TestToast = () => {
 
-    const light = useSelector(selectTheme);
-    const {data: session} = useSession();
-    function test() {
-      console.log(Math.abs(1.547, 5000));
-    }
-
-
+    const test = useSelector(selectTheme);
     return (
-        <h1 onClick={test}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+        <h1>
+            Welcome to <a href="https://nextjs.org%22%3Enext.js%21/"></a>
         </h1>
     )
 }
 export default TestToast
-

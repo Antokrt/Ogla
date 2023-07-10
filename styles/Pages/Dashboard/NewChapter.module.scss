@@ -226,7 +226,11 @@ padding-left: 2%;
           margin-top: 10px;
 
           img{
-            width: 4vw;
+            transition: 0.2s;
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
           }
         }
       }
@@ -634,6 +638,11 @@ display: flex;
     }
 
     img{
+      &:active {
+        transform: scale(0.8);
+        transition: 0.2s;
+      }
+      transition: 0.2s;
       width: 60px;
       height: 60px;
       border-radius: 50%;

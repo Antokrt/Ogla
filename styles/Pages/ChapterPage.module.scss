@@ -22,6 +22,33 @@
   box-shadow: 5px 2px 10px $darkBrown;
 }
 
+.errContainer{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+
+  h4{
+    font-size: 20px;
+    font-family: $primaryFont;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  p{
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: $primaryFont;
+    font-weight: 500;
+    -webkit-text-stroke-width: 0.2px;
+    color: rgb(62, 70, 79);
+    font-size: 14px;
+    padding: 0px 10px;
+  }
+}
+
 
 
 .containerC {
@@ -30,7 +57,7 @@
 }
 
 .bannerChapter {
-  height: 20vh;
+  height: 10vh;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -247,8 +274,7 @@
   width: 100%;
   height: auto;
   padding-bottom: 150px;
-
-
+  margin-top: 20px;
 }
 
 .bookMenuVerticalPhone{
@@ -264,7 +290,7 @@
   background-color: white;
   box-shadow: $shadow;
   width: 100%;
-  z-index: 200;
+  z-index: 9;
   bottom: 0;
 
   .fMenuPhone{

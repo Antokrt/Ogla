@@ -24,6 +24,10 @@ object-fit: cover;
     border-radius: 50%;
     height: 50px;
   }
+
+  .like{
+    -webkit-text-stroke-width: 0.1px;
+  }
   div{
     margin-left: 15px;
     display: flex;
@@ -37,7 +41,7 @@ object-fit: cover;
   font-family: $primaryFont;
   font-weight: bold;
   letter-spacing: 0.5px;
-  font-size: 11px;
+  font-size: 12px;
 }
     p{
 font-size: 11px;

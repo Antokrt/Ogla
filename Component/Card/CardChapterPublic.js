@@ -8,6 +8,7 @@ export const CardChapterPublic = ({id,index,title,date_creation,likes,bookTitle}
     const router = useRouter();
 return (
     <div
+        tabIndex={0}
         onClick={() => {
             router.push({
                 pathname: "/chapitre/" + id, query: {
@@ -22,7 +23,7 @@ return (
         </div>
 
         <div className={styles.likeChapter}>
-            <p>{likes} like(s)</p>
+            <p>{likes} j'aimes</p>
         </div>
     </div>
 )
@@ -46,7 +47,7 @@ export const CardChapterDashboard = ({id,index,title,likes,publish}) => {
             </div>
 
             <div className={styles.likeChapter}>
-                <p>{likes} like(s)</p>
+                <p>{likes} j&apos;aimes</p>
             </div>
         </div>
     )

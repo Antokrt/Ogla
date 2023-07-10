@@ -31,3 +31,13 @@ em{
 html{
   scroll-behavior: smooth;
 }
+
+*[style*="text-align:center"] {
+  display: none !important;
+}
+
+/* Ou */
+
+*[style*="text-align:center"] {
+  display: none !important;
+}

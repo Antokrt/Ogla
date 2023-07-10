@@ -13,6 +13,7 @@ import {
     DeleteAllNotifsService, ReadNotifService
 } from "../../service/Notifications/NotificationsService";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
 
 const Notif = ({ element }) => {
 
@@ -67,7 +68,7 @@ const Notif = ({ element }) => {
                 // Un utilisateur à commenté votre chapitre
                 // Like de chapitre -> naviguer vers le chapitre en question 
                 // Vous avez une réponse
-                // Vous avez une réponse de l'autheur
+                // Vous avez une réponse de l'auteur
                 dispatch(setActiveModalNotif(false));
                 dispatch(setRead(element._id))
                 if (element.secondTargetDocumentId === "null") {
@@ -128,7 +129,7 @@ const Notif = ({ element }) => {
         <div className={styles.container}>
             <div className={!element.read ? styles.itemNotif + ' ' + anim.scaleInModal : styles.itemNotifOpen} onClick={NavigateNotif}>
                 <div className={styles.cntImg}>
-                    <img src={element.content.sender.img} />
+                    <img className={anim.fadeIn} referrerPolicy={'no-referrer'} src={element.content.sender.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError() } />
                     {
                         !element.read &&
                         <div className={styles.notRead}> </div>

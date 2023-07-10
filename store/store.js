@@ -7,6 +7,7 @@ import { notifSlice } from "./slices/notifSlice";
 import { socketSlice } from "./slices/socketSlice";
 import { themeSlice } from "./slices/themeSlice";
 import { categorySlice } from "./slices/categorySlice";
+import { darkenSlice } from "./slices/darkenSlice";
 import {
     persistReducer,
     persistStore,
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
     [socketSlice.name]: socketSlice.reducer,
     [themeSlice.name]: themeSlice.reducer,
     [categorySlice.name]: categorySlice.reducer,
+    [darkenSlice.name]: darkenSlice.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -49,19 +51,4 @@ export const store = configureStore({
     devTools: true,
 })
 
-// const makeStore = () =>
-//     configureStore({
-//         reducer: {
-//             [commentSlice.name]: commentSlice.reducer,
-//             [notifSlice.name]: notifSlice.reducer,
-//             [modalSlice.name]: modalSlice.reducer,
-//             [musicSlice.name]: musicSlice.reducer,
-//             [socketSlice.name]: socketSlice.reducer,
-//             [themeSlice.name]: themeSlice.reducer,
-//             [categorySlice.name]: categorySlice.reducer,
-//         },
-//         devTools: true
-//     })
-
 export const persistor = persistStore(store)
-// export const wrapper = createWrapper(makeStore);

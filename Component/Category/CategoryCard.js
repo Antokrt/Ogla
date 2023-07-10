@@ -30,13 +30,13 @@ const CategoryCard = (props) =>{
         }
     }
 return (
-    <div className={styles.container + ' ' + styles[props.category]}
+    <div tabIndex={0} className={styles.container + ' ' + styles[props.category]}
          onClick={() => {
              if(props.title === 'Science Fiction'){
-                 return router.push('/cat/sf');
+                 return router.push('/bibliotheque/sf');
              }
              router.push({
-                 pathname: '/cat/' + props.title.toLowerCase()
+                 pathname: '/bibliotheque/' + props.title.toLowerCase()
              })
          }}
     >

@@ -1,23 +1,26 @@
 import styles from '../styles/Component/Footer.module.scss';
 import Link from "next/link";
-import React, { useContext, useState } from "react";
-import { useRouter } from "next/router";
-import { LangueContext } from "../utils/context";
+import React, {useContext, useState} from "react";
+import {useRouter} from "next/router";
+import {LangueContext} from "../utils/context";
 import Facebook from "./layouts/Icons/Social/facebook";
 import Instagram from "./layouts/Icons/Social/instagram";
 import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
-import { GetRandomBookService } from "../service/Book/BookService";
-import { useSession } from "next-auth/react";
-import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme, selectTheme } from '../store/slices/themeSlice';
-import { LockClosedIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import {GetRandomBookService} from "../service/Book/BookService";
+import {useSession} from "next-auth/react";
+import {useDispatch, useSelector} from 'react-redux';
+import {changeTheme, selectTheme} from '../store/slices/themeSlice';
+import {LockClosedIcon, MoonIcon, MusicalNoteIcon, SunIcon} from "@heroicons/react/24/outline";
+import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
+import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
 
 
 export default function Footer() {
     const router = useRouter();
-    const { data: session } = useSession();
+    const {data: session} = useSession();
     const theme = useSelector(selectTheme);
+    const selectMusicState = useSelector(selectActiveMusicStatus);
     const dispatch = useDispatch();
 
     const getRandomBook = () => {
@@ -39,15 +42,15 @@ export default function Footer() {
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>
-                    <Facebook />
-                    <Instagram />
-                    <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noopener'} >
-                        <a target={'_blank'}>
-                            <Twitter />
+                    <Facebook/>
+                    <Instagram/>
+                    <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noreferrer'}>
+                        <a target={'_blank'} rel={'noreferrer'}>
+                            <Twitter/>
                         </a>
 
                     </Link>
-                    <DiscordIcon />
+                    <DiscordIcon/>
 
                 </div>
             </div>
@@ -59,17 +62,30 @@ export default function Footer() {
                         <ul>
                             <li><Link href="/"><a
                                 className={router.pathname === "/" ? styles.activeNav : ""}>Accueil</a></Link></li>
-                            <li><Link href="/cat"><a className={router.pathname === "/cat" ? styles.activeNav : ""}>Derniers
-                                ouvrages</a></Link></li>
+                            <li><Link href="/bibliotheque"><a
+                                className={router.pathname === "/bibliotheque" ? styles.activeNav : ""}>Bibliothèque</a></Link>
+                            </li>
                             {
                                 !session || !session.user.is_author &&
-                                <li><Link href="/"><a className={router.pathname === "/new-writer" ? styles.activeNav : ""}>Deviens
+                                <li><Link href="/"><a
+                                    className={router.pathname === "/new-writer" ? styles.activeNav : ""}>Deviens
                                     écrivain</a></Link></li>
                             }
 
-                            <li style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
+                            <li tabIndex={0} style={{cursor: 'pointer'}} onClick={() => getRandomBook()}>Aléatoire</li>
+                            <li className={styles.btn}>
+                                <div
+                                    className={styles.headphone}
+                                    onClick={() => dispatch(setActiveMusic())}>
+                                    <MusicalNoteIcon/>
+                                    {
+                                        selectMusicState &&
+                                        <div className={styles.animation}></div>
+                                    }
 
-                            <li>
+                                </div>
+
+
                                 {
                                     theme ?
                                         <SunIcon onClick={setTheme} className={styles.svgTheme} />
@@ -77,15 +93,16 @@ export default function Footer() {
                                         <MoonIcon onClick={setTheme} className={styles.svgTheme} />
                                 }
                             </li>
+
+
                         </ul>
                     </div>
 
                     <div className={styles.plan}>
                         <h6>A propos</h6>
                         <ul>
-                            <li>Mentions légales</li>
-                            <li>Données personnelles</li>
-                            <li>Conditions générales</li>
+                            <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales
+                                d&apos;utilisation </Link></li>
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
                             <li>© OGLA Tous droits réservés 2023
                             </li>
@@ -97,8 +114,8 @@ export default function Footer() {
 
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>
-                    <p>Ogla est une plateforme d’écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne vous empêchera d’écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
-                    <p></p>
+                    <p>Ogla est une plateforme d&apos;écriture et de lecture ouverte à tous. Grâce à Ogla, personne ne
+                        vous empêchera d&apos;écrire votre histoire parce que nous croyons au pouvoir des mots.</p>
                 </div>
             </div>
         </div>

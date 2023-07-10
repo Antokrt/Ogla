@@ -12,6 +12,8 @@
   min-height: 100vh;
   width: 100vw;
 }
+
+
 .sidebar {
   position: fixed;
   display: flex;
@@ -23,6 +25,33 @@
   z-index: 2;
   width: 400px;
   box-shadow: 5px 2px 10px $darkBrown;
+}
+
+.errContainer{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+
+  h4{
+    font-size: 20px;
+    font-family: $primaryFont;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  p{
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: $primaryFont;
+    font-weight: 500;
+    -webkit-text-stroke-width: 0.2px;
+    color: rgb(62, 70, 79);
+    font-size: 14px;
+    padding: 0px 10px;
+  }
 }
 
 .containerC {
@@ -46,14 +75,15 @@
 .imgContainer {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
   width: 220px;
   height: auto;
   margin-right: 50px;
   gap: 10px;
   .img{
-    height: 220px;
-    width: 220px;
+    height: 210px;
+    width: 210px;
     img{
       border-radius: 15px;
       width: 100%;
@@ -86,10 +116,10 @@
 
   p{
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     font-family: 'Pt Sans',sans-serif;
-    opacity: 0.8;
+    color: #343d46;
   }
 }
 
@@ -113,11 +143,11 @@
     gap: 8px;
     width: 100%;
     padding: 12px 12px;
-    background-color: $purpleLight;
+    background-color: #9844AD;
     color: white;
-    border-radius: 10px;
-    font-size: 12px;
-    font-family: "Pt Sans",sans-serif;
+    border-radius: 5px;
+    font-size: 10px;
+    font-family: $primaryFont;
     font-weight: bold;
 
     svg{
@@ -236,7 +266,6 @@ color: $darkBrown;
   height: auto;
   margin-top: 2vh;
 }
-
 
 
 .contentChapterList {
@@ -477,7 +506,6 @@ background-color: white;
     flex-direction: column;
     height: 100%;
     width: 100%;
-
     gap: 10px;
 
     .abso{
@@ -494,8 +522,12 @@ background-color: white;
     }
 
     h3{
-      font-family: 'Santral-Regular',sans-serif;
+      &:first-letter{
+        text-transform: uppercase;
+      }
+      font-family: $primaryFont;
       font-weight: bold;
+      -webkit-text-stroke-width: 0.1px;
       font-size: 18px;
       color: #1C232B;
       text-align: left;
@@ -673,6 +705,10 @@ p{
   }
 }
 
+.summaryPhone{
+
+}
+
 .emptyContentPhone{
   display: flex;
   justify-content: center;
@@ -683,9 +719,6 @@ p{
     width: 100px;
   }
   p{
-    &:first-letter{
-      text-transform: uppercase;
-    }
     text-align: center;
     font-style: initial!important;
     font-size: 13px;
@@ -730,8 +763,10 @@ p{
 }
 
 
-@media screen and (max-width: 900px){
-
+@media screen and (max-width: 950px){
+.err{
+  margin-top: 5vh;
+}
 }
 
 @media screen and (max-width: 800px){
@@ -828,9 +863,6 @@ flex-direction: column;
     .link{
       p{
         font-size: 12px!important;
-        span{
-          font-size: 9px;
-        }
       }
     }
     svg{

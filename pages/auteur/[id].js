@@ -31,49 +31,72 @@ import {setActiveModalState} from "../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
 import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {ErrMsg} from "../../Component/ErrMsg";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import {GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../../utils/ImageUtils";
+import {FormatCount} from "../../utils/NbUtils";
+import Head from "next/head";
+import {HotPost, HotPostPhone} from "../../Component/Post/HotPost";
+import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
+import {GetTopUtils} from "../../utils/TopUtils";
+import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
 
-export async function getServerSideProps({params,req}) {
+export async function getServerSideProps({params, req}) {
 
     const pseudo = params.id;
-    const profil = await GetAuthorProfilAPI(pseudo,req);
+    const profil = await GetAuthorProfilAPI(pseudo, req);
 
-    return {
-        props: {
-            key:pseudo,
-            profilData: profil.profil,
-            booksData: profil.books,
-            hasLikeData: profil.hasLike,
-            errProfil: profil.errProfil,
-            errBooks: profil.errBook,
+
+    if (!profil.errProfil && !profil.errBook) {
+        return {
+            props: {
+                key: pseudo,
+                profilData: profil.profil,
+                booksData: profil.books,
+                topBookData: profil.profil.topBook,
+                hasLikeData: profil.hasLike,
+                errProfil: profil.errProfil,
+                errBooks: profil.errBook,
+            }
+        }
+    } else {
+        return {
+            props: {
+                key: pseudo,
+                profilData: null,
+                booksData: null,
+                topBookData: null,
+                hasLikeData: null,
+                errProfil: profil.errProfil,
+                errBooks: profil.errBook,
+            }
         }
     }
+
+
 }
 
-const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks}) => {
-
+const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfil, errBooks}) => {
     const [profilAuthor, setProfilAuthor] = useState(profilData);
-    const [likes,setLikes] = useState(profilAuthor?.author?.likes);
+    const [likes, setLikes] = useState(profilAuthor?.author?.likes);
     const social = profilAuthor?.author?.social;
     const router = useRouter();
     const [page, setPage] = useState(2);
     const [activeFilter, setActiveFilter] = useState('popular');
     const [canSeeMore, setCanSeeMore] = useState(true);
     const [canSeeMoreRecent, setCanSeeMoreRecent] = useState(true);
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [canSeeMorePopular, setCanSeeMorePopular] = useState(true);
     const [pagePopular, setPagePopular] = useState(2);
-    const [hasLike,setHasLike] = useState(hasLikeData);
+    const [hasLike, setHasLike] = useState(hasLikeData);
     const [pageRecent, setPageRecent] = useState(1);
     const [popular, setPopular] = useState(booksData);
-    const [line,setLine] = useState(12);
+    const [line, setLine] = useState(12);
     const [recent, setRecent] = useState([]);
     const [maxSize, setMaxSize] = useState(600);
     const [width, height] = ScreenSize();
-    const {data:session} = useSession();
+    const {data: session} = useSession();
     const dispatch = useDispatch();
-
 
 
     const fetchRecentBooks = () => {
@@ -132,39 +155,53 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
     }
 
     useEffect(() => {
-        if(width < 1300){
+        if (width < 1300) {
             setMaxSize(1000);
             setLine(8)
         }
-    },[width])
+    }, [width])
 
     const likeAuthor = () => {
-    if(session){
-        LikeAuthorService(profilData._id)
-            .then(() => setHasLike(!hasLike))
-            .then(() => {
-                if(hasLike){
-                    setLikes(likes - 1);
-                }
-                else {
-                    setLikes(likes + 1);
-                    SendNotifService(profilAuthor._id, 3, profilAuthor._id, "null")
-                }
-            })
-            .catch(() => toastDisplayError("Impossible d'aimer ce profil !"))
+        if (session) {
+            LikeAuthorService(profilData._id)
+                .then(() => setHasLike(!hasLike))
+                .then(() => {
+                    if (hasLike) {
+                        setLikes(likes - 1);
+                    } else {
+                        setLikes(likes + 1);
+                        SendNotifService(profilAuthor._id, 3, profilAuthor._id, "null")
+                    }
+                })
+                .catch(() => toastDisplayError("Impossible d'aimer ce profil !"))
+        } else {
+            dispatch(setActiveModalState(true));
+        }
     }
-    else {
-        dispatch(setActiveModalState(true));
-    }
-    }
+
 
     return (
         <div className={styles.container}>
-            <Header/>
+            <Head>
+                <title>{'Ogla - ' + (!errProfil && !errBooks ? Capitalize(profilData?.pseudo) : 'Erreur')}</title>
+                <meta name="description" content="Generated by create next app"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="icon" href="/favicon.ico"/>
+            </Head>
 
             {
-                errProfil &&
-                <ErrMsg text={'Impossible de récupérer ce profil !'} textBtn={'Retour'} click={() => router.back()}/>
+                width > 950 ?
+                    <HeaderMain/> :
+                    <div style={{width: '100%'}}>
+                        <HeaderMainResponsive/>
+                    </div>
+            }
+
+            {
+                (errProfil || errBooks) &&
+                <div className={styles.err}>
+                    <ErrMsg text={'Impossible de récupérer ce profil !'}/>
+                </div>
             }
             {
                 profilData && !errProfil &&
@@ -173,13 +210,14 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
 
                         <div className={styles.chapterContainer}>
                             <div className={styles.infoContainer}>
-                                <p className={styles.absoText}>{profilAuthor?.pseudo}</p>
                                 <div className={styles.pseudo_date}>
                                     <div className={styles.imgPseudo}>
-                                        <img referrerPolicy={'no-referrer'} src={profilData?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
+                                        <img referrerPolicy={'no-referrer'} src={profilData?.img}
+                                             alt={'Image Profil Ecrivain Ogla'}
+                                             onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                         <div>
                                             <h3>{profilAuthor?.pseudo}</h3>
-                                            <p>{likes} <span>j'aimes </span></p>
+                                            <p>{FormatCount(likes)} <span>j&apos;aimes </span></p>
                                         </div>
                                     </div>
 
@@ -187,13 +225,13 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                                         hasLike ?
                                             <button onClick={() => {
                                                 likeAuthor();
-                                            }}>J'aime <HeartSolid/></button> :
-                                            <button onClick={() => likeAuthor()}>J'aime <HeartOutline/></button>
+                                            }}>J&apos;aime <HeartSolid/></button> :
+                                            <button onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
                                     }
                                 </div>
 
                                 <div className={styles.lab}>
-                                    <h6>Écrivain <span>OGLA</span> </h6>
+                                    <h6>Écrivain <span>OGLA</span></h6>
                                     {
                                         profilAuthor?.author.became_author &&
                                         <p>Devenu auteur le {FormatDateNb(profilAuthor?.author.became_author)}</p>
@@ -202,23 +240,29 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
 
                                 <div className={styles.social}>
                                     {
-                                        social.instagram && social.instagram !== '' &&
-                                        <a className={styles.itemSocial} href={'https://www.instagram.com/'+social.instagram.slice(1,social.instagram.length)} target={'_blank'}>
+                                        social?.instagram && social?.instagram !== '' &&
+                                        <a className={styles.itemSocial}
+                                           href={'https://www.instagram.com/' + social?.instagram.slice(1, social?.instagram.length)}
+                                           rel={'noreferrer'} target={'_blank'}>
                                             <Instagram/>
-                                            <span><span className={styles.dat}>@</span>{Capitalize(social.instagram.slice(1,social.instagram.length))}</span>
+                                            <span><span
+                                                className={styles.dat}>@</span>{Capitalize(social?.instagram.slice(1, social?.instagram.length))}</span>
                                         </a>
                                     }
 
                                     {
-                                        social.twitter && social.twitter !== '' &&
-                                        <a className={styles.itemSocial} href={'https://twitter.com/'+ social.twitter} target={'_blank'}>
+                                        social && social.twitter && social.twitter !== '' &&
+                                        <a className={styles.itemSocial} href={'https://twitter.com/' + social.twitter}
+                                           rel={'noreferrer'} target={'_blank'}>
                                             <Twitter/>
-                                            <span><span className={styles.dat}>@</span>{Capitalize(social.twitter.slice(1,social.twitter.length))}</span>
+                                            <span><span
+                                                className={styles.dat}>@</span>{Capitalize(social.twitter.slice(1, social.twitter.length))}</span>
                                         </a>
                                     }
                                     {
-                                        social.facebook && social.facebook !== '' &&
-                                        <a className={styles.itemSocial} href={social.facebook} target={'_blank'}>
+                                        social && social.facebook && social.facebook !== '' &&
+                                        <a className={styles.itemSocial} href={social.facebook} rel={'noreferrer'}
+                                           target={'_blank'}>
                                             <Facebook/>
                                             <span>Facebook</span>
                                         </a>
@@ -227,10 +271,11 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                                 </div>
 
                                 {
-                                    profilAuthor.author.description !== '' &&
+                                    profilAuthor?.author?.description !== '' &&
                                     <div className={styles.description}>
                                         <div className={styles.containerD}>
-                                            <Snippet line={line} maxSize={maxSize} content={profilAuthor.author.description}/>
+                                            <Snippet line={line} maxSize={maxSize}
+                                                     content={profilAuthor.author.description}/>
                                         </div>
                                     </div>
                                 }
@@ -243,76 +288,118 @@ const AuthorProfil = ({profilData, booksData,  hasLikeData,errProfil, errBooks})
                     {
                         profilAuthor.nbBooks <= 0 ?
                             <div className={styles.empty}>
-                                <img src={'/assets/jim/smile8.png'}/>
-                                <p><span>{profilAuthor.pseudo}</span> n'a pas encore écrit de livres !</p>
+                                <img
+                                    src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Ogla'}
+                                    onError={(e) => {e.target.src = '/assets/jim/smile8.png'}}/>
+                                <p><span>{Capitalize(profilAuthor.pseudo)}</span> n&apos;a pas encore écrit de livres !
+                                </p>
                             </div>
                             :
-                            <div className={styles.containerS}>
-                                <div className={styles.sortContainer}>
-                                    <div>
-                                        <button
-                                            className={activeFilter === 'popular' && styles.activeBtn}
-                                            onClick={() => {
-                                                if (activeFilter !== 'popular') {
-                                                    setActiveFilter('popular');
-                                                }
-                                            }}>Populaire(s)
-                                        </button>
-                                        <button
-                                            className={activeFilter === 'recent' && styles.activeBtn}
-                                            onClick={() => {
-                                                if (activeFilter !== 'recent') {
-                                                    if (recent.length === 0) {
-                                                        fetchRecentBooks();
-                                                    }
-                                                    setActiveFilter('recent');
-                                                    setPage(2);
-                                                }
-                                            }}>Récent(s)
-                                        </button>
-                                    </div>
-                                </div>
+                            <>
                                 {
-                                    !errBooks &&
-                                    <>
+                                    topBookData &&
+                                    <div className={styles.hotContainer}>
                                         {
-                                            activeFilter === 'recent' && recent.length !== 0 &&
-                                            <ListCard books={recent}/>
-                                        }
-                                        {
-                                            activeFilter === 'popular' && popular.length !== 0 &&
-                                            <ListCard books={popular}/>
-                                        }
-                                        <div className={styles.seeMore}>
-
-                                            {
-                                                loading &&
-                                                <LoaderCommentary/>
-                                            }
-
-                                            {
-                                                profilAuthor.nbBooks > 10 &&
+                                            width > 530 ?
+                                                <HotPost className={styles.hotItem}
+                                                         likes={topBookData.likes}
+                                                         title={topBookData.title} author={topBookData.author_pseudo}
+                                                         img={topBookData.img} category={topBookData.category}
+                                                         nbChapter={topBookData.nbChapters}
+                                                         slug={topBookData.slug}
+                                                         id={topBookData._id}
+                                                         top={true}
+                                                         description={topBookData.summary}
+                                                />
+                                                :
                                                 <>
-                                                    {
-                                                        activeFilter === 'popular' && canSeeMorePopular && !loading &&
-                                                        <p onClick={() => fetchMorePopularBooks()}>Voir plus</p>
-                                                    }
-
-                                                    {
-                                                        activeFilter === 'recent' && canSeeMoreRecent && !loading &&
-                                                        <p onClick={() => fetchMoreRecentBooks()}>Voir plus</p>
-                                                    }
+                                                    <HotPostPhone className={styles.hotItem}
+                                                                  likes={topBookData.likes}
+                                                                  title={topBookData.title}
+                                                                  author={topBookData.author_pseudo}
+                                                                  img={topBookData.img} category={topBookData.category}
+                                                                  nbChapter={topBookData.nbChapters}
+                                                                  slug={topBookData.slug}
+                                                                  id={topBookData._id}
+                                                                  top={true}
+                                                                  description={topBookData.summary}
+                                                    />
                                                 </>
-                                            }
 
+                                        }
 
-                                        </div>
-
-
-                                    </>
+                                    </div>
                                 }
+                                <div className={styles.containerS}>
 
-                            </div>
+                                    <div className={styles.sortContainer}>
+                                        <div>
+                                            <button
+                                                className={activeFilter === 'popular' && styles.activeBtn}
+                                                onClick={() => {
+                                                    if (activeFilter !== 'popular') {
+                                                        setActiveFilter('popular');
+                                                    }
+                                                }}>Populaires
+                                            </button>
+                                            <button
+                                                className={activeFilter === 'recent' && styles.activeBtn}
+                                                onClick={() => {
+                                                    if (activeFilter !== 'recent') {
+                                                        if (recent.length === 0) {
+                                                            fetchRecentBooks();
+                                                        }
+                                                        setActiveFilter('recent');
+                                                        setPage(2);
+                                                    }
+                                                }}>Récents
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {
+                                        !errBooks &&
+                                        <>
+                                            {
+                                                activeFilter === 'recent' && recent.length !== 0 &&
+                                                <ListCard topId={GetTopUtils(popular)} books={recent}/>
+                                            }
+                                            {
+                                                activeFilter === 'popular' && popular.length !== 0 &&
+                                                <ListCard topId={GetTopUtils(popular)} books={popular}/>
+                                            }
+                                            <div className={styles.seeMore}>
+
+                                                {
+                                                    loading &&
+                                                    <LoaderCommentary/>
+                                                }
+
+                                                {
+                                                    profilAuthor.nbBooks > 10 &&
+                                                    <>
+                                                        {
+                                                            activeFilter === 'popular' && canSeeMorePopular && !loading &&
+                                                            <TextSeeMore
+                                                                onclick={() => fetchMorePopularBooks()}></TextSeeMore>
+                                                        }
+
+                                                        {
+                                                            activeFilter === 'recent' && canSeeMoreRecent && !loading &&
+                                                            <TextSeeMore
+                                                                onclick={() => fetchMoreRecentBooks()}></TextSeeMore>
+                                                        }
+                                                    </>
+                                                }
+
+
+                                            </div>
+
+
+                                        </>
+                                    }
+
+                                </div>
+                            </>
 
 
                     }

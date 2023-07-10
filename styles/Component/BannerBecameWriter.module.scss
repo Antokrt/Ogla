@@ -1,17 +1,17 @@
 .container {
   margin-top: 4vh;
-  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   height: 40vh;
   overflow: hidden;
+
   width: 100%;
 }
 
 .image {
-  width: 30vw;
+  width: 25vw;
   object-fit: contain;
 }
 
@@ -25,8 +25,9 @@
   p {
     margin-top: 10px;
     text-align: center;
-    font-size: 1.9vh;
+    font-size: 16px;
     font-family: 'Pt Sans', sans-serif;
+    letter-spacing: -0.4px;
     opacity: 0.8;
     width: 80%;
 
@@ -50,6 +51,7 @@
   }
 
   ul {
+    margin-left: 10px;
     height: 100%;
     overflow: hidden;
     font-size: 45px;
@@ -208,8 +210,8 @@
     h5{
       white-space: initial!important;
       text-align: center;
-      line-height: 5vh;
-      margin-bottom: 20px;
+      line-height: 2vh;
+      margin-bottom: 30px!important;
       margin-left: 0px !important;
     }
   }

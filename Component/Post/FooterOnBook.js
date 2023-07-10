@@ -19,13 +19,14 @@ import ScreenSize from "../../utils/Size";
 import useOrientation from "../../utils/Orientation";
 import {HeadPhoneBtn, HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
+import {useSession} from "next-auth/react";
+import {FormatCount} from "../../utils/NbUtils";
 
 
 
 const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentary,nbChapter, likeBook, hasLike}) => {
 
     const [width, height] = ScreenSize();
-    const orientation = useOrientation();
 
     if(width > 600 && height > 500 ){
         return (
@@ -33,10 +34,10 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
 
                 <div className={styles.titleContainer + ' ' + styles.child}>
-                    <img src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
+                    <img alt={'Image Livre Ogla'} src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
                     <div>
                         <p className={styles.titleBook}>{title}</p>
-                        <p>{like} like(s) - <span>{author}</span></p>
+                        <p className={styles.like}>{FormatCount(like)} j'aimes - <span>{author}</span></p>
                     </div>
 
 
@@ -49,8 +50,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
                 <div className={styles.commentAndListContainer + ' ' + styles.child}>
 
-                    <HeadPhoneBtnOnFooter/>
-
+                        <HeadPhoneBtnOnFooter/>
 
                     <div className={styles.b} onClick={openCommentary}>
                         <ChatBubbleBottomCenterTextIcon/>

@@ -112,11 +112,11 @@ color: $darkBrown;
 
       .seeMore{
         cursor: pointer;
-        margin-top: 5px;
+        margin-bottom: 2px;
         font-size: 10px;
         color: #9844AD;
         font-family: $primaryFont;
-        -webkit-text-stroke-width: 0.2px;
+        -webkit-text-stroke-width: 0.1px;
         text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
       }
     }

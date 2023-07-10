@@ -3,6 +3,41 @@
   <component name="ChangeListManager">
     <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/Card/drama.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/Card/drama.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Category/Card/horror.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/Card/horror.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/book/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/book/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,15 +66,17 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/Front/pages/dashboard/nouveau/livre&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/Front/public/assets/logo&quot;,
+    &quot;nodejs.jest.jest_package&quot;: &quot;C:/Dev/Ogla/Front/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.2.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external&quot;
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Dev\\Ogla\\Front\\node_modules\\typescript\\lib&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Front\public\assets\logo" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau\livre" />
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
@@ -51,15 +88,51 @@
       <recent name="C:\Dev\Ogla\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.MainSearchBar.js">
+  <component name="RunManager" selected="npm.build">
+    <configuration name="Home" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/__tests__/index.test.js" />
+      <test-names>
+        <test-name value="Home" />
+      </test-names>
+      <method v="2" />
+    </configuration>
     <configuration name="Footer.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/Footer.js" working-dir="$PROJECT_DIR$/Component">
       <method v="2" />
     </configuration>
     <configuration name="MainSearchBar.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/MainSearchBar.js" working-dir="$PROJECT_DIR$/Component">
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.test" />
+        <item itemvalue="Jest.Home" />
         <item itemvalue="Node.js.MainSearchBar.js" />
         <item itemvalue="Node.js.Footer.js" />
       </list>
@@ -275,6 +348,44 @@
       <workItem from="1685522751724" duration="15911000" />
       <workItem from="1685610430284" duration="18936000" />
       <workItem from="1685694804997" duration="15540000" />
+      <workItem from="1685780522111" duration="476000" />
+      <workItem from="1685830840920" duration="592000" />
+      <workItem from="1685869416214" duration="45440000" />
+      <workItem from="1686137491621" duration="7729000" />
+      <workItem from="1686155779518" duration="2779000" />
+      <workItem from="1686217085149" duration="6721000" />
+      <workItem from="1686299034585" duration="11524000" />
+      <workItem from="1686340708615" duration="10089000" />
+      <workItem from="1686470180476" duration="9052000" />
+      <workItem from="1686502378269" duration="684000" />
+      <workItem from="1686557459257" duration="18948000" />
+      <workItem from="1686648537408" duration="35347000" />
+      <workItem from="1686819244703" duration="15991000" />
+      <workItem from="1686919389157" duration="12518000" />
+      <workItem from="1687162284425" duration="18672000" />
+      <workItem from="1687252085460" duration="6999000" />
+      <workItem from="1687334015927" duration="16137000" />
+      <workItem from="1687422804974" duration="3020000" />
+      <workItem from="1687449317482" duration="7044000" />
+      <workItem from="1687513923873" duration="3097000" />
+      <workItem from="1687520901849" duration="2000" />
+      <workItem from="1687686946484" duration="8057000" />
+      <workItem from="1687764533169" duration="18337000" />
+      <workItem from="1687868363525" duration="5023000" />
+      <workItem from="1687941993652" duration="121000" />
+      <workItem from="1688029585358" duration="5026000" />
+      <workItem from="1688113635797" duration="17095000" />
+      <workItem from="1688201250827" duration="8990000" />
+      <workItem from="1688232411235" duration="8000" />
+      <workItem from="1688243419217" duration="1854000" />
+      <workItem from="1688373074933" duration="3610000" />
+      <workItem from="1688376773887" duration="10806000" />
+      <workItem from="1688460278434" duration="19264000" />
+      <workItem from="1688544502827" duration="9921000" />
+      <workItem from="1688555398261" duration="2500000" />
+      <workItem from="1688714399539" duration="20023000" />
+      <workItem from="1688808051579" duration="4759000" />
+      <workItem from="1688890651829" duration="11226000" />
     </task>
     <servers />
   </component>

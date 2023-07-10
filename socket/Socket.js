@@ -13,14 +13,13 @@ export const Socket = () => {
     const { data: session } = useSession();
 
     const initializeSocket = useCallback(() => {
-        if (session && !session.user.settings.notif) {
-            console.log("aha socket")
+        if (session && !session.user.settings?.notif) {
             GetAllNotifs()
                 .then((res) => {
                     dispatch(setAllNotifs(res.data));
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log('err notifs')
                 })
         }
         else if (session && session.user.settings.notif) {

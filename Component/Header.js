@@ -3,7 +3,7 @@ import styles from "../styles/Component/Header.module.scss";
 import Link from "next/link";
 import { router, useRouter } from "next/router";
 import {
-    ArrowLeftOnRectangleIcon, BellIcon, MagnifyingGlassIcon,
+    ArrowLeftOnRectangleIcon, BellIcon, Cog8ToothIcon, MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
 import MainSearchBar from "./MainSearchBar";
@@ -30,6 +30,7 @@ import 'tippy.js/dist/svg-arrow.css';
 import ScreenSize from "../utils/Size";
 import { selectCategories } from "../store/slices/categorySlice";
 import CategorieHead from "./Header/CategorieHead";
+import {Cog6ToothIcon} from "@heroicons/react/20/solid";
 
 export default function Header() {
     const router = useRouter();
@@ -154,17 +155,17 @@ export default function Header() {
                         <li>
                             <div></div>
                             <div className={styles.contentNav}>
-                                <h4 onClick={() => router.push('/cat')}> Catégorie </h4>
+                                <h4 onClick={() => router.push('/bibliotheque')}> Bibiothèque </h4>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ref={svgCatRef} onClick={categorieOC}>
                                     <path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758L12 15.0006Z"></path>
                                 </svg>
                             </div>
                             {
-                                router.pathname !== "/cat" &&
+                                router.pathname !== "/bibiotheque" &&
                                 <div></div>
                             }
                             {
-                                router.pathname === "/cat" &&
+                                router.pathname === "/bibliotheque" &&
                                 <div className={styles.activeNav}> </div>
                             }
                         </li>
@@ -190,7 +191,7 @@ export default function Header() {
                                 :
                                 <li>
                                     <div></div>
-                                    <h4 onClick={() => router.push('/devenir-auteur')}>
+                                    <h4 onClick={() => router.push('/devenir-ecrivain')}>
                                         Deviens écrivain
                                     </h4>
                                     <div></div>
@@ -470,7 +471,7 @@ export default function Header() {
                                 </div>
                                 <div className={styles.trait}> </div>
                                 {
-                                    router.pathname === '/' || router.pathname === '/devenir-auteur' ?
+                                    router.pathname === '/' || router.pathname === '/devenir-ecrivain' ?
                                         <div onClick={() => router.push({ pathname: "/auth", query: "login" })}
                                             className={styles.login}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -1,10 +1,12 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboardPhone.module.scss';
+import anim from '../../../styles/utils/anim.module.scss';
 import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
 
 import {useRouter} from "next/router";
 import {Capitalize} from "../../../utils/String";
 import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
 import {CursorArrowRaysIcon} from "@heroicons/react/24/outline";
+import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 
 
 export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbView,top}) => {
@@ -12,22 +14,26 @@ export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbV
 
     const catClassName = 'style.'+category;
     return (
-        <div className={styles.container} >
+        <div className={styles.container + ' ' + anim.fadeIn} >
 
             {
-                top &&
+                top && likes > 0 &&
                 <div className={styles.thumbnail}>
-                    <p>Top</p>
+                    <p>Top livre</p>
                     <HeartIcon/>
                 </div>
             }
 
             <div className={styles.containerBookImg}>
-                <img src={'/assets/diapo/book.png'}/>
+                <img src={GetImgPathOfAssets() + 'diapo/book.png'}
+                     onError={(e) => e.target.src = '/assets/diapo/book.png'}
+                     alt={'Book Ogla Default'}
+                />
+
             </div>
 
             <div className={styles.containerImg}>
-                <img src={img} alt={'Book Ogla'}/>
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}  alt={'Book Image Ogla'}/>
             </div>
 
             <div className={styles.containerTitle}>

@@ -19,9 +19,12 @@ import ScreenSize from "../../utils/Size";
 import useOrientation from "../../utils/Orientation";
 import {FilterBtn, FilterBtn3} from "../layouts/Btn/ActionBtn";
 import {ConfirmModal, ConfirmModalCommentary} from "../Modal/ConfirmModal";
+import {ErrMsg} from "../ErrMsg";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 
 const SidebarCommentary = ({
+    errCommentary,
                                scrollChange,
                                title,
                                author,
@@ -52,7 +55,6 @@ const SidebarCommentary = ({
     const [newComment, setNewComment] = useState('');
     const [openConfirmModalForDeleteComment,setOpenConfirmModalForDeleteComment] = useState(false);
     const [openConfirmModalForDeleteAnswer,setOpenConfirmModalForDeleteAnswer] = useState(false);
-
     const divRef = useRef(null);
     const [endRefresh,setEndRefresh] = useState(true);
     const [load,setLoad] = useState(false);
@@ -79,6 +81,8 @@ const SidebarCommentary = ({
         },200)
     }, [comments])
 
+
+
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
             .then((res) => {
@@ -86,6 +90,7 @@ const SidebarCommentary = ({
                 createNewComment(res);
                 setNewComment('');
             })
+            .then(() => scrollToTop())
             .catch((err) => console.log(err));
     }
 
@@ -135,28 +140,68 @@ const SidebarCommentary = ({
         divRef.current.scrollTop = divRef.current.scrollHeight
     }
 
-    useEffect(() => {
-        const div = divRef.current;
+    const scrollToTop = () => {
+        return setTimeout(() => {
+            divRef.current.scrollTop = 0;
+        },10)
+    }
 
-        const handleScroll = () => {
-            const threshold = 1;
-            const isBottom =
-                div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-            if (isBottom && canScroll && !loadingScroll) {
-                getMore()
-            }
-        };
-        div.addEventListener("scroll", handleScroll);
-        return () => {
-            div.removeEventListener("scroll", handleScroll);
-        };
+
+    useEffect(() => {
+        if(!errCommentary){
+            const div = divRef.current;
+
+            const handleScroll = () => {
+                const threshold = 1;
+                const isBottom =
+                    div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
+                if (isBottom && canScroll && !loadingScroll) {
+                    getMore()
+                }
+            };
+            div.addEventListener("scroll", handleScroll);
+            return () => {
+                div.removeEventListener("scroll", handleScroll);
+            };
+        }
+
     }, [canScroll, loadingScroll]);
 
     if(width > 600 && height > 500 && orientation !== 'landscape'){
 
     }
 
+    if(errCommentary){
         return (
+            <div className={styles.container}>
+
+                <div className={styles.headerComment}>
+                    <p><QueueListIcon/>{Capitalize(title)}</p>
+                    <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
+                </div>
+
+                <div className={styles.titleSection}>
+                    <h5>Commentaire(s) <span>({nbCommentary})</span></h5>
+
+                    <div>
+                        <p
+                           className={activeFilter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                        <p
+                           className={activeFilter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                    </div>
+                </div>
+
+                <div className={styles.errContainer}>
+                    <h4>Erreur</h4>
+                    <p>Impossible de récupérer les commentaires.</p>
+                </div>
+
+
+            </div>
+        )
+    }
+
+    else return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
@@ -197,9 +242,10 @@ const SidebarCommentary = ({
                 }
 
 
-
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
+
+                        console.log(item.nbAnswers);
                         return (
                             <Fragment key={item._id}>
                                 <Commentary
@@ -233,7 +279,7 @@ const SidebarCommentary = ({
                                     authorHasLike={item.authorHasLike}
                                     authorImg={authorImg}
                                     authorPseudo={author}
-                                    nbAnswers={item.nbAnswers}
+                                    nbAnswers={item?.nbAnswers}
                                     likes={item.likes}
                                     img={item.img}
                                     date={item.date_creation}
@@ -252,8 +298,8 @@ const SidebarCommentary = ({
                 {
                      comments.length <= 0 && !loadingScroll && endRefresh &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
-                        <img src={'/assets/jim/angry2.png'}/>
-                        <p>C'est bien silencieux ici ! <br/> <span onClick={() => {
+                        <img src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Jim Ogla'} onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
+                        <p>C&apos;est bien silencieux ici ! <br/> <span onClick={() => {
                             if (session) {
                                 inputRef.current.focus();
                             } else {
@@ -318,7 +364,7 @@ const SidebarCommentary = ({
                 <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => deleteComment(activeCommentaryToDelete.id)}  close={() => {
                     setActiveCommentaryToDelete({id: null,content: null})
                     setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
+                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
             }
 
             {
@@ -328,7 +374,7 @@ const SidebarCommentary = ({
                 }}  close={() => {
                     setActiveAnswersToDelete({id: null,content: null})
                     setOpenConfirmModalForDeleteAnswer(false);
-                }} title={'Supprimer votre réponse'} subTitle={Capitalize(activeAnswersToDelete.content)} />
+                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)} />
             }
 
         </div>

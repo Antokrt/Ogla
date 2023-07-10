@@ -1,12 +1,12 @@
 import styles from "../../styles/Pages/Form/Login.module.scss";
-
+import anim from '../../styles/utils/anim.module.scss';
 import { useSession, signIn, signOut } from "next-auth/react";
 import React, { createRef, useEffect, useRef, useState } from "react";
-import { router } from "next/router";
+import { useRouter} from "next/router";
 import { GoogleLoginBtn } from "../layouts/Btn/Link";
 import { ReCAPTCHA } from "react-google-recaptcha";
 import ScreenSize from "../../utils/Size";
-import { UserIcon } from "@heroicons/react/24/outline";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 const Login = ({ register, forgotPassword }) => {
 
@@ -14,6 +14,7 @@ const Login = ({ register, forgotPassword }) => {
     const formRef = useRef(null);
     const captchaRef = useRef(null);
     const [width, height] = ScreenSize();
+    const router = useRouter();
 
     const token = async () => {
         const captchaToken = await captchaRef.current.executeAsync();
@@ -45,14 +46,19 @@ const Login = ({ register, forgotPassword }) => {
             .then((res) => {
                 if (res?.status === 401) {
                     setSubmitErr(prevState => ({
-                        msg: 'Identifiant ou mot de passe incorrect!',
+                        msg: 'Identifiant ou mot de passe incorrect.',
                         show: true
                     }))
                 } else {
-                    setSubmitErr(prevState => ({
-                        msg: 'Erreur lors de la connexion',
-                        show: true
-                    }))
+                    if(res?.status === 200){
+                        router.push('/')
+                    }
+                    else {
+                        setSubmitErr(prevState => ({
+                            msg: 'Erreur lors de la connexion',
+                            show: true
+                        }))
+                    }
                 }
             })
 
@@ -60,10 +66,14 @@ const Login = ({ register, forgotPassword }) => {
 
 
     return (
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer + ' ' + anim.fadeIn}>
             <div className={styles.ctn}>
                 <div className={styles.imgAbs} onClick={() => router.push("/")}>
-                    <img src="/assets/bookOrange2.png" />
+                    <img
+                        src={GetLogoUtils()}
+                    alt={'Logo Ogla'}
+                        onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                    />
                 </div>
                 <div className={styles.leftBlock}>
                     <div className={styles.header}>
@@ -76,8 +86,8 @@ const Login = ({ register, forgotPassword }) => {
                             <h1 className={styles.h1Connexion}> Connexion </h1>
                         }
                         <p>
-                            Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à tous.
-                            Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire.
+                            Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de romans ouverte à tous.
+                            Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d&apos;écrire.
                         </p>
                     </div>
                     <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
@@ -88,14 +98,14 @@ const Login = ({ register, forgotPassword }) => {
                                 </svg>
                                 <input className={styles.inputId} type={"text"} name={"pseudo"} placeholder={" "}></input>
                                 <label htmlFor={"pseudo"} className={styles.labelId}>
-                                    Identifiant
+                                    Pseudo
                                 </label>
                             </div>
                             <div className={styles.inputContainer}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                     <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
                                 </svg>
-                                <input className={styles.inputPW} /*value={'azerty'}*/ type={"password"} name={"password"} placeholder={" "} />
+                                <input className={styles.inputPW}  type={"password"} name={"password"} placeholder={" "} />
                                 <label htmlFor={"password"} className={styles.labelPW}>
                                     Mot de passe
                                 </label>
@@ -107,7 +117,7 @@ const Login = ({ register, forgotPassword }) => {
                             }
                             <div className={styles.conditions}>
                                 <div className={styles.register}>
-                                    <p onClick={register}> Créez un compte ici</p>
+                                    <p onClick={register}> Créer un compte ici</p>
                                 </div>
                                 <p onClick={forgotPassword}>Mot de passe oublié?</p>
                             </div>
@@ -116,13 +126,13 @@ const Login = ({ register, forgotPassword }) => {
                             <button type={'submit'} className={styles.stepBtn + ' ' + styles.logInBtn}>Se connecter</button>
                             <div className={styles.otherOption}>
                                 <div className={styles.trait}> </div>
-                                <h3> Se connecter autrement </h3>
+                                <h3> Ou </h3>
                             </div>
                             <GoogleLoginBtn click={() => signIn('google')} />
                         </div>
 
                         <ReCAPTCHA ref={captchaRef} size={'normal'}
-                            sitekey={'6LdQPrQlAAAAAMw_TQ02hrA9145W96nGWFUZTQPL'} onChange={token}>
+                            sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITEKEY} onChange={token}>
                         </ReCAPTCHA>
 
 
@@ -133,7 +143,10 @@ const Login = ({ register, forgotPassword }) => {
             {
                 width > 970 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/soldier.png"} />
+                    <img
+                        alt={'Bannière Connexion Ogla'}
+                        onError={(e) => e.target.src = "/assets/diapo/soldier.png"}
+                        src={GetImgPathOfAssets() + "diapo/soldier.png"} />
                 </div>
             }
         </div>

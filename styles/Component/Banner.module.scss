@@ -101,11 +101,12 @@
           cursor: pointer;
           transition: 0.2s;
          font-family: "Pt Sans",sans-serif;
+          letter-spacing: -0.2px;
           font-weight: bold;
           background-color: #e94f37;
           color: white;
           padding: 15px;
-          font-size: 15px;
+          font-size: 14px;
           width: 220px;
           border-radius: 25px;
           z-index: 1;
@@ -132,6 +133,8 @@
       text-shadow: initial !important;
       text-align: center;
       white-space: pre !important;
+      letter-spacing: -1px;
+      -webkit-text-stroke-width: 0.6px;
       width: auto !important;
       font-size: 5vw !important;
       color: #1C232B !important;
@@ -143,6 +146,7 @@
       text-align: center;
       font-size: 2vw !important;
       font-weight: bold !important;
+      letter-spacing: -0.5px;
       width: 80% !important;
       color: #1C232B !important;
     }

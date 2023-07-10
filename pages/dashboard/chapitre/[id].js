@@ -11,7 +11,10 @@ import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {EditorContent, useEditor} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {Placeholder} from "@tiptap/extension-placeholder";
-import {deleteChapter, newChapter, publishChapter, saveChapter} from "../../../service/Dashboard/ChapterAuthorService";
+import {
+    DeleteChapterService, PublishChapterService,
+    SaveChapterService
+} from "../../../service/Dashboard/ChapterAuthorService";
 import {
     ArrowPathIcon,
     ChevronDoubleLeftIcon,
@@ -33,15 +36,19 @@ import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
 import Tippy from "@tippyjs/react";
+import Head from "next/head";
+import {toastDisplayError} from "../../../utils/Toastify";
+import {GetFetchPath} from "../../api/utils/Instance";
+import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
-    const chapter = await fetch('http://localhost:3008/chapter/' + id, config);
+    const chapter = await fetch(GetFetchPath() + 'chapter/' + id, config);
     const chapterErrData = !chapter.ok;
     let chapterJson = await chapter.json();
-    const book = await fetch('http://localhost:3008/author/book/' + chapterJson.book_id, config);
+    const book = await fetch( GetFetchPath()+ 'author/book/' + chapterJson.book_id, config);
     const bookErrData = !book.ok;
     let booksJson = await book.json();
     if (chapterJson.statusCode === 404) {
@@ -52,9 +59,10 @@ export async function getServerSideProps({req, params}) {
         booksJson = null;
     }
 
+
     return {
         props: {
-            key:params.id,
+            key: params.id,
             err: {
                 chapter: chapterErrData,
                 book: bookErrData
@@ -73,7 +81,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [chapter, setChapter] = useState([]);
     const [book, setBook] = useState();
     const [title, setTitle] = useState(chapterData?.title);
-    const [content, setContent] = useState(JSON.parse(chapterData?.content));
+    const [content, setContent] = useState(!err ? JSON.parse(chapterData?.content) : '');
     const [text, setText] = useState(chapterData?.text);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
@@ -105,7 +113,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 placeholder: 'Commencez à écrire votre chapitre ici...'
             })
         ],
-        enableInputRules:false,
+        enableInputRules: false,
         onUpdate({editor}) {
             setContent(editor?.getJSON());
             setText(editor?.getText());
@@ -130,7 +138,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 text,
             }
 
-            saveChapter(data)
+            SaveChapterService(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
                     chapterData.title = res.data.title;
@@ -138,7 +146,10 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    console.log(err)
+                    console.log('err save chapter');
+                })
         }
     }
 
@@ -151,7 +162,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                 text,
             }
 
-            publishChapter(data)
+            PublishChapterService(data)
                 .then((res) => {
                     chapterData.content = res.data.content;
                     chapterData.title = res.data.title;
@@ -160,17 +171,30 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    console.log(err);
+                    if (err.response.data.message === 'Chapter-120') {
+                        toastDisplayError('Titre incorrect.');
+                    } else {
+                        toastDisplayError('Impossible de modifier le chapitre.')
+                    }
+                })
         }
     }
 
     const deleteThis = () => {
-        deleteChapter(chapterData._id)
+        DeleteChapterService(chapterData._id)
             .then((res) => router.replace('/dashboard/books/' + bookData._id))
-            .catch((err) => console.log(err));
+            .catch((err) => console.log('err delete this'));
     }
     return (
         <div className={styles.container}>
+            <Head>
+                <title>{'Ogla - ' + (!err.chapter && !err.book ? Capitalize(chapterData.title) : 'Erreur')}</title>
+                <meta name="description" content="Generated by create next app"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="icon" href="/favicon.ico"/>
+            </Head>
             <div className={styles.containerMain}>
                 {
                     width < 700 && orientation === 'portrait' ?
@@ -178,7 +202,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                         :
                         <>
                             {
-                                width  >= 700 && width <= 1050 ?
+                                width >= 700 && width <= 1050 ?
                                     <div className={styles.verticalTabContainer}>
                                         <VerticalTabMenu/>
                                     </div>
@@ -198,53 +222,35 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                         <div className={styles.errContainer}>
                             <ErrorDashboard
                                 title={'Impossible de récupérer ce chapitre (ERR-001)'}
-                                img={'/assets/jim/angry2.png'}
-                                link={() => router.push('/dashboard/books/')}
-                                btn={'Retour'}
+                                img={'/assets/diapo/old.png'}
                                 subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
                                     '\n'}
                             />
-                        </div>                    }
+                        </div>}
 
                     {
                         err.book && !err.chapter &&
                         <div className={styles.errContainer}>
                             <ErrorDashboard
                                 title={'Impossible de récupérer ce chapitre (ERR-002)'}
-                                img={'/assets/jim/angry2.png'}
-                                link={() => router.push('/dashboard/books/')}
-                                btn={'Retour'}
+                                img={'/assets/diapo/old.png'}
                                 subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
                                     '\n'}
                             />
-                        </div>                    }
+                        </div>}
                     {
                         err.book && err.chapter &&
                         <div className={styles.errContainer}>
                             <ErrorDashboard
                                 title={'Impossible de récupérer ce chapitre (ERR-003)'}
-                                img={'/assets/jim/angry2.png'}
-                                link={() => router.push('/dashboard/books/')}
-                                btn={'Retour'}
+                                img={'/assets/diapo/old.png'}
                                 subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
                                     '\n'}
                             />
-                        </div>                    }
+                        </div>}
                 </>
 
-                {
-                    err.chapter || err.book && !loading &&
-                    <div className={styles.errContainer}>
-                        <ErrorDashboard
-                            title={'Impossible de récupérer ce chapitre (ERR-001)'}
-                            img={'/assets/jim/angry2.png'}
-                            link={() => router.push('/dashboard/books/')}
-                            btn={'Retour'}
-                            subTitle={'Réessayer ou contacter le support pour obtenir de l\'aide...\n' +
-                                '\n'}
-                        />
-                    </div>
-                }
+
                 {
                     !err.chapter && !err.book && !loading && chapterData &&
                     <div className={styles.containerData}>
@@ -256,7 +262,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <ChevronRightIcon className={styles.arrow}/>
                                         <h6
                                             onClick={() => router.push('/dashboard/books/' + book._id)}
-                                        >{book.title}</h6>
+                                        >{book?.title}</h6>
                                         <ChevronRightIcon className={styles.arrow}/>
                                         <p>{chapter?.title} ({index})</p>
                                     </div>
@@ -311,7 +317,6 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         </Tippy>
 
 
-
                                     </div>
 
 
@@ -322,7 +327,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <HomeIcon className={styles.homeHResp}/>
                                         <ChevronRightIcon className={styles.arrow + ' ' + styles.arrowResp}/>
                                         <h6
-                                        >{book.title} et d'autres filouteries ({index})</h6>
+                                        >{book.title} ({index})</h6>
                                     </div>
                                     <div className={styles.btnList}>
                                         {
@@ -336,7 +341,6 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             >Enregistrer <ArrowPathIcon/>
                                             </button>
                                         }
-
 
 
                                         <button
@@ -395,7 +399,9 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             <div className={styles.titleR}>
                                                 <p>{DateNow()}</p>
                                                 <div className={styles.containerImgBook}>
-                                                    <img src={'/assets/diapo/chapter.png'}/>
+                                                    <img alt={'Image Livre Ogla'}
+                                                         onError={(e) => e.target.src = GetDefaultBookImgWhenError()}
+                                                         src={bookData?.img}/>
                                                 </div>
                                             </div>
 
@@ -415,7 +421,10 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                             <div className={styles.separatorEditor}></div>
                                             {
                                                 width <= 700 &&
-                                                <img className={styles.bookEditor} src={'/assets/diapo/book.png'}/>
+                                                <img alt={'Image Défaut Ogla'}
+                                                     onError={(e) => e.target.src = '/assets/diapo/book.png'}
+                                                     className={styles.bookEditor}
+                                                     src={GetImgPathOfAssets() + 'diapo/book.png'}/>
                                             }
                                         </div>
 
@@ -460,21 +469,23 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                     <div className={styles.containerPresentationBook}>
                                         <div onClick={() => router.push('/dashboard/books/' + book._id)}
                                              className={styles.headPresentation}>
-                                            <img src={book.img}/>
+                                            <img alt={'Image Livre Ogla'}
+                                                 onError={(e) => e.target.src = GetDefaultBookImgWhenError()}
+                                                 src={book?.img}/>
                                             <h3>{bookData?.title}</h3>
                                         </div>
                                         {
                                             bookData?.summary.length > 0 &&
                                             <div className={styles.summary}>
-                                                <p>"{Capitalize(bookData?.summary)}"</p>
+                                                <p>{Capitalize(bookData?.summary)}</p>
                                             </div>
                                         }
 
 
                                         <div className={styles.statsPresentation}>
-                                            <img src={'/assets/jim/cool2.png'}/>
-                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à notre guide
-                                                d'écriture...</h6>
+                                            <h6>Apprenez à donner vie à vos idées et à captiver vos lecteurs grâce à
+                                                notre guide
+                                                d&apos;écriture...</h6>
                                             <p>Cliquez ici pour en savoir plus !</p>
                                         </div>
                                     </div>
@@ -491,7 +502,10 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <div className={styles.titleRPhone}>
                                             <p>{DateNow()}</p>
                                             <div className={styles.containerImgBook}>
-                                                <img src={book.img}/>
+                                                <img onClick={() =>  router.push({
+                                                    pathname: '/dashboard/books/' + book._id,
+                                                })}
+                                                     src={book.img}/>
                                             </div>
                                         </div>
 
@@ -558,7 +572,8 @@ export default function ChapitrePage({chapterData, bookData, err}) {
             {
                 seeConfirmModal &&
                 <ConfirmModal confirm={() => deleteThis()} btnConfirm={'Supprimer'}
-                              close={() => setSeeConfirmModal(false)} img={book?.img} title={'Supprimer le chapitre'} subTitle={'Êtes-vous sûr de vouloir supprimer "'+chapter.title +'" ?'}/>
+                              close={() => setSeeConfirmModal(false)} img={book?.img} title={'Supprimer le chapitre'}
+                              subTitle={'Êtes-vous sûr de vouloir supprimer "' + chapter.title + '" ?'}/>
             }
         </div>
     )

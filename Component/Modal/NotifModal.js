@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Notif from './Notif';
 import {DeleteAllNotifsService, ReadAllService} from '../../service/Notifications/NotificationsService';
 import { selectTheme } from '../../store/slices/themeSlice';
+import {CheckCircleIcon, TrashIcon} from "@heroicons/react/24/solid";
 
 export const NotifModal = ({ close }) => {
     const router = useRouter();
@@ -29,6 +30,7 @@ export const NotifModal = ({ close }) => {
             }
         })
     }
+
 
     function DeleteAll() {
         if (allNotifs.length > 0)
@@ -79,8 +81,8 @@ export const NotifModal = ({ close }) => {
             {
                 allNotifs.length > 0 &&
                 <div className={styles.footer}>
-                    <h3 className={styles.lus} onClick={readAllNotifs}> Marquer comme lue(s)</h3>
-                    <h3 className={styles.suppr} onClick={DeleteAll}> Tout supprimer </h3>
+                    <button className={styles.read} onClick={readAllNotifs}> Marquer comme lus <CheckCircleIcon/> </button>
+                    <button className={styles.delete} onClick={DeleteAll}> Tout supprimer <TrashIcon/> </button>
                 </div>
             }
         </div>
