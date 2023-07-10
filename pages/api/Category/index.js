@@ -1,6 +1,8 @@
+import {GetFetchPath} from "../utils/Instance";
+
 export async function GetActiveMonthlyCateoryApi() {
 
-    const catData = await fetch('http://localhost:3008/category/active-monthly-category');
+    const catData = await fetch(GetFetchPath() + 'category/active-monthly-category');
     const catErrData = !catData.ok;
     let catDataJson = await catData.json();
 
