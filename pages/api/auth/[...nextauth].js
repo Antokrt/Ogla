@@ -308,6 +308,7 @@ export default function (req, res) {
         },
         secret: process.env.NEXT_AUTH_SECRET,
         session: {
+            strategy:'jwt',
             maxAge: 604800  // 7 jours
         }
     })
