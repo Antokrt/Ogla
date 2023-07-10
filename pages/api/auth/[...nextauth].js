@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 import {getToken} from "next-auth/jwt";
 import {getConfigOfProtectedRoute} from "../utils/Config";
+import {GetFetchPath} from "../utils/Instance";
 
 
 async function refreshAccessToken(tokenObject) {
@@ -15,7 +16,7 @@ async function refreshAccessToken(tokenObject) {
         };
 
         if(config){
-            const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
+            const tokenResponse = await axios.get(GetFetchPath() + 'auth/refresh/',config);
             return {
                 ...tokenObject,
                 accessToken: tokenResponse.data.accessToken,
@@ -57,7 +58,7 @@ function getProfil(accessToken) {
     };
 
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:3008/user/profil', config)
+        axios.get(GetFetchPath() + 'user/profil', config)
             .then((res) => resolve(res))
             .catch((err) => reject(err))
     })
@@ -89,7 +90,7 @@ export default function (req, res) {
                         password: credentials.password
                     }
 
-                    const res = await fetch('http://localhost:3008/auth/login/', {
+                    const res = await fetch(GetFetchPath() + 'auth/login/', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -120,7 +121,7 @@ export default function (req, res) {
                         password: credentials.password,
                         is_author: false
                     }
-                    const res = await fetch('http://localhost:3008/user/register', {
+                    const res = await fetch(GetFetchPath() + 'user/register', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -150,7 +151,7 @@ export default function (req, res) {
                     const payload = credentials;
                     payload.is_author = true;
 
-                    const res = await fetch('http://localhost:3008/user/register', {
+                    const res = await fetch(GetFetchPath() + 'user/register', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -184,7 +185,7 @@ export default function (req, res) {
                         user: account,
                         profil: profile
                     }
-                    const res = await fetch('http://localhost:3008/auth/google/redirect', {
+                    const res = await fetch(GetFetchPath() + 'auth/google/redirect', {
                         method: 'POST',
                         body: JSON.stringify(data),
                         headers: {
@@ -263,7 +264,7 @@ export default function (req, res) {
 
                 if (req.url === '/api/auth/session?update-author') {
                     const config = await getConfigOfProtectedRoute(req);
-                    const newAuthor = await fetch('http://localhost:3008/author/check', config);
+                    const newAuthor = await fetch(GetFetchPath() + 'author/check', config);
                     const authorJson = await newAuthor.json();
                     if (authorJson.statusCode !== 401) {
                         token.is_author = true;
