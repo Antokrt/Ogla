@@ -6,7 +6,7 @@ export async function middleware(req){
 
     const token = await getToken({
         req,
-        secret:'05jXZs0Wv81MrzYSZMmIy'
+        secret:process.env.NEXT_AUTH_SECRET
     });
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && !token) {

@@ -306,7 +306,7 @@ export default function (req, res) {
             }
 
         },
-        secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
+        secret: process.env.NEXT_AUTH_SECRET,
         session: {
             maxAge: 604800  // 7 jours
         }
