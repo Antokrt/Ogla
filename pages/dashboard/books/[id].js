@@ -52,6 +52,7 @@ import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
 import {FormatCount} from "../../../utils/NbUtils";
+import {GetUrl} from "../../../utils/PathUtils";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -109,7 +110,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
 
     const copyLink = () => {
-        navigator.clipboard.writeText(process.env.NEXT_PUBLIC_URL + 'livre/' + book._id + '?' + book.slug)
+        navigator.clipboard.writeText(GetUrl() + 'livre/' + book._id + '?' + book.slug)
             .then(() => {
                 if (!tippyCopy) {
                     setTippyCopy(true);
