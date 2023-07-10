@@ -20,6 +20,7 @@ import useOrientation from "../../utils/Orientation";
 import {HeadPhoneBtn, HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
 import {useSession} from "next-auth/react";
+import {FormatCount} from "../../utils/NbUtils";
 
 
 
@@ -36,7 +37,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
                     <img alt={'Image Livre Ogla'} src={img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
                     <div>
                         <p className={styles.titleBook}>{title}</p>
-                        <p>{like} like(s) - <span>{author}</span></p>
+                        <p className={styles.like}>{FormatCount(like)} j'aimes - <span>{author}</span></p>
                     </div>
 
 

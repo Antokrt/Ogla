@@ -33,30 +33,32 @@
     display: flex;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.22);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.11);
     margin-bottom: 30px;
 
     svg {
+      color: #343d46;
       height: 23px;
     }
   }
 
   button {
-    &:hover {
-      transform: scale(1.1);
-      transition: 0.2s;
-    }
-    &:active{
-      transform: scale(0.8);
-      transition: 0.2s;
-    }
+
     position: relative;
     z-index: 2;
     transition: 0.2s;
-    width: 20%;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
+      width: 30px;
+      height: 30px;
+      background-color: #e94f37;
+      border-radius: 50%;
+    svg{
+      width: 14px;
+      color: white!important;
+    }
   }
 
   .labelSearch {
@@ -86,6 +88,7 @@
     margin-left: 10px;
     padding: 14px 5px;
     width: 80%;
+
   }
 
   .inputSearch:focus+.labelSearch {

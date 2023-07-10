@@ -244,6 +244,8 @@ const SidebarCommentary = ({
 
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
+
+                        console.log(item.nbAnswers);
                         return (
                             <Fragment key={item._id}>
                                 <Commentary
@@ -277,7 +279,7 @@ const SidebarCommentary = ({
                                     authorHasLike={item.authorHasLike}
                                     authorImg={authorImg}
                                     authorPseudo={author}
-                                    nbAnswers={item.nbAnswers}
+                                    nbAnswers={item?.nbAnswers}
                                     likes={item.likes}
                                     img={item.img}
                                     date={item.date_creation}
@@ -362,7 +364,7 @@ const SidebarCommentary = ({
                 <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => deleteComment(activeCommentaryToDelete.id)}  close={() => {
                     setActiveCommentaryToDelete({id: null,content: null})
                     setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
+                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
             }
 
             {
@@ -372,7 +374,7 @@ const SidebarCommentary = ({
                 }}  close={() => {
                     setActiveAnswersToDelete({id: null,content: null})
                     setOpenConfirmModalForDeleteAnswer(false);
-                }} title={'Supprimer votre réponse'} subTitle={Capitalize(activeAnswersToDelete.content)} />
+                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)} />
             }
 
         </div>

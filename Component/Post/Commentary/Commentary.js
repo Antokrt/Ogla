@@ -39,7 +39,7 @@ const Commentary = ({pseudo,
                     }) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
-    const [tooLong, setTooLong] = useState(false);
+    const [tooLong, setTooLong] = useState(content?.length > 200);
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList,setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
@@ -48,6 +48,8 @@ const Commentary = ({pseudo,
     const {data: session } = useSession();
     const modalState = useSelector(selectLoginModalStatus);
     const dispatch = useDispatch();
+
+    useEffect(() => {console.log(nbAnswers)},[openSubCategory])
 
     useEffect(()=>{
      setHasLike(hasLikeData);
@@ -61,12 +63,6 @@ const Commentary = ({pseudo,
         setPage(answerPage)
     },[answerPage])
 
-
-    useEffect(() => {
-        if (sizeCommentary > 200) {
-            setTooLong(true);
-        }
-    }, [])
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
@@ -125,7 +121,8 @@ const Commentary = ({pseudo,
                             }
                         }}/> </div>
 
-                        <p className={styles.replyCount}> {nbAnswers} réponse(s)</p>
+
+                            <p className={styles.replyCount}> {nbAnswers} réponses</p>
                     </div>
 
                     <div className={styles.replyContainer}>

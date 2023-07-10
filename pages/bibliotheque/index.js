@@ -40,7 +40,7 @@ import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 export async function getServerSideProps({req, params}) {
     let category = 'popular';
 
-    const data = await GetBookByCategoryApi(category, 'popular');
+    const data = await GetBookByCategoryApi(category, 'popular',true);
 
     return {
         props: {

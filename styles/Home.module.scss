@@ -20,6 +20,7 @@
   align-items: center;
   margin-top: 50px;
 
+
   .headerHot {
     width: 1050px;
     display: flex;
@@ -58,7 +59,6 @@
     &::-webkit-scrollbar-thumb {
       background: rgba(28, 35, 43, 0.21);
     }
-
     display: flex;
     justify-content: space-between;
     width: 1050px;

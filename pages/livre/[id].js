@@ -729,7 +729,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                     </div>
                                                     :
                                                     <div className={styles.summaryPhone}>
-                                                        <p>{bookData?.summary} </p>
+                                                        <p>{Capitalize(bookData?.summary)} </p>
                                                     </div>
                                             }
                                         </div>

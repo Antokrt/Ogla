@@ -18,6 +18,7 @@ export const HotPost = ({img, title, category, author, authorImg, nbChapter, des
     const router = useRouter();
     const theme = useSelector(selectTheme);
 
+
     return (
         <div tabIndex={0} className={theme ? styles.container : styles.darkContainer} onClick={() => router.push({
             pathname: '/livre/' + id,

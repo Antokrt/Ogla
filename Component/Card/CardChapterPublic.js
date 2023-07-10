@@ -47,7 +47,7 @@ export const CardChapterDashboard = ({id,index,title,likes,publish}) => {
             </div>
 
             <div className={styles.likeChapter}>
-                <p>{likes} like(s)</p>
+                <p>{likes} j&apos;aimes</p>
             </div>
         </div>
     )

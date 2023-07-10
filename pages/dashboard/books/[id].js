@@ -51,6 +51,7 @@ import {CardChapterDashboard} from "../../../Component/Card/CardChapterPublic";
 import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
+import {FormatCount} from "../../../utils/NbUtils";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -493,7 +494,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                          onError={(e) => e.target.src = '/assets/stats/likes.png'}
                                                          src={GetImgPathOfAssets() + 'stats/likes.png'}/>
                                                     <div>
-                                                        <p className={styles.valueStats}> {book.likes}</p>
+                                                        <p className={styles.valueStats}> {FormatCount(book.likes)}</p>
                                                         <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
@@ -505,7 +506,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                          src={GetImgPathOfAssets() + 'stats/bar.png'}/>
 
                                                     <div>
-                                                        <p className={styles.valueStats}>{book?.stats?.view}</p>
+                                                        <p className={styles.valueStats}>{FormatCount(book?.stats?.view)}</p>
                                                         <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
@@ -524,7 +525,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                          src={GetImgPathOfAssets() + 'stats/comments.png'}/>
 
                                                     <div>
-                                                        <p className={styles.valueStats}>{book?.stats?.nbCommentary}</p>
+                                                        <p className={styles.valueStats}>{FormatCount(book?.stats?.nbCommentary)}</p>
 
                                                         <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
@@ -539,7 +540,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                          src={GetImgPathOfAssets() + 'diapo/book.png'}
                                                          onError={(e) => e.target.src = '/assets/diapo/book.png'}/>
                                                     <div>
-                                                        <p className={styles.valueStats}>{book.chapter_list.length}</p>
+                                                        <p className={styles.valueStats}>{FormatCount(book.chapter_list.length)}</p>
                                                         <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
 
@@ -564,7 +565,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                 !errListChapter && !loadingChapter && chapterList.length > 0 &&
                                                 <div className={anim.fadeIn}>
                                                     <div className={styles.headerChapter}>
-                                                        <h4>  {book.chapter_list.length} chapitres</h4>
+                                                        <h4>  {book.chapter_list.length} chapitre{book.chapter_list.length > 1 && <>s</>}</h4>
                                                         <div>
                                                             <FilterBtn filter={activeFilter} onclick={() => {
                                                                 if (activeFilter === 'order') {
