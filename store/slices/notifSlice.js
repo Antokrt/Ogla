@@ -47,15 +47,15 @@ export const notifSlice = createSlice({
             state.notifs.splice(0, state.notifs.length)
         }
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.see,
-                ...action.payload.notifs,
-            };
-        },
-    },
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.see,
+    //             ...action.payload.notifs,
+    //         };
+    //     },
+    // },
 })
 
 export const {setActiveModalNotif} = notifSlice.actions;

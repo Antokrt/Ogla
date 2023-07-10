@@ -75,7 +75,7 @@ export const TextSeeMore = ({ onclick }) => {
     )
 }
 
-export const HeadPhoneBtn = ({ onclick }) => {
+export const HeadPhoneBtn = () => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const selectIndex = useSelector(selectIndexStateMusic);
@@ -94,7 +94,7 @@ export const HeadPhoneBtn = ({ onclick }) => {
 
 }
 
-export const HeadPhoneBtnHeader = ({ onclick }) => {
+export const HeadPhoneBtnHeader = () => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const dispatch = useDispatch();
@@ -104,7 +104,7 @@ export const HeadPhoneBtnHeader = ({ onclick }) => {
     }
 
     return <div className={styles.headphoneHeader}>
-        <input type="checkbox" id="music" onChange={change} checked={!selectMusicState} />
+        <input type="checkbox" id="music" onChange={change} checked={selectMusicState} />
         <label htmlFor="music">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={styles.headPhone} >
                 <path d="M12 4C7.58172 4 4 7.58172 4 12H7C8.10457 12 9 12.8954 9 14V19C9 20.1046 8.10457 21 7 21H4C2.89543 21 2 20.1046 2 19V12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12V19C22 20.1046 21.1046 21 20 21H17C15.8954 21 15 20.1046 15 19V14C15 12.8954 15.8954 12 17 12H20C20 7.58172 16.4183 4 12 4ZM4 14V19H7V14H4ZM17 14V19H20V14H17Z"></path>
@@ -116,7 +116,7 @@ export const HeadPhoneBtnHeader = ({ onclick }) => {
     </div>
 }
 
-export const HeadPhoneBtnOnFooter = ({ onclick }) => {
+export const HeadPhoneBtnOnFooter = () => {
 
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const selectIndex = useSelector(selectIndexStateMusic);

@@ -38,11 +38,11 @@
 
     .circle {
       position: absolute;
-      bottom: 5%;
-      right: 0%;
+      bottom: 0px;
+      right: 0px;
       background-color: #1bce1b;
-      height: 13px;
-      width: 13px;
+      height: 14px;
+      width: 14px;
       border-radius: 50%;
       border: 2px solid #1C232B;
     }
@@ -66,8 +66,9 @@
     z-index: 21;
     content: "";
     background-color: #9844AD;
-    width: 7px;
-    height: 7px;
+    border: 1px solid #1c232b;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
     top: 0px;
     right: 37%;

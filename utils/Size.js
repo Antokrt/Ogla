@@ -15,9 +15,12 @@ export default function ScreenSize() {
         handleWindowResize();
         window.addEventListener('resize', handleWindowResize);
         // unsubscribe from the event on component unmount
-        // console.log("width: " + width + " height: " + height)
         return () => window.removeEventListener('resize', handleWindowResize);
     }, []);
 
     return [width, height]
+}
+
+export function Add(nb) {
+    return nb + 1;
 }

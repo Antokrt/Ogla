@@ -13,14 +13,14 @@ export const socketSlice = createSlice({
             state.socketState = action.payload
         }
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.socketState,
-            }
-        }
-    }
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.socketState,
+    //         }
+    //     }
+    // }
 })
 
 export const {setActiveSocket} = socketSlice.actions;

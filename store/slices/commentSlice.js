@@ -31,14 +31,14 @@ export const commentSlice = createSlice({
         }
     },
 
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.comments
-            }
-        }
-    }
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.comments
+    //         }
+    //     }
+    // }
 })
 
 export const {addComment, editComment} = commentSlice.actions;

@@ -153,24 +153,23 @@
   position: relative;
   display: flex;
   justify-content: center;
-  box-shadow: $shadow;
   align-items: center;
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  border: #e94f37 solid 1px;
   cursor: pointer;
 
   svg {
-    color: #e94f37;
+    color: rgba(28, 35, 43, 0.37);
     width: 22px;
   }
+
 
   .animation {
     position: absolute;
     width: 50px;
     height: 50px;
-    background: #e94f37;
+    background: #9844AD;
     border-radius: 50%;
     opacity: 0;
     animation: pulse 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
@@ -357,7 +356,7 @@
 }
 
 @media screen and (max-width: 700px) {
-  .headphone {
+  .headphone, .darkHeadphone {
     border: none;
     box-shadow: none;
     padding: initial;

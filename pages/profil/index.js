@@ -34,6 +34,7 @@ import ScreenSize from "../../utils/Size";
 import { openAll } from "../../service/Notifications/NotificationsService";
 import { useEffect } from "react";
 import { OpenAllService } from "../../service/Notifications/NotificationsService";
+import HeaderResponsive from "../../Component/HeaderResponsive";
 
 export async function getServerSideProps({ req }) {
     const data = await GetPrivateProfilApi(req);
@@ -286,7 +287,7 @@ const Profil = ({ profilData, err }) => {
 
                 <div className={styles.form}>
                     <label>Pseudo</label>
-                    <input disabled={true} type={"text"} value={profilData.pseudo} />
+                    <input disabled={true} type={"text"} value={profilData?.pseudo} />
                     <label className={styles.emailLabel}>Email <span>{profilData.verified ?
                         <CheckBadgeIcon /> :
                         <span className={styles.verify} onClick={() => {
@@ -296,26 +297,26 @@ const Profil = ({ profilData, err }) => {
                         }}>Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email} />
                     {
-                        session.user.provider !== 'google' ?
-                        <>
-                            <label>Modifier votre mot de passe</label>
-                            <input value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                                type={"password"} placeholder={'Ancien mot de passe'} />
-                            <input value={newPassword}
-                                onChange={(e) => setNewPassowrd(e.target.value)}
-                                type={"password"} placeholder={'Nouveau mot de passe'} />
-                            {
-                                errMsgModifyPassword.show &&
-                                <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
-                            }
+                        session?.user.provider !== 'google' ?
+                            <>
+                                <label>Modifier votre mot de passe</label>
+                                <input value={oldPassword}
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                    type={"password"} placeholder={'Ancien mot de passe'} />
+                                <input value={newPassword}
+                                    onChange={(e) => setNewPassowrd(e.target.value)}
+                                    type={"password"} placeholder={'Nouveau mot de passe'} />
+                                {
+                                    errMsgModifyPassword.show &&
+                                    <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
+                                }
 
-                            <button onClick={(e) => changePassword(e)}
-                                className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
-                            </button>
-                        </>
+                                <button onClick={(e) => changePassword(e)}
+                                    className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
+                                </button>
+                            </>
                             :
-                            <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un mot de passe <LockClosedIcon/></button>
+                            <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un mot de passe <LockClosedIcon /></button>
 
                     }
 
@@ -335,15 +336,17 @@ const Profil = ({ profilData, err }) => {
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img}/>
-                        <h5>Ecrivain <span>OGLA</span></h5>
-                    </div>
-
-                    <div className={styles.headerWriterStats}>
-                        <h5>Devenu écrivain
-                            le <span>{FormatDateStr(profilData?.register_date)}</span></h5>
-
-                        <p>{profilData.author.likes} j'aimes</p>
+                        <img src={profilData?.img} />
+                        <div className={styles.headerWriterStats}>
+                            <h4>Ecrivain <span>OGLA</span></h4>
+                            <h5>
+                                Devenu écrivain <span>{FormatDateStr(profilData?.register_date)}</span>
+                            </h5>
+                            <p>
+                                {profilData.author.likes}
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853Z"></path></svg>
+                            </p>
+                        </div>
                     </div>
 
                     <div className={styles.containerPresentation}>
@@ -355,7 +358,7 @@ const Profil = ({ profilData, err }) => {
                                     updateDescription();
                                 }
                             }}
-                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
                             </button>
                         </div>
 
@@ -375,77 +378,8 @@ const Profil = ({ profilData, err }) => {
 
 
                     </div>
-
-                    <div className={styles.formWriter}>
-
-             {/*           {
-                            width > 1150 &&
-                            <div className={styles.headerWriter}>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbBooks}</p>
-                                    <h6>livre(s)</h6>
-
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.nbChapters}</p>
-                                    <h6>chapitre(s)</h6>
-                                </div>
-                                <div className={styles.itemWriter}>
-                                    <p>{profil?.author?.stats?.totalLikes}</p>
-                                    <h6>like(s) reçus</h6>
-                                </div>
-
-                            </div>
-                        }*/}
-                  {/*      {
-                            width <= 1150 &&
-                            <div className={styles.phoneHeaderAuthor}>
-                                <img src={profil.img} />
-                                <div className={styles.phoneHeaderStats}>
-                                    <div className={styles.phonehWriter}>
-                                        <h5>Quelques statistiques</h5>
-                                    </div>
-                                    <div className={styles.headerWriter}>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbBooks}</p>
-                                            <h6>livre(s)</h6>
-
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.nbChapters}</p>
-                                            <h6>chapitre(s)</h6>
-                                        </div>
-                                        <div className={styles.itemWriter}>
-                                            <p>{profil?.author?.stats?.totalLikes}</p>
-                                            <h6>like(s) reçus</h6>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        }*/}
-
-     {/*                   <div className={styles.stats}>
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Livre le plus liké <HeartIcon /></p>
-                                <p className={styles.value}>La quete du maitre <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus liké <ChartBarIcon /></p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-
-                            <div className={styles.writerItem}>
-                                <p className={styles.label}>Chapitre le plus vue <EyeIcon /> </p>
-                                <p className={styles.value}>Pouliche liche moi la babine <span>21201</span></p>
-                            </div>
-                        </div>*/}
-                    </div>
                 </div>
                 <div className={styles.rContainerWriter}>
-
-
                     <div className={styles.containerSocial}>
                         <div className={styles.headSocial}>
                             <h5>Réseaux sociaux</h5>
@@ -458,6 +392,7 @@ const Profil = ({ profilData, err }) => {
                                 <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
                                 <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
                                 <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
+                                <ProfilAuthor type={4} content={profilData?.author.social.tiktok} />
                             </div>
                             <div className={styles.socialImg}>
                                 <img src={"/assets/other/manReading2.png"} alt="author reading" />
@@ -623,14 +558,28 @@ const Profil = ({ profilData, err }) => {
             {
                 err &&
                 <div>
-                    <Header />
+                    {
+                        width > 800 &&
+                        <Header />
+                    }
+                    {
+                        width <= 800 &&
+                        <HeaderResponsive />
+                    }
                     <p>Impossible de récupérer le profil</p>
                 </div>
             }
             {
                 !err && profilData && session &&
                 <div className={styles.container}>
-                    <Header />
+                    {
+                        width > 800 &&
+                        <Header />
+                    }
+                    {
+                        width <= 800 &&
+                        <HeaderResponsive />
+                    }
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
                             {
@@ -668,7 +617,7 @@ const Profil = ({ profilData, err }) => {
                             {
                                 width <= 800 && activeLink === 'settings' &&
                                 <div className={styles.headerTitlePhone}>
-                                        <h2> Réglages </h2>
+                                    <h2> Réglages </h2>
                                 </div>
                             }
                             <div className={styles.containerItem}>

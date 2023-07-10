@@ -35,8 +35,7 @@ const DevenirAuteur = () => {
         confirmPassword: "",
         description: ""
     })
-
-
+    const RefErrorMsg = useRef(null);
 
     useEffect(() => {
         if (session && !session.user.is_author) {
@@ -293,26 +292,18 @@ const DevenirAuteur = () => {
                     className={styles.textareaForm}
                 />
 
-                {
-                    // seeErr &&
-                    <p className={styles.errMsgItem} ref={testRef} style={{}}>{errMsg} </p>
-                }
+                <p className={styles.errMsgItemF} ref={RefErrorMsg} style={{}}>{errMsg} </p>
                 <div className={styles.conditions}>
                     <label htmlFor={"confirmConditions"}>En devenant écrivain sur <strong>OGLA </strong>, j'accepte les <span>conditions d'utilisation</span></label>
                 </div>
-
-
                 {
                     !session &&
                     loginLink()
                 }
-
-
             </div>
         )
     }
 
-    const testRef = useRef(null);
 
     const displayForm = (param) => {
         if (!session) {
@@ -409,12 +400,14 @@ const DevenirAuteur = () => {
                             data.description === ""
                         ) {
                             setSeeErr(true);
-                            testRef.current.style.opacity = 1;
+                            RefErrorMsg.current.style.opacity = 1;
                             setTimeout(() => {
-                                testRef.current.style.opacity = 0;
-                            }, 1000)
+                                if (RefErrorMsg.current)
+                                    RefErrorMsg.current.style.opacity = 0;
+                            }, 2000)
                         }
                         else {
+                            console.log("eeeeeeee")
                             setSeeErr(false);
                         }
                     }}

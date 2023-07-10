@@ -89,10 +89,10 @@
         width: 80%;
         span{
           position: absolute;
-          bottom: 10%;
-          left: 29px;
-          height: 12px;
-          width: 12px;
+          bottom: 2px;
+          left: 30px;
+          height: 13px;
+          width: 13px;
           border-radius: 50%;
           background-color: #1bce1b;
           border: 2px solid white;
@@ -138,8 +138,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15px;
-    height: 15px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background-color: #9844AD;
     font-size: 10px;
@@ -158,19 +158,6 @@
     color: white!important;
   }
 
-}
-
-
-
-@media screen and (max-width: 1300px){
-  .container{
-    li{
-      span{
-        height: 10px;
-        width: 10px;
-      }
-    }
-  }
 }
 
 @media screen and (max-width: 1200px){
@@ -194,7 +181,6 @@
     }
   }
 }
-
 
 @media screen and (max-height: 500px) and (max-width: 700px) and (orientation: landscape){
   .container{

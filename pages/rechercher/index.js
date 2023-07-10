@@ -15,6 +15,7 @@ import { ErrMsg } from "../../Component/ErrMsg";
 import { ListCard } from "../../Component/Card/ListCard";
 import { ScrollDownUtils } from "../../utils/Scroll";
 import HeaderResponsive from "../../Component/HeaderResponsive";
+import ScreenSize from "../../utils/Size";
 
 export async function getServerSideProps({ req, query }) {
 
@@ -48,6 +49,7 @@ const SearchPage = ({ queryData, data, err }) => {
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [filter, setFilter] = useState('popular');
     const [page, setPage] = useState(2);
+    const [width] = ScreenSize();
 
     useEffect(() => {
         const params = router.query;
@@ -105,8 +107,14 @@ const SearchPage = ({ queryData, data, err }) => {
 
     return (
         <div className={styles.container}>
-            <Header />
-            {/* <HeaderResponsive /> */}
+            {
+                width > 800 &&
+                <Header />
+            }
+            {
+                width <= 800 &&
+                <HeaderResponsive />
+            }
 
             <div className={styles.searchContainer}>
                 <form onSubmit={(event) => {

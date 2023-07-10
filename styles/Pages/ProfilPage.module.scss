@@ -52,7 +52,6 @@
   button {
     &:hover {
       background-color: rgba(100, 105, 109, 0.137);
-      ;
     }
 
     position: relative;
@@ -60,13 +59,14 @@
     background-color: rgba(180, 185, 190, 0.13);
     padding: 0.8vh 2vw;
     font-size: 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins',
+    sans-serif;
     color: #54595F;
 
     span {
       position: absolute;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 4px;
       top: 50%;
       right: 8px;
       transform: translate(0, -50%);
@@ -174,50 +174,68 @@
 
   .lContainerWriter {
 
-    .containerImg{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-      img{
-        width: 140px;
-        height: 140px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-      h5{
-        font-family: $primaryFont;
-        font-size: 15px;
-        font-weight: bold;
-        span{
-          color: #9844AD;
-        }
-      }
-    }
-
-    .headerWriterStats{
+    .containerImg {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      height: 100px;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+
+    .headerWriterStats {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      // align-items: center;
+      width: 70%;
+      height: 100%;
+      border-right: 1px solid rgba(84, 89, 95, 0.11);
+
+      h4 {
+        font-family: $primaryFont;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+
+        span {
+          color: #9844AD;
+        }
+      }
 
       h5 {
         font-family: $primaryFont;
         font-size: 12px;
         color: #5a6673;
         font-weight: 500;
-        span{
+
+        span {
           font-weight: bold;
         }
       }
 
-      p{
+      p {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 0px;
+        right: 5px;
         font-family: $primaryFont;
-        font-size: 12px;
+        font-size: 13px;
         color: #5a6673;
         font-weight: bold;
+
+        svg {
+          margin-left: 3px;
+          height: 14px;
+          fill: #9844AD;
+        }
       }
     }
 
@@ -278,6 +296,7 @@
       text-align: center;
       margin-bottom: 18px;
     }
+
     .imgWriter {
       display: flex;
       justify-content: flex-start;
@@ -352,52 +371,52 @@
         }
       }
 
-      .stats {
-        margin-top: 70px;
+      // .stats {
+      //   margin-top: 70px;
 
-        .writerItem {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          margin-bottom: 20px;
+      //   .writerItem {
+      //     display: flex;
+      //     flex-direction: column;
+      //     gap: 2px;
+      //     margin-bottom: 20px;
 
-          .label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: left;
-            width: 100%;
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 2px;
-            font-family: $primaryFont;
+      //     .label {
+      //       display: flex;
+      //       justify-content: space-between;
+      //       align-items: center;
+      //       text-align: left;
+      //       width: 100%;
+      //       font-size: 13px;
+      //       font-weight: bold;
+      //       margin-bottom: 2px;
+      //       font-family: $primaryFont;
 
-            svg {
-              color: #9844AD;
-              width: 17px;
-            }
-          }
+      //       svg {
+      //         color: #9844AD;
+      //         width: 17px;
+      //       }
+      //     }
 
-          .value {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: left;
-            width: 100%;
-            font-size: 13px;
-            font-weight: bold;
-            color: #9844AD;
-            margin-bottom: 1px;
-            font-family: $primaryFont;
+      //     .value {
+      //       display: flex;
+      //       justify-content: space-between;
+      //       align-items: center;
+      //       text-align: left;
+      //       width: 100%;
+      //       font-size: 13px;
+      //       font-weight: bold;
+      //       color: #9844AD;
+      //       margin-bottom: 1px;
+      //       font-family: $primaryFont;
 
 
-            span {
-              font-size: 11px;
-              color: #9844AD;
-            }
-          }
-        }
-      }
+      //       span {
+      //         font-size: 11px;
+      //         color: #9844AD;
+      //       }
+      //     }
+      //   }
+      // }
 
       input {
         transition: 0.1s;
@@ -420,7 +439,6 @@
     .containerSocial {
       display: flex;
       flex-direction: column;
-      margin-top: 40px;
 
       .headSocial {
         h5 {
@@ -432,15 +450,14 @@
 
         p {
           margin-top: 15px;
-          color: #6b7077;
+          color: #6b707780;
           font-family: $primaryFont;
-          font-size: 13px;
+          font-size: 12px;
           text-align: left;
         }
       }
 
       .socialForm {
-        position: relative;
         margin-top: 15px;
         display: flex;
         justify-content: space-between;
@@ -452,8 +469,8 @@
           right: 0px;
 
           img {
-            width: 127px;
-            height: 175px;
+            width: 140px;
+            height: 230px;
           }
         }
       }
@@ -497,8 +514,6 @@
       box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
       transition: 0.1s;
     }
-
-    &::placeholder {}
 
     transition: 0.1s;
     outline: none !important;
@@ -866,9 +881,9 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 10vh;
+  height: 70px;
   background-color: transparent;
-  z-index: 2000;
+  z-index: 2;
 
   .containerMain {
     height: 100%;
@@ -888,6 +903,8 @@
       flex-direction: column;
       gap: 5px;
       align-items: center;
+      border-bottom: solid 2px rgb(255 255 255 / 0%);
+      padding-bottom: 5px;
 
       img {
         width: 50px;
@@ -898,12 +915,13 @@
 
       .circle {
         position: absolute;
-        bottom: 5%;
-        right: 0%;
-        background-color: #97fd97;
-        height: 12px;
-        width: 12px;
+        bottom: 0px;
+        right: 0px;
+        background-color: #1bce1b;
+        height: 14px;
+        width: 14px;
         border-radius: 50%;
+        border: 2px solid #1C232B;
       }
 
       svg {
@@ -925,17 +943,15 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        right: 10px;
-        top: 6px;
+        right: 27px;
+        top: 0px;
+        border: 1px solid #1c232b;
       }
     }
   }
 
   .activeItem {
-    p {
-      border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-      padding-bottom: 5px;
-    }
+      border-color: rgba(255, 255, 255, 0.91) !important;
   }
 }
 
@@ -977,7 +993,7 @@
 
       h5 {
         font-family: $primaryFont;
-        font-weight:bold;
+        font-weight: bold;
         margin-bottom: 0px;
         font-size: 15px;
       }
@@ -1017,6 +1033,10 @@
     }
   }
 
+  .rContainerWriter {
+    padding-bottom: 20px;
+  }
+
   .socialImg {
     display: contents;
   }
@@ -1025,30 +1045,23 @@
     width: 80%;
   }
 
-  .containerSocial {
-    margin-bottom: 40px;
-  }
-
-  .stats {
-    margin-top: 15px !important;
-  }
-
   .headerWriter {
-    gap: 30px !important;
-
-    .itemWriter {
-      p {
-        padding: 5px 25px;
-      }
+    .headerWriterStats {
+      height: 100% !important;
     }
+
+    // gap: 30px !important;
+
+    // .itemWriter {
+    //   p {
+    //     padding: 5px 25px;
+    //   }
+    // }
   }
 }
 
 @media screen and (max-width: 800px) {
   .container {
-    .containerF {
-      // margin-bottom: 80px;
-    }
 
     .containerM {
       margin-bottom: 80px;
@@ -1090,18 +1103,19 @@
       width: 100%;
     }
 
-    .writer{
-      gap: 0!important;
+    .writer {
+      gap: 0 !important;
     }
 
 
-    .settings{
+    .settings {
       gap: 20px;
     }
 
-    .itemSetting{
+    .itemSetting {
       padding: 6% 6%;
-      border: 1px solid rgba(84, 89, 95, 0.13);;
+      border: 1px solid rgba(84, 89, 95, 0.13);
+      ;
       width: 600px;
     }
 
@@ -1117,7 +1131,7 @@
 @media screen and (max-width: 650px) {
   .settings {
     .itemSetting {
-      width:500px;
+      width: 500px;
     }
   }
 }
@@ -1136,7 +1150,7 @@
     }
   }
 
-  .itemSetting{
+  .itemSetting {
     padding: 6% 3% !important;
     width: 95% !important;
   }
@@ -1212,34 +1226,37 @@
 @media screen and (max-width: 420px) {
 
   .itemSetting {
-    border-top: none!important;
-    border-right: none!important;
-    border-left: none!important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
 
-    svg,{
+    svg {
       display: none;
     }
 
-    .valueSetting{
-      font-size: 11px!important;
+    .valueSetting {
+      font-size: 11px !important;
     }
-
-
   }
 }
 
 @media screen and (max-width: 310px) {
-
-
   .modifySettingsBtn {
     width: 90% !important;
   }
+
+  .containerImg {
+    img {
+
+      width: 70px !important;
+      height: 70px !important;
+    }
+  }
 }
 
-
-@media screen and (max-width: 300px){
-  .valueSetting{
-    font-size: 8px!important;
+@media screen and (max-width: 300px) {
+  .valueSetting {
+    font-size: 8px !important;
   }
 }
 
@@ -1255,25 +1272,23 @@
       }
 
       .haveNotif {
-        right: 0px !important;
+        width: 10px !important;
+        height: 10px !important;
+        right: 1px !important;
         top: 1px !important;
       }
     }
   }
-
-  .activeItem {
-    svg {
-      border-bottom: solid 2px rgba(255, 255, 255, 0.91);
-      padding-bottom: 5px;
-    }
-  }
 }
 
-@media screen and (max-width: 250px){
-  .musicToggle , .toggleBtn{
-    width: 40px!important;
-    height: 25px!important;
-    label{
+@media screen and (max-width: 250px) {
+
+  .musicToggle,
+  .toggleBtn {
+    width: 40px !important;
+    height: 25px !important;
+
+    label {
       width: 20px;
       height: 20px;
     }

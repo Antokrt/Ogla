@@ -43,6 +43,11 @@ const New = () => {
     const [width, height] = ScreenSize();
     const categories = useSelector(selectCategories);
 
+    useEffect(() => {
+        console.log("width: " + width + " height: " + height)
+
+    },  [width, height])
+
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
             setLocalImg(URL.createObjectURL(event.target.files[0]));
@@ -84,7 +89,6 @@ const New = () => {
             summary.length <= 2000 &&
             category !== "";
     }
-
     const btn = () => {
         return (
             <div className={styles.btnContainer}>
@@ -117,7 +121,6 @@ const New = () => {
             </div>
         )
     }
-
     const firstStep = () => {
 
         return (
@@ -166,7 +169,6 @@ const New = () => {
             </>
         )
     }
-
     const secondStep = () => {
         return (
             <>
@@ -235,7 +237,6 @@ const New = () => {
             </>
         )
     }
-
     const thirdStep = () => {
         return (
             <div className={styles.finalContainer}>
@@ -258,7 +259,6 @@ const New = () => {
             </div>
         )
     }
-
     const checkStep = () => {
         switch (step) {
             case 1:
@@ -293,7 +293,7 @@ const New = () => {
     return (
         <div className={styles.container}>
             {
-                width < 700 && height < 600 /* && orientation === 'portrait' */ ?
+                width < 700 || height < 600 /* && orientation === 'portrait' */ ?
                     <VerticalPhoneMenu />
                     :
                     <>

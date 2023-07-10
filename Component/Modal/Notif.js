@@ -32,6 +32,8 @@ const Notif = ({ element }) => {
                         if (element.code === 10)
                             localStorage.setItem('openSidebar', true);
                         ReadNotifService(element._id);
+                        if (router.pathname.startsWith('/livre') && router.query.id === element.targetDocumentId)
+                            window.location.reload()
                         router.push({
                             pathname: '/livre/' + element.targetDocumentId,
                             query: res.slug
@@ -73,6 +75,9 @@ const Notif = ({ element }) => {
                         .then((res) => {
                             localStorage.setItem('openSidebar', true);
                             ReadNotifService(element._id);
+                            console.log(router.pathname)
+                            if (router.pathname.startsWith('/livre') && router.query.id === element.targetDocumentId)
+                                router.reload()
                             router.push({
                                 pathname: '/livre/' + element.targetDocumentId,
                                 query: res.slug
@@ -92,9 +97,11 @@ const Notif = ({ element }) => {
                                             if (element.code !== 2)
                                                 localStorage.setItem('openSidebar', true);
                                             ReadNotifService(element._id);
+                                            if (router.pathname.startsWith('/chapitre') && router.query.id === element.targetDocumentId)
+                                                window.location.reload()
                                             router.push({
                                                 pathname: '/chapitre/' + element.targetDocumentId,
-                                                query: {slug: resChap.slug, i: numberI },
+                                                query: { slug: resChap.slug, i: numberI },
                                             })
                                         }
                                     })

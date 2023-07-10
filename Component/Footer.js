@@ -9,9 +9,9 @@ import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
 import { GetRandomBookService } from "../service/Book/BookService";
 import { useSession } from "next-auth/react";
-import {useDispatch, useSelector} from 'react-redux';
-import {changeTheme, selectTheme} from '../store/slices/themeSlice';
-import {LockClosedIcon, MoonIcon, SunIcon} from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTheme, selectTheme } from '../store/slices/themeSlice';
+import { LockClosedIcon, MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
 
 export default function Footer() {
@@ -28,6 +28,10 @@ export default function Footer() {
                     query: res.slug
                 })
             })
+    }
+
+    function setTheme() {
+        dispatch(changeTheme())
     }
 
     return (
@@ -68,9 +72,9 @@ export default function Footer() {
                             <li>
                                 {
                                     theme ?
-                                        <SunIcon onClick={() => dispatch(changeTheme())}  className={styles.svgTheme}/>
-:
-<MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                        <SunIcon onClick={setTheme} className={styles.svgTheme} />
+                                        :
+                                        <MoonIcon onClick={setTheme} className={styles.svgTheme} />
                                 }
                             </li>
                         </ul>

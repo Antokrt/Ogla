@@ -61,6 +61,7 @@ export async function getServerSideProps({req, params, query}) {
     if (!data.err) {
         return {
             props: {
+                key: id,
                 err: false,
                 bookData: data?.book,
                 chapterData: data?.chapter,
@@ -108,11 +109,13 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
-        if (openSidebar && typeof window !== 'undefined') {
-            setSidebarSelect('Commentary');
-            localStorage.removeItem('openSidebar');
+        if (session) {
+            if (openSidebar && typeof window !== 'undefined') {
+                setSidebarSelect('Commentary');
+                localStorage.removeItem('openSidebar');
+            }
         }
-    }, [])
+    }, [session])
 
     const modalState = useSelector(selectLoginModalStatus);
 
@@ -205,6 +208,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     setNoComments(false);
                     getComment(pageComment, 1);
                     if (session) {
+                        console.log("session oui")
                         getMyComments(1, 'popular');
                     }
                 }
@@ -223,7 +227,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         isEmpty={noComments}
                         createNewComment={(res) => newComment(res)}
                         deleteAComment={(id) => deleteComment(id)}
-                        seeMore={() => getComment(pageComment)}
+                        seeMore={() => {
+                            if(!loadingScroll){
+                                getComment(pageComment);
+                            }
+                        }}
                         sendANewAnswer={(data) => sendAnswer(data)}
                         deleteAnswer={(id) => deleteAnswer(id)}
                         authorImg={authorData?.img}
@@ -423,7 +431,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         <div className={styles.container}>
                             <Header/>
                             {checkSide()}
-
                             <div className={styles.containerC}>
 
                                 <div className={styles.labelPresentation}>

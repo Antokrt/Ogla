@@ -22,12 +22,12 @@ import { GetCommentService, GetMyCommentsService } from "../../service/Comment/C
 import { GetAnswerByCommentService } from "../../service/Answer/AnswerService";
 import { DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce } from "../../utils/CommentaryUtils";
 import { GetChapterListService } from "../../service/Chapter/ChapterService";
-import {Capitalize, ReduceString} from "../../utils/String";
+import { Capitalize, ReduceString } from "../../utils/String";
 import { setActiveModalState } from "../../store/slices/modalSlice";
 import { useDispatch } from "react-redux";
 import { AddViewToChapterApi } from "../api/book";
-import ErrMsg, {ErrMsgOnChapter} from "../../Component/ErrMsg";
-import { SendNotifService} from "../../service/Notifications/NotificationsService";
+import ErrMsg, { ErrMsgOnChapter } from "../../Component/ErrMsg";
+import { SendNotifService } from "../../service/Notifications/NotificationsService";
 import ScreenSize from "../../utils/Size";
 import {
     ArrowLeftIcon,
@@ -36,11 +36,11 @@ import {
     HomeIcon,
     ListBulletIcon
 } from "@heroicons/react/24/outline";
-import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
-import {HeadPhoneBtn} from "../../Component/layouts/Btn/ActionBtn";
+import { LikeBtnSidebarPhone } from "../../Component/layouts/Btn/Like";
+import { HeadPhoneBtn } from "../../Component/layouts/Btn/ActionBtn";
 import useOrientation from "../../utils/Orientation";
 import Footer from "../../Component/Footer";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -104,7 +104,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const [activeFilterChapterSidebar, setActiveFilterChapterSidebar] = useState('order');
     const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
     const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
-    const [activeLinkPhone,setActiveLinkPhone] = useState('content');
+    const [activeLinkPhone, setActiveLinkPhone] = useState('content');
     const { data: session } = useSession();
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
@@ -112,11 +112,13 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
-        if (openSidebar && typeof window !== 'undefined') {
-            setSidebarSelect('Commentary');
-            localStorage.removeItem('openSidebar');
+        if (session) {
+            if (openSidebar && typeof window !== 'undefined') {
+                setSidebarSelect('Commentary');
+                localStorage.removeItem('openSidebar');
+            }
         }
-    }, [])
+    }, [session])
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
 
@@ -159,11 +161,11 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         extensions: [
             StarterKit,
         ],
-        editable:false,
+        editable: false,
         content: chapterData ? JSON.parse(chapterData?.content) : null
     })
 
-    const checkSide = () =>  {
+    const checkSide = () => {
         switch (sidebarSelect) {
             case 'Commentary':
                 if (comments.length === 0 && canScroll) {
@@ -421,7 +423,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     const sendAnswer = (data) => {
         setComments(SendAnswerReduce(comments, data.target_id, data));
-        comments.forEach((elem) =>  {
+        comments.forEach((elem) => {
             if (elem._id === data.target_id) {
                 if (authorData._id != session.user.id)
                     SendNotifService(elem.userId, 20, chapterData._id, bookData._id)
@@ -457,7 +459,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     const navBlockPrev = () => {
 
-        if(chapterData.navChapter && chapterData.navChapter.prev){
+        if (chapterData.navChapter && chapterData.navChapter.prev) {
             return (
                 <div className={styles.navBlock} onClick={() => {
                     router.push({
@@ -466,7 +468,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                         }
                     })
                 }}>
-                    <ChevronLeftIcon/>
+                    <ChevronLeftIcon />
                     <p>{chapterData.navChapter.prev.title} ({index - 1})</p>
                 </div>
             )
@@ -477,8 +479,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
     }
 
-    const navBlockNext = (type,link) => {
-        if(chapterData.navChapter && chapterData.navChapter.next){
+    const navBlockNext = (type, link) => {
+        if (chapterData.navChapter && chapterData.navChapter.next) {
             return (
                 <div className={styles.navBlock} onClick={() => {
                     router.push({
@@ -488,7 +490,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                     })
                 }}>
                     <p>{chapterData.navChapter.next.title} ({index + 1})</p>
-                    <ChevronRightIcon/>
+                    <ChevronRightIcon />
 
                 </div>
             )
@@ -497,10 +499,10 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     }
 
     const disableCopy = (e) => {
-        if(session && session.user.id === bookData?.author_id){
+        if (session && session.user.id === bookData?.author_id) {
             return null;
         }
-        if(typeof window !== 'undefined'){
+        if (typeof window !== 'undefined') {
             navigator.clipboard.writeText('Ogla ne permet ');
         }
     }
@@ -516,10 +518,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                 chapterData && width > 900 &&
                 checkSide()
             }
-
-
-
-
 
             {
                 chapterData && !err ?
@@ -546,12 +544,12 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                             className={styles.contentChapter}>
                                             <div className={styles.headerContent}>
                                                 <h5 onClick={() => router.push({
-                                                    pathname:'/livre/'+ bookData?._id,
-                                                    query:bookData?.slug
+                                                    pathname: '/livre/' + bookData?._id,
+                                                    query: bookData?.slug
                                                 })}>{bookData.title}</h5>
                                                 <h6 onClick={() => router.push('/auteur/' + authorData.pseudo)}>
                                                     <img src={authorData.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                                         referrerPolicy={'no-referrer'} />{authorData.pseudo}
+                                                        referrerPolicy={'no-referrer'} />{authorData.pseudo}
                                                 </h6>
                                             </div>
                                             <div className={styles.nextChapterContainer}>
@@ -620,16 +618,16 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                 })}>{bookData.title}</h4>
                                             </div>
 
-                                            <img src={bookData?.img} alt={'Image du livre'}/>
+                                            <img src={bookData?.img} alt={'Image du livre'} />
 
                                         </div>
                                         <div className={styles.sMenuPhone}>
                                             <div className={styles.itemMenuBookPhone} onClick={() => router.push('/')}>
-                                                <HomeIcon/>
+                                                <HomeIcon />
                                             </div>
 
                                             <div className={styles.itemMenuBookPhone} onClick={() => setActiveLinkPhone('content')}>
-                                                <BookOpenIcon/>
+                                                <BookOpenIcon />
                                             </div>
                                             <div className={styles.like}>
                                                 <LikeBtnSidebarPhone onLike={likeChapter} isLike={hasLike} />
@@ -640,11 +638,11 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                                 setSidebarSelect('Commentary');
                                             }
                                             }>
-                                                <ChatBubbleBottomCenterTextIcon/>
+                                                <ChatBubbleBottomCenterTextIcon />
                                             </div>
 
                                             <div className={styles.itemMenuBookPhone} >
-                                                <HeadPhoneBtn/>
+                                                <HeadPhoneBtn />
                                             </div>
                                         </div>
 
@@ -652,10 +650,10 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
 
                                     {navBlockPrev()}
 
-                                        <div className={styles.titlePhone}>
-                                            <p>Chapitre {index}</p>
-                                            <h2>{chapterData?.title}</h2>
-                                        </div>
+                                    <div className={styles.titlePhone}>
+                                        <p>Chapitre {index}</p>
+                                        <h2>{chapterData?.title}</h2>
+                                    </div>
 
 
                                     {
@@ -680,7 +678,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                         </div>
                                     }
 
-                           {/*         {
+                                    {/*         {
                                         activeLinkPhone === 'chapters' &&
                                         <div
                                             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
@@ -722,7 +720,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                     :
                     <>
                         <ErrMsgOnChapter click={() => router.back()} textBtn={'Retour'} linkBtn={'/livre/'} text={'Impossible de récupérer le chapitre, veuillez réessayer.'} />
-<Footer/>
+                        <Footer />
                     </>
             }
 

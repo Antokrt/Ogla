@@ -9,18 +9,21 @@ export const themeSlice = createSlice({
     reducers: {
         changeTheme: (state) => {
             state.light = !state.light
-        } 
-    },
-    extraReducers : {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.light,
-            }
         }
-    }
+    },
+    // extraReducers : {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.light,
+    //         }
+    //     }
+    // }
 });
 
 export const {changeTheme} = themeSlice.actions;
-export const selectTheme = (state) => state.theme.light;
+export const selectTheme = (state) => {
+    return state.theme.light;
+} 
+    
 export default themeSlice.reducer;

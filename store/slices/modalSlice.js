@@ -13,14 +13,14 @@ export const modalSlice = createSlice({
             state.login = action.payload
         }
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.login,
-            };
-        },
-    },
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.login,
+    //         };
+    //     },
+    // },
 })
 
 export const {setActiveModalState} = modalSlice.actions;

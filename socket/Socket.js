@@ -1,9 +1,9 @@
-import {useDispatch, useSelector} from "react-redux";
-import {selectSocketStatus, setActiveSocket} from "../store/slices/socketSlice";
-import {addNotif, selectNotifs, setAllNotifs} from "../store/slices/notifSlice";
-import {useSession} from "next-auth/react";
-import React, {useCallback, useEffect} from "react";
-import {io} from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSocketStatus, setActiveSocket } from "../store/slices/socketSlice";
+import { addNotif, selectNotifs, setAllNotifs } from "../store/slices/notifSlice";
+import { useSession } from "next-auth/react";
+import React, { useCallback, useEffect } from "react";
+import { io } from "socket.io-client";
 import { GetAllNotifs } from "../service/Notifications/NotificationsService";
 
 export const Socket = () => {
@@ -14,6 +14,7 @@ export const Socket = () => {
 
     const initializeSocket = useCallback(() => {
         if (session && !session.user.settings.notif) {
+            console.log("aha socket")
             GetAllNotifs()
                 .then((res) => {
                     dispatch(setAllNotifs(res.data));
@@ -29,12 +30,11 @@ export const Socket = () => {
                     auth: {
                         token: session?.user.accessToken
                     }
-                }
-                );
+                });
                 dispatch(setActiveSocket(true))
             }
             if (socket) {
-                socket.emit("userId", 1190201)
+                socket.emit("userId", process.env.CODE_SOCKET)
                 socket.removeAllListeners("status");
                 socket.on("status", (notif) => {
                     dispatch(setAllNotifs(notif));
@@ -47,11 +47,11 @@ export const Socket = () => {
         }
     }, [dispatch, selectNotifsState, selectSocketState, session])
 
-   useEffect(() => {
-       initializeSocket();
-   }, [session]);
+    useEffect(() => {
+        initializeSocket();
+    }, [session]);
 
     return (
-        <h1 style={{ fontSize: "1px", zIndex: "-1", display: "none" }}>.</h1>
+        <div></div>
     )
 }

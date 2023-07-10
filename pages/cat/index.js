@@ -57,7 +57,6 @@ export default function CatPage({cat, err, bookListData,topData}) {
     const [loadingScroll, setLoadingScroll] = useState(false);
     const [width, height] = ScreenSize();
     const theme = useSelector(selectTheme);
-
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
         setCanSeeMore(true);

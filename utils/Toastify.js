@@ -14,8 +14,8 @@ export const toastDisplaySuccess = (msg) => {
 }
 
 export const toastDisplayError = (msg) => {
-	toast.error(<div>{msg}</div>, {
-		position: "top-center",
+	toast.error(<div styles={{fontSize: "10px"}} >{msg}</div>, {
+		position: "bottom-right",
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,

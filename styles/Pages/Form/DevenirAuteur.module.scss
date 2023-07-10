@@ -124,6 +124,17 @@
         width: 100%;
 
         .errMsgItem {
+          opacity: 1;
+          display: block;
+          text-align: left;
+          font-size: 12px;
+          font-family: "Poppins", sans-serif;
+          font-style: italic;
+          color: red;
+          transition: 0.4s;
+        }
+
+        .errMsgItemF {
           opacity: 0;
           display: block;
           text-align: left;

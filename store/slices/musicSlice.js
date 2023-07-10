@@ -21,14 +21,14 @@ export const musicSlice = createSlice({
             else  state.index = action.payload;
         }
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.active,
-            };
-        },
-    },
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.active,
+    //         };
+    //     },
+    // },
 })
 
 export const {setActiveMusic} = musicSlice.actions;

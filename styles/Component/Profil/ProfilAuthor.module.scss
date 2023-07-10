@@ -1,6 +1,9 @@
 @import "../../../styles/utils/var";
 
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: inherit;
     height: 60px;
 }
@@ -32,6 +35,7 @@
         font-size: 13px;
         color: rgb(165, 165, 165);
         width: 300px;
+        // height: 21px;
     }
 
     svg {
@@ -40,7 +44,7 @@
             transition: 0.2s;
         }
         cursor: pointer;
-        height: 30px;
+        height: 24px;
         color: #9844AD;
     }
 }
@@ -51,6 +55,7 @@
     justify-content: space-between;
 
     a {
+        width: 230px;
         overflow: hidden;
         text-overflow: ellipsis;
         -webkit-line-clamp: 1;
@@ -58,7 +63,6 @@
         -webkit-box-orient: vertical;
         font-family: 'Poppins',sans-serif;
         font-size: 12px;
-        width: 300px;
         overflow: hidden;
     }
 
@@ -71,10 +75,10 @@
     justify-content: space-around;
     position: relative;
     border: 1px solid #9844AD;
-    // background-color: white;
     border-radius: 5px;
     margin-left: 15px;
     transition: 0.3s;
+    z-index: 0;
 
     svg {
         &:active{
@@ -82,7 +86,7 @@
             transition: 0.2s;
         }
         width: 50%;
-        height: 24px;
+        height: 22px;
         padding: 3px;
         border-radius: 2px;
         border-top-left-radius: 0px;
@@ -103,7 +107,7 @@
     .rightOption {
         background-color: #9844AD;
         color: white;
-        height: 24px!important;
+        height: 22px!important;
     }
 }
 
@@ -115,7 +119,7 @@
     input {
         padding: 5px;
         width: 230px;
-        height: 24px;
+        height: 21px;
         font-size: 12px;
         font-weight: 500;
         font-family: 'Poppins',sans-serif;

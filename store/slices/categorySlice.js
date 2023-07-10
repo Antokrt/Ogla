@@ -15,14 +15,14 @@ export const categorySlice = createSlice({
         },
     },
 
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return {
-                ...state,
-                ...action.payload.categories
-            }
-        }
-    }
+    // extraReducers: {
+    //     [HYDRATE]: (state, action) => {
+    //         return {
+    //             ...state,
+    //             ...action.payload.categories
+    //         }
+    //     }
+    // }
 })
 
 export const {addCategory} = categorySlice.actions;
