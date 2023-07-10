@@ -6,7 +6,7 @@ export async function middleware(req){
 
     const token = await getToken({
         req,
-        secret:'05jXZs0Wv81MrzYSZMmIy'
+        secret:process.env.NEXTAUTH_SECRET
     });
 
 
@@ -41,3 +41,6 @@ export async function middleware(req){
     return NextResponse.next();
 }
 
+export const config = {
+    matcher: ['/dashboard/','/dashboard/books','/dashboard/nouveau-livre', '/dashboard/books/']
+}
