@@ -49,6 +49,7 @@ export const HeaderMain = () => {
         '/chapitre/',
         "/conditions-generales-d'utilisation",
         '/profil',
+        '/news'
     ]
 
     const headerHasToBeWhite = [
@@ -193,7 +194,7 @@ export const HeaderMain = () => {
                                 </>
                                 :
                                 <>
-                                    <Link href={"/devenir-auteur"}>Deviens écrivain</Link>
+                                    <Link href={"/devenir-ecrivain"}>Deviens écrivain</Link>
                                     <Link href={'/bibliotheque'}>Bibliothèque</Link>
                                 </>
                         }
@@ -229,13 +230,30 @@ export const HeaderMain = () => {
                             }}/>
                         }
 
-                        <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
-                            <MusicalNoteIcon tabIndex={0}/>
-                            {
-                                selectMusicState &&
-                                <div className={styles.animation}></div>
-                            }
-                        </div>
+                        {
+                            !session ?
+                            <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
+                                <MusicalNoteIcon tabIndex={0}/>
+                                {
+                                    selectMusicState &&
+                                    <div className={styles.animation}></div>
+                                }
+                            </div> :
+                                <>
+                                {
+                                    session && session?.user?.settings?.music &&
+                                    <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
+                                        <MusicalNoteIcon tabIndex={0}/>
+                                        {
+                                            selectMusicState &&
+                                            <div className={styles.animation}></div>
+                                        }
+                                    </div>
+                                }
+                                </>
+
+                        }
+
 
 
 

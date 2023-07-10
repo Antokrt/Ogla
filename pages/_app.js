@@ -2,6 +2,7 @@ import '../styles/globals.scss';
 import '../styles/editor.css';
 import '../styles/tippy.css';
 import '../styles/toast.css';
+import '../styles/cookie.css';
 import {SessionProvider, useSession} from "next-auth/react";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +38,7 @@ import {useRouter} from "next/router";
 import {Loader} from "../Component/Loader";
 import {Darken} from "../Component/Darken";
 import CustomStyle from "../Component/CustomStyle";
+import {CookieAccept} from "../Component/CookieAccept";
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -71,29 +73,33 @@ function MyApp({Component, pageProps}) {
     }
 
 
-    return (
-    <AnimatePresence mode={'wait'} initial={false}>
-        <SessionProvider session={pageProps.session}>
-            <Provider store={store}>
-                <Notif/>
-                <Modal/>
-                <Darken/>
-                {
-                    loading &&
-                    <Loader/>
-                }
-                <Component {...pageProps} />
 
-                <Socket/>
-                <ToastContainer toastStyle={{
-                    fontFamily: 'Poppins',
-                }} limit={3}/>
-                <DynamicHeader/>
-                <GetCategories/>
-            </Provider>
-        </SessionProvider>
-    </AnimatePresence>
+
+    return (
+        <AnimatePresence mode={'wait'} initial={false}>
+            <SessionProvider session={pageProps.session}>
+                <Provider store={store}>
+                    <CookieAccept/>
+                    <Notif/>
+                    <Modal/>
+                    <Darken/>
+                    {
+                        loading &&
+                        <Loader/>
+                    }
+                    <Component {...pageProps} />
+
+                    <Socket/>
+                    <ToastContainer toastStyle={{
+                        fontFamily: 'Poppins',
+                    }} limit={3}/>
+                    <DynamicHeader/>
+                    <GetCategories/>
+                </Provider>
+            </SessionProvider>
+        </AnimatePresence>
     )
 }
+
 
 export default MyApp;

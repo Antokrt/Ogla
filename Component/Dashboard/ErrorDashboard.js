@@ -5,10 +5,13 @@ import {CursorArrowRaysIcon} from "@heroicons/react/24/outline";
 const ErrorDashboard = ({img, title, subTitle, btn, link}) => {
 return (
     <div className={styles.container + ' ' + anim.fadeIn}>
-        <img src={img}/>
+        <img alt={'Image Erreur Ogla'} src={img}/>
         <h5>{title}</h5>
         <p>{subTitle}</p>
-        <button onClick={link}>{btn} <CursorArrowRaysIcon/></button>
+        {
+            btn &&
+            <button onClick={link}>{btn} <CursorArrowRaysIcon/></button>
+        }
     </div>
 )
 }

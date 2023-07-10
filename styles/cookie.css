@@ -1,0 +1,20 @@
+.btn-consent-container{
+    display: flex;
+    align-items: center;
+}
+
+.btn-consent-container button:hover{
+     transition: 0.2s;
+     filter: brightness(98%);
+}
+
+.btn-consent-container button{
+    height: 30px;
+    transition: 0.2s;
+}
+
+.btn-consent-container button:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+}
+

@@ -11,9 +11,9 @@ import {
 } from "@heroicons/react/24/outline";
 import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
-import {newBook, NewBookService} from "../../../service/Dashboard/BooksAuthorService";
+import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
-import {renderPrediction} from "../../../utils/ImageUtils";
+import {GetImgPathOfAssets, renderPrediction} from "../../../utils/ImageUtils";
 import {toastDisplayError} from "../../../utils/Toastify";
 import {LoaderImg} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
@@ -24,7 +24,6 @@ import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@he
 import {PhotoIcon} from "@heroicons/react/20/solid";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../../store/slices/categorySlice";
-import {useEffect} from 'react';
 import Head from "next/head";
 
 
@@ -35,6 +34,7 @@ const New = () => {
     const [category, setCategory] = useState('Action');
     const imageMimeType = /image\/(png|jpg|jpeg)/i;
     const [selectedFile, setSelectedFile] = useState(null);
+    const [disableBtn,setDisableBtn] = useState(false);
     const fileRef = useRef(null);
     const [seeErrMsg, setSeeErrMsg] = useState(false);
     const [errMsg,setErrMsg] = useState('');
@@ -54,6 +54,10 @@ const New = () => {
         fileRef.current.click();
     }
     const sendData = () => {
+        if(disableBtn){
+            return null;
+        }
+        setDisableBtn(true);
         const form = {
             title: title,
             summary: summary,
@@ -202,7 +206,7 @@ const New = () => {
                             <img
                                 onClick={openFileUpload}
                                 src={localImg}
-                                alt={'Selected'}
+                                alt={'Nouvelle Image Ogla'}
                                 width={'200px'}
                                 className={styles.fileName}/>
                         </div>
@@ -254,7 +258,7 @@ const New = () => {
             <div className={styles.finalContainer}>
                 {
                     localImg &&
-                    <img src={localImg}/>
+                    <img alt={'Nouvelle Image Ogla'} src={localImg}/>
                 }
                 <h4>{title}</h4>
                 <p>{category}</p>
@@ -382,7 +386,7 @@ const New = () => {
                 <div className={styles.newContainer}>
                     <div className={styles.titleABook}>
                         {titleStep()}
-                        <img src={'/assets/diapo/book.png'}/>
+                        <img alt={'Défaut Image Ogla'} onError={(e) => e.target.src = '/assets/diapo/book.png'} src={GetImgPathOfAssets() + 'diapo/book.png'}/>
                     </div>
                     {checkStep()}
                     {btn()}

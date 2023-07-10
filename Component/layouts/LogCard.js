@@ -23,7 +23,7 @@ const LogCard = () => {
                 </div>
             </div>
             <div className={styles.why}>
-                <button onClick={() => router.push("/devenir-auteur")}>Pourquoi pas toi ?</button>
+                <button onClick={() => router.push("/devenir-ecrivain")}>Pourquoi pas toi ?</button>
             </div>
 
         </div>

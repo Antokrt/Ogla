@@ -7,8 +7,9 @@
   height: auto;
   z-index: 20;
   user-select: none;
-  overflow-y: scroll;
-
+  svg{
+    outline: none;
+  }
 }
 
 .disableOverflow {
@@ -18,8 +19,11 @@
   top: 0;
 }
 
-.containerMain {
+.fixed{
   position: fixed;
+}
+
+.containerMain {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -137,7 +141,7 @@
   position: absolute;
   top: 100px;
   z-index: 20;
-  min-height: 200px;
+  min-height: 150px;
   padding: 32px;
   width: 100%;
   background-color: white;
@@ -186,6 +190,7 @@
       cursor: pointer;
       color: #e94f37;
       width: 18px;
+      outline: none;
     }
 
   }

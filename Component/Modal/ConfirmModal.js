@@ -14,7 +14,7 @@ export const ConfirmModal = ({close,title, btnConfirm, subTitle, img, confirm}) 
                             <p>{subTitle}</p>
                     {
                         img &&
-                        <img src={img}/>
+                        <img alt={'Image Ogla'} src={img}/>
                     }
                     <div className={styles.containerBtn}>
                         <button onClick={close}>Annuler</button>

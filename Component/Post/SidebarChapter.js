@@ -21,6 +21,7 @@ const SidebarChapter = ({
                             getMoreChapter,
                             author,
                             bookTitle,
+    errChapters,
                             nbChapters,
                             bookId,
                             bookSlug,
@@ -72,8 +73,36 @@ const SidebarChapter = ({
         },10)
     }
 
+    if(errChapters){
+        return (
+            <div className={styles.container}>
+                <div className={styles.headerComment}>
+                    <p><QueueListIcon/> <span onClick={() => router.push({
+                        pathname: '/livre/' + bookId,
+                        query: bookSlug
+                    })}>{Capitalize(bookTitle)} </span>  &nbsp;({nbChapters} chapitres)</p>
+                    <p><span>logo</span></p>
+                </div>
 
-    return (<div className={styles.container}>
+                <div className={styles.titleSection}>
+                    <h5>Tous les chapitres</h5>
+                    <div>
+
+                        <BarsArrowDownIcon />
+                    </div>
+                </div>
+
+                <div className={styles.errContainer}>
+                    <h4>Erreur</h4>
+                    <p>Impossible de récupérer les chapitres.</p>
+                </div>
+
+
+            </div>
+        )
+    }
+
+    else return (<div className={styles.container}>
 
         <div className={styles.headerComment}>
             <p><QueueListIcon/> <span onClick={() => router.push({
@@ -127,7 +156,7 @@ const SidebarChapter = ({
             <div className={styles.err + ' ' + anim.fadeIn}>
                 <img src={'/assets/jim/angry4.png'}/>
                 <h4>Oups !</h4>
-                <p>Impossible de récupérer les chapitres </p>
+                <p>Impossible de récupérer les chapitres. </p>
 
             </div>
         }

@@ -9,6 +9,8 @@
 
 }
 
+
+
 .containerF {
   display: flex;
   justify-content: space-between;
@@ -189,10 +191,10 @@ display: flex;
       }
       p{
         font-family: $primaryFont;
-        opacity: 0.8;
-        font-size: 13px;
-        font-weight: bold;
-        letter-spacing: -0.5px;
+        font-size: 12px;
+        opacity: 0.9;
+        -webkit-text-stroke-width: 0.2px;
+        color: #343d46;
       }
     }
     .pseudo_date {
@@ -442,9 +444,11 @@ display: flex;
   }
   p{
     padding: 0px 10px;
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: $primaryFont;
     color: rgba(28, 35, 43, 0.65);
     text-align: center;
+    -webkit-text-stroke-width: 0.2px;
+    font-size: 14px;
     span{
       font-weight: bold;
     }
@@ -549,6 +553,12 @@ display: flex;
     right: 0% !important;
     font-size: 6vh!important;
     word-break: initial!important;
+  }
+}
+
+@media screen and (max-width: 950px){
+  .err{
+    margin-top: 100px;
   }
 }
 

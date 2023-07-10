@@ -1,15 +1,15 @@
 import styles from "../../styles/Pages/Form/Register.module.scss";
-
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import React, { useEffect, useState } from "react";
-import { RegisterSchema } from "./Schema/RegisterSchema";
-import {router, useRouter} from "next/router";
-import { signIn } from "next-auth/react";
+import anim from '../../styles/utils/anim.module.scss';
+import {Formik, Field, Form, ErrorMessage} from 'formik';
+import React, {useEffect, useState} from "react";
+import {RegisterSchema} from "./Schema/RegisterSchema";
+import { useRouter} from "next/router";
+import {signIn} from "next-auth/react";
 import ScreenSize from "../../utils/Size";
-import Link from "next/link";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 
-const Register = ({ login }) => {
+const Register = ({login}) => {
 
     // const [errItem, setErrItem] = useState({
     //     email: {
@@ -79,7 +79,7 @@ const Register = ({ login }) => {
 
                         case "Email-120":
                             setSubmitErr({
-                                msg:'Email incorrect.',
+                                msg: 'Email incorrect.',
                                 show: true
                             })
                             break;
@@ -111,8 +111,7 @@ const Register = ({ login }) => {
                                 show: true
                             })
                     }
-                }
-                else {
+                } else {
                     router.push('/');
                 }
             })
@@ -155,16 +154,18 @@ const Register = ({ login }) => {
     }
 
     return (
-        <div className={styles.formContainer}>
+        <div className={styles.formContainer + ' ' + anim.fadeIn}>
             <div className={styles.imgAbs} onClick={() => router.push("/")}>
-                <img src="/assets/bookOrange2.png" />
+                <img src={GetLogoUtils()} onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                     alt={'Logo Ogla'}/>
             </div>
             <div className={styles.leftBlock}>
                 <div className={styles.content}>
                     <div className={styles.header}>
                         <h1> Rejoins nous !</h1>
-                        <p> Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de romans ouverte à tout.
-                           <br/> Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
+                        <p> Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de
+                            romans ouverte à tout.
+                            <br/> Rejoignez la communauté pour avoir accès à tout son potentiel !</p>
                     </div>
                     <div className={styles.form}>
                         <Formik
@@ -173,13 +174,14 @@ const Register = ({ login }) => {
                             onSubmit={(values) => {
                                 submit(values)
                             }}>
-                            {({ resetForm }) => (
+                            {({resetForm}) => (
                                 <Form>
                                     <div className={styles.selectItem + " " + "fadeIn"}>
                                         {/* EMAIL */}
                                         <div className={styles.inputContainer}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z"></path>
+                                                <path
+                                                    d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z"></path>
                                             </svg>
                                             <Field
                                                 id={'email'}
@@ -192,7 +194,7 @@ const Register = ({ login }) => {
                                                 Email
                                             </label>
                                             <p className={styles.errMsgItem}>
-                                                <ErrorMessage name={"email"} />
+                                                <ErrorMessage name={"email"}/>
                                             </p>
                                         </div>
                                         {/* EMAIL */}
@@ -200,7 +202,8 @@ const Register = ({ login }) => {
                                         {/* PSEUDO */}
                                         <div className={styles.inputContainer}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
+                                                <path
+                                                    d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z"></path>
                                             </svg>
                                             <Field
                                                 type={"text"}
@@ -214,7 +217,7 @@ const Register = ({ login }) => {
                                                 Pseudo
                                             </label>
                                             <p className={styles.errMsgItem}>
-                                                <ErrorMessage name={"pseudo"} />
+                                                <ErrorMessage name={"pseudo"}/>
                                             </p>
                                         </div>
                                         {/* PSEUDO */}
@@ -222,7 +225,8 @@ const Register = ({ login }) => {
                                         {/* PASSWORD */}
                                         <div className={styles.inputContainer}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
+                                                <path
+                                                    d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
                                             </svg>
                                             <Field
                                                 id={'password'}
@@ -236,7 +240,7 @@ const Register = ({ login }) => {
                                                 Mot de passe
                                             </label>
                                             <p className={styles.errMsgItem}>
-                                                <ErrorMessage name={"password"} />
+                                                <ErrorMessage name={"password"}/>
                                             </p>
                                         </div>
                                         {/* PASSWORD */}
@@ -244,7 +248,8 @@ const Register = ({ login }) => {
                                         {/* CONFIRM PASSWORD */}
                                         <div className={styles.inputContainer}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <path d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
+                                                <path
+                                                    d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM5 12V20H19V12H5ZM11 14H13V18H11V14ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17Z"></path>
                                             </svg>
                                             <Field
                                                 id={"confirmPassword"}
@@ -259,7 +264,7 @@ const Register = ({ login }) => {
                                             <p className={styles.errMsgItem}>
                                                 {
                                                     width > 196 &&
-                                                    <ErrorMessage name={"confirmPassword"} />
+                                                    <ErrorMessage name={"confirmPassword"}/>
                                                 }
                                             </p>
                                         </div>
@@ -271,11 +276,16 @@ const Register = ({ login }) => {
                                     }
 
                                     <div className={styles.conditions}>
-                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En rejoignant <strong>OGLA</strong>, j&apos;accepte l'ensemble des <a target={'_blank'} rel={'noreferrer'} href={("/conditions-generales-d'utilisation")} className={styles.spanCondition}>conditions d&apos;utilisation</a>.</p>
+                                        <p className={styles.acceptCondition} htmlFor={"confirmConditions"}>En
+                                            rejoignant <strong>OGLA</strong>, j&apos;accepte l'ensemble des <a
+                                                target={'_blank'} rel={'noreferrer'}
+                                                href={("/conditions-generales-d'utilisation")}
+                                                className={styles.spanCondition}>conditions d&apos;utilisation</a>.</p>
                                     </div>
                                     <div className={styles.lastOptions}>
                                         {loginLink()}
-                                        <p className={styles.registerGoogle} onClick={() => signIn('google')}> S&apos;inscrire avec Google </p>
+                                        <p className={styles.registerGoogle}
+                                           onClick={() => signIn('google')}> S&apos;inscrire avec Google </p>
                                     </div>
                                     <div className={styles.stepBtnContainer}>
                                         <button type={'submit'} className={styles.stepBtn}> Envoyer
@@ -290,7 +300,10 @@ const Register = ({ login }) => {
             {
                 width > 1000 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/knight2.png"} />
+                    <img
+                        alt={'Image Bannière Inscription Ogla'}
+                        onError={(e) => e.target.src = "/assets/diapo/knight2.png"}
+                        src={GetImgPathOfAssets() + "diapo/knight2.png"}/>
                 </div>
             }
         </div>

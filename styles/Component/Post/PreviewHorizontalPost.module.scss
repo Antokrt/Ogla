@@ -73,11 +73,47 @@
   }
 }
 
+@media screen and (max-width: 500px){
+  .container{
+    align-items: center;
+    img{
+      width: 60px;
+      height: 60px;
+    }
+    h5{
+      font-size: 14px!important;
+    }
+  }
+}
+
 @media screen and (max-width: 350px){
   .container{
     img{
       width: 60px;
       height: 60px;
     }
+  }
+}
+
+
+@media screen and (max-width: 250px){
+  .container{
+    flex-direction: column!important;
+    height: auto;
+    gap: 20px;
+    img{
+      margin-top: 20px;
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .contentContainer{
+    align-items: center!important;
+    margin-left: 0!important;
+  }
+
+  .rankContainer{
+    margin-left: 0!important;
   }
 }

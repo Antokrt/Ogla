@@ -10,11 +10,11 @@
   background-color: rgba(28, 35, 43, 0.77);
 
   img{
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
+    border-radius: 10px;
     object-fit: cover;
-    border-radius: 50%;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .containerContent {
@@ -308,18 +308,13 @@
         transform: scale(0.8);
         transition: 0.2s;
       }
-
-      &:hover {
-        transition: 0.2s;
-        filter: brightness(92%);
-      }
       background-color: #1C232B;
       color: white;
       font-family: $primaryFont;
       letter-spacing: 1px;
       font-weight: bold;
       border-radius: 5px;
-      font-size: 9px;
+      font-size: 10px;
       box-shadow: $shadow;
       padding: 8px 20px;
     }

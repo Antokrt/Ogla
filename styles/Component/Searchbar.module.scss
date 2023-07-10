@@ -38,6 +38,9 @@
   border: solid 1px rgba(90, 102, 115, 0.12);
 
   input {
+    &::placeholder{
+      opacity: 0.8;
+    }
     transition: box-shadow 0.3s;
     padding-left: 15px;
     width: 90%;

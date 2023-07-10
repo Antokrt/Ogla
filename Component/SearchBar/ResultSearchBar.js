@@ -89,7 +89,9 @@ const ResultSearchBar = ({ destroy, query, data }) => {
                                     tabIndex={0} // Assurez-vous que la div est focusable en définissant le tabIndex
                                     onKeyDown={handleKeyDown} // Gestionnaire d'événement pour les touches du clavier
                                 >
-                                    <p className={styles.title + ' ' + styles.author}><img referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} src={item.img}/>
+                                    <p className={styles.title + ' ' + styles.author}><img referrerPolicy={'no-referrer'} onError={(e) => {
+                                        e.target.src = GetDefaultUserImgWhenError();
+                                    }} src={item.img}/>
                                         <span>{ReduceString(Capitalize(item.pseudo),40)} </span>
                                     </p>
                                     <div className={styles.subContainer}>

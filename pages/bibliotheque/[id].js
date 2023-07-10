@@ -38,20 +38,19 @@ export async function getServerSideProps({ req, params }) {
 
     let category = params.id;
 
-    const data = await GetBookByCategoryApi(category, 'popular');
-
+    const data = await GetBookByCategoryApi(category, 'popular',false);
 
     return {
         props: {
             key: category,
             err: data.err,
             cat: category,
-            bookListData: data.book
+            bookListData: data.book,
         }
     }
 }
 
-export default function CatPage({ cat, err, bookListData }) {
+export default function CatPage({ cat, err, bookListData,topBookData }) {
 
     const router = useRouter();
     const [filter, setFilter] = useState('popular');
@@ -63,7 +62,7 @@ export default function CatPage({ cat, err, bookListData }) {
     const [width, height] = ScreenSize();
     const theme = useSelector(selectTheme);
     const [activeCat,setActiveCat] = useState(cat);
-    const topBook = bookListData[0];
+    const topBook = !err ? bookListData[0] : null;
     const categories = useSelector(selectCategories);
 
 
@@ -154,6 +153,7 @@ export default function CatPage({ cat, err, bookListData }) {
                                         img={topBook.img} category={topBook.category}
                                         nbChapter={topBook.nbChapters}
                                         slug={topBook.slug}
+                                             authorImg={topBook?.author?.img}
                                         id={topBook._id}
                                         top={true}
                                         description={topBook.summary}
@@ -241,7 +241,7 @@ export default function CatPage({ cat, err, bookListData }) {
             }
             {
                 err &&
-                <ErrMsg textBtn={'Retour'} click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'} />
+                <ErrMsg click={() => router.back()} text={'Impossible de récupérer les livres, veuillez réessayer...'} />
             }
 
             <Footer />

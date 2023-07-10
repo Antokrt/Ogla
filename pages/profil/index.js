@@ -1,4 +1,5 @@
 import styles from "../../styles/Pages/ProfilPage.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
@@ -15,7 +16,13 @@ import {GetPrivateProfilApi} from "../api/user";
 import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
-import {GetDefaultUserImg, GetDefaultUserImgWhenError, GetLogoUtils, renderPrediction} from "../../utils/ImageUtils";
+import {
+    GetDefaultUserImg,
+    GetDefaultUserImgWhenError,
+    GetImgPathOfAssets,
+    GetLogoUtils,
+    renderPrediction
+} from "../../utils/ImageUtils";
 import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
 import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
@@ -27,7 +34,12 @@ import Footer from "../../Component/Footer";
 import {useDispatch, useSelector} from "react-redux";
 import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/notifSlice";
 import {LoaderImg} from "../../Component/layouts/Loader";
-import {toastDisplayError, toastDisplayPromiseSendMail} from "../../utils/Toastify";
+import {
+    toastDisplayError,
+    toastDisplayInfo,
+    toastDisplayPromiseSendMail,
+    toastDisplaySuccess
+} from "../../utils/Toastify";
 import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
 import {instance} from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
@@ -40,6 +52,7 @@ import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {ErrMsg} from "../../Component/ErrMsg";
 import Link from "next/link";
+import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -134,6 +147,11 @@ const Profil = ({profilData, err}) => {
                             music: newSettings.music
                         }
                     })))
+                    .then(() => {
+                        if(!newSettings.music){
+                            dispatch(stopMusic());
+                        }
+                    })
                     .then(() => ReloadSession())
                     .catch(() => toastDisplayError('Impossible de modifier les réglages'))
                 )
@@ -177,7 +195,8 @@ const Profil = ({profilData, err}) => {
 
     const verifyEmail = () => {
         VerifyEmailService()
-            .catch((err) => console.log('err to send email'));
+            .then((res) => toastDisplaySuccess('Email envoyé !'))
+            .catch((err) => toastDisplayError("Impossible d'envoyer l'email."));
     }
 
     const changePassword = (e) => {
@@ -222,7 +241,7 @@ const Profil = ({profilData, err}) => {
 
     const profilComponent = () => {
         return (
-            <div className={styles.profil}>
+            <div className={styles.profil + ' ' + anim.fadeIn}>
                 <div className={styles.imgContainer}>
                     {
                         loadingImg && width > 800 &&
@@ -236,14 +255,16 @@ const Profil = ({profilData, err}) => {
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Profil Pic'}/>
+                                    src={localImg} alt={'Nouvelle Image Ogla Profil'}/>
                             </>
                             :
                             <Tippy trigger={'mouseenter'} content={'Modifier'}>
                                 <img
                                     onClick={() => imgClick()}
                                     src={profil?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                    alt={'Profil Pic'}/>
+                                    alt={'Profil Ogla'}
+                                referrerPolicy={'no-referrer'}
+                                />
 
                             </Tippy>
                     }
@@ -353,9 +374,6 @@ const Profil = ({profilData, err}) => {
 
 
                 </div>
-                {/* <div className={styles.imgContainer}>
-                    <img src={'/assets/diapo/WalkRead.png'}/>
-                </div> */}
             </div>
 
         )
@@ -363,11 +381,11 @@ const Profil = ({profilData, err}) => {
 
     const writerComponent = () => {
         return (
-            <div className={styles.writer}>
+            <div className={styles.writer + ' ' + anim.fadeIn}>
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img}/>
+                        <img src={profilData?.img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
 
@@ -427,7 +445,7 @@ const Profil = ({profilData, err}) => {
                                 <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
                             </div>
                             <div className={styles.socialImg}>
-                                <img src={"/assets/other/manReading2.png"} alt="author reading"/>
+                                <img src={GetImgPathOfAssets() +"other/manReading2.png"} onError={(e) => e.target.src = '/assets/other/manReading2.png'} alt="Auteur lit un livre ogla"/>
                             </div>
                         </div>
                     </div>
@@ -440,22 +458,22 @@ const Profil = ({profilData, err}) => {
 
     const becameWriter = () => {
         return (
-            <div className={styles.becameWriter}>
-                <img src={'/assets/jim/smile8.png'}/>
+            <div className={styles.becameWriter + ' ' + anim.fadeIn}>
+                <img alt={'Image Castle Ogla'} src={GetImgPathOfAssets() +'diapo/castle.png'} onError={(e) => e.target.src = 'assets/diapo/castle.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
                     ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d&apos;être entendue</p>
 
-                <button onClick={() => router.push('/devenir-auteur')}>Je me lance !</button>
+                <button onClick={() => router.push('/devenir-ecrivain')}>Je me lance !</button>
             </div>
         )
     }
 
     const settingComponent = () => {
         return (
-            <div className={styles.settings}>
+            <div className={styles.settings +  ' ' + anim.fadeIn}>
                 {
                     width > 800 &&
                     <h5>Réglages</h5>
@@ -478,7 +496,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
                          onClick={() => setNotifState(!notifState)}>
-                        <input checked={notifState} type="checkbox" id="toggle1"/>
+                        <input  checked={notifState} readOnly={true} type="checkbox" id="toggle1"/>
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -498,9 +516,9 @@ const Profil = ({profilData, err}) => {
 
                     <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle}
                          onClick={() => {
-                             setMusicState(!musicState)
+                             setMusicState(!musicState);
                          }}>
-                        <input checked={musicState} type="checkbox" id="toggle2"/>
+                        <input checked={musicState} readOnly={true} type="checkbox" id="toggle2"/>
                         <label htmlFor="toggle2"></label>
                     </div>
                 </div>
@@ -580,7 +598,7 @@ const Profil = ({profilData, err}) => {
                             {
                                 session && session.user.image &&
                                 <>
-                                    <img src={session.user.image}/>
+                                    <img src={session.user.image} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                     <span className={styles.circle}></span>
                                 </>
                             }
@@ -600,18 +618,22 @@ const Profil = ({profilData, err}) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {
-                err || !session &&
+                err && session &&
                 <div>
                     {
                         width > 950 ?
                             <HeaderMain/> :
                             <HeaderMainResponsive/>
                     }
-                    <div className={styles.errContainer}>
-                        <img src={GetLogoUtils()} onError={(e) => e.target.src = '/assets/diapo/mountain.png'}/>
-                        <h1>Session expirée !</h1>
-                        <Link href={'/auth'}>Connectez vous pour pouvoir avoir accès à votre profil</Link>
+
+                    <div className={styles.err}>
+                        <ErrMsg text={'Impossible de récupérer votre profil'}/>
                     </div>
+
+                    {
+                        width < 800 &&
+                        <Footer/>
+                    }
                 </div>
             }
             {
@@ -638,10 +660,10 @@ const Profil = ({profilData, err}) => {
                                             className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
                                     </button>
                                     <button onClick={() => setActiveLink('writer')}
-                                            className={activeLink === 'writer' && styles.activeMenu}>Ecrivain
+                                            className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
                                     </button>
                                     <button onClick={() => setActiveLink('settings')}
-                                            className={activeLink === 'settings' && styles.activeMenu}>Réglages
+                                            className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
                                     </button>
                                     <button onClick={() => {
                                         if (Notifs.length > 0) {
