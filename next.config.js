@@ -2,8 +2,29 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
+  },
   env: {
-    maintenance: true,
+    maintenance: false,
     NEXT_PUBLIC_URL:"http://localhost:3000/",
     NEXTAUTH_URL:"http://localhost:3000",
     NEXT_PUBLIC_SECRET:'secretcode',
@@ -20,6 +41,7 @@ const nextConfig = {
     NEXT_PUBLIC_DEFAULT_USER_IMG:'/assets/default/user/default.png',
     NEXT_PUBLIC_DEFAULT_BOOK_IMG:'/assets/default/book/default.png',
     NEXT_PUBLIC_GOOGLE_SECRET_DELETE: 'Kg6Opr0HHPtufd8',
+    NEXT_PUBLIC_OPEN_WRITER:false,
     NEXT_PUBLIC_SIGHTENGINE_BOOK_API_USER: '380892233',
     NEXT_PUBLIC_SIGHTENGINE_BOOK_API_SECRET: 'ZeyDv4MRrF58dsHEDXha',
     NEXT_PUBLIC_SIGHTENGINE_USER_API_USER:'124421506',

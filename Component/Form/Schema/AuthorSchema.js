@@ -57,7 +57,7 @@ export const AuthorSchemaLog = Yup.object().shape({
 
     pseudo: Yup.string()
         .notRequired()
-        .min(5, "5 caractères min")
+        .min(0, "5 caractères min")
         .max(15, "15 caractères max"),
 
     description: Yup.string()

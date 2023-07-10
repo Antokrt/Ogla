@@ -33,7 +33,7 @@ const FooterOnChapter = ({
 
     return (<div className={styles.container}>
         <div className={styles.titleContainer}>
-            <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+            <img  alt={'Image Livre Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             <div>
                 <p className={styles.titleBook}>{ReduceString(title,80)} ({index})</p>
                 <p>{likes} likes - {author}</p>

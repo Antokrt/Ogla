@@ -346,8 +346,9 @@
         width: 100%;
         font-size: 15px;
         font-family: $primaryFont;
+        opacity: 0.9;
         font-weight: bold;
-        margin: 20px 0;
+        margin: 10px 0;
         svg{
           width: 18px;
         }
@@ -377,10 +378,10 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-            font-size: 11px;
+            font-size: 12px;
             font-family: $primaryFont;
             color: rgba(28, 35, 43, 0.82);
-            -webkit-text-stroke-width: 0.4px;
+            font-weight: bold;
             svg{
               width: 12px;
             }
@@ -390,7 +391,8 @@
             text-align: right;
             font-family: $primaryFont;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
+            color: #343d46;
           }
         }
       }
@@ -752,7 +754,8 @@
       text-align: center;
       margin-bottom: 20px;
       font-size: 15px;
-      font-weight: 500;
+      -webkit-text-stroke-width: 0.2px;
+      opacity: 0.8;
     }
 
     button {
@@ -908,7 +911,7 @@
     padding: 1vh 2vw;
     height: 40px;
     font-size: 11px;
-    font-family: $secondaryFont;
+    font-family: $primaryFont;
     color: rgba(28, 35, 43, 0.98);
     svg{
       width: 20px;

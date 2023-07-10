@@ -1,8 +1,9 @@
 import {VerifLikeApi} from "../like";
+import {GetFetchPath} from "../utils/Instance";
 
 export const GetAuthorProfilAPI = async (pseudo,req) => {
-    const data = await fetch('http://localhost:3008/author/public-profil/' + pseudo);
-    const bookData = await fetch('http://localhost:3008/book-render/by-author/' + pseudo + '/popular/popular');
+    const data = await fetch(GetFetchPath() + 'author/public-profil/' + pseudo);
+    const bookData = await fetch(GetFetchPath() + 'book-render/by-author/' + pseudo + '/popular/popular');
 
     const errDataProfil = !data.ok;
     const errBookData = !bookData.ok;
@@ -20,6 +21,7 @@ export const GetAuthorProfilAPI = async (pseudo,req) => {
     if (bookJson.statusCode === 404) {
         bookJson = null;
     }
+
 
     return {
         profil: dataJson,

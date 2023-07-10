@@ -44,7 +44,7 @@ import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/mo
 import CardCategory from "../../Component/Card/CardCategory";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import {Snippet} from "../../Component/Snippet";
-import { SendNotifService} from "../../service/Notifications/NotificationsService";
+import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {CardChapterPublic, CardChapterPublicPhone} from "../../Component/Card/CardChapterPublic";
 import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
 import CategoryCard from "../../Component/Category/CategoryCard";
@@ -52,9 +52,10 @@ import {Capitalize} from "../../utils/String";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import Footer from "../../Component/Footer";
 import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
-import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../../utils/ImageUtils";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
+import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 
 export async function getServerSideProps({req, params, query}) {
     const id = params.id;
@@ -63,6 +64,7 @@ export async function getServerSideProps({req, params, query}) {
     if (!data.err) {
         return {
             props: {
+                key: id,
                 err: false,
                 bookData: data?.book,
                 chapterData: data?.chapter,
@@ -92,10 +94,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [likes, setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [comments, setComments] = useState([]);
+    const [errCommentary, setErrCommentary] = useState(false);
     const [myComments, setMyComments] = useState([]);
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
-    const [nbChapters,setNbChapters] = useState(bookData?.nbChapters);
+    const [nbChapters, setNbChapters] = useState(bookData?.nbChapters);
     const [noComments, setNoComments] = useState(false);
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [pageChapter, setPageChapter] = useState(2);
@@ -139,13 +142,12 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const countNbOfChapters = useCallback(async () => {
         const nb = await CountNbOfChaptersService(bookData?._id);
         return setNbChapters(nb);
-    },[]);
+    }, []);
 
     useEffect(() => {
         countNbOfChapters()
             .catch(() => console.log('err callback'));
-    },[chapterList]);
-
+    }, [chapterList]);
 
 
     const openCommentaryOnPhone = () => {
@@ -161,50 +163,61 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         }
         return (<div
             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-            <SidebarCommentary
-                limit={sizeComment}
-                page={pageComment}
-                getMore={() => {
-                    getComment();
-                }}
-                nbCommentary={nbCommentary}
-                refresh={() => refresh()}
-                scrollChange={hasToScroll}
-                likeAComment={(id) => likeComment(id)}
-                createNewComment={(res) => newComment(res)}
-                deleteAComment={(id) => deleteComment(id)}
-                seeMore={() => getComment(pageComment)}
-                sendANewAnswer={(data) => sendAnswer(data)}
-                deleteAnswer={(id) => deleteAnswer(id)}
-                authorImg={authorData?.img}
-                likeAnswer={(id) => likeAnswer(id)}
-                newPageAnswer={(id) => loadMoreAnswer(id)}
-                type={'book'}
-                canScroll={canScroll}
-                loadingScroll={loadingScroll}
-                isEmpty={noComments}
-                activeFilter={activeFilterComments}
-                changeFilter={(e) => {
-                    setNoComments(false);
-                    if (e === 'recent' && activeFilterComments === 'popular') {
-                        setCanScroll(true);
-                        setActiveFilterComments('recent');
-                        setComments([]);
-                        setPageComment(1);
+            {
+                errCommentary ?
+                    <div className={styles.errContainer}>
+                        <h4>Erreur</h4>
+                        <p>Impossible de récupérer les commentaires.</p>
+                    </div>
 
-                    } else if (e === 'popular' && activeFilterComments === 'recent') {
-                        setCanScroll(true);
-                        setActiveFilterComments('popular');
-                        setComments([]);
-                        setPageComment(1);
-                    }
-                }}
-                typeId={bookData._id}
-                bookId={bookData._id}
-                title={bookData.title}
-                author={bookData.author_pseudo}
-                comments={comments}
-                select={sidebarSelect}/>
+                    :
+                    <SidebarCommentary
+                        limit={sizeComment}
+                        page={pageComment}
+                        getMore={() => {
+                            getComment();
+                        }}
+                        err={errCommentary}
+                        nbCommentary={nbCommentary}
+                        refresh={() => refresh()}
+                        scrollChange={hasToScroll}
+                        likeAComment={(id) => likeComment(id)}
+                        createNewComment={(res) => newComment(res)}
+                        deleteAComment={(id) => deleteComment(id)}
+                        seeMore={() => getComment(pageComment)}
+                        sendANewAnswer={(data) => sendAnswer(data)}
+                        deleteAnswer={(id) => deleteAnswer(id)}
+                        authorImg={authorData?.img}
+                        likeAnswer={(id) => likeAnswer(id)}
+                        newPageAnswer={(id) => loadMoreAnswer(id)}
+                        type={'book'}
+                        canScroll={canScroll}
+                        loadingScroll={loadingScroll}
+                        isEmpty={noComments}
+                        activeFilter={activeFilterComments}
+                        changeFilter={(e) => {
+                            setNoComments(false);
+                            if (e === 'recent' && activeFilterComments === 'popular') {
+                                setCanScroll(true);
+                                setActiveFilterComments('recent');
+                                setComments([]);
+                                setPageComment(1);
+
+                            } else if (e === 'popular' && activeFilterComments === 'recent') {
+                                setCanScroll(true);
+                                setActiveFilterComments('popular');
+                                setComments([]);
+                                setPageComment(1);
+                            }
+                        }}
+                        typeId={bookData._id}
+                        bookId={bookData._id}
+                        title={bookData.title}
+                        author={bookData.author_pseudo}
+                        comments={comments}
+                        select={sidebarSelect}/>
+            }
+
         </div>)
     }
 
@@ -229,6 +242,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         getMore={() => {
                             getComment();
                         }}
+                        errCommentary={errCommentary}
                         nbCommentary={nbCommentary}
                         refresh={() => refresh()}
                         scrollChange={hasToScroll}
@@ -237,7 +251,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         createNewComment={(res) => newComment(res)}
                         deleteAComment={(id) => deleteComment(id)}
                         seeMore={() => {
-                            if(!loadingScroll){
+                            if (!loadingScroll) {
                                 getComment(pageComment);
                             }
                         }}
@@ -290,8 +304,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                 if (res.length !== 0) {
                     setComments((prevState) => [...prevState, ...res]);
                     setNoComments(false);
-                }
-                else {
+                } else {
                     setNoComments(true);
                 }
             })
@@ -323,13 +336,13 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                            setTimeout(() => setHasToScroll(!hasToScroll), 50);
                        }*/
             })
-            .catch((err) => console.log('err'))
+            .catch((err) => setErrCommentary(true))
     }
 
-    const GetMoreChapters =  (state, setState, filter, page, setPage, setCanSeeMore) => {
+    const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
         setLoadingScrollChapterList(true);
         GetChapterListService(bookData._id, filter, page)
-            .then( async (res) => {
+            .then(async (res) => {
                 if (res.length !== 0) {
                     setState(prevState => [...prevState, ...res]);
                     setPage(page + 1);
@@ -426,8 +439,16 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     if (err) {
         return (
             <div className={styles.containerErr}>
-                <Header/>
-                <ErrMsgOnChapter click={() => router.back()} textBtn={'Retour'} text={'Impossible de récupérer ce livre, veuillez réessayer.'} />
+                {
+                    width > 950 ?
+                        <HeaderMain/> :
+                        <div style={{width: '100%'}}>
+                            <HeaderMainResponsive/>
+                        </div>
+                }
+
+
+                <ErrMsg click={() => router.back()} text={'Impossible de récupérer ce livre, veuillez réessayer.'}/>
 
                 <Footer/>
             </div>
@@ -440,9 +461,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         <div className={styles.container}>
                             <Head>
                                 <title>{'Ogla - ' + Capitalize(bookData.title)}</title>
-                                <meta name="description" content="Generated by create next app" />
-                                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                                <link rel="icon" href="/favicon.ico" />
+                                <meta name="description" content="Generated by create next app"/>
+                                <meta name="viewport"
+                                      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                                <link rel="icon" href="/favicon.ico"/>
                             </Head>
                             <HeaderMain/>
                             {checkSide()}
@@ -452,10 +474,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                 <div className={styles.labelPresentation}>
                                     <div className={styles.imgContainer}>
                                         <div className={styles.img}>
-                                            <img src={bookData?.img} onError={(e) =>e.target.src = GetDefaultBookImgWhenError()}/>
+                                            <img src={bookData?.img}
+                                                 alt={'Image Livre Ogla'}
+                                                 onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
                                         </div>
-
-
 
 
                                         <div className={styles.btnRead}>
@@ -465,7 +487,9 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                     onClick={() => {
                                                         router.push({
                                                             pathname: "/chapitre/" + chapterData[0]._id, query: {
-                                                                name: chapterData[0].title, slug: chapterData[0].slug, i: 1
+                                                                name: chapterData[0].title,
+                                                                slug: chapterData[0].slug,
+                                                                i: 1
                                                             },
                                                         })
                                                     }}
@@ -480,16 +504,19 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     <div className={styles.chapterContainer}>
                                         <div className={styles.infoContainer}>
                                             <div className={styles.infosBook}>
-                                                <div className={styles.authorInfos}  >
+                                                <div className={styles.authorInfos}>
                                                     <p onClick={() => router.push({
                                                         pathname: '/auteur/' + authorData.pseudo
                                                     })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
                                                     <img onClick={() => router.push({
                                                         pathname: '/auteur/' + authorData.pseudo
-                                                    })} src={authorData.img} referrerPolicy={'no-referrer'} onError={(e) => {
-                                                        e.target.src = GetDefaultUserImgWhenError()
-                                                    }
-                                                    }/>
+                                                    })} src={authorData.img}
+                                                         alt={'Image Profil Ecrivain Ogla'}
+                                                         referrerPolicy={'no-referrer'}
+                                                         onError={(e) => {
+                                                             e.target.src = GetDefaultUserImgWhenError()
+                                                         }
+                                                         }/>
                                                 </div>
 
                                                 <CardCategory category={bookData?.category}/>
@@ -503,7 +530,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                                     </div>
                                 </div>
-
 
 
                             </div>
@@ -533,8 +559,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     {
                                         chapterList?.length <= 0 &&
                                         <div className={styles.empty}>
-                                            <img src={'/assets/jim/smile8.png'}/>
-                                            <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !</p>
+                                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'jim/smile8.png'}
+                                                 onError={(e) => e.target.src = '/assets/jim/smile8.png'}
+                                            />
+                                            <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !
+                                            </p>
                                         </div>
                                     }
 
@@ -554,7 +583,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         )
                                     })}
                                     {
-                                        canSeeMoreChapter  && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
+                                        canSeeMoreChapter && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
                                         <div className={styles.seeMoreContainer}>
                                             {
                                                 !loadingScrollChapterList &&
@@ -562,7 +591,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                     onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
 
                                             }
-                                                {
+                                            {
                                                 loadingScrollChapterList &&
                                                 <LoaderCommentary/>
                                             }
@@ -598,8 +627,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
 
                             <div className={styles.headerBookPhone}>
-                                <img className={styles.absoImg} src={bookData?.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
-                                <img className={styles.imgBookPhone} src={bookData?.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                                <img
+                                    alt={'Fond Livre Ogla'}
+                                    className={styles.absoImg} src={bookData?.img}
+                                    onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                                <img
+                                    alt={'Image Livre Ogla'}
+                                    className={styles.imgBookPhone} src={bookData?.img}
+                                    onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
                             </div>
 
                             <div className={styles.contentContainerBookPhone}>
@@ -608,15 +643,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         <HomeIcon/>
                                     </div>
 
-                                    <div className={styles.itemMenuBookPhone} onClick={() => setActiveLinkPhone('chapters')}>
+                                    <div className={styles.itemMenuBookPhone}
+                                         onClick={() => setActiveLinkPhone('chapters')}>
                                         <ListBulletIcon/>
                                     </div>
 
                                     <div className={styles.like}>
                                         <LikeBtnSidebarPhone onLike={() => likeBook()} isLike={hasLike}/>
                                     </div>
-
-
 
 
                                     <div className={styles.itemMenuBookPhone} onClick={() => {
@@ -636,13 +670,20 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     <div className={styles.titleBookPhone}>
                                         <div className={styles.t}>
                                             <h3>{bookData?.title}</h3>
-                                            <img className={styles.abso} src={'/assets/diapo/book.png'}/>
+                                            <img
+                                                alt={'Image Défaut Ogla'}
+                                                onError={(e) => e.target.src = '/assets/diapo/book.png'}
+                                                className={styles.abso} src={GetImgPathOfAssets() + 'diapo/book.png'}/>
 
                                             <div className={styles.authorAndStatsPhone}>
-                                                <div className={styles.authorInfosContainerPhone} onClick={() => router.push({
-                                                    pathname: '/auteur/' + authorData.pseudo
-                                                })}>
-                                                    <img src={authorData?.img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                                                <div className={styles.authorInfosContainerPhone}
+                                                     onClick={() => router.push({
+                                                         pathname: '/auteur/' + authorData.pseudo
+                                                     })}>
+                                                    <img
+                                                        alt={'Image Profil Ogla'}
+                                                        src={authorData?.img} referrerPolicy={'no-referrer'}
+                                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                                     <p><span>{authorData?.pseudo}</span></p>
                                                 </div>
 
@@ -675,17 +716,20 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                                     {
                                         activeLinkPhone === 'description' &&
-                                        <div className={styles.descriptionContainerPhone + ' '+ styles.slideInRight}>
+                                        <div className={styles.descriptionContainerPhone + ' ' + styles.slideInRight}>
                                             {
                                                 bookData?.summary === '' ?
                                                     <div className={styles.emptyContentPhone}>
-                                                        <img src={'/assets/jim/smile8.png'}/>
+                                                        <img
+                                                            alt={'Image Jim Ogla'}
+                                                            onError={(e) => e.target.src = '/assets/jim/smile8.png'}
+                                                            src={GetImgPathOfAssets() + 'jim/smile8.png'}/>
                                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             résumé !</p>
                                                     </div>
                                                     :
                                                     <div className={styles.summaryPhone}>
-                                                        <p>{bookData?.summary} </p>
+                                                        <p>{Capitalize(bookData?.summary)} </p>
                                                     </div>
                                             }
                                         </div>
@@ -714,7 +758,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                             {
                                                 bookData?.nbChapters <= 0 ?
                                                     <div className={styles.emptyContentPhone}>
-                                                        <img src={'/assets/jim/smile8.png'}/>
+                                                        <img
+                                                            alt={'Image Jim Ogla'}
+                                                            onError={(e) => e.target.src = '/assets/jim/smile8.png'}
+                                                            src={GetImgPathOfAssets() + 'jim/smile8.png'}/>
                                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             chapitres !</p>
                                                     </div>
@@ -761,7 +808,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                                 </div>
                             </div>
-
 
 
                         </div>

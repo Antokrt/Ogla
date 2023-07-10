@@ -18,7 +18,9 @@ import {setActiveModalState} from "../store/slices/modalSlice";
 import Link from "next/link";
 import {BellIcon, Cog8ToothIcon, MoonIcon, MusicalNoteIcon, SunIcon} from "@heroicons/react/24/outline";
 import {OpenAllService} from "../service/Notifications/NotificationsService";
-export const HeaderHome = () =>  {
+import {GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../utils/ImageUtils";
+
+export const HeaderHome = () => {
 
     const router = useRouter();
     const [width] = ScreenSize()
@@ -66,11 +68,15 @@ export const HeaderHome = () =>  {
         }
     }
 
-    return(
+    return (
         <div className={styles.container}>
             <div className={styles.fContainer}>
                 <div className={styles.logoContainer}>
-                    <img onClick={() => router.push('/')} tabIndex={0} src={process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png'}/>
+                    <img
+                    alt={'Logo Ogla'}
+                        onClick={() => router.push('/')} tabIndex={0}
+                         onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                         src={GetImgPathOfAssets() + 'logo/mountain.png'}/>
                 </div>
 
                 <div className={styles.searchbarContainer}>
@@ -86,7 +92,6 @@ export const HeaderHome = () =>  {
                             }}
                             height={50}
                             width={100}/>
-
                         {
                             query !== '' && data &&
                             <div className={styles.containerResultSearchBar}>
@@ -109,8 +114,12 @@ export const HeaderHome = () =>  {
                     {
                         session ?
                             <>
-                                <div tabIndex={0} onClick={() => router.push('/profil')} className={styles.containerImgProfil}>
-                                    <img src={session?.user?.image} referrerPolicy={'no-referrer'}/>
+                                <div tabIndex={0} onClick={() => router.push('/profil')}
+                                     className={styles.containerImgProfil}>
+                                    <img
+                                        alt={'Ogla Profil'}
+                                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                        src={session?.user?.image} referrerPolicy={'no-referrer'}/>
                                 </div>
 
                                 <Tippy trigger={'mouseenter'} content={'Déconnexion'}>
@@ -130,7 +139,10 @@ export const HeaderHome = () =>  {
                             :
                             <>
                                 <button className={styles.register}
-                                        onClick={() => router.push({pathname: "/auth", query: "register"})}>S&apos;inscrire
+                                        onClick={() => router.push({
+                                            pathname: "/auth",
+                                            query: "register"
+                                        })}>S&apos;inscrire
                                 </button>
                                 <button className={styles.login} onClick={() => {
                                     if (router.pathname === '/')
@@ -156,7 +168,7 @@ export const HeaderHome = () =>  {
                                 </>
                                 :
                                 <>
-                                    <Link href={"/devenir-auteur"}>Deviens écrivain</Link>
+                                    <Link href={"/devenir-ecrivain"}>Deviens écrivain</Link>
                                     <Link href={'/bibliotheque'}>Bibliothèque</Link>
                                 </>
                         }
@@ -175,27 +187,43 @@ export const HeaderHome = () =>  {
                             }}/>
                         }
 
-                        <div className={styles.music} tabIndex={0} onClick={() => dispatch(setActiveMusic())}>
-                            <MusicalNoteIcon/>
-                            {
-                                selectMusicState &&
-                                <div className={styles.animation}></div>
-                            }
-                        </div>
+                        {
+                            !session ?
+                                <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
+                                    <MusicalNoteIcon tabIndex={0}/>
+                                    {
+                                        selectMusicState &&
+                                        <div className={styles.animation}></div>
+                                    }
+                                </div> :
+                                <>
+                                    {
+                                        session && session?.user?.settings?.music &&
+                                        <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
+                                            <MusicalNoteIcon tabIndex={0}/>
+                                            {
+                                                selectMusicState &&
+                                                <div className={styles.animation}></div>
+                                            }
+                                        </div>
+                                    }
+                                </>
 
+                        }
 
 
                         {
                             theme ?
-                                <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
+                                         className={styles.svgTheme}/>
                                 :
-                                <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
+                                          className={styles.svgTheme}/>
                         }
                     </div>
                 </div>
 
             }
-
 
 
         </div>

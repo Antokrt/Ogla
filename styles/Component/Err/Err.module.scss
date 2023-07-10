@@ -4,11 +4,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 50vh;
+  min-height: 50vh;
   width: 100%;
 
   img{
-    margin-top: -6%;
     padding: 1%;
     height: 220px;
     width: 220px;
@@ -28,7 +27,8 @@
     margin-bottom: 20px;
     font-family: $primaryFont;
     font-weight: 500;
-    color: rgb(28, 35, 43);
+    -webkit-text-stroke-width: 0.2px;
+    color: rgb(62, 70, 79);
 font-size: 14px;
     padding: 0px 10px;
   }
@@ -46,7 +46,7 @@ font-size: 14px;
     justify-content: center;
     align-items: center;
     color: white;
-    font-family: 'Poppins',sans-serif;
+    font-family: $primaryFont;
     background-color: #9844AD;
     font-weight: bold;
     font-size: 10px;
@@ -124,6 +124,17 @@ font-size: 14px;
     }
   }
 
+}
+
+@media screen and (max-width: 400px){
+  .container{
+    img{
+      width: 140px!important;
+    }
+    p{
+      text-align: center!important;
+    }
+  }
 }
 
 

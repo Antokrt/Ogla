@@ -92,3 +92,7 @@ const validSightEngine = (analyzeObject) => {
 export const GetLogoUtils = () => {
      return process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png';
 }
+
+export const GetImgPathOfAssets = () => {
+    return process.env.NEXT_PUBLIC_ASSETS;
+}

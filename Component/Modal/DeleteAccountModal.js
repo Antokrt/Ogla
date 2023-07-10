@@ -5,26 +5,32 @@ import {signOut, useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import {DeleteAccountService} from "../../service/User/Account.service";
 import {ConfirmModal, ConfirmModalDeleteAccountCustomProvider} from "./ConfirmModal";
+import {LoaderCommentary} from "../layouts/Loader";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 export const DeleteAccountModal = ({close}) => {
     const {data: session} = useSession();
-
+    const [loading,setLoading] = useState(false);
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState({
         msg: '',
         show: false
     })
     const deleteAccount = (password) => {
+        setLoading(true);
         DeleteAccountService(session.user.email, password)
             .then((res) => signOut())
             .catch((err) => {
                 const statusCode = err.response.data.statusCode;
                 if (statusCode === 401) {
+                    setPassword('');
                     setErrMsg({msg: 'Mot de passe incorrect', show: true});
                 }
                 else {
+                    setPassword('');
                     setErrMsg({msg: 'Impossible de supprimer le compte', show: true});
                 }
+                setLoading(false);
             })
     }
 
@@ -46,7 +52,11 @@ export const DeleteAccountModal = ({close}) => {
                     <div className={styles.form}>
 
                                 <>
-                                    <img src={'assets/jim/angry4.png'}/>
+                                    {
+                                        loading ?
+                                            <LoaderCommentary/> :
+                                            <img src={GetImgPathOfAssets()+ 'diapo/old.png'}/>
+                                    }
                                     <label>Mot de passe</label>
                                     <input value={password} onChange={(e) => setPassword(e.target.value)} type={"password"}
                                            placeholder={'Mot de passe'}/>
@@ -71,6 +81,8 @@ export const DeleteAccountModal = ({close}) => {
             </div>
         )
     }
+
+
     else {
         return (
             <ConfirmModalDeleteAccountCustomProvider err={errMsg.show} img={'/assets/google.png'} confirm={() => deleteAccount(process.env.NEXT_PUBLIC_GOOGLE_SECRET_DELETE)} close={close} btnConfirm={'Supprimer mon compte'} title={'Êtes-vous sûr de vouloir nous quitter ?'} subTitle={

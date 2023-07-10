@@ -20,6 +20,7 @@
   align-items: center;
   margin-top: 50px;
 
+
   .headerHot {
     width: 1050px;
     display: flex;
@@ -58,7 +59,6 @@
     &::-webkit-scrollbar-thumb {
       background: rgba(28, 35, 43, 0.21);
     }
-
     display: flex;
     justify-content: space-between;
     width: 1050px;
@@ -83,9 +83,11 @@
     gap: 10vh;
     border-radius: 10px;
     padding: 4vh;
+    height: auto;
 
     .sep {
-      height: 330px;
+      min-height: 100px;
+      height: auto;
       width: 1px;
       background-color: rgba(28, 35, 43, 0.1);
     }
@@ -132,9 +134,10 @@
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   .previewPostListContainer {
     flex-direction: column;
+    width: 100% !important;
   }
 
   .sep {
@@ -163,5 +166,21 @@
     padding-left: 0% !important;
     padding-right: 0% !important;
     height: auto;
+  }
+}
+
+@media screen and (max-width: 250px){
+  .previewPostListContainer{
+    width: 100% !important;
+  }
+
+  .container{
+    h7{
+      font-size: 13px!important;
+    }
+  }
+
+  .trendTitle{
+    font-size: 13px!important;
   }
 }

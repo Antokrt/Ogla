@@ -5,12 +5,13 @@ import { Capitalize } from "../../utils/String";
 
 import scrollbar from "../../styles/utils/scrollbar.module.scss";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { router, useRouter } from "next/router";
 import { SendNewPasswordWhenForgot } from "../../service/User/Password.service";
 import { instance } from "../../service/config/Interceptor";
 import { ReloadSession } from "../../utils/ReloadSession";
 import ScreenSize from "../../utils/Size";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 const ResetPasswordForm = ({ email, token, id }) => {
 
@@ -55,13 +56,14 @@ const ResetPasswordForm = ({ email, token, id }) => {
         <div className={styles.formContainer}>
             <div className={styles.leftBlock}>
                 <div className={styles.container}>
+                    <div className={styles.LogoHead}>
+                        <h1 onClick={() => router.push("/")}> OGLA </h1>
+                    </div>
+
+
                     <div className={styles.headerTwo}>
-                        <img src="/assets/bookOrange2.png" />
                         <h1>Modifier votre mot de passe</h1>
-                        <p> Ogla est une plateforme d’écriture et de lecture de livres, d’histoires ou de romans ouverte à
-                            tous. Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d’écrire
-                            votre histoire parce que nous croyons au pouvoir des mots.
-                        </p>
+
                     </div>
 
                     <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>
@@ -88,7 +90,9 @@ const ResetPasswordForm = ({ email, token, id }) => {
             {
                 width > 1000 &&
                 <div className={styles.containerImg}>
-                    <img src={"/assets/diapo/knight.png"} />
+                    <img alt={'Image Bannière Modifier Mot de passe Ogla'}
+                         onError={(e) => e.target.src = '/assets/diapo/knight.png'}
+                         src={GetImgPathOfAssets() + 'diapo/knight.png'} />
                 </div>
             }
         </div>

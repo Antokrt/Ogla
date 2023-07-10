@@ -55,7 +55,8 @@
   opacity: 0.9;
   font-family: $primaryFont;
   font-size: 11px;
-  font-weight: bold;
+  -webkit-text-stroke-width: 0.4px;
+  color: #343d46;
   border-radius: 5px;
 
   svg {
@@ -355,13 +356,13 @@
 
 @keyframes pulse {
   0% {
-    opacity: 0.4;
-    transform: scale(0);
+    opacity: 0.4!important;
+    transform: scale(0) !important;
   }
 
   100% {
-    opacity: 0;
-    transform: scale(1.5);
+    opacity: 0!important;
+    transform: scale(1.5) !important;
   }
 }
 

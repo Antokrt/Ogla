@@ -39,7 +39,7 @@ const Commentary = ({pseudo,
                     }) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
-    const [tooLong, setTooLong] = useState(false);
+    const [tooLong, setTooLong] = useState(content?.length > 200);
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList,setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
@@ -48,6 +48,8 @@ const Commentary = ({pseudo,
     const {data: session } = useSession();
     const modalState = useSelector(selectLoginModalStatus);
     const dispatch = useDispatch();
+
+    useEffect(() => {console.log(nbAnswers)},[openSubCategory])
 
     useEffect(()=>{
      setHasLike(hasLikeData);
@@ -62,18 +64,12 @@ const Commentary = ({pseudo,
     },[answerPage])
 
 
-    useEffect(() => {
-        if (sizeCommentary > 200) {
-            setTooLong(true);
-        }
-    }, [])
-
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
-                    <img referrerPolicy="no-referrer" src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                    <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                 </div>
 
 
@@ -125,7 +121,8 @@ const Commentary = ({pseudo,
                             }
                         }}/> </div>
 
-                        <p className={styles.replyCount}> {nbAnswers} réponse(s)</p>
+
+                            <p className={styles.replyCount}> {nbAnswers} réponses</p>
                     </div>
 
                     <div className={styles.replyContainer}>
@@ -151,7 +148,7 @@ const Commentary = ({pseudo,
                                 authorHasLike && session.user.pseudo !== authorPseudo &&
                                 <div className={styles.likeAuthor}>
 
-                                    <img src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
+                                    <img alt={'Image Ecrivain Ogla'} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
                                     <HeartIcon className={styles.like}/>
 
                                 </div>

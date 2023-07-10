@@ -23,7 +23,7 @@ export const CardChapter = ({id,title,index,like,date, publish}) => {
 
             <div className={styles.likeChapter}>
                 <p>{like}</p>
-                <p>like(s)</p>
+                <p>j&apos;aimes</p>
 
             </div>
         </div>

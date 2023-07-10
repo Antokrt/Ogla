@@ -18,7 +18,7 @@ return (
     <div className={styles.container + ' ' + anim.fadeIn}>
         <div className={styles.containerComment}>
             <div className={styles.imgContainer}>
-                <img src={img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError() } alt={"Image Profil User"}/>
+                <img src={img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError() } alt={"Image Profil Ogla"}/>
             </div>
 
             <div className={styles.contentCommentContainer}>

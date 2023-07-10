@@ -135,7 +135,7 @@ export default function Header2() {
                                 </>
 
                                 :
-                                    <li onClick={() => router.push('/devenir-auteur')}>
+                                    <li onClick={() => router.push('/devenir-ecrivain')}>
                                         Deviens écrivain
                                     </li>
                         }
@@ -408,7 +408,7 @@ export default function Header2() {
                                 </div>
                                 <div className={styles.trait}> </div>
                                 {
-                                    router.pathname === '/' || router.pathname === '/devenir-auteur' ?
+                                    router.pathname === '/' || router.pathname === '/devenir-ecrivain' ?
                                         <div onClick={() => router.push({ pathname: "/auth", query: "login" })}
                                              className={styles.login}>
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

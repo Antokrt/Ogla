@@ -345,7 +345,6 @@
 .conditions {
     display: flex;
     align-items: center;
-    margin-top: 10px;
 
     p {
         &:hover {
@@ -370,7 +369,8 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    align-items: center;
+    margin-top: 15px;
     p {
         &:hover {
             opacity: 1;
