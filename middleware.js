@@ -42,5 +42,5 @@ export async function middleware(req){
 }
 
 export const config = {
-    matcher: ['/dashboard/','/dashboard/books','/dashboard/nouveau-livre', '/dashboard/books/']
+    matcher: ['/dashboard/','/dashboard/books','/dashboard/nouveau-livre', '/dashboard/books/', '/profil', '/devenir-ecrivain']
 }
