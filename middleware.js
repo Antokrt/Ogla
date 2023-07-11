@@ -58,6 +58,7 @@ export const config = {
 
 import { withAuth} from "next-auth/middleware";
 import {NextResponse} from "next/server";
+import {getToken} from "next-auth/jwt";
 
 export default withAuth(
     function middleware(req){
@@ -70,14 +71,15 @@ export default withAuth(
 
     },
     {
-        jwt:{
-          secret:process.env.NEXTAUTH_SECRET
-        },
-        callbacks: {
-            authorized: async ({ token }) => {
-           return token;
-            },
-        },
+        authorized: async ({req}) => {
+            const session = await getToken({
+                req,
+                secret:process.env.NEXTAUTH_SECRET
+            })
+
+            return !!session;
+        }
+
     }
 )
 
