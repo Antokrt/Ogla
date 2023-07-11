@@ -19,10 +19,10 @@ export async function middleware(req){
         return NextResponse.redirect(new URL('/auth?login', req.url))
     }
 
-
+/*
     if (req.nextUrl.pathname.startsWith('/bibliotheque/') && !GetCategory().includes(req.nextUrl.pathname.split('/bibliotheque/')[1])) {
         return NextResponse.redirect(new URL('/bibliotheque/', req.url));
-    }
+    }*/
 
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && token && !token.is_author) {

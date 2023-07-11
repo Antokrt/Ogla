@@ -37,7 +37,7 @@ import {GetImgPathOfAssets} from "../../../utils/ImageUtils";
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
     const books = await fetch(GetFetchPath()+ 'author/my-books/popular/1', config);
-    const nbBooks = await fetch('http://localhost:3008/author/books-number', config)
+    const nbBooks = await fetch(GetFetchPath() + 'author/books-number', config)
     const booksErrData = !books.ok;
     const booksJson = await books.json();
 

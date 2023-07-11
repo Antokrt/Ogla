@@ -33,10 +33,20 @@ import Head from "next/head";
 import {GetTopUtils} from "../../utils/TopUtils";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import {GetCategory} from "../api/utils/Category";
 
 export async function getServerSideProps({ req, params }) {
 
     let category = params.id;
+
+    if(!GetCategory().includes(category)){
+        return {
+            redirect: {
+                permanent: false,
+                destination:'/bibliotheque'
+            }
+        }
+    }
 
     const data = await GetBookByCategoryApi(category, 'popular',false);
 
