@@ -101,6 +101,7 @@ height: auto;
     img{
       z-index: 2;
       width: 50px;
+      object-fit: cover;
       height: 50px;
       border-radius: 50%;
       border: double 4px rgba(90, 102, 115, 0.356);
