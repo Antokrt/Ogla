@@ -70,7 +70,7 @@ const Profil = ({profilData, err}) => {
     const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session, status} = useSession();
+    const {data: session,update, status} = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
@@ -197,6 +197,8 @@ const Profil = ({profilData, err}) => {
         }
     }
 
+    useEffect(() => {console.log(session)},[session])
+
     const verifyEmail = () => {
         VerifyEmailService()
             .then((res) => toastDisplaySuccess('Email envoyé !'))
@@ -289,7 +291,13 @@ const Profil = ({profilData, err}) => {
 
                     <div className={styles.labelImg}>
                         <h5>Avatar</h5>
+                        <p>{session.user.image}</p>
                         <p>.png .jpg jpeg </p>
+                        <button
+                            onClick={() => {
+                                console.log(session)
+                            }}
+                        >Update</button>
 
                         <div className={styles.imgCheck}>
                             {

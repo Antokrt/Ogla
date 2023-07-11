@@ -233,7 +233,7 @@ export default function (req, res) {
                 }
             },
 
-            async jwt({ token, user, account }) {
+            async jwt({ token, user, account,trigger }) {
                 if (user) {
                     token.accessToken = user?.accessToken;
                     token.refreshToken = user?.refreshToken;
