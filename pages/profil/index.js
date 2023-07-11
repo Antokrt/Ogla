@@ -178,9 +178,12 @@ const Profil = ({profilData, err}) => {
                         axios.get(GetApiPath() + '/api/auth/session?update-picture')
                             .then(() => {
                                 ReloadSession();
-                                setLoadingImg(false)
+                                setLoadingImg(false);
+                                console.log('success update pic')
                             })
-                            .catch((err) => {setLoadingImg(false)});
+                            .catch((err) => {setLoadingImg(false)
+                            console.log('err update pic h')
+                            });
                     })
                     .catch((err) => {
                         setLoadingImg(false);
