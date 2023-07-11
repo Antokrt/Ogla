@@ -1,4 +1,4 @@
-/*
+
 import { NextResponse} from "next/server";
 import {getToken} from "next-auth/jwt";
 import {GetCategory} from "./pages/api/utils/Category";
@@ -16,7 +16,7 @@ export async function middleware(req){
     }
 
     if (req.nextUrl.pathname.startsWith('/profil') && !token) {
-        return NextResponse.redirect(new URL('/', req.url))
+        return NextResponse.redirect(new URL('/auth?login', req.url))
     }
 
 
@@ -26,7 +26,7 @@ export async function middleware(req){
 
 
     if (req.nextUrl.pathname.startsWith('/dashboard') && token && !token.is_author) {
-        return NextResponse.redirect(new URL('/', req.url))
+        return NextResponse.redirect(new URL('/auth?login', req.url))
     }
 
     if(req.nextUrl.pathname === '/dashboard'){
@@ -44,7 +44,7 @@ export async function middleware(req){
 
 export const config = {
     matcher: ['/dashboard/:path*', '/profil/:path*', '/devenir-ecrivain/:path*']
-}*/
+}
 
 
 /*
@@ -55,6 +55,7 @@ export const config = {
 }
 */
 
+/*
 
 import { withAuth} from "next-auth/middleware";
 import {NextResponse} from "next/server";
@@ -85,4 +86,4 @@ export default withAuth(
 
 export const config = {
     matcher: ['/dashboard/:path*', '/profil/:path*', ]
-}
+}*/
