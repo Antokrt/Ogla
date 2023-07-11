@@ -71,7 +71,11 @@ export default withAuth(
     },
     {
         callbacks: {
-            authorized: ({ token }) => token,
+            authorized: ({ token }) => {
+                if(!token) return false;
+
+                return true;
+            },
         },
     }
 )
