@@ -53,6 +53,7 @@ import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {ErrMsg} from "../../Component/ErrMsg";
 import Link from "next/link";
 import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
+import {GetApiPath, GetFetchPath} from "../api/utils/Instance";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -122,7 +123,7 @@ const Profil = ({profilData, err}) => {
 
     const updateSettingsOfSession = () => {
         return new Promise((resolve, reject) => {
-            instance.get('http://localhost:3000/api/auth/session?new-settings')
+            instance.get(GetApiPath() + 'api/auth/session?new-settings')
                 .then(() => resolve())
                 .catch((err) => {
                     console.log('err settings')
