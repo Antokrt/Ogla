@@ -56,29 +56,7 @@ export const config = {
 */
 
 
-import { withAuth} from "next-auth/middleware";
-import {NextResponse} from "next/server";
-
-export default withAuth(
-    function middleware(req){
-        const token = req.nextauth.token;
-
-
-        if(req.nextUrl.pathname === '/dashboard'){
-            return NextResponse.redirect(new URL('/dashboard/books',req.url))
-        }
-
-    },
-    {
-        callbacks: {
-            authorized: ({ token }) => {
-                if(!token) return false;
-
-                return true;
-            },
-        },
-    }
-)
+export { default } from 'next-auth/middleware';
 
 export const config = {
     matcher: ['/dashboard/:path*', '/profil/:path*', ]
