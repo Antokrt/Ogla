@@ -1,3 +1,4 @@
+/*
 import { NextResponse} from "next/server";
 import {getToken} from "next-auth/jwt";
 import {GetCategory} from "./pages/api/utils/Category";
@@ -43,4 +44,11 @@ export async function middleware(req){
 
 export const config = {
     matcher: ['/dashboard/:path*', '/profil/:path*', '/devenir-ecrivain/:path*']
+}*/
+
+
+export { default} from 'next-auth/middleware';
+
+export const config = {
+    matcher: ['/dashboard/:path*', '/profil/:path*', ]
 }
