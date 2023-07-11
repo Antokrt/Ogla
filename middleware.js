@@ -70,6 +70,9 @@ export default withAuth(
 
     },
     {
+        jwt:{
+          secret:process.env.NEXTAUTH_SECRET
+        },
         callbacks: {
             authorized: ({ token }) => {
            return token;
