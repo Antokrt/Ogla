@@ -278,7 +278,6 @@ export default function (req, res) {
                 }
 
                 if (req.url === '/api/auth/session?update-picture') {
-                    console.log('heyyyyyyyyyyyyyyy ici')
                     const res = await getProfil(token?.accessToken);
                     session.user.image = res.data.img;
                     return session;
