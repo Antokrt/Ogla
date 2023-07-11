@@ -69,7 +69,7 @@ function MyApp({Component, pageProps}) {
     }, [])
 
 
-    if (process.env.maintenance) {
+    if (process.env.maintenance || process.env.NODE_ENV !== "development") {
         const srcAnalytics = "https://www.googletagmanager.com/gtag/js?id="+process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
         return (
             <>
