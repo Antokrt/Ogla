@@ -66,11 +66,6 @@
     width: 100%;
     margin-bottom: 30px;
 
-    // img {
-    //   height: 150px;
-    //   margin-bottom: 10px;
-    // }
-
     h1 {
       font-size: 32px;
       margin-bottom: 10px;
@@ -189,7 +184,7 @@
         svg {
           height: 5px;
           width: 7px;
-          fill: #e94f37;
+          fill: $orange;
         }
       }
     }
@@ -244,7 +239,7 @@
     margin-top: -20px;
     font-size: 12px;
     font-family: $primaryFont;
-    color: #e94f37;
+    color: $orange;
     font-weight: 500;
     opacity: 0.9;
   }
@@ -323,7 +318,7 @@
     }
 
     .newPassBtn {
-      background-color: #9844AD;
+      background-color: $purple;
       color: white;
       transition: 0.1s;
       cursor: pointer;
@@ -343,13 +338,13 @@
     }
     &:hover{
       transition: 0.2s;
-      background-color: #901aad;
+      background-color: $purpleHover;
     }
 
     transition: 0.3s;
     cursor: pointer;
     text-align: center;
-    background-color: #9239a8;
+    background-color: $purple;
     padding: 15px 20px;
     border-radius: 5px;
     font-size: 12px;

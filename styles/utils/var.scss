@@ -1,4 +1,7 @@
-$purple: #635291;
+/*        Colors        */
+$purple: #9844ad;
+$purple2: #635291;
+$orange: #e94f37;
 $purpleLight: rgba(152, 68, 173, 1);
 $beige: #e5ccb8;
 $white: #fcfaf7;
@@ -9,13 +12,25 @@ $grey: #f5f8f8;
 $dark: #131045;
 $pink: #ff99c8;
 $pink2: #f13789;
+$darkBrown: rgb(66, 60, 53);
+$purpleHover: #9332ac;
+$orangeHover : #da462f;
+$purpleLightTransparent: rgba(152, 68, 173,0.2);
+
+
+/*        Borders        */
 $border: rgba(28, 35, 43, 0.14);
 $divBorder:solid 1px rgba(84, 89, 95, 0.16);
-$darkBrown: rgb(66, 60, 53);
+
+
+/*        Shadows        */
 $shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 $shadowText: 2px 3px 10px rgba(0,0,0,0.3);
+
+
+/*        Fonts        */
 $primaryFont: 'Pt Sans',sans-serif;
 $primaryFontItalic: "Open Sans-Italic", sans-serif;
 $branch: "Branch",sans-serif;
+$lato: "Lato", sans-serif;
 $secondaryFont: "Rebond Grotesque", sans-serif;
-$purpleLightTransparent: rgba(152, 68, 173,0.2);

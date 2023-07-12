@@ -270,7 +270,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
   height: auto;
   padding-bottom: 150px;
@@ -365,8 +365,6 @@
     justify-content: center;
     align-items: center;
   }
-
-
 }
 
 .titlePhone{
@@ -425,7 +423,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  align-items: start;
+  align-items: flex-start;
   margin-top: 20px;
 }
 

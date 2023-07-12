@@ -65,7 +65,7 @@
   .labelPresentation{
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     width: 1300px;
   }
 
@@ -118,7 +118,7 @@
     cursor: pointer;
     font-size: 12px;
     font-weight: bold;
-    font-family: 'Pt Sans',sans-serif;
+    font-family: $primaryFont;
     color: #343d46;
   }
 }
@@ -201,7 +201,7 @@ color: $darkBrown;
       font-size: 11px;
       color: rgba(28, 35, 43, 0.87);
       font-style: italic;
-      font-family: "Pt Sans",sans-serif;
+      font-family: $primaryFont;
     }
 
     .seeMore{
@@ -425,7 +425,7 @@ width: 180px;
 
 .contentContainerBookPhone{
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   flex: 1;
@@ -502,7 +502,7 @@ background-color: white;
     padding-bottom: 20px;
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
     height: 100%;
     width: 100%;
@@ -636,11 +636,11 @@ background-color: white;
     }
     font-size: 15px;
     font-weight: bold;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: $secondaryFont;
   }
 
   .lato{
-    font-family: 'Lato',sans-serif;
+    font-family: $lato;
   }
 
 }
@@ -705,10 +705,6 @@ p{
   }
 }
 
-.summaryPhone{
-
-}
-
 .emptyContentPhone{
   display: flex;
   justify-content: center;
@@ -743,7 +739,7 @@ p{
 
   .filterBtnPhone{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
     height: 30px;
@@ -779,7 +775,7 @@ flex-direction: column;
     flex-direction: column;
   }
 
-  .labelPresentation, .btnFilter,{
+  .labelPresentation, .btnFilter{
     width: 90%!important;
   }
 

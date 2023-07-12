@@ -1,3 +1,5 @@
+@import "../utils/var.scss";
+
 .container {
     margin-top: 4vh;
     background-color: white;
@@ -26,12 +28,12 @@
 
     h5 {
         font-size: 5vh;
-        font-family: 'Branch', sans-serif;
+        font-family: $branch;
         font-weight: bold;
         white-space: pre;
         -webkit-text-stroke-width: 1px;
         span{
-            color: #9844AD;
+            color: $purple;
         }
     }
 
@@ -39,13 +41,13 @@
         margin-top: 10px;
         text-align: center;
         font-size: 16px;
-        font-family: 'Pt Sans', sans-serif;
+        font-family: $primaryFont;
         letter-spacing: -0.4px;
         opacity: 0.8;
         width: 80%;
 
         strong {
-            color: #9844AD;
+            color: $purple;
         }
     }
 
@@ -63,13 +65,13 @@
 
         &:hover {
             transition: 0.2s;
-            background-color: #da462f;
+            background-color: $orangeHover;
         }
 
         transition: 0.2s;
-        font-family: 'Pt Sans', sans-serif;
+        font-family: $primaryFont;
         font-weight: bold;
-        background-color: #e94f37;
+        background-color: $orange;
         color: white;
         padding: 15px 3vw;
         font-size: 13px;

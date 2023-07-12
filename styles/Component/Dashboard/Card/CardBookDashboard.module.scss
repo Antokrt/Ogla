@@ -25,7 +25,7 @@
   top: 18%;
   left: 50%;
   transform: translate(-50%, -50%);   font-size: 30px;
-  font-family: 'Branch',sans-serif;
+  font-family: $branch;
   white-space: pre;
   opacity: 0.09;
 }
@@ -126,7 +126,7 @@ display: flex;
 
   .containerImgBook{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     img{
 width: 3vw;

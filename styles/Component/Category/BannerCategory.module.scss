@@ -22,7 +22,7 @@
 
       position: relative;
       font-size: 10vh;
-      font-family: "Branch", sans-serif;
+      font-family: $branch;
       font-weight: bold;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
@@ -67,7 +67,7 @@
 
       position: relative;
       font-size: 10vh;
-      font-family: "Branch",
+      font-family: $branch;
       sans-serif;
       font-weight: bold;
       color: white;
@@ -81,7 +81,7 @@
     p {
       text-align: center;
       font-size: 15px;
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: $secondaryFont;
       color: white;
     }
   }

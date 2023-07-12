@@ -40,7 +40,7 @@
 .leftContainer {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   width: 130px;
 
   svg {
@@ -62,7 +62,7 @@
 
 .rightContainer {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   width: 130px;
 
@@ -137,7 +137,7 @@
 .modalLinks {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   position: absolute;
   top: 100px;
   z-index: 20;
@@ -198,8 +198,8 @@
   ul {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: start;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: 20px;
 
     li {
@@ -316,19 +316,19 @@
   .containerLinksProfil{
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-top: 15px;
     ul {
       display: flex;
       flex-direction: column;
-      align-items: start;
-      justify-content: start;
+      align-items: flex-start;
+      justify-content: flex-start;
       gap: 20px;
 
       .notif{
 display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         gap: 10px;
         span{
@@ -350,7 +350,7 @@ display: flex;
 
         a{
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           align-items: center;
           gap: 5px;
           svg{

@@ -28,14 +28,14 @@
     justify-content: space-between;
 
     h4 {
-      font-family: "Pt Sans", sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       font-size: 18px;
       color: #1C232B;
     }
 
     h5 {
-      font-family: "Pt Sans", sans-serif;
+      font-family: $primaryFont;
       font-weight: 700;
       cursor: pointer;
       display: flex;
@@ -67,7 +67,7 @@
 
   .trendTitle {
     margin-top: 5vh;
-    font-family: 'Pt Sans', sans-serif;
+    font-family: $primaryFont;
     font-size: 18px;
     font-weight: bold;
     text-align: center;

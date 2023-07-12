@@ -414,7 +414,7 @@
 
     h4{
       color: rgb(28, 35, 43);
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $secondaryFont;
       font-weight: bold;
       font-size: 16px;
     }
@@ -430,7 +430,7 @@
 .statsContainer{
   position: relative;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   background-color: white;
@@ -514,7 +514,7 @@
   div {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 5px;
     padding-bottom: 5px;
 
@@ -631,7 +631,7 @@
 .some {
   margin-top: 30px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   width: 90%;
 
   h7 {
@@ -685,9 +685,9 @@
 
   .headerChapter {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     height: auto;
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
     padding-left: 10%;
     padding-right: 10%;
@@ -953,7 +953,7 @@
     align-items: center;
     text-align: center;
     color: white;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: $secondaryFont;
     font-weight: bold;
   }
 
@@ -1029,7 +1029,7 @@
   }
 
   .chapterContainer{
-    justify-content: start!important;
+    justify-content: flex-start!important;
     padding-top: 50px;
     background-color: transparent;
   }
@@ -1146,7 +1146,7 @@
 
 .labelContainer{
   margin-top: 40px;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 10px;
   height: auto;
 }
@@ -1161,7 +1161,7 @@
 
   .containerImgPhone{
     display: flex;
-    justify-content: start!important;
+    justify-content: flex-start!important;
     gap: 50px;
     flex-direction: row!important;
     width: 100%;
@@ -1333,8 +1333,8 @@
   }
 
   .containerBtnImgPhone{
-    justify-content: start!important;
-    align-items: start!important;
+    justify-content: flex-start!important;
+    align-items: flex-start!important;
     width: 100%;
 
     button{

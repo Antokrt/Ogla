@@ -59,7 +59,7 @@
       .btn{
         display: flex;
         position: relative;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         gap: 15px;
         margin-left: -5px;
@@ -144,7 +144,7 @@
         font-weight: bold;
         font-size: 13px;
         line-height: 20px;
-        color: $purple;
+        color: $purple2;
       }
     }
   }

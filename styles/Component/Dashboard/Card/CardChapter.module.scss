@@ -29,7 +29,7 @@
       &:first-letter{
         text-transform: uppercase;
       }
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $secondaryFont;
     }
     .schema{
       margin-left: 2px;

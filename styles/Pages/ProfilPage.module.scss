@@ -767,7 +767,7 @@ width: 200px;
 
 .active {
   &:hover {
-    background-color: #9332ac !important;
+    background-color: $purpleHover !important;
   }
 
   cursor: pointer;

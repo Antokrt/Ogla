@@ -333,7 +333,7 @@
     height: 100%;
     .headPresentation{
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: center;
       gap: 20px;
       cursor: pointer;
@@ -364,7 +364,7 @@
         -webkit-box-orient: vertical;
         font-size: 13px;
         opacity: 0.8;
-        font-family: 'Pt Sans',sans-serif;
+        font-family: $primaryFont;
       }
     }
 

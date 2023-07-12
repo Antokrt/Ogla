@@ -60,7 +60,7 @@
         h1 {
           width: 900px;
           font-size: 5vh;
-          font-family: "Branch", sans-serif;
+          font-family: $branch;
           font-weight: bold;
           color: white;
           margin-bottom: 40px;
@@ -71,7 +71,7 @@
 
         p {
           width: 600px;
-          font-family: 'Branch',sans-serif;
+          font-family: $branch;
           font-size: 25px;
           text-shadow: 0px 0px 5px black;
           color: white;
@@ -95,12 +95,12 @@
 
           &:hover {
             transition: 0.2s;
-            background-color: #da462f;
+            background-color: $orangeHover;
           }
 
           cursor: pointer;
           transition: 0.2s;
-         font-family: "Pt Sans",sans-serif;
+         font-family: $primaryFont;
           letter-spacing: -0.2px;
           font-weight: bold;
           background-color: #e94f37;

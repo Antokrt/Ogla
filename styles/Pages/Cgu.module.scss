@@ -16,7 +16,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   gap: 60px;
   min-height: 70vh;
   margin-top: 20px;
@@ -72,8 +72,8 @@
 .item{
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-top: 20px;
   gap: 10px;
   h4{
@@ -128,7 +128,7 @@
   }
 
   .menuContainer{
-    align-items: start;
+    align-items: flex-start;
     width: 600px;
 
     .listMenu{
@@ -156,7 +156,7 @@
 
   .listMenu{
     display: flex!important;
-    align-items: start!important;
+    align-items: flex-start!important;
     justify-content: center!important;
     flex-direction: column;
   }

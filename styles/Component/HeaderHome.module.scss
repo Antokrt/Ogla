@@ -71,7 +71,7 @@
 
 .logContainer{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
   width: 300px;
@@ -155,7 +155,7 @@
 .leftLinkContainer{
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 30px;
   width: auto;
   white-space: pre;
@@ -171,7 +171,7 @@
 
 .rightLinkContainer{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 20px;
   width: 200px;
@@ -245,7 +245,7 @@
       text-decoration: none;
       color: white;
       font-weight: bold;
-      font-family: "Branch", sans-serif;
+      font-family: $branch;
       font-size: 15px;
     }
   }

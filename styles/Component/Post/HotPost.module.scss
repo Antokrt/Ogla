@@ -35,7 +35,7 @@
     align-items: center;
     padding: 10px 10px;
     font-size: 11px;
-    font-family: "Pt Sans", sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
     border-radius: 25px;
     color: white;
@@ -146,7 +146,7 @@
           &:first-letter{
             text-transform: uppercase;
           }
-          font-family: 'Pt Sans',sans-serif;
+          font-family: $primaryFont;
           font-size: 13px;
           font-weight: bold;
 
@@ -192,7 +192,7 @@
         color: rgba(62, 62, 62, 0.84);
         -webkit-text-stroke-width: 0.2px;
         opacity: 0.9;
-        font-family: "Pt Sans", sans-serif;
+        font-family: $primaryFont;
       }
     }
   }
@@ -210,7 +210,7 @@
 p{
   -webkit-text-stroke-width: 1px;
   letter-spacing: 1px;
-  font-family: 'Branch',sans-serif!important;
+  font-family: $branch!important;
   font-weight: bold!important;
   color: rgba(28, 35, 43, 0.76) !important;
   font-size: 12px!important;
@@ -231,7 +231,7 @@ p{
     right: 5%;
     opacity: 0.06;
     font-size: 4vh;
-    font-family: 'Branch',sans-serif;
+    font-family: $branch;
   }
   position: relative;
   display: flex;
@@ -455,7 +455,7 @@ p{
         flex-direction: column;
         font-size: 12px;
         color: hsla(0deg, 100%, 100%, 0.88);
-        font-family: "Rebond Grotesque",sans-serif;
+        font-family: $secondaryFont;
 
         .category {
           position: absolute;
@@ -577,7 +577,7 @@ p{
       gap: 5px;
 
       p {
-        font-family: 'Rebond Grotesque', sans-serif;
+        font-family: $secondaryFont;
         font-weight: bold;
         font-size: 12px;
         text-align: right;
@@ -592,7 +592,7 @@ p{
     h6 {
       overflow: hidden;
       font-size: 18px;
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: $secondaryFont;
       font-weight: 700;
       color: #1C232B;
       margin-top: 30px;
@@ -612,14 +612,14 @@ p{
       padding: 0 4%;
       font-size: 14px;
       color: rgba(28, 35, 43, 0.71);
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: $secondaryFont;
     }
 
     button {
       margin-top: 30px;
       background-color: #e94f37;
       transition: 0.2s;
-      font-family: "Rebond Grotesque", sans-serif;
+      font-family: $secondaryFont;
       font-weight: bold;
       color: white;
       font-size: 10px;

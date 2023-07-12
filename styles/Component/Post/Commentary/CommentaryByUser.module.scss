@@ -31,13 +31,13 @@
     .contentCommentContainer{
       display: flex;
       flex-direction: column;
-      justify-content: start;
+      justify-content: flex-start;
       width: 100%;
       padding-left: 20px;
       padding-right: 10px;
       .authorDate{
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
 
         h8{
           display: flex;
@@ -136,7 +136,7 @@
 
         .sendResponse{
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           padding-right: 20px;
           margin-bottom: 10px;
 

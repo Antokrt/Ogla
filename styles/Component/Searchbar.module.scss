@@ -101,7 +101,7 @@ transition: 0.2s;
 /* Theme sombre */
 .darkContainer {
   ::placeholder {
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $secondaryFont;
     color: #7b7b7d;
   }
 
@@ -121,7 +121,7 @@ transition: 0.2s;
     border-radius: 10px;
     border: solid 1px #67676b;
     font-size: 14px;
-    font-family: "Rebond Grotesque", sans-serif;
+    font-family: $secondaryFont;
     color: hsla(0, 100%, 100%, 0.88);;
     letter-spacing: 1px;
 

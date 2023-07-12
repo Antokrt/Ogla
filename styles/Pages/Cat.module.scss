@@ -17,7 +17,6 @@
     margin-top: 5vh;
   }
 
-
   .bannerContainer {
     display: flex;
     justify-content: center;
@@ -38,7 +37,7 @@
       font-weight: bold;
       -webkit-text-stroke-width: 1px;
       span{
-        color: #9844AD;
+        color: $purple;
       }
     }
     img{
@@ -70,11 +69,11 @@
 
         font-size: 14px;
         font-weight: bolder;
-        font-family: "Pt Sans", sans-serif;
+        font-family: $primaryFont;
       }
 
       h3 {
-        font-family: "Pt Sans", sans-serif;
+        font-family: $primaryFont;
         font-size: 16px;
         color: #1C232B;
         font-weight: bold;
@@ -296,7 +295,6 @@
           color: white;
           font-size: 0.8rem;
           font-family: "Potta One", sans-serif;
-
           text-align: center;
           margin-bottom: 25px;
         }
@@ -332,7 +330,6 @@
     flex-direction: column;
     margin-top: 20px;
     width: 100%;
-
     overflow: hidden;
 
     .sortContainer {
@@ -342,31 +339,34 @@
       width: 100%;
       margin-bottom: 30px;
 
-      h3 {
-        font-family: "Pt Sans", sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        border-bottom: 1px solid rgba(84, 89, 95, 0.22);
-        padding-bottom: 5px;
-        margin-bottom: 0px;
+      // h3 {
+      //   font-family: $primaryFont;
+      //   font-size: 14px;
+      //   font-weight: bold;
+      //   border-bottom: 1px solid rgba(84, 89, 95, 0.22);
+      //   padding-bottom: 5px;
+      //   margin-bottom: 0px;
 
-        color: #1C232B;
-      }
+      //   color: #1C232B;
+      // }
 
       div {
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         margin-top: 20px;
-        border: 1px solid #9844ad00;
+        border: 1px solid transparent;
 
         button {
+          &:hover {
+            background-color: $grey;
+          }
           cursor: pointer;
           // margin-right: 5px;
           border-radius: 20px;
           font-size: 12px;
           padding: 10px 20px;
-          font-family: "Pt Sans", sans-serif;
+          font-family: $primaryFont;
           color: #1C232B;
           transition: 0.1s;
           font-weight: bold;
@@ -374,7 +374,7 @@
 
         .activeBtn {
           transition: 0.1s;
-          background-color: #9844AD !important;
+          background-color: $purple !important;
           color: $white !important;
         }
       }
@@ -420,7 +420,7 @@
 
 /* Theme sombre */
 .darkContainer {
-  background-color: #0e0e10;
+  background-color: white;
 
   .containerM {
     display: flex;
@@ -428,9 +428,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    // background-image: url("/assets/blurry.svg");
-    background-size: 100%;
-    background-repeat: no-repeat;
+    padding-top: 40px;
   }
 
   .containerCategory {
@@ -438,6 +436,42 @@
     margin-top: 5vh;
   }
 
+
+  .bannerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+    gap: 30px;
+    div{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    h1{
+      text-align: center;
+      color: #1c232b;
+      font-family: $branch;
+      font-size: 40px;
+      font-weight: bold;
+      -webkit-text-stroke-width: 1px;
+      span{
+        color: $purple;
+      }
+    }
+    img{
+      width: 400px;
+    }
+
+    p{
+      text-align: center;
+      font-size: 15px;
+      opacity: 0.8;
+      font-family: $primaryFont;
+      width: 500px;
+    }
+  }
 
   .rankingContainer {
     display: flex;
@@ -447,23 +481,24 @@
     .headerRanking {
       display: flex;
       justify-content: space-between;
-      color: hsla(0deg, 100%, 100%, 0.88);
 
       p {
-        font-size: 12px;
-        font-family: "Montserrat Alternates", sans-serif;
+        &:first-letter {
+          text-transform: uppercase;
+        }
+
+        font-size: 14px;
+        font-weight: bolder;
+        font-family: $primaryFont;
       }
 
       h3 {
-        font-family: "Montserrat Alternates", sans-serif;
+        font-family: $primaryFont;
         font-size: 16px;
+        color: #1C232B;
         font-weight: bold;
-        -webkit-text-stroke-width: 1px;
-        stroke-width: 1px;
-        letter-spacing: 1px;
       }
     }
-
 
     .rankOther {
       display: flex;
@@ -680,7 +715,6 @@
           color: white;
           font-size: 0.8rem;
           font-family: "Potta One", sans-serif;
-
           text-align: center;
           margin-bottom: 25px;
         }
@@ -699,6 +733,16 @@
     }
   }
 
+  .thisMonthPhone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0px 0px 0px;
+    font-family: $primaryFont;
+    font-weight: bold;
+  }
+
   .containerCardPreview {
     display: flex;
     align-items: flex-start;
@@ -706,49 +750,51 @@
     flex-direction: column;
     margin-top: 20px;
     width: 100%;
-
     overflow: hidden;
 
     .sortContainer {
+
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
-      // width: 100%;
+      width: 100%;
       margin-bottom: 30px;
 
-      h3 {
-        font-family: "Montserrat Alternates", sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        border-bottom: 1px solid rgba(84, 89, 95, 0.22);
-        padding-bottom: 5px;
-        margin-bottom: 0px;
-        color: #1C232B;
-      }
+      // h3 {
+      //   font-family: $primaryFont;
+      //   font-size: 14px;
+      //   font-weight: bold;
+      //   border-bottom: 1px solid rgba(84, 89, 95, 0.22);
+      //   padding-bottom: 5px;
+      //   margin-bottom: 0px;
+
+      //   color: #1C232B;
+      // }
 
       div {
+
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         margin-top: 20px;
-        border: 1px solid #9844AD;
-        border-radius: 20px;
+        border: 1px solid transparent;
 
         button {
+
+
           cursor: pointer;
-          // margin-right: 5px;
           border-radius: 20px;
-          font-size: 11px;
+          font-size: 12px;
           padding: 10px 20px;
-          font-family: "Montserrat Alternates", sans-serif;
-          color: hsla(0deg, 100%, 100%, 0.88);
+          font-family: $primaryFont;
+          color: #1C232B;
           transition: 0.1s;
           font-weight: bold;
         }
 
         .activeBtn {
           transition: 0.1s;
-          background-color: #9844AD !important;
+          background-color: $purple !important;
           color: $white !important;
         }
       }
@@ -773,14 +819,6 @@
     align-items: center;
     width: 100%;
     margin-bottom: 50px;
-  }
-
-  .containerSeeMore::after {
-    position: relative;
-    content: "";
-    width: 100%;
-    height: 1px;
-    background-color: hsla(0deg, 100%, 100%, 0.88);
   }
 
   .hotContainer {
@@ -926,38 +964,3 @@
     grid-template-columns: 1fr !important;
   }
 }
-
-
-/*
-.emailTest{
-  min-height: 200px;
-  text-align: center;
-  width: 100%;
-
-  h1{
-    font-family: 'Inter',sans-serif;
-    font-weight: bold;
-    font-size: 24px;
-    margin-bottom: 30px;
-  }
-
-  .thanks{
-    font-family: 'Inter',sans-serif;
-  }
-  span{
-    cursor: pointer;
-    color: #9844AD;
-    text-decoration: underline;
-    font-family: 'Arial',sans-serif;
-    font-weight: bold;
-  }
-
-  .citation{
-    font-size: 14px;
-    margin-top: 30px;
-    font-style: italic;
-    color: #9844AD;
-  }
-}*/
-
-

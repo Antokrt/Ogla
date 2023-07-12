@@ -42,7 +42,7 @@
     text-align: center;
     font-size: 18px;
     letter-spacing: 0.5px;
-    font-family: 'Rebond Grotesque',sans-serif;
+    font-family: $secondaryFont;
     font-weight: bold;
     color: #1C232B;
     gap: 10px;
@@ -161,7 +161,7 @@ button{
     }
 
     h5{
-      font-family: 'Rebond Grotesque',sans-serif;
+      font-family: $secondaryFont;
       font-size: 15px;
       font-weight: bold;
       margin-top: 20px;
@@ -174,7 +174,7 @@ button{
       margin-top: 10px;
       li{
         font-size: 14px;
-        font-family: 'Rebond Grotesque',sans-serif;
+        font-family: $secondaryFont;
         font-weight: bold;
         color: #9844AD;
       }

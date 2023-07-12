@@ -22,7 +22,7 @@
     top: 5%;
 
     p {
-      font-family: "Pt Sans", sans-serif;
+      font-family: $primaryFont;
       font-weight: bold;
       font-size: 10px;
       letter-spacing: 1px;
@@ -87,7 +87,7 @@
       width: auto;
       font-size: 15px;
       font-weight: bold;
-      font-family: "Pt Sans", sans-serif;
+      font-family: $primaryFont;
       text-overflow: ellipsis;
       overflow: hidden;
       -webkit-line-clamp: 2;
@@ -223,8 +223,7 @@
       text-align: left;
       width: auto;
       font-size: 15px;
-      font-family: "Rebond Grotesque",
-      sans-serif;
+      font-family: $secondaryFont
       // color: rgba(28, 35, 43, 0.94);
       font-weight: 600;
       text-overflow: ellipsis;
