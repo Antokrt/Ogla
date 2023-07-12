@@ -123,14 +123,9 @@ const Profil = ({profilData, err}) => {
 
     const updateSettingsOfSession = () => {
         return new Promise((resolve, reject) => {
-            axios.get('https://ogla.vercel.app/api/auth/session?new-settings')
-                .then((res) => {
-                    console.log('here');
-                    console.log(res)
-                    resolve();
-                })
+            axios.get('/api/auth/session?new-settings')
+                .then(() => resolve())
                 .catch((err) => {
-                    console.log('err settings')
                     reject()
                 })
         })
