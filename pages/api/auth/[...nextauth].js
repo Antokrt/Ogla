@@ -291,7 +291,7 @@ export default function (req, res) {
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?new-settings') {
+                if (req.url === '/api/auth/session?new-settings=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.settings = res.data.settings
                     return session;
