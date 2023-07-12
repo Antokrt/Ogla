@@ -279,7 +279,7 @@ export default function (req, res) {
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?update-picture') {
+                if (req.url === '/api/auth/session?update-picture=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.image = res.data.img;
                     return session;
