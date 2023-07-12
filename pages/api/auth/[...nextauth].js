@@ -57,6 +57,7 @@ function getProfil(accessToken) {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
 
+
     return new Promise((resolve, reject) => {
         axios.get(GetFetchPath() + 'user/profil', config)
             .then((res) => resolve(res))
@@ -180,6 +181,8 @@ export default function (req, res) {
         callbacks: {
 
             async signIn({ user, account, profile }) {
+
+                console.log('heyyyyy')
                 if (account.provider === 'google' && profile) {
                     const data = {
                         user: account,
