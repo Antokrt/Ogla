@@ -123,7 +123,7 @@ const Profil = ({profilData, err}) => {
 
     const updateSettingsOfSession = () => {
         return new Promise((resolve, reject) => {
-            axios.get('/api/auth/session?new-settings')
+            axios.get(GetApiPath() + '/api/auth/session?new-settings')
                 .then(() => resolve())
                 .catch((err) => {
                     reject()
