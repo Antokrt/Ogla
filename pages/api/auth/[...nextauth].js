@@ -182,7 +182,6 @@ export default function (req, res) {
 
             async signIn({ user, account, profile }) {
 
-                console.log('heyyyyy')
                 if (account.provider === 'google' && profile) {
                     const data = {
                         user: account,
