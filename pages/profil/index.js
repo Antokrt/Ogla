@@ -290,13 +290,8 @@ const Profil = ({profilData, err}) => {
 
                     <div className={styles.labelImg}>
                         <h5>Avatar</h5>
-                        <p>{session.user.image}</p>
                         <p>.png .jpg jpeg </p>
-                        <button
-                            onClick={() => {
-                                console.log(session)
-                            }}
-                        >Update</button>
+
 
                         <div className={styles.imgCheck}>
                             {

@@ -264,7 +264,7 @@ export default function (req, res) {
                 token.is_author = session.user.is_author;
 
 
-                if (req.url === '/api/auth/session?update-author') {
+                if (req.url === '/api/auth/session?update-author=') {
                     const config = await getConfigOfProtectedRoute(req);
                     const newAuthor = await fetch(GetFetchPath() + 'author/check', config);
                     const authorJson = await newAuthor.json();
@@ -285,7 +285,7 @@ export default function (req, res) {
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?email-verified') {
+                if (req.url === '/api/auth/session?email-verified=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.verified = res.data.verified;
                     return session;
@@ -297,13 +297,12 @@ export default function (req, res) {
                     return session;
                 }
 
-                if(req.url === '/api/auth/session?update-google-provider'){
+                if(req.url === '/api/auth/session?update-google-provider='){
                     const res = await getProfil(token?.accessToken);
                     session.user.provider = res.data.provider;
                     return session;
                 }
                 session.user.accessToken = token?.accessToken;
-                session.user.test = req.url;
                 return session;
 
             }

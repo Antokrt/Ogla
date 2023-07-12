@@ -18,7 +18,7 @@ export const Partner = () => {
 
 
             <div className={styles.rContainer}>
-                <h3>Lettre à nos futurs écrivains...</h3>
+                <h3>Lettre aux futurs écrivains...</h3>
                 <p>
                     L'aventure Ogla ne fait que commencer, et nous sommes ravis de vous avoir à nos côtés. <br/> Nous croyons
                     fermement en l'importance de donner à chacun l'opportunité de vivre l'expérience unique d'être écrivain.

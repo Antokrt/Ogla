@@ -18,7 +18,7 @@ import {AuthorConditionsModal} from "../../Component/Modal/AuthorConditionsModal
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {getConfigOfProtectedRoute} from "../api/utils/Config";
-import {GetFetchPath} from "../api/utils/Instance";
+import {GetApiPath, GetFetchPath} from "../api/utils/Instance";
 
 export async function getServerSideProps({req}) {
     const config = await getConfigOfProtectedRoute(req);
@@ -442,7 +442,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
             }
             instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
-                    axios.get('/api/auth/session?update-author')
+                    axios.get(GetApiPath() + '/api/auth/session?update-author')
                         .then(() => router.push('/'))
                         .then(() => router.reload())
                 })

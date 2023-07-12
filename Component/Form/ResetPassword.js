@@ -1,21 +1,22 @@
 import styles from "../../styles/Pages/Form/ResetPassword.module.scss";
-import { ArrowDownIcon } from "@heroicons/react/24/outline";
+import {ArrowDownIcon} from "@heroicons/react/24/outline";
 import Category from "../../json/category.json";
-import { Capitalize } from "../../utils/String";
+import {Capitalize} from "../../utils/String";
 
 import scrollbar from "../../styles/utils/scrollbar.module.scss";
-import { useSession, signIn, signOut } from "next-auth/react";
-import React, { useEffect, useRef, useState } from "react";
-import { router, useRouter } from "next/router";
-import { SendNewPasswordWhenForgot } from "../../service/User/Password.service";
-import { instance } from "../../service/config/Interceptor";
-import { ReloadSession } from "../../utils/ReloadSession";
+import {useSession, signIn, signOut} from "next-auth/react";
+import React, {useEffect, useRef, useState} from "react";
+import {router, useRouter} from "next/router";
+import {SendNewPasswordWhenForgot} from "../../service/User/Password.service";
+import {instance} from "../../service/config/Interceptor";
+import {ReloadSession} from "../../utils/ReloadSession";
 import ScreenSize from "../../utils/Size";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import {GetApiPath} from "../../pages/api/utils/Instance";
 
-const ResetPasswordForm = ({ email, token, id }) => {
+const ResetPasswordForm = ({email, token, id}) => {
 
-    const { data: session, status } = useSession();
+    const {data: session, status} = useSession();
     const formRef = useRef(null);
     const [newPassword, setNewPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
@@ -37,7 +38,7 @@ const ResetPasswordForm = ({ email, token, id }) => {
             }
             SendNewPasswordWhenForgot(data)
                 .then(async () => {
-                    await instance.get('http://localhost:3000/api/auth/session?update-google-provider');
+                    await instance.get(GetApiPath() + '/api/auth/session?update-google-provider');
                 })
                 .then(() => ReloadSession())
                 .then(() => router.replace({
@@ -70,9 +71,11 @@ const ResetPasswordForm = ({ email, token, id }) => {
 
                         <div className={styles.selectItem + " " + "fadeIn"}>
                             <label htmlFor={"password"}>Nouveau mot de passe</label>
-                            <input type={"password"} onChange={(e) => setNewPassword(e.target.value)} name={"password"} placeholder={"Nouveau mot de passe"}></input>
+                            <input type={"password"} onChange={(e) => setNewPassword(e.target.value)} name={"password"}
+                                   placeholder={"Nouveau mot de passe"}></input>
                             <label htmlFor={"password"}>Confirmer le mot de passe</label>
-                            <input type={"password"} onChange={(e) => setConfPassword(e.target.value)} name={"password"} placeholder={"Confirmer le mot de passe"} />
+                            <input type={"password"} onChange={(e) => setConfPassword(e.target.value)} name={"password"}
+                                   placeholder={"Confirmer le mot de passe"}/>
 
                         </div>
                         {
@@ -81,7 +84,9 @@ const ResetPasswordForm = ({ email, token, id }) => {
                         }
 
                         <div className={styles.stepBtnContainer}>
-                            <button type={'submit'} className={confPassword === newPassword ? styles.newPassBtn : styles.disabledBtn + ' ' + styles.newPassBtn}>Modifier</button>
+                            <button type={'submit'}
+                                    className={confPassword === newPassword ? styles.newPassBtn : styles.disabledBtn + ' ' + styles.newPassBtn}>Modifier
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -92,7 +97,7 @@ const ResetPasswordForm = ({ email, token, id }) => {
                 <div className={styles.containerImg}>
                     <img alt={'Image Bannière Modifier Mot de passe Ogla'}
                          onError={(e) => e.target.src = '/assets/diapo/knight.png'}
-                         src={GetImgPathOfAssets() + 'diapo/knight.png'} />
+                         src={GetImgPathOfAssets() + 'diapo/knight.png'}/>
                 </div>
             }
         </div>

@@ -108,8 +108,6 @@ export const HeaderMain = () => {
             <div className={styles.fContainer}>
                 <div  className={styles.logoContainer + ' ' + anim.fadeIn}>
                     <img tabIndex={0} onClick={() => router.push('/')} src={process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png'}/>
-                    <p>{session?.user?.image}</p>
-                    <button>Update</button>
                 </div>
 
                 <div className={styles.searchbarContainer}>
