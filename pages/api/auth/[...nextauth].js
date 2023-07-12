@@ -303,6 +303,7 @@ export default function (req, res) {
                     return session;
                 }
                 session.user.accessToken = token?.accessToken;
+                session.user.test = req.url;
                 return session;
 
             }

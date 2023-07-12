@@ -24,7 +24,9 @@ const getAccessToken = async (req) => {
       req:req,
       secret:process.env.NEXTAUTH_SECRET
   })
-    return token?.accessToken;
+    if(token){
+        return token?.accessToken;
+    }
 }
 
 const getRefreshToken = async (req) => {
@@ -33,7 +35,10 @@ const getRefreshToken = async (req) => {
         secret:process.env.NEXTAUTH_SECRET
     })
 
-    return token.refreshToken;
+    if(token){
+        return token.refreshToken;
+    }
+
 }
 
 
