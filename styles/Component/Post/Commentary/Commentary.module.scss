@@ -69,18 +69,52 @@ width: 50px;
 padding-left: 10px;
       padding-right: 10px;
 
-      .trash{
-        &:hover{
-          transition: 0.1s;
-          color: #9844AD;
-        }
-        transition: 0.1s;
-        cursor: pointer;
+
+      .dotContainer{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: end;
+        justify-content: end;
+        z-index: 200000;
         position: absolute;
         right: 5%;
-        width: 18px;
-        color: rgba(28, 35, 43, 0.44);
+        .dot{
+          &:hover{
+            transition: 0.1s;
+            color: #9844AD;
+          }
+          transition: 0.1s;
+          cursor: pointer;
+          width: 18px;
+          color: rgba(28, 35, 43, 0.44);
+        }
       }
+
+      .dotContent{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 50px;
+        width: 100px;
+        background-color: white;
+        border: solid 1px rgba(52, 61, 70, 0.07);
+        button{
+          display: flex;
+          justify-content: end;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          font-size: 12px;
+          color: #343d46;
+          font-family: $primaryFont;
+          svg{
+            width: 12px;
+            color: #343d46;
+          }
+        }
+      }
+
       .authorDate{
         display: flex;
         justify-content: flex-start;
@@ -288,8 +322,20 @@ background-color: #9844AD!important;
   }
 }
 
+
+
+
+
 .deleteModal{
   position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+.openModalContainer{
+  position: absolute;
+  background-color: red;
+  z-index: 203300;
   height: 100vh;
   width: 100vw;
 }

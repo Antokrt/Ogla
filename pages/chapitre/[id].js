@@ -52,6 +52,7 @@ export async function getServerSideProps({ req, params, query, ctx }) {
     if (data.chapter) {
         await AddViewToChapterApi(id);
         hasLike = await VerifLikeApi(req, 'chapter', data.chapter._id);
+
         return {
             props: {
                 key: id,
@@ -111,6 +112,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const [canSeeMoreChapterSidebar, setCanSeeMoreChapterSidebar] = useState(true);
     const [chapterListSidebar, setChapterListSidebar] = useState(chapterList);
     const [activeLinkPhone,setActiveLinkPhone] = useState('content');
+    const [noComments, setNoComments] = useState(nbCommentary <= 0);
     const { data: session } = useSession();
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
@@ -123,7 +125,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
             localStorage.removeItem('openSidebar');
         }
     }, [])
-
 
     const countNbOfChapters = useCallback(async () => {
         const nb = await CountNbOfChaptersService(bookData?._id);
@@ -207,6 +208,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                             getMore={() => {
                                 getComment();
                             }}
+                            isEmpty={noComments}
                             errCommentary={errCommentary}
                             nbCommentary={nbCommentary}
                             refresh={() => refresh()}
@@ -293,9 +295,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         }
     }
 
-
-
-
     const openCommentaryPhone =  () => {
         if (err) {
             return null;
@@ -325,6 +324,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                             getMore={() => {
                                 getComment();
                             }}
+                            isEmpty={noComments}
                             nbCommentary={nbCommentary}
                             refresh={() => refresh()}
                             scrollChange={hasToScroll}
@@ -541,6 +541,17 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         }
     }
 
+
+    useEffect(() => {
+        if(!loadingScroll && nbCommentary <= 0){
+            setNoComments(true);
+        }
+
+        else if (!loadingScroll && nbCommentary <= 0){
+            setNoComments(false);
+        }
+    },[comments])
+
     return (
         <div className={styles.container}>
 
@@ -577,6 +588,14 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                         {
                             width > 600 ?
                                 <>
+                                    <div>
+                                        {
+                                            noComments ?
+                                                <span>true</span> :
+                                                <span>false</span>
+                                        }
+                                        <p>{chapterData?.nbCommentary}</p>
+                                    </div>
                                     <div
                                         className={styles.containerC}>
 

@@ -1,9 +1,16 @@
 import styles from "../../../styles/Component/Post/Commentary/Commentary.module.scss";
 import anim from '../../../styles/utils/anim.module.scss';
 import scroll from "../../../styles/utils/scrollbar.module.scss";
-import {Fragment, useEffect, useState} from "react";
+import ReactDOM from "react-dom"
+import {Fragment, useEffect, useRef, useState} from "react";
 import {HeartIcon} from "@heroicons/react/24/solid";
-import {ArrowDownIcon, ArrowUpIcon, HandThumbUpIcon, TrashIcon} from "@heroicons/react/24/outline";
+import {
+    ArrowDownIcon,
+    ArrowUpIcon,
+    EllipsisHorizontalIcon, FlagIcon,
+    HandThumbUpIcon,
+    TrashIcon
+} from "@heroicons/react/24/outline";
 import SubCommentary from "./SubCommentary";
 import {useSession} from "next-auth/react";
 import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
@@ -15,7 +22,8 @@ import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 
-const Commentary = ({pseudo,
+const Commentary = ({
+                        pseudo,
                         img,
                         date,
                         content,
@@ -29,39 +37,64 @@ const Commentary = ({pseudo,
                         likeAanswer,
                         sendNewAnswer,
                         deleteAanswer,
-    nbAnswers,
-    seeMoreAnswers,
-    authorHasLike,
-    authorImg,
-    authorPseudo,
+                        nbAnswers,
+                        seeMoreAnswers,
+                        authorHasLike,
+                        authorImg,
+                        authorPseudo,
                         answerPage,
-                    newAnswerPage
+                        newAnswerPage
                     }) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(content?.length > 200);
     const [openSubCategory, setOpenSubCategory] = useState(false);
-    const [answersList,setAnswersList] = useState(answers);
+    const [answersList, setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
-    const [page,setPage] = useState(answerPage)
-    const [hasLike,setHasLike] = useState(hasLikeData);
-    const {data: session } = useSession();
+    const [page, setPage] = useState(answerPage)
+    const [hasLike, setHasLike] = useState(hasLikeData);
+    const [openModalChoice, setOpenModalChoice] = useState(false);
+    const {data: session} = useSession();
     const modalState = useSelector(selectLoginModalStatus);
+    const contentDotRef = useRef(null);
+    const dotRef = useRef(null);
     const dispatch = useDispatch();
 
-    useEffect(() => {console.log(nbAnswers)},[openSubCategory])
 
-    useEffect(()=>{
-     setHasLike(hasLikeData);
-    },[hasLikeData])
+    useEffect(() => {
+        setHasLike(hasLikeData);
+    }, [hasLikeData])
 
     useEffect(() => {
         setAnswersList(answers);
-    },[answers])
+    }, [answers])
 
     useEffect(() => {
         setPage(answerPage)
-    },[answerPage])
+    }, [answerPage])
+
+
+    function clickOutside(ref,btnRef, onClickOutside) {
+        useEffect(() => {
+            /**
+             * Invoke Function onClick outside of element
+             */
+            function handleClickOutside(event) {
+                if (ref.current && btnRef.current && !ref.current.contains(event.target) && !btnRef.current.contains(event.target)) {
+                    onClickOutside();
+                }
+            }
+
+            // Bind
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                // dispose
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref, btnRef,onClickOutside]);
+    }
+
+    clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
 
     return (
@@ -69,25 +102,38 @@ const Commentary = ({pseudo,
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
-                    <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                    <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img}
+                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                 </div>
 
 
-
-
-
                 <div className={styles.contentCommentContainer}>
-                    {
-                        session && authorId === session.user.id &&
-                        <TrashIcon
-                            onClick={() => deleteComment(id)}
-                            className={styles.trash}/>
-                    }
+                    <div className={styles.dotContainer}>
+                        {
+                            // session && authorId === session.user.id &&
+                            <EllipsisHorizontalIcon
+                                onClick={() => {
+                                    setOpenModalChoice(!openModalChoice)
+                                }}
+                                ref={dotRef}
+                                className={styles.dot}
+                            />
+                        }
+                        {
+                            openModalChoice &&
+                            <div className={styles.dotContent} ref={contentDotRef}>
+                                {
+                                    session && authorId === session.user.id &&
+                                    <button>Supprimer <TrashIcon/></button>
+                                }
 
-
+                                <button>Signaler <FlagIcon/></button>
+                            </div>
+                        }
+                    </div>
 
                     <div className={styles.authorDate}>
-                        <h8 is={'h8'}>{pseudo}  <span>{FormatDateFrom(date)}</span></h8>
+                        <h8 is={'h8'}>{pseudo} <span>{FormatDateFrom(date)}</span></h8>
 
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
@@ -113,16 +159,15 @@ const Commentary = ({pseudo,
 
                     <div className={styles.likeCommentaryContainer}>
                         <div className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
-                            if(session){
+                            if (session) {
                                 likeComment(id);
-                            }
-                            else {
+                            } else {
                                 dispatch(setActiveModalState(true))
                             }
-                        }}/> </div>
+                        }}/></div>
 
 
-                            <p className={styles.replyCount}> {nbAnswers} réponses</p>
+                        <p className={styles.replyCount}> {nbAnswers} réponses</p>
                     </div>
 
                     <div className={styles.replyContainer}>
@@ -145,10 +190,12 @@ const Commentary = ({pseudo,
                             </button>
 
                             {
-                                authorHasLike && session.user.pseudo !== authorPseudo &&
+                                authorHasLike &&
                                 <div className={styles.likeAuthor}>
 
-                                    <img alt={'Image Ecrivain Ogla'} src={authorImg} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} referrerPolicy={'no-referrer'}/>
+                                    <img alt={'Image Ecrivain Ogla'} src={authorImg}
+                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                         referrerPolicy={'no-referrer'}/>
                                     <HeartIcon className={styles.like}/>
 
                                 </div>
@@ -163,48 +210,51 @@ const Commentary = ({pseudo,
 
                                 {
                                     session ?
-                                    <textarea
-                                        onKeyDown={(e) => {
-                                            if(e.key === 'Enter' && !e.shiftKey && newAnswer !== "" && session){
-                                                const data ={
-                                                    id,content:newAnswer
+                                        <textarea
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' && !e.shiftKey && newAnswer !== "" && session) {
+                                                    const data = {
+                                                        id, content: newAnswer
+                                                    }
+                                                    e.preventDefault();
+                                                    sendNewAnswer(data);
+                                                    setNewAnswer('');
                                                 }
-                                                e.preventDefault();
-                                                sendNewAnswer(data);
-                                                setNewAnswer('');
-                                            }
-                                        }}
-                                        onChange={(e) => {
-                                            if(session){
-                                                setNewAnswer(e.target.value);
-                                            }
-                                        }} value={newAnswer} className={scroll.scrollbar} placeholder={"Répondez à " + pseudo + "..."}/> :
+                                            }}
+                                            onChange={(e) => {
+                                                if (session) {
+                                                    setNewAnswer(e.target.value);
+                                                }
+                                            }} value={newAnswer} className={scroll.scrollbar}
+                                            placeholder={"Répondez à " + pseudo + "..."}/> :
 
-                                        <textarea onClick={() => dispatch(setActiveModalState(true))} readOnly={true} className={scroll.scrollbar} placeholder={"Connectez vous pour répondre à " + pseudo+ '...'}/>
+                                        <textarea onClick={() => dispatch(setActiveModalState(true))} readOnly={true}
+                                                  className={scroll.scrollbar}
+                                                  placeholder={"Connectez vous pour répondre à " + pseudo + '...'}/>
                                 }
-
 
 
                                 <div className={styles.sendResponse}>
                                     <button onClick={() => {
-                                        if(session && newAnswer !== ""){
-                                            const data ={
-                                                id,content:newAnswer
+                                        if (session && newAnswer !== "") {
+                                            const data = {
+                                                id, content: newAnswer
                                             }
                                             sendNewAnswer(data);
                                             setNewAnswer('');
                                         }
                                     }
-                                    } className={newAnswer !== "" ? styles.activeBtn : ''} >Envoyer</button>
+                                    } className={newAnswer !== "" ? styles.activeBtn : ''}>Envoyer
+                                    </button>
                                 </div>
                                 <div className={styles.listReply}>
                                     {
-                                        answersList?.map((item,index) => {
+                                        answersList?.map((item, index) => {
                                             return (
                                                 <Fragment key={item._id}>
                                                     <SubCommentary
                                                         hasLike={item.hasLike}
-                                                        deleteAnswer={() => deleteAanswer(item._id,item.content)}
+                                                        deleteAnswer={() => deleteAanswer(item._id, item.content)}
                                                         likeAnswer={() => likeAanswer(item._id)}
                                                         id={item._id}
                                                         authorId={item.userId}
@@ -223,7 +273,7 @@ const Commentary = ({pseudo,
                                     {
                                         seeMoreAnswers &&
                                         <div className={styles.getMoreBtn}>
-                                            <button  onClick={() => newAnswerPage(id)}>Voir plus</button>
+                                            <button onClick={() => newAnswerPage(id)}>Voir plus</button>
                                         </div>
                                     }
 
@@ -235,9 +285,19 @@ const Commentary = ({pseudo,
 
                     </div>
 
-
+                    <button style={{color: 'red'}} onClick={() => setOpenModalChoice(!openModalChoice)}>Ouvrir</button>
 
                 </div>
+                {
+                    openModalChoice &&
+                    ReactDOM.createPortal(
+                        <div className={styles.overlay} onClick={() => setOpenModalChoice(false)}>
+                        </div>,
+                        document.getElementsByTagName('body')[0]
+                    )
+
+                }
+
             </div>
         </div>
     )

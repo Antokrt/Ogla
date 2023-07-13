@@ -12,7 +12,6 @@ import { SearchBarService } from "../service/Search/SearchService"
 import { toastDisplayError } from "../utils/Toastify";
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, editComment, selectComments } from "../store/slices/commentSlice";
 import { LogoutService } from "../service/User/Account.service";
 import { HeadPhoneBtn, HeadPhoneBtnHeader } from "./layouts/Btn/ActionBtn";
 import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";

@@ -99,7 +99,7 @@ const SidebarCommentary = ({
             .then(() => deleteAComment(id))
             .then(() => {
                 setActiveCommentaryToDelete({id: null,content: null})
-                setOpenConfirmModal(false);
+                setOpenConfirmModalForDeleteComment(false);
             })
             .catch((err) => console.log(err));
     }
@@ -167,9 +167,6 @@ const SidebarCommentary = ({
 
     }, [canScroll, loadingScroll]);
 
-    if(width > 600 && height > 500 && orientation !== 'landscape'){
-
-    }
 
     if(errCommentary){
         return (
@@ -241,11 +238,9 @@ const SidebarCommentary = ({
                     </div>
                 }
 
-
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
 
-                        console.log(item.nbAnswers);
                         return (
                             <Fragment key={item._id}>
                                 <Commentary
@@ -294,9 +289,8 @@ const SidebarCommentary = ({
                 }
 
 
-
                 {
-                     comments.length <= 0 && !loadingScroll && endRefresh &&
+                     nbCommentary <= 0 && !loadingScroll &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
                         <img src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Jim Ogla'} onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
                         <p>C&apos;est bien silencieux ici ! <br/> <span onClick={() => {

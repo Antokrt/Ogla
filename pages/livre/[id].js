@@ -99,7 +99,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
     const [nbChapters, setNbChapters] = useState(bookData?.nbChapters);
-    const [noComments, setNoComments] = useState(false);
+    const [noComments, setNoComments] = useState(bookData?.nbCommentary <= 0);
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [pageChapter, setPageChapter] = useState(2);
     const [canScroll, setCanScroll] = useState(true);
@@ -137,6 +137,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         setComments([]);
         setMyComments([]);
     }
+
 
 
     const countNbOfChapters = useCallback(async () => {
@@ -193,10 +194,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         type={'book'}
                         canScroll={canScroll}
                         loadingScroll={loadingScroll}
-                        isEmpty={noComments}
                         activeFilter={activeFilterComments}
                         changeFilter={(e) => {
-                            setNoComments(false);
                             if (e === 'recent' && activeFilterComments === 'popular') {
                                 setCanScroll(true);
                                 setActiveFilterComments('recent');
@@ -221,14 +220,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         </div>)
     }
 
-    const checkSide = () => {
+    const checkSide =  () => {
         if (err) {
             return null;
         }
         switch (sidebarSelect) {
             case 'Commentary':
+
                 if (comments.length === 0 && canScroll) {
-                    setNoComments(false);
                     getComment(pageComment, 1);
                     if (session) {
                         getMyComments(1, 'popular');
@@ -247,7 +246,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         refresh={() => refresh()}
                         scrollChange={hasToScroll}
                         likeAComment={(id) => likeComment(id)}
-                        isEmpty={noComments}
                         createNewComment={(res) => newComment(res)}
                         deleteAComment={(id) => deleteComment(id)}
                         seeMore={() => {
@@ -265,7 +263,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         loadingScroll={loadingScroll}
                         activeFilter={activeFilterComments}
                         changeFilter={(e) => {
-                            setNoComments(false);
                             if (e === 'recent' && activeFilterComments === 'popular') {
                                 setCanScroll(true);
                                 setActiveFilterComments('recent');
@@ -303,18 +300,15 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .then((res) => {
                 if (res.length !== 0) {
                     setComments((prevState) => [...prevState, ...res]);
-                    setNoComments(false);
-                } else {
-                    setNoComments(true);
                 }
             })
             .catch((err) => console.log(err));
     };
 
-    const getComment = () => {
+
+    const getComment =  () => {
         setLoadingScroll(true);
         setCanScroll(false);
-        setNoComments(false);
         GetCommentService('book', bookData._id, pageComment, 5, session, activeFilterComments)
             .then((res) => {
                 res.forEach(element => {
@@ -322,19 +316,20 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         setComments((prevState) => ([...prevState, element]))
                     }
                 })
+
                 if (res.length !== 0) {
                     setPageComment(pageComment + 1);
                     setCanScroll(true);
                 } else {
                     setCanScroll(false);
                 }
+
+
             })
             .then(() => {
                 setLoadingScroll(false);
+                console.log(comments);
 
-                /*       if (comments.length !== 0) {
-                           setTimeout(() => setHasToScroll(!hasToScroll), 50);
-                       }*/
             })
             .catch((err) => setErrCommentary(true))
     }
@@ -385,16 +380,12 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         if (res.userId !== session.user.id) {
             setTimeout(() => setHasToScroll(!hasToScroll), 10);
         }
-        setNoComments(false);
         SendNotifService(authorData._id, 10, bookData._id, "null");
     }
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
         setNbCommentary(nbCommentary - 1);
-        if (comments.length === 1) {
-            setNoComments(true);
-        }
     }
 
     const sendAnswer = (data) => {
@@ -455,7 +446,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         )
     } else {
         return (
-            <div>
+            <div id={'portal'}>
                 {
                     width > 600 ?
                         <div className={styles.container}>

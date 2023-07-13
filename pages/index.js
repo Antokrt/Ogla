@@ -59,6 +59,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
     const router = useRouter();
 
+
     return (
         <div className={styles.container}>
             <Head>
@@ -79,7 +80,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
             <Banner/>
             <CategoryHome/>
             {
-                !err && tops && tops.length === 1 &&
+                !err && tops && tops.length === 2 &&
                 <div className={styles.hot}>
                     <div className={styles.headerHot}>
                         <h4>Populaires :</h4>
@@ -93,19 +94,20 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                 <>
                                     {
                                         tops.map((item, i) => {
+
                                             return (
                                                 <Fragment key={item._id}>
                                                     <HotPost
                                                         className={styles.hotItem}
-                                                        authorImg={tops[i].author.img}
-                                                        id={tops[i]?._id}
-                                                        slug={tops[i]?.slug}
-                                                        likes={tops[i]?.likes}
-                                                        top={true}
-                                                        title={tops[i]?.title} nbChapter={tops[i]?.nbChapters}
-                                                        author={tops[i]?.author_pseudo}
-                                                        img={tops[i]?.img} category={tops[i]?.category}
-                                                        description={tops[i]?.summary}
+                                                        authorImg={item.author.img}
+                                                        id={item?._id}
+                                                        slug={item?.slug}
+                                                        likes={item?.likes}
+                                                        top={i === 0}
+                                                        title={item?.title} nbChapter={item?.nbChapters}
+                                                        author={item?.author_pseudo}
+                                                        img={item?.img} category={item?.category}
+                                                        description={item?.summary}
                                                     />
                                                 </Fragment>
 
