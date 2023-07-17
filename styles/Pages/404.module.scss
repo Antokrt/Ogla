@@ -1,13 +1,16 @@
-.container{
-  &:after{
+@import "../utils/var.scss";
+
+.container {
+  &:after {
     position: absolute;
     left: 50%;
     top: 42%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     content: attr(data-after);
     font-size: 300px;
     opacity: 0.09;
   }
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -19,48 +22,54 @@
   overflow-y: hidden;
   overflow-x: hidden;
 
-  .logo{
+  .logo {
     top: 2%;
     left: 2%;
     position: absolute;
     z-index: 2;
-    img{
+
+    img {
       width: 100px;
     }
   }
 
-  .img{
+  .img {
     object-fit: contain;
     width: 230px;
   }
 
-  p{
+  p {
     text-align: center;
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: 'Santral-Regular', sans-serif;
     font-weight: bold;
     font-size: 20px;
   }
-  button{
-    &:active{
+
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
-    &:hover{
+
+    &:hover {
       transition: 0.2s;
-      filter: brightness(98%);
+      background-color: $orangeHover;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    background-color: #e94f37;
+    background-color: $orange;
     color: white;
-    font-family: 'Santral-Regular',sans-serif;
+    font-family: 'Santral-Regular',
+    sans-serif;
     font-size: 12px;
     font-weight: bold;
     padding: 10px 20px;
     border-radius: 8px;
-    svg{
+
+    svg {
       margin-top: -1px;
       width: 16px;
       color: white;
@@ -69,20 +78,22 @@
 }
 
 
-@media screen and (max-width: 450px){
-  .container{
-    &:after{
+@media screen and (max-width: 450px) {
+  .container {
+    &:after {
       font-size: 220px;
     }
-    p{
+
+    p {
       font-size: 18px;
     }
 
-    button{
+    button {
       font-size: 12px;
     }
   }
-    .img{
-      width: 160px!important;
-    }
+
+  .img {
+    width: 160px !important;
+  }
 }

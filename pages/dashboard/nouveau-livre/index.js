@@ -2,14 +2,12 @@ import styles from '../../../styles/Pages/Dashboard/New.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
 import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
-import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import {
     ArrowDownIcon,
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
-import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
@@ -20,7 +18,7 @@ import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import {PhotoIcon} from "@heroicons/react/20/solid";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../../store/slices/categorySlice";
@@ -327,7 +325,7 @@ const New = () => {
                                     <VerticalTabMenu/>
                                 </div>
                                 :
-                                <VerticalPhoneMenu/>
+                                <VerticalAuthorMenu/>
                         }
                     </>
             }

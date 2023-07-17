@@ -1,4 +1,5 @@
 @import "styles/utils/var";
+
 .container {
   position: fixed;
   display: flex;
@@ -9,7 +10,7 @@
   z-index: 9999 !important;
   background-color: rgba(28, 35, 43, 0.77);
 
-  img{
+  img {
     width: 130px;
     height: 130px;
     border-radius: 10px;
@@ -35,6 +36,7 @@
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     position: absolute;
     width: 20px;
     right: 4%;
@@ -42,20 +44,22 @@
     cursor: pointer;
   }
 
-  .headerModal{
+  .headerModal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 25px;
-    h5{
+
+    h5 {
       font-size: calc(12px + 0.2vw);
       font-family: $primaryFont;
       font-weight: bold;
       text-align: center;
       padding: 0px 10px;
     }
-    p{
+
+    p {
       padding: 0px 10px;
       text-align: center;
       color: #6b7077;
@@ -64,14 +68,15 @@
     }
   }
 
-  .containerBtn{
+  .containerBtn {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     margin-top: 20px;
     gap: 15px;
-    button{
+
+    button {
       &:active {
         transform: scale(0.8);
         transition: 0.2s;
@@ -79,11 +84,10 @@
 
       &:hover {
         transition: 0.2s;
-        filter: brightness(92%);
       }
 
       transition: 0.2s;
-      background-color: #1C232B;
+      background-color: $black;
       color: white;
       font-family: $primaryFont;
       letter-spacing: 1px;
@@ -93,8 +97,19 @@
       box-shadow: $shadow;
       padding: 10px 20px;
     }
-    .red{
-      background-color: #e04444;
+
+    .red {
+      &:hover {
+        background-color: $orangeHover;
+      }
+
+      background-color: $orange;
+    }
+
+    .black {
+      &:hover {
+        background-color: $blackHover;
+      }
     }
   }
 
@@ -116,11 +131,11 @@
     background-color: #54595F !important;
   }
 
-  .active {
-    cursor: pointer;
-    transition: 0.1s;
-    background-color: #e04444;
-  }
+  // .active {
+  //   cursor: pointer;
+  //   transition: 0.1s;
+  //   background-color: #e04444;
+  // }
 
 }
 
@@ -153,6 +168,7 @@
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     position: absolute;
     width: 20px;
     right: 4%;
@@ -160,21 +176,23 @@
     cursor: pointer;
   }
 
-  .headerModal{
+  .headerModal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 30px;
     height: 100%;
     align-items: center;
-    h5{
+
+    h5 {
       font-size: calc(12px + 0.2vw);
       font-family: $primaryFont;
       font-weight: bold;
       text-align: center;
       padding: 0px 10px;
     }
-    p{
+
+    p {
       padding: 0px 10px;
       text-align: center;
       color: #6b7077;
@@ -183,13 +201,14 @@
     }
   }
 
-  .containerBtn{
+  .containerBtn {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     gap: 15px;
-    button{
+
+    button {
       &:active {
         transform: scale(0.8);
         transition: 0.2s;
@@ -201,7 +220,7 @@
       }
 
       transition: 0.2s;
-      background-color: #1C232B;
+      background-color: $black;
       color: white;
       font-family: $primaryFont;
       letter-spacing: 1px;
@@ -211,7 +230,8 @@
       box-shadow: $shadow;
       padding: 10px 20px;
     }
-    .red{
+
+    .red {
       background-color: #e04444;
     }
   }
@@ -244,7 +264,7 @@
 
 
 
-.containerCommentary{
+.containerCommentary {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -267,6 +287,7 @@
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     position: absolute;
     width: 20px;
     right: 4%;
@@ -274,18 +295,20 @@
     cursor: pointer;
   }
 
-  .headerModal{
+  .headerModal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 25px;
-    h5{
+
+    h5 {
       font-size: calc(12px + 0.2vw);
       font-family: $primaryFont;
       font-weight: bold;
     }
-    p{
+
+    p {
       text-align: center;
       color: #6b7077;
       font-family: $primaryFont;
@@ -296,19 +319,21 @@
     }
   }
 
-  .containerBtn{
+  .containerBtn {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     margin-top: 20px;
     gap: 15px;
-    button{
+
+    button {
       &:active {
         transform: scale(0.8);
         transition: 0.2s;
       }
-      background-color: #1C232B;
+
+      background-color: $black;
       color: white;
       font-family: $primaryFont;
       letter-spacing: 1px;
@@ -318,7 +343,8 @@
       box-shadow: $shadow;
       padding: 8px 20px;
     }
-    .red{
+
+    .red {
       background-color: #e04444;
     }
   }
@@ -348,94 +374,104 @@
   }
 }
 
-@media screen and (max-width: 700px){
-  .containerDeleteAccountCustomProvider{
-    .containerContent{
-      padding: 55px 55px ;
+@media screen and (max-width: 700px) {
+  .containerDeleteAccountCustomProvider {
+    .containerContent {
+      padding: 55px 55px;
     }
-    .close{
+
+    .close {
       display: none;
     }
-    .containerBtn{
+
+    .containerBtn {
       flex-direction: column;
       margin-top: 10px;
-      button{
+
+      button {
         width: 160px;
-        font-size: 9px!important;
+        font-size: 9px !important;
       }
     }
   }
-  .container,{
-    .close{
+
+  .container,
+  {
+  .close {
+    display: none;
+  }
+
+  .containerContent {
+    border-radius: 10px;
+    padding: 35px 35px;
+    width: min-content;
+    height: min-content;
+  }
+
+  .headerModal {
+    gap: 5px;
+
+    img {
       display: none;
     }
-.containerContent{
-  border-radius: 10px;
-  padding: 35px 35px;
-  width: min-content;
-  height: min-content;
-}
-
-    .headerModal{
-      gap: 5px;
-      img{
-        display: none;
-      }
-    }
   }
 }
+}
 
 
-.errMsgDelete{
+.errMsgDelete {
   text-align: center;
-  color: #e94f37!important;
+  color: $orange !important;
 }
 
 
-@media screen and (max-width: 600px){
-  .containerCommentary .containerContent{
-    box-shadow: none!important;
+@media screen and (max-width: 600px) {
+  .containerCommentary .containerContent {
+    box-shadow: none !important;
   }
 }
 
-@media screen and (max-width: 500px){
-  .containerCommentary{
-    .containerContent{
+@media screen and (max-width: 500px) {
+  .containerCommentary {
+    .containerContent {
       width: 100% !important;
     }
   }
 }
 
-@media screen and (max-width: 400px){
-  .containerDeleteAccountCustomProvider{
-    .containerContent{
+@media screen and (max-width: 400px) {
+  .containerDeleteAccountCustomProvider {
+    .containerContent {
       width: 90%;
-      padding: 25px 5px ;
+      padding: 25px 5px;
     }
-    .containerBtn{
+
+    .containerBtn {
       flex-direction: column;
       margin-top: 10px;
-      button{
+
+      button {
         width: 160px;
-        font-size: 9px!important;
+        font-size: 9px !important;
       }
     }
   }
 }
 
 
-@media screen and (max-width: 270px){
-  .container{
-    .containerContent{
+@media screen and (max-width: 270px) {
+  .container {
+    .containerContent {
       width: 90%;
       padding: 25px 5px;
     }
 
-    .containerBtn{
+    .containerBtn {
       flex-direction: column;
       margin-top: 10px;
-      button{
-        font-size: 9px!important;
+
+      button {
+        font-size: 9px !important;
       }
     }
   }

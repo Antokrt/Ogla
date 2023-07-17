@@ -1,24 +1,24 @@
 import styles from '../styles/Component/Footer.module.scss';
 import Link from "next/link";
-import React, {useContext, useState} from "react";
-import {useRouter} from "next/router";
-import {LangueContext} from "../utils/context";
+import React from "react";
+import { useRouter } from "next/router";
 import Facebook from "./layouts/Icons/Social/facebook";
 import Instagram from "./layouts/Icons/Social/instagram";
 import Twitter from "./layouts/Icons/Social/twitter";
 import DiscordIcon from "./layouts/Icons/Social/discord";
-import {GetRandomBookService} from "../service/Book/BookService";
-import {useSession} from "next-auth/react";
-import {useDispatch, useSelector} from 'react-redux';
-import {changeTheme, selectTheme} from '../store/slices/themeSlice';
-import {LockClosedIcon, MoonIcon, MusicalNoteIcon, SunIcon} from "@heroicons/react/24/outline";
-import {HeadPhoneBtn} from "./layouts/Btn/ActionBtn";
-import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
-
+import { GetRandomBookService } from "../service/Book/BookService";
+import { useSession } from "next-auth/react";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeTheme, selectTheme } from '../store/slices/themeSlice';
+import { MoonIcon, MusicalNoteIcon, SunIcon } from "@heroicons/react/24/outline";
+import { selectActiveMusicStatus, setActiveMusic } from "../store/slices/musicSlice";
+import 'tippy.js/dist/tippy.css'
+import Tippy from "@tippyjs/react";
+import 'tippy.js/animations/scale.css';
 
 export default function Footer() {
     const router = useRouter();
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const theme = useSelector(selectTheme);
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const dispatch = useDispatch();
@@ -42,15 +42,15 @@ export default function Footer() {
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>
-                    <Facebook/>
-                    <Instagram/>
+                    <Facebook />
+                    <Instagram />
                     <Link href={'https://twitter.com/OglaOff'} target={'_blank'} rel={'noreferrer'}>
                         <a target={'_blank'} rel={'noreferrer'}>
-                            <Twitter/>
+                            <Twitter />
                         </a>
 
                     </Link>
-                    <DiscordIcon/>
+                    <DiscordIcon />
 
                 </div>
             </div>
@@ -72,29 +72,49 @@ export default function Footer() {
                                     écrivain</a></Link></li>
                             }
 
-                            <li tabIndex={0} style={{cursor: 'pointer'}} onClick={() => getRandomBook()}>Aléatoire</li>
+                            <li tabIndex={0} style={{ cursor: 'pointer' }} onClick={() => getRandomBook()}>Aléatoire</li>
                             <li className={styles.btn}>
-                                <div
-                                    className={styles.headphone}
-                                    onClick={() => dispatch(setActiveMusic())}>
-                                    <MusicalNoteIcon/>
-                                    {
-                                        selectMusicState &&
-                                        <div className={styles.animation}></div>
-                                    }
-
-                                </div>
-
+                                <Tippy
+                                    trigger={'mouseenter'}
+                                    content={'Musique'}
+                                    delay={[200, 0]}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                >
+                                    <div
+                                        className={styles.headphone}
+                                        onClick={() => dispatch(setActiveMusic())}>
+                                        <MusicalNoteIcon />
+                                        {
+                                            selectMusicState &&
+                                            <div className={styles.animation}></div>
+                                        }
+                                    </div>
+                                </Tippy>
 
                                 {
                                     theme ?
-                                        <SunIcon onClick={setTheme} className={styles.svgTheme} />
+                                        <Tippy
+                                            trigger={'mouseenter'}
+                                            content={'Thème'}
+                                            delay={[200, 0]}
+                                            animation={'scale'}
+                                            placement={'bottom'}
+                                        >
+                                            <SunIcon onClick={setTheme} className={styles.svgTheme} />
+                                        </Tippy>
                                         :
-                                        <MoonIcon onClick={setTheme} className={styles.svgTheme} />
+                                        <Tippy
+                                            trigger={'mouseenter'}
+                                            content={'Thème'}
+                                            delay={[200, 0]}
+                                            animation={'scale'}
+                                            placement={'bottom'}
+                                        >
+                                            <MoonIcon onClick={setTheme} className={styles.svgTheme} />
+                                        </Tippy>
                                 }
                             </li>
-
-
                         </ul>
                     </div>
 
@@ -106,11 +126,10 @@ export default function Footer() {
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
                             <li>© OGLA Tous droits réservés 2023
                             </li>
-
+                            *
                         </ul>
                     </div>
                 </div>
-
 
                 <div className={styles.text}>
                     <h6>Qui sommes nous?</h6>

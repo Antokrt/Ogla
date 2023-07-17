@@ -29,8 +29,6 @@
       text-align: center;
     }
 
-
-
     p {
       text-align: center;
       font-size: 15px;
@@ -42,8 +40,6 @@
   .image {
     height: 30vh;
   }
-
-
 }
 
 .darkContainer {
@@ -68,15 +64,12 @@
       position: relative;
       font-size: 10vh;
       font-family: $branch;
-      sans-serif;
       font-weight: bold;
       color: white;
       white-space: pre;
       -webkit-text-stroke-width: 1px;
       text-align: center;
     }
-
-
 
     p {
       text-align: center;
@@ -91,7 +84,6 @@
   }
 }
 
-
 @media screen and (max-width: 1500px) {
   .container {
     gap: 100px;
@@ -99,7 +91,6 @@
 }
 
 @media screen and (max-width: 1200px) {
-
   .container {
     gap: 20px;
   }

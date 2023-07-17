@@ -1,34 +1,36 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  h2{
+
+  h2 {
     margin-bottom: 40px;
     font-size: 28px;
-    font-family: "Potta One",sans-serif;
+    font-family: "Potta One", sans-serif;
     color: $purple;
   }
 
-  .btn{
+  .btn {
     font-size: 20px;
     border-radius: 10px;
     color: white;
-    font-family: "Potta One",sans-serif;
+    font-family: "Potta One", sans-serif;
     width: 20%;
     padding: 20px 0px;
     transition: 0.2s;
   }
 }
 
-.containerRadio{
+.containerRadio {
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
-  .item{
+
+  .item {
 
     transition: 0.2s;
     cursor: pointer;
@@ -40,38 +42,41 @@
     width: 50vh;
     border: solid 2px $border;
     border-radius: 25px;
-padding: 50px;
-    img{
+    padding: 50px;
+
+    img {
       width: 100%;
       object-fit: contain;
       height: 200px;
       margin-bottom: 30px;
     }
 
-    h3{
+    h3 {
       margin-bottom: 30px;
-      font-family: "Potta One",sans-serif;
-      span{
+      font-family: "Potta One", sans-serif;
+
+      span {
         color: $purple;
       }
     }
-    p{
+
+    p {
       text-align: center;
-      font-family: "Montserrat",sans-serif;
+      font-family: "Montserrat", sans-serif;
       font-size: 13px;
       margin-bottom: 30px;
     }
   }
 
-  .fItem{
+  .fItem {
     margin-right: 50px;
   }
 
-  .radio{
+  .radio {
     cursor: pointer;
   }
 
-  .radio:after{
+  .radio:after {
     width: 15px;
     height: 15px;
     border-radius: 15px;
@@ -85,7 +90,7 @@ padding: 50px;
     border: 2px solid $border;
   }
 
-  .radio:checked:after{
+  .radio:checked:after {
     transition: 0.2s;
     width: 15px;
     height: 15px;
@@ -102,17 +107,17 @@ padding: 50px;
 }
 
 
-.invalid{
+.invalid {
   cursor: initial;
   background-color: #686f77;
 }
 
-.valid{
+.valid {
   cursor: pointer;
   background-color: $purple;
 }
 
-.upValid{
+.upValid {
   transition: 0.2s;
   transform: translateY(-20px);
 }

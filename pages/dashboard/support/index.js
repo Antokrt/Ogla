@@ -15,7 +15,6 @@ const Support = () => {
     const [width, height] = ScreenSize();
     const orientation = useOrientation();
 
-
     return (
         <div className={styles.container}>
             <Head>

@@ -608,11 +608,11 @@ width: 200px;
 
     &:hover {
       transition: 0.2s;
-      filter: brightness(98%);
+      background-color: $purpleHover;
     }
 
     box-shadow: $shadow;
-    background-color: #9844AD;
+    background-color: $purple;
     padding: 10px 40px;
     border-radius: 15px;
     font-family:$primaryFont;

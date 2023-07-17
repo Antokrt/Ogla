@@ -1,22 +1,26 @@
 @import "styles/utils/var";
-.container{
+
+.container {
   display: flex;
   width: 100%;
   height: 100vh;
   overflow-y: hidden;
   overflow-x: hidden;
 }
-.containerMain{
+
+.containerMain {
   display: flex;
   height: 100vh;
   width: 100%;
 
 }
-.verticalMenuContainer{
+
+.verticalMenuContainer {
   height: 100%;
   width: 15%;
 }
-.containerData{
+
+.containerData {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -26,16 +30,19 @@
   gap: 2%;
 
 }
-.errContainer{
+
+.errContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
-.headerList{
+
+.headerList {
   width: 80%;
   margin-top: 1%;
-  h4{
+
+  h4 {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,32 +53,37 @@
     font-weight: bold;
     color: #1C232B;
     gap: 10px;
-    svg{
+
+    svg {
       width: 20px;
     }
   }
 
 }
-.sortContainer{
+
+.sortContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 80%;
   margin-bottom: 2%;
-button{
-  padding: 10px 15px;
-}
-  p{
+
+  button {
+    padding: 10px 15px;
+  }
+
+  p {
     font-family: $primaryFont;
     font-weight: bold;
     border-radius: 5px;
     padding: 6px 10px;
     background-color: rgba(152, 68, 173, 0.21);
-    color: #9844AD;
+    color: $purple;
     font-size: 11px;
   }
 }
-.listContainer{
+
+.listContainer {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -79,13 +91,15 @@ button{
   gap: 10px;
   padding-bottom: 20px;
 }
-.list{
+
+.list {
   display: flex;
   flex-direction: column;
   gap: 25px;
   width: 80%;
 }
-.seeMoreContainer{
+
+.seeMoreContainer {
   margin-top: 10px;
   display: flex;
   padding: 15px 0;
@@ -94,24 +108,29 @@ button{
   z-index: 2;
 
   .seeMoreText {
+    &:hover {
+      color: rgb(118, 10, 145);
+    }
+
     width: 100px;
     z-index: 2;
     background-color: white;
     font-size: 12px;
-    color: #9844AD;
+    color: $purple;
     font-family: $primaryFont;
     font-weight: bold;
     text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
   }
 }
-.scrollbar{
+
+.scrollbar {
   &::-webkit-scrollbar {
     width: 3px;
   }
 
   /* Track */
   &::-webkit-scrollbar-track {
-    background:transparent;
+    background: transparent;
   }
 
   /* Handle */
@@ -125,32 +144,34 @@ button{
   }
 }
 
-.mainHasNoBooks{
+.mainHasNoBooks {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   padding: 0% 5%;
 
-  .hasNotWriteContainer{
+  .hasNotWriteContainer {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .contentNoBooks{
+  .contentNoBooks {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 70%;
     color: rgba(28, 35, 43, 0.87);
-    h3{
+
+    h3 {
       font-size: 24px;
-      color: #1C232B!important;
+      color: #1C232B !important;
       font-family: $primaryFont;
       font-weight: bold;
     }
-    p{
+
+    p {
       font-family: $primaryFont;
       font-size: 15px;
       text-align: left;
@@ -160,31 +181,37 @@ button{
 
     }
 
-    h5{
+    h5 {
       font-family: $secondaryFont;
       font-size: 15px;
       font-weight: bold;
       margin-top: 20px;
     }
 
-    ul{
+    ul {
       display: flex;
       flex-direction: column;
       gap: 5px;
       margin-top: 10px;
-      li{
+
+      li {
         font-size: 14px;
         font-family: $secondaryFont;
         font-weight: bold;
-        color: #9844AD;
+        color: $purple;
       }
     }
 
-    button{
-      &:active{
+    button {
+      &:active {
         transform: scale(0.8);
         transition: 0.2s;
       }
+
+      &:hover {
+        background-color: $purpleHover;
+      }
+
       margin-top: 20px;
       display: flex;
       justify-content: center;
@@ -194,159 +221,165 @@ button{
       font-size: 11px;
       font-weight: bold;
       font-family: $primaryFont;
-      background-color: #9844AD;
+      background-color: $purple;
       width: 160px;
       color: white;
       border-radius: 5px;
       gap: 8px;
-      svg{
+
+      svg {
         width: 15px;
       }
     }
   }
 
-  .imgNoBooks{
+  .imgNoBooks {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 30%;
-img{
-  width: 15vh;
-}
+
+    img {
+      width: 15vh;
+    }
   }
 }
 
-
-
-@media screen and (max-width: 1400px){
-  .verticalMenuContainer{
+@media screen and (max-width: 1400px) {
+  .verticalMenuContainer {
     width: 20%;
   }
 
-  .list{
+  .list {
     width: 90% !important;
   }
 }
 
-@media screen and (max-width: 1100px){
-  .verticalMenuContainer{
+@media screen and (max-width: 1100px) {
+  .verticalMenuContainer {
     width: 22%;
   }
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1000px) {
 
-  .mainHasNoBooks{
+  .mainHasNoBooks {
     padding: 0% 2% !important;
   }
-  .hasNotWriteContainer{
-    flex-direction: column-reverse!important;
 
-    h3{
+  .hasNotWriteContainer {
+    flex-direction: column-reverse !important;
+
+    h3 {
       margin-top: 20px;
       text-align: center;
     }
-    p{
-      text-align: center!important;
+
+    p {
+      text-align: center !important;
     }
 
-    .contentNoBooks{
+    .contentNoBooks {
       justify-content: center;
       width: 80% !important;
       align-items: center;
-      button{
-        padding: 10px 30px ;
+
+      button {
+        padding: 10px 30px;
       }
     }
   }
 }
 
 @media screen and (max-width: 1000px) and (max-height: 500px) {
-  .verticalTabContainer{
+  .verticalTabContainer {
     display: none;
   }
 
-  .sortContainer{
+  .sortContainer {
     margin-top: 5%;
     margin-bottom: 5%;
   }
 
-  .containerData{
-    overflow-y: initial!important;
-    height: auto!important;
+  .containerData {
+    overflow-y: initial !important;
+    height: auto !important;
   }
 
-  .containerMain{
+  .containerMain {
     height: auto;
     overflow-y: scroll;
   }
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) {
 
-  .mainHasNoBooks{
+  .mainHasNoBooks {
     margin-top: -10%;
   }
+
   .listContainer {
     margin-bottom: 60px;
   }
-  .containerData{
+
+  .containerData {
     gap: 0%;
   }
 
-  .headerList{
+  .headerList {
     margin-top: 20px;
   }
-  .sortContainer{
+
+  .sortContainer {
     margin-top: 20px;
     margin-bottom: 40px;
-    p{
+
+    p {
       font-size: 10px;
       font-weight: 500;
     }
   }
 
-  .errContainer{
+  .errContainer {
     margin-top: -10vh;
   }
 }
 
-@media screen and (max-width: 560px){
-  .listContainer{
-    height: auto!important;
-    overflow-y: initial!important;
+@media screen and (max-width: 560px) {
+  .listContainer {
+    height: auto !important;
+    overflow-y: initial !important;
   }
 
-  .containerMain{
-    min-height: 90vh!important;
+  .containerMain {
+    min-height: 90vh !important;
   }
 
   .containerData {
     padding-bottom: 80px
   }
 
-  .seeMoreContainer{
-    margin-bottom: 0!important;
+  .seeMoreContainer {
+    margin-bottom: 0 !important;
   }
 }
 
-@media screen and (max-width: 750px) and (max-height: 500px) and (orientation: landscape){
-  .container{
+@media screen and (max-width: 750px) and (max-height: 500px) and (orientation: landscape) {
+  .container {
     overflow-x: scroll;
     height: auto;
   }
-  .verticalMenuContainer{
-    display: none!important;
+
+  .verticalMenuContainer {
+    display: none !important;
   }
 }
 
-
-
-@media screen and (max-width: 300px){
-  .sortContainer{
-    p{
-      font-size: 10px!important;
+@media screen and (max-width: 300px) {
+  .sortContainer {
+    p {
+      font-size: 10px !important;
     }
   }
 }

@@ -34,13 +34,13 @@
     }
     &:hover{
       transition: 0.2s;
-      filter: brightness(98%);
+      background-color: $orangeHover;
     }
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    background-color: #e94f37;
+    background-color: $orange;
     color: white;
     font-size: 12px;
     padding: 10px 35px;

@@ -1,18 +1,15 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
 import { useEffect, useRef, useState } from "react";
-import { Formik, Field, Form, ErrorMessage, useFormikContext, } from "formik";
-
-import { router, useRouter } from "next/router";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 import { AuthorSchema, AuthorSchemaLog } from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
 import { instance } from "../../service/config/Interceptor";
-import { toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail } from "../../utils/Toastify";
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 import ScreenSize from "../../utils/Size";
 
 const DevenirAuteur = () => {
-
     const [stepActiveForm, setStepActiveForm] = useState(1);
     const [activeText, setActiveText] = useState("Il nous faut peu de mots pour exprimer l’essentiel, il nous faut tous les mots pour le rendre réel...");
     const { data: session } = useSession();
@@ -259,22 +256,6 @@ const DevenirAuteur = () => {
                         </>
                 }
 
-
-                {/*<label htmlFor={"genres"}>Genre favoris</label>
-                <div className={styles.selectCategory}>
-                    <ArrowDownIcon/>
-                    <select name="genres" id="pet-select">
-                        {
-                            Category.category.map((item) => {
-                                return (
-                                    <option key={item.name}
-                                            value={Capitalize(item.name)}>{Capitalize(item.name)}</option>
-                                )
-                            })
-                        }
-                        <option value={"none"}>Pas de préférence</option>
-                    </select>
-                </div>*/}
                 <label htmlFor={"description"}>Une petite présentation
                     <span>
                         <svg viewBox="-16 0 512 512"><path d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z" /></svg>

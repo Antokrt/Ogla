@@ -1,28 +1,30 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 100%;
+  width: 250px;
   min-width: 80px;
   z-index: 1;
-  padding-top: 10%;
-  padding-bottom: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   background-color: white;
   box-shadow: $shadow;
 
-  .fContainer{
+  .fContainer {
     display: flex;
     flex-direction: column;
-    .logo{
+
+    .logo {
       margin-bottom: 10%;
-      h3{
+
+      h3 {
         cursor: pointer;
         text-align: center;
         z-index: 2;
-        font-family: 'Montserrat',sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-weight: bold;
         font-size: 25px;
         color: #1C232B;
@@ -30,15 +32,21 @@
     }
   }
 
-  .navContainer{
+  .navContainer {
     padding-left: 10%;
     padding-right: 10%;
-    ul{
+
+    ul {
       display: flex;
       flex-direction: column;
 
       gap: 10px;
-      li{
+
+      li {
+        &:hover {
+          background-color: $grey;
+        }
+
         cursor: pointer;
         display: flex;
         justify-content: flex-start;
@@ -51,7 +59,8 @@
         letter-spacing: 1px;
         font-weight: bold;
         font-size: 11px;
-        svg{
+
+        svg {
           margin-top: -2px;
           width: 25px;
           min-width: 20px;
@@ -61,18 +70,20 @@
     }
   }
 
-  .imgContainer{
+  .imgContainer {
     display: flex;
     justify-content: center;
-    img{
+
+    img {
       width: 140px;
     }
   }
 
-  .sContainer{
+  .sContainer {
     display: flex;
     flex-direction: column;
-    .profilContainer{
+
+    .profilContainer {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -80,24 +91,26 @@
       width: 100%;
       height: auto;
 
-      .profil{
+      .profil {
         position: relative;
         display: flex;
         align-items: center;
         gap: 8%;
         height: 100%;
         width: 80%;
-        span{
+
+        span {
           position: absolute;
           bottom: 2px;
           left: 30px;
           height: 13px;
           width: 13px;
           border-radius: 50%;
-          background-color: #1bce1b;
+          background-color: $green;
           border: 2px solid white;
         }
-        img{
+
+        img {
           cursor: pointer;
           width: 40px;
           height: 40px;
@@ -105,17 +118,19 @@
           object-fit: cover;
         }
 
-        .infos{
+        .infos {
           cursor: pointer;
           display: flex;
           flex-direction: column;
-          .name{
+
+          .name {
             font-size: 12px;
             font-family: $primaryFont;
             font-weight: bold;
             color: #1C232B;
           }
-          .pseudo{
+
+          .pseudo {
             font-size: 10px;
             font-weight: bold;
             font-family: $primaryFont;
@@ -127,12 +142,13 @@
   }
 }
 
-.notification{
+.notification {
   position: relative;
   display: flex;
   justify-content: left;
   align-items: center;
-  span{
+
+  span {
     position: absolute;
     right: 0%;
     display: flex;
@@ -146,46 +162,47 @@
   }
 }
 
-.bell{
+.bell {
   width: 25px;
   color: #54595F;
 }
 
-.activeMenu{
-  background-color: #9844AD!important;
-  color: white!important;
-  svg{
-    color: white!important;
+.activeMenu {
+  background-color: #9844AD !important;
+  color: white !important;
+
+  svg {
+    color: white !important;
   }
 
 }
 
-@media screen and (max-width: 1200px){
-  .container{
-    li{
-      font-size: 10px!important;
-    }
-    svg{
-      width: 10px!important;
-    }
-  }
-}
-
-@media screen and (max-width: 900px){
-  .container{
+@media screen and (max-width: 1200px) {
+  .container {
     li {
-      font-size: 0!important;
-      span{
+      font-size: 10px !important;
+    }
+
+    svg {
+      width: 10px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    li {
+      font-size: 0 !important;
+
+      span {
         display: none;
       }
     }
   }
 }
 
-@media screen and (max-height: 500px) and (max-width: 700px) and (orientation: landscape){
-  .container{
+@media screen and (max-height: 500px) and (max-width: 700px) and (orientation: landscape) {
+  .container {
     display: none;
   }
 }
-
-

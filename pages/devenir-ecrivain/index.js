@@ -1,22 +1,18 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 import React, {useEffect, useRef, useState} from "react";
-import {Formik, Field, Form, ErrorMessage, useFormikContext,} from "formik";
-
-import {router, useRouter} from "next/router";
+import {Formik, Field, Form, ErrorMessage} from "formik";
+import {useRouter} from "next/router";
 import {signIn, useSession} from "next-auth/react";
 import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
 import {instance} from "../../service/config/Interceptor";
-import {toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail} from "../../utils/Toastify";
 import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import ScreenSize from "../../utils/Size";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import Head from "next/head";
-import {ConfirmModal} from "../../Component/Modal/ConfirmModal";
 import {AuthorConditionsModal} from "../../Component/Modal/AuthorConditionsModal";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
-import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {getConfigOfProtectedRoute} from "../api/utils/Config";
 import {GetFetchPath} from "../api/utils/Instance";
 

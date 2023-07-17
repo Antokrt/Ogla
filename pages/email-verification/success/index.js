@@ -53,7 +53,7 @@ const SuccessVerificationEmailPage = ({profilData}) => {
 
             <h1>Email vérifiée !</h1>
             <p> <span>{profilData?.pseudo}</span>, votre email a été vérifié avec succès. </p>
-            <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>
+            <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes, bonne lecture sur <strong>Ogla</strong> !</p>
         </div>
     )
 

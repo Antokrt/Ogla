@@ -1,25 +1,27 @@
 @import "styles/utils/var";
-.container{
+
+.container {
   display: flex;
   width: 100vw;
   max-width: 100vw;
   overflow-y: hidden;
   overflow-x: hidden;
 }
-.containerMain{
+
+.containerMain {
   display: flex;
   height: 100vh;
   width: 100%;
   max-width: 100vw;
 }
 
-.verticalMenuContainer{
+.verticalMenuContainer {
   height: 100%;
   width: 15%;
   z-index: 1;
 }
 
-.errContainer{
+.errContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +29,7 @@
   background-color: white;
 }
 
-.containerData{
+.containerData {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,14 +40,14 @@
 
 
 
-.scrollbar{
+.scrollbar {
   &::-webkit-scrollbar {
     width: 3px;
   }
 
   /* Track */
   &::-webkit-scrollbar-track {
-    background:transparent;
+    background: transparent;
   }
 
   /* Handle */
@@ -55,70 +57,69 @@
 
 }
 
-.header{
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 3%;
   height: 12vh;
   border-bottom: solid 1px rgba(90, 102, 115, 0.16);
-  .list{
+
+  .list {
     display: flex;
     align-items: center;
     gap: 10px;
 
-    svg{
+    svg {
       width: 20px;
       color: rgba(28, 35, 43, 0.71);
     }
 
-    .arrow{
+    .arrow {
       width: 15px;
     }
 
-    h6{
+    h6 {
       font-weight: bold;
       font-family: $primaryFont;
       font-size: 14px;
       cursor: pointer;
       text-decoration: underline;
     }
-    p{
-      &:first-letter{
+
+    p {
+      &:first-letter {
         text-transform: uppercase;
       }
+
       font-family: $primaryFont;
       font-size: 14px;
       color: rgba(28, 35, 43, 0.89);
-      span{
+
+      span {
         font-weight: bold;
         color: #9844AD;
       }
     }
-
-
   }
 
-  .btnList{
+  .btnList {
     display: flex;
     gap: 10px;
   }
 
-
-
-
-
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 5px;
     cursor: initial;
-    transition: 0.1s!important;
+    transition: 0.1s !important;
     background-color: #54595F;
     padding: 10px 25px;
     font-size: 11px;
@@ -126,31 +127,38 @@
     box-shadow: $shadow;
     font-weight: bold;
     font-family: $primaryFont;
-    svg{
-      width: 15px!important;
+
+    svg {
+      width: 15px !important;
       color: white;
     }
   }
 }
 
-.iconDiv{
-  &:active{
+.iconDiv {
+  &:active {
     transform: scale(0.8);
     transition: 0.2s;
   }
+
+  &:hover {
+    background-color: $blackHover;
+  }
+
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #54595F;
+  background-color: $black;
   padding: 2px 10px;
-  svg{
+
+  svg {
     width: 14px;
     color: white;
   }
 }
 
-.containerSecond{
+.containerSecond {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -160,7 +168,7 @@
   padding-right: 2%;
   padding-bottom: 2%;
 
-  .containerText{
+  .containerText {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -171,7 +179,8 @@
     position: relative;
     height: 100%;
     border: solid 1px rgba(28, 35, 43, 0.12);
-    .toogleMenuContainer{
+
+    .toogleMenuContainer {
       cursor: pointer;
       display: flex;
       justify-content: center;
@@ -187,34 +196,37 @@
 
 
 
-      svg{
+      svg {
         transition: 0.2s;
         color: white;
         width: 15px;
       }
     }
 
-    .containerTitle{
+    .containerTitle {
       display: flex;
       justify-content: space-between;
       width: 100%;
 
-      .titleL{
+      .titleL {
         display: flex;
         flex-direction: column;
         width: 70%;
         gap: 5px;
-        p{
+
+        p {
           font-family: $primaryFont;
           color: rgba(28, 35, 43, 0.55);
         }
-        input{
-          &::placeholder{
+
+        input {
+          &::placeholder {
             font-size: calc(14px + 0.5vw);
             color: rgba(28, 35, 43, 0.56);
             font-weight: bold;
             font-family: $primaryFont;
           }
+
           font-weight: bold;
           border: none;
           outline: none;
@@ -224,26 +236,26 @@
           text-align: left;
         }
 
-        .date{
-        }
+        .date {}
       }
 
-      .titleR{
+      .titleR {
         display: flex;
         flex-direction: column;
-        p{
+
+        p {
           font-size: 14px;
           font-family: $primaryFont;
           color: rgba(28, 35, 43, 0.42);
         }
 
-        .containerImgBook{
+        .containerImgBook {
           display: flex;
           justify-content: center;
           align-items: center;
           margin-top: 10px;
 
-          img{
+          img {
             width: 70px;
             height: 70px;
             border-radius: 50%;
@@ -254,7 +266,7 @@
 
     }
 
-    .containerTextEditor{
+    .containerTextEditor {
       position: relative;
       margin-top: 20px;
       display: flex;
@@ -265,33 +277,35 @@
       padding-bottom: 20px;
       width: 600px;
 
-      .separatorEditor{
+      .separatorEditor {
         height: 100%;
         width: 2px;
         background-color: rgba(28, 35, 43, 0.14);
       }
 
-      .bookEditor{
+      .bookEditor {
         position: absolute;
         right: 0;
         width: 12vw;
         min-width: 50px;
       }
 
-      button{
+      button {
         font-size: 14px;
         font-family: 'Poppins', sans-serif;
       }
-      .bold{
+
+      .bold {
         font-weight: bold;
       }
 
-      .italic{
+      .italic {
         font-family: 'Noto Sans Tangsa', sans-serif;
         font-style: italic;
         margin-top: -2px;
       }
-      .under{
+
+      .under {
         margin-top: -2px;
         font-family: 'Montserrat';
         font-weight: bold;
@@ -299,14 +313,14 @@
       }
     }
 
-    .text{
+    .text {
       &::-webkit-scrollbar {
         width: 2px;
       }
 
       /* Track */
       &::-webkit-scrollbar-track {
-        background:transparent;
+        background: transparent;
       }
 
       /* Handle */
@@ -325,37 +339,43 @@
   }
 
 
-  .containerPresentationBook{
+  .containerPresentationBook {
     display: none;
     flex-direction: column;
     padding: 2%;
     flex: 1;
     height: 100%;
-    .headPresentation{
+
+    .headPresentation {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       gap: 20px;
       cursor: pointer;
-      img{
+
+      img {
         height: 8vh;
         clip-path: circle();
         background-color: #1C232B;
       }
-      h3{
-        &:first-letter{
+
+      h3 {
+        &:first-letter {
           text-transform: uppercase;
         }
+
         word-break: break-word;
-        font-family: 'Montserrat Alternates',sans-serif;
+        font-family: 'Montserrat Alternates',
+        sans-serif;
         font-size: 16px;
         font-weight: bold;
       }
     }
 
-    .summary{
+    .summary {
       margin-top: 10px;
-      p{
+
+      p {
         word-break: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -368,7 +388,7 @@
       }
     }
 
-    .statsPresentation{
+    .statsPresentation {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -376,17 +396,21 @@
       flex: 1;
       gap: 20px;
 
-      img{
+      img {
         height: 10vh;
       }
-      h6{
+
+      h6 {
         font-size: 14px;
       }
-      h6,p{
+
+      h6,
+      p {
         font-family: $primaryFont;
         text-align: center;
       }
-      p{
+
+      p {
         text-decoration: underline;
         font-size: 12px;
         color: #e04444;
@@ -395,7 +419,7 @@
     }
   }
 
-  .containerCommentary{
+  .containerCommentary {
     display: flex;
     flex-direction: column;
     border: solid 1px $border;
@@ -404,25 +428,28 @@
     width: auto;
     height: 100%;
     padding: 1% 2%;
-    .headerCommentary{
+
+    .headerCommentary {
       display: flex;
       flex-direction: column;
       gap: 5px;
       margin-bottom: 20px;
-      h5{
+
+      h5 {
         font-size: 18px;
-        font-family: 'Montserrat Alternates',sans-serif;
+        font-family: 'Montserrat Alternates', sans-serif;
         font-weight: bold;
         color: rgb(28, 35, 43);
       }
-      p{
+
+      p {
         font-size: 12px;
-        font-family: 'Montserrat Alternates',sans-serif;
+        font-family: 'Montserrat Alternates', sans-serif;
         color: rgba(28, 35, 43, 0.55);
       }
     }
 
-    h6{
+    h6 {
       display: flex;
       align-items: center;
       gap: 10px;
@@ -430,70 +457,73 @@
       font-weight: bold;
       font-size: 12px;
       color: rgba(28, 35, 43, 0.85);
-      svg{
+
+      svg {
         width: 15px;
       }
     }
 
-    .listCommentary{
-      overflow-y: auto!important;
+    .listCommentary {
+      overflow-y: auto !important;
       height: 800px;
       display: block;
       flex-direction: column;
       width: 100%;
-      padding-top:0px;
+      padding-top: 0px;
       padding-left: 20px;
     }
   }
 
-  .closedMenuContainer{
+  .closedMenuContainer {
     background-color: white;
     height: 100%;
     width: 2%;
   }
 }
 
-.headerResp{
+.headerResp {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2% 3%;
   border-bottom: solid 1px rgba(90, 102, 115, 0.16);
 
-  .list{
+  .list {
     display: flex;
     align-items: center;
     gap: 10px;
 
-    svg{
+    svg {
       width: 20px;
       color: rgba(28, 35, 43, 0.71);
     }
 
-    .arrow{
+    .arrow {
       width: 15px;
     }
 
-    h6{
+    h6 {
       font-weight: bold;
       font-family: $primaryFont;
       font-size: 14px;
-      text-align: center!important;
+      text-align: center !important;
       cursor: pointer;
       text-decoration: underline;
     }
-    p{
+
+    p {
       display: flex;
       align-items: center;
       justify-content: center;
       white-space: pre;
-      font-family: 'Montserrat',sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-weight: bold;
       font-size: 12px;
       width: min-content;
       margin-right: 20px;
       color: rgba(28, 35, 43, 0.89);
-      span{
+
+      span {
         font-weight: bold;
         color: #9844AD;
       }
@@ -502,37 +532,40 @@
 
   }
 
-  .btnList{
+  .btnList {
     display: flex;
     gap: 10px;
   }
 
 
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: initial;
-    transition: 0.1s!important;
+    transition: 0.1s !important;
     background-color: #54595F;
     padding: 10px 20px;
     font-size: 10px;
     color: white;
     box-shadow: $shadow;
     font-weight: bold;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Montserrat Alternates',
+    sans-serif;
     gap: 8px;
-    svg{
+
+    svg {
       width: 15px;
     }
   }
 }
 
-.btnListResp{
+.btnListResp {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -540,25 +573,28 @@
   width: 100%;
   margin-top: 2%;
 
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: initial;
-    transition: 0.1s!important;
+    transition: 0.1s !important;
     background-color: #54595F;
     padding: 10px 25px;
     font-size: 10px;
     color: white;
     box-shadow: $shadow;
     font-weight: bold;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Montserrat Alternates',
+    sans-serif;
     gap: 8px;
-    svg{
+
+    svg {
       margin-bottom: 1px;
       width: 18px;
       color: white;
@@ -566,36 +602,47 @@
   }
 }
 
-.eyeDiv{
-  &:active{
+.eyeDiv {
+  &:active {
     transform: scale(0.8);
     transition: 0.2s;
   }
+
+  &:hover {
+    background-color: $purpleHover;
+  }
+
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #9844AD;
+  background-color: $purple;
   padding: 2px 10px;
-  svg{
+
+  svg {
     width: 14px;
     color: white;
   }
 }
 
-.activeSaveBtn{
-  cursor: pointer!important;
-  transition: 0.1s!important;
-  background-color: #1C232B!important;
+.activeSaveBtn {
+  cursor: pointer !important;
+  transition: 0.1s !important;
+  background-color: #1C232B !important;
 }
 
-.activePublishBtn{
-  cursor: pointer!important;
-  transition: 0.1s!important;
-  background-color: #9844AD!important;
+.activePublishBtn {
+
+  &:hover {
+    background-color: $purpleHover !important;
+  }
+
+  cursor: pointer !important;
+  transition: 0.1s !important;
+  background-color: $purple !important;
 }
 
-.btnListResp{
+.btnListResp {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -603,25 +650,28 @@
   width: 100%;
   margin-top: 2%;
 
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: initial;
-    transition: 0.1s!important;
+    transition: 0.1s !important;
     background-color: #54595F;
     padding: 10px 25px;
     font-size: 10px;
     color: white;
     box-shadow: $shadow;
     font-weight: bold;
-    font-family: 'Montserrat Alternates',sans-serif;
+    font-family: 'Montserrat Alternates',
+    sans-serif;
     gap: 8px;
-    svg{
+
+    svg {
       margin-bottom: 1px;
       width: 18px;
       color: white;
@@ -629,17 +679,17 @@
   }
 }
 
-.containerPhone{
+.containerPhone {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 3%;
   padding-right: 5%;
   padding-left: 5%;
-  height: calc(100vh - 80px) ;
+  height: calc(100vh - 80px);
 }
 
-.containerTitlePhone{
+.containerTitlePhone {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -647,10 +697,11 @@
   align-items: center;
 
 
-  h6{
-    &:first-letter{
+  h6 {
+    &:first-letter {
       text-transform: uppercase;
     }
+
     text-align: center;
     font-weight: bold;
     font-family: $primaryFont;
@@ -660,14 +711,14 @@
 
   }
 
-  .new{
+  .new {
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: 12px;
     color: rgba(28, 35, 43, 0.89);
   }
 
-  input{
+  input {
     margin-top: 2%;
     font-weight: bold;
     border: none;
@@ -680,22 +731,24 @@
     text-align: left;
   }
 
-  .titleRPhone{
+  .titleRPhone {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    p{
+
+    p {
       font-weight: 500;
       font-size: 12px;
       font-family: $primaryFont;
     }
 
-    img{
+    img {
       &:active {
         transform: scale(0.8);
         transition: 0.2s;
       }
+
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -704,10 +757,10 @@
   }
 }
 
-.containerBtnPhone{
+.containerBtnPhone {
   position: fixed;
   bottom: 12%;
-  z-index: 20000!important;
+  z-index: 20000 !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -715,16 +768,17 @@
   width: 100%;
   margin-top: 2%;
 
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: initial;
-    transition: 0.1s!important;
+    transition: 0.1s !important;
     background-color: #54595F;
     padding: 10px 25px;
     font-size: 10px;
@@ -733,7 +787,8 @@
     font-weight: bold;
     font-family: $primaryFont;
     gap: 8px;
-    svg{
+
+    svg {
       margin-bottom: 1px;
       width: 18px;
       color: white;
@@ -741,7 +796,7 @@
   }
 }
 
-.containerTextEditorPhone{
+.containerTextEditorPhone {
   margin-top: 4%;
   display: flex;
   align-items: center;
@@ -751,12 +806,12 @@
   border-bottom: solid 1px rgba(28, 35, 43, 0.14);
   width: 100%;
 
-  button{
+  button {
     font-size: 16px;
     font-family: "Poppins", sans-serif;
   }
 
-  .separatorEditor{
+  .separatorEditor {
     height: 100%;
     width: 2px;
     background-color: rgba(28, 35, 43, 0.14);
@@ -765,7 +820,7 @@
 
 }
 
-.textPhone{
+.textPhone {
   margin-top: 2vh;
   width: 100%;
   overflow-y: scroll;
@@ -774,140 +829,147 @@
   margin-bottom: 10vh;
 }
 
-
-@media screen and (max-width: 1500px){
-  .containerPresentationBook{
-    display: none!important;
+@media screen and (max-width: 1500px) {
+  .containerPresentationBook {
+    display: none !important;
   }
 
-  .containerSecond{
+  .containerSecond {
     padding-left: 0% !important;
   }
 
-  .header{
+  .header {
     border-bottom: solid 1px rgba(28, 35, 43, 0.09);
     box-shadow: none;
   }
 
-  .containerText{
-    width: 100%!important;
-    border: none!important;
+  .containerText {
+    width: 100% !important;
+    border: none !important;
   }
 }
 
-@media screen and (max-width: 1400px){
-  .verticalMenuContainer{
+@media screen and (max-width: 1400px) {
+  .verticalMenuContainer {
     width: 20% !important;
   }
 
-  .text{
+  .text {
     padding-bottom: 5%;
   }
 }
 
-@media screen and (max-width: 1100px){
-  .containerData{
-    height: auto!important;
-    overflow-y: scroll!important;
+@media screen and (max-width: 1100px) {
+  .containerData {
+    height: auto !important;
+    overflow-y: scroll !important;
   }
 
 
-  .btnListResp{
-    margin-top: 2vh!important;
+  .btnListResp {
+    margin-top: 2vh !important;
   }
 
-  .iconDiv{
+  .iconDiv {
     height: 100%;
   }
 
-  .headerResp{
-    flex-direction: column!important;
+  .headerResp {
+    flex-direction: column !important;
     gap: 30px;
     border-bottom: solid 1px rgba(90, 102, 115, 0.07);
-    h6{
-      text-align: center!important;
+
+    h6 {
+      text-align: center !important;
     }
-    .btnList{
+
+    .btnList {
       display: none;
     }
 
-    .arrowResp,.homeHResp,.countIndex{
-      display: none!important;
+    .arrowResp,
+    .homeHResp,
+    .countIndex {
+      display: none !important;
     }
 
 
-    h6{
-      text-decoration: initial!important;
-      font-size: 18px!important;
+    h6 {
+      text-decoration: initial !important;
+      font-size: 18px !important;
     }
-    .arrow{
-      width: 20px!important;
+
+    .arrow {
+      width: 20px !important;
     }
   }
 }
 
-@media screen and (max-width: 700px){
-  .headerResp{
+@media screen and (max-width: 700px) {
+  .headerResp {
     display: none;
   }
 }
 
-@media screen and (max-width: 500px){
-  .containerTitlePhone{
-    input{
+@media screen and (max-width: 500px) {
+  .containerTitlePhone {
+    input {
       text-align: center;
     }
   }
 }
 
-@media screen and (max-width: 350px){
-  .containerTitlePhone{
+@media screen and (max-width: 350px) {
+  .containerTitlePhone {
     margin-bottom: 10px;
     gap: 10px;
   }
-  .titleRPhone{
-    display: none!important;
+
+  .titleRPhone {
+    display: none !important;
   }
 }
 
-@media screen and (max-width: 280px){
-  .containerBtnPhone{
+@media screen and (max-width: 280px) {
+  .containerBtnPhone {
     gap: 10px;
     flex-direction: column;
-    button{
+
+    button {
       min-width: 140px;
     }
   }
 }
 
-@media screen and (max-height: 500px) and (orientation: landscape){
-  .container{
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .container {
     height: auto;
     overflow-y: initial;
     padding-top: 20px;
     padding-bottom: 20px;
   }
 
-  .containerSecond{
+  .containerSecond {
     height: auto;
   }
 
-  .containerMain{
+  .containerMain {
     height: auto;
   }
 
-  .text{
-    height: auto!important;
-    overflow-y: initial!important;
-    overflow-x: initial!important;
+  .text {
+    height: auto !important;
+    overflow-y: initial !important;
+    overflow-x: initial !important;
 
 
   }
-  .verticalMenuContainer{
+
+  .verticalMenuContainer {
     display: none;
   }
 
-  .verticalTabContainer{
+  .verticalTabContainer {
     display: none;
   }
 }

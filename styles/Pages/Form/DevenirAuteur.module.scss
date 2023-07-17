@@ -249,7 +249,7 @@
           }
 
           &:hover {
-            background-color: #901aad;
+            background-color: $purpleHover;
             transition: 0.1s;
           }
 
@@ -265,7 +265,7 @@
           transition: 0.3s;
           cursor: pointer;
           margin-top: 20px;
-          background-color: #9239a8;
+          background-color: $purple;
           padding: 15px 20px;
           border-radius: 5px;
           font-size: 12px;

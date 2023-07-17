@@ -1,30 +1,22 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.scss'
-import Header from "../Component/Header";
 import Banner from "../Component/Banner";
 import Footer from "../Component/Footer";
 import {HotPostPhone, HotPost} from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
 import PreviewHorizontalPostList from "../Component/Post/PreviewHorizontalPostList";
 import CategoryHome from "../Component/CategoryHome";
-import React, {Fragment, useContext, useEffect, useState} from "react";
+import React, {Fragment} from "react";
 import {useSession} from "next-auth/react";
-import {LoginModal} from "../Component/Modal/LoginModal";
 import {GetTopBooksOnHomeApi} from "./api/book";
 import {GetActiveMonthlyCateoryApi} from "./api/Category";
-import {Capitalize} from "../utils/String";
 import {useRouter} from "next/router";
 import {BannerBecameWriter} from "../Component/BannerBecameWriter";
-
 import MusicHome from '../Component/MusicHome';
-import {DeleteAllNotifsService} from '../service/Notifications/NotificationsService';
 import ScreenSize from "../utils/Size";
-import HeaderResponsive from '../Component/HeaderResponsive';
 import {HeaderHome} from "../Component/HeaderHome";
-import {toastDisplayTest} from "../utils/Toastify";
 import {HeaderMainResponsive} from "../Component/HeaderMainResponsive";
 import {Partner} from "../Component/Partner";
-import NewFeatured from "../Component/Category/New";
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -54,7 +46,6 @@ export async function getServerSideProps() {
 
 export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, err}) {
 
-    const {data: session} = useSession();
     const [width, height] = ScreenSize();
 
     const router = useRouter();
@@ -159,9 +150,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
             <BannerBecameWriter/>
             <MusicHome/>
             <Partner/>
-
             <Footer/>
-
         </div>
     )
 }

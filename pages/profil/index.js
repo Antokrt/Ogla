@@ -3,32 +3,29 @@ import anim from '../../styles/utils/anim.module.scss';
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
+    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon
 } from "@heroicons/react/24/outline";
 import React, {useRef, useState} from "react";
 import {
-    ChartBarIcon, CheckCircleIcon, HeartIcon, XCircleIcon
+    CheckCircleIcon, XCircleIcon
 } from "@heroicons/react/20/solid";
-import {Capitalize} from "../../utils/String";
-import {signOut, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {GetPrivateProfilApi} from "../api/user";
-import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
+import {UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
 import {
-    GetDefaultUserImg,
     GetDefaultUserImgWhenError,
     GetImgPathOfAssets,
-    GetLogoUtils,
     renderPrediction
 } from "../../utils/ImageUtils";
-import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
+import {VerifyEmailService} from "../../service/User/Account.service";
+import {FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
 import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {BookmarkIcon, EyeIcon, LockClosedIcon} from "@heroicons/react/24/solid";
-import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
+import {LockClosedIcon} from "@heroicons/react/24/solid";
+import {UpdateAuthorDescriptionService} from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
 import {useDispatch, useSelector} from "react-redux";
@@ -36,14 +33,12 @@ import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/not
 import {LoaderImg} from "../../Component/layouts/Loader";
 import {
     toastDisplayError,
-    toastDisplayInfo,
     toastDisplayPromiseSendMail,
     toastDisplaySuccess
 } from "../../utils/Toastify";
-import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
+import {UpdateSettingsService} from "../../service/User/Settings.service";
 import {instance} from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
-import {openAll} from "../../service/Notifications/NotificationsService";
 import {useEffect} from "react";
 import {OpenAllService} from "../../service/Notifications/NotificationsService";
 import Tippy from "@tippyjs/react";
@@ -51,8 +46,7 @@ import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {ErrMsg} from "../../Component/ErrMsg";
-import Link from "next/link";
-import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
+import {stopMusic} from "../../store/slices/musicSlice";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);

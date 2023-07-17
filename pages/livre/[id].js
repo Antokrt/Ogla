@@ -1,44 +1,28 @@
 import {useRouter} from "next/router";
-import React, {Fragment, useCallback, useEffect, useRef, useState} from "react";
+import React, {Fragment, useCallback, useEffect, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
-import anim from '../../styles/utils/anim.module.scss';
-
-import Header from "../../Component/Header";
 import {
-    ArrowsUpDownIcon,
-    BanknotesIcon,
-    BookOpenIcon,
     ChatBubbleBottomCenterTextIcon,
     ChatBubbleLeftEllipsisIcon,
-    ChatBubbleLeftIcon,
-    ChatBubbleOvalLeftIcon,
     CursorArrowRaysIcon,
-    DocumentTextIcon,
     HeartIcon as HeartOutline,
     HomeIcon,
     ListBulletIcon
 } from "@heroicons/react/24/outline";
-import {HeartIcon} from "@heroicons/react/20/solid";
-import Book from "../../Component/layouts/Icons/Book";
-import Like from "../../Component/layouts/Icons/Like";
 import ToogleSidebar from "../../utils/ToogleSidebar";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
-import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
 import {useSession} from "next-auth/react";
 import ScreenSize from "../../utils/Size"
 import {LikeBookService} from "../../service/Like/LikeService";
-import {VerifLikeApi} from "../api/like";
-import {AddViewToBookApi, GetOneBookApi} from "../api/book";
+import {GetOneBookApi} from "../api/book";
 import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
 import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {FilterBtn, HeadPhoneBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
-import {LoginModal} from "../../Component/Modal/LoginModal";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 import CardCategory from "../../Component/Card/CardCategory";
@@ -46,12 +30,10 @@ import {LoaderCommentary} from "../../Component/layouts/Loader";
 import {Snippet} from "../../Component/Snippet";
 import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {CardChapterPublic, CardChapterPublicPhone} from "../../Component/Card/CardChapterPublic";
-import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
-import CategoryCard from "../../Component/Category/CategoryCard";
 import {Capitalize} from "../../utils/String";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import Footer from "../../Component/Footer";
-import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
+import {ErrMsg} from "../../Component/ErrMsg";
 import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../../utils/ImageUtils";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
@@ -85,7 +67,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     const [width, height] = ScreenSize();
     const router = useRouter();
-    const [loginModal, setLoginModal] = useState(true);
     const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
@@ -108,7 +89,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [chapterList, setChapterList] = useState(chapterData);
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
-    const [snippetTooBig, setSnippetTooBig] = useState(bookData?.summary?.length > 500);
     const [activeLinkPhone, setActiveLinkPhone] = useState('description');
     const dispatch = useDispatch();
 
@@ -121,8 +101,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             }
         }
     }, [session])
-
-    const modalState = useSelector(selectLoginModalStatus);
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)

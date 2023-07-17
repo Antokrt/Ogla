@@ -19,7 +19,7 @@ import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
 
 export default function VerticalAuthorMenu() {
 
@@ -77,7 +77,10 @@ export default function VerticalAuthorMenu() {
             <div className={styles.sContainer}>
                 <div className={styles.navContainer}>
                     <ul>
-                        <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon /> Support  </li>
+                        <li onClick={() => router.push('/dashboard/support')} 
+                        className={router.pathname.startsWith('/dashboard/support') ? styles.activeMenu : ''}>
+                            <LifebuoyIcon /> Support
+                        </li>
                         <li onClick={() => {
                             LogoutService()
                                 .then(() => signOut()
@@ -90,8 +93,8 @@ export default function VerticalAuthorMenu() {
 
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
-                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image} 
-                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
+                        <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}
+                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                         <Tippy
                             trigger="mouseenter"
                             content={"En ligne"}

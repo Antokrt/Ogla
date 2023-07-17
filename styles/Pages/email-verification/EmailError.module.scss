@@ -42,9 +42,14 @@
       transform: scale(0.8);
       transition: 0.2s;
     }
+
+    &:hover {
+      background-color: $purpleHover;
+    }
+
     transition: 0.2s;
     margin-top: 20px;
-    background-color: #9844AD;
+    background-color: $purple;
     padding: 8px 20px;
     font-family: $primaryFont;
     font-weight: bold;

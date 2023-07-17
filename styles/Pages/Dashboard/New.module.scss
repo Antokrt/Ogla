@@ -202,7 +202,7 @@
           }
           &:hover{
             transition: 0.2s;
-            filter: brightness(98%);
+            background-color: $purpleHover;
           }
           transition: 0.2s;
           display: flex;
@@ -211,7 +211,7 @@
           cursor: pointer;
           text-align: center;
           margin-top: 10px;
-          background-color: #9844AD;
+          background-color: $purple;
           width: auto;
           font-size: 11px;
           color: white;
@@ -274,6 +274,12 @@
         }
 
         select {
+
+          &:hover {
+            cursor: pointer;
+            background-color: $grey
+          }
+
           transition: 0.1s;
           width: 80%;
           background-color: white;
@@ -305,13 +311,13 @@
         }
         &:hover{
           transition: 0.2s;
-          filter: brightness(98%);
+          background-color: $blackHover;
         }
         transition: 0.2s;
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #1C232B;
+        background-color: $black;
         font-size: 11px;
         color: white;
         font-family: $primaryFont;
@@ -326,7 +332,12 @@
       }
 
       .sendBtn {
-        background-color: #9844AD;
+
+        &:hover {
+          background-color: $purpleHover;
+        }
+
+        background-color: $purple;
       }
     }
   }

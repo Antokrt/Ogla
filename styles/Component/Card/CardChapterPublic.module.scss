@@ -77,10 +77,10 @@
 
 .containerDashboard{
   &:hover{
+    background-color: $grey;
     transition: 0.2s;
-    filter: brightness(98%);
-    background-color: rgba(152, 68, 173, 0.003);
   }
+
   &:active{
     transform: scale(0.95);
     transition: 0.2s;
