@@ -289,7 +289,7 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                         profilAuthor.nbBooks <= 0 ?
                             <div className={styles.empty}>
                                 <img
-                                    src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Ogla'}
+                                    src={GetImgPathOfAssets() + 'utils/smile8.png'} alt={'Image Ogla'}
                                     onError={(e) => {e.target.src = '/assets/jim/smile8.png'}}/>
                                 <p><span>{Capitalize(profilAuthor.pseudo)}</span> n&apos;a pas encore écrit de livres !
                                 </p>

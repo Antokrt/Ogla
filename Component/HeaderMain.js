@@ -159,7 +159,7 @@ export const HeaderMain = () => {
                                                     .catch(() => signOut()
                                                         .then(() => router.push('/')))
                                             }}
-                                            title={'Se déconnecter'}><ArrowLeftOnRectangleIcon/></button>
+                                            title={'Déconnexion'}><ArrowLeftOnRectangleIcon/></button>
                                 </Tippy>
 
                             </>

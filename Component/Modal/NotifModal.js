@@ -11,6 +11,7 @@ import Notif from './Notif';
 import {DeleteAllNotifsService, ReadAllService} from '../../service/Notifications/NotificationsService';
 import { selectTheme } from '../../store/slices/themeSlice';
 import {CheckCircleIcon, TrashIcon} from "@heroicons/react/24/solid";
+import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 
 export const NotifModal = ({ close }) => {
     const router = useRouter();
@@ -67,14 +68,13 @@ export const NotifModal = ({ close }) => {
                         }
                     </div> :
                     <div className={styles.empty}>
-                        {
-                            !theme &&
-                            <img src={'/assets/diapo/old.png'} />
-                        }
-                        {
-                            theme &&
-                            <img src={'/assets/jim/smile7.png'} />
-                        }
+
+                            <img
+                                className={styles.old}
+                                alt={'Image Ogla'}
+                                onError={(e) => e.target.src = '/assets/diapo/old.png'}
+                            src={GetImgPathOfAssets() + 'diapo/old.png'}
+                            />
                         <p> Vous n'avez pas de notifications </p>
                     </div>
             }

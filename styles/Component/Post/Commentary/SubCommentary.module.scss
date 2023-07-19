@@ -38,8 +38,67 @@
       flex-direction: column;
       justify-content: flex-start;
       width: 100%;
-      padding-left: 20px;
+      gap: 4px;
+      padding-left: 10px;
       padding-right: 10px;
+
+      .dotContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: end;
+        z-index: 200000;
+        position: absolute;
+        right: 5%;
+        .dot{
+          &:hover{
+            transition: 0.1s;
+            color: #9844AD;
+          }
+          transition: 0.1s;
+          cursor: pointer;
+          width: 18px;
+          color: rgba(28, 35, 43, 0.44);
+        }
+      }
+
+      .dotContent{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: auto;
+        gap: 10px;
+        padding: 5px 5px;
+        border-radius: 5px;
+        box-shadow: $shadow;
+        width: 120px;
+        background-color: white;
+        button{
+          &:hover{
+            transition: 0.2s;
+            background-color: rgba(230, 235, 241, 0.71);
+          }
+          transition: 0.2s;
+          padding: 5px 5px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          font-size: 10px;
+          color: #1c232b;
+          opacity: 0.8;
+          font-family: 'Inter',sans-serif;
+          svg{
+            width: 12px;
+            color: #343d46;
+          }
+        }
+
+
+      }
+
+
       .authorDate{
         display: flex;
         justify-content: flex-start;
@@ -50,7 +109,7 @@
           font-size: 12px;
           font-weight: bold;
           span{
-            margin-left: 5px;
+            margin-left: 8px;
             color: rgba(28, 35, 43, 0.43);
             font-size: 10px;
           }

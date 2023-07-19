@@ -326,11 +326,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
 
             })
-            .then(() => {
-                setLoadingScroll(false);
-                console.log(comments);
-
-            })
+            .then(() => setLoadingScroll(false))
             .catch((err) => setErrCommentary(true))
     }
 
@@ -550,7 +546,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     {
                                         chapterList?.length <= 0 &&
                                         <div className={styles.empty}>
-                                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'jim/smile8.png'}
+                                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'utils/smile8.png'}
                                                  onError={(e) => e.target.src = '/assets/jim/smile8.png'}
                                             />
                                             <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !
@@ -714,7 +710,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                         <img
                                                             alt={'Image Jim Ogla'}
                                                             onError={(e) => e.target.src = '/assets/jim/smile8.png'}
-                                                            src={GetImgPathOfAssets() + 'jim/smile8.png'}/>
+                                                            src={GetImgPathOfAssets() + 'utils/smile8.png'}/>
                                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             résumé !</p>
                                                     </div>

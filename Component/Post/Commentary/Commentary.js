@@ -21,6 +21,7 @@ import {selectLoginModalStatus, setActiveModalState} from "../../../store/slices
 import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
+import {FormatCount} from "../../../utils/NbUtils";
 
 const Commentary = ({
                         pseudo,
@@ -32,6 +33,8 @@ const Commentary = ({
                         authorId,
                         deleteComment,
                         id,
+    reportComment,
+    reportAnswer,
                         hasLikeData,
                         likeComment,
                         likeAanswer,
@@ -109,8 +112,6 @@ const Commentary = ({
 
                 <div className={styles.contentCommentContainer}>
                     <div className={styles.dotContainer}>
-                        {
-                            // session && authorId === session.user.id &&
                             <EllipsisHorizontalIcon
                                 onClick={() => {
                                     setOpenModalChoice(!openModalChoice)
@@ -118,16 +119,23 @@ const Commentary = ({
                                 ref={dotRef}
                                 className={styles.dot}
                             />
-                        }
                         {
                             openModalChoice &&
-                            <div className={styles.dotContent} ref={contentDotRef}>
+                            <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                                 {
-                                    session && authorId === session.user.id &&
-                                    <button>Supprimer <TrashIcon/></button>
+                                    session && authorId === session?.user?.id &&
+                                    <button onClick={() => deleteComment()}> Supprimer <TrashIcon/> </button>
                                 }
 
-                                <button>Signaler <FlagIcon/></button>
+                                {
+                                    !session ?
+                                        <button onClick={() => {
+                                            dispatch(setActiveModalState(true));
+                                        }}> Signaler <FlagIcon/></button>
+                                        :
+                                      authorId !== session?.user?.id &&
+                                    <button onClick={() => reportComment()}> Signaler <FlagIcon/></button>
+                                }
                             </div>
                         }
                     </div>
@@ -167,7 +175,7 @@ const Commentary = ({
                         }}/></div>
 
 
-                        <p className={styles.replyCount}> {nbAnswers} réponses</p>
+                        <p className={styles.replyCount}> {FormatCount(nbAnswers)} réponses</p>
                     </div>
 
                     <div className={styles.replyContainer}>
@@ -193,7 +201,9 @@ const Commentary = ({
                                 authorHasLike &&
                                 <div className={styles.likeAuthor}>
 
-                                    <img alt={'Image Ecrivain Ogla'} src={authorImg}
+                                    <img
+                                        title={authorPseudo}
+                                        alt={'Image Ecrivain Ogla'} src={authorImg}
                                          onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
                                          referrerPolicy={'no-referrer'}/>
                                     <HeartIcon className={styles.like}/>
@@ -256,6 +266,7 @@ const Commentary = ({
                                                         hasLike={item.hasLike}
                                                         deleteAnswer={() => deleteAanswer(item._id, item.content)}
                                                         likeAnswer={() => likeAanswer(item._id)}
+                                                        reportAnswer={() => reportAnswer(item._id,item.content)}
                                                         id={item._id}
                                                         authorId={item.userId}
                                                         img={item.img}
@@ -285,7 +296,6 @@ const Commentary = ({
 
                     </div>
 
-                    <button style={{color: 'red'}} onClick={() => setOpenModalChoice(!openModalChoice)}>Ouvrir</button>
 
                 </div>
                 {

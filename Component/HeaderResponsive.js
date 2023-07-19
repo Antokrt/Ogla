@@ -261,7 +261,7 @@ const HeaderResponsive = () => {
                                                 .catch(() => signOut()
                                                     .then(() => router.push('/')))
                                         }}
-                                        title={'Se déconnecter'} />
+                                        title={'Déconnexion'} />
                                 </div>
                             </div>
                         }

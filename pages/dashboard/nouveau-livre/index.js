@@ -14,7 +14,7 @@ import {Capitalize} from "../../../utils/String";
 import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
 import {GetImgPathOfAssets, renderPrediction} from "../../../utils/ImageUtils";
-import {toastDisplayError} from "../../../utils/Toastify";
+import {toastDisplayError, toastDisplaySuccess} from "../../../utils/Toastify";
 import {LoaderImg} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
@@ -66,8 +66,12 @@ const New = () => {
         }
         NewBookService(form, selectedFile)
             .then((res) => {
+                toastDisplaySuccess('Livre publié !')
                 if (res.data._id) {
                     router.push('/dashboard/books/' + res.data._id);
+                }
+                else {
+                    router.push('/dashboard/books')
                 }
             })
             .catch((err) => {

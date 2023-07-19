@@ -292,7 +292,7 @@ export const HeaderMainResponsive = () => {
                                     .catch(() => signOut()
                                         .then(() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))))
                             }}
-                            title={'Se déconnecter'}>Se déconnecter <ArrowLeftOnRectangleIcon/></button>
+                            title={'Déconnexion'}>Se déconnecter <ArrowLeftOnRectangleIcon/></button>
                     </div>
                 </div>
             }
