@@ -35,6 +35,7 @@ async function refreshAccessToken(tokenObject) {
     }
 }
 
+
 async function getExpFromToken(token) {
     try {
         const decoded = await jwt.decode(token, 'code');
@@ -102,7 +103,11 @@ export default function (req, res) {
 
                     const user = await res.json();
 
+
                     if (!res.ok && user) {
+                        if(user.message === 'blacklisted'){
+                            throw new Error(user.message);
+                        }
                         return null
                     }
 
@@ -136,6 +141,7 @@ export default function (req, res) {
 
                     const user = await res.json();
 
+                    console.log(user.message)
                     if (!res.ok && user) {
                         throw new Error(user.message)
                     }

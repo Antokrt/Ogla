@@ -69,8 +69,9 @@ const Register = ({login}) => {
             .then((res) => {
                 if (res.status === 401) {
                     let errMsg = res.error;
+                    console.log(res)
                     switch (errMsg) {
-                        case "Email & pseudo already exists":
+                        case "Email & pseudo already exist":
                             setSubmitErr({
                                 msg: 'Email ou pseudo déjà existant',
                                 show: true
@@ -101,6 +102,13 @@ const Register = ({login}) => {
                         case "Pseudo already exists":
                             setSubmitErr({
                                 msg: 'Pseudo déjà existant',
+                                show: true
+                            })
+                            break;
+
+                        case "blacklisted":
+                            setSubmitErr({
+                                msg: 'Votre compte a été  suspendu en raison d\'activités inappropriées.',
                                 show: true
                             })
                             break;

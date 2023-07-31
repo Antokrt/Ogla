@@ -509,6 +509,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
             const register = await signIn('signupAuthor', formData)
                 .then((res) => {
                     if (res.status === 401) {
+                        console.log(res.error)
                         let errMsg = res.error;
                         setStepActiveForm(3);
                         switch (errMsg) {
@@ -544,9 +545,14 @@ const DevenirEcrivain = ({isWhitelistData}) => {
 
                             case "Pseudo already exists":
                                 setStepActiveForm(3);
-                                setSeeErr('Pseudo déjà existant.')
+                                setErrMsg('Pseudo déjà existant.')
                                 setSeeErr(true);
                                 break;
+
+                            case "blacklisted":
+                                setStepActiveForm(3);
+                                setErrMsg("Votre compte a été  suspendu en raison d'activités inappropriées.")
+                                setSeeErr(true);
 
                             default:
                                 setSeeErr("Erreur lors de l'envoi du formulaire.")
@@ -644,7 +650,6 @@ const DevenirEcrivain = ({isWhitelistData}) => {
         )
     }
 
-    useEffect(() => console.log(session?.user))
 
     return (
         <div className={styles.container}>

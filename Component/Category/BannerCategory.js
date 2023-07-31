@@ -11,7 +11,7 @@ export const BannerCategory = ({category, presentation}) => {
         <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.darkContainer}>
             <div className={styles.content}>
                 {
-                    category.toLowerCase() === 'science-fiction' ?
+                    category.toLowerCase() === 'sf' ?
                         <h4 data-after={'Science-Fiction'}>SF</h4> :
                         <h4 data-after={category}>{category}</h4>
                 }
