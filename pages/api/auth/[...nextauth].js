@@ -141,7 +141,6 @@ export default function (req, res) {
 
                     const user = await res.json();
 
-                    console.log(user.message)
                     if (!res.ok && user) {
                         throw new Error(user.message)
                     }
@@ -182,6 +181,7 @@ export default function (req, res) {
 
         pages: {
             signIn: '/auth?login',
+            error:'/auth-error'
         },
 
         callbacks: {
@@ -201,6 +201,9 @@ export default function (req, res) {
                         }
                     })
                     const response = await res.json();
+
+                    if(response.statusCode === 401) throw new Error('Google Authentification Error')
+
                     user.accessToken = response.accessToken;
                     user.refreshToken = response.refreshToken;
                     if (res.ok && user) {

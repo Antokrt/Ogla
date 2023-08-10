@@ -59,6 +59,10 @@ export async function getServerSideProps({req, params}) {
         booksJson = null;
     }
 
+    console.log(chapterErrData)
+    console.log(bookErrData)
+
+
 
     return {
         props: {
@@ -81,7 +85,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [chapter, setChapter] = useState([]);
     const [book, setBook] = useState();
     const [title, setTitle] = useState(chapterData?.title);
-    const [content, setContent] = useState(!err ? JSON.parse(chapterData?.content) : '');
+    const [content, setContent] = useState(!err.chapter && !err.book ? JSON.parse(chapterData?.content) : '');
     const [text, setText] = useState(chapterData?.text);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
@@ -95,6 +99,9 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         setLoading(false);
     }, []);
 
+/// Err est a true
+
+    useEffect(() => {console.log(!err.chapter && ! err.book)},[])
 
     useEffect(() => {
         if (JSON.stringify(content) !== chapterData?.content || title !== chapterData.title) {

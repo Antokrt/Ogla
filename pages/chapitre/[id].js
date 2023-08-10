@@ -588,14 +588,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                         {
                             width > 600 ?
                                 <>
-                                    <div>
-                                        {
-                                            noComments ?
-                                                <span>true</span> :
-                                                <span>false</span>
-                                        }
-                                        <p>{chapterData?.nbCommentary}</p>
-                                    </div>
+                        
                                     <div
                                         className={styles.containerC}>
 

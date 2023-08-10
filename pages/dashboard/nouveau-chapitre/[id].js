@@ -149,6 +149,7 @@ const NouveauChapitre = ({bookData, err}) => {
                 publish
             }
 
+
             NewChapterService(data)
                 .then((res) => {
                     localStorage.removeItem('book-' + bookData._id);

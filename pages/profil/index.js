@@ -351,7 +351,7 @@ const Profil = ({profilData, err}) => {
                             if (!profilData.verified) {
                                 verifyEmail();
                             }
-                        }}>(Vérifier maintenant)</span>}</span></label>
+                        }}> Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
                     {
                         session?.user?.provider !== 'google' ?

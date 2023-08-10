@@ -26,6 +26,7 @@ import axios from "axios";
 import {instance} from "../service/config/Interceptor";
 import {toastDisplayInfo} from "../utils/Toastify";
 import dynamic from "next/dynamic";
+import NextTopLoader from "nextjs-toploader";
 import {GetAllNotifs} from '../service/Notifications/NotificationsService';
 import {Notif} from "../Component/Notif";
 import {Modal} from "../Component/Modal";
@@ -93,7 +94,7 @@ function MyApp({Component, pageProps}) {
                     <Loader/>
                 }
                 <Component {...pageProps} />
-
+                <NextTopLoader color={'#9844AD'}/>
                 <Socket/>
                 <ToastContainer toastStyle={{
                     fontFamily: 'Poppins',

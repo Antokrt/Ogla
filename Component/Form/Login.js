@@ -50,6 +50,7 @@ const Login = ({ register, forgotPassword }) => {
                             msg: "Votre compte a été  suspendu en raison d'activités inappropriées.",
                             show: true
                         }))
+                        router.push('/auth-error')
                     }
                     else {
                         setSubmitErr(prevState => ({
