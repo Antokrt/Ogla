@@ -11,7 +11,6 @@ export const GoogleAnalytics = () => {
 
     useEffect(() => {
         const url = pathname + searchParams
-
         pageview(id, url);
 
     }, [pathname, searchParams, id]);
