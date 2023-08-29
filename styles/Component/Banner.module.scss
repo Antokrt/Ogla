@@ -25,11 +25,21 @@
       justify-content: center;
       align-items: center;
       object-fit: contain;
-      width: 1200px;
+      width: 900px;
       animation: testimg 4s ease;
       animation-fill-mode: forwards;
-      height: 90%;
+      height: 80%;
     }
+
+    /*      display: none;
+      width: 70%;
+      height: 100%;
+      background-image: url("../../public/assets/diapo/Welcome.png");
+      background-repeat: no-repeat;
+      background-position: left;
+      background-size: 100% 100%;
+      animation: testimg 6s ease;
+      animation-fill-mode: forwards;*/
 
     @keyframes testimg {
       0% {
@@ -60,7 +70,7 @@
         h1 {
           width: 900px;
           font-size: 5vh;
-          font-family: $branch;
+          font-family: "Branch", sans-serif;
           font-weight: bold;
           color: white;
           margin-bottom: 40px;
@@ -71,7 +81,7 @@
 
         p {
           width: 600px;
-          font-family: $branch;
+          font-family: 'Branch',sans-serif;
           font-size: 25px;
           text-shadow: 0px 0px 5px black;
           color: white;
@@ -95,12 +105,12 @@
 
           &:hover {
             transition: 0.2s;
-            background-color: $orangeHover;
+            filter: brightness(92%);
           }
 
           cursor: pointer;
           transition: 0.2s;
-         font-family: $primaryFont;
+         font-family: "Pt Sans",sans-serif;
           letter-spacing: -0.2px;
           font-weight: bold;
           background-color: #e94f37;

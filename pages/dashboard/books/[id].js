@@ -1,41 +1,60 @@
 import styles from '../../../styles/Pages/Dashboard/OneBook.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
-import { Fragment, useEffect, useRef, useState } from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import {
     DeleteBookService, GetMoreChapterService, TestService,
     UpdateBookPictureService, UpdateBookSummaryService,
 } from "../../../service/Dashboard/BooksAuthorService";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
-import { useRouter } from "next/router";
-import { getConfigOfProtectedRoute } from "../../api/utils/Config";
-import { useSession } from "next-auth/react";
-import { ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon, ShareIcon } from "@heroicons/react/20/solid";
-import { CardChapter } from "../../../Component/Dashboard/Card/CardChapter";
+import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
+import {useRouter} from "next/router";
+import {getConfigOfProtectedRoute} from "../../api/utils/Config";
+import {
+    Bars3CenterLeftIcon,
+    InformationCircleIcon,
+    PlusIcon,
+    UserCircleIcon, XMarkIcon
+} from "@heroicons/react/24/solid";
+import {useSession} from "next-auth/react";
+import {BookOpenIcon} from "@heroicons/react/24/solid";
+import {ArrowTrendingUpIcon, CheckCircleIcon, TagIcon, XCircleIcon, ShareIcon} from "@heroicons/react/20/solid";
+import CommentaryDashboard from "../../../Component/Dashboard/CommentaryDashboard";
+import chapter from "../../../Component/layouts/Icons/Chapter";
+import {CardChapter} from "../../../Component/Dashboard/Card/CardChapter";
+import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
 import {
     ArrowUturnLeftIcon,
+    Bars3BottomRightIcon,
+    BookmarkIcon,
+    BookmarkSquareIcon,
+    HeartIcon,
     CursorArrowRaysIcon,
-    ChatBubbleBottomCenterTextIcon, PresentationChartBarIcon,
+    ClockIcon, ChevronDoubleUpIcon, ChartBarIcon, ChatBubbleBottomCenterTextIcon, PresentationChartBarIcon,
 } from "@heroicons/react/24/outline";
-import { Capitalize } from "../../../utils/String";
-import { EyeIcon as EyeSolid } from "@heroicons/react/24/solid";
-import { Loader1, Loader2, LoaderCommentary, LoaderImg } from "../../../Component/layouts/Loader";
+import {Capitalize} from "../../../utils/String";
+import {EyeIcon as EyeSolid} from "@heroicons/react/24/solid";
+import {EyeIcon as EyeOutline} from "@heroicons/react/24/outline";
+import {Loader1, Loader2, LoaderCommentary, LoaderImg} from "../../../Component/layouts/Loader";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
-import { FilterBtn, SeeMoreBtn, TextSeeMore } from "../../../Component/layouts/Btn/ActionBtn";
-import { ConfirmModal } from "../../../Component/Modal/ConfirmModal";
-import { GetDefaultBookImgWhenError, GetImgPathOfAssets, renderPrediction } from "../../../utils/ImageUtils";
-import { toastDisplayError, toastDisplayInfo } from "../../../utils/Toastify";
+import {FilterBtn, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn/ActionBtn";
+import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+
+import {GetDefaultBookImgWhenError, GetImgPathOfAssets, renderPrediction} from "../../../utils/ImageUtils";
+import {toastDisplayError, toastDisplayInfo} from "../../../utils/Toastify";
+import CardCategory from "../../../Component/Card/CardCategory";
 import ScreenSize from "../../../utils/Size";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import useOrientation from "../../../utils/Orientation";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
-import { CardChapterDashboard } from "../../../Component/Card/CardChapterPublic";
+import {CardChapterDashboard} from "../../../Component/Card/CardChapterPublic";
 import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
-import { FormatCount } from "../../../utils/NbUtils";
+import {FormatCount} from "../../../utils/NbUtils";
+import {GetUrl} from "../../../utils/PathUtils";
 
-export async function getServerSideProps({ req, params }) {
+export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
     const book = await fetch('http://localhost:3008/author/book/' + id, config);
@@ -60,8 +79,9 @@ export async function getServerSideProps({ req, params }) {
     }
 }
 
-const OneBook = ({ bookData, chapterListData, err }) => {
+const OneBook = ({bookData, chapterListData, err}) => {
     const [loading, setLoading] = useState(true);
+    const {data: session} = useSession();
     const [active, setActive] = useState('chapter');
     const [book, setBook] = useState(bookData);
     const [chapterList, setChapterList] = useState(chapterListData);
@@ -90,7 +110,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
 
     const copyLink = () => {
-        navigator.clipboard.writeText(process.env.NEXT_PUBLIC_URL + 'livre/' + book._id + '?' + book.slug)
+        navigator.clipboard.writeText(GetUrl() + 'livre/' + book._id + '?' + book.slug)
             .then(() => {
                 if (!tippyCopy) {
                     setTippyCopy(true);
@@ -218,23 +238,23 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
             <Head>
                 <title>{'Ogla - ' + !err ? Capitalize(bookData.title) : 'Erreur'}</title>
-                <meta name="description" content="Generated by create next app" />
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-                <link rel="icon" href="/favicon.ico" />
+                <meta name="description" content="Generated by create next app"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
             {
                 width < 700 && orientation === 'portrait' ?
-                    <VerticalPhoneMenu />
+                    <VerticalPhoneMenu/>
                     :
                     <>
                         {
                             width >= 700 && width <= 1050 ?
                                 <div className={styles.verticalTabContainer}>
-                                    <VerticalTabMenu />
+                                    <VerticalTabMenu/>
                                 </div>
                                 :
                                 <div className={styles.verticalMenuContainer}>
-                                    <VerticalAuthorMenu />
+                                    <VerticalAuthorMenu/>
                                 </div>
                         }
                     </>
@@ -247,7 +267,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                 {
                     !err.book &&
                     <div className={styles.containerHeader}>
-                        <SmHeaderDashboard title={bookData.title} />
+                        <SmHeaderDashboard title={bookData.title}/>
                     </div>
                 }
 
@@ -294,10 +314,10 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                 width <= 1300 &&
                                 <div className={styles.containerBtnPhone}>
                                     <button className={phoneMenuLinkActive === 'infos' ? styles.activeBtnPhone : ''}
-                                        onClick={() => setPhoneMenuLinkActive('infos')}>Informations <CursorArrowRaysIcon />
+                                            onClick={() => setPhoneMenuLinkActive('infos')}>Informations <CursorArrowRaysIcon/>
                                     </button>
                                     <button className={phoneMenuLinkActive === 'chapters' ? styles.activeBtnPhone : ''}
-                                        onClick={() => setPhoneMenuLinkActive('chapters')}>Chapitres
+                                            onClick={() => setPhoneMenuLinkActive('chapters')}>Chapitres
                                     </button>
                                 </div>
                             }
@@ -310,7 +330,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                         {/*here*/}
                                         <h2> {Capitalize(book.title)} <XCircleIcon onClick={() => {
                                             setSeeConfirmModal(true);
-                                        }} /></h2>
+                                        }}/></h2>
                                         <span></span>
                                     </div>
 
@@ -320,7 +340,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                             {
                                                 loadingImg && width > 1050 &&
                                                 <div className={styles.loaderImg}>
-                                                    <LoaderImg />
+                                                    <LoaderImg/>
                                                 </div>
                                             }
                                             {
@@ -330,25 +350,25 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                         {
                                                             width > 1050 ?
                                                                 <>
-                                                                    <img alt={'Nouvelle Image Ogla'} src={localImg} className={styles.darkImg} />
+                                                                    <img alt={'Nouvelle Image Ogla'} src={localImg} className={styles.darkImg}/>
 
                                                                     <div className={styles.imgCheck}>
                                                                         <CheckCircleIcon
                                                                             onClick={() => updatePic()}
-                                                                            className={styles.check} />
+                                                                            className={styles.check}/>
                                                                         <XCircleIcon
                                                                             onClick={() => {
                                                                                 setLocalImg(null);
                                                                                 setFile(null);
                                                                             }
                                                                             }
-                                                                            className={styles.off} />
+                                                                            className={styles.off}/>
                                                                     </div>
                                                                 </>
                                                                 :
                                                                 <div
                                                                     className={styles.containerImgPhone + ' ' + anim.fadeIn}>
-                                                                    <img alt={'Nouvelle Image Ogla'} src={localImg} className={styles.darkImg} />
+                                                                    <img alt={'Nouvelle Image Ogla'} src={localImg} className={styles.darkImg}/>
                                                                     <div className={styles.containerBtnImgPhone}>
                                                                         {
                                                                             !loadingImg ?
@@ -364,7 +384,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                                     </button>
                                                                                 </>
                                                                                 :
-                                                                                <LoaderImg />
+                                                                                <LoaderImg/>
 
                                                                         }
 
@@ -381,7 +401,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                 imgClick();
                                                             }}
                                                             alt={'Image livre Ogla'}
-                                                            src={book.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
+                                                            src={book.img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
                                                         <input
                                                             type={'file'}
                                                             ref={imgRef}
@@ -414,10 +434,11 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                 copyLink()
                                                             }
                                                             }
-                                                            className={styles.seeBtn}><ShareIcon />
+                                                            className={styles.seeBtn}><ShareIcon/>
                                                         </div>
 
                                                     </Tippy>
+
 
                                                     <Tippy trigger={'mouseenter'} content={'Voir'}>
                                                         <div
@@ -425,14 +446,14 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                 pathname: '/livre/' + book._id,
                                                                 query: book.slug
                                                             })}
-                                                            className={styles.seeBtn}><EyeSolid />
+                                                            className={styles.seeBtn}><EyeSolid/>
                                                         </div>
                                                     </Tippy>
 
 
                                                     <button
                                                         onClick={() => sumUpdate()}
-                                                        className={newSummary !== book.summary ? styles.activeBtn : styles.inactiveBtn}
+                                                        className={newSummary !== book.summary ? styles.activeBtn : ''}
                                                     >Modifier
                                                     </button>
 
@@ -448,7 +469,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                             {
                                                 book?.summary?.length !== 0 ?
                                                     <textarea onChange={(e) => setNewSummary(e.target.value)}
-                                                        value={newSummary} />
+                                                              value={newSummary}/>
 
                                                     :
                                                     <textarea
@@ -465,29 +486,29 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
 
                                         <div className={styles.containerStats}>
-                                            <h5>Statistiques <PresentationChartBarIcon /></h5>
+                                            <h5>Statistiques <PresentationChartBarIcon/></h5>
 
                                             <div className={styles.listItem}>
                                                 <div className={styles.itemStats}>
 
                                                     <img alt={'Like Image Ogla'}
-                                                        onError={(e) => e.target.src = '/assets/stats/likes.png'}
-                                                        src={GetImgPathOfAssets() + 'stats/likes.png'} />
+                                                         onError={(e) => e.target.src = '/assets/stats/likes.png'}
+                                                         src={GetImgPathOfAssets() + 'stats/likes.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}> {FormatCount(book.likes)}</p>
-                                                        <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon />
+                                                        <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
                                                 </div>
                                                 <div className={styles.itemStats}>
                                                     <img alt={'Image Chart Ogla'}
-                                                        onError={(e) => e.target.src = '/assets/stats/bar.png'}
-                                                        src={GetImgPathOfAssets() + 'stats/bar.png'} />
+                                                         onError={(e) => e.target.src = '/assets/stats/bar.png'}
+                                                         src={GetImgPathOfAssets() + 'stats/bar.png'}/>
 
                                                     <div>
                                                         <p className={styles.valueStats}>{FormatCount(book?.stats?.view)}</p>
-                                                        <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon />
+                                                        <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
@@ -501,13 +522,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
                                                 <div className={styles.itemStats}>
                                                     <img alt={'Image Commentaire Ogla'}
-                                                        onError={(e) => e.target.src = '/assets/stats/comments.png'}
-                                                        src={GetImgPathOfAssets() + 'stats/comments.png'} />
+                                                         onError={(e) => e.target.src = '/assets/stats/comments.png'}
+                                                         src={GetImgPathOfAssets() + 'stats/comments.png'}/>
 
                                                     <div>
                                                         <p className={styles.valueStats}>{FormatCount(book?.stats?.nbCommentary)}</p>
 
-                                                        <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon />
+                                                        <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
                                                     </div>
 
@@ -517,11 +538,11 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                 <div className={styles.itemStats + ' ' + styles.statsChapters}>
 
                                                     <img alt={'Image livre Ogla'}
-                                                        src={GetImgPathOfAssets() + 'diapo/book.png'}
-                                                        onError={(e) => e.target.src = '/assets/diapo/book.png'} />
+                                                         src={GetImgPathOfAssets() + 'diapo/book.png'}
+                                                         onError={(e) => e.target.src = '/assets/diapo/book.png'}/>
                                                     <div>
                                                         <p className={styles.valueStats}>{FormatCount(book.chapter_list.length)}</p>
-                                                        <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon />
+                                                        <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon/>
                                                         </p>
 
                                                     </div>
@@ -556,13 +577,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     setActiveFilter('order');
                                                                 }
                                                             }
-                                                            } />
+                                                            }/>
                                                             <button
                                                                 className={styles.newChapter}
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
                                                             >
                                                                 Nouveau chapitre
-                                                                <CursorArrowRaysIcon />
+                                                                <CursorArrowRaysIcon/>
                                                             </button>
 
 
@@ -580,13 +601,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                     <div className={styles.emptyContainer}>
                                                         <h6>Oups !</h6>
                                                         <img alt={'Lune Ogla Image'}
-                                                            src={GetImgPathOfAssets() + 'diapo/moon.png'}
-                                                            onError={(e) => e.target.src = '/assets/diapo/moon.png'} />
+                                                             src={GetImgPathOfAssets() + 'diapo/moon.png'}
+                                                             onError={(e) => e.target.src = '/assets/diapo/moon.png'}/>
                                                         <p>C&apos;est bien vide ici, écrivez votre prochain chapitre dès
                                                             maintenant</p>
                                                         <button
                                                             onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                        >Commencez à écrire <CursorArrowRaysIcon />
+                                                        >Commencez à écrire <CursorArrowRaysIcon/>
                                                         </button>
                                                     </div> :
 
@@ -597,13 +618,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                             <p>Impossible de récupérer les chapitres</p>
                                                             <button
                                                                 onClick={() => router.reload()}
-                                                            >Rafraîchir <ArrowUturnLeftIcon />
+                                                            >Rafraîchir <ArrowUturnLeftIcon/>
                                                             </button>
                                                         </div>
                                                         :
 
                                                         loadingChapter ?
-                                                            <div className={styles.loadingChapter}><Loader1 /></div>
+                                                            <div className={styles.loadingChapter}><Loader1/></div>
                                                             :
 
                                                             <div className={styles.contentChapterList} ref={divRef}>
@@ -647,7 +668,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     }
                                                                     {
                                                                         loadingScroll &&
-                                                                        <LoaderCommentary />
+                                                                        <LoaderCommentary/>
                                                                     }
                                                                 </div>
                                                             </div>
@@ -665,10 +686,10 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
                                         <div className={styles.containerTitle}>
                                             <h2> {Capitalize(book.title)} <Tippy trigger={'mouseenter'}
-                                                content={'Supprimer le livre'}>
+                                                                                 content={'Supprimer le livre'}>
                                                 <XCircleIcon onClick={() => {
                                                     setSeeConfirmModal(true);
-                                                }} />
+                                                }}/>
                                             </Tippy></h2>
                                             <span></span>
 
@@ -680,14 +701,14 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                 {
                                                     loadingImg &&
                                                     <div className={styles.loaderImg}>
-                                                        <LoaderImg />
+                                                        <LoaderImg/>
                                                     </div>
                                                 }
                                                 {
                                                     localImg && file ?
                                                         <>
                                                             <img alt={'Nouvelle Image Ogla'} src={localImg}
-                                                                className={styles.darkImg} />
+                                                                 className={styles.darkImg}/>
 
                                                             <div className={styles.imgCheck}>
                                                                 {
@@ -695,14 +716,14 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     <>
                                                                         <CheckCircleIcon
                                                                             onClick={() => updatePic()}
-                                                                            className={styles.check} />
+                                                                            className={styles.check}/>
                                                                         <XCircleIcon
                                                                             onClick={() => {
                                                                                 setLocalImg(null);
                                                                                 setFile(null);
                                                                             }
                                                                             }
-                                                                            className={styles.off} />
+                                                                            className={styles.off}/>
                                                                     </>
                                                                 }
 
@@ -711,14 +732,14 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                         :
                                                         <>
                                                             <Tippy trigger={'mouseenter'} content={'Modifier'}
-                                                                placement={'bottom'}>
+                                                                   placement={'bottom'}>
                                                                 <img className={styles.imgOriginal}
-                                                                    onClick={() => {
-                                                                        imgClick();
-                                                                    }}
-                                                                    src={book.img}
-                                                                    onError={(e) => e.target.src = GetDefaultBookImgWhenError()}
-                                                                    alt={'Image livre Ogla'}
+                                                                     onClick={() => {
+                                                                         imgClick();
+                                                                     }}
+                                                                     src={book.img}
+                                                                     onError={(e) => e.target.src = GetDefaultBookImgWhenError()}
+                                                                     alt={'Image livre Ogla'}
                                                                 />
 
                                                             </Tippy>
@@ -755,7 +776,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     copyLink()
                                                                 }
                                                                 }
-                                                                className={styles.seeBtn}><ShareIcon />
+                                                                className={styles.seeBtn}><ShareIcon/>
                                                             </div>
 
                                                         </Tippy>
@@ -766,13 +787,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     pathname: '/livre/' + book._id,
                                                                     query: book.slug
                                                                 })}
-                                                                className={styles.seeBtn}><EyeSolid />
+                                                                className={styles.seeBtn}><EyeSolid/>
                                                             </div>
                                                         </Tippy>
 
                                                         <button
                                                             onClick={() => sumUpdate()}
-                                                            className={newSummary !== book.summary ? styles.activeBtn : styles.inactiveBtn}
+                                                            className={newSummary !== book.summary ? styles.activeBtn : ''}
                                                         >Modifier
                                                         </button>
 
@@ -788,7 +809,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                 {
                                                     book?.summary?.length !== 0 ?
                                                         <textarea onChange={(e) => setNewSummary(e.target.value)}
-                                                            value={newSummary} />
+                                                                  value={newSummary}/>
 
                                                         :
                                                         <textarea
@@ -805,29 +826,29 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
 
                                             <div className={styles.containerStats}>
-                                                <h5>Statistiques <PresentationChartBarIcon /></h5>
+                                                <h5>Statistiques <PresentationChartBarIcon/></h5>
 
                                                 <div className={styles.listItem}>
                                                     <div className={styles.itemStats}>
 
                                                         <img alt={'Image Like Ogla'}
-                                                            src={GetImgPathOfAssets() + 'stats/likes.png'}
-                                                            onError={(e) => e.target.src = '/assets/stats/likes.png'} />
+                                                             src={GetImgPathOfAssets() + 'stats/likes.png'}
+                                                             onError={(e) => e.target.src = '/assets/stats/likes.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book?.likes}</p>
-                                                            <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon />
+                                                            <p className={styles.labelStats}>j&apos;aimes <ChatBubbleBottomCenterTextIcon/>
                                                             </p>
                                                         </div>
 
                                                     </div>
                                                     <div className={styles.itemStats}>
                                                         <img src={GetImgPathOfAssets() + 'stats/bar.png'}
-                                                            alt={'Image Chart Ogla'}
-                                                            onError={(e) => e.target.src = '/assets/stats/bar.png'} />
+                                                             alt={'Image Chart Ogla'}
+                                                             onError={(e) => e.target.src = '/assets/stats/bar.png'}/>
 
                                                         <div>
                                                             <p className={styles.valueStats}>{book?.stats?.view}</p>
-                                                            <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon />
+                                                            <p className={styles.labelStats}>vues <ChatBubbleBottomCenterTextIcon/>
                                                             </p>
                                                         </div>
 
@@ -841,13 +862,13 @@ const OneBook = ({ bookData, chapterListData, err }) => {
 
                                                     <div className={styles.itemStats}>
                                                         <img alt={'Image Commentaire Ogla'}
-                                                            src={GetImgPathOfAssets() + 'stats/comments.png'}
-                                                            onError={(e) => e.target.src = '/assets/stats/comments.png'} />
+                                                             src={GetImgPathOfAssets() + 'stats/comments.png'}
+                                                             onError={(e) => e.target.src = '/assets/stats/comments.png'}/>
 
                                                         <div>
                                                             <p className={styles.valueStats}>{book?.stats?.nbCommentary}</p>
 
-                                                            <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon />
+                                                            <p className={styles.labelStats}>commentaires <ChatBubbleBottomCenterTextIcon/>
                                                             </p>
                                                         </div>
 
@@ -857,11 +878,11 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                     <div className={styles.itemStats}>
 
                                                         <img alt={'Image livre violet Ogla'}
-                                                            src={GetImgPathOfAssets() + 'diapo/chapter.png'}
-                                                            onError={(e) => e.target.src = '/assets/diapo/chapter.png'} />
+                                                             src={GetImgPathOfAssets() + 'diapo/chapter.png'}
+                                                             onError={(e) => e.target.src = '/assets/diapo/chapter.png'}/>
                                                         <div>
                                                             <p className={styles.valueStats}>{book?.chapter_list?.length}</p>
-                                                            <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon />
+                                                            <p className={styles.labelStats}>chapitres <ChatBubbleBottomCenterTextIcon/>
                                                             </p>
 
                                                         </div>
@@ -894,14 +915,14 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                         setActiveFilter('order');
                                                                     }
                                                                 }
-                                                                } />
+                                                                }/>
                                                                 <button
                                                                     className={styles.newChapter}
                                                                     onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
 
                                                                 >
                                                                     Nouveau chapitre
-                                                                    <CursorArrowRaysIcon />
+                                                                    <CursorArrowRaysIcon/>
                                                                 </button>
 
 
@@ -918,20 +939,20 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                     book.chapter_list.length === 0 ?
                                                         <div className={styles.emptyContainer}>
                                                             <img alt={'Image Lune Ogla'}
-                                                                src={GetImgPathOfAssets() + 'diapo/moon.png'}
-                                                                onError={(e) => e.target.src = '/assets/diapo/moon.png'} />
+                                                                 src={GetImgPathOfAssets() + 'diapo/moon.png'}
+                                                                 onError={(e) => e.target.src = '/assets/diapo/moon.png'}/>
                                                             <p>C&apos;est bien vide ici, écrivez votre prochain chapitre
                                                                 dès
                                                                 maintenant</p>
                                                             <button
                                                                 onClick={() => router.push('/dashboard/nouveau-chapitre/' + book._id)}
-                                                            >Commencez à écrire <CursorArrowRaysIcon />
+                                                            >Commencez à écrire <CursorArrowRaysIcon/>
                                                             </button>
                                                         </div>
                                                         :
 
                                                         loadingChapter ?
-                                                            <div className={styles.loadingChapter}><Loader1 /></div>
+                                                            <div className={styles.loadingChapter}><Loader1/></div>
                                                             :
 
                                                             <div className={styles.contentChapterList} ref={divRef}>
@@ -976,7 +997,7 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     }
                                                                     {
                                                                         loadingScroll &&
-                                                                        <LoaderCommentary />
+                                                                        <LoaderCommentary/>
                                                                     }
                                                                 </div>
 
@@ -984,8 +1005,8 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                                                                     book.chapter_list.length <= 2 &&
                                                                     <div className={styles.oneChapter}>
                                                                         <img alt={'Image Lune Ogla'}
-                                                                            src={GetImgPathOfAssets() + 'diapo/moon.png'}
-                                                                            onError={(e) => e.target.src = '/assets/diapo/moon.png'} />
+                                                                             src={GetImgPathOfAssets() + 'diapo/moon.png'}
+                                                                             onError={(e) => e.target.src = '/assets/diapo/moon.png'}/>
                                                                     </div>
                                                                 }
 
@@ -1015,8 +1036,8 @@ const OneBook = ({ bookData, chapterListData, err }) => {
                         .catch((err) => console.log('err delete book'))
                 }
                 } img={bookData?.img} btnConfirm={'Supprimer'}
-                    subTitle={'Supprimer ' + bookData.title + ' et ses chapitres.'}
-                    title={'Êtes-vous sûr de vouloir continuer ? '} close={() => setSeeConfirmModal(false)} />
+                              subTitle={'Supprimer ' + bookData.title + ' et ses chapitres.'}
+                              title={'Êtes-vous sûr de vouloir continuer ? '} close={() => setSeeConfirmModal(false)}/>
             }
         </div>
 

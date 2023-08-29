@@ -21,10 +21,12 @@ import {FilterBtn, FilterBtn3} from "../layouts/Btn/ActionBtn";
 import {ConfirmModal, ConfirmModalCommentary} from "../Modal/ConfirmModal";
 import {ErrMsg} from "../ErrMsg";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import {NewReportService} from "../../service/Report/ReportService";
+import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
 
 
 const SidebarCommentary = ({
-    errCommentary,
+                               errCommentary,
                                scrollChange,
                                title,
                                author,
@@ -48,40 +50,48 @@ const SidebarCommentary = ({
                                activeFilter,
                                likeAnswer,
                                newPageAnswer,
-    isEmpty
+                               isEmpty
                            }) => {
     const router = useRouter();
     const [commentList, setCommentList] = useState(comments);
     const [newComment, setNewComment] = useState('');
-    const [openConfirmModalForDeleteComment,setOpenConfirmModalForDeleteComment] = useState(false);
-    const [openConfirmModalForDeleteAnswer,setOpenConfirmModalForDeleteAnswer] = useState(false);
+    const [openConfirmModalForDeleteComment, setOpenConfirmModalForDeleteComment] = useState(false);
+    const [openConfirmModalForDeleteAnswer, setOpenConfirmModalForDeleteAnswer] = useState(false);
+    const [openConfirmModalForReportComment, setOpenConfirmModalForReportComment] = useState(false);
+    const [openConfirmModalForReportAnswer, setOpenConfirmModalForReportAnswer] = useState(false);
     const divRef = useRef(null);
-    const [endRefresh,setEndRefresh] = useState(true);
-    const [load,setLoad] = useState(false);
+    const [endRefresh, setEndRefresh] = useState(true);
+    const [load, setLoad] = useState(false);
     const [activeCommentaryToDelete, setActiveCommentaryToDelete] = useState({
-        content:null,
-        id:null
+        content: null,
+        id: null
     });
     const [activeAnswersToDelete, setActiveAnswersToDelete] = useState({
-        content:null,
-        id:null
+        content: null,
+        id: null
     });
+    const [activeCommentToReport, setActiveCommentToReport] = useState({
+        content: null,
+        id: null
+    });
+    const [activeAnswerToReport, setActiveAnswerToReport] = useState({
+        content: null,
+        id: null
+    });
+
     const {data: session} = useSession();
     const orientation = useOrientation();
     const inputRef = useRef(null);
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
 
-
     useEffect(() => {
         setCommentList(comments);
         setEndRefresh(false)
         setTimeout(() => {
             setEndRefresh(true);
-        },200)
+        }, 200)
     }, [comments])
-
-
 
     const sendNewComment = () => {
         NewCommentaryService(typeId, newComment, type)
@@ -98,8 +108,8 @@ const SidebarCommentary = ({
         DeleteCommentaryService(id)
             .then(() => deleteAComment(id))
             .then(() => {
-                setActiveCommentaryToDelete({id: null,content: null})
-                setOpenConfirmModal(false);
+                setActiveCommentaryToDelete({id: null, content: null})
+                setOpenConfirmModalForDeleteComment(false);
             })
             .catch((err) => console.log(err));
     }
@@ -120,7 +130,7 @@ const SidebarCommentary = ({
         DeleteAnswerService(id, session)
             .then(() => deleteAnswer(id))
             .then(() => {
-                setActiveAnswersToDelete({id: null,content: null})
+                setActiveAnswersToDelete({id: null, content: null})
                 setOpenConfirmModalForDeleteAnswer(false);
             })
             .catch((err) => console.log(err))
@@ -131,6 +141,70 @@ const SidebarCommentary = ({
             .then((res) => likeAnswer(id))
             .catch((err) => console.log(err))
     }
+
+    const resetCommentReport = () => {
+        setActiveCommentToReport({id: null, content: null});
+        setOpenConfirmModalForReportComment(false);
+    }
+
+    const resetAnswerReport = () => {
+        setActiveAnswerToReport({id: null, content: null});
+        setOpenConfirmModalForReportAnswer(false);
+    }
+
+    const addReportToStorage = (id) => {
+        if(typeof window !== 'undefined'){
+            let arr = JSON.parse(localStorage.getItem('report'));
+            if(!arr){
+                localStorage.setItem('report', JSON.stringify([id]));
+            }
+            else {
+                arr.push(id);
+                localStorage.setItem('report', JSON.stringify(arr));
+            }
+        }
+    }
+
+    const checkIfIdIsAlreadyInStorage = (id) => {
+        if (typeof window !== 'undefined') {
+            let arr = JSON.parse(localStorage.getItem('report'));
+            if (!arr) {
+                return false;
+            } else {
+                return arr.includes(id);
+            }
+        }
+    }
+
+    const report =  (id, typeOfReport) => {
+        const validTypes = ['comment', 'answer'];
+
+        if(!validTypes.includes(typeOfReport)){
+            resetCommentReport();
+            resetAnswerReport();
+        }
+
+        if(checkIfIdIsAlreadyInStorage(id)){
+            if(typeOfReport === 'comment'){
+                resetCommentReport();
+                return toastDisplayError('Déjà signalé !');
+            }
+            else {
+                resetAnswerReport();
+                return toastDisplayError('Déjà signalé !');
+            }
+        }
+
+        NewReportService(id,typeOfReport)
+            .then(() => toastDisplaySuccess('Merci pour votre signalement.'))
+            .then(() => addReportToStorage(id))
+            .then(() => {
+                if(typeOfReport === 'comment') resetCommentReport();
+                else resetAnswerReport();
+            })
+            .catch(() => toastDisplayError('Impossible de signaler ce commentaire.'));
+    };
+
 
     useEffect(() => {
         setCommentList(comments);
@@ -143,12 +217,12 @@ const SidebarCommentary = ({
     const scrollToTop = () => {
         return setTimeout(() => {
             divRef.current.scrollTop = 0;
-        },10)
+        }, 10)
     }
 
 
     useEffect(() => {
-        if(!errCommentary){
+        if (!errCommentary) {
             const div = divRef.current;
 
             const handleScroll = () => {
@@ -167,11 +241,8 @@ const SidebarCommentary = ({
 
     }, [canScroll, loadingScroll]);
 
-    if(width > 600 && height > 500 && orientation !== 'landscape'){
 
-    }
-
-    if(errCommentary){
+    if (errCommentary) {
         return (
             <div className={styles.container}>
 
@@ -181,13 +252,13 @@ const SidebarCommentary = ({
                 </div>
 
                 <div className={styles.titleSection}>
-                    <h5>Commentaire(s) <span>({nbCommentary})</span></h5>
+                    <h5><span>{nbCommentary}</span> commentaire(s) </h5>
 
                     <div>
                         <p
-                           className={activeFilter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                            className={activeFilter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
                         <p
-                           className={activeFilter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                            className={activeFilter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
                     </div>
                 </div>
 
@@ -199,16 +270,14 @@ const SidebarCommentary = ({
 
             </div>
         )
-    }
-
-    else return (
+    } else return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
                 <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
             </div>
             <div className={styles.titleSection}>
-                <h5>Commentaire(s) <span>({nbCommentary})</span></h5>
+                <h5><span>{nbCommentary}</span> commentaires</h5>
 
                 <div>
                     <p onClick={() => {
@@ -230,22 +299,19 @@ const SidebarCommentary = ({
                     width <= 600 &&
                     <div className={styles.filterPhone}>
                         <FilterBtn3 filter={activeFilter} onclick={() => {
-                        if(activeFilter === 'recent'){
-                            changeFilter('popular');
-                        }
-                        else {
-                            changeFilter('recent');
-                        }
+                            if (activeFilter === 'recent') {
+                                changeFilter('popular');
+                            } else {
+                                changeFilter('recent');
+                            }
                         }
                         }/>
                     </div>
                 }
 
-
                 {
                     commentList && comments.length > 0 && commentList.map((item, index) => {
 
-                        console.log(item.nbAnswers);
                         return (
                             <Fragment key={item._id}>
                                 <Commentary
@@ -253,20 +319,43 @@ const SidebarCommentary = ({
                                     id={item._id}
                                     deleteComment={() => {
                                         setOpenConfirmModalForDeleteAnswer(false);
+                                        setOpenConfirmModalForReportAnswer(false);
+                                        setOpenConfirmModalForReportComment(false);
                                         setActiveCommentaryToDelete({
-                                            content: ReduceString(item.content,40),
-                                            id:item._id
+                                            content: ReduceString(item.content, 40),
+                                            id: item._id
                                         })
                                         setOpenConfirmModalForDeleteComment(true);
                                     }}
-                                    deleteAanswer={(id,content) => {
+                                    reportComment={() => {
                                         setOpenConfirmModalForDeleteComment(false);
-
+                                        setOpenConfirmModalForDeleteAnswer(false);
+                                        setOpenConfirmModalForReportAnswer(false);
+                                        setActiveCommentToReport({
+                                            content: ReduceString(item.content, 40),
+                                            id: item._id
+                                        })
+                                        setOpenConfirmModalForReportComment(true);
+                                    }}
+                                    deleteAanswer={(id, content) => {
+                                        setOpenConfirmModalForDeleteComment(false);
+                                        setOpenConfirmModalForReportComment(false);
+                                        setOpenConfirmModalForReportAnswer(false);
                                         setActiveAnswersToDelete({
-                                            content: ReduceString(content,40),
-                                            id:id
+                                            content: ReduceString(content, 40),
+                                            id: id
                                         })
                                         setOpenConfirmModalForDeleteAnswer(true);
+                                    }}
+                                    reportAnswer={(id, content) => {
+                                        setOpenConfirmModalForDeleteComment(false);
+                                        setOpenConfirmModalForDeleteAnswer(false);
+                                        setOpenConfirmModalForReportComment(false);
+                                        setActiveAnswerToReport({
+                                            content: ReduceString(content, 40),
+                                            id: id
+                                        })
+                                        setOpenConfirmModalForReportAnswer(true);
                                     }}
                                     likeAanswer={(id) => likeAanswer(id)}
                                     likeComment={() => likeComment(item._id)}
@@ -294,11 +383,11 @@ const SidebarCommentary = ({
                 }
 
 
-
                 {
-                     comments.length <= 0 && !loadingScroll && endRefresh &&
+                    nbCommentary <= 0 && !loadingScroll &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
-                        <img src={GetImgPathOfAssets() + 'jim/smile8.png'} alt={'Image Jim Ogla'} onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
+                        <img src={GetImgPathOfAssets() + 'utils/smile8.png'} alt={'Image Jim Ogla'}
+                             onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
                         <p>C&apos;est bien silencieux ici ! <br/> <span onClick={() => {
                             if (session) {
                                 inputRef.current.focus();
@@ -316,65 +405,95 @@ const SidebarCommentary = ({
             </div>
 
 
-                <div className={styles.commentaryContainer}>
+            <div className={styles.commentaryContainer}>
 
-                    <div className={styles.formContainer}>
-                        {
-                            session ?
-                                <textarea
-                                    ref={inputRef}
-                                    value={newComment}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {
-                                            e.preventDefault();
-                                            sendNewComment();
-                                        }
-                                    }}
-                                    onChange={(e) => setNewComment(e.target.value)}
-                                    className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
-                                :
-                                <textarea
-                                    className={scroll.scrollbar}
-                                    type={"textarea"}
-                                    onClick={() => dispatch(setActiveModalState(true))}
-                                    placeholder={"Connectez vous pour pouvoir commenter..."}
-                                    readOnly={true}
-                                />
-                        }
-                    </div>
+                <div className={styles.formContainer}>
                     {
-                        loadingScroll && commentList.length >= 1 &&
-                        <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                        session ?
+                            <textarea
+                                ref={inputRef}
+                                value={newComment}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !e.shiftKey && newComment !== "") {
+                                        e.preventDefault();
+                                        sendNewComment();
+                                    }
+                                }}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                            :
+                            <textarea
+                                className={scroll.scrollbar}
+                                type={"textarea"}
+                                onClick={() => dispatch(setActiveModalState(true))}
+                                placeholder={"Connectez vous pour pouvoir commenter..."}
+                                readOnly={true}
+                            />
                     }
-
-                    <div
-                        onClick={() => {
-                            if (newComment !== "") {
-                                sendNewComment();
-                            }
-                        }}
-                        className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
-                        <PaperAirplaneIcon/>
-                    </div>
                 </div>
+                {
+                    loadingScroll && commentList.length >= 1 &&
+                    <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                }
+
+                <div
+                    onClick={() => {
+                        if (newComment !== "") {
+                            sendNewComment();
+                        }
+                    }}
+                    className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
+                    <PaperAirplaneIcon/>
+                </div>
+            </div>
 
 
             {
                 openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => deleteComment(activeCommentaryToDelete.id)}  close={() => {
-                    setActiveCommentaryToDelete({id: null,content: null})
+                <ConfirmModalCommentary btnConfirm={'Confirmer'}
+                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
+                    setActiveCommentaryToDelete({id: null, content: null})
                     setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)} />
+                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
+            }
+
+            {
+                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
+                <ConfirmModalCommentary btnConfirm={'Confirmer'}
+                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
+                    setActiveCommentaryToDelete({id: null, content: null})
+                    setOpenConfirmModalForDeleteComment(false);
+                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
             }
 
             {
                 openConfirmModalForDeleteAnswer && activeAnswersToDelete.id &&
                 <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
                     deleteAanswer(activeAnswersToDelete.id);
-                }}  close={() => {
-                    setActiveAnswersToDelete({id: null,content: null})
+                }} close={() => {
+                    setActiveAnswersToDelete({id: null, content: null})
                     setOpenConfirmModalForDeleteAnswer(false);
-                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)} />
+                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)}/>
+            }
+
+
+            {
+                openConfirmModalForReportComment && activeCommentToReport.id &&
+                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
+                    report(activeCommentToReport.id, 'comment');
+                }} close={() => {
+                    resetCommentReport();
+                }} title={'Signaler ce commentaire ?'} subTitle={Capitalize(activeCommentToReport.content)}/>
+            }
+
+
+            {
+                openConfirmModalForReportAnswer && activeAnswerToReport.id &&
+                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
+                    report(activeAnswerToReport.id, 'answer');
+                }} close={() => {
+                    resetAnswerReport();
+                }} title={'Signaler cette réponse ?'} subTitle={Capitalize(activeAnswerToReport.content)}/>
             }
 
         </div>

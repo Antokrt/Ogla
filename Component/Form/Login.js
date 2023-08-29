@@ -45,12 +45,23 @@ const Login = ({ register, forgotPassword }) => {
         })
             .then((res) => {
                 if (res?.status === 401) {
-                    setSubmitErr(prevState => ({
-                        msg: 'Identifiant ou mot de passe incorrect.',
-                        show: true
-                    }))
+                    if(res.error === 'blacklisted'){
+                        setSubmitErr(prevState => ({
+                            msg: "Votre compte a été  suspendu en raison d'activités inappropriées.",
+                            show: true
+                        }))
+                        router.push('/auth-error')
+                    }
+                    else {
+                        setSubmitErr(prevState => ({
+                            msg: 'Identifiant ou mot de passe incorrect.',
+                            show: true
+                        }))
+
+                    }
+
                 } else {
-                    if(res?.status === 200){
+                   if(res?.status === 200){
                         router.push('/')
                     }
                     else {
@@ -61,6 +72,7 @@ const Login = ({ register, forgotPassword }) => {
                     }
                 }
             })
+            .catch((e) => console.log(e))
 
     }
 
@@ -87,7 +99,7 @@ const Login = ({ register, forgotPassword }) => {
                         }
                         <p>
                             Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de romans ouverte à tous.
-                            Nous voulons que vous vous assuriez que personne ne puisse jamais vous empêcher d&apos;écrire.
+                            Nous voulons nous assurer que personne ne puisse jamais vous empêcher d&apos;écrire.
                         </p>
                     </div>
                     <form onSubmit={handleSubmit} ref={formRef} className={styles.form}>

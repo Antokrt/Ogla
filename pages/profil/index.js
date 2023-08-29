@@ -3,29 +3,32 @@ import anim from '../../styles/utils/anim.module.scss';
 import Header from "../../Component/Header";
 import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
-    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon
+    BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
 } from "@heroicons/react/24/outline";
 import React, {useRef, useState} from "react";
 import {
-    CheckCircleIcon, XCircleIcon
+    ChartBarIcon, CheckCircleIcon, HeartIcon, XCircleIcon
 } from "@heroicons/react/20/solid";
-import {useSession} from "next-auth/react";
+import {Capitalize} from "../../utils/String";
+import {signOut, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {GetPrivateProfilApi} from "../api/user";
-import {UpdateUserProfilPictureService} from "../../service/User/Profil.service";
+import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
 import axios from "axios";
 import {ReloadSession} from "../../utils/ReloadSession";
 import {
+    GetDefaultUserImg,
     GetDefaultUserImgWhenError,
     GetImgPathOfAssets,
+    GetLogoUtils,
     renderPrediction
 } from "../../utils/ImageUtils";
-import {VerifyEmailService} from "../../service/User/Account.service";
-import {FormatDateStr} from "../../utils/Date";
+import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
+import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
 import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {LockClosedIcon} from "@heroicons/react/24/solid";
-import {UpdateAuthorDescriptionService} from "../../service/Author";
+import {BookmarkIcon, EyeIcon, LockClosedIcon} from "@heroicons/react/24/solid";
+import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
 import {useDispatch, useSelector} from "react-redux";
@@ -33,12 +36,14 @@ import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/not
 import {LoaderImg} from "../../Component/layouts/Loader";
 import {
     toastDisplayError,
+    toastDisplayInfo,
     toastDisplayPromiseSendMail,
     toastDisplaySuccess
 } from "../../utils/Toastify";
-import {UpdateSettingsService} from "../../service/User/Settings.service";
+import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
 import {instance} from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
+import {openAll} from "../../service/Notifications/NotificationsService";
 import {useEffect} from "react";
 import {OpenAllService} from "../../service/Notifications/NotificationsService";
 import Tippy from "@tippyjs/react";
@@ -46,7 +51,9 @@ import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {ErrMsg} from "../../Component/ErrMsg";
-import {stopMusic} from "../../store/slices/musicSlice";
+import Link from "next/link";
+import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
+import {GetApiPath, GetFetchPath} from "../api/utils/Instance";
 
 export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
@@ -63,7 +70,7 @@ const Profil = ({profilData, err}) => {
     const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session, status} = useSession();
+    const {data: session,update, status} = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
@@ -116,10 +123,9 @@ const Profil = ({profilData, err}) => {
 
     const updateSettingsOfSession = () => {
         return new Promise((resolve, reject) => {
-            instance.get('http://localhost:3000/api/auth/session?new-settings')
+            axios.get(GetApiPath() + '/api/auth/session?new-settings')
                 .then(() => resolve())
                 .catch((err) => {
-                    console.log('err settings')
                     reject()
                 })
         })
@@ -168,12 +174,15 @@ const Profil = ({profilData, err}) => {
                         setFile(null);
                     })
                     .then(() => {
-                        axios.get('/api/auth/session?update-picture')
+                        axios.get(GetApiPath() + '/api/auth/session?update-picture')
                             .then(() => {
                                 ReloadSession();
-                                setLoadingImg(false)
+                                setLoadingImg(false);
+                                console.log('success update pic')
                             })
-                            .catch((err) => {setLoadingImg(false)});
+                            .catch((err) => {setLoadingImg(false)
+                            console.log('err update pic h')
+                            });
                     })
                     .catch((err) => {
                         setLoadingImg(false);
@@ -186,6 +195,8 @@ const Profil = ({profilData, err}) => {
 
         }
     }
+
+    useEffect(() => {console.log(session)},[session])
 
     const verifyEmail = () => {
         VerifyEmailService()
@@ -281,6 +292,7 @@ const Profil = ({profilData, err}) => {
                         <h5>Avatar</h5>
                         <p>.png .jpg jpeg </p>
 
+
                         <div className={styles.imgCheck}>
                             {
                                 localImg && file &&
@@ -339,7 +351,7 @@ const Profil = ({profilData, err}) => {
                             if (!profilData.verified) {
                                 verifyEmail();
                             }
-                        }}>(Vérifier maintenant)</span>}</span></label>
+                        }}> Vérifier maintenant</span>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
                     {
                         session?.user?.provider !== 'google' ?
@@ -399,7 +411,7 @@ const Profil = ({profilData, err}) => {
                                     updateDescription();
                                 }
                             }}
-                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
                             </button>
                         </div>
 
@@ -420,8 +432,11 @@ const Profil = ({profilData, err}) => {
 
                     </div>
 
+
                 </div>
                 <div className={styles.rContainerWriter}>
+
+
                     <div className={styles.containerSocial}>
                         <div className={styles.headSocial}>
                             <h5>Réseaux sociaux</h5>
@@ -431,10 +446,9 @@ const Profil = ({profilData, err}) => {
 
                         <div className={styles.socialForm}>
                             <div className={styles.socialLinks}>
-                                <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
-                                <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
-                                <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
-                                <ProfilAuthor type={4} content={profilData?.author.social.tiktok} />
+                                <ProfilAuthor type={1} content={profilData?.author.social.instagram}/>
+                                <ProfilAuthor type={2} content={profilData?.author.social.twitter}/>
+                                <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
                             </div>
                             <div className={styles.socialImg}>
                                 <img src={GetImgPathOfAssets() +"other/manReading2.png"} onError={(e) => e.target.src = '/assets/other/manReading2.png'} alt="Auteur lit un livre ogla"/>

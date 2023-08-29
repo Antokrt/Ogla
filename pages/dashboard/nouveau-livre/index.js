@@ -2,23 +2,25 @@ import styles from '../../../styles/Pages/Dashboard/New.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
 import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
-import React, {useRef, useState, useEffect} from "react";
+import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
+import React, {useRef, useState} from "react";
 import {
     ArrowDownIcon,
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
+import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
 import {GetImgPathOfAssets, renderPrediction} from "../../../utils/ImageUtils";
-import {toastDisplayError} from "../../../utils/Toastify";
+import {toastDisplayError, toastDisplaySuccess} from "../../../utils/Toastify";
 import {LoaderImg} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import {PhotoIcon} from "@heroicons/react/20/solid";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../../store/slices/categorySlice";
@@ -43,11 +45,6 @@ const New = () => {
     const [width, height] = ScreenSize();
     const categories = useSelector(selectCategories);
 
-    useEffect(() => {
-        console.log("width: " + width + " height: " + height)
-
-    },  [width, height])
-
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
             setLocalImg(URL.createObjectURL(event.target.files[0]));
@@ -69,8 +66,12 @@ const New = () => {
         }
         NewBookService(form, selectedFile)
             .then((res) => {
+                toastDisplaySuccess('Livre publié !')
                 if (res.data._id) {
                     router.push('/dashboard/books/' + res.data._id);
+                }
+                else {
+                    router.push('/dashboard/books')
                 }
             })
             .catch((err) => {
@@ -98,6 +99,7 @@ const New = () => {
             summary.length <= 2000 &&
             category !== "";
     }
+
     const btn = () => {
         return (
             <div className={styles.btnContainer}>
@@ -131,6 +133,7 @@ const New = () => {
             </div>
         )
     }
+
     const firstStep = () => {
 
         return (
@@ -182,6 +185,7 @@ const New = () => {
             </>
         )
     }
+
     const secondStep = () => {
         return (
             <>
@@ -252,6 +256,7 @@ const New = () => {
             </>
         )
     }
+
     const thirdStep = () => {
         return (
             <div className={styles.finalContainer}>
@@ -274,6 +279,7 @@ const New = () => {
             </div>
         )
     }
+
     const checkStep = () => {
         switch (step) {
             case 1:
@@ -315,8 +321,10 @@ const New = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             {
-                width < 700 || height < 600 /* && orientation === 'portrait' */ ?
-                    <VerticalPhoneMenu />
+                width > 1050 && height > 600 ?
+                    <div className={styles.verticalMenuContainer}>
+                        <VerticalAuthorMenu/>
+                    </div>
                     :
                     <>
                         {
@@ -325,7 +333,7 @@ const New = () => {
                                     <VerticalTabMenu/>
                                 </div>
                                 :
-                                <VerticalAuthorMenu/>
+                                <VerticalPhoneMenu/>
                         }
                     </>
             }

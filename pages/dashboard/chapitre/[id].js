@@ -1,7 +1,11 @@
 import styles from '../../../styles/Pages/Dashboard/OneChapter.module.scss';
+
 import {useRouter} from "next/router";
+
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
+import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
+import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {EditorContent, useEditor} from "@tiptap/react";
@@ -13,14 +17,20 @@ import {
 } from "../../../service/Dashboard/ChapterAuthorService";
 import {
     ArrowPathIcon,
-    ChevronRightIcon,
-    CursorArrowRaysIcon,
-    HomeIcon,
+    ChevronDoubleLeftIcon,
+    ChevronDoubleRightIcon,
+    ChevronRightIcon, CursorArrowRaysIcon, FolderArrowDownIcon,
+    HomeIcon, InboxArrowDownIcon,
+    TrashIcon
 } from "@heroicons/react/24/outline";
 import {DateNow} from "../../../utils/Date";
-import {EyeIcon, TrashIcon} from "@heroicons/react/24/solid";
+import {ChatBubbleLeftRightIcon} from "@heroicons/react/20/solid";
+import scrollbar from "../../../styles/utils/scrollbar.module.scss";
+import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChapter";
+import {EyeIcon} from "@heroicons/react/24/solid";
 import {Capitalize} from "../../../utils/String";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+import {LoaderCommentary} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
@@ -30,6 +40,7 @@ import Head from "next/head";
 import {toastDisplayError} from "../../../utils/Toastify";
 import {GetFetchPath} from "../../api/utils/Instance";
 import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
+
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -48,6 +59,10 @@ export async function getServerSideProps({req, params}) {
         booksJson = null;
     }
 
+    console.log(chapterErrData)
+    console.log(bookErrData)
+
+
 
     return {
         props: {
@@ -65,11 +80,12 @@ export async function getServerSideProps({req, params}) {
 export default function ChapitrePage({chapterData, bookData, err}) {
 
     const router = useRouter();
+    const {data: session} = useSession();
     const [loading, setLoading] = useState(true);
     const [chapter, setChapter] = useState([]);
     const [book, setBook] = useState();
     const [title, setTitle] = useState(chapterData?.title);
-    const [content, setContent] = useState(!err ? JSON.parse(chapterData?.content) : '');
+    const [content, setContent] = useState(!err.chapter && !err.book ? JSON.parse(chapterData?.content) : '');
     const [text, setText] = useState(chapterData?.text);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
@@ -83,6 +99,9 @@ export default function ChapitrePage({chapterData, bookData, err}) {
         setLoading(false);
     }, []);
 
+/// Err est a true
+
+    useEffect(() => {console.log(!err.chapter && ! err.book)},[])
 
     useEffect(() => {
         if (JSON.stringify(content) !== chapterData?.content || title !== chapterData.title) {

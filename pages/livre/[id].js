@@ -1,28 +1,44 @@
 import {useRouter} from "next/router";
-import React, {Fragment, useCallback, useEffect, useState} from "react";
+import React, {Fragment, useCallback, useEffect, useRef, useState} from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
+import anim from '../../styles/utils/anim.module.scss';
+
+import Header from "../../Component/Header";
 import {
+    ArrowsUpDownIcon,
+    BanknotesIcon,
+    BookOpenIcon,
     ChatBubbleBottomCenterTextIcon,
     ChatBubbleLeftEllipsisIcon,
+    ChatBubbleLeftIcon,
+    ChatBubbleOvalLeftIcon,
     CursorArrowRaysIcon,
+    DocumentTextIcon,
     HeartIcon as HeartOutline,
     HomeIcon,
     ListBulletIcon
 } from "@heroicons/react/24/outline";
+import {HeartIcon} from "@heroicons/react/20/solid";
+import Book from "../../Component/layouts/Icons/Book";
+import Like from "../../Component/layouts/Icons/Like";
 import ToogleSidebar from "../../utils/ToogleSidebar";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
+import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
 import {useSession} from "next-auth/react";
 import ScreenSize from "../../utils/Size"
 import {LikeBookService} from "../../service/Like/LikeService";
-import {GetOneBookApi} from "../api/book";
+import {VerifLikeApi} from "../api/like";
+import {AddViewToBookApi, GetOneBookApi} from "../api/book";
 import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
 import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
 import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
+import {FormatDateNb, FormatDateStr} from "../../utils/Date";
 import {FilterBtn, HeadPhoneBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
+import {LoginModal} from "../../Component/Modal/LoginModal";
 import {useDispatch, useSelector} from "react-redux";
 import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
 import CardCategory from "../../Component/Card/CardCategory";
@@ -30,10 +46,12 @@ import {LoaderCommentary} from "../../Component/layouts/Loader";
 import {Snippet} from "../../Component/Snippet";
 import {SendNotifService} from "../../service/Notifications/NotificationsService";
 import {CardChapterPublic, CardChapterPublicPhone} from "../../Component/Card/CardChapterPublic";
+import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
+import CategoryCard from "../../Component/Category/CategoryCard";
 import {Capitalize} from "../../utils/String";
 import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
 import Footer from "../../Component/Footer";
-import {ErrMsg} from "../../Component/ErrMsg";
+import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
 import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../../utils/ImageUtils";
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
@@ -67,6 +85,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     const [width, height] = ScreenSize();
     const router = useRouter();
+    const [loginModal, setLoginModal] = useState(true);
     const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
@@ -80,7 +99,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [pageComment, setPageComment] = useState(1);
     const [sizeComment, setSizeComment] = useState(1);
     const [nbChapters, setNbChapters] = useState(bookData?.nbChapters);
-    const [noComments, setNoComments] = useState(false);
+    const [noComments, setNoComments] = useState(bookData?.nbCommentary <= 0);
     const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [pageChapter, setPageChapter] = useState(2);
     const [canScroll, setCanScroll] = useState(true);
@@ -89,18 +108,17 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [chapterList, setChapterList] = useState(chapterData);
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
+    const [snippetTooBig, setSnippetTooBig] = useState(bookData?.summary?.length > 500);
     const [activeLinkPhone, setActiveLinkPhone] = useState('description');
     const dispatch = useDispatch();
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
-        if (session) {
-            if (openSidebar && typeof window !== 'undefined') {
-                setSidebarSelect('Commentary');
-                localStorage.removeItem('openSidebar');
-            }
+        if (openSidebar && typeof window !== 'undefined') {
+            setSidebarSelect('Commentary');
+            localStorage.removeItem('openSidebar');
         }
-    }, [session])
+    }, []);
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -119,6 +137,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         setComments([]);
         setMyComments([]);
     }
+
 
 
     const countNbOfChapters = useCallback(async () => {
@@ -175,10 +194,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         type={'book'}
                         canScroll={canScroll}
                         loadingScroll={loadingScroll}
-                        isEmpty={noComments}
                         activeFilter={activeFilterComments}
                         changeFilter={(e) => {
-                            setNoComments(false);
                             if (e === 'recent' && activeFilterComments === 'popular') {
                                 setCanScroll(true);
                                 setActiveFilterComments('recent');
@@ -203,17 +220,16 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         </div>)
     }
 
-    const checkSide = () => {
+    const checkSide =  () => {
         if (err) {
             return null;
         }
         switch (sidebarSelect) {
             case 'Commentary':
+
                 if (comments.length === 0 && canScroll) {
-                    setNoComments(false);
                     getComment(pageComment, 1);
                     if (session) {
-                        console.log("session oui")
                         getMyComments(1, 'popular');
                     }
                 }
@@ -230,7 +246,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         refresh={() => refresh()}
                         scrollChange={hasToScroll}
                         likeAComment={(id) => likeComment(id)}
-                        isEmpty={noComments}
                         createNewComment={(res) => newComment(res)}
                         deleteAComment={(id) => deleteComment(id)}
                         seeMore={() => {
@@ -248,7 +263,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         loadingScroll={loadingScroll}
                         activeFilter={activeFilterComments}
                         changeFilter={(e) => {
-                            setNoComments(false);
                             if (e === 'recent' && activeFilterComments === 'popular') {
                                 setCanScroll(true);
                                 setActiveFilterComments('recent');
@@ -286,18 +300,15 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .then((res) => {
                 if (res.length !== 0) {
                     setComments((prevState) => [...prevState, ...res]);
-                    setNoComments(false);
-                } else {
-                    setNoComments(true);
                 }
             })
             .catch((err) => console.log(err));
     };
 
-    const getComment = () => {
+
+    const getComment =  () => {
         setLoadingScroll(true);
         setCanScroll(false);
-        setNoComments(false);
         GetCommentService('book', bookData._id, pageComment, 5, session, activeFilterComments)
             .then((res) => {
                 res.forEach(element => {
@@ -305,20 +316,17 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         setComments((prevState) => ([...prevState, element]))
                     }
                 })
+
                 if (res.length !== 0) {
                     setPageComment(pageComment + 1);
                     setCanScroll(true);
                 } else {
                     setCanScroll(false);
                 }
-            })
-            .then(() => {
-                setLoadingScroll(false);
 
-                /*       if (comments.length !== 0) {
-                           setTimeout(() => setHasToScroll(!hasToScroll), 50);
-                       }*/
+
             })
+            .then(() => setLoadingScroll(false))
             .catch((err) => setErrCommentary(true))
     }
 
@@ -368,16 +376,12 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         if (res.userId !== session.user.id) {
             setTimeout(() => setHasToScroll(!hasToScroll), 10);
         }
-        setNoComments(false);
         SendNotifService(authorData._id, 10, bookData._id, "null");
     }
 
     const deleteComment = (id) => {
         setComments((list) => list.filter((item) => item._id !== id))
         setNbCommentary(nbCommentary - 1);
-        if (comments.length === 1) {
-            setNoComments(true);
-        }
     }
 
     const sendAnswer = (data) => {
@@ -438,7 +442,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         )
     } else {
         return (
-            <div>
+            <div id={'portal'}>
                 {
                     width > 600 ?
                         <div className={styles.container}>
@@ -451,6 +455,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             </Head>
                             <HeaderMain/>
                             {checkSide()}
+
                             <div className={styles.containerC}>
 
                                 <div className={styles.labelPresentation}>
@@ -541,7 +546,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     {
                                         chapterList?.length <= 0 &&
                                         <div className={styles.empty}>
-                                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'jim/smile8.png'}
+                                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'utils/smile8.png'}
                                                  onError={(e) => e.target.src = '/assets/jim/smile8.png'}
                                             />
                                             <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !
@@ -705,7 +710,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                         <img
                                                             alt={'Image Jim Ogla'}
                                                             onError={(e) => e.target.src = '/assets/jim/smile8.png'}
-                                                            src={GetImgPathOfAssets() + 'jim/smile8.png'}/>
+                                                            src={GetImgPathOfAssets() + 'utils/smile8.png'}/>
                                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                                             résumé !</p>
                                                     </div>

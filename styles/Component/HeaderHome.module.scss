@@ -1,6 +1,6 @@
 @import "../../styles/utils/var";
 
-.container {
+.container{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,31 +11,31 @@
   width: 100%;
 }
 
-.fContainer,
-.sContainer {
+.fContainer,.sContainer{
   width: 100%;
 }
 
-.fContainer {
+.fContainer{
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.logoContainer {
+.logoContainer{
   display: flex;
   align-items: center;
   gap: 20px;
   width: 300px;
 
-  img {
+  img{
     cursor: pointer;
     margin-top: -2px;
     width: 80px;
   }
 }
 
-.searchbarContainer {
+
+.searchbarContainer{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +52,7 @@
   .containerResultSearchBar {
     position: absolute;
     z-index: 2;
-    top: 6vh;
+    top: 7vh;
     width: 100%;
     max-height: 50vh;
     height: auto;
@@ -69,51 +69,50 @@
   }
 }
 
-.logContainer {
+.logContainer{
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
   align-items: center;
   gap: 10px;
   width: 300px;
   height: 50px;
 
-  .containerImgProfil {
-    &::after {
+  .containerImgProfil{
+    &::after{
       content: '';
-      bottom: 9%;
-      right: -1%;
+      bottom: 10%;
+      right: -0%;
       position: absolute;
-      background-color: $green;
-      height: 13px;
-      width: 13px;
+      background-color: #1bce1b;
+      height: 12px;
+      width: 12px;
       border-radius: 50%;
-      border: 2px solid #311959;
+      border: 2px solid white;
       z-index: 2;
     }
-
-    &:active {
+    &:active{
       transform: scale(0.8);
       transition: 0.2s;
     }
-
     position: relative;
     transition: 0.2s;
     cursor: pointer;
-
-    img {
+    img{
       width: 50px;
       height: 50px;
+      object-fit: cover;
       border-radius: 50%;
       border: double 4px white;
     }
   }
 
-  button {
-    &:active {
+
+
+  button{
+    &:active{
       transform: scale(0.8);
       transition: 0.2s;
     }
-
     transition: 0.2s;
     border-radius: 5px;
     font-size: 11px;
@@ -123,39 +122,28 @@
     font-family: $primaryFont;
   }
 
-  .register {
-
-    &:hover {
-      background-color: #240752;
-    }
-
+  .register{
     -webkit-text-stroke-width: 0.5px;
     background-color: transparent;
     color: white;
   }
 
-  .login {
-
-    &:hover {
-      background-color: $purpleHover;
-    }
-
-    background-color: $purple;
+  .login{
+    background-color: #9844AD;
     color: white;
   }
 
-  .logOut {
+  .logOut{
     color: white;
     background-color: transparent;
-
-    svg {
+    svg{
       color: white;
       width: 20px;
     }
   }
 }
 
-.sContainer {
+.sContainer{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -165,27 +153,15 @@
   height: auto;
 }
 
-.leftLinkContainer {
+.leftLinkContainer{
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: start;
   gap: 30px;
   width: auto;
   white-space: pre;
 
-  a {
-    &:hover {
-      color: #9844ad;
-    }
-
-    &:active {
-      transform: scale(0.8);
-      transition: 0.2s;
-    }
-
-    transition: 0.2s;
-    padding: 2px 10px;
-    border-radius: 4px;
+  a{
     cursor: pointer;
     font-size: 13px;
     color: white;
@@ -194,27 +170,22 @@
   }
 }
 
-.rightLinkContainer {
+.rightLinkContainer{
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
   align-items: center;
   gap: 20px;
   width: 200px;
 
-  .notif,
-  .sett {
-
-    border-radius: 2px;
+  .notif, .sett{
     color: white;
   }
 
-  .music {
+  .music{
     &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
-
-    border-radius: 2px;
     transition: 0.2s;
     cursor: pointer;
     position: relative;
@@ -222,7 +193,7 @@
     justify-content: center;
     align-items: center;
 
-    .animation {
+    .animation{
       position: absolute;
       width: 30px;
       height: 30px;
@@ -234,16 +205,11 @@
     }
   }
 
-  .svgTheme {
-    border-radius: 2px;
-  }
-
-  svg {
+  svg{
     &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
-
     cursor: pointer;
     color: white;
     width: 18px;
@@ -252,7 +218,7 @@
   }
 }
 
-.catContainer {
+.catContainer{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -260,7 +226,7 @@
   width: auto;
   height: 100%;
 
-  div {
+  div{
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -269,18 +235,18 @@
     opacity: 0.9;
     min-width: 60px;
 
-    img {
+    img{
       width: 60px;
       height: 60px;
     }
 
-    p {
+    p{
       transition: 0.1s;
       text-align: center;
       text-decoration: none;
       color: white;
       font-weight: bold;
-      font-family: $branch;
+      font-family: "Branch", sans-serif;
       font-size: 15px;
     }
   }
@@ -307,51 +273,41 @@
   }
 }
 
-.bgTransparent {
-  background-color: transparent !important;
+.bgTransparent{
+  background-color: transparent!important;
 }
 
-@media screen and (max-width: 1200px) {
-  .containerSearchBarHeader {
-    &::placeholder {
-      color: #1c232b !important;
+@media screen and (max-width: 1200px){
+  .containerSearchBarHeader{
+    &::placeholder{
+      color: #1c232b!important;
+    }
+  }
+  .logOut svg{
+    color: #1c232b!important;
+  }
+
+  .leftLinkContainer a{
+      color: #1c232b;
+  }
+
+  .rightLinkContainer svg{
+    color: #1c232b!important;
+  }
+
+  .music{
+    svg{
+      color: #e94f37!important;
     }
   }
 
-  .logOut svg {
-    color: #1c232b !important;
-  }
-
-  .leftLinkContainer a {
-    color: #1c232b;
-  }
-
-  .rightLinkContainer svg {
-    color: #1c232b !important;
-  }
-
-  .music {
-    svg {
-      color: #e94f37 !important;
-    }
-  }
-
-  .rightLinkContainer .svgTheme {
-    color: #e94f37 !important;
-  }
-
-  .containerImgProfil {
-    &:after {
-      border: 2px solid white !important;
-      bottom: 10% !important;
-      right: 2% !important;
-    }
-
+  .rightLinkContainer .svgTheme{
+    color: #e94f37!important;
   }
 }
 
-@media screen and (max-width: 1000px) {
-  .register {
+@media screen and (max-width: 1000px){
+  .register{
     display: none;
   }
 }

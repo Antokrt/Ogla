@@ -86,8 +86,8 @@ const ResultSearchBar = ({ destroy, query, data }) => {
                                         });
                                     }}
                                     className={styles.itemResult + ' ' + styles.itemAuthor + ' ' + anim.fadeIn}
-                                    tabIndex={0} // Assurez-vous que la div est focusable en définissant le tabIndex
-                                    onKeyDown={handleKeyDown} // Gestionnaire d'événement pour les touches du clavier
+                                    tabIndex={0}
+                                    onKeyDown={handleKeyDown}
                                 >
                                     <p className={styles.title + ' ' + styles.author}><img referrerPolicy={'no-referrer'} onError={(e) => {
                                         e.target.src = GetDefaultUserImgWhenError();

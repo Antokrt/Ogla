@@ -1,43 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="">
+    <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Card/CardChapterPublic.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/Card/drama.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/Card/drama.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Category/Card/horror.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Category/Card/horror.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/Card/CardChapter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/Commentary/Commentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnBook.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/HotPost.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/HotPost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/SidebarCommentary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/book/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/book/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/bibliotheque/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/bibliotheque/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/books/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/books/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rechercher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rechercher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/BannerBecameWriter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CardChapterPublic.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Card/CategoryCard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Category/CategoryCard.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Dashboard/Card/CardChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Err/Err.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/HeaderMain.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/ConfirmModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/Commentary/Commentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/SidebarCommentary.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Snippet.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Layouts/Btn/ActionBtn.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/BookPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Search.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/SearchBar/SearchBarResult.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +31,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Ogla/Front/public/assets/logo&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Portfolio/portfolio-koreta&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;C:/Dev/Ogla/Front/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -76,7 +41,6 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Dev\Ogla\Front\public\assets\logo" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau\livre" />
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
@@ -141,7 +105,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5e484ba4-718c-469b-aa90-993852e22ff0" name="Changes" comment="" />
+      <changelist id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="" />
       <created>1665406480197</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -371,21 +335,29 @@
       <workItem from="1687520901849" duration="2000" />
       <workItem from="1687686946484" duration="8057000" />
       <workItem from="1687764533169" duration="18337000" />
-      <workItem from="1687868363525" duration="5023000" />
-      <workItem from="1687941993652" duration="121000" />
-      <workItem from="1688029585358" duration="5026000" />
-      <workItem from="1688113635797" duration="17095000" />
-      <workItem from="1688201250827" duration="8990000" />
-      <workItem from="1688232411235" duration="8000" />
-      <workItem from="1688243419217" duration="1854000" />
-      <workItem from="1688373074933" duration="3610000" />
-      <workItem from="1688376773887" duration="10806000" />
-      <workItem from="1688460278434" duration="19264000" />
-      <workItem from="1688544502827" duration="9921000" />
-      <workItem from="1688555398261" duration="2500000" />
-      <workItem from="1688714399539" duration="20023000" />
-      <workItem from="1688808051579" duration="4759000" />
-      <workItem from="1688890651829" duration="11226000" />
+      <workItem from="1689063764235" duration="16498000" />
+      <workItem from="1689165154895" duration="11363000" />
+      <workItem from="1689237091469" duration="4407000" />
+      <workItem from="1689241654125" duration="12866000" />
+      <workItem from="1689346666696" duration="3255000" />
+      <workItem from="1689495522520" duration="6123000" />
+      <workItem from="1689752722843" duration="11314000" />
+      <workItem from="1689927883042" duration="1656000" />
+      <workItem from="1690803257973" duration="5948000" />
+      <workItem from="1690810824753" duration="595000" />
+      <workItem from="1690882064931" duration="644000" />
+      <workItem from="1691597362068" duration="2226000" />
+      <workItem from="1691656849867" duration="8636000" />
+      <workItem from="1692112620739" duration="723000" />
+      <workItem from="1692176165809" duration="1558000" />
+      <workItem from="1692193253704" duration="1701000" />
+      <workItem from="1692537669927" duration="780000" />
+      <workItem from="1692603955111" duration="596000" />
+      <workItem from="1692709482796" duration="611000" />
+      <workItem from="1692722000485" duration="140000" />
+      <workItem from="1692779473235" duration="588000" />
+      <workItem from="1692975299985" duration="99000" />
+      <workItem from="1693338338904" duration="1651000" />
     </task>
     <servers />
   </component>

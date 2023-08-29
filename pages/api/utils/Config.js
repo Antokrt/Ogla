@@ -22,18 +22,23 @@ const getBearerConfig = (accessToken) => {
 const getAccessToken = async (req) => {
   const token = await getToken({
       req:req,
-      secret:process.env.NEXT_AUTH_SECRET
+      secret:process.env.NEXTAUTH_SECRET
   })
-    return token?.accessToken;
+    if(token){
+        return token?.accessToken;
+    }
 }
 
 const getRefreshToken = async (req) => {
     const token = await getToken({
         req:req,
-        secret:process.env.NEXT_AUTH_SECRET
+        secret:process.env.NEXTAUTH_SECRET
     })
 
-    return token.refreshToken;
+    if(token){
+        return token.refreshToken;
+    }
+
 }
 
 

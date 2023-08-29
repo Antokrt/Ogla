@@ -17,7 +17,7 @@ export default function Banner() {
                     <div className={styles.HomeCenterTitle}>
                         <h1> Commencez votre voyage avec <span>OGLA</span> ! </h1>
                         <p> Découvrez des histoires captivantes et des
-                            aventures passionantes qui vous ferons voyager au-delà de votre imagination... </p>
+                            aventures passionnantes qui vous feront voyager au-delà de votre imagination... </p>
                         <button onClick={() => router.push("/bibliotheque")}> Derniers ouvrages</button>
                         <p className={styles.token}>{session?.user?.accessToken}</p>
                     </div>

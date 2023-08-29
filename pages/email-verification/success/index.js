@@ -7,6 +7,7 @@ import {instance} from "../../../service/config/Interceptor";
 import {ReloadSession} from "../../../utils/ReloadSession";
 import Head from "next/head";
 import {GetImgPathOfAssets} from "../../../utils/ImageUtils";
+import {GetApiPath} from "../../api/utils/Instance";
 
 export async function getServerSideProps({req, query}) {
 
@@ -25,7 +26,7 @@ const SuccessVerificationEmailPage = ({profilData}) => {
     const router = useRouter();
 
     const updateSession = async () => {
-        await instance.get('http://localhost:3000/api/auth/session?email-verified');
+        await instance.get(GetApiPath() +'/api/auth/session?email-verified');
     }
 
   useEffect(() =>  {
@@ -53,7 +54,7 @@ const SuccessVerificationEmailPage = ({profilData}) => {
 
             <h1>Email vérifiée !</h1>
             <p> <span>{profilData?.pseudo}</span>, votre email a été vérifié avec succès. </p>
-            <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes, bonne lecture sur <strong>Ogla</strong> !</p>
+            <p>Vous allez être redirigé vers l&apos;accueil dans quelques secondes , bonne lecture sur <strong>Ogla</strong> !</p>
         </div>
     )
 

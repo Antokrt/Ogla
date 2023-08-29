@@ -29,7 +29,7 @@ export async function GetOneBookApi(id,req) {
 }
 
 export async function AddViewToChapterApi(id) {
-    const addView = await fetch('http://localhost:3008/chapter/view/' + id, {
+    const addView = await fetch(GetFetchPath() + 'chapter/view/' + id, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

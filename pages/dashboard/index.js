@@ -7,24 +7,7 @@ import HeaderDashboard from "../../Component/Dashboard/HeaderDashboard";
 import Head from "next/head";
 import React from "react";
 
-
-export async function getServerSideProps({context, req}){
-    const config = await getConfigOfProtectedRoute(req);
-    const books = await fetch('http://localhost:3008/author/my-books',config);
-    const booksErrData = books.ok ? false : books.status;
-    const booksJson = await books.json()
-
-    return {
-        props:{
-            err:{
-                books:booksErrData
-            },
-            books: booksJson,
-        }
-    }
-}
-
-export default function DashboardAuthor({books}) {
+export default function DashboardAuthor() {
 
     const router = useRouter();
     const {data: session} = useSession();

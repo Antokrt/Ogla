@@ -72,14 +72,90 @@
         color: #1c232b;
         text-align: left;
         font-size: 13px;
-        font-weight: bold;
+        font-weight:bold;
         opacity: 0.9;
     }
 }
 
 .form {
+    // margin-top: 10px;
+    // display: flex;
+    // justify-content: center;
+    // flex-direction: column;
+    // width: 100%;
+
+    // .date {
+    //     font-family: "Montserrat", sans-serif;
+    // }
+
+    // label {
+    //     position: relative;
+    //     text-align: left;
+    //     width: 100%;
+    //     font-size: 14px;
+    //     font-weight: bold;
+    //     margin-bottom: 5px;
+    //     font-family: "Montserrat", sans-serif;
+
+    //     span {
+    //         position: absolute;
+    //         right: -10px;
+    //         top: 5%;
+    //         color: red;
+    //         font-size: 8px;
+    //     }
+    // }
+
+    // textarea {
+    //     &:focus {
+    //         box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    //         transition: 0.1s;
+    //     }
+
+    //     transition: 0.1s;
+    //     outline: none;
+    //     resize: none;
+    //     border: solid 1px $border;
+    //     padding: 8px 8px 50px 8px;
+    //     border-radius: 5px;
+    //     width: 100%;
+    //     font-size: 12px;
+    //     font-family: "Montserrat",
+    //     sans-serif;
+    // }
+
+    // input {
+    //     &:focus {
+    //         box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    //         transition: 0.1s;
+    //     }
+
+    //     &::placeholder {}
+
+    //     cursor: text;
+    //     transition: 0.1s;
+    //     outline: none !important;
+    //     font-family: "Montserrat",
+    //     sans-serif;
+    //     border-radius: 5px;
+    //     font-size: 13px;
+    //     border: solid 1px $border;
+    //     margin-bottom: 10px;
+    //     margin-top: 7px;
+    //     padding: 14px 24px;
+    //     width: 100%;
+    // }
+
     .selectItem {
         width: 100%;
+
+        // label {
+        //     svg {
+        //         height: 5px;
+        //         width: 7px;
+        //         fill: #e94f37;
+        //     }
+        // }
 
         .inputContainer {
             position: relative;
@@ -90,14 +166,11 @@
             margin-bottom: 20px;
 
             svg {
-                fill: #1c232b;
+                fill:#1c232b;
                 height: 20px;
             }
 
-            .labelEmail,
-            .labelPseudo,
-            .labelPW,
-            .labelConfirm {
+            .labelEmail, .labelPseudo, .labelPW, .labelConfirm {
                 position: absolute;
                 left: 36px;
                 top: 15px;
@@ -112,10 +185,7 @@
                 transition: 0.4s;
             }
 
-            .inputEmail,
-            .inputPseudo,
-            .inputPW,
-            .inputConfirm {
+            .inputEmail, .inputPseudo, .inputPW, .inputConfirm {
                 position: relative;
                 z-index: 2;
                 cursor: text;
@@ -134,7 +204,8 @@
             .inputEmail:focus+.labelEmail,
             .inputPseudo:focus+.labelPseudo,
             .inputPW:focus+.labelPW,
-            .inputConfirm:focus+.labelConfirm {
+            .inputConfirm:focus+.labelConfirm
+            {
                 top: -13px;
                 font-size: 10px;
             }
@@ -142,7 +213,8 @@
             .inputEmail:not(:placeholder-shown).inputEmail:not(:focus)+.labelEmail,
             .inputPseudo:not(:placeholder-shown).inputPseudo:not(:focus)+.labelPseudo,
             .inputPW:not(:placeholder-shown).inputPW:not(:focus)+.labelPW,
-            .inputConfirm:not(:placeholder-shown).inputConfirm:not(:focus)+.labelConfirm {
+            .inputConfirm:not(:placeholder-shown).inputConfirm:not(:focus)+.labelConfirm
+            {
                 top: -13px;
                 font-size: 10px;
             }
@@ -200,21 +272,26 @@
     right: 0px;
     top: -13px;
     z-index: 1;
+    // display: block;
     text-align: left;
+    font-size: 10px;
+    font-family: "Poppins", sans-serif;
+    font-style: italic;
+    color: red;
+    // margin-bottom: 10px;
+    // margin-top: -20px;
+}
+
+.submitErr {
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-size: 10px;
     font-family: "Poppins", sans-serif;
     font-style: italic;
     color: red;
 }
 
-.submitErr {
-    margin-top: 10px;
-    margin-bottom: 0px;
-    font-size: 10px;
-    font-family: "Poppins", sans-serif;
-    font-style: italic;
-    color: red;
-}
+
 
 .stepBtnContainer {
     display: flex;
@@ -223,13 +300,12 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 20px;
-
     .pre {
         margin-right: 20px;
     }
 
     .newPassBtn {
-        background-color: $purple;
+        background-color: #9844AD;
         color: white;
         transition: 0.1s;
         cursor: pointer;
@@ -243,16 +319,14 @@
 }
 
 .stepBtn {
-    &:active {
+    &:active{
         transform: scale(0.8);
         transition: 0.2s;
     }
-
-    &:hover {
+    &:hover{
         transition: 0.2s;
-        background-color: $purpleHover;
+        background-color: #901aad;
     }
-
     margin-top: 20px;
     width: 100%;
     font-family: $primaryFont;
@@ -261,7 +335,7 @@
     transition: 0.3s;
     cursor: pointer;
     text-align: center;
-    background-color: $purple;
+    background-color: #9239a8;
     padding: 15px 20px;
     border-radius: 5px;
     font-size: 12px;
@@ -278,12 +352,11 @@
             transition: 0.3s;
         }
 
-        .spanCondition {
-            color: $purple;
+        .spanCondition{
+            color: #9844AD;
             text-decoration: underline;
             cursor: pointer;
         }
-
         transition: 0.3s;
         font-weight: bold;
         font-family: $primaryFont;
@@ -298,13 +371,11 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 15px;
-
     p {
         &:hover {
             opacity: 1;
             transition: 0.3s;
         }
-
         text-decoration: underline;
         transition: 0.3s;
         font-weight: bold;
@@ -320,9 +391,8 @@
             color: rgb(118, 10, 145);
             transition: 0.3s;
         }
-
         text-decoration: unset;
-        color: $purple;
+        color: rgb(152, 68, 173);
     }
 }
 
@@ -342,7 +412,6 @@
     .leftBlock {
         width: 100%;
     }
-
     .content {
         width: 90%;
     }
@@ -364,7 +433,7 @@
 }
 
 @media screen and (max-height: 850px) {
-    .containerImg {
+      .containerImg {
         min-height: 740px;
-    }
-}
+      }
+  }

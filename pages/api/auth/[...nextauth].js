@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 import {getToken} from "next-auth/jwt";
 import {getConfigOfProtectedRoute} from "../utils/Config";
+import {GetFetchPath} from "../utils/Instance";
 
 
 async function refreshAccessToken(tokenObject) {
@@ -15,7 +16,7 @@ async function refreshAccessToken(tokenObject) {
         };
 
         if(config){
-            const tokenResponse = await axios.get('http://localhost:3008/auth/refresh/',config);
+            const tokenResponse = await axios.get(GetFetchPath() + 'auth/refresh/',config);
             return {
                 ...tokenObject,
                 accessToken: tokenResponse.data.accessToken,
@@ -33,6 +34,7 @@ async function refreshAccessToken(tokenObject) {
         }
     }
 }
+
 
 async function getExpFromToken(token) {
     try {
@@ -56,8 +58,9 @@ function getProfil(accessToken) {
         headers: { Authorization: `Bearer ${accessToken}` }
     };
 
+
     return new Promise((resolve, reject) => {
-        axios.get('http://localhost:3008/user/profil', config)
+        axios.get(GetFetchPath() + 'user/profil', config)
             .then((res) => resolve(res))
             .catch((err) => reject(err))
     })
@@ -89,7 +92,7 @@ export default function (req, res) {
                         password: credentials.password
                     }
 
-                    const res = await fetch('http://localhost:3008/auth/login/', {
+                    const res = await fetch(GetFetchPath() + 'auth/login/', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -100,7 +103,11 @@ export default function (req, res) {
 
                     const user = await res.json();
 
+
                     if (!res.ok && user) {
+                        if(user.message === 'blacklisted'){
+                            throw new Error(user.message);
+                        }
                         return null
                     }
 
@@ -120,7 +127,7 @@ export default function (req, res) {
                         password: credentials.password,
                         is_author: false
                     }
-                    const res = await fetch('http://localhost:3008/user/register', {
+                    const res = await fetch(GetFetchPath() + 'user/register', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -150,7 +157,7 @@ export default function (req, res) {
                     const payload = credentials;
                     payload.is_author = true;
 
-                    const res = await fetch('http://localhost:3008/user/register', {
+                    const res = await fetch(GetFetchPath() + 'user/register', {
                         method: 'POST',
                         body: JSON.stringify(payload),
                         headers: {
@@ -174,17 +181,19 @@ export default function (req, res) {
 
         pages: {
             signIn: '/auth?login',
+            error:'/auth-error'
         },
 
         callbacks: {
 
             async signIn({ user, account, profile }) {
+
                 if (account.provider === 'google' && profile) {
                     const data = {
                         user: account,
                         profil: profile
                     }
-                    const res = await fetch('http://localhost:3008/auth/google/redirect', {
+                    const res = await fetch(GetFetchPath() + 'auth/google/redirect', {
                         method: 'POST',
                         body: JSON.stringify(data),
                         headers: {
@@ -192,6 +201,9 @@ export default function (req, res) {
                         }
                     })
                     const response = await res.json();
+
+                    if(response.statusCode === 401) throw new Error('Google Authentification Error')
+
                     user.accessToken = response.accessToken;
                     user.refreshToken = response.refreshToken;
                     if (res.ok && user) {
@@ -232,7 +244,7 @@ export default function (req, res) {
                 }
             },
 
-            async jwt({ token, user, account }) {
+            async jwt({ token, user, account,trigger }) {
                 if (user) {
                     token.accessToken = user?.accessToken;
                     token.refreshToken = user?.refreshToken;
@@ -261,9 +273,9 @@ export default function (req, res) {
                 token.is_author = session.user.is_author;
 
 
-                if (req.url === '/api/auth/session?update-author') {
+                if (req.url === '/api/auth/session?update-author=') {
                     const config = await getConfigOfProtectedRoute(req);
-                    const newAuthor = await fetch('http://localhost:3008/author/check', config);
+                    const newAuthor = await fetch(GetFetchPath() + 'author/check', config);
                     const authorJson = await newAuthor.json();
                     if (authorJson.statusCode !== 401) {
                         token.is_author = true;
@@ -276,25 +288,25 @@ export default function (req, res) {
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?update-picture') {
+                if (req.url === '/api/auth/session?update-picture=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.image = res.data.img;
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?email-verified') {
+                if (req.url === '/api/auth/session?email-verified=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.verified = res.data.verified;
                     return session;
                 }
 
-                if (req.url === '/api/auth/session?new-settings') {
+                if (req.url === '/api/auth/session?new-settings=') {
                     const res = await getProfil(token?.accessToken);
                     session.user.settings = res.data.settings
                     return session;
                 }
 
-                if(req.url === '/api/auth/session?update-google-provider'){
+                if(req.url === '/api/auth/session?update-google-provider='){
                     const res = await getProfil(token?.accessToken);
                     session.user.provider = res.data.provider;
                     return session;
@@ -305,9 +317,11 @@ export default function (req, res) {
             }
 
         },
-        secret: process.env.NEXT_AUTH_SECRET,
+        secret: process.env.NEXTAUTH_SECRET,
         session: {
             maxAge: 604800  // 7 jours
         }
     })
 }
+
+

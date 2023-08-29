@@ -54,7 +54,7 @@ const FooterOnBook = ({openCommentary,openList,img,title,like,author,nbCommentar
 
                     <div className={styles.b} onClick={openCommentary}>
                         <ChatBubbleBottomCenterTextIcon/>
-                        <p>{nbCommentary} commentaire(s) </p>
+                        <p>{FormatCount(nbCommentary)} commentaire(s) </p>
                     </div>
 
 

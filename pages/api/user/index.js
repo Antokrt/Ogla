@@ -21,7 +21,7 @@ export async function GetPrivateProfilApi(req){
 
 
 export async function GetPublicProfilApi(id){
-    const profil = await fetch('http://localhost:3008/user/public-profil/'+ id);
+    const profil = await fetch(GetFetchPath() + 'user/public-profil/'+ id);
     const profilErrData = !profil.ok;
     let profilJson = await profil.json();
 

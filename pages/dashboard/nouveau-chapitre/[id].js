@@ -1,4 +1,5 @@
 import styles from '../../../styles/Pages/Dashboard/NewChapter.module.scss';
+import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
@@ -6,11 +7,13 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {Placeholder} from "@tiptap/extension-placeholder";
 import {
-    ChevronRightIcon,
-    CursorArrowRaysIcon,
-    HomeIcon
+    ArrowRightIcon,
+    ChevronDoubleLeftIcon,
+    ChevronDoubleRightIcon,
+    ChevronRightIcon, CursorArrowRaysIcon,
+    HomeIcon, PaperAirplaneIcon
 } from "@heroicons/react/24/outline";
-import {useEditor, EditorContent} from "@tiptap/react";
+import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
 import {DateNow} from "../../../utils/Date";
 import {NewChapterService} from "../../../service/Dashboard/ChapterAuthorService";
@@ -145,6 +148,7 @@ const NouveauChapitre = ({bookData, err}) => {
                 text,
                 publish
             }
+
 
             NewChapterService(data)
                 .then((res) => {
@@ -286,6 +290,7 @@ const NouveauChapitre = ({bookData, err}) => {
                                         onClick={() => sendData(false)}
                                     >Enregistrer en tant que brouillon <ArrowPathIcon/>
                                     </button>
+
 
                                     <button
                                         className={canSend ? styles.activePublishBtn : ''}

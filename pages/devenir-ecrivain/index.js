@@ -1,20 +1,24 @@
 import styles from "../../styles/Pages/Form/DevenirAuteur.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 import React, {useEffect, useRef, useState} from "react";
-import {Formik, Field, Form, ErrorMessage} from "formik";
-import {useRouter} from "next/router";
+import {Formik, Field, Form, ErrorMessage, useFormikContext,} from "formik";
+
+import {router, useRouter} from "next/router";
 import {signIn, useSession} from "next-auth/react";
 import {AuthorSchema, AuthorSchemaLog} from "../../Component/Form/Schema/AuthorSchema";
 import axios from "axios";
 import {instance} from "../../service/config/Interceptor";
+import {toastDisplayError, toastDisplaySuccess, toastDisplayPromiseSendMail} from "../../utils/Toastify";
 import {ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import ScreenSize from "../../utils/Size";
 import {LoaderCommentary} from "../../Component/layouts/Loader";
 import Head from "next/head";
+import {ConfirmModal} from "../../Component/Modal/ConfirmModal";
 import {AuthorConditionsModal} from "../../Component/Modal/AuthorConditionsModal";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import Twitter from "../../Component/layouts/Icons/Social/twitter";
 import {getConfigOfProtectedRoute} from "../api/utils/Config";
-import {GetFetchPath} from "../api/utils/Instance";
+import {GetApiPath, GetFetchPath} from "../api/utils/Instance";
 
 export async function getServerSideProps({req}) {
     const config = await getConfigOfProtectedRoute(req);
@@ -438,7 +442,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
             }
             instance.put('http://localhost:3008/author/turn-author', formData)
                 .then(() => {
-                    axios.get('/api/auth/session?update-author')
+                    axios.get(GetApiPath() + '/api/auth/session?update-author')
                         .then(() => router.push('/'))
                         .then(() => router.reload())
                 })
@@ -505,6 +509,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
             const register = await signIn('signupAuthor', formData)
                 .then((res) => {
                     if (res.status === 401) {
+                        console.log(res.error)
                         let errMsg = res.error;
                         setStepActiveForm(3);
                         switch (errMsg) {
@@ -540,9 +545,14 @@ const DevenirEcrivain = ({isWhitelistData}) => {
 
                             case "Pseudo already exists":
                                 setStepActiveForm(3);
-                                setSeeErr('Pseudo déjà existant.')
+                                setErrMsg('Pseudo déjà existant.')
                                 setSeeErr(true);
                                 break;
+
+                            case "blacklisted":
+                                setStepActiveForm(3);
+                                setErrMsg("Votre compte a été  suspendu en raison d'activités inappropriées.")
+                                setSeeErr(true);
 
                             default:
                                 setSeeErr("Erreur lors de l'envoi du formulaire.")
@@ -640,7 +650,6 @@ const DevenirEcrivain = ({isWhitelistData}) => {
         )
     }
 
-    useEffect(() => console.log(session?.user))
 
     return (
         <div className={styles.container}>

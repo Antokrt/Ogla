@@ -1,21 +1,33 @@
 import styles from '../../../styles/Pages/Dashboard/Books.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
 import {useSession} from "next-auth/react";
-import { CursorArrowRaysIcon } from "@heroicons/react/24/outline";
-import {CardBookDashboard} from "../../../Component/Dashboard/Card/CardBook";
-import {Fragment, useRef, useState} from "react";
+import {
+    ArrowDownCircleIcon,
+    BellAlertIcon, BookmarkSquareIcon,
+    ClockIcon, CursorArrowRaysIcon,
+    MagnifyingGlassIcon,
+    PencilIcon, QueueListIcon, Square3Stack3DIcon
+} from "@heroicons/react/24/outline";
+import CardBook, {CardBookDashboard} from "../../../Component/Dashboard/Card/CardBook";
+import {Fragment, useEffect, useRef, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
+import HeaderDashboard from "../../../Component/Dashboard/HeaderDashboard";
 import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import {useRouter} from "next/router";
 import {GetMoreBookService} from "../../../service/Dashboard/BooksAuthorService";
-import { FilterBtn3 } from "../../../Component/layouts/Btn/ActionBtn";
+import {CardBookPublic} from "../../../Component/Card/CardBook";
+import {FilterBtn, FilterBtn3, SeeMoreBtn, TextSeeMore} from "../../../Component/layouts/Btn/ActionBtn";
+import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
+import {DateNow} from "../../../utils/Date";
 import {LoaderCommentary} from "../../../Component/layouts/Loader";
+import {GetBooksWithCategoryService} from "../../../service/Book/BookService";
 import {ErrMsg} from "../../../Component/ErrMsg";
 import SmHeaderDashboard from "../../../Component/Dashboard/SmHeaderDashboard";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import ScreenSize from "../../../utils/Size";
 import useOrientation from "../../../utils/Orientation";
+import {ArrowSmallDownIcon, Bars4Icon} from "@heroicons/react/24/solid";
 import {CardBookDashboardTab} from "../../../Component/Dashboard/Card/CardBookTab";
 import {CardBookPhone} from "../../../Component/Dashboard/Card/CardBookPhone";
 import Head from "next/head";
@@ -25,7 +37,7 @@ import {GetImgPathOfAssets} from "../../../utils/ImageUtils";
 export async function getServerSideProps({context, req}) {
     const config = await getConfigOfProtectedRoute(req);
     const books = await fetch(GetFetchPath()+ 'author/my-books/popular/1', config);
-    const nbBooks = await fetch('http://localhost:3008/author/books-number', config)
+    const nbBooks = await fetch(GetFetchPath() + 'author/books-number', config)
     const booksErrData = !books.ok;
     const booksJson = await books.json();
 

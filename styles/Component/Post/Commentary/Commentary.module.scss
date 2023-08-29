@@ -69,18 +69,64 @@ width: 50px;
 padding-left: 10px;
       padding-right: 10px;
 
-      .trash{
-        &:hover{
-          transition: 0.1s;
-          color: #9844AD;
-        }
-        transition: 0.1s;
-        cursor: pointer;
+
+
+      .dotContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: end;
+        z-index: 200000;
         position: absolute;
         right: 5%;
-        width: 18px;
-        color: rgba(28, 35, 43, 0.44);
+        .dot{
+          &:hover{
+            transition: 0.1s;
+            color: #9844AD;
+          }
+          transition: 0.1s;
+          cursor: pointer;
+          width: 18px;
+          color: rgba(28, 35, 43, 0.44);
+        }
       }
+
+      .dotContent{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: auto;
+        gap: 10px;
+        padding: 5px 5px;
+        border-radius: 5px;
+        box-shadow: $shadow;
+        width: 120px;
+        background-color: white;
+        button{
+          &:hover{
+            transition: 0.2s;
+            background-color: rgba(230, 235, 241, 0.71);
+          }
+          transition: 0.2s;
+          padding: 5px 5px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          font-size: 10px;
+          color: #1c232b;
+          opacity: 0.8;
+          font-family: 'Inter',sans-serif;
+          svg{
+            width: 12px;
+            color: #343d46;
+          }
+        }
+
+
+      }
+
       .authorDate{
         display: flex;
         justify-content: flex-start;
@@ -145,9 +191,11 @@ color: $darkBrown;
 
       .replyCount{
         padding-left: 5px;
-color: $darkBrown;
+        color: #343d46;
         font-size: 11px;
-        font-family: "Montserrat",sans-serif;
+        opacity: 0.9;
+        font-family: $primaryFont;
+
       }
 
     }
@@ -288,8 +336,20 @@ background-color: #9844AD!important;
   }
 }
 
+
+
+
+
 .deleteModal{
   position: fixed;
+  height: 100vh;
+  width: 100vw;
+}
+
+.openModalContainer{
+  position: absolute;
+  background-color: red;
+  z-index: 203300;
   height: 100vh;
   width: 100vw;
 }

@@ -6,7 +6,7 @@ export const toastDisplaySuccess = (msg) => {
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,
-		pauseOnHover: true,
+		pauseOnHover: false,
 		draggable: false,
 		progress: undefined,
 		theme: "light",
@@ -14,8 +14,8 @@ export const toastDisplaySuccess = (msg) => {
 }
 
 export const toastDisplayError = (msg) => {
-	toast.error(<div styles={{fontSize: "10px"}} >{msg}</div>, {
-		position: "bottom-right",
+	toast.error(<div>{msg}</div>, {
+		position: "top-center",
 		autoClose: 2000,
 		hideProgressBar: false,
 		closeOnClick: true,
