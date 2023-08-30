@@ -26,7 +26,7 @@ const AuthError = () => {
            <p style={{
                fontWeight:'bold',
            }}>
-               Désolé, mais nous n'avons pas réussi à vous connecter. <br/>Cela peut être dû à une erreur d'authentification ou à une suspension de votre compte pour non-conformité.
+               Désolé, mais nous n&apos;avons pas réussi à vous connecter. <br/>Cela peut être dû à une erreur d&apos;authentification ou à une suspension de votre compte pour non-conformité.
            </p>
         </div>
     )
