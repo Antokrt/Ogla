@@ -6,7 +6,7 @@ import styles from "../styles/Component/HeaderResponsive.module.scss";
 import anim from "../styles/utils/anim.module.scss"
 import { LogoutService } from "../service/User/Account.service";
 import { useRouter } from "next/router";
-import DarkLight from "./layouts/Btn/DarkLight";
+import {DarkLight} from "./layouts/Btn/DarkLight";
 import { HeadPhoneBtn } from "./layouts/Btn/ActionBtn";
 import { useRef } from "react";
 import { GetRandomBookService } from "../service/Book/BookService";
