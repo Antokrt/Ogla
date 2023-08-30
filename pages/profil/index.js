@@ -70,7 +70,7 @@ const Profil = ({profilData, err}) => {
     const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session,update, status} = useSession();
+    const {data: session, update, status} = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
@@ -148,7 +148,7 @@ const Profil = ({profilData, err}) => {
                         }
                     })))
                     .then(() => {
-                        if(!newSettings.music){
+                        if (!newSettings.music) {
                             dispatch(stopMusic());
                         }
                     })
@@ -180,8 +180,9 @@ const Profil = ({profilData, err}) => {
                                 setLoadingImg(false);
                                 console.log('success update pic')
                             })
-                            .catch((err) => {setLoadingImg(false)
-                            console.log('err update pic h')
+                            .catch((err) => {
+                                setLoadingImg(false)
+                                console.log('err update pic h')
                             });
                     })
                     .catch((err) => {
@@ -196,7 +197,9 @@ const Profil = ({profilData, err}) => {
         }
     }
 
-    useEffect(() => {console.log(session)},[session])
+    useEffect(() => {
+        console.log(session)
+    }, [session])
 
     const verifyEmail = () => {
         VerifyEmailService()
@@ -268,7 +271,7 @@ const Profil = ({profilData, err}) => {
                                     onClick={() => imgClick()}
                                     src={profil?.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
                                     alt={'Profil Ogla'}
-                                referrerPolicy={'no-referrer'}
+                                    referrerPolicy={'no-referrer'}
                                 />
 
                             </Tippy>
@@ -345,14 +348,15 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.form}>
                     <label>Pseudo</label>
                     <input disabled={true} type={"text"} value={profilData.pseudo}/>
-                    <label className={styles.emailLabel}>Email <span>{profilData.verified ?
-                        <CheckBadgeIcon/> :
-                        <span className={styles.verify} onClick={() => {
-                            if (!profilData.verified) {
-                                verifyEmail();
-                            }
-                        }}> Vérifier maintenant</span>}</span></label>
+                    <label className={styles.emailLabel}>Email <span>{profilData.verified &&
+                        <CheckBadgeIcon/>}</span></label>
                     <input disabled={true} type={"text"} value={profilData.email}/>
+                    {
+                        !profilData.verified &&
+                        <button className={styles.verifyBtn} onClick={() => verifyEmail()}>Vérifier votre adresse
+                            email</button>
+                    }
+
                     {
                         session?.user?.provider !== 'google' ?
                             <>
@@ -391,7 +395,8 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
+                        <img src={profilData?.img} referrerPolicy={'no-referrer'}
+                             onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
 
@@ -441,7 +446,7 @@ const Profil = ({profilData, err}) => {
                         <div className={styles.headSocial}>
                             <h5>Réseaux sociaux</h5>
                             <p>Ne manquez plus jamais une occasion de vous connecter avec vos lecteurs en ajoutant vos
-                                réseaux sociaux à votre profil.</p>
+                                réseaux sociaux à votre profil écrivain.</p>
                         </div>
 
                         <div className={styles.socialForm}>
@@ -450,9 +455,9 @@ const Profil = ({profilData, err}) => {
                                 <ProfilAuthor type={2} content={profilData?.author.social.twitter}/>
                                 <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
                             </div>
-                            <div className={styles.socialImg}>
+                            {/*       <div className={styles.socialImg}>
                                 <img src={GetImgPathOfAssets() +"other/manReading2.png"} onError={(e) => e.target.src = '/assets/other/manReading2.png'} alt="Auteur lit un livre ogla"/>
-                            </div>
+                            </div>*/}
                         </div>
                     </div>
 
@@ -465,9 +470,11 @@ const Profil = ({profilData, err}) => {
     const becameWriter = () => {
         return (
             <div className={styles.becameWriter + ' ' + anim.fadeIn}>
-                <img alt={'Image Castle Ogla'} src={GetImgPathOfAssets() +'diapo/castle.png'} onError={(e) => e.target.src = 'assets/diapo/castle.png'}/>
+                <img alt={'Image Castle Ogla'} src={GetImgPathOfAssets() + 'diapo/castle.png'}
+                     onError={(e) => e.target.src = 'assets/diapo/castle.png'}/>
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
-                <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde entier
+                <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde
+                    entier
                     ! <br/>
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d&apos;être entendue</p>
@@ -479,7 +486,7 @@ const Profil = ({profilData, err}) => {
 
     const settingComponent = () => {
         return (
-            <div className={styles.settings +  ' ' + anim.fadeIn}>
+            <div className={styles.settings + ' ' + anim.fadeIn}>
                 {
                     width > 800 &&
                     <h5>Réglages</h5>
@@ -502,7 +509,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
                          onClick={() => setNotifState(!notifState)}>
-                        <input  checked={notifState} readOnly={true} type="checkbox" id="toggle1"/>
+                        <input checked={notifState} readOnly={true} type="checkbox" id="toggle1"/>
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -571,7 +578,7 @@ const Profil = ({profilData, err}) => {
                     </div>
                     <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item}
                          onClick={() => setActiveLink('writer')}>
-                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin" >
+                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin">
                             <path
                                 d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z"/>
                         </svg>
@@ -604,7 +611,8 @@ const Profil = ({profilData, err}) => {
                             {
                                 session && session.user.image &&
                                 <>
-                                    <img src={session.user.image} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                                    <img src={session.user.image} referrerPolicy={'no-referrer'}
+                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
                                     <span className={styles.circle}></span>
                                 </>
                             }
@@ -619,9 +627,9 @@ const Profil = ({profilData, err}) => {
         <>
             <Head>
                 <title>Ogla - Profil</title>
-                <meta name="description" content="Generated by create next app" />
+                <meta name="description" content="Generated by create next app"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.ico"/>
             </Head>
             {
                 err && session &&
@@ -711,7 +719,7 @@ const Profil = ({profilData, err}) => {
                 <>
                     {
                         width >= 800 ?
-                        <Footer/>
+                            <Footer/>
                             :
                             <>
                                 {

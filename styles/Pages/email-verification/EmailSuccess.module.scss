@@ -22,8 +22,10 @@
 
   p{
     font-family: $primaryFont;
-    color: rgba(28, 35, 43, 0.8);
+    color: $black;
+    font-weight: bold;
     padding: 0px 10px;
+
     text-align: center;
     .retry{
       color: #9844AD;

@@ -44,7 +44,7 @@ const ProfilAuthor = ({ type, content }) => {
         switch (type) {
             case 1:
                 if (social.length <= 1 || social.length > 31 || social[0] !== '@')
-                    return toastDisplayError("Veuillez fournir un username valide.");
+                    return toastDisplayError("Veuillez fournir un identifiant valide.");
                 UpdateLinksProfilAuthor(type, social.replace(/\s/g, ""))
                     .then(() => setLink(social.replace(/\s/g, "")))
                     .catch(() => toastDisplayError("Une erreur s'est produite."))
@@ -53,7 +53,7 @@ const ProfilAuthor = ({ type, content }) => {
 
             case 2:
                 if (isValidTiktokUsername(social) === false)
-                    return toastDisplayError("Veuillez fournir un username valide.");
+                    return toastDisplayError("Veuillez fournir un identifiant valide.");
                 UpdateLinksProfilAuthor(type, social)
                     .then(() => setLink(social))
                     .catch(() => toastDisplayError("Une erreur s'est produite."))
@@ -62,7 +62,7 @@ const ProfilAuthor = ({ type, content }) => {
 
             case 3:
                 if (isValidTwitterUsername(social) === false)
-                    return toastDisplayError("Veuillez fournir un username valide.");
+                    return toastDisplayError("Veuillez fournir un identifiant valide.");
                 UpdateLinksProfilAuthor(type, social)
                     .then(() => setLink(social))
                     .catch(() => toastDisplayError("Une erreur c'est produite."))
@@ -92,7 +92,6 @@ const ProfilAuthor = ({ type, content }) => {
     useEffect(() => {
         if (change)
             inputRef.current.focus()
-        console.log(content)
     }, [change])
 
     return (
@@ -100,7 +99,7 @@ const ProfilAuthor = ({ type, content }) => {
             {
                 type === 1 &&
                 <div className={styles.Social}>
-                    <label>Instagram <Instagram /></label>
+                    <label><Instagram /> Instagram </label>
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>
@@ -129,10 +128,10 @@ const ProfilAuthor = ({ type, content }) => {
                 type === 2 &&
                 <div className={styles.Social}>
                     <label>
-                        Tiktok
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16 8.24537V15.5C16 19.0899 13.0899 22 9.5 22C5.91015 22 3 19.0899 3 15.5C3 11.9101 5.91015 9 9.5 9C10.0163 9 10.5185 9.06019 11 9.17393V12.3368C10.5454 12.1208 10.0368 12 9.5 12C7.567 12 6 13.567 6 15.5C6 17.433 7.567 19 9.5 19C11.433 19 13 17.433 13 15.5V2H16C16 4.76142 18.2386 7 21 7V10C19.1081 10 17.3696 9.34328 16 8.24537Z"></path>
                         </svg>
+                        Tiktok
                     </label>
                     {
                         link.length > 0 && !change &&
@@ -161,7 +160,7 @@ const ProfilAuthor = ({ type, content }) => {
             {
                 type === 3 &&
                 <div className={styles.Social}>
-                    <label>Twitter <Twitter /></label>
+                    <label><Twitter /> Twitter </label>
                     {
                         link.length > 0 && !change &&
                         <div className={styles.isNotEmpty}>

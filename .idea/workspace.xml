@@ -3,6 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Profil/ProfilAuthor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/devenir-ecrivain/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Profil/ProfilAuthor.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/404.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/404.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ProfilPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/email-verification/EmailSuccess.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/email-verification/EmailSuccess.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -358,6 +365,7 @@
       <workItem from="1692779473235" duration="588000" />
       <workItem from="1692975299985" duration="99000" />
       <workItem from="1693338338904" duration="1651000" />
+      <workItem from="1693387482457" duration="5782000" />
     </task>
     <servers />
   </component>

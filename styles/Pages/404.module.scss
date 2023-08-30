@@ -40,7 +40,7 @@
 
   p {
     text-align: center;
-    font-family: 'Santral-Regular', sans-serif;
+    font-family: $primaryFont;
     font-weight: bold;
     font-size: 20px;
   }
@@ -62,8 +62,7 @@
     gap: 8px;
     background-color: $orange;
     color: white;
-    font-family: 'Santral-Regular',
-    sans-serif;
+    font-family: $primaryFont;
     font-size: 12px;
     font-weight: bold;
     padding: 10px 20px;

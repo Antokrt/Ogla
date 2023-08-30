@@ -72,10 +72,11 @@ width: 200px;
   }
 
   p {
-    color: #6b7077;
+    color: $black;
     font-family: $primaryFont;
     font-size: 13px;
-    font-weight: 500;
+    -webkit-text-stroke-width: 0.3px;
+    opacity: 0.9;
   }
 }
 
@@ -95,8 +96,8 @@ width: 200px;
     background-color: rgba(180, 185, 190, 0.13);
     padding: 0.8vh 2vw;
     font-size: 12px;
-    font-family: 'Poppins',
-    sans-serif;
+   font-family: $primaryFont;
+    -webkit-text-stroke-width: 0.4px;
     color: #54595F;
 
     span {
@@ -217,11 +218,20 @@ width: 200px;
       flex-direction: column;
       gap: 10px;
       margin-bottom: 20px;
+      h5{
+        color: $black;
+        font-weight: bold;
+        font-family: $primaryFont;
+        span{
+          color: $purple;
+        }
+      }
       img{
         width: 100px;
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
+        margin-bottom: 10px;
       }
     }
 
@@ -231,7 +241,7 @@ width: 200px;
       flex-direction: column;
       justify-content: space-around;
       // align-items: center;
-      width: 70%;
+      width: 100%;
       height: 100%;
       border-right: 1px solid rgba(84, 89, 95, 0.11);
 
@@ -249,8 +259,8 @@ width: 200px;
       h5 {
         font-family: $primaryFont;
         font-size: 12px;
-        color: #5a6673;
-        font-weight: 500;
+        color: $black;
+        font-weight: bold;
 
         span {
           font-weight: bold;
@@ -476,21 +486,25 @@ width: 200px;
     .containerSocial {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      height: 100%;
 
       .headSocial {
+        border-bottom: solid 1px $border;
+        padding-bottom: 10px;
         h5 {
           font-family: $primaryFont;
           font-weight: bold;
-          font-size: 14px;
+          font-size: 16px;
           text-align: center;
         }
 
         p {
           margin-top: 15px;
-          color: #6b707780;
+          color: $black;
+          font-weight: bold;
           font-family: $primaryFont;
-          font-size: 12px;
-          text-align: left;
+          font-size: 13px;
         }
       }
 
@@ -499,8 +513,11 @@ width: 200px;
         display: flex;
         justify-content: space-between;
 
-        .socialImg {
+        .socialLinks{
+          width: 100%;
+        }
 
+        .socialImg {
           position: absolute;
           z-index: -1;
           right: 0px;
@@ -532,6 +549,16 @@ width: 200px;
     }
   }
 
+  .verifyBtn{
+    font-family: $primaryFont;
+    font-size: 11px;
+    text-decoration: underline;
+    font-weight: bold;
+    width: 80%;
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
   label {
     text-align: left;
     width: 80%;
@@ -541,6 +568,7 @@ width: 200px;
     font-family: $primaryFont;
     letter-spacing: -0.3px;
     .verify {
+      display: flex;
       cursor: pointer;
       font-size: 10px;
       text-decoration: underline;
@@ -655,7 +683,7 @@ width: 200px;
 
       svg {
         width: 25px;
-        color: #1C232B;
+        color: $black;
       }
 
       div {
@@ -672,7 +700,8 @@ width: 200px;
 
         .valueSetting {
           font-family: $primaryFont;
-          color: #5a6673;
+          color: $black;
+          -webkit-text-stroke-width: 0.5px;
           font-size: 12px;
         }
       }
@@ -745,6 +774,7 @@ width: 200px;
   border: solid 1px rgba(84, 89, 95, 0.09);
   background-color: white !important;
   color: #e94f37 !important;
+  -webkit-text-stroke-width: 0px!important;
   font-weight: bold;
 }
 
@@ -801,7 +831,8 @@ width: 200px;
 
 .deleteAccount {
   font-family: $primaryFont;
-  font-size: 11px;
+  font-size: 12px;
+  -webkit-text-stroke-width: 0.3px;
   padding: 5px 10px;
   color: #e04444 !important;
   margin-top: 0px;

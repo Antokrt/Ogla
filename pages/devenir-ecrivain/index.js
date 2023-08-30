@@ -735,7 +735,7 @@ const DevenirEcrivain = ({isWhitelistData}) => {
                             <br/>
                             Pour faire parti des premiers écrivains OGLA, vous pouvez nous contacter par <a
                                 href={'mailto:support@ogla.fr?subject=Candidature écrivain Ogla'}
-                                className={styles.email}>email</a> ou sur <a
+                                className={styles.email}>mail</a> ou sur <a
                                 className={styles.twitter} href={'https://twitter.com/elonmusk'} rel={'noreferrer'} target={'_blank'}>Twitter </a>
                         </p>
                     </div>
