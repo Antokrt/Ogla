@@ -42,7 +42,7 @@
 
   &:hover {
     transition: 0.2s;
-    filter: brightness(98%);
+    background-color: $grey;
   }
 
   display: flex;
