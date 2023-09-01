@@ -58,8 +58,8 @@ import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {
     activeLoading,
-    addComment, addFirstComment,
-    disableLoading,
+    addComment, addMyComments,
+    disableLoading, hasGetMyComments,
     incrPages,
     mountComment, removeAnErr,
     selectComments,
@@ -125,7 +125,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const [snippetTooBig, setSnippetTooBig] = useState(bookData?.summary?.length > 500);
     const [activeLinkPhone, setActiveLinkPhone] = useState('description');
     const infosComment = useSelector(selectInfosComment);
-
     const commentsReducer = useSelector(selectComments);
     const dispatch = useDispatch();
     useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary);
@@ -137,8 +136,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             localStorage.removeItem('openSidebar');
         }
     }, []);
-
-
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -168,32 +165,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch(() => console.log('err callback'));
     }, [chapterList]);
 
-    const GetCommentReducer = () => {
-        if (commentsReducer.length >= nbComments) {
-            return null;
-        }
-
-        activeLoading();
-
-        GetCommentService(type, activeId, pages, 5, session, activeFilter)
-            .then((res) => {
-                res.forEach(element => {
-                    if (!lastCommentId.includes(element._id)) {
-                        addCommentF(element);
-                    }
-                });
-                if (res.length !== 0) {
-                    incrPagesF();
-                    // setCanScroll(true);
-                } else {
-                    // setCanScroll(false);
-                }
-
-
-            })
-            .then(() => disableLoadingF())
-            .catch(() => activeErrF());
-    }
 
  /*   useEffect(() => {
 
@@ -314,9 +285,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                 getComment(pageComment);
                             }
                         }}
+
                         sendANewAnswer={(data) => sendAnswer(data)}
                         deleteAnswer={(id) => deleteAnswer(id)}
-                        authorImg={authorData?.img}
+                        authorImg={authorData.img}
                         likeAnswer={(id) => likeAnswer(id)}
                         newPageAnswer={(id) => loadMoreAnswer(id)}
                         type={'book'}
@@ -366,6 +338,16 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch((err) => console.log(err));
     };
 
+    const getMyCommentsReducer = (page, filter) => {
+        GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter)
+            .then((res) => {
+                if (res.length !== 0) {
+                    dispatch(addMyComments(res));
+                }
+            })
+            .catch((err) => dispatch(throwAnErr()));
+    };
+
     const getComment = () => {
         setLoadingScroll(true);
         setCanScroll(false);
@@ -390,25 +372,28 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch((err) => setErrCommentary(true))
     }
 
-    const getCommentReducer = (first) => {
+    const getCommentReducer = async () => {
+
 
         if (commentsReducer.length >= infosComment.nbComments) {
             return null;
         }
+
+        if(session && !infosComment.getMyComments){
+          await getMyCommentsReducer(1, infosComment.filter);
+         await dispatch(hasGetMyComments())
+        }
+
+
         dispatch(activeLoading());
         // setCanScroll(false);
-        GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.activeFilter)
+        GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.filter)
             .then((res) => {
-                if(first){
-                    dispatch(addFirstComment(res));
-                }
-                else {
                     res.forEach(element => {
                         if (!lastCommentId.includes(element._id)) {
                             dispatch(addComment(element));
                         }
                     });
-                }
                 if (res.length !== 0) {
                     dispatch(incrPages());
                     setCanScroll(true);
@@ -417,7 +402,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                 }
             })
             .then(() => dispatch(disableLoading()))
-            .then(() => console.log(commentsReducer.length))
             .catch((err) => dispatch(throwAnErr()));
     };
 
@@ -678,10 +662,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         }}
                         openCommentary={() => {
                             ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
-                            if(!infosComment.ready){
-                                getCommentReducer();
-                                dispatch(setReady());
-                            }
+                            if(commentsReducer.length <= 0) getCommentReducer();
                         }}
                     />
 

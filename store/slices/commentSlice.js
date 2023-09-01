@@ -17,6 +17,7 @@ const initialState = {
         pages:1,
         nbComments:null,
         err:false,
+        getMyComments:false,
         lastCommentId:[]
     },
     comments:[]
@@ -41,6 +42,8 @@ export const commentSlice = createSlice({
             state.infos.nbComments = data.nbComments;
         },
 
+
+
         activeLoading:(state) => {
           state.infos.loading = true;
         },
@@ -53,14 +56,26 @@ export const commentSlice = createSlice({
             state.infos.ready = true
         },
 
-        addFirstComment:(state,action) => {
-          state.comments = action.payload;
+        addMyComments:(state,action) => {
+            if(action.payload){
+                state.comments = action.payload.concat(state.comments);
+            }
+        },
+
+        hasGetMyComments:(state) => {
+          state.infos.getMyComments = true;
         },
 
         addComment: (state, action) => {
             if(action.payload){
                 state.comments.push(action.payload);
             }
+        },
+
+        cleanComments:(state,action) => {
+            state.infos.getMyComments = false;
+            state.infos.pages = 1;
+            state.comments = [];
         },
 
         incrPages:(state) => {
@@ -106,7 +121,7 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment,mountComment,activeLoading,disableLoading,addActiveId,setReady,incrPages,addFirstComment,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const {addComment, editComment,mountComment,activeLoading,disableLoading,addActiveId, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
 export const selectInfosComment = (state) => state.comments.infos;
 export const selectComments = (state) => state.comments.comments;
 

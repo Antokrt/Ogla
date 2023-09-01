@@ -8,7 +8,12 @@ import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
 import Commentary from "./Commentary/Commentary";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
-import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
+import {
+    DeleteCommentaryService,
+    GetCommentService,
+    GetMyCommentsService,
+    NewCommentaryService
+} from "../../service/Comment/CommentService";
 import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
@@ -23,17 +28,25 @@ import {ErrMsg} from "../ErrMsg";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 import {NewReportService} from "../../service/Report/ReportService";
 import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
-import {selectComments, selectInfosComment, setPopular, setRecent} from "../../store/slices/commentSlice";
+import {
+    activeLoading, addComment, addMyComments, cleanComments, disableLoading, hasGetMyComments, incrPages,
+    selectComments,
+    selectInfosComment,
+    setPopular,
+    setRecent, throwAnErr
+} from "../../store/slices/commentSlice";
 
 
 const NewSidebarCommentary = ({
-                                  errCommentary
+                                  errCommentary,
+    authorImg,
                               }) => {
     const router = useRouter();
     const [openConfirmModalForDeleteComment, setOpenConfirmModalForDeleteComment] = useState(false);
     const [openConfirmModalForDeleteAnswer, setOpenConfirmModalForDeleteAnswer] = useState(false);
     const [openConfirmModalForReportComment, setOpenConfirmModalForReportComment] = useState(false);
     const [openConfirmModalForReportAnswer, setOpenConfirmModalForReportAnswer] = useState(false);
+    const [visible,setVisible] = useState(true);
     const divRef = useRef(null);
     const [activeCommentaryToDelete, setActiveCommentaryToDelete] = useState({
         content: null,
@@ -59,9 +72,12 @@ const NewSidebarCommentary = ({
     const [width, height] = ScreenSize();
     const [newComment, setNewComment] = useState('');
     const infosComment = useSelector(selectInfosComment);
-    const {title, activeId, type, nbComments, loading, pages, filter, err} = infosComment;
+    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter, err} = infosComment;
     const {author} = infosComment.author;
     const commentsReducer = useSelector(selectComments);
+    const canSeeMore = useState(commentsReducer.length < nbComments);
+
+
 
 
 
@@ -136,6 +152,41 @@ const NewSidebarCommentary = ({
         }, 10)
     }
 
+    const getCommentReducer = async (filter,pages) => {
+
+        if (commentsReducer.length >= nbComments) {
+            return null;
+        }
+
+        dispatch(activeLoading());
+        // setCanScroll(false);
+        GetCommentService(infosComment.type, infosComment.activeId, pages, 5, session, filter)
+            .then((res) => {
+                res.forEach(element => {
+                    if (!lastCommentId.includes(element._id)) {
+                        dispatch(addComment(element));
+                    }
+                });
+                if (res.length !== 0) {
+                    dispatch(incrPages());
+                    // setCanScroll(true);
+                } else {
+                    // setCanScroll(false);
+                }
+            })
+            .then(() => dispatch(disableLoading()))
+            .catch((err) => dispatch(throwAnErr()));
+    };
+
+    const getMyCommentsReducer = (page, filter) => {
+        GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter)
+            .then((res) => {
+                if (res.length !== 0) {
+                   dispatch(addMyComments(res));
+                }
+            })
+            .catch((err) => dispatch(throwAnErr()));
+    };
 
     /*useEffect(() => {
         if (!errCommentary) {
@@ -157,9 +208,34 @@ const NewSidebarCommentary = ({
 
     }, [canScroll, loadingScroll]);*/
 
-    useEffect(() => {
-        console.log(commentsReducer);
-    },[commentsReducer])
+    const changeFilter =  (newFilter) => {
+        if(nbComments === 0){
+            if(newFilter === 'recent'){
+                dispatch(setRecent());
+            }
+            else {
+                dispatch(setPopular());
+            }
+            return null;
+        }
+        setVisible(false);
+         dispatch(activeLoading());
+        dispatch(cleanComments());
+
+        if(newFilter === 'recent'){
+             dispatch(setRecent())
+        }
+        else {
+             dispatch(setPopular());
+        }
+         dispatch(cleanComments());
+        if(session){
+            getMyCommentsReducer(1, newFilter);
+            dispatch(hasGetMyComments());
+        }
+         getCommentReducer(newFilter,1);
+        setTimeout(() => setVisible(true),500);
+    }
 
     if (err) {
         return (
@@ -175,9 +251,9 @@ const NewSidebarCommentary = ({
 
                     <div>
                         <p
-                            className={filter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                            className={filter === 'popular' ? styles.filterActive : ''}>Populaires</p>
                         <p
-                            className={filter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                            className={filter === 'recent' ? styles.filterActive : ''}>Récents</p>
                     </div>
                 </div>
 
@@ -191,6 +267,9 @@ const NewSidebarCommentary = ({
         )
     } else return (
         <div className={styles.container}>
+            {
+                infosComment.getMyComments ? <p>hasMyComments : true</p> : <p> false</p>
+            }
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
                 <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
@@ -200,11 +279,11 @@ const NewSidebarCommentary = ({
 
 
                 <div>
-                    <p onClick={() => filter === 'recent' ? dispatch(setPopular()) : null}
-                       className={filter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                    <p onClick={() => filter === 'recent' ? changeFilter('popular') : null}
+                       className={filter === 'popular' ? styles.filterActive : ''}>Populaires</p>
 
-                    <p onClick={() => filter === 'popular' ? dispatch(setRecent()) : null}
-                       className={filter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                    <p onClick={() => filter === 'popular' ? changeFilter('recent') : null}
+                       className={filter === 'recent' ? styles.filterActive : ''}>Récents</p>
                 </div>
             </div>
 
@@ -221,14 +300,12 @@ const NewSidebarCommentary = ({
                 }
 
 
-
-               {/* {
-                    commentsReducer && commentsReducer.length > 0 &&
-
-                    commentsReducer.map((item, index) => {
-
+                {
+                    commentsReducer && commentsReducer.length > 0 && visible &&
+                    commentsReducer.map((item,index)=> {
                         return (
                             <Fragment key={item._id}>
+
                                 <Commentary
                                     seeMoreAnswers={item.seeMoreAnswers}
                                     id={item._id}
@@ -290,17 +367,8 @@ const NewSidebarCommentary = ({
                                     pseudo={item.pseudo}
                                     answers={item.answers}
                                 />
+
                             </Fragment>
-
-
-                        )
-                    })
-                }*/}
-
-                {
-                    commentsReducer.map((item,index) => {
-                        return (
-                            <p>{item?.content}</p>
                         )
                     })
                 }
@@ -358,6 +426,11 @@ const NewSidebarCommentary = ({
                 {
                     loading && commentsReducer.length >= 1 &&
                     <div className={styles.loaderContainer}><LoaderCommentary/></div>
+                }
+
+                {
+                    commentsReducer.length < nbComments &&
+                    <button onClick={() => getCommentReducer(filter,pages)}>Voir plus</button>
                 }
 
                 <div
