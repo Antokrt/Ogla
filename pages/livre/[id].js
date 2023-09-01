@@ -58,7 +58,7 @@ import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {
     activeLoading,
-    addComment, addMyComments,
+    addComment, addMyComments, cleanComments, cleanInfos,
     disableLoading, hasGetMyComments,
     incrPages,
     mountComment, removeAnErr,
@@ -135,7 +135,13 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
         }
+        return () => {
+            dispatch(cleanInfos());
+            dispatch(cleanComments());
+        }
     }, []);
+
+
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -338,14 +344,16 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch((err) => console.log(err));
     };
 
-    const getMyCommentsReducer = (page, filter) => {
-        GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter)
-            .then((res) => {
-                if (res.length !== 0) {
-                    dispatch(addMyComments(res));
-                }
-            })
-            .catch((err) => dispatch(throwAnErr()));
+    const getMyCommentsReducer = async (page, filter) => {
+        try {
+            const res = await GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter);
+
+            if (res.length !== 0) {
+                dispatch(addMyComments(res));
+            }
+        } catch (error) {
+            dispatch(throwAnErr());
+        }
     };
 
     const getComment = () => {
@@ -373,37 +381,41 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     }
 
     const getCommentReducer = async () => {
+        try {
+            if (commentsReducer.length >= infosComment.nbComments) {
+                return null;
+            }
 
+            if (session && !infosComment.getMyComments) {
+                await getMyCommentsReducer(1, infosComment.filter);
+                await dispatch(hasGetMyComments());
+            }
 
-        if (commentsReducer.length >= infosComment.nbComments) {
-            return null;
-        }
+            dispatch(activeLoading());
+            // setCanScroll(false);
 
-        if(session && !infosComment.getMyComments){
-          await getMyCommentsReducer(1, infosComment.filter);
-         await dispatch(hasGetMyComments())
-        }
+            const res = await GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.filter);
 
-
-        dispatch(activeLoading());
-        // setCanScroll(false);
-        GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.filter)
-            .then((res) => {
-                    res.forEach(element => {
-                        if (!lastCommentId.includes(element._id)) {
-                            dispatch(addComment(element));
-                        }
-                    });
-                if (res.length !== 0) {
-                    dispatch(incrPages());
-                    setCanScroll(true);
-                } else {
-                    setCanScroll(false);
+            res.forEach(element => {
+                if (!lastCommentId.includes(element._id)) {
+                    dispatch(addComment(element));
                 }
-            })
-            .then(() => dispatch(disableLoading()))
-            .catch((err) => dispatch(throwAnErr()));
+            });
+
+            if (res.length !== 0) {
+                dispatch(incrPages());
+                setCanScroll(true);
+            } else {
+                setCanScroll(false);
+            }
+
+            dispatch(disableLoading());
+        } catch (error) {
+            // Gérer les erreurs ici (vous pouvez ajouter une fonction de gestion d'erreur appropriée)
+            dispatch(throwAnErr());
+        }
     };
+
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
         setLoadingScrollChapterList(true);

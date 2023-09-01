@@ -42,7 +42,9 @@ export const commentSlice = createSlice({
             state.infos.nbComments = data.nbComments;
         },
 
-
+        cleanInfos: (state) => {
+            state.infos = initialState.infos;
+        },
 
         activeLoading:(state) => {
           state.infos.loading = true;
@@ -121,7 +123,7 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment,mountComment,activeLoading,disableLoading,addActiveId, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const {addComment, editComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
 export const selectInfosComment = (state) => state.comments.infos;
 export const selectComments = (state) => state.comments.comments;
 

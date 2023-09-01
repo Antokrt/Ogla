@@ -152,41 +152,48 @@ const NewSidebarCommentary = ({
         }, 10)
     }
 
-    const getCommentReducer = async (filter,pages) => {
+    const getCommentReducer = async (filter, pages) => {
+        try {
+            if (commentsReducer.length >= nbComments) {
+                return;
+            }
 
-        if (commentsReducer.length >= nbComments) {
-            return null;
-        }
+            const res = await GetCommentService(infosComment.type, infosComment.activeId, pages, 5, session, filter);
 
-        dispatch(activeLoading());
-        // setCanScroll(false);
-        GetCommentService(infosComment.type, infosComment.activeId, pages, 5, session, filter)
-            .then((res) => {
-                res.forEach(element => {
-                    if (!lastCommentId.includes(element._id)) {
-                        dispatch(addComment(element));
-                    }
-                });
-                if (res.length !== 0) {
-                    dispatch(incrPages());
-                    // setCanScroll(true);
-                } else {
-                    // setCanScroll(false);
+
+            res.forEach(element => {
+                if (!lastCommentId.includes(element._id)) {
+                    dispatch(addComment(element));
                 }
-            })
-            .then(() => dispatch(disableLoading()))
-            .catch((err) => dispatch(throwAnErr()));
+            });
+
+            if (res.length !== 0) {
+                dispatch(incrPages());
+            }
+
+            return;
+        } catch (error) {
+            throw error;
+        }
     };
 
     const getMyCommentsReducer = (page, filter) => {
-        GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter)
-            .then((res) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter);
+
                 if (res.length !== 0) {
-                   dispatch(addMyComments(res));
+                    dispatch(addMyComments(res));
                 }
-            })
-            .catch((err) => dispatch(throwAnErr()));
+
+                dispatch(hasGetMyComments());
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
     };
+
 
     /*useEffect(() => {
         if (!errCommentary) {
@@ -208,34 +215,54 @@ const NewSidebarCommentary = ({
 
     }, [canScroll, loadingScroll]);*/
 
-    const changeFilter =  (newFilter) => {
-        if(nbComments === 0){
-            if(newFilter === 'recent'){
-                dispatch(setRecent());
+    const changeFilter = async (newFilter) => {
+        try {
+            if (nbComments === 0) {
+                if (newFilter === 'recent') {
+                    dispatch(setRecent());
+                } else {
+                    dispatch(setPopular());
+                }
+                return null;
             }
-            else {
+
+            // Masquer le contenu
+            setVisible(false);
+
+            // Activer le chargement
+            dispatch(activeLoading());
+
+            // Nettoyer les commentaires
+            dispatch(cleanComments());
+
+            // Sélectionner le filtre approprié
+            if (newFilter === 'recent') {
+                dispatch(setRecent());
+            } else {
                 dispatch(setPopular());
             }
-            return null;
-        }
-        setVisible(false);
-         dispatch(activeLoading());
-        dispatch(cleanComments());
 
-        if(newFilter === 'recent'){
-             dispatch(setRecent())
+            // Nettoyer les commentaires à nouveau
+            dispatch(cleanComments());
+
+            // Si une session est active, obtenir les commentaires de l'utilisateur
+            if (session) {
+                await getMyCommentsReducer(1, newFilter);
+            }
+
+            // Obtenir les commentaires en fonction du filtre
+            await getCommentReducer(newFilter, 1);
+
+            // Rétablir la visibilité après un délai de 500 ms
+            setTimeout(() => {
+                setVisible(true);
+                dispatch(disableLoading());
+            }, 500);
+        } catch (error) {
+            // Gérer les erreurs ici (vous pouvez ajouter une fonction de gestion d'erreur appropriée)
+            dispatch(throwAnErr(error));
         }
-        else {
-             dispatch(setPopular());
-        }
-         dispatch(cleanComments());
-        if(session){
-            getMyCommentsReducer(1, newFilter);
-            dispatch(hasGetMyComments());
-        }
-         getCommentReducer(newFilter,1);
-        setTimeout(() => setVisible(true),500);
-    }
+    };
 
     if (err) {
         return (
@@ -267,16 +294,13 @@ const NewSidebarCommentary = ({
         )
     } else return (
         <div className={styles.container}>
-            {
-                infosComment.getMyComments ? <p>hasMyComments : true</p> : <p> false</p>
-            }
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
                 <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
             </div>
             <div className={styles.titleSection}>
                 <h5><span>{nbComments}</span> commentaires</h5>
-
+                <p>{infosComment.loading ? <span>Loading true</span> : <span>loading false</span>}</p>
 
                 <div>
                     <p onClick={() => filter === 'recent' ? changeFilter('popular') : null}
@@ -424,12 +448,12 @@ const NewSidebarCommentary = ({
                     }
                 </div>
                 {
-                    loading && commentsReducer.length >= 1 &&
+                    infosComment.loading && commentsReducer.length >= 1 &&
                     <div className={styles.loaderContainer}><LoaderCommentary/></div>
                 }
 
                 {
-                    commentsReducer.length < nbComments &&
+                    commentsReducer.length < nbComments && !loading &&
                     <button onClick={() => getCommentReducer(filter,pages)}>Voir plus</button>
                 }
 
