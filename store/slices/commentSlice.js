@@ -16,9 +16,12 @@ const initialState = {
         loading:false,
         pages:1,
         nbComments:null,
-        err:false,
         getMyComments:false,
-        lastCommentId:[]
+        lastCommentId:[],
+    },
+    err:{
+        err:false,
+        msg:null
     },
     comments:[]
 };
@@ -74,6 +77,11 @@ export const commentSlice = createSlice({
             }
         },
 
+        deleteMyComment:(state,action) => {
+            const id = action.payload;
+            state.comments = state.comments.filter((comment) => comment._id !== id);
+        },
+
         cleanComments:(state,action) => {
             state.infos.getMyComments = false;
             state.infos.pages = 1;
@@ -96,12 +104,17 @@ export const commentSlice = createSlice({
             state.infos.filter = 'recent'
         },
 
-        throwAnErr:(state) => {
-            state.infos.err = true;
+        throwAnErr:(state,action) => {
+            const msg = action.payload;
+            state.err.err = true;
+            if(msg){
+                state.err.msg = msg;
+            }
         },
 
         removeAnErr:(state) => {
-            state.infos.err = false;
+            state.err.err = false;
+            state.err.msg = null;
         },
 
         editComment: (state, action) => {
@@ -123,8 +136,9 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const {addComment, editComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, deleteMyComment, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
 export const selectInfosComment = (state) => state.comments.infos;
 export const selectComments = (state) => state.comments.comments;
+export const selectErrComments = (state) => state.comments.err;
 
 export default commentSlice.reducer;

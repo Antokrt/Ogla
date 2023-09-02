@@ -537,7 +537,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
                     <button onClick={() => getCommentReducer()}>Get comment</button>
                 <button onClick={() => dispatch(setRecent())}>change filter</button>
-                <button onClick={() => dispatch(throwAnErr())}>Make an err</button>
+                <button onClick={() => dispatch(throwAnErr('Err perso'))}>Make an err</button>
                 <button onClick={() => dispatch(removeAnErr())}>Remove the err</button>
                 <p>{infosComment.filter}</p>
                     <p>{infosComment.title}</p>

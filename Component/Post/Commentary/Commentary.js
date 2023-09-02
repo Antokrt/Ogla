@@ -22,6 +22,7 @@ import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
+import {deleteMyComment, throwAnErr} from "../../../store/slices/commentSlice";
 
 const Commentary = ({
                         pseudo,
@@ -99,6 +100,14 @@ const Commentary = ({
 
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
+    const newDeleteComment = () => {
+        DeleteCommentaryService(id)
+            .then(() => {
+                dispatch(deleteMyComment(id))
+            })
+            .catch(() => dispatch(throwAnErr()));
+    }
+
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
@@ -124,7 +133,7 @@ const Commentary = ({
                             <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                                 {
                                     session && authorId === session?.user?.id &&
-                                    <button onClick={() => deleteComment()}> Supprimer <TrashIcon/> </button>
+                                    <button onClick={() => newDeleteComment()}> Supprimer <TrashIcon/> </button>
                                 }
 
                                 {

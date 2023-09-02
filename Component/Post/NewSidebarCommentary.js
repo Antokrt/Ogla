@@ -30,7 +30,7 @@ import {NewReportService} from "../../service/Report/ReportService";
 import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
 import {
     activeLoading, addComment, addMyComments, cleanComments, disableLoading, hasGetMyComments, incrPages,
-    selectComments,
+    selectComments, selectErrComments,
     selectInfosComment,
     setPopular,
     setRecent, throwAnErr
@@ -72,7 +72,8 @@ const NewSidebarCommentary = ({
     const [width, height] = ScreenSize();
     const [newComment, setNewComment] = useState('');
     const infosComment = useSelector(selectInfosComment);
-    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter, err} = infosComment;
+    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter} = infosComment;
+    const errComments = useSelector(selectErrComments);
     const {author} = infosComment.author;
     const commentsReducer = useSelector(selectComments);
     const canSeeMore = useState(commentsReducer.length < nbComments);
@@ -194,6 +195,17 @@ const NewSidebarCommentary = ({
         });
     };
 
+    const sendNewComment = () => {
+        NewCommentaryService(infosComment.activeId, newComment, type)
+            .then((res) => {
+                res.answersPage = 1;
+                dispatch(addMyComments([res]));
+                setNewComment('');
+            })
+            .then(() => scrollToTop())
+            .catch((err) => console.log(err));
+    }
+
 
     /*useEffect(() => {
         if (!errCommentary) {
@@ -264,7 +276,7 @@ const NewSidebarCommentary = ({
         }
     };
 
-    if (err) {
+    if (errComments.err) {
         return (
             <div className={styles.container}>
 
@@ -286,7 +298,11 @@ const NewSidebarCommentary = ({
 
                 <div className={styles.errContainer}>
                     <h4>Erreur</h4>
-                    <p>Impossible de récupérer les commentaires.</p>
+                    {
+                        errComments.msg !== null ?
+                            <p>{errComments.msg}</p> :
+                            <p>Impossible de récupérer les commentaires.</p>
+                    }
                 </div>
 
 
@@ -460,6 +476,7 @@ const NewSidebarCommentary = ({
                 <div
                     onClick={() => {
                         if (newComment !== "") {
+                            sendNewComment();
                         }
                     }}
                     className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
