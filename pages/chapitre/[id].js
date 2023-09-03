@@ -24,7 +24,7 @@ import { DeleteAnswerReduce, LikeAnswerReduce, LikeCommentReduce, SendAnswerRedu
 import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
 import {Capitalize, ReduceString} from "../../utils/String";
 import { setActiveModalState } from "../../store/slices/modalSlice";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { AddViewToChapterApi } from "../api/book";
 import {ErrMsg} from "../../Component/ErrMsg";
 import { SendNotifService} from "../../service/Notifications/NotificationsService";
@@ -44,6 +44,8 @@ import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError} from "../../util
 import Head from "next/head";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import useMountComment from "../../utils/hook/MountComment";
+import {selectInfosComment} from "../../store/slices/commentSlice";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -117,6 +119,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
     const orientation = useOrientation();
+    const infosComment = useSelector(selectInfosComment);
+    useMountComment(chapterData._id,chapterData.title,authorData,'chapter',chapterData.nbCommentary);
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
@@ -570,6 +574,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                 checkSide()
             }
 
+            <p>{infosComment.title} - {infosComment.activeId} - {infosComment.type}</p>
 
 
 

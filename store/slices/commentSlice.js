@@ -2,16 +2,24 @@ import {createSlice} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
 
 const initialState = {
-    test: [
-        {
-            comment: 'Gojo looks nice. Excellent work amigo!',
-            username: 'Saitama',
+    infos:{
+        activeId:null,
+        title:null,
+        author: {
+            pseudo:null,
+            provider:null,
+            img:null,
         },
-        {
-            comment: 'Catoru Sensei! Konnichiwa!',
-            username: 'Yuji',
-        },
-    ],
+        type:null,
+        filter:'popular',
+        ready:false,
+        loading:false,
+        pages:1,
+        nbComments:null,
+        err:false,
+        lastCommentId:[]
+    },
+    comments:[]
 };
 
 
@@ -19,9 +27,66 @@ export const commentSlice = createSlice({
     name: 'comments',
     initialState,
     reducers: {
-        addComment: (state, action) => {
-            state.test = [...state.test, action.payload];
+        addActiveId: (state,action) => {
+          state.activeId = action.payload;
         },
+
+        mountComment:(state,action) => {
+            const data = {...action.payload};
+            state.infos.activeId = data.activeId;
+            state.infos.title = data.title;
+            state.infos.author = data.author;
+            state.infos.type = data.type;
+            state.infos.loading = false;
+            state.infos.nbComments = data.nbComments;
+        },
+
+        activeLoading:(state) => {
+          state.infos.loading = true;
+        },
+
+        disableLoading:(state) => {
+            state.infos.loading = false
+        },
+
+        setReady:(state) => {
+            state.infos.ready = true
+        },
+
+        addFirstComment:(state,action) => {
+          state.comments = action.payload;
+        },
+
+        addComment: (state, action) => {
+            if(action.payload){
+                state.comments.push(action.payload);
+            }
+        },
+
+        incrPages:(state) => {
+            state.infos.pages += 1;
+        },
+
+        changePages: (state,action) => {
+            state.infos.pages = action.payload;
+        },
+
+        setPopular: (state) => {
+            state.infos.filter = 'popular'
+        },
+
+        setRecent:(state) => {
+            state.infos.filter = 'recent'
+        },
+
+        throwAnErr:(state) => {
+            state.infos.err = true;
+        },
+
+        removeAnErr:(state) => {
+            state.infos.err = false;
+        },
+
         editComment: (state, action) => {
             const {username, comment} = action.payload;
             const index = state.test.findIndex(item => item.username === username);
@@ -41,6 +106,8 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment} = commentSlice.actions;
-export const selectComments = (state) => state.comments.test;
+export const {addComment, editComment,mountComment,activeLoading,disableLoading,addActiveId,setReady,incrPages,addFirstComment,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const selectInfosComment = (state) => state.comments.infos;
+export const selectComments = (state) => state.comments.comments;
+
 export default commentSlice.reducer;
