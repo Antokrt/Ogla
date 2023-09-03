@@ -16,7 +16,7 @@ import { LogoutService } from "../service/User/Account.service";
 import { HeadPhoneBtn, HeadPhoneBtnHeader } from "./layouts/Btn/ActionBtn";
 import { selectNotifStatus, selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
 import { openAll, OpenAllService } from "../service/Notifications/NotificationsService";
-import DarkLight from "./layouts/Btn/DarkLight";
+import {DarkLight} from "./layouts/Btn/DarkLight";
 import { changeTheme, selectTheme } from "../store/slices/themeSlice";
 import { setActiveModalState } from "../store/slices/modalSlice";
 import { BellAlertIcon } from "@heroicons/react/24/solid";
