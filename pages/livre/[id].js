@@ -172,6 +172,10 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     }, [chapterList]);
 
 
+    useEffect(() => {
+        console.log(commentsReducer)
+    },[commentsReducer])
+
  /*   useEffect(() => {
 
         if (commentsReducer.length === 0) {

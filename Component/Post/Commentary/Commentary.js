@@ -22,7 +22,7 @@ import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
-import {deleteMyComment, throwAnErr} from "../../../store/slices/commentSlice";
+import {deleteMyComment, likeAComment, throwAnErr} from "../../../store/slices/commentSlice";
 
 const Commentary = ({
                         pseudo,
@@ -108,6 +108,11 @@ const Commentary = ({
             .catch(() => dispatch(throwAnErr()));
     }
 
+    const newLikeComment = () => {
+        LikeService('comment', id)
+            .then(() => dispatch(likeAComment(id)))
+            .catch((err) => console.log(err));
+    }
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
@@ -177,7 +182,7 @@ const Commentary = ({
                     <div className={styles.likeCommentaryContainer}>
                         <div className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
                             if (session) {
-                                likeComment(id);
+                                newLikeComment();
                             } else {
                                 dispatch(setActiveModalState(true))
                             }

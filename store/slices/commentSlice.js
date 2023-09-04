@@ -77,6 +77,21 @@ export const commentSlice = createSlice({
             }
         },
 
+        likeAComment:(state,action) => {
+            const commentId = action.payload;
+            state.comments.forEach((item) => {
+                if(commentId === item._id){
+                    if(item.hasLike){
+                        item.likes = item.likes - 1;
+                    }
+                    else {
+                        item.likes += 1;
+                    }
+                    item.hasLike = !item.hasLike;
+                }
+            })
+        },
+
         deleteMyComment:(state,action) => {
             const id = action.payload;
             state.comments = state.comments.filter((comment) => comment._id !== id);
@@ -136,7 +151,7 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, deleteMyComment, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const {addComment, editComment,likeAComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, deleteMyComment, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
 export const selectInfosComment = (state) => state.comments.infos;
 export const selectComments = (state) => state.comments.comments;
 export const selectErrComments = (state) => state.comments.err;
