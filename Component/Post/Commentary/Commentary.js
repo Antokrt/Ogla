@@ -23,14 +23,17 @@ import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
 import {
+    addAnswer,
     deleteMyComment, getMoreAnswers,
     likeAComment,
     selectAnswers,
     selectAnswersPage,
     throwAnErr
 } from "../../../store/slices/commentSlice";
-import {GetAnswerByCommentService} from "../../../service/Answer/AnswerService";
+import {GetAnswerByCommentService, NewAnswerService} from "../../../service/Answer/AnswerService";
 import {LoaderCommentary} from "../../layouts/Loader";
+import {SendAnswerReduce} from "../../../utils/CommentaryUtils";
+import {SendNotifService} from "../../../service/Notifications/NotificationsService";
 
 const Commentary = ({
                         pseudo,
@@ -138,6 +141,26 @@ const Commentary = ({
                     setLoading(false);
                 })
     }
+
+
+    const sendAanswer = (data) => {
+      NewAnswerService(data.id, data.content, session)
+            .then((res) => dispatch(addAnswer({commentId: id, data:res.data})))
+            .catch((err) => throwAnErr(true));
+    }
+
+    /*const sendAnswer = (data) => {
+        setComments(SendAnswerReduce(comments, data.target_id, data));
+        comments.forEach((elem) => {
+            if (elem._id === data.target_id) {
+                if (authorData._id != session.user.id)
+                    SendNotifService(elem.userId, 20, bookData._id, "null")
+                else
+                    SendNotifService(elem.userId, 21, bookData._id, "null")
+                return;
+            }
+        })
+    };*/
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
@@ -266,7 +289,7 @@ const Commentary = ({
                                                         id, content: newAnswer
                                                     }
                                                     e.preventDefault();
-                                                    sendNewAnswer(data);
+                                                    sendAanswer(data);
                                                     setNewAnswer('');
                                                 }
                                             }}
@@ -289,7 +312,7 @@ const Commentary = ({
                                             const data = {
                                                 id, content: newAnswer
                                             }
-                                            sendNewAnswer(data);
+                                            sendAanswer(data);
                                             setNewAnswer('');
                                         }
                                     }
@@ -309,6 +332,7 @@ const Commentary = ({
                                                         id={item._id}
                                                         authorId={item.userId}
                                                         img={item.img}
+                                                        commentId={id}
                                                         pseudo={item.pseudo}
                                                         date={item.date_creation}
                                                         likes={item.likes}
