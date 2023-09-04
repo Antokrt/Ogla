@@ -332,7 +332,8 @@ background-color: #9844AD!important;
   button{
     color: #9844AD;
     font-size: 11px;
-    font-family: 'Montserrat',sans-serif;
+    font-family: $primaryFont;
+    font-weight: bold;
   }
 }
 

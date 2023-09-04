@@ -77,6 +77,24 @@ export const commentSlice = createSlice({
             }
         },
 
+        getMoreAnswers : (state,action) => {
+          if(action.payload){
+              const commentId = action.payload.commentId;
+              const answersToAdd = action.payload.answers;
+              const commentToSelect = state.comments.find((comment) => comment._id === commentId);
+              if(answersToAdd.length === 0){
+                  commentToSelect.seeMoreAnswers = false;
+              }
+              else {
+                  commentToSelect.answers = commentToSelect.answers.concat(answersToAdd);
+                  commentToSelect.answersPage += 1;
+              }
+          }
+          else{
+              return null;
+          }
+        },
+
         likeAComment:(state,action) => {
             const commentId = action.payload;
             state.comments.forEach((item) => {
@@ -151,9 +169,17 @@ export const commentSlice = createSlice({
     // }
 })
 
-export const {addComment, editComment,likeAComment,mountComment,activeLoading,disableLoading,cleanInfos,addActiveId, deleteMyComment, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
+export const {addComment, editComment,likeAComment,mountComment,activeLoading,getMoreAnswers,disableLoading,cleanInfos,addActiveId, deleteMyComment, cleanComments,addMyComments, hasGetMyComments,setReady,incrPages,changePages,throwAnErr,removeAnErr,setPopular,setRecent} = commentSlice.actions;
 export const selectInfosComment = (state) => state.comments.infos;
 export const selectComments = (state) => state.comments.comments;
+export const selectAnswers = (state,commentId) => {
+    const commentToSelect = state.comments.comments.find(comment => commentId === comment._id);
+    return commentToSelect.answers;
+};
+export const selectAnswersPage = (state,commentId) => {
+    const commentToSelect = state.comments.comments.find(comment => commentId === comment._id);
+    return commentToSelect.answersPage;
+}
 export const selectErrComments = (state) => state.comments.err;
 
 export default commentSlice.reducer;

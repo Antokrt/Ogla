@@ -22,7 +22,15 @@ import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
-import {deleteMyComment, likeAComment, throwAnErr} from "../../../store/slices/commentSlice";
+import {
+    deleteMyComment, getMoreAnswers,
+    likeAComment,
+    selectAnswers,
+    selectAnswersPage,
+    throwAnErr
+} from "../../../store/slices/commentSlice";
+import {GetAnswerByCommentService} from "../../../service/Answer/AnswerService";
+import {LoaderCommentary} from "../../layouts/Loader";
 
 const Commentary = ({
                         pseudo,
@@ -55,11 +63,14 @@ const Commentary = ({
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList, setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
-    const [page, setPage] = useState(answerPage)
+    const [page, setPage] = useState(answerPage);
+    const [loading,setLoading] = useState(false);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [openModalChoice, setOpenModalChoice] = useState(false);
     const {data: session} = useSession();
     const modalState = useSelector(selectLoginModalStatus);
+    const answersReducer = useSelector(state => selectAnswers(state,id));
+    const answersPage = useSelector(state => selectAnswersPage(state,id));
     const contentDotRef = useRef(null);
     const dotRef = useRef(null);
     const dispatch = useDispatch();
@@ -98,6 +109,7 @@ const Commentary = ({
         }, [ref, btnRef,onClickOutside]);
     }
 
+
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
     const newDeleteComment = () => {
@@ -112,6 +124,19 @@ const Commentary = ({
         LikeService('comment', id)
             .then(() => dispatch(likeAComment(id)))
             .catch((err) => console.log(err));
+    }
+
+    const loadMoreAnswers = () => {
+        setLoading(true);
+            GetAnswerByCommentService(id, answersPage, 1, session)
+                .then((res) => {
+                    dispatch(getMoreAnswers({commentId:id,answers:res.data}));
+                })
+                .then(() => setLoading(false))
+                .catch(() => {
+                    throwAnErr(true, 'Impossible de récupérer les réponses.');
+                    setLoading(false);
+                })
     }
 
     return (
@@ -156,7 +181,7 @@ const Commentary = ({
 
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo} <span>{FormatDateFrom(date)}</span></h8>
-
+                        <h8>{answersPage}</h8>
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
@@ -273,7 +298,7 @@ const Commentary = ({
                                 </div>
                                 <div className={styles.listReply}>
                                     {
-                                        answersList?.map((item, index) => {
+                                        answersReducer?.map((item, index) => {
                                             return (
                                                 <Fragment key={item._id}>
                                                     <SubCommentary
@@ -296,12 +321,15 @@ const Commentary = ({
                                     }
 
                                     {
-                                        seeMoreAnswers &&
+                                        seeMoreAnswers && nbAnswers > answersReducer.length &&
                                         <div className={styles.getMoreBtn}>
-                                            <button onClick={() => newAnswerPage(id)}>Voir plus</button>
+                                            {
+                                                !loading ?
+                                                    <button onClick={() => loadMoreAnswers()}>Voir plus</button> :
+                                                    <LoaderCommentary/>
+                                            }
                                         </div>
                                     }
-
 
                                 </div>
 
