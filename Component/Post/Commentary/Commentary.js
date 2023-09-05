@@ -23,6 +23,8 @@ import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
 import {
+    activeDeleteModal,
+    activeReportModal,
     addAnswer,
     deleteMyComment, getMoreAnswers,
     likeAComment,
@@ -34,6 +36,7 @@ import {GetAnswerByCommentService, NewAnswerService} from "../../../service/Answ
 import {LoaderCommentary} from "../../layouts/Loader";
 import {SendAnswerReduce} from "../../../utils/CommentaryUtils";
 import {SendNotifService} from "../../../service/Notifications/NotificationsService";
+import {ReduceString} from "../../../utils/String";
 
 const Commentary = ({
                         pseudo,
@@ -115,13 +118,7 @@ const Commentary = ({
 
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
-    const newDeleteComment = () => {
-        DeleteCommentaryService(id)
-            .then(() => {
-                dispatch(deleteMyComment(id))
-            })
-            .catch(() => dispatch(throwAnErr()));
-    }
+
 
     const newLikeComment = () => {
         LikeService('comment', id)
@@ -186,7 +183,7 @@ const Commentary = ({
                             <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                                 {
                                     session && authorId === session?.user?.id &&
-                                    <button onClick={() => newDeleteComment()}> Supprimer <TrashIcon/> </button>
+                                    <button onClick={() => dispatch(activeDeleteModal({type:'comment',id,content}))}> Supprimer <TrashIcon/> </button>
                                 }
 
                                 {
@@ -196,7 +193,7 @@ const Commentary = ({
                                         }}> Signaler <FlagIcon/></button>
                                         :
                                       authorId !== session?.user?.id &&
-                                    <button onClick={() => reportComment()}> Signaler <FlagIcon/></button>
+                                    <button onClick={() => dispatch(activeReportModal({type:'comment',id,content}))}> Signaler <FlagIcon/></button>
                                 }
                             </div>
                         }
@@ -204,7 +201,6 @@ const Commentary = ({
 
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo} <span>{FormatDateFrom(date)}</span></h8>
-                        <h8>{answersPage}</h8>
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}

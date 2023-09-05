@@ -12,7 +12,8 @@ import {useDispatch} from "react-redux";
 import {LikeAnswerReduce} from "../../../utils/CommentaryUtils";
 import {LikeService} from "../../../service/Like/LikeService";
 import {SendNotifService} from "../../../service/Notifications/NotificationsService";
-import {likeOneAnswer, throwAnErr} from "../../../store/slices/commentSlice";
+import {activeReportModal, deleteMyAnswer, likeOneAnswer, throwAnErr} from "../../../store/slices/commentSlice";
+import {DeleteAnswerService} from "../../../service/Answer/AnswerService";
 const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswer, reportAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers}) => {
 
     const [sizeCommentary,setSizeCommentary] = useState(content?.length);
@@ -73,8 +74,15 @@ const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswe
 
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
-
-
+    const deleteAanswer = () => {
+        DeleteAnswerService(id, session)
+            .then(() => dispatch(deleteMyAnswer({commentId,answerId:id})))
+            .then(() => {
+                setActiveAnswersToDelete({id: null, content: null})
+                setOpenConfirmModalForDeleteAnswer(false);
+            })
+            .catch((err) => console.log(err))
+    }
 
 return (
     <div className={styles.container + ' ' + anim.fadeIn}>
@@ -106,14 +114,14 @@ return (
                         <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                             {
                                 session && authorId === session?.user?.id &&
-                                <button onClick={() => deleteAnswer(id)}> Supprimer <TrashIcon/> </button>
+                                <button onClick={() => deleteAanswer()}> Supprimer <TrashIcon/> </button>
                             }
 
                             {
                                 !session ?
                                     <button onClick={() => dispatch(setActiveModalState(true))}> Signaler <FlagIcon/></button> :
                                         authorId !== session?.user?.id &&
-                                    <button onClick={() => reportAnswer()}> Signaler <FlagIcon/></button>
+                                    <button onClick={() => dispatch(activeReportModal({type:'answer',id,content}))}> Signaler <FlagIcon/></button>
                             }
                         </div>
                     }

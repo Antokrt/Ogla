@@ -86,7 +86,7 @@
         transition: 0.2s;
       }
 
-      transition: 0.2s;
+      transition: 0.2s!important;
       background-color: $black;
       color: white;
       font-family: $primaryFont;
@@ -333,6 +333,7 @@
         transition: 0.2s;
       }
 
+      transition: 0.2s;
       background-color: $black;
       color: white;
       font-family: $primaryFont;

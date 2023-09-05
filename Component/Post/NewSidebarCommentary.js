@@ -29,24 +29,35 @@ import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 import {NewReportService} from "../../service/Report/ReportService";
 import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
 import {
-    activeLoading, addComment, addMyComments, cleanComments, disableLoading, hasGetMyComments, incrPages,
-    selectComments, selectErrComments,
+    activeLoading,
+    addComment,
+    addMyComments,
+    cleanComments, deleteMyComment, disableDeleteModal,
+    disableLoading,
+    disableModalReport,
+    hasGetMyComments,
+    incrPages,
+    selectComments,
+    selectDeleteModal,
+    selectErrComments,
     selectInfosComment,
+    selectReportModal,
     setPopular,
-    setRecent, throwAnErr
+    setRecent,
+    throwAnErr
 } from "../../store/slices/commentSlice";
 
 
 const NewSidebarCommentary = ({
                                   errCommentary,
-    authorImg,
+                                  authorImg,
                               }) => {
     const router = useRouter();
     const [openConfirmModalForDeleteComment, setOpenConfirmModalForDeleteComment] = useState(false);
     const [openConfirmModalForDeleteAnswer, setOpenConfirmModalForDeleteAnswer] = useState(false);
     const [openConfirmModalForReportComment, setOpenConfirmModalForReportComment] = useState(false);
     const [openConfirmModalForReportAnswer, setOpenConfirmModalForReportAnswer] = useState(false);
-    const [visible,setVisible] = useState(true);
+    const [visible, setVisible] = useState(true);
     const divRef = useRef(null);
     const [activeCommentaryToDelete, setActiveCommentaryToDelete] = useState({
         content: null,
@@ -64,11 +75,13 @@ const NewSidebarCommentary = ({
         content: null,
         id: null
     });
-
+    const reportModal = useSelector(selectReportModal);
+    const deleteModal = useSelector(selectDeleteModal);
     const {data: session} = useSession();
     const orientation = useOrientation();
     const inputRef = useRef(null);
     const dispatch = useDispatch();
+    const [loadingModal,setLoadingModal] = useState(false);
     const [width, height] = ScreenSize();
     const [newComment, setNewComment] = useState('');
     const infosComment = useSelector(selectInfosComment);
@@ -77,10 +90,6 @@ const NewSidebarCommentary = ({
     const {author} = infosComment.author;
     const commentsReducer = useSelector(selectComments);
     const canSeeMore = useState(commentsReducer.length < nbComments);
-
-
-
-
 
     const resetCommentReport = () => {
         setActiveCommentToReport({id: null, content: null});
@@ -116,6 +125,7 @@ const NewSidebarCommentary = ({
     }
 
     const report = (id, typeOfReport) => {
+        setLoadingModal(true);
         const validTypes = ['comment', 'answer'];
 
         if (!validTypes.includes(typeOfReport)) {
@@ -124,6 +134,8 @@ const NewSidebarCommentary = ({
         }
 
         if (checkIfIdIsAlreadyInStorage(id)) {
+            dispatch(disableLoading());
+            dispatch(disableModalReport());
             if (typeOfReport === 'comment') {
                 resetCommentReport();
                 return toastDisplayError('Déjà signalé !');
@@ -139,6 +151,10 @@ const NewSidebarCommentary = ({
             .then(() => {
                 if (typeOfReport === 'comment') resetCommentReport();
                 else resetAnswerReport();
+            })
+            .then(() => {
+                dispatch(disableModalReport());
+                setLoadingModal(false);
             })
             .catch(() => toastDisplayError('Impossible de signaler ce commentaire.'));
     };
@@ -206,6 +222,18 @@ const NewSidebarCommentary = ({
             .catch((err) => console.log(err));
     }
 
+    const newDeleteComment = (id) => {
+        setLoadingModal(true)
+        DeleteCommentaryService(id)
+            .then(() => {
+                dispatch(deleteMyComment(id))
+            })
+            .then(() => {
+                dispatch(disableDeleteModal());
+                setLoadingModal(false);
+            })
+            .catch(() => dispatch(throwAnErr('Impossible de supprimer votre commentaire')));
+    }
 
     /*useEffect(() => {
         if (!errCommentary) {
@@ -316,8 +344,6 @@ const NewSidebarCommentary = ({
             </div>
             <div className={styles.titleSection}>
                 <h5><span>{nbComments}</span> commentaires</h5>
-                <p>{infosComment.loading ? <span>Loading true</span> : <span>loading false</span>}</p>
-
                 <div>
                     <p onClick={() => filter === 'recent' ? changeFilter('popular') : null}
                        className={filter === 'popular' ? styles.filterActive : ''}>Populaires</p>
@@ -342,7 +368,7 @@ const NewSidebarCommentary = ({
 
                 {
                     commentsReducer && commentsReducer.length > 0 && visible &&
-                    commentsReducer.map((item,index)=> {
+                    commentsReducer.map((item, index) => {
                         return (
                             <Fragment key={item._id}>
 
@@ -414,7 +440,6 @@ const NewSidebarCommentary = ({
                 }
 
 
-
                 {
                     nbComments <= 0 && !loading &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
@@ -470,7 +495,7 @@ const NewSidebarCommentary = ({
 
                 {
                     commentsReducer.length < nbComments && !loading &&
-                    <button onClick={() => getCommentReducer(filter,pages)}>Voir plus</button>
+                    <button onClick={() => getCommentReducer(filter, pages)}>Voir plus</button>
                 }
 
                 <div
@@ -486,6 +511,29 @@ const NewSidebarCommentary = ({
 
 
             {
+                reportModal.type !== null &&
+                <ConfirmModalCommentary
+                    loading={loadingModal}
+                    btnConfirm={'Confirmer'}
+                                        confirm={() => {report(reportModal.id,reportModal.type)}}
+                                        close={() => dispatch(disableModalReport())}
+                                        title={reportModal.type === 'comment' ? 'Signaler ce commentaire ?' : 'Signaler cette réponse ?'}
+                                        subTitle={Capitalize(ReduceString(reportModal.content,70))}/>
+            }
+
+            {
+                reportModal.type === null && deleteModal.type !== null &&
+                <ConfirmModalCommentary
+                    loading={loadingModal}
+                    btnConfirm={'Confirmer'}
+                                        confirm={() =>  newDeleteComment(deleteModal.id)}
+                                        close={() => dispatch(disableDeleteModal())}
+                                        title={deleteModal.type === 'comment' ? 'Supprimer votre commentaire ?' : 'Supprimer votre réponse ?'}
+                                        subTitle={Capitalize(ReduceString(deleteModal.content),70)}/>
+            }
+
+
+            {/*{
                 openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
                 <ConfirmModalCommentary btnConfirm={'Confirmer'}
                                         confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
@@ -531,7 +579,7 @@ const NewSidebarCommentary = ({
                 }} close={() => {
                     resetAnswerReport();
                 }} title={'Signaler cette réponse ?'} subTitle={Capitalize(activeAnswerToReport.content)}/>
-            }
+            }*/}
 
         </div>
     )

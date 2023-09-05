@@ -19,6 +19,16 @@ const initialState = {
         getMyComments: false,
         lastCommentId: [],
     },
+    reportModal:{
+        type:null,
+        id:null,
+        content:null
+    },
+    deleteModal:{
+        type:null,
+        id:null,
+        content:null
+    },
     err: {
         err: false,
         msg: null
@@ -64,6 +74,7 @@ export const commentSlice = createSlice({
         addMyComments: (state, action) => {
             if (action.payload) {
                 state.comments = action.payload.concat(state.comments);
+                state.infos.nbComments += 1;
             }
         },
 
@@ -129,12 +140,25 @@ export const commentSlice = createSlice({
                 const {commentId,data} = action.payload;
                 const commentSelect = state.comments.find((comment) => comment._id === commentId);
                 commentSelect.answers.unshift(data);
+                commentSelect.nbAnswers += 1;
+            }
+        },
+
+        deleteMyAnswer:(state,action) => {
+            if(action.payload){
+                const {commentId,answerId} = action.payload;
+                const commentSelect = state.comments.find((comment) => comment._id === commentId);
+                commentSelect.answers = commentSelect.answers.filter((answer) => answer._id !== answerId);
+                commentSelect.nbAnswers -= 1;
             }
         },
 
         deleteMyComment: (state, action) => {
-            const id = action.payload;
-            state.comments = state.comments.filter((comment) => comment._id !== id);
+            if(action.payload){
+                const id = action.payload;
+                state.comments = state.comments.filter((comment) => comment._id !== id);
+                state.infos.nbComments -= 1;
+            }
         },
 
         cleanComments: (state, action) => {
@@ -157,6 +181,32 @@ export const commentSlice = createSlice({
 
         setRecent: (state) => {
             state.infos.filter = 'recent'
+        },
+
+        activeReportModal:(state,action) => {
+            if (!action.payload) return null;
+            const validTypes = ['comment', 'answer'];
+            if(!validTypes.includes(action.payload.type)) return null;
+            state.reportModal = action.payload;
+        },
+
+        activeDeleteModal:(state,action) => {
+            if(!action.payload) return null;
+            const validTypes = ['comment', 'answer'];
+            if(!validTypes.includes(action.payload.type)) return null;
+            state.deleteModal = action.payload
+        },
+
+        disableModalReport:(state,action) => {
+            for(let key in state.reportModal){
+                state.reportModal[key] = null;
+            }
+        },
+
+        disableDeleteModal:(state,action) => {
+            for(let key in state.deleteModal){
+                state.deleteModal[key] = null;
+            }
         },
 
         throwAnErr: (state, action) => {
@@ -206,8 +256,13 @@ export const {
     cleanComments,
     addMyComments,
     hasGetMyComments,
+    activeDeleteModal,
+    activeReportModal,
+    disableDeleteModal,
+    disableModalReport,
     setReady,
     addAnswer,
+    deleteMyAnswer,
     incrPages,
     changePages,
     throwAnErr,
@@ -227,6 +282,8 @@ export const selectAnswersPage = (state, commentId) => {
     const commentToSelect = state.comments.comments.find(comment => commentId === comment._id);
     return commentToSelect.answersPage;
 }
+export const selectReportModal = (state) => state.comments.reportModal;
+export const selectDeleteModal = (state) => state.comments.deleteModal;
 export const selectErrComments = (state) => state.comments.err;
 
 export default commentSlice.reducer;
