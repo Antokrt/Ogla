@@ -41,11 +41,12 @@ import {
     selectDeleteModal,
     selectErrComments,
     selectInfosComment,
-    selectReportModal,
+    selectReportModal, sendMyNewComment,
     setPopular,
     setRecent,
     throwAnErr
 } from "../../store/slices/commentSlice";
+import {ScrollDownUtils} from "../../utils/Scroll";
 
 
 const NewSidebarCommentary = ({
@@ -160,7 +161,15 @@ const NewSidebarCommentary = ({
     };
 
     const scrollBottom = () => {
-        divRef.current.scrollTop = divRef.current.scrollHeight
+        return setTimeout(() => {
+            divRef.current.scrollTop = divRef.current.scrollHeight
+        },100)
+    }
+
+    const scrollBottomPhone = () => {
+        return setTimeout(() => {
+ScrollDownUtils(1110)
+        },100)
     }
 
     const scrollToTop = () => {
@@ -171,9 +180,6 @@ const NewSidebarCommentary = ({
 
     const getCommentReducer = async (filter, pages) => {
         try {
-            if (commentsReducer.length >= nbComments) {
-                return;
-            }
 
             const res = await GetCommentService(infosComment.type, infosComment.activeId, pages, 5, session, filter);
 
@@ -187,9 +193,9 @@ const NewSidebarCommentary = ({
             if (res.length !== 0) {
                 dispatch(incrPages());
             }
-
             return;
         } catch (error) {
+            dispatch(throwAnErr(true,'Impossible de récupérer les commentaires.'))
             throw error;
         }
     };
@@ -215,7 +221,7 @@ const NewSidebarCommentary = ({
         NewCommentaryService(infosComment.activeId, newComment, type)
             .then((res) => {
                 res.answersPage = 1;
-                dispatch(addMyComments([res]));
+                dispatch(sendMyNewComment([res]));
                 setNewComment('');
             })
             .then(() => scrollToTop())
@@ -235,27 +241,8 @@ const NewSidebarCommentary = ({
             .catch(() => dispatch(throwAnErr('Impossible de supprimer votre commentaire')));
     }
 
-    /*useEffect(() => {
-        if (!errCommentary) {
-            const div = divRef.current;
-
-            const handleScroll = () => {
-                const threshold = 1;
-                const isBottom =
-                    div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-                if (isBottom && canScroll && !loadingScroll) {
-                    getMore()
-                }
-            };
-            div.addEventListener("scroll", handleScroll);
-            return () => {
-                div.removeEventListener("scroll", handleScroll);
-            };
-        }
-
-    }, [canScroll, loadingScroll]);*/
-
     const changeFilter = async (newFilter) => {
+
         try {
             if (nbComments === 0) {
                 if (newFilter === 'recent') {
@@ -266,43 +253,48 @@ const NewSidebarCommentary = ({
                 return null;
             }
 
-            // Masquer le contenu
             setVisible(false);
 
-            // Activer le chargement
             dispatch(activeLoading());
 
-            // Nettoyer les commentaires
             dispatch(cleanComments());
 
-            // Sélectionner le filtre approprié
             if (newFilter === 'recent') {
                 dispatch(setRecent());
             } else {
                 dispatch(setPopular());
             }
 
-            // Nettoyer les commentaires à nouveau
-            dispatch(cleanComments());
-
-            // Si une session est active, obtenir les commentaires de l'utilisateur
             if (session) {
                 await getMyCommentsReducer(1, newFilter);
             }
 
-            // Obtenir les commentaires en fonction du filtre
             await getCommentReducer(newFilter, 1);
 
-            // Rétablir la visibilité après un délai de 500 ms
             setTimeout(() => {
                 setVisible(true);
                 dispatch(disableLoading());
             }, 500);
         } catch (error) {
-            // Gérer les erreurs ici (vous pouvez ajouter une fonction de gestion d'erreur appropriée)
             dispatch(throwAnErr(error));
         }
     };
+
+   /* useEffect(() => {
+        if (!errComments) {
+            const div = divRef.current;
+            const handleScroll = () => {
+                const threshold = 1;
+                const isBottom =
+                    div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
+
+            };
+            div.addEventListener("scroll", handleScroll);
+            return () => {
+                div.removeEventListener("scroll", handleScroll);
+            };
+        }
+    }, [commentsReducer,filter,pages,loading]);*/
 
     if (errComments.err) {
         return (
@@ -332,8 +324,6 @@ const NewSidebarCommentary = ({
                             <p>Impossible de récupérer les commentaires.</p>
                     }
                 </div>
-
-
             </div>
         )
     } else return (
@@ -354,6 +344,12 @@ const NewSidebarCommentary = ({
             </div>
 
             <div
+              /*  onScroll={(event) => {
+                    const target = event.target;
+                    if(target.scrollHeight - target.scrollTop === target.clientHeight){
+
+                    }
+                }}*/
                 ref={divRef}
                 className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar + ' ' + anim.fadeIn}>
 
@@ -366,12 +362,13 @@ const NewSidebarCommentary = ({
                 }
 
 
+
+
                 {
                     commentsReducer && commentsReducer.length > 0 && visible &&
                     commentsReducer.map((item, index) => {
                         return (
                             <Fragment key={item._id}>
-
                                 <Commentary
                                     seeMoreAnswers={item.seeMoreAnswers}
                                     id={item._id}
@@ -441,7 +438,26 @@ const NewSidebarCommentary = ({
 
 
                 {
-                    nbComments <= 0 && !loading &&
+                    commentsReducer.length < nbComments && visible && !loading && commentsReducer.length !== 0 &&
+                    <div className={styles.getMore}>
+                                <button onClick={() => {
+                                    dispatch(activeLoading())
+                                        getCommentReducer(filter, pages)
+                                            .then(() => {
+                                                if(width > 600){
+                                                    scrollBottom();
+                                                }
+                                                else {
+                                                    scrollBottomPhone()
+                                                }
+                                            })
+                                            .then(() => dispatch(disableLoading()))
+                                }}>Voir plus</button>
+                    </div>
+                }
+
+                {
+                    infosComment.nbComments <= 0 && !loading &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
                         <img src={GetImgPathOfAssets() + 'utils/smile8.png'} alt={'Image Jim Ogla'}
                              onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
@@ -493,10 +509,6 @@ const NewSidebarCommentary = ({
                     <div className={styles.loaderContainer}><LoaderCommentary/></div>
                 }
 
-                {
-                    commentsReducer.length < nbComments && !loading &&
-                    <button onClick={() => getCommentReducer(filter, pages)}>Voir plus</button>
-                }
 
                 <div
                     onClick={() => {

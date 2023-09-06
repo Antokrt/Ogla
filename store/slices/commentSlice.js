@@ -74,6 +74,12 @@ export const commentSlice = createSlice({
         addMyComments: (state, action) => {
             if (action.payload) {
                 state.comments = action.payload.concat(state.comments);
+            }
+        },
+
+        sendMyNewComment:(state,action) => {
+            if(action.payload){
+                state.comments = action.payload.concat(state.comments);
                 state.infos.nbComments += 1;
             }
         },
@@ -162,6 +168,7 @@ export const commentSlice = createSlice({
         },
 
         cleanComments: (state, action) => {
+            console.log('im the clean comment')
             state.infos.getMyComments = false;
             state.infos.pages = 1;
             state.comments = [];
@@ -260,6 +267,7 @@ export const {
     activeReportModal,
     disableDeleteModal,
     disableModalReport,
+    sendMyNewComment,
     setReady,
     addAnswer,
     deleteMyAnswer,

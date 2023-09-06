@@ -275,7 +275,6 @@
             color: white;
             -webkit-text-stroke-width: 0.5px;
             letter-spacing: 1px;
-            font-family: $primaryFont;
             padding: 8px 15px;
           }
         }
@@ -748,6 +747,16 @@
     }
   }
 
+  .oneChapter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      margin-top: 10px;
+      width: 200px;
+    }
+  }
+
   .emptyContainer {
     display: flex;
     justify-content: center;
@@ -880,6 +889,12 @@
   background-color: $black;
 }
 
+.activeBtnModify{
+  transition: 0.1s;
+  cursor: pointer;
+  background-color: $purple;
+}
+
 .inactiveBtn {
   cursor: initial;
   background-color: rgba(28, 35, 43, 0.32);
@@ -911,6 +926,13 @@
   align-items: center;
   z-index: 2220 !important;
   padding-top: 12px;
+
+  .getMore{
+    font-size: 12px;
+    color: #9844AD;
+    font-weight: bold;
+    font-family: $primaryFont;
+  }
 
   svg {
     cursor: pointer;

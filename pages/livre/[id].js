@@ -75,7 +75,6 @@ export async function getServerSideProps({req, params, query}) {
 
     const data = await GetOneBookApi(id, req);
     if (!data.err) {
-        console.log(data)
         return {
             props: {
                 key: id,
@@ -209,23 +208,28 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     <p>Impossible de récupérer les commentaires.</p>
                 </div>
 
-                : <SidebarCommentary
+                :  <NewSidebarCommentary
                     limit={sizeComment}
                     page={pageComment}
                     getMore={() => {
                         getComment();
                     }}
-                    err={errCommentary}
+                    errCommentary={errCommentary}
                     nbCommentary={nbCommentary}
                     refresh={() => refresh()}
                     scrollChange={hasToScroll}
                     likeAComment={(id) => likeComment(id)}
                     createNewComment={(res) => newComment(res)}
                     deleteAComment={(id) => deleteComment(id)}
-                    seeMore={() => getComment(pageComment)}
+                    seeMore={() => {
+                        if (!loadingScroll) {
+                            getComment(pageComment);
+                        }
+                    }}
+
                     sendANewAnswer={(data) => sendAnswer(data)}
                     deleteAnswer={(id) => deleteAnswer(id)}
-                    authorImg={authorData?.img}
+                    authorImg={authorData.img}
                     likeAnswer={(id) => likeAnswer(id)}
                     newPageAnswer={(id) => loadMoreAnswer(id)}
                     type={'book'}
@@ -250,7 +254,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     bookId={bookData._id}
                     title={bookData.title}
                     author={bookData.author_pseudo}
-                    comments={comments}
+                    comments={commentsReducer}
                     select={sidebarSelect}/>}
 
         </div>)
@@ -534,21 +538,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     <HeaderMain/>
                     {checkSide()}
 
-                    <button onClick={() => getCommentReducer()}>Get comment</button>
-                <button onClick={() => dispatch(setRecent())}>change filter</button>
-                <button onClick={() => dispatch(throwAnErr('Err perso'))}>Make an err</button>
-                <button onClick={() => dispatch(removeAnErr())}>Remove the err</button>
-                <p>{infosComment.filter}</p>
-                    <p>{infosComment.title}</p>
                     <div className={styles.containerC}>
-
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <p>{commentsReducer.length}</p>
-                            <p>pages index : {infosComment.pages}</p>
-                            <p> {infosComment.loading && <LoaderCommentary/>}</p>
-                        </div>
-
-
                         <div className={styles.labelPresentation}>
                             <div className={styles.imgContainer}>
                                 <div className={styles.img}>
@@ -605,6 +595,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
 
                     </div>
+
+                <p>{infosComment.nbComments}</p>
 
                     <div className={styles.containerChapterList}>
                         {chapterList?.length > 0 && <div className={styles.btnFilter}>
@@ -664,7 +656,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         title={bookData?.title}
                         like={likes}
                         img={bookData?.img}
-                        nbCommentary={nbCommentary}
+                        nbCommentary={infosComment.nbComments}
                         author={bookData?.author_pseudo}
                         nbChapter={bookData?.nbChapters}
                         hasLike={hasLike}
@@ -712,6 +704,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             <div className={styles.itemMenuBookPhone} onClick={() => {
                                 setSidebarSelect('Commentary');
                                 setActiveLinkPhone('comments');
+                                if(commentsReducer.length <= 0) getCommentReducer();
+
                             }}>
                                 <ChatBubbleBottomCenterTextIcon/>
                             </div>
@@ -760,11 +754,12 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                        className={activeLinkPhone === 'chapters' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Chapitre{bookData?.nbChapters !== 1 && <>s</>}
                                         <span> ({bookData?.nbChapters})</span></p>
                                     <p onClick={() => {
+                                        if(commentsReducer.length <= 0) getCommentReducer();
                                         setSidebarSelect('Commentary');
                                         setActiveLinkPhone('comments');
                                     }}
                                        className={activeLinkPhone === 'comments' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Commentaire{nbCommentary !== 1 && <>s</>}
-                                        <span> ({nbCommentary})</span></p>
+                                        <span> ({infosComment.nbComments})</span></p>
                                 </div>
                                 <ChatBubbleLeftEllipsisIcon className={styles.svgDescription}/>
                             </div>

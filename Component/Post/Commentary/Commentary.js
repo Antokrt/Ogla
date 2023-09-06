@@ -123,7 +123,7 @@ const Commentary = ({
     const newLikeComment = () => {
         LikeService('comment', id)
             .then(() => dispatch(likeAComment(id)))
-            .catch((err) => console.log(err));
+            .catch((err) => dispatch(throwAnErr(true,'')));
     }
 
     const loadMoreAnswers = () => {

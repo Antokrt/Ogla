@@ -29,6 +29,7 @@ const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswe
             .then(() => {
                 dispatch(likeOneAnswer({commentId,id}));
             })
+
             .catch(() => throwAnErr(true,'Impossible de liker cette réponse.'))
 /*   /!*     LikeService('answer', id)
             .then((res) => {

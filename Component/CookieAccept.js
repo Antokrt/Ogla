@@ -22,7 +22,6 @@ export const CookieAccept = () => {
             });
         }
 
-
         setLocalStorage("cookie_consent", cookieConsent)
 
         //For Testing

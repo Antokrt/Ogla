@@ -196,7 +196,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                 getComment(pageComment, 1);
                             })
                             .catch(() => {
-                                getComment(pageComment, 1)
+                                getComment(pageComment, 1);
                             })
                     }
                     else {
