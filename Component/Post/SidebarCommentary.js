@@ -420,7 +420,7 @@ const SidebarCommentary = ({
                                     }
                                 }}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                                className={scroll.scrollbar} type="textarea" placeholder="Écrire un commentaire..."/>
                             :
                             <textarea
                                 className={scroll.scrollbar}

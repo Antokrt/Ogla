@@ -251,7 +251,7 @@ const Books = ({booksData, err, errNb, nbBooks}) => {
                                                             id={item._id}
                                                             img={item.img}
                                                             category={item.category}
-                                                            title={item.title + ' ainsi que des autres livres'}
+                                                            title={item.title}
                                                             likes={item.likes}
                                                             date={item.date_creation}
                                                             nbView={item.stats.view}
@@ -266,7 +266,7 @@ const Books = ({booksData, err, errNb, nbBooks}) => {
                                                             id={item._id}
                                                             img={item.img}
                                                             category={item.category}
-                                                            title={item.title + ' ainsi que des autres livres'}
+                                                            title={item.title}
                                                             likes={item.likes}
                                                             date={item.date_creation}
                                                             nbView={item.stats.view}

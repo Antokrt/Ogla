@@ -22,6 +22,21 @@ import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
 import {ConfirmModal} from "../../Modal/ConfirmModal";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {FormatCount} from "../../../utils/NbUtils";
+import {
+    activeDeleteModal,
+    activeReportModal,
+    addAnswer,
+    deleteMyComment, getMoreAnswers,
+    likeAComment,
+    selectAnswers,
+    selectAnswersPage,
+    throwAnErr
+} from "../../../store/slices/commentSlice";
+import {GetAnswerByCommentService, NewAnswerService} from "../../../service/Answer/AnswerService";
+import {LoaderCommentary} from "../../layouts/Loader";
+import {SendAnswerReduce} from "../../../utils/CommentaryUtils";
+import {SendNotifService} from "../../../service/Notifications/NotificationsService";
+import {ReduceString} from "../../../utils/String";
 
 const Commentary = ({
                         pseudo,
@@ -54,11 +69,14 @@ const Commentary = ({
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList, setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
-    const [page, setPage] = useState(answerPage)
+    const [page, setPage] = useState(answerPage);
+    const [loading,setLoading] = useState(false);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [openModalChoice, setOpenModalChoice] = useState(false);
     const {data: session} = useSession();
     const modalState = useSelector(selectLoginModalStatus);
+    const answersReducer = useSelector(state => selectAnswers(state,id));
+    const answersPage = useSelector(state => selectAnswersPage(state,id));
     const contentDotRef = useRef(null);
     const dotRef = useRef(null);
     const dispatch = useDispatch();
@@ -97,8 +115,49 @@ const Commentary = ({
         }, [ref, btnRef,onClickOutside]);
     }
 
+
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
+
+
+    const newLikeComment = () => {
+        LikeService('comment', id)
+            .then(() => dispatch(likeAComment(id)))
+            .catch((err) => dispatch(throwAnErr(true,'')));
+    }
+
+    const loadMoreAnswers = () => {
+        setLoading(true);
+            GetAnswerByCommentService(id, answersPage, 1, session)
+                .then((res) => {
+                    dispatch(getMoreAnswers({commentId:id,answers:res.data}));
+                })
+                .then(() => setLoading(false))
+                .catch(() => {
+                    throwAnErr(true, 'Impossible de récupérer les réponses.');
+                    setLoading(false);
+                })
+    }
+
+
+    const sendAanswer = (data) => {
+      NewAnswerService(data.id, data.content, session)
+            .then((res) => dispatch(addAnswer({commentId: id, data:res.data})))
+            .catch((err) => throwAnErr(true));
+    }
+
+    /*const sendAnswer = (data) => {
+        setComments(SendAnswerReduce(comments, data.target_id, data));
+        comments.forEach((elem) => {
+            if (elem._id === data.target_id) {
+                if (authorData._id != session.user.id)
+                    SendNotifService(elem.userId, 20, bookData._id, "null")
+                else
+                    SendNotifService(elem.userId, 21, bookData._id, "null")
+                return;
+            }
+        })
+    };*/
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
@@ -124,7 +183,7 @@ const Commentary = ({
                             <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                                 {
                                     session && authorId === session?.user?.id &&
-                                    <button onClick={() => deleteComment()}> Supprimer <TrashIcon/> </button>
+                                    <button onClick={() => dispatch(activeDeleteModal({type:'comment',id,content}))}> Supprimer <TrashIcon/> </button>
                                 }
 
                                 {
@@ -134,7 +193,7 @@ const Commentary = ({
                                         }}> Signaler <FlagIcon/></button>
                                         :
                                       authorId !== session?.user?.id &&
-                                    <button onClick={() => reportComment()}> Signaler <FlagIcon/></button>
+                                    <button onClick={() => dispatch(activeReportModal({type:'comment',id,content}))}> Signaler <FlagIcon/></button>
                                 }
                             </div>
                         }
@@ -142,7 +201,6 @@ const Commentary = ({
 
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo} <span>{FormatDateFrom(date)}</span></h8>
-
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
@@ -168,7 +226,7 @@ const Commentary = ({
                     <div className={styles.likeCommentaryContainer}>
                         <div className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
                             if (session) {
-                                likeComment(id);
+                                newLikeComment();
                             } else {
                                 dispatch(setActiveModalState(true))
                             }
@@ -227,7 +285,7 @@ const Commentary = ({
                                                         id, content: newAnswer
                                                     }
                                                     e.preventDefault();
-                                                    sendNewAnswer(data);
+                                                    sendAanswer(data);
                                                     setNewAnswer('');
                                                 }
                                             }}
@@ -245,12 +303,13 @@ const Commentary = ({
 
 
                                 <div className={styles.sendResponse}>
+
                                     <button onClick={() => {
                                         if (session && newAnswer !== "") {
                                             const data = {
                                                 id, content: newAnswer
                                             }
-                                            sendNewAnswer(data);
+                                            sendAanswer(data);
                                             setNewAnswer('');
                                         }
                                     }
@@ -259,7 +318,7 @@ const Commentary = ({
                                 </div>
                                 <div className={styles.listReply}>
                                     {
-                                        answersList?.map((item, index) => {
+                                        answersReducer?.map((item, index) => {
                                             return (
                                                 <Fragment key={item._id}>
                                                     <SubCommentary
@@ -270,6 +329,7 @@ const Commentary = ({
                                                         id={item._id}
                                                         authorId={item.userId}
                                                         img={item.img}
+                                                        commentId={id}
                                                         pseudo={item.pseudo}
                                                         date={item.date_creation}
                                                         likes={item.likes}
@@ -282,12 +342,15 @@ const Commentary = ({
                                     }
 
                                     {
-                                        seeMoreAnswers &&
+                                        seeMoreAnswers && nbAnswers > answersReducer.length &&
                                         <div className={styles.getMoreBtn}>
-                                            <button onClick={() => newAnswerPage(id)}>Voir plus</button>
+                                            {
+                                                !loading ?
+                                                    <button onClick={() => loadMoreAnswers()}>Voir plus</button> :
+                                                    <LoaderCommentary/>
+                                            }
                                         </div>
                                     }
-
 
                                 </div>
 

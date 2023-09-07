@@ -1,7 +1,9 @@
 @import "styles/utils/var";
 
-.container {
 
+
+.container {
+  user-select: none;
   position: relative;
   background-color: white;
   height: 100%;
@@ -83,6 +85,22 @@
     }
   }
 
+  .getMore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 202200!important;
+    button{
+      margin-bottom: 50px;
+
+      font-size: 11px;
+      font-family: $primaryFont;
+      font-weight: bold;
+      color: $purple;
+    }
+  }
+
   .errContainer{
     display: flex;
     justify-content: center;
@@ -127,6 +145,8 @@
     margin-bottom: 30px;
   }
 
+
+
   .empty{
     display: flex;
     justify-content: center;
@@ -153,7 +173,7 @@ font-size: 12px;
   }
 
   .commentaryContainer {
-    z-index: 2;
+    z-index: 222222;
     position: absolute;
     background-color: $grey;
     min-height: 90px;

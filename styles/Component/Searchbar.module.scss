@@ -144,8 +144,9 @@
 .homeSearch {
   &::placeholder {
     color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
+    font-family: $primaryFont;
+    font-size: 12px!important;
+    letter-spacing: 0.6px;
   }
 
   border-color: rgba(255, 255, 255, 0.11) !important;

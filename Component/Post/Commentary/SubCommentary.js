@@ -9,7 +9,12 @@ import {FormatDateFrom} from "../../../utils/Date";
 import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
 import {setActiveModalState} from "../../../store/slices/modalSlice";
 import {useDispatch} from "react-redux";
-const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, reportAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers}) => {
+import {LikeAnswerReduce} from "../../../utils/CommentaryUtils";
+import {LikeService} from "../../../service/Like/LikeService";
+import {SendNotifService} from "../../../service/Notifications/NotificationsService";
+import {activeReportModal, deleteMyAnswer, likeOneAnswer, throwAnErr} from "../../../store/slices/commentSlice";
+import {DeleteAnswerService} from "../../../service/Answer/AnswerService";
+const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswer, reportAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers}) => {
 
     const [sizeCommentary,setSizeCommentary] = useState(content?.length);
     const [openModalChoice, setOpenModalChoice] = useState(false);
@@ -18,6 +23,34 @@ const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, reportAn
     const {data:session } = useSession();
     const dotRef = useRef(null);
     const contentDotRef = useRef(null);
+
+    const like = () => {
+        LikeService('answer',id)
+            .then(() => {
+                dispatch(likeOneAnswer({commentId,id}));
+            })
+
+            .catch(() => throwAnErr(true,'Impossible de liker cette réponse.'))
+/*   /!*     LikeService('answer', id)
+            .then((res) => {
+                newArr.map((comment) => {
+                    comment.answers.map((reply) => {
+                        if (reply._id === replyId) {
+                            if (reply.hasLike) {
+                                reply.likes = reply.likes - 1;
+                            } else {
+                                reply.likes += 1;
+                                if (authorId != userId) SendNotifService(reply.userId, 5, targetDocumentId, secondTargetDocumentId); else SendNotifService(reply.userId, 7, targetDocumentId, secondTargetDocumentId);
+                            }
+                            reply.hasLike = !reply.hasLike;
+                        }
+                    })
+                });
+                setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id, bookData._id, "null"));*!/
+            })
+            .catch((err) => console.log(err))*/
+    }
+
 
 
     function clickOutside(ref,btnRef, onClickOutside) {
@@ -42,6 +75,15 @@ const SubCommentary = ({img, pseudo, date, content, likes,deleteAnswer, reportAn
 
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
+    const deleteAanswer = () => {
+        DeleteAnswerService(id, session)
+            .then(() => dispatch(deleteMyAnswer({commentId,answerId:id})))
+            .then(() => {
+                setActiveAnswersToDelete({id: null, content: null})
+                setOpenConfirmModalForDeleteAnswer(false);
+            })
+            .catch((err) => console.log(err))
+    }
 
 return (
     <div className={styles.container + ' ' + anim.fadeIn}>
@@ -68,20 +110,19 @@ return (
                             ref={dotRef}
                             className={styles.dot}
                         />
-
                     {
                         openModalChoice &&
                         <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                             {
                                 session && authorId === session?.user?.id &&
-                                <button onClick={() => deleteAnswer(id)}> Supprimer <TrashIcon/> </button>
+                                <button onClick={() => deleteAanswer()}> Supprimer <TrashIcon/> </button>
                             }
 
                             {
                                 !session ?
                                     <button onClick={() => dispatch(setActiveModalState(true))}> Signaler <FlagIcon/></button> :
                                         authorId !== session?.user?.id &&
-                                    <button onClick={() => reportAnswer()}> Signaler <FlagIcon/></button>
+                                    <button onClick={() => dispatch(activeReportModal({type:'answer',id,content}))}> Signaler <FlagIcon/></button>
                             }
                         </div>
                     }
@@ -114,7 +155,10 @@ return (
                 <div className={styles.likeCommentaryContainer}>
             <TextLikeBtn onLike={() => {
                 if(session){
-                    likeAnswer();
+                    like(id);
+                }
+                else {
+                    dispatch(setActiveModalState(true));
                 }
             }} nb={likes} isLike={hasLike}/>
                 </div>

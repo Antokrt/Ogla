@@ -143,7 +143,9 @@ const OneBook = ({bookData, chapterListData, err}) => {
             .then(() => {
                 setLoadingScroll(false);
                 setTimeout(() => {
-                    divRef.current.scrollTop = divRef.current.scrollHeight;
+                    if(divRef){
+                        divRef.current.scrollTop = divRef.current.scrollHeight;
+                    }
                 }, 10)
             })
             .catch(() => {
@@ -662,6 +664,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                 <div className={styles.seeMoreContainer}>
                                                                     {
                                                                         seeMoreChapter && chapterList && !loadingScroll &&
+
                                                                         <TextSeeMore
                                                                             onclick={() => getMoreChapter()}
                                                                         />
@@ -793,7 +796,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                         <button
                                                             onClick={() => sumUpdate()}
-                                                            className={newSummary !== book.summary ? styles.activeBtn : ''}
+                                                            className={newSummary !== book.summary ? styles.activeBtnModify : styles.inactiveBtn}
                                                         >Modifier
                                                         </button>
 
@@ -991,10 +994,8 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                                 <div className={styles.seeMoreContainer}>
                                                                     {
                                                                         seeMoreChapter && chapterList && !loadingScroll &&
-                                                                        <TextSeeMore
-                                                                            onclick={() => getMoreChapter()}
-                                                                        />
-                                                                    }
+                                                                        <button className={styles.getMore} onClick={() => getMoreChapter()}>Voir plus</button>
+                                                                     }
                                                                     {
                                                                         loadingScroll &&
                                                                         <LoaderCommentary/>

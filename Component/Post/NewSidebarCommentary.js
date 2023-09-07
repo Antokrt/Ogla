@@ -8,7 +8,12 @@ import {PaperAirplaneIcon} from "@heroicons/react/24/solid"
 import Commentary from "./Commentary/Commentary";
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
-import {DeleteCommentaryService, GetCommentService, NewCommentaryService} from "../../service/Comment/CommentService";
+import {
+    DeleteCommentaryService,
+    GetCommentService,
+    GetMyCommentsService,
+    NewCommentaryService
+} from "../../service/Comment/CommentService";
 import {LikeService} from "../../service/Like/LikeService";
 import {DeleteAnswerService, NewAnswerService} from "../../service/Answer/AnswerService";
 import {Loader2, LoaderCommentary} from "../layouts/Loader";
@@ -23,17 +28,36 @@ import {ErrMsg} from "../ErrMsg";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 import {NewReportService} from "../../service/Report/ReportService";
 import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
-import {selectComments, selectInfosComment, setPopular, setRecent} from "../../store/slices/commentSlice";
+import {
+    activeLoading,
+    addComment,
+    addMyComments,
+    cleanComments, deleteMyComment, disableDeleteModal,
+    disableLoading,
+    disableModalReport,
+    hasGetMyComments,
+    incrPages,
+    selectComments,
+    selectDeleteModal,
+    selectErrComments,
+    selectInfosComment,
+    selectReportModal, sendMyNewComment,
+    setPopular,
+    setRecent,
+    throwAnErr
+} from "../../store/slices/commentSlice";
+import {ScrollDownUtils, ScrollUpUtils} from "../../utils/Scroll";
 
 
 const NewSidebarCommentary = ({
-                                  errCommentary
+                                  authorImg,
                               }) => {
     const router = useRouter();
     const [openConfirmModalForDeleteComment, setOpenConfirmModalForDeleteComment] = useState(false);
     const [openConfirmModalForDeleteAnswer, setOpenConfirmModalForDeleteAnswer] = useState(false);
     const [openConfirmModalForReportComment, setOpenConfirmModalForReportComment] = useState(false);
     const [openConfirmModalForReportAnswer, setOpenConfirmModalForReportAnswer] = useState(false);
+    const [visible, setVisible] = useState(true);
     const divRef = useRef(null);
     const [activeCommentaryToDelete, setActiveCommentaryToDelete] = useState({
         content: null,
@@ -51,19 +75,20 @@ const NewSidebarCommentary = ({
         content: null,
         id: null
     });
-
+    const reportModal = useSelector(selectReportModal);
+    const deleteModal = useSelector(selectDeleteModal);
     const {data: session} = useSession();
     const orientation = useOrientation();
     const inputRef = useRef(null);
     const dispatch = useDispatch();
+    const [loadingModal,setLoadingModal] = useState(false);
     const [width, height] = ScreenSize();
     const [newComment, setNewComment] = useState('');
     const infosComment = useSelector(selectInfosComment);
-    const {title, activeId, type, nbComments, loading, pages, filter, err} = infosComment;
-    const {author} = infosComment.author;
+    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter,author} = infosComment;
+    const errComments = useSelector(selectErrComments);
     const commentsReducer = useSelector(selectComments);
-
-
+    const canSeeMore = useState(commentsReducer.length < nbComments);
 
     const resetCommentReport = () => {
         setActiveCommentToReport({id: null, content: null});
@@ -99,6 +124,7 @@ const NewSidebarCommentary = ({
     }
 
     const report = (id, typeOfReport) => {
+        setLoadingModal(true);
         const validTypes = ['comment', 'answer'];
 
         if (!validTypes.includes(typeOfReport)) {
@@ -107,6 +133,8 @@ const NewSidebarCommentary = ({
         }
 
         if (checkIfIdIsAlreadyInStorage(id)) {
+            dispatch(disableLoading());
+            dispatch(disableModalReport());
             if (typeOfReport === 'comment') {
                 resetCommentReport();
                 return toastDisplayError('Déjà signalé !');
@@ -123,11 +151,29 @@ const NewSidebarCommentary = ({
                 if (typeOfReport === 'comment') resetCommentReport();
                 else resetAnswerReport();
             })
+            .then(() => {
+                dispatch(disableModalReport());
+                setLoadingModal(false);
+            })
             .catch(() => toastDisplayError('Impossible de signaler ce commentaire.'));
     };
 
     const scrollBottom = () => {
-        divRef.current.scrollTop = divRef.current.scrollHeight
+        return setTimeout(() => {
+            divRef.current.scrollTop = divRef.current.scrollHeight
+        },100)
+    }
+
+    const scrollBottomPhone = () => {
+        return setTimeout(() => {
+ScrollDownUtils(1110);
+        },100)
+    }
+
+    const scrollTopPhone = () => {
+        return setTimeout(() => {
+            ScrollUpUtils(0);
+        },100)
     }
 
     const scrollToTop = () => {
@@ -136,38 +182,138 @@ const NewSidebarCommentary = ({
         }, 10)
     }
 
+    const getCommentReducer = async (filter, pages) => {
+        try {
 
-    /*useEffect(() => {
-        if (!errCommentary) {
+            const res = await GetCommentService(infosComment.type, infosComment.activeId, pages, 5, session, filter);
+
+
+            res.forEach(element => {
+                if (!lastCommentId.includes(element._id)) {
+                    dispatch(addComment(element));
+                }
+            });
+
+            if (res.length !== 0) {
+                dispatch(incrPages());
+            }
+            return;
+        } catch (error) {
+            dispatch(throwAnErr(true,'Impossible de récupérer les commentaires.'))
+            throw error;
+        }
+    };
+
+    const getMyCommentsReducer = (page, filter) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter);
+
+                if (res.length !== 0) {
+                    dispatch(addMyComments(res));
+                }
+
+                dispatch(hasGetMyComments());
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        });
+    };
+
+    const sendNewComment = () => {
+        NewCommentaryService(infosComment.activeId, newComment, type)
+            .then((res) => {
+                res.answersPage = 1;
+                dispatch(sendMyNewComment([res]));
+                setNewComment('');
+            })
+            .then(() => {
+                if(width > 600){
+                    scrollToTop();
+                }
+                else {
+                    scrollTopPhone();
+                }
+            })
+            .catch((err) => console.log('err send new comment'));
+    }
+
+    const newDeleteComment = (id) => {
+        setLoadingModal(true)
+        DeleteCommentaryService(id)
+            .then(() => {
+                dispatch(deleteMyComment(id))
+            })
+            .then(() => {
+                dispatch(disableDeleteModal());
+                setLoadingModal(false);
+            })
+            .catch(() => dispatch(throwAnErr('Impossible de supprimer votre commentaire')));
+    }
+
+    const changeFilter = async (newFilter) => {
+
+        try {
+            if (nbComments === 0) {
+                if (newFilter === 'recent') {
+                    dispatch(setRecent());
+                } else {
+                    dispatch(setPopular());
+                }
+                return null;
+            }
+
+            setVisible(false);
+
+            dispatch(activeLoading());
+
+            dispatch(cleanComments());
+
+            if (newFilter === 'recent') {
+                dispatch(setRecent());
+            } else {
+                dispatch(setPopular());
+            }
+
+            if (session) {
+                await getMyCommentsReducer(1, newFilter);
+            }
+
+            await getCommentReducer(newFilter, 1);
+
+            setTimeout(() => {
+                setVisible(true);
+                dispatch(disableLoading());
+            }, 500);
+        } catch (error) {
+            dispatch(throwAnErr(error));
+        }
+    };
+
+   /* useEffect(() => {
+        if (!errComments) {
             const div = divRef.current;
-
             const handleScroll = () => {
                 const threshold = 1;
                 const isBottom =
                     div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-                if (isBottom && canScroll && !loadingScroll) {
-                    getMore()
-                }
+
             };
             div.addEventListener("scroll", handleScroll);
             return () => {
                 div.removeEventListener("scroll", handleScroll);
             };
         }
+    }, [commentsReducer,filter,pages,loading]);*/
 
-    }, [canScroll, loadingScroll]);*/
-
-    useEffect(() => {
-        console.log(commentsReducer);
-    },[commentsReducer])
-
-    if (err) {
+    if (errComments.err) {
         return (
             <div className={styles.container}>
 
                 <div className={styles.headerComment}>
                     <p><QueueListIcon/>{Capitalize(title)}</p>
-                    <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
+                    <p onClick={() => router.push("/auteur/" + author.pseudo)}><span>{author.pseudo}</span></p>
                 </div>
 
                 <div className={styles.titleSection}>
@@ -175,40 +321,46 @@ const NewSidebarCommentary = ({
 
                     <div>
                         <p
-                            className={filter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                            className={filter === 'popular' ? styles.filterActive : ''}>Populaires</p>
                         <p
-                            className={filter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                            className={filter === 'recent' ? styles.filterActive : ''}>Récents</p>
                     </div>
                 </div>
 
                 <div className={styles.errContainer}>
                     <h4>Erreur</h4>
-                    <p>Impossible de récupérer les commentaires.</p>
+                    {
+                        errComments.msg !== null ?
+                            <p>{errComments.msg}</p> :
+                            <p>Impossible de récupérer les commentaires.</p>
+                    }
                 </div>
-
-
             </div>
         )
     } else return (
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
-                <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
+                <p onClick={() => router.push("/auteur/" + author.pseudo)}><span>{author.pseudo}</span></p>
             </div>
             <div className={styles.titleSection}>
                 <h5><span>{nbComments}</span> commentaires</h5>
-
-
                 <div>
-                    <p onClick={() => filter === 'recent' ? dispatch(setPopular()) : null}
-                       className={filter === 'popular' ? styles.filterActive : ''}>Populaire(s)</p>
+                    <p onClick={() => filter === 'recent' ? changeFilter('popular') : null}
+                       className={filter === 'popular' ? styles.filterActive : ''}>Populaires</p>
 
-                    <p onClick={() => filter === 'popular' ? dispatch(setRecent()) : null}
-                       className={filter === 'recent' ? styles.filterActive : ''}>Récent(s)</p>
+                    <p onClick={() => filter === 'popular' ? changeFilter('recent') : null}
+                       className={filter === 'recent' ? styles.filterActive : ''}>Récents</p>
                 </div>
             </div>
 
             <div
+              /*  onScroll={(event) => {
+                    const target = event.target;
+                    if(target.scrollHeight - target.scrollTop === target.clientHeight){
+
+                    }
+                }}*/
                 ref={divRef}
                 className={styles.contentCommentaryContainer + ' ' + scroll.scrollbar + ' ' + anim.fadeIn}>
 
@@ -216,17 +368,14 @@ const NewSidebarCommentary = ({
                     width <= 600 &&
                     <div className={styles.filterPhone}>
                         <FilterBtn3 filter={filter}
-                                    onclick={() => filter === 'recent' ? dispatch(setPopular()) : dispatch(setRecent())}/>
+                                    onclick={() => changeFilter(filter === 'recent' ? 'popular' : 'recent')}
+                                  />
                     </div>
                 }
 
-
-
-               {/* {
-                    commentsReducer && commentsReducer.length > 0 &&
-
+                {
+                    commentsReducer && commentsReducer.length > 0 && visible &&
                     commentsReducer.map((item, index) => {
-
                         return (
                             <Fragment key={item._id}>
                                 <Commentary
@@ -290,25 +439,34 @@ const NewSidebarCommentary = ({
                                     pseudo={item.pseudo}
                                     answers={item.answers}
                                 />
+
                             </Fragment>
-
-
-                        )
-                    })
-                }*/}
-
-                {
-                    commentsReducer.map((item,index) => {
-                        return (
-                            <p>{item?.content}</p>
                         )
                     })
                 }
 
 
+                {
+                    commentsReducer.length < nbComments && visible && !loading && commentsReducer.length !== 0 &&
+                    <div className={styles.getMore}>
+                                <button onClick={() => {
+                                    dispatch(activeLoading())
+                                        getCommentReducer(filter, pages)
+                                            .then(() => {
+                                                if(width > 600){
+                                                    scrollBottom();
+                                                }
+                                                else {
+                                                    scrollBottomPhone()
+                                                }
+                                            })
+                                            .then(() => dispatch(disableLoading()))
+                                }}>Voir plus</button>
+                    </div>
+                }
 
                 {
-                    nbComments <= 0 && !loading &&
+                    infosComment.nbComments <= 0 && !loading &&
                     <div className={styles.empty + ' ' + anim.fadeIn}>
                         <img src={GetImgPathOfAssets() + 'utils/smile8.png'} alt={'Image Jim Ogla'}
                              onError={(e) => e.target.src = '/assets/jim/smile8.png'}/>
@@ -329,6 +487,8 @@ const NewSidebarCommentary = ({
             </div>
 
 
+
+
             <div className={styles.commentaryContainer}>
 
                 <div className={styles.formContainer}>
@@ -344,7 +504,7 @@ const NewSidebarCommentary = ({
                                     }
                                 }}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                                className={scroll.scrollbar} type="textarea" placeholder="Écrire un commentaire..."/>
                             :
                             <textarea
                                 className={scroll.scrollbar}
@@ -356,13 +516,15 @@ const NewSidebarCommentary = ({
                     }
                 </div>
                 {
-                    loading && commentsReducer.length >= 1 &&
+                    infosComment.loading && commentsReducer.length >= 1 &&
                     <div className={styles.loaderContainer}><LoaderCommentary/></div>
                 }
+
 
                 <div
                     onClick={() => {
                         if (newComment !== "") {
+                            sendNewComment();
                         }
                     }}
                     className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
@@ -372,52 +534,27 @@ const NewSidebarCommentary = ({
 
 
             {
-                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'}
-                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
-                    setActiveCommentaryToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
+                reportModal.type !== null &&
+                <ConfirmModalCommentary
+                    loading={loadingModal}
+                    btnConfirm={'Confirmer'}
+                                        confirm={() => {report(reportModal.id,reportModal.type)}}
+                                        close={() => dispatch(disableModalReport())}
+                                        title={reportModal.type === 'comment' ? 'Signaler ce commentaire ?' : 'Signaler cette réponse ?'}
+                                        subTitle={Capitalize(ReduceString(reportModal.content,70))}/>
             }
 
             {
-                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'}
-                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
-                    setActiveCommentaryToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
+                reportModal.type === null && deleteModal.type !== null &&
+                <ConfirmModalCommentary
+                    loading={loadingModal}
+                    btnConfirm={'Confirmer'}
+                                        confirm={() =>  newDeleteComment(deleteModal.id)}
+                                        close={() => dispatch(disableDeleteModal())}
+                                        title={deleteModal.type === 'comment' ? 'Supprimer votre commentaire ?' : 'Supprimer votre réponse ?'}
+                                        subTitle={Capitalize(ReduceString(deleteModal.content),70)}/>
             }
 
-            {
-                openConfirmModalForDeleteAnswer && activeAnswersToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    deleteAanswer(activeAnswersToDelete.id);
-                }} close={() => {
-                    setActiveAnswersToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteAnswer(false);
-                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)}/>
-            }
-
-
-            {
-                openConfirmModalForReportComment && activeCommentToReport.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    report(activeCommentToReport.id, 'comment');
-                }} close={() => {
-                    resetCommentReport();
-                }} title={'Signaler ce commentaire ?'} subTitle={Capitalize(activeCommentToReport.content)}/>
-            }
-
-
-            {
-                openConfirmModalForReportAnswer && activeAnswerToReport.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    report(activeAnswerToReport.id, 'answer');
-                }} close={() => {
-                    resetAnswerReport();
-                }} title={'Signaler cette réponse ?'} subTitle={Capitalize(activeAnswerToReport.content)}/>
-            }
 
         </div>
     )

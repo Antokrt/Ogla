@@ -58,11 +58,11 @@ import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {
     activeLoading,
-    addComment, addFirstComment,
-    disableLoading,
+    addComment, addMyComments, cleanComments, cleanInfos,
+    disableLoading, hasGetMyComments,
     incrPages,
     mountComment, removeAnErr,
-    selectComments,
+    selectComments, selectErrComments,
     selectInfosComment, setReady,
     setRecent,
     throwAnErr
@@ -75,7 +75,6 @@ export async function getServerSideProps({req, params, query}) {
 
     const data = await GetOneBookApi(id, req);
     if (!data.err) {
-        console.log(data)
         return {
             props: {
                 key: id,
@@ -99,35 +98,22 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     const [width, height] = ScreenSize();
     const router = useRouter();
-    const [loginModal, setLoginModal] = useState(true);
     const {data: session} = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
-    const [nbCommentary, setNbCommentary] = useState(bookData?.nbCommentary);
-    const [lastCommentId, setLastCommentId] = useState([]);
-    const [hasToScroll, setHasToScroll] = useState(false);
     const [likes, setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
-    const [comments, setComments] = useState([]);
-    const [errCommentary, setErrCommentary] = useState(false);
-    const [myComments, setMyComments] = useState([]);
-    const [pageComment, setPageComment] = useState(1);
-    const [sizeComment, setSizeComment] = useState(1);
     const [nbChapters, setNbChapters] = useState(bookData?.nbChapters);
-    const [noComments, setNoComments] = useState(bookData?.nbCommentary <= 0);
-    const [activeFilterComments, setActiveFilterComments] = useState('popular');
     const [pageChapter, setPageChapter] = useState(2);
-    const [canScroll, setCanScroll] = useState(true);
-    const [loadingScroll, setLoadingScroll] = useState(false);
     const [loadingScrollChapterList, setLoadingScrollChapterList] = useState(false);
     const [chapterList, setChapterList] = useState(chapterData);
     const [canSeeMoreChapter, setCanSeeMoreChapter] = useState(true);
     const [activeFilterList, setActiveFilterList] = useState('order');
-    const [snippetTooBig, setSnippetTooBig] = useState(bookData?.summary?.length > 500);
     const [activeLinkPhone, setActiveLinkPhone] = useState('description');
     const infosComment = useSelector(selectInfosComment);
-
+    const errComments = useSelector(selectErrComments);
     const commentsReducer = useSelector(selectComments);
     const dispatch = useDispatch();
+
     useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary);
 
     useEffect(() => {
@@ -136,9 +122,29 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
         }
+        return () => {
+            dispatch(cleanInfos());
+            dispatch(cleanComments());
+        }
     }, []);
 
-
+    const likeBook = () => {
+        if (session) {
+            LikeBookService(bookData._id)
+                .then((res) => setHasLike(!hasLike))
+                .then(() => {
+                    if (hasLike) {
+                        setLikes(likes - 1);
+                    } else {
+                        setLikes(likes + 1);
+                        SendNotifService(authorData._id, 1, bookData._id, "null")
+                    }
+                })
+                .catch(() => console.log('err like book'));
+        } else {
+            dispatch(setActiveModalState(true));
+        }
+    }
 
     const GetChapters = (setState, setCanSeeMore, filter) => {
         GetChapterListService(bookData._id, filter, 1)
@@ -152,12 +158,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             })
     }
 
-    const refresh = () => {
-        setPageComment(1);
-        setComments([]);
-        setMyComments([]);
-    }
-
     const countNbOfChapters = useCallback(async () => {
         const nb = await CountNbOfChaptersService(bookData?._id);
         return setNbChapters(nb);
@@ -168,114 +168,21 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .catch(() => console.log('err callback'));
     }, [chapterList]);
 
-    const GetCommentReducer = () => {
-        if (commentsReducer.length >= nbComments) {
-            return null;
-        }
-
-        activeLoading();
-
-        GetCommentService(type, activeId, pages, 5, session, activeFilter)
-            .then((res) => {
-                res.forEach(element => {
-                    if (!lastCommentId.includes(element._id)) {
-                        addCommentF(element);
-                    }
-                });
-                if (res.length !== 0) {
-                    incrPagesF();
-                    // setCanScroll(true);
-                } else {
-                    // setCanScroll(false);
-                }
-
-
-            })
-            .then(() => disableLoadingF())
-            .catch(() => activeErrF());
-    }
-
- /*   useEffect(() => {
-
-        if (commentsReducer.length === 0) {
-            GetCommentsUtils(
-                commentsReducer,
-                infosComment.nbComments,
-                dispatch(activeLoading()),
-                dispatch(disableLoading()),
-                infosComment.type,
-                infosComment.activeId,
-                infosComment.pages,
-                session,
-                infosComment.filter,
-                infosComment.lastCommentId,
-                dispatch(addComment()),
-                dispatch(incrPages()),
-                () => setErrCommentary(true))
-        }
-    },[])*/
-
     const openCommentaryOnPhone = () => {
         if (err) {
             return null;
         }
 
-        if (comments.length === 0 && canScroll) {
-            getComment(pageComment, 1);
-            if (session) {
-                getMyComments(1, 'popular');
-            }
-        }
         return (<div
             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
-            {errCommentary ? <div className={styles.errContainer}>
+            {errComments.err ? <div className={styles.errContainer}>
                     <h4>Erreur</h4>
                     <p>Impossible de récupérer les commentaires.</p>
                 </div>
 
-                : <SidebarCommentary
-                    limit={sizeComment}
-                    page={pageComment}
-                    getMore={() => {
-                        getComment();
-                    }}
-                    err={errCommentary}
-                    nbCommentary={nbCommentary}
-                    refresh={() => refresh()}
-                    scrollChange={hasToScroll}
-                    likeAComment={(id) => likeComment(id)}
-                    createNewComment={(res) => newComment(res)}
-                    deleteAComment={(id) => deleteComment(id)}
-                    seeMore={() => getComment(pageComment)}
-                    sendANewAnswer={(data) => sendAnswer(data)}
-                    deleteAnswer={(id) => deleteAnswer(id)}
-                    authorImg={authorData?.img}
-                    likeAnswer={(id) => likeAnswer(id)}
-                    newPageAnswer={(id) => loadMoreAnswer(id)}
-                    type={'book'}
-                    canScroll={canScroll}
-                    loadingScroll={loadingScroll}
-                    activeFilter={activeFilterComments}
-                    changeFilter={(e) => {
-                        if (e === 'recent' && activeFilterComments === 'popular') {
-                            setCanScroll(true);
-                            setActiveFilterComments('recent');
-                            setComments([]);
-                            setPageComment(1);
+                :
 
-                        } else if (e === 'popular' && activeFilterComments === 'recent') {
-                            setCanScroll(true);
-                            setActiveFilterComments('popular');
-                            setComments([]);
-                            setPageComment(1);
-                        }
-                    }}
-                    typeId={bookData._id}
-                    bookId={bookData._id}
-                    title={bookData.title}
-                    author={bookData.author_pseudo}
-                    comments={comments}
-                    select={sidebarSelect}/>}
+                <NewSidebarCommentary authorImg={authorData.img}/>}
 
         </div>)
     }
@@ -286,63 +193,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         }
         switch (sidebarSelect) {
             case 'Commentary':
-
-
-                /*if (comments.length === 0 && canScroll) {
-                    getComment(pageComment, 1);
-                    if (session) {
-                        getMyComments(1, 'popular');
-                    }
-                }*/
                 return (<div
                     className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
                     <NewSidebarCommentary
-                        limit={sizeComment}
-                        page={pageComment}
-                        getMore={() => {
-                            getComment();
-                        }}
-                        errCommentary={errCommentary}
-                        nbCommentary={nbCommentary}
-                        refresh={() => refresh()}
-                        scrollChange={hasToScroll}
-                        likeAComment={(id) => likeComment(id)}
-                        createNewComment={(res) => newComment(res)}
-                        deleteAComment={(id) => deleteComment(id)}
-                        seeMore={() => {
-                            if (!loadingScroll) {
-                                getComment(pageComment);
-                            }
-                        }}
-                        sendANewAnswer={(data) => sendAnswer(data)}
-                        deleteAnswer={(id) => deleteAnswer(id)}
-                        authorImg={authorData?.img}
-                        likeAnswer={(id) => likeAnswer(id)}
-                        newPageAnswer={(id) => loadMoreAnswer(id)}
-                        type={'book'}
-                        canScroll={canScroll}
-                        loadingScroll={loadingScroll}
-                        activeFilter={activeFilterComments}
-                        changeFilter={(e) => {
-                            if (e === 'recent' && activeFilterComments === 'popular') {
-                                setCanScroll(true);
-                                setActiveFilterComments('recent');
-                                setComments([]);
-                                setPageComment(1);
-
-                            } else if (e === 'popular' && activeFilterComments === 'recent') {
-                                setCanScroll(true);
-                                setActiveFilterComments('popular');
-                                setComments([]);
-                                setPageComment(1);
-                            }
-                        }}
-                        typeId={bookData._id}
-                        bookId={bookData._id}
-                        title={bookData.title}
-                        author={bookData.author_pseudo}
-                        comments={commentsReducer}
-                        select={sidebarSelect}/>
+                        authorImg={authorData.img}
+                    />
                 </div>)
                 break;
 
@@ -356,69 +211,47 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         }
     }
 
-    const getMyComments = (page, filter) => {
-        GetMyCommentsService('book', bookData._id, page, filter)
-            .then((res) => {
-                if (res.length !== 0) {
-                    setComments((prevState) => [...prevState, ...res]);
-                }
-            })
-            .catch((err) => console.log(err));
+    const getMyCommentsReducer = async (page, filter) => {
+        try {
+            const res = await GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter);
+
+            if (res.length !== 0) {
+                dispatch(addMyComments(res));
+            }
+        } catch (error) {
+            dispatch(throwAnErr());
+        }
     };
 
-    const getComment = () => {
-        setLoadingScroll(true);
-        setCanScroll(false);
-        GetCommentService('book', bookData._id, pageComment, 5, session, activeFilterComments)
-            .then((res) => {
-                res.forEach(element => {
-                    if (!lastCommentId.includes(element._id)) {
-                        setComments((prevState) => ([...prevState, element]))
-                    }
-                })
+    const getCommentReducer = async () => {
+        try {
+            if (commentsReducer.length >= infosComment.nbComments) {
+                return null;
+            }
 
-                if (res.length !== 0) {
-                    setPageComment(pageComment + 1);
-                    setCanScroll(true);
-                } else {
-                    setCanScroll(false);
-                }
+            if (session && !infosComment.getMyComments) {
+                await getMyCommentsReducer(1, infosComment.filter);
+                await dispatch(hasGetMyComments());
+            }
 
+            dispatch(activeLoading());
+            // setCanScroll(false);
 
-            })
-            .then(() => setLoadingScroll(false))
-            .catch((err) => setErrCommentary(true))
-    }
+            const res = await GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.filter);
 
-    const getCommentReducer = (first) => {
+            res.forEach(element => {
+                    dispatch(addComment(element));
+            });
 
-        if (commentsReducer.length >= infosComment.nbComments) {
-            return null;
+            if (res.length !== 0) {
+                dispatch(incrPages());
+            }
+
+            dispatch(disableLoading());
+        } catch (error) {
+            // Gérer les erreurs ici (vous pouvez ajouter une fonction de gestion d'erreur appropriée)
+            dispatch(throwAnErr());
         }
-        dispatch(activeLoading());
-        // setCanScroll(false);
-        GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.activeFilter)
-            .then((res) => {
-                if(first){
-                    dispatch(addFirstComment(res));
-                }
-                else {
-                    res.forEach(element => {
-                        if (!lastCommentId.includes(element._id)) {
-                            dispatch(addComment(element));
-                        }
-                    });
-                }
-                if (res.length !== 0) {
-                    dispatch(incrPages());
-                    setCanScroll(true);
-                } else {
-                    setCanScroll(false);
-                }
-            })
-            .then(() => dispatch(disableLoading()))
-            .then(() => console.log(commentsReducer.length))
-            .catch((err) => dispatch(throwAnErr()));
     };
 
     const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
@@ -435,84 +268,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             .then(() => setLoadingScrollChapterList(false))
             .catch(() => setLoadingScrollChapterList(false));
     }
-
-    const likeBook = () => {
-        if (session) {
-            LikeBookService(bookData._id)
-                .then((res) => setHasLike(!hasLike))
-                .then(() => {
-                    if (hasLike) {
-                        setLikes(likes - 1);
-                    } else {
-                        setLikes(likes + 1);
-                        SendNotifService(authorData._id, 1, bookData._id, "null")
-                    }
-                })
-                .catch((err) => console.log('err like book'));
-        } else {
-            dispatch(setActiveModalState(true));
-        }
-    }
-
-    const likeComment = (id) => {
-        setComments(LikeCommentReduce(id, comments, authorData._id, session.user.id, bookData._id, "null"));
-    }
-
-    const newComment = (res) => {
-
-        setComments((prevState) => [res, ...prevState])
-        setLastCommentId(prevState => [...prevState, res._id])
-        setPageComment((pageComment + 1));
-        setNbCommentary(nbCommentary + 1);
-        if (res.userId !== session.user.id) {
-            setTimeout(() => setHasToScroll(!hasToScroll), 10);
-        }
-        SendNotifService(authorData._id, 10, bookData._id, "null");
-    }
-
-    const deleteComment = (id) => {
-        setComments((list) => list.filter((item) => item._id !== id))
-        setNbCommentary(nbCommentary - 1);
-    }
-
-    const sendAnswer = (data) => {
-        setComments(SendAnswerReduce(comments, data.target_id, data));
-        comments.forEach((elem) => {
-            if (elem._id === data.target_id) {
-                if (authorData._id != session.user.id)
-                    SendNotifService(elem.userId, 20, bookData._id, "null")
-                else
-                    SendNotifService(elem.userId, 21, bookData._id, "null")
-                return;
-            }
-        })
-    };
-
-    const deleteAnswer = (id) => {
-        setComments(DeleteAnswerReduce(comments, id))
-    };
-
-    const likeAnswer = (replyId) => {
-        setComments(LikeAnswerReduce(comments, replyId, authorData._id, session.user.id, bookData._id, "null"));
-    }
-
-    const loadMoreAnswer = (id) => {
-        const newState = [...comments];
-        const target = newState.find(obj => obj._id === id);
-        if (target) {
-            GetAnswerByCommentService(id, target.answersPage, 1, session)
-                .then((res) => {
-                    if (res.data.length > 0) {
-                        target.answersPage += 1;
-                        target.answers = [...target.answers, ...res.data];
-                    } else {
-                        target.seeMoreAnswers = false;
-                    }
-                })
-                .then(() => setComments(newState))
-        }
-    }
-
 
     if (err) {
         return (<div className={styles.containerErr}>
@@ -539,21 +294,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                     <HeaderMain/>
                     {checkSide()}
 
-                    <button onClick={() => getCommentReducer()}>Get comment</button>
-                <button onClick={() => dispatch(setRecent())}>change filter</button>
-                <button onClick={() => dispatch(throwAnErr())}>Make an err</button>
-                <button onClick={() => dispatch(removeAnErr())}>Remove the err</button>
-                <p>{infosComment.filter}</p>
-                    <p>{infosComment.title}</p>
                     <div className={styles.containerC}>
-
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <p>{commentsReducer.length}</p>
-                            <p>pages index : {infosComment.pages}</p>
-                            <p> {infosComment.loading && <LoaderCommentary/>}</p>
-                        </div>
-
-
                         <div className={styles.labelPresentation}>
                             <div className={styles.imgContainer}>
                                 <div className={styles.img}>
@@ -574,7 +315,6 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         }}
                                     >Lire le chapitre 1 <CursorArrowRaysIcon/>
                                     </button>}
-
                                 </div>
                             </div>
 
@@ -669,7 +409,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         title={bookData?.title}
                         like={likes}
                         img={bookData?.img}
-                        nbCommentary={nbCommentary}
+                        nbCommentary={infosComment.nbComments}
                         author={bookData?.author_pseudo}
                         nbChapter={bookData?.nbChapters}
                         hasLike={hasLike}
@@ -678,10 +418,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                         }}
                         openCommentary={() => {
                             ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
-                            if(!infosComment.ready){
-                                getCommentReducer();
-                                dispatch(setReady());
-                            }
+                            if (commentsReducer.length <= 0) getCommentReducer();
                         }}
                     />
 
@@ -720,6 +457,8 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             <div className={styles.itemMenuBookPhone} onClick={() => {
                                 setSidebarSelect('Commentary');
                                 setActiveLinkPhone('comments');
+                                if (commentsReducer.length <= 0) getCommentReducer();
+
                             }}>
                                 <ChatBubbleBottomCenterTextIcon/>
                             </div>
@@ -768,11 +507,12 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                        className={activeLinkPhone === 'chapters' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Chapitre{bookData?.nbChapters !== 1 && <>s</>}
                                         <span> ({bookData?.nbChapters})</span></p>
                                     <p onClick={() => {
+                                        if (commentsReducer.length <= 0) getCommentReducer();
                                         setSidebarSelect('Commentary');
                                         setActiveLinkPhone('comments');
                                     }}
-                                       className={activeLinkPhone === 'comments' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Commentaire{nbCommentary !== 1 && <>s</>}
-                                        <span> ({nbCommentary})</span></p>
+                                       className={activeLinkPhone === 'comments' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Commentaires
+                                        <span> ({infosComment.nbComments})</span></p>
                                 </div>
                                 <ChatBubbleLeftEllipsisIcon className={styles.svgDescription}/>
                             </div>
