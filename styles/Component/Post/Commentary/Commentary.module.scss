@@ -92,6 +92,11 @@ padding-left: 10px;
       }
 
       .dotContent{
+        &:active{
+          transform: scale(0.8);
+          transition: 0.2s;
+        }
+        transition: 0.2s;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -103,6 +108,7 @@ padding-left: 10px;
         width: 120px;
         background-color: white;
         button{
+
           &:hover{
             transition: 0.2s;
             background-color: rgba(230, 235, 241, 0.71);

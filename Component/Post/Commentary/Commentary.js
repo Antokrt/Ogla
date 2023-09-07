@@ -303,6 +303,7 @@ const Commentary = ({
 
 
                                 <div className={styles.sendResponse}>
+
                                     <button onClick={() => {
                                         if (session && newAnswer !== "") {
                                             const data = {

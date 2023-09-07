@@ -46,11 +46,10 @@ import {
     setRecent,
     throwAnErr
 } from "../../store/slices/commentSlice";
-import {ScrollDownUtils} from "../../utils/Scroll";
+import {ScrollDownUtils, ScrollUpUtils} from "../../utils/Scroll";
 
 
 const NewSidebarCommentary = ({
-                                  errCommentary,
                                   authorImg,
                               }) => {
     const router = useRouter();
@@ -86,9 +85,8 @@ const NewSidebarCommentary = ({
     const [width, height] = ScreenSize();
     const [newComment, setNewComment] = useState('');
     const infosComment = useSelector(selectInfosComment);
-    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter} = infosComment;
+    const {title, activeId, lastCommentId, type, nbComments, loading, pages, filter,author} = infosComment;
     const errComments = useSelector(selectErrComments);
-    const {author} = infosComment.author;
     const commentsReducer = useSelector(selectComments);
     const canSeeMore = useState(commentsReducer.length < nbComments);
 
@@ -168,7 +166,13 @@ const NewSidebarCommentary = ({
 
     const scrollBottomPhone = () => {
         return setTimeout(() => {
-ScrollDownUtils(1110)
+ScrollDownUtils(1110);
+        },100)
+    }
+
+    const scrollTopPhone = () => {
+        return setTimeout(() => {
+            ScrollUpUtils(0);
         },100)
     }
 
@@ -224,8 +228,15 @@ ScrollDownUtils(1110)
                 dispatch(sendMyNewComment([res]));
                 setNewComment('');
             })
-            .then(() => scrollToTop())
-            .catch((err) => console.log(err));
+            .then(() => {
+                if(width > 600){
+                    scrollToTop();
+                }
+                else {
+                    scrollTopPhone();
+                }
+            })
+            .catch((err) => console.log('err send new comment'));
     }
 
     const newDeleteComment = (id) => {
@@ -302,7 +313,7 @@ ScrollDownUtils(1110)
 
                 <div className={styles.headerComment}>
                     <p><QueueListIcon/>{Capitalize(title)}</p>
-                    <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
+                    <p onClick={() => router.push("/auteur/" + author.pseudo)}><span>{author.pseudo}</span></p>
                 </div>
 
                 <div className={styles.titleSection}>
@@ -330,7 +341,7 @@ ScrollDownUtils(1110)
         <div className={styles.container}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
-                <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
+                <p onClick={() => router.push("/auteur/" + author.pseudo)}><span>{author.pseudo}</span></p>
             </div>
             <div className={styles.titleSection}>
                 <h5><span>{nbComments}</span> commentaires</h5>
@@ -357,12 +368,10 @@ ScrollDownUtils(1110)
                     width <= 600 &&
                     <div className={styles.filterPhone}>
                         <FilterBtn3 filter={filter}
-                                    onclick={() => filter === 'recent' ? dispatch(setPopular()) : dispatch(setRecent())}/>
+                                    onclick={() => changeFilter(filter === 'recent' ? 'popular' : 'recent')}
+                                  />
                     </div>
                 }
-
-
-
 
                 {
                     commentsReducer && commentsReducer.length > 0 && visible &&
@@ -478,6 +487,8 @@ ScrollDownUtils(1110)
             </div>
 
 
+
+
             <div className={styles.commentaryContainer}>
 
                 <div className={styles.formContainer}>
@@ -493,7 +504,7 @@ ScrollDownUtils(1110)
                                     }
                                 }}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                                className={scroll.scrollbar} type="textarea" placeholder="Écrire un commentaire..."/>
                             :
                             <textarea
                                 className={scroll.scrollbar}
@@ -544,54 +555,6 @@ ScrollDownUtils(1110)
                                         subTitle={Capitalize(ReduceString(deleteModal.content),70)}/>
             }
 
-
-            {/*{
-                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'}
-                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
-                    setActiveCommentaryToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
-            }
-
-            {
-                openConfirmModalForDeleteComment && activeCommentaryToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'}
-                                        confirm={() => deleteComment(activeCommentaryToDelete.id)} close={() => {
-                    setActiveCommentaryToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteComment(false);
-                }} title={'Supprimer votre commentaire ?'} subTitle={Capitalize(activeCommentaryToDelete.content)}/>
-            }
-
-            {
-                openConfirmModalForDeleteAnswer && activeAnswersToDelete.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    deleteAanswer(activeAnswersToDelete.id);
-                }} close={() => {
-                    setActiveAnswersToDelete({id: null, content: null})
-                    setOpenConfirmModalForDeleteAnswer(false);
-                }} title={'Supprimer votre réponse ?'} subTitle={Capitalize(activeAnswersToDelete.content)}/>
-            }
-
-
-            {
-                openConfirmModalForReportComment && activeCommentToReport.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    report(activeCommentToReport.id, 'comment');
-                }} close={() => {
-                    resetCommentReport();
-                }} title={'Signaler ce commentaire ?'} subTitle={Capitalize(activeCommentToReport.content)}/>
-            }
-
-
-            {
-                openConfirmModalForReportAnswer && activeAnswerToReport.id &&
-                <ConfirmModalCommentary btnConfirm={'Confirmer'} confirm={() => {
-                    report(activeAnswerToReport.id, 'answer');
-                }} close={() => {
-                    resetAnswerReport();
-                }} title={'Signaler cette réponse ?'} subTitle={Capitalize(activeAnswerToReport.content)}/>
-            }*/}
 
         </div>
     )
