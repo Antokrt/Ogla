@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.scss';
 import anim from '../styles/utils/anim.module.scss';
 import Header from "../Component/Header";
 import Banner from "../Component/Banner";
+import {Suspense} from "react";
 import Footer from "../Component/Footer";
 import {HotPostPhone, HotPost} from "../Component/Post/HotPost";
 import {ChevronDoubleRightIcon} from "@heroicons/react/20/solid";
@@ -26,6 +27,7 @@ import {toastDisplayTest} from "../utils/Toastify";
 import {HeaderMainResponsive} from "../Component/HeaderMainResponsive";
 import {Partner} from "../Component/Partner";
 import NewFeatured from "../Component/Category/New";
+import dynamic from "next/dynamic";
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -52,6 +54,7 @@ export async function getServerSideProps() {
         }
     }
 }
+
 
 export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, err}) {
 
@@ -97,21 +100,22 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                         tops.map((item, i) => {
 
                                             return (
-                                                <Fragment key={item._id}>
-                                                    <HotPost
-                                                        className={styles.hotItem}
-                                                        authorImg={item.author?.img}
-                                                        id={item?._id}
-                                                        slug={item?.slug}
-                                                        likes={item?.likes}
-                                                        top={i === 0}
-                                                        title={item?.title} nbChapter={item?.nbChapters}
-                                                        author={item?.author_pseudo}
-                                                        img={item?.img} category={item?.category}
-                                                        description={item?.summary}
-                                                    />
-                                                </Fragment>
-
+                                                <Suspense fallback={<div>loading...</div>} >
+                                                    <Fragment key={item._id}>
+                                                        <HotPost
+                                                            className={styles.hotItem}
+                                                            authorImg={item.author?.img}
+                                                            id={item?._id}
+                                                            slug={item?.slug}
+                                                            likes={item?.likes}
+                                                            top={i === 0}
+                                                            title={item?.title} nbChapter={item?.nbChapters}
+                                                            author={item?.author_pseudo}
+                                                            img={item?.img} category={item?.category}
+                                                            description={item?.summary}
+                                                        />
+                                                    </Fragment>
+                                                </Suspense>
                                             )
                                         })
                                     }
