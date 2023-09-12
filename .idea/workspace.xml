@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Modal/LoginModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Modal/LoginModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/LoginModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/LoginModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Modal/NotifModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +377,8 @@
       <workItem from="1694340018161" duration="131000" />
       <workItem from="1694340161103" duration="189000" />
       <workItem from="1694433192382" duration="41000" />
-      <workItem from="1694433562220" duration="810000" />
+      <workItem from="1694433562220" duration="3835000" />
+      <workItem from="1694512494850" duration="597000" />
     </task>
     <servers />
   </component>

@@ -125,6 +125,7 @@
     width: 100% !important;
     display: flex !important;
     overflow-x: scroll !important;
+    scroll-snap-type: x mandatory ;
     white-space: nowrap;
     height: auto;
   }

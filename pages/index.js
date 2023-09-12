@@ -43,6 +43,8 @@ export async function getServerSideProps() {
         }
     }
 
+    console.log(data)
+
     return {
         props: {
             err: data.err,
