@@ -47,7 +47,7 @@ import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import useMountComment from "../../utils/hook/MountComment";
 import {
     activeLoading, addComment,
-    addMyComments, disableLoading,
+    addMyComments, cleanComments, cleanInfos, disableLoading,
     hasGetMyComments, incrPages, selectComments, selectErrComments,
     selectInfosComment,
     throwAnErr
@@ -117,13 +117,18 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const errComments = useSelector(selectErrComments);
 
 
-    useMountComment(chapterData._id,chapterData.title,authorData,'chapter',chapterData.nbCommentary);
+    useMountComment(chapterData._id,chapterData.title,authorData,'chapter',chapterData.nbCommentary,bookData._id);
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
         if (openSidebar && typeof window !== 'undefined') {
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
+        }
+
+        return () => {
+            dispatch(cleanInfos());
+            dispatch(cleanComments());
         }
     }, [])
 

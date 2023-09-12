@@ -114,7 +114,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const commentsReducer = useSelector(selectComments);
     const dispatch = useDispatch();
 
-    useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary);
+    useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary,bookData?._id);
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');

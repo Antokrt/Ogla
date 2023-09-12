@@ -4,6 +4,7 @@ import {HYDRATE} from "next-redux-wrapper";
 const initialState = {
     infos: {
         activeId: null,
+        bookId:null,
         title: null,
         author: {
             pseudo: null,
@@ -53,6 +54,9 @@ export const commentSlice = createSlice({
             state.infos.type = data.type;
             state.infos.loading = false;
             state.infos.nbComments = data.nbComments;
+            if(data.type === 'chapter' && data.bookId){
+                state.infos.bookId = data.bookId;
+            }
         },
 
         cleanInfos: (state) => {
@@ -168,7 +172,6 @@ export const commentSlice = createSlice({
         },
 
         cleanComments: (state, action) => {
-            console.log('im the clean comment')
             state.infos.getMyComments = false;
             state.infos.pages = 1;
             state.comments = [];
