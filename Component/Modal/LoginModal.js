@@ -8,6 +8,7 @@ import {GoogleLoginBtn} from "../layouts/Btn/Link";
 import {useRouter} from "next/router";
 import {useDispatch} from "react-redux";
 import {setActiveModalState} from "../../store/slices/modalSlice";
+import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
 
 export const LoginModal = ({close}) => {
     const {data: session} = useSession();
@@ -57,7 +58,10 @@ export const LoginModal = ({close}) => {
                 <div className={styles.containerContent + ' ' + anim.scaleInModal}>
                     <XMarkIcon onClick={close} className={styles.close}/>
                     <div className={styles.headerModal}>
-                        <img src={'assets/chara/chara1.png'}/>
+                        <img
+                            alt={'Logo Ogla'}
+                            onError={(e) => e.target.src = '/assets/logo.png'}
+                            src={GetLogoUtils()} />
                         <h5>Connexion</h5>
                         <p>Connectez vous pour accéder à toutes les fonctionnalités d'Ogla !</p>
                     </div>
