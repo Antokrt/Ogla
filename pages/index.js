@@ -26,8 +26,7 @@ import {HeaderHome} from "../Component/HeaderHome";
 import {toastDisplayTest} from "../utils/Toastify";
 import {HeaderMainResponsive} from "../Component/HeaderMainResponsive";
 import {Partner} from "../Component/Partner";
-import NewFeatured from "../Component/Category/New";
-import dynamic from "next/dynamic";
+
 
 export async function getServerSideProps() {
     const cat = await GetActiveMonthlyCateoryApi();
@@ -102,7 +101,6 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                         tops.map((item, i) => {
 
                                             return (
-                                                <Suspense fallback={<div>loading...</div>} >
                                                     <Fragment key={item._id}>
                                                         <HotPost
                                                             className={styles.hotItem}
@@ -117,7 +115,6 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
                                                             description={item?.summary}
                                                         />
                                                     </Fragment>
-                                                </Suspense>
                                             )
                                         })
                                     }
