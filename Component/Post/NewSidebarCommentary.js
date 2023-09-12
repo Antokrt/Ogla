@@ -212,7 +212,6 @@ const NewSidebarCommentary = ({
                 if (res.length !== 0) {
                     dispatch(addMyComments(res));
                 }
-
                 dispatch(hasGetMyComments());
                 resolve();
             } catch (error) {

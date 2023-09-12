@@ -23,7 +23,6 @@ const FooterOnChapter = ({
                              nbCommentary,
                              author,
                              nbChapter,
-                             refresh,
                              index,
                              likeChapter,
                              hasLike
