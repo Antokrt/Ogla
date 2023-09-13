@@ -211,7 +211,9 @@ const Books = ({booksData, err, errNb, nbBooks}) => {
                     }
 
                     <div className={styles.containerData}>
-                        <SmHeaderDashboard title={'Mes livres'}/>
+                        <div className={styles.smHeader}>
+                            <SmHeaderDashboard title={'Tous mes livres'} nb={nbBooks} />
+                        </div>
                         {
                             err || errNb  &&
                             <div className={styles.errContainer + ' ' + anim.fadeIn}>

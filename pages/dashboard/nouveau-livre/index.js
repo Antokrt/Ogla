@@ -44,6 +44,7 @@ const New = () => {
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
     const categories = useSelector(selectCategories);
+    const [loadingBtn,setLoadingBtn] = useState(false);
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -57,6 +58,7 @@ const New = () => {
         if(disableBtn){
             return null;
         }
+        setLoadingBtn(true);
         setDisableBtn(true);
         const form = {
             title: title,
@@ -66,7 +68,8 @@ const New = () => {
         }
         NewBookService(form, selectedFile)
             .then((res) => {
-                toastDisplaySuccess('Livre publié !')
+                setLoadingBtn(false);
+                toastDisplaySuccess('Livre publié !');
                 if (res.data._id) {
                     router.push('/dashboard/books/' + res.data._id);
                 }
@@ -76,6 +79,8 @@ const New = () => {
             })
             .catch((err) => {
                 setSeeErrMsg(true);
+                setLoadingBtn(false);
+                setDisableBtn(false);
                 if(err.response.data.message === 'Book-120'){
                     setErrMsg('Titre incorrect.');
                 }
@@ -126,7 +131,15 @@ const New = () => {
                     step >= 3 && !loadingImg &&
                     <>
                         <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
-                        <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon/>
+                        <button className={styles.sendBtn} onClick={() => sendData()}>
+                            {
+                                !loadingBtn ?
+                                    <span>
+                                        Enregistrer <CursorArrowRaysIcon/>
+                                    </span> :
+                                    <span><LoaderImg/></span>
+                            }
+
                         </button>
                     </>
                 }
