@@ -507,3 +507,11 @@
   }
 }
 
+@media screen and (max-width: 600px){
+  .editorPhone{
+    p{
+      font-family: $primaryFont!important;
+    }
+  }
+}
+
