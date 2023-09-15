@@ -23,8 +23,6 @@ import { GetDefaultUserImgWhenError, GetImgPathOfAssets } from "../utils/ImageUt
 export const HeaderHome = () => {
 
     const router = useRouter();
-    const [width] = ScreenSize()
-    const categories = useSelector(selectCategories);
     const { data: session } = useSession();
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState();
@@ -44,6 +42,18 @@ export const HeaderHome = () => {
         setQuery('');
         setSearchValue('');
     }, [router]);
+
+    useEffect(() => {
+        let nb = 0;
+        Notifs.forEach((elem) => {
+            if (elem.open === false) {
+                setIsOpen(true);
+                nb++;
+            }
+        })
+        if (nb === 0)
+            setIsOpen(false);
+    }, [Notifs])
 
     const openNotif = () => {
         if (session) {
@@ -194,7 +204,10 @@ export const HeaderHome = () => {
                             animation={'scale'}
                             placement={'bottom'}
                             delay={[200, 0]}>
-                            <BellIcon tabIndex={0} className={styles.notif} onClick={() => openNotif()} />
+                            <div className={styles.bellActive} onClick={openNotif}>
+                                <BellIcon onClick={() => dispatch(setActiveModalNotif(true))} />
+                                {isOpen && <span></span>}
+                            </div>
                         </Tippy>
                         {
                             session &&

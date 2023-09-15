@@ -114,7 +114,6 @@ export const commentSlice = createSlice({
             }
         },
 
-
         likeAComment: (state, action) => {
             const commentId = action.payload;
             state.comments.forEach((item) => {

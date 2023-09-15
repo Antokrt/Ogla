@@ -72,7 +72,7 @@
 
 .logContainer {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
   width: 300px;
@@ -170,7 +170,7 @@
 .leftLinkContainer {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 30px;
   width: auto;
   white-space: pre;
@@ -198,7 +198,7 @@
 
 .rightLinkContainer {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 20px;
   width: 200px;
@@ -296,6 +296,45 @@
   }
 }
 
+.bellActive {
+  &:hover {
+    background-color: hsla(240, 7%, 70%, .35);
+    transition: 0.3s;
+  }
+
+  &:active {
+    transform: scale(0.9);
+    transition: 0.1s;
+  }
+
+  position: relative;
+  border-radius: 3px;
+
+  svg {
+    &:hover {
+      background-color: unset;
+    }
+
+    &:active {
+      transform: unset
+    }
+
+    margin-right: unset;
+  }
+
+  span {
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: $orange;
+    border: 1px solid #f9f9f9;
+    cursor: pointer;
+  }
+}
+
 @keyframes pulse {
   0% {
     opacity: 0.4;
@@ -333,12 +372,12 @@
 
   .music {
     svg {
-      color: #e94f37 !important;
+      color: $orange !important;
     }
   }
 
   .rightLinkContainer .svgTheme {
-    color: #e94f37 !important;
+    color: $orange !important;
   }
 
   .containerImgProfil {

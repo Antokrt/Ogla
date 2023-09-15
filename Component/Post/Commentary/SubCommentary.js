@@ -12,8 +12,9 @@ import {useDispatch} from "react-redux";
 import {LikeAnswerReduce} from "../../../utils/CommentaryUtils";
 import {LikeService} from "../../../service/Like/LikeService";
 import {SendNotifService} from "../../../service/Notifications/NotificationsService";
-import {activeReportModal, deleteMyAnswer, likeOneAnswer, throwAnErr} from "../../../store/slices/commentSlice";
+import {activeReportModal, deleteMyAnswer, likeOneAnswer, selectInfosComment, throwAnErr} from "../../../store/slices/commentSlice";
 import {DeleteAnswerService} from "../../../service/Answer/AnswerService";
+
 const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswer, reportAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers}) => {
 
     const [sizeCommentary,setSizeCommentary] = useState(content?.length);
@@ -25,11 +26,27 @@ const SubCommentary = ({img, commentId, pseudo, date, content, likes,deleteAnswe
     const contentDotRef = useRef(null);
 
     const like = () => {
+        console.log("ehehehehe");
+        console.log(id);
         LikeService('answer',id)
             .then(() => {
                 dispatch(likeOneAnswer({commentId,id}));
             })
-
+            .then(() => {
+                // if (infosComment.type === "book") {
+                //     // infosComment.author._id => l'autheur du livre 
+                //     if (infosComment.author._id === session.user.id)
+                //         SendNotifService(authorId, 7, infosComment.activeId, "null")
+                //     else
+                //         SendNotifService(authorId, 5, infosComment.activeId, "null")
+                // }
+                // else {
+                //     if (infosComment.author._id === session.user.id)
+                //         SendNotifService(authorId, 7, infosComment.activeId, infosComment.bookId)
+                //     else
+                //         SendNotifService(authorId, 5, infosComment.activeId, infosComment.bookId)
+                // }
+            })
             .catch(() => throwAnErr(true,'Impossible de liker cette réponse.'))
 /*   /!*     LikeService('answer', id)
             .then((res) => {

@@ -74,8 +74,8 @@ padding-left: 10px;
       .dotContainer{
         display: flex;
         flex-direction: column;
-        align-items: end;
-        justify-content: end;
+        align-items: flex-end;
+        justify-content: flex-end;
         z-index: 200000;
         position: absolute;
         right: 5%;

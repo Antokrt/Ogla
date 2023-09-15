@@ -227,9 +227,9 @@ const NewSidebarCommentary = ({
                 dispatch(sendMyNewComment([res]));
                 setNewComment('');
                 if (type == "book")
-                    SendNotifService(infosComment.author._id, 10, infosComment.activeId, null)
-               // else
-               //     SendNotifService(infosComment.author._id, 11, infosComment.activeId, /*l'id du livre auquel le chapitre appartient*/)
+                    SendNotifService(infosComment.author._id, 10, infosComment.activeId, null);
+               else
+                   SendNotifService(infosComment.author._id, 11, infosComment.activeId, infosComment.bookId);
             })
             .then(() => {
                 if (width > 600) {
