@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/slices/commentSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/commentSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/hook/MountComment.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/hook/MountComment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/utils/var.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/var.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,6 +361,7 @@
       <workItem from="1692975299985" duration="99000" />
       <workItem from="1693338338904" duration="1651000" />
       <workItem from="1693387482457" duration="5861000" />
+<<<<<<< HEAD
       <workItem from="1693425017551" duration="394000" />
       <workItem from="1693499538850" duration="9204000" />
       <workItem from="1693643109538" duration="3971000" />
@@ -380,6 +379,10 @@
       <workItem from="1694433192382" duration="41000" />
       <workItem from="1694433562220" duration="3835000" />
       <workItem from="1694512494850" duration="597000" />
+=======
+      <workItem from="1693425017551" duration="3448000" />
+      <workItem from="1694699033540" duration="550000" />
+>>>>>>> dad86bd13fd6dfb95c127602df4151710f452a0c
     </task>
     <servers />
   </component>

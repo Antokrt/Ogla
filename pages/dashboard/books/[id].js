@@ -53,12 +53,13 @@ import Tippy from "@tippyjs/react";
 import Head from "next/head";
 import {FormatCount} from "../../../utils/NbUtils";
 import {GetUrl} from "../../../utils/PathUtils";
+import {GetFetchPath} from "../../api/utils/Instance";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
-    const book = await fetch('http://localhost:3008/author/book/' + id, config);
-    const chapterList = await fetch('http://localhost:3008/chapter/dashboard/list/' + id + '/1/order', config);
+    const book = await fetch(GetFetchPath()+'author/book/' + id, config);
+    const chapterList = await fetch(GetFetchPath()+ 'chapter/dashboard/list/' + id + '/1/order', config);
     const chapterErrData = !chapterList.ok;
     const bookErrData = !book.ok;
     let chapterJson = await chapterList.json();
