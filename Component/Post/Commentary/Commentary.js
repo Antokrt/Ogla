@@ -122,6 +122,8 @@ const Commentary = ({
         LikeService('comment', id)
             .then(() => dispatch(likeAComment(id)))
             .then(() => {
+                if (hasLike === true)
+                    return;
                 if (infosComment.type === "book") {
                     // infosComment.author._id => l'autheur du livre 
                     if (infosComment.author._id === session.user.id)
