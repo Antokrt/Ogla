@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/Component/styles/Component/Menu/VerticalAuthorMenu.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/nouveau-chapitre/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/New.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/NewChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneChapter.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/var.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/var.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -369,6 +363,8 @@
       <workItem from="1693387482457" duration="5861000" />
       <workItem from="1693425017551" duration="3448000" />
       <workItem from="1694699033540" duration="550000" />
+      <workItem from="1695073229730" duration="3265000" />
+      <workItem from="1695134180835" duration="125000" />
     </task>
     <servers />
   </component>
