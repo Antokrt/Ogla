@@ -119,6 +119,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
         if (openSidebar && typeof window !== 'undefined') {
+            if (commentsReducer.length <= 0) getCommentReducer();
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
         }

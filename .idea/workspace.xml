@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Post/FooterOnChapter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Post/FooterOnPost.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/ChapterPage.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/OneBook.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,23 +363,10 @@
       <workItem from="1692975299985" duration="99000" />
       <workItem from="1693338338904" duration="1651000" />
       <workItem from="1693387482457" duration="5861000" />
-      <workItem from="1693425017551" duration="394000" />
-      <workItem from="1693499538850" duration="9204000" />
-      <workItem from="1693643109538" duration="3971000" />
-      <workItem from="1693678685327" duration="817000" />
-      <workItem from="1693831933584" duration="9165000" />
-      <workItem from="1693854484300" duration="5953000" />
-      <workItem from="1693917026517" duration="11239000" />
-      <workItem from="1693942319660" duration="6721000" />
-      <workItem from="1693994500638" duration="5105000" />
-      <workItem from="1693999791911" duration="5163000" />
-      <workItem from="1694077714488" duration="5069000" />
-      <workItem from="1694186379430" duration="3179000" />
-      <workItem from="1694340018161" duration="131000" />
-      <workItem from="1694340161103" duration="189000" />
-      <workItem from="1694433192382" duration="41000" />
-      <workItem from="1694433562220" duration="3835000" />
-      <workItem from="1694512494850" duration="597000" />
+      <workItem from="1693425017551" duration="3448000" />
+      <workItem from="1694699033540" duration="550000" />
+      <workItem from="1695073229730" duration="3265000" />
+      <workItem from="1695134180835" duration="499000" />
     </task>
     <servers />
   </component>

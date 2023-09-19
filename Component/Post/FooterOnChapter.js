@@ -35,7 +35,7 @@ const FooterOnChapter = ({
             <img  alt={'Image Livre Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             <div>
                 <p className={styles.titleBook}>{ReduceString(title,80)} ({index})</p>
-                <p>{likes} likes - {author}</p>
+                <p>{likes} j'aimes - {author}</p>
             </div>
 
 
