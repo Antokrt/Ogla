@@ -1,0 +1,37 @@
+@import "styles/utils/var";
+
+.container{
+  position: relative;
+
+  button{
+    &:active {
+      transform: scale(0.8);
+      transition: 0.2s;
+    }
+transition: 0.2s;
+    cursor: pointer;
+    font-family: $primaryFont;
+    padding: 8px 30px;
+    background-color: #343d46;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 25px;
+    font-size: 11px;
+    svg {
+      width: 15px;
+      color: white;
+    }
+  }
+  }
+
+.secIcon{
+  width: 18px!important;
+  stroke-width: 2px!important;
+}
+
+

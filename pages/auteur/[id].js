@@ -39,6 +39,8 @@ import {TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
 import {GetTopUtils} from "../../utils/TopUtils";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import {SubBtn} from "../../Component/Sub/SubBtn";
+import {SubModal} from "../../Component/Sub/SubModal";
 
 
 export async function getServerSideProps({params, req}) {
@@ -95,6 +97,7 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
     const [recent, setRecent] = useState([]);
     const [maxSize, setMaxSize] = useState(600);
     const [width, height] = ScreenSize();
+    const [openSubModal,setOpenSubModal] = useState(false);
     const {data: session} = useSession();
     const dispatch = useDispatch();
 
@@ -116,8 +119,6 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                 setCanSeeMoreRecent(false);
             });
     }
-
-
     const fetchMorePopularBooks = () => {
         setLoading(true);
         GetBooksByAuthorService(profilAuthor.pseudo, 'popular', pagePopular)
@@ -135,7 +136,6 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                 setCanSeeMorePopular(false);
             });
     }
-
     const fetchMoreRecentBooks = () => {
         setLoading(true);
         GetBooksByAuthorService(profilAuthor.pseudo, 'recent', pageRecent)
@@ -153,14 +153,12 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                 setCanSeeMoreRecent(false)
             });
     }
-
     useEffect(() => {
         if (width < 1300) {
             setMaxSize(1000);
             setLine(8)
         }
     }, [width])
-
     const likeAuthor = () => {
         if (session) {
             LikeAuthorService(profilData._id)
@@ -221,15 +219,34 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                         </div>
                                     </div>
 
-                                    {
-                                        hasLike ?
-                                            <button  onClick={() => {
-                                                likeAuthor();
-                                            }}>J&apos;aime <HeartSolid/></button> :
-                                            <button className={styles.likeBtn} onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
-                                    }
+                                    <div className={styles.containerBtn}>
+                                        {
+                                            hasLike ?
+                                                <button className={styles.likeBtn} onClick={() => {
+                                                    likeAuthor();
+                                                }}>J&apos;aime <HeartSolid/></button> :
+                                                <button className={styles.likeAnim + ' ' + styles.likeBtn} onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
+                                        }
+
+                                        <SubBtn open={() => setOpenSubModal(!openSubModal)}/>
+
+
+                                    </div>
+
+
+
+
+
                                 </div>
 
+                                <div className={styles.containerSub}>
+
+
+                                    {
+                                        openSubModal &&
+                                        <div className={styles.containerSubModal}><SubModal close={() => setOpenSubModal(false)}/></div>
+                                    }
+                                </div>
                                 <div className={styles.lab}>
                                     <h6>Écrivain <span>OGLA</span></h6>
                                     {

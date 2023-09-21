@@ -1,0 +1,61 @@
+@import "styles/utils/var";
+
+.container{
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    cursor: pointer;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    margin-top: 2px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.4);
+    border-radius: 25px;
+
+  }
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: $shadow;
+  border-radius: 5px;
+  padding: 15px;
+  background-color: white;
+  height: 500px;
+  width: 500px;
+  overflow-y: scroll;
+}
+
+.loaderContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.close{
+  &:hover{
+    background-color: rgba(52, 61, 70, 0.07);
+    transition: 0.2s;
+  }
+  &:active{
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+  cursor: pointer;
+  transition: 0.2s;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border-radius: 5px;
+  width: 30px;
+  padding: 5px;
+  color: $darkBrown;
+}

@@ -156,6 +156,21 @@
   }
 }
 
+.containerSub{
+  position: relative;
+  height: 0px;
+  width: 100%;
+}
+
+.containerSubModal{
+  position: absolute;
+  height: 500px;
+  top: -20px;
+  right: 0;
+  width: 500px;
+  z-index: 1;
+}
+
 .chapterContainer {
 
   height: auto;
@@ -243,12 +258,16 @@
         }
       }
 
+      .containerBtn{
+        display: flex;
+        gap: 10px;
+      }
 
-      .likeBtn{
+      .likeAnim{
         transition: 0.2s!important;
         &:hover{
           svg{
-            transform: scale(1.2) !important;
+            transform: scale(1.1) !important;
             transition: 0.2s!important;
           }
         }
@@ -257,7 +276,8 @@
         }
       }
 
-      button {
+
+      .likeBtn {
         &:active {
           transform: scale(0.8);
           transition: 0.2s;
@@ -265,10 +285,13 @@
 
         &:hover {
           transition: 0.2s;
-          background-color: $orangeHover;
+          background-color: $purpleHover;
         }
 
         cursor: pointer;
+        font-family: $primaryFont;
+        padding: 8px 30px;
+        background-color: $purple;
         z-index: 1;
         margin-top: 10px;
         display: flex;
@@ -277,13 +300,8 @@
         gap: 10px;
         color: white;
         font-weight: bold;
-        font-family: 'Montserrat',
-        sans-serif;
         border-radius: 25px;
-        font-size: 10px;
-        background-color: $orange;
-        padding: 8px 50px;
-
+        font-size: 11px;
         svg {
           width: 15px;
           color: white;
