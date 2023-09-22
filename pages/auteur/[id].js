@@ -97,7 +97,7 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
     const [recent, setRecent] = useState([]);
     const [maxSize, setMaxSize] = useState(600);
     const [width, height] = ScreenSize();
-    const [openSubModal,setOpenSubModal] = useState(false);
+    const [openSubModal, setOpenSubModal] = useState(false);
     const {data: session} = useSession();
     const dispatch = useDispatch();
 
@@ -225,16 +225,15 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                                 <button className={styles.likeBtn} onClick={() => {
                                                     likeAuthor();
                                                 }}>J&apos;aime <HeartSolid/></button> :
-                                                <button className={styles.likeAnim + ' ' + styles.likeBtn} onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
+                                                <button className={styles.likeAnim + ' ' + styles.likeBtn}
+                                                        onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/>
+                                                </button>
                                         }
 
-                                        <SubBtn open={() => setOpenSubModal(!openSubModal)}/>
+                                        <SubBtn isOpen={openSubModal} open={() => setOpenSubModal(!openSubModal)}/>
 
 
                                     </div>
-
-
-
 
 
                                 </div>
@@ -244,7 +243,10 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
 
                                     {
                                         openSubModal &&
-                                        <div className={styles.containerSubModal}><SubModal close={() => setOpenSubModal(false)}/></div>
+                                        <div className={styles.containerSubModal}>
+                                            <SubModal becameAuthor={profilAuthor?.author.became_author} img={profilAuthor?.img} pseudo={profilAuthor?.pseudo} close={() => setOpenSubModal(false)}/>
+
+                                        </div>
                                     }
                                 </div>
                                 <div className={styles.lab}>
@@ -307,7 +309,9 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                             <div className={styles.empty}>
                                 <img
                                     src={GetImgPathOfAssets() + 'utils/smile8.png'} alt={'Image Ogla'}
-                                    onError={(e) => {e.target.src = '/assets/jim/smile8.png'}}/>
+                                    onError={(e) => {
+                                        e.target.src = '/assets/jim/smile8.png'
+                                    }}/>
                                 <p><span>{Capitalize(profilAuthor.pseudo)}</span> n&apos;a pas encore écrit de livres !
                                 </p>
                             </div>

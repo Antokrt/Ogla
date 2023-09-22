@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Component/Sub/SubBtn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Component/Sub/SubModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Sub/SubBtn.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Component/Sub/SubModal.module.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Sub/SubBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Sub/SubBtn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Component/Sub/SubModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Sub/SubModal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Component/Sub/SubModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Sub/SubModal.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -371,6 +369,8 @@
       <workItem from="1695134180835" duration="499000" />
       <workItem from="1695230173716" duration="833000" />
       <workItem from="1695299556211" duration="1114000" />
+      <workItem from="1695328688995" duration="1001000" />
+      <workItem from="1695373757133" duration="11603000" />
     </task>
     <servers />
   </component>

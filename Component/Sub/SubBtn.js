@@ -2,7 +2,7 @@ import styles from '../../styles/Component/Sub/SubBtn.module.scss';
 import {ChevronDownIcon, StarIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import {useState} from "react";
 
-export const SubBtn = ({open}) => {
+export const SubBtn = ({open,isOpen}) => {
 
 
     return (
@@ -11,7 +11,7 @@ export const SubBtn = ({open}) => {
 
             <button onClick={() => open()}>
                 {
-                    !open ?
+                    !isOpen ?
                     <>
                         <StarIcon/>S'abonner <ChevronDownIcon className={styles.secIcon}/>
                     </>    :
