@@ -117,6 +117,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary,bookData?._id);
 
     useEffect(() => {
+        console.log(session?.user?.accessToken)
         const openSidebar = localStorage.getItem('openSidebar');
         if (openSidebar && typeof window !== 'undefined') {
             if (commentsReducer.length <= 0) getCommentReducer();
@@ -316,6 +317,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         }}
                                     >Lire le chapitre 1 <CursorArrowRaysIcon/>
                                     </button>}
+
                                 </div>
                             </div>
 

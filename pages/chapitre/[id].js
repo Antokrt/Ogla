@@ -53,6 +53,7 @@ import {
     throwAnErr
 } from "../../store/slices/commentSlice";
 import NewSidebarCommentary from "../../Component/Post/NewSidebarCommentary";
+import {AddToProgressService, GetProgressService} from "../../service/Progress";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -394,6 +395,25 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
         }
     }
 
+    const addToProgress = () => {
+        AddToProgressService(bookData._id,chapterData._id)
+            .then((res)=> console.log(res))
+            .catch((err) => {
+                if(err.response.status === 409){
+                    alert('already in the list')
+                }
+                else{
+                    console.log(err)
+                }
+            })
+    }
+
+   const getProgress = () => {
+        GetProgressService()
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+   }
+
     return (
         <div className={styles.container}>
 
@@ -441,6 +461,8 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                                             </div>
                                         </div>
 
+                                        <button onClick={() =>addToProgress()}>Add to progress</button>
+                                        <button onClick={() => getProgress()}>Get my progress</button>
                                         <div
                                             className={styles.contentChapter}>
                                             <div className={styles.headerContent}>

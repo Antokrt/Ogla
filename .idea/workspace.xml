@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/service/Progress/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Sub/SubBtn.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Sub/SubBtn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Sub/SubModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Sub/SubModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Component/Sub/SubModal.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Sub/SubModal.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/chapitre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/chapitre/[id].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/livre/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/livre/[id].js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,7 +369,12 @@
       <workItem from="1695230173716" duration="833000" />
       <workItem from="1695299556211" duration="1114000" />
       <workItem from="1695328688995" duration="1001000" />
-      <workItem from="1695373757133" duration="11603000" />
+      <workItem from="1695373757133" duration="11646000" />
+      <workItem from="1695463204693" duration="1251000" />
+      <workItem from="1695546339953" duration="732000" />
+      <workItem from="1695632866080" duration="514000" />
+      <workItem from="1695634590041" duration="2360000" />
+      <workItem from="1695646543794" duration="733000" />
     </task>
     <servers />
   </component>
