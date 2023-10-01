@@ -12,8 +12,8 @@
 }
 
 .verticalMenuContainer {
-  height: 100%;
   width: 15%;
+  height: 100%;
 }
 
 
@@ -355,7 +355,6 @@
         width: 100%;
         font-size: 15px;
         font-family: $primaryFont;
-        opacity: 0.9;
         font-weight: bold;
         margin: 10px 0;
 
@@ -393,7 +392,7 @@
             gap: 5px;
             font-size: 12px;
             font-family: $primaryFont;
-            color: rgba(28, 35, 43, 0.82);
+            color: rgba(28, 35, 43, 0.72);
             font-weight: bold;
 
             svg {
@@ -405,7 +404,7 @@
             text-align: right;
             font-family: $primaryFont;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
             color: #343d46;
           }
         }
@@ -942,6 +941,7 @@
 
 .containerBtnPhone {
   margin-top: 1%;
+  margin-bottom: 1%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1050,13 +1050,7 @@
 
 }
 
-@media screen and (max-width: 1400px) {
-  .verticalMenuContainer {
-    width: 20% !important;
-  }
 
-
-}
 
 @media screen and (max-width: 1300px) {
 

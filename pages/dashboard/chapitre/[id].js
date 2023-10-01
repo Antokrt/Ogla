@@ -30,7 +30,7 @@ import CommentaryNewChapter from "../../../Component/Dashboard/CommentaryNewChap
 import {EyeIcon} from "@heroicons/react/24/solid";
 import {Capitalize} from "../../../utils/String";
 import {ConfirmModal} from "../../../Component/Modal/ConfirmModal";
-import {LoaderCommentary} from "../../../Component/layouts/Loader";
+import {LoaderCommentary, LoaderImg} from "../../../Component/layouts/Loader";
 import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
@@ -89,6 +89,8 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     const [text, setText] = useState(chapterData?.text);
     const [hasChange, setHasChange] = useState(false);
     const [seeConfirmModal, setSeeConfirmModal] = useState(false);
+    const [publishLoading,setPublishLoading] = useState(false);
+    const [saveLoading,setSaveLoading] = useState(false);
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
     const index = router.query.i
@@ -137,6 +139,7 @@ export default function ChapitrePage({chapterData, bookData, err}) {
     }
 
     const saveThis = () => {
+        setSaveLoading(true);
         if (hasChange) {
             const data = {
                 id: chapterData._id,
@@ -152,15 +155,17 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setTitle(chapterData.title);
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
+                    setSaveLoading(false);
                 })
                 .catch((err) => {
-                    console.log(err)
+                    setSaveLoading(false);
                     console.log('err save chapter');
                 })
         }
     }
 
     const publishThis = () => {
+        setPublishLoading(true);
         if (hasChange || !chapterData.publish) {
             const data = {
                 id: chapterData._id,
@@ -177,14 +182,16 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                     setTitle(chapterData.title);
                     setContent(JSON.parse(chapterData.content));
                     setHasChange(false);
+                    setPublishLoading(false);
                 })
                 .catch((err) => {
-                    console.log(err);
+
                     if (err.response.data.message === 'Chapter-120') {
                         toastDisplayError('Titre incorrect.');
                     } else {
                         toastDisplayError('Impossible de modifier le chapitre.')
                     }
+                    setPublishLoading(false);
                 })
         }
     }
@@ -281,15 +288,31 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                                 onClick={() => {
                                                     saveThis()
                                                 }
+                                                }>
+
+                                                {
+                                                !saveLoading ?
+                                                    <>
+                                                        Enregistrer <ArrowPathIcon/>
+                                                    </> :
+                                                    <LoaderImg/>
                                                 }
-                                            >Enregistrer <ArrowPathIcon/></button>
+                                            </button>
                                         }
 
 
                                         <button
                                             className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
                                             onClick={() => publishThis()}
-                                        >Publier <CursorArrowRaysIcon/>
+                                        >
+                                            {
+                                                !publishLoading ?
+<>
+    Publier <CursorArrowRaysIcon/>
+</>
+: <LoaderImg/>
+
+                                            }
                                         </button>
 
 
@@ -345,7 +368,14 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                                     saveThis()
                                                 }
                                                 }
-                                            >Enregistrer <ArrowPathIcon/>
+                                            >
+                                                {
+                                                    !saveLoading ?
+                                                        <>
+                                                            Enregistrer <ArrowPathIcon/>
+                                                        </> :
+                                                        <LoaderImg/>
+                                                }
                                             </button>
                                         }
 
@@ -353,7 +383,14 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <button
                                             className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
                                             onClick={() => publishThis()}
-                                        >Publier <CursorArrowRaysIcon/>
+                                        >
+                                            {
+                                                !publishLoading ?
+                                                 <>
+                                                     Publier <CursorArrowRaysIcon/>
+                                                 </>   :
+                                                    <LoaderImg/>
+                                            }
 
                                         </button>
 
@@ -445,21 +482,43 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         {
                                             width < 1100 &&
                                             <div className={styles.btnListResp}>
-                                                <button
-                                                    className={hasChange ? styles.activeSaveBtn : ''}
-                                                    onClick={() => {
-                                                        saveThis()
-                                                    }
-                                                    }
-                                                >Enregistrer <ArrowPathIcon/>
-                                                </button>
+                                                {
+                                                    !chapterData.publish ?
+                                                    <button
+                                                        className={hasChange ? styles.activeSaveBtn : ''}
+                                                        onClick={() => {
+                                                            saveThis()
+                                                        }
+                                                        }
+                                                    >
+
+                                                        {
+                                                            !saveLoading ?
+                                                                <>
+                                                                    Enregistrer <ArrowPathIcon/>
+                                                                </> :
+                                                                <LoaderImg/>
+                                                        }
+
+                                                    </button> :
+                                                        <button
+                                                            className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
+                                                            onClick={() => publishThis()}
+                                                        >
+                                                            {
+                                                                !publishLoading ?
+                                                                    <>
+                                                                        Publier <CursorArrowRaysIcon/>
+                                                                    </>
+                                                                    :
+                                                                    <LoaderImg/>
+                                                            }
+                                                        </button>
+                                                }
 
 
-                                                <button
-                                                    className={hasChange || !chapterData.publish ? styles.activePublishBtn : ''}
-                                                    onClick={() => publishThis()}
-                                                >Publier <CursorArrowRaysIcon/>
-                                                </button>
+
+
 
                                                 <div
                                                     onClick={() => {
@@ -503,7 +562,6 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <div className={styles.titleLPhone}>
                                             <h6>{chapter.title}</h6>
                                             <p className={styles.new}>{book.title} ({book.chapter_list.length}) {!chapterData.publish && <>(brouillon)</>}</p>
-
                                         </div>
 
                                         <div className={styles.titleRPhone}>
@@ -549,14 +607,30 @@ export default function ChapitrePage({chapterData, bookData, err}) {
                                         <button
                                             className={hasChange ? styles.activeSaveBtn : ''}
                                             onClick={() => saveThis()}
-                                        >Enregistrer <ArrowPathIcon/>
+                                        >
+                                            {
+                                                !saveLoading ?
+                                                    <>
+                                                        Enregistrer <ArrowPathIcon/>
+                                                    </> :
+                                                    <LoaderImg/>
+                                            }
+
                                         </button>
 
 
                                         <button
                                             className={hasChange ? styles.activePublishBtn : ''}
                                             onClick={() => publishThis()}
-                                        >Publier <CursorArrowRaysIcon/>
+                                        >
+                                            {
+                                                !publishLoading ?
+                                                    <>
+                                                        Publier <CursorArrowRaysIcon/>
+                                                    </>
+                                                    :
+                                                    <LoaderImg/>
+                                            }
                                         </button>
 
                                         <button

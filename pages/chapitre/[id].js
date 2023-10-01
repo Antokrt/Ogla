@@ -122,6 +122,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
         if (openSidebar && typeof window !== 'undefined') {
+            if (commentsReducer.length <= 0) getCommentReducer();
             setSidebarSelect('Commentary');
             localStorage.removeItem('openSidebar');
         }
@@ -426,7 +427,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
                         {
                             width > 600 ?
                                 <>
-                        
+
                                     <div
                                         className={styles.containerC}>
 

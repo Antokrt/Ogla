@@ -128,6 +128,10 @@
     font-weight: bold;
     font-family: $primaryFont;
 
+    div{
+      border-top: white 2px solid!important;
+    }
+
     svg {
       width: 15px !important;
       color: white;
@@ -599,6 +603,10 @@
       width: 18px;
       color: white;
     }
+
+    div{
+      border-top: solid 2px white;
+    }
   }
 }
 
@@ -629,6 +637,10 @@
   cursor: pointer !important;
   transition: 0.1s !important;
   background-color: #1C232B !important;
+
+  div{
+    border-top: solid 2px white!important;
+  }
 }
 
 .activePublishBtn {
@@ -640,6 +652,10 @@
   cursor: pointer !important;
   transition: 0.1s !important;
   background-color: $purple !important;
+
+  div{
+    border-top: solid 2px white!important;
+  }
 }
 
 .btnListResp {
@@ -788,6 +804,10 @@
     font-family: $primaryFont;
     gap: 8px;
 
+    div {
+      border-top: solid 2px white!important;
+    }
+
     svg {
       margin-bottom: 1px;
       width: 18px;
@@ -805,7 +825,6 @@
   padding-bottom: 4%;
   border-bottom: solid 1px rgba(28, 35, 43, 0.14);
   width: 100%;
-
   button {
     font-size: 16px;
     font-family: "Poppins", sans-serif;
@@ -856,6 +875,12 @@
 
   .text {
     padding-bottom: 5%;
+  }
+}
+
+@media screen and (max-width: 1200px){
+  .containerText{
+    margin-left: 4%;
   }
 }
 

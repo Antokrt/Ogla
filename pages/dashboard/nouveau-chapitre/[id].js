@@ -27,6 +27,7 @@ import Head from "next/head";
 import {toastDisplayError} from "../../../utils/Toastify";
 import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 import {GetFetchPath} from "../../api/utils/Instance";
+import {LoaderImg} from "../../../Component/layouts/Loader";
 
 export async function getServerSideProps({req, params}) {
     const id = params.id;
@@ -54,6 +55,8 @@ const NouveauChapitre = ({bookData, err}) => {
     const [content, setContent] = useState();
     const [text, setText] = useState('');
     const [canSend, setCanSend] = useState(false)
+    const [saveLoading,setSaveLoading] = useState(false);
+    const [publishLoading,setPublishLoading] = useState(false);
     const router = useRouter();
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
@@ -140,6 +143,12 @@ const NouveauChapitre = ({bookData, err}) => {
     })
 
     const sendData = (publish) => {
+        if(publish){
+            setPublishLoading(true);
+        }
+        else {
+            setSaveLoading(true);
+        }
         if (canSend) {
             const data = {
                 book_id: book._id,
@@ -154,12 +163,25 @@ const NouveauChapitre = ({bookData, err}) => {
                 .then((res) => {
                     localStorage.removeItem('book-' + bookData._id);
                     router.push('/dashboard/books/' + book._id);
+                    if(publish){
+                        setPublishLoading(false);
+                    }
+                    else {
+                        setSaveLoading(false);
+                    }
                 })
                 .catch((err) => {
                     if (err.response.data.message === 'Chapter-120') {
                         toastDisplayError('Titre incorrect.');
                     } else {
                         toastDisplayError('Impossible de modifier le chapitre.')
+                    }
+
+                    if(publish){
+                        setPublishLoading(false);
+                    }
+                    else {
+                        setSaveLoading(false);
                     }
                 });
         }
@@ -288,14 +310,31 @@ const NouveauChapitre = ({bookData, err}) => {
                                     <button
                                         className={canSend ? styles.activeSaveBtn : ''}
                                         onClick={() => sendData(false)}
-                                    >Enregistrer en tant que brouillon <ArrowPathIcon/>
+                                    >
+                                        {
+                                            !saveLoading ?
+                                              <>
+                                                  Enregistrer en tant que brouillon <ArrowPathIcon/>
+                                              </>
+                                                :
+                                                <LoaderImg/>
+                                        }
                                     </button>
+
 
 
                                     <button
                                         className={canSend ? styles.activePublishBtn : ''}
                                         onClick={() => sendData(true)}
-                                    >Publier <CursorArrowRaysIcon/>
+                                    >
+                                        {
+                                            !publishLoading ?
+                                                <>
+                                                    Publier <CursorArrowRaysIcon/>
+                                                </>
+                                                :
+                                                <LoaderImg/>
+                                        }
                                     </button>
                                 </div>
 
@@ -324,7 +363,15 @@ const NouveauChapitre = ({bookData, err}) => {
                                     <button
                                         className={canSend ? styles.activeSaveBtn : ''}
                                         onClick={() => sendData(false)}
-                                    >Brouillon <ArrowPathIcon/>
+                                    >
+                                        {
+                                            !saveLoading ?
+<>
+    Brouillon <ArrowPathIcon/>
+</>
+:
+                                                <LoaderImg/>
+                                        }
                                     </button>
 
 
@@ -399,14 +446,30 @@ const NouveauChapitre = ({bookData, err}) => {
                                                 <button
                                                     className={canSend ? styles.activeSaveBtn : ''}
                                                     onClick={() => sendData(false)}
-                                                >Brouillon <ArrowPathIcon/>
+                                                >
+                                                    {
+                                                        !saveLoading ?
+                                                            <>
+                                                                Brouillon <ArrowPathIcon/>
+                                                            </>
+                                                            :
+                                                            <LoaderImg/>
+                                                    }
                                                 </button>
 
 
                                                 <button
                                                     className={canSend ? styles.activePublishBtn : ''}
                                                     onClick={() => sendData(true)}
-                                                >Publier <CursorArrowRaysIcon/>
+                                                >
+                                                    {
+                                                        !publishLoading ?
+<>
+    Publier <CursorArrowRaysIcon/>
+</>
+:
+<LoaderImg/>
+                                                    }
                                                 </button>
                                             </div>
                                         }
@@ -485,14 +548,29 @@ const NouveauChapitre = ({bookData, err}) => {
                                         <button
                                             className={canSend ? styles.activeSaveBtn : ''}
                                             onClick={() => sendData(false)}
-                                        >Brouillon <ArrowPathIcon/>
+                                        >
+                                            {
+                                                !saveLoading ?
+                                                    <>
+                                                        Brouillon <ArrowPathIcon/>
+                                                    </>
+                                                    :
+                                                    <LoaderImg/>
+                                            }
                                         </button>
 
 
                                         <button
                                             className={canSend ? styles.activePublishBtn : ''}
                                             onClick={() => sendData(true)}
-                                        >Publier <CursorArrowRaysIcon/>
+                                        >
+                                            {
+                                                !publishLoading ?
+                                                    <>
+                                                        Publier <CursorArrowRaysIcon/>
+                                                    </> :
+                                                    <LoaderImg/>
+                                            }
                                         </button>
 
                                     </div>

@@ -92,6 +92,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
     const [seeMoreChapter, setSeeMoreChapter] = useState(true);
     const [errSummary, setErrSummary] = useState(false);
     const [loadingImg, setLoadingImg] = useState(false);
+    const [loadingModify,setLoadingModify] = useState(false);
     const [newSummary, setNewSummary] = useState(book.summary);
     const imgRef = useRef();
     const divRef = useRef(null);
@@ -216,6 +217,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
 
     const sumUpdate = () => {
+        setLoadingModify(true);
         if (newSummary !== book.summary && newSummary.length < 2000) {
             UpdateBookSummaryService(book._id, newSummary)
                 .then((res) => {
@@ -224,10 +226,11 @@ const OneBook = ({bookData, chapterListData, err}) => {
                         summary: res.summary
                     }))
                     setNewSummary(res.summary);
+                    setLoadingModify(false);
                 })
                 .catch((err) => {
-                    console.log('err update summary')
                     setErrSummary(true);
+                    setLoadingModify(false);
                 });
         } else {
             return null;
@@ -266,13 +269,13 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
 
             <div className={styles.containerData}>
-
+{/*
                 {
                     !err.book &&
                     <div className={styles.containerHeader}>
                         <SmHeaderDashboard title={bookData.title}/>
                     </div>
-                }
+                }*/}
 
 
                 {/*ERR MSG*/}
@@ -456,8 +459,11 @@ const OneBook = ({bookData, chapterListData, err}) => {
 
                                                     <button
                                                         onClick={() => sumUpdate()}
-                                                        className={newSummary !== book.summary ? styles.activeBtn : ''}
-                                                    >Modifier
+                                                        className={newSummary !== book.summary ? styles.activeBtnModify : styles.inactiveBtn}
+                                                    >
+                                                        {
+                                                            !loadingModify ? <>Modifier</> : <LoaderImg/>
+                                                        }
                                                     </button>
 
 
@@ -798,7 +804,10 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         <button
                                                             onClick={() => sumUpdate()}
                                                             className={newSummary !== book.summary ? styles.activeBtnModify : styles.inactiveBtn}
-                                                        >Modifier
+                                                        >
+                                                            {
+                                                                !loadingModify ? <>Modifier</> : <LoaderImg/>
+                                                            }
                                                         </button>
 
                                                     </div>
@@ -956,7 +965,7 @@ const OneBook = ({bookData, chapterListData, err}) => {
                                                         :
 
                                                         loadingChapter ?
-                                                            <div className={styles.loadingChapter}><Loader1/></div>
+                                                            <div className={styles.loadingChapter}><LoaderCommentary/></div>
                                                             :
 
                                                             <div className={styles.contentChapterList} ref={divRef}>

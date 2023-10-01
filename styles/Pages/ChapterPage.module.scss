@@ -175,7 +175,7 @@
     }
     transition: 0.1s;
     margin-top: 20px;
-    font-family: $primaryFontItalic;
+    font-family: $primaryFont;
     font-weight: bold;
     font-size: 13px;
     opacity: 0.8;
@@ -503,6 +503,14 @@
     height: 10vh;
     h3{
       font-size: 18px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px){
+  .editorPhone{
+    p{
+      font-family: $primaryFont!important;
     }
   }
 }
