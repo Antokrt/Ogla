@@ -8,6 +8,7 @@ import { selectTheme } from "../../store/slices/themeSlice";
 import { Capitalize, MinimizeStr, ReduceString } from "../../utils/String";
 import { FormatCount } from "../../utils/NbUtils";
 import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
+import { BookOpenIcon, CheckBadgeIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 const ResultSearchBar = ({ destroy, query, data }) => {
     const router = useRouter();
@@ -44,13 +45,13 @@ const ResultSearchBar = ({ destroy, query, data }) => {
     };
 
     return (
-        <div className={light ? styles.resultContainer : styles.blackResultContainer}>
+        <div className={light ? styles.resultContainer : styles.resultContainer + ' ' + styles.blackResultContainer}>
             {data && (
                 <>
                     {data.books.length > 0 && (
                         <>
                             <div className={styles.titleHeader}>
-                                <h5>Livres ({data.books.length})</h5>
+                                <h5> Livres <BookOpenIcon /> </h5>
                             </div>
                             {data.books.map((item, index) => (
                                 <div
@@ -74,7 +75,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
                     {data.authors.length > 0 && (
                         <>
                             <div className={styles.titleHeader}>
-                                <h5>Auteurs ({data.authors.length})</h5>
+                                <h5>Auteurs <CheckBadgeIcon /> </h5>
                             </div>
                             {data.authors.map((item, index) => (
                                 <div

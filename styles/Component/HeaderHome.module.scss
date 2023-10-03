@@ -181,7 +181,7 @@
     }
 
     &:active {
-      transform: scale(0.8);
+      color: #ab4fc2;
       transition: 0.2s;
     }
 
@@ -297,10 +297,10 @@
 }
 
 .bellActive {
-  &:hover {
-    background-color: hsla(240, 7%, 70%, .35);
-    transition: 0.3s;
-  }
+  // &:hover {
+  //   background-color: hsla(240, 7%, 70%, .35);
+  //   transition: 0.3s;
+  // }
 
   &:active {
     transform: scale(0.9);

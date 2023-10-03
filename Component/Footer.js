@@ -79,7 +79,7 @@ export default function Footer() {
                                     content={'Musique'}
                                     delay={[200, 0]}
                                     animation={'scale'}
-                                    placement={'bottom'}
+                                    placement={'top'}
                                 >
                                     <div
                                         className={styles.headphone}

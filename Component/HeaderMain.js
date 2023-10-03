@@ -111,9 +111,19 @@ export const HeaderMain = () => {
         if (nb === 0)
             setIsOpen(false);
     }, [Notifs])
-    
+
     return (
-        <div className={checkPathname(headerHasToBeWhite) ? styles.container : styles.container + ' ' + styles.bgTransparent}>
+        <div className={checkPathname(headerHasToBeWhite) ? 
+                theme ? 
+                styles.container 
+                : 
+                styles.container + ' ' + styles.darkModeContainer 
+            : 
+                theme ?
+                styles.container + ' ' + styles.bgTransparent
+                :
+                styles.container + ' ' + styles.bgTransparent + ' ' + styles.darkModeContainer 
+                }>
             <div className={styles.fContainer}>
                 <div className={styles.logoContainer + ' ' + anim.fadeIn}>
                     <img tabIndex={0} onClick={() => router.push('/')} src={process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png'} />
@@ -151,7 +161,7 @@ export const HeaderMain = () => {
 
                 </div>
 
-                <div className={styles.logContainer}>
+                <div className={theme ? styles.logContainer : styles.logContainer + ' ' + styles.darkModeContainer}>
                     {
                         session ?
                             <>
@@ -174,6 +184,7 @@ export const HeaderMain = () => {
                             </>
 
                             :
+                            
                             <>
                                 <button className={styles.register}
                                     onClick={() => router.push({ pathname: "/auth", query: "register" })}>S&apos;inscrire
@@ -193,7 +204,7 @@ export const HeaderMain = () => {
 
             {
                 checkPathname(pagesToHideCat) &&
-                <div className={styles.sContainer}>
+                <div className={theme ? styles.sContainer : styles.sContainer + ' ' + styles.darkModeContainer}>
                     <nav className={styles.leftLinkContainer}>
                         {
                             session && session?.user?.is_author ?
@@ -209,7 +220,7 @@ export const HeaderMain = () => {
                         }
 
                     </nav>
-                    <div className={styles.catContainer}>
+                    <div className={theme ? styles.catContainer : styles.catContainer + ' ' + styles.darkModeContainer}>
                         {
                             categories.map((item, index) => {
                                 return (
@@ -252,7 +263,14 @@ export const HeaderMain = () => {
                         {
                             !session ?
                                 <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
-                                    <MusicalNoteIcon tabIndex={0} />
+                                    <Tippy
+                                        trigger="mouseenter"
+                                        content={"Musique"}
+                                        animation={'scale'}
+                                        placement={'bottom'}
+                                        delay={[200, 0]}>
+                                        <MusicalNoteIcon tabIndex={0} />
+                                    </Tippy>
                                     {
                                         selectMusicState &&
                                         <div className={styles.animation}></div>
@@ -262,7 +280,14 @@ export const HeaderMain = () => {
                                     {
                                         session && session?.user?.settings?.music &&
                                         <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
-                                            <MusicalNoteIcon tabIndex={0} />
+                                            <Tippy
+                                                trigger="mouseenter"
+                                                content={"Musique"}
+                                                animation={'scale'}
+                                                placement={'bottom'}
+                                                delay={[200, 0]}>
+                                                <MusicalNoteIcon tabIndex={0} />
+                                            </Tippy>
                                             {
                                                 selectMusicState &&
                                                 <div className={styles.animation}></div>
@@ -273,22 +298,30 @@ export const HeaderMain = () => {
 
                         }
 
-
-
-
                         {
                             theme ?
-                                <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                    delay={[200, 0]}>
+                                    <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                </Tippy>
                                 :
-                                <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                    delay={[200, 0]}>
+                                    <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                </Tippy>
                         }
                     </div>
                 </div>
 
             }
-
-
-
         </div>
     )
 }

@@ -1,23 +1,22 @@
 import styles from "../styles/Component/Searchbar.module.scss";
-import {useEffect, useState} from "react";
-import {router, useRouter} from "next/router";
-import {SearchBarService} from "../service/Search/SearchService";
-import {useSelector} from "react-redux";
-import {selectTheme} from "../store/slices/themeSlice";
+import { useEffect, useState } from "react";
+import { router, useRouter } from "next/router";
+import { SearchBarService } from "../service/Search/SearchService";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../store/slices/themeSlice";
 import ScreenSize from "../utils/Size";
-import {MagnifyingGlassIcon} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-export default function MainSearchBar({data, submit, width, height, query, search}) {
+export default function MainSearchBar({ data, submit, width, height, query, search }) {
 
     const router = useRouter();
-    const light = useSelector(selectTheme);
-    const [widthPage] = ScreenSize();
+    const theme = useSelector(selectTheme);
 
     const submitSearch = () => {
         if (search.length !== 0 && search !== "undefined") {
             router.push({
                 pathname: "/rechercher",
-                query: {search: search}
+                query: { search: search }
             })
             submit();
         }
@@ -25,7 +24,7 @@ export default function MainSearchBar({data, submit, width, height, query, searc
     }
 
     return (
-        <div style={{
+        <div className={theme ? '' : styles.dark} style={{
             width: width + "%",
             height: height + "px"
         }}>
@@ -33,7 +32,11 @@ export default function MainSearchBar({data, submit, width, height, query, searc
 
             <form
 
-                className={router.pathname !== '/' ? styles.container : styles.homeContainer + ' ' + styles.container}
+                className={router.pathname !== '/' ?
+                    styles.container
+                    :
+                    styles.homeContainer + ' ' + styles.container
+                }
                 onSubmit={(e) => {
                     e.preventDefault();
                     e.target.reset();
@@ -48,22 +51,22 @@ export default function MainSearchBar({data, submit, width, height, query, searc
                         autoComplete={'off'}
                         onChange={(e) => {
                             query(e.target.value);
-                        }} type="text" name={"searchbar"} placeholder="Chercher un livre..."/>
+                        }} type="text" name={"searchbar"} placeholder="Chercher un livre..." />
                 }
 
                 {
                     router.pathname !== '/' &&
                     <input
-                        className={light ? styles.lightInput : styles.darkInput}
+                        className={theme ? styles.lightInput : styles.darkInput}
                         autoComplete={'off'}
                         onChange={(e) => {
                             query(e.target.value);
-                        }} type="text" name={"searchbar"} placeholder="Chercher un livre..."/>
+                        }} type="text" name={"searchbar"} placeholder="Chercher un livre..." />
                 }
 
                 <div className={styles.loopContainer}>
                     <div tabIndex={0} onClick={() => submitSearch()}>
-                        <MagnifyingGlassIcon/>
+                        <MagnifyingGlassIcon />
                     </div>
                 </div>
             </form>

@@ -1,10 +1,10 @@
 @import "../../styles/utils/var";
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-height: auto;
+  height: auto;
   background-color: rgba(119, 108, 107, 0.04);
   padding: 20px 30px;
   gap: 30px;
@@ -12,23 +12,24 @@ height: auto;
   width: 100%;
 }
 
-.fContainer,.sContainer{
+.fContainer,
+.sContainer {
   width: 100%;
 }
 
-.fContainer{
+.fContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.logoContainer{
+.logoContainer {
   display: flex;
   align-items: center;
   gap: 20px;
   width: 300px;
 
-  img{
+  img {
     cursor: pointer;
     margin-top: -2px;
     width: 80px;
@@ -36,7 +37,7 @@ height: auto;
 }
 
 
-.searchbarContainer{
+.searchbarContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,7 +70,7 @@ height: auto;
   }
 }
 
-.logContainer{
+.logContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -77,8 +78,8 @@ height: auto;
   width: 300px;
   height: 50px;
 
-  .containerImgProfil{
-    &::after{
+  .containerImgProfil {
+    &::after {
       content: '';
       bottom: 10%;
       right: -0%;
@@ -90,15 +91,17 @@ height: auto;
       border: 2px solid white;
       z-index: 2;
     }
-    &:active{
+
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     position: relative;
     transition: 0.2s;
     cursor: pointer;
 
-    img{
+    img {
       z-index: 2;
       width: 50px;
       object-fit: cover;
@@ -110,11 +113,12 @@ height: auto;
 
 
 
-  button{
-    &:active{
+  button {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     transition: 0.2s;
     border-radius: 5px;
     font-size: 11px;
@@ -124,7 +128,7 @@ height: auto;
     font-family: $primaryFont;
   }
 
-  .register{
+  .register {
 
     &:hover {
       background-color: $grey;
@@ -135,7 +139,7 @@ height: auto;
     color: #54595F;
   }
 
-  .login{
+  .login {
     &:hover {
       background-color: $purpleHover;
     }
@@ -144,17 +148,18 @@ height: auto;
     color: white;
   }
 
-  .logOut{
+  .logOut {
     color: white;
     background-color: transparent;
-    svg{
+
+    svg {
       color: #e94f37;
       width: 20px;
     }
   }
 }
 
-.sContainer{
+.sContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -162,9 +167,11 @@ height: auto;
   padding-left: 2%;
   padding-right: 2%;
   height: auto;
+  color: #1c232b;
+
 }
 
-.leftLinkContainer{
+.leftLinkContainer {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -172,8 +179,8 @@ height: auto;
   width: auto;
   white-space: pre;
 
-  a{
-    
+  a {
+
     &:hover {
       color: black;
       transition: 0.2s;
@@ -183,7 +190,7 @@ height: auto;
     justify-content: center;
     cursor: pointer;
     font-size: 13px;
-    color: #1c232b;
+    // color: #1c232b;
     border-radius: 3px;
     transition: 0.2s;
     width: 100%;
@@ -192,22 +199,24 @@ height: auto;
   }
 }
 
-.rightLinkContainer{
+.rightLinkContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 20px;
   width: 200px;
 
-  .notif, .sett{
+  .notif,
+  .sett {
     color: #54595F;
   }
 
-  .music{
+  .music {
     &:active {
-      transform: scale(0.8);
+      transform: scale(0.9);
       transition: 0.2s;
     }
+
     transition: 0.2s;
     cursor: pointer;
     position: relative;
@@ -215,7 +224,7 @@ height: auto;
     justify-content: center;
     align-items: center;
 
-    .animation{
+    .animation {
       position: absolute;
       width: 30px;
       height: 30px;
@@ -227,28 +236,30 @@ height: auto;
     }
   }
 
-  svg{
+  svg {
     &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     outline: none;
     cursor: pointer;
     color: #e94f37;
-    width: 18px;
+    width: 20px;
     transition: 0.2s;
   }
 }
 
-.catContainer{
+.catContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
   width: auto;
   height: 100%;
+  color: rgba(28, 35, 43, 0.88);
 
-  div{
+  div {
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -257,23 +268,23 @@ height: auto;
     opacity: 0.9;
     min-width: 60px;
 
-    img{
+    img {
       width: 60px;
       height: 60px;
     }
 
-    p{
-      
+    p {
+
       &:hover {
-        color: rgba(0, 0, 0, 0.88);
+        color: rgba(0, 0, 0, 0.945);
       }
 
       transition: 0.1s;
       text-align: center;
       text-decoration: none;
-      color: rgba(28, 35, 43, 0.88);
       font-weight: bold;
-      font-family: "Branch", sans-serif;
+      font-family: "Branch",
+      sans-serif;
       font-size: 15px;
     }
   }
@@ -289,10 +300,7 @@ height: auto;
 }
 
 .bellActive {
-  &:hover {
-    background-color: hsla(240, 7%, 70%, .35);
-    transition: 0.3s;
-  }
+
 
   &:active {
     transform: scale(0.9);
@@ -327,6 +335,37 @@ height: auto;
   }
 }
 
+.darkModeContainer {
+  background-color: $darkMode;
+
+  a {
+    &:hover {
+      color: $orangeHover;
+      transition: 0.2s;
+    }
+    color: $colorTextD;
+  }
+
+  .sContainer {
+
+    p {
+      &:hover {
+        color: $orangeHover !important;
+        transition: 0.2s;
+      }
+      color: $colorTextD;
+    }
+  }
+
+  .register {
+    &:hover {
+      background-color: $darkModeHoverBtn;
+    }
+    background-color: $darkMode5;
+    color: $colorTextD;
+  }
+}
+
 @keyframes pulse {
   0% {
     opacity: 0.4;
@@ -339,51 +378,54 @@ height: auto;
   }
 }
 
-.bgTransparent{
-  background-color: transparent!important;
+.bgTransparent {
+  background-color: transparent !important;
 }
 
-@media screen and (max-width: 1400px){
-  .catContainer{
+@media screen and (max-width: 1400px) {
+  .catContainer {
     gap: 30px;
   }
 
-  .rightLinkContainer{
+  .rightLinkContainer {
     width: auto;
   }
 }
 
-@media screen and (max-width: 1300px){
-  .leftLinkContainer{
+@media screen and (max-width: 1300px) {
+  .leftLinkContainer {
     flex-direction: column;
-    a{
+
+    a {
       font-size: 13px;
     }
   }
 }
 
-@media screen and (max-width: 1100px){
-  .catContainer{
+@media screen and (max-width: 1100px) {
+  .catContainer {
     gap: 20px;
-    div{
-      img{
+
+    div {
+      img {
         width: 40px;
       }
 
-      p{
+      p {
         font-size: 14px;
       }
     }
   }
 }
 
-@media screen and (max-width: 1050px){
-  .rightLinkContainer{
+@media screen and (max-width: 1050px) {
+  .rightLinkContainer {
     flex-direction: column;
   }
 }
-@media screen and (max-width: 1000px){
-  .register{
+
+@media screen and (max-width: 1000px) {
+  .register {
     display: none;
   }
 }
