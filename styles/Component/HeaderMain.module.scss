@@ -206,10 +206,10 @@
   gap: 20px;
   width: 200px;
 
-  .notif,
-  .sett {
-    color: #54595F;
-  }
+  // .notif,
+  // .sett {
+  //   // color: #54595F;
+  // }
 
   .music {
     &:active {
@@ -421,6 +421,10 @@
 @media screen and (max-width: 1050px) {
   .rightLinkContainer {
     flex-direction: column;
+  }
+
+  .container {
+    gap: 0px;
   }
 }
 

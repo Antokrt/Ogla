@@ -254,10 +254,18 @@ export const HeaderMain = () => {
 
                         {
                             session &&
+                            <Tippy
+                            trigger="mouseenter"
+                            content={"Réglages"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
                             <Cog8ToothIcon tabIndex={0} className={styles.sett} onClick={() => {
                                 localStorage.setItem('side', 'settings');
                                 router.push('/profil')
                             }} />
+                        </Tippy>
+
                         }
 
                         {

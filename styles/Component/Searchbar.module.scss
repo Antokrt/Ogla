@@ -116,7 +116,7 @@
     div {
       background-color: #901aad;
 
-    } 
+    }
   }
 
   form {
@@ -143,5 +143,11 @@
 
   .container {
     background-color: white !important;
+  }
+
+  .dark {
+    .container {
+      background-color: $darkMode2 !important;
+    }
   }
 }
