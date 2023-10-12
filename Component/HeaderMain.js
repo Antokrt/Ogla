@@ -117,12 +117,12 @@ export const HeaderMain = () => {
                 theme ? 
                 styles.container 
                 : 
-                styles.container + ' ' + styles.darkModeContainer 
+                styles.container + ' ' + styles.dark 
             : 
                 theme ?
                 styles.container + ' ' + styles.bgTransparent
                 :
-                styles.container + ' ' + styles.bgTransparent + ' ' + styles.darkModeContainer 
+                styles.container + ' ' + styles.dark 
                 }>
             <div className={styles.fContainer}>
                 <div className={styles.logoContainer + ' ' + anim.fadeIn}>

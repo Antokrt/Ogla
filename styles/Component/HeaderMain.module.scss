@@ -115,7 +115,7 @@
 
   button {
     &:active {
-      transform: scale(0.8);
+      transform: scale(0.9);
       transition: 0.2s;
     }
 
@@ -335,7 +335,7 @@
   }
 }
 
-.darkModeContainer {
+.dark {
   background-color: $darkMode;
 
   a {
@@ -364,6 +364,16 @@
     background-color: $darkMode5;
     color: $colorTextD;
   }
+
+  .active p {
+    color: $orange !important;
+  }
+
+  .containerImgProfil {
+    &::after {
+      border: 1px solid $darkMode;
+    }
+  }
 }
 
 @keyframes pulse {
@@ -379,7 +389,7 @@
 }
 
 .bgTransparent {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 @media screen and (max-width: 1400px) {

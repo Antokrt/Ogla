@@ -239,7 +239,7 @@ p{
   align-items: center;
   height: auto;
   width: 100%;
-  padding: 0% 4%;
+  padding: 2% 4%;
 
   .likeThumbnailPhone {
     position: absolute;
@@ -343,7 +343,7 @@ p{
     font-size: 10px;
     border-radius: 25px;
     padding: 12px 60px;
-
+    margin-bottom: 10px;
     svg {
       width: 14px;
       color: white;
@@ -351,298 +351,44 @@ p{
   }
 }
 
-.darkContainer {
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  width: 590px;
-  height: 245px;
-  margin-right: 5px;
-  margin-left: 5px;
-  box-shadow: $shadow;
-  background: linear-gradient(180deg, #9533ad, #311959);
-  border-radius: 10px;
-  position: relative;
+.dark {
+  &:after{
+    color: $colorTextD;
+  }
+  background-color: $darkMode;
 
-  .imgContainer {
-    width: 185px;
-    height: 100%;
-    padding: 15px;
-
-    img {
-      box-shadow: $shadow;
-      border-radius: 10px;
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-      box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-      -webkit-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-      -moz-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-    }
+  .authorPic p, .likes {
+    color: $colorTextD;
   }
 
-  .sThumbnail {
-    position: absolute;
-    left: -6%;
-    top: -5%;
-    z-index: 2 !important;
-    background-color: #e94f37;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
-    font-size: 10px;
-    font-family: $primaryFont;
-    font-weight: 700;
-    border-radius: 25px;
-  }
-
-  .thumbnail {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background-color: #e94f37;
-    color: white;
-    font-size: 10px;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-weight: bold;
-    font-family: "Poppins", sans-serif;
-    margin-left: 5px;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 5px 1px rgba(64, 60, 67, 0.16);
-
-    p {
-      color: white;
-    }
-
-    svg {
-      color: white;
-    }
-  }
-
-  .contentContainer {
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 5px;
-    padding-left: 10px;
-
+  .header {
     h6 {
-      &:first-letter {
-        text-transform: uppercase;
-      }
-
-      overflow: hidden;
-      font-size: 18px;
-      font-family: $primaryFont;
-      font-weight: 700;
-      color: hsla(0deg, 100%, 100%, 0.88);
-    }
-
-    .header {
-      position: relative;
-
-      p {
-
-        display: flex;
-        flex-direction: column;
-        font-size: 12px;
-        color: hsla(0deg, 100%, 100%, 0.88);
-        font-family: $secondaryFont;
-
-        .category {
-          position: absolute;
-          min-width: 50px;
-          right: 10px;
-          top: 30px;
-          display: flex;
-          justify-content: center;
-          background-color: #0e0e10;
-          // border: 1px solid white;
-          box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          -webkit-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          -moz-box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.52);
-          padding: 5px 10px;
-          border-radius: 10px;
-          text-transform: capitalize;
-          font-weight: bold;
-          color: hsla(0deg, 100%, 100%, 0.88);
-          margin-right: 5px;
-        }
-
-        .author {
-          font-weight: bold;
-          color: #e94f37;
-        }
-
-        .nbChapter {
-          color: hsla(0deg, 100%, 100%, 0.88);
-
-        }
-      }
-
-      margin-bottom: 20px;
-    }
-
-    .titleDesc {
-      position: relative;
-      content: "";
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 11px;
-
-      h4 {
-        display: flex;
-        justify-content: center;
-        width: 70px;
-        color: hsl(0, 0%, 83%);
-      }
-      .bef, .aft {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background-color: hsl(0, 0%, 69%);
-      }
-    }
-
-    .description {
-      min-height: 90px;
-      padding-right: 35px;
-
-      p {
-        word-break: break-word;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 6;
-        display: -webkit-box;
-        font-style: italic;
-        -webkit-box-orient: vertical;
-        font-size: 11px;
-        color: hsla(0deg, 100%, 100%, 0.88);
-        font-family: "Montserrat", sans-serif;
-      }
+      color: $colorTextD !important;
     }
   }
 
-  .containerPhone {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: auto;
-    width: 100%;
-    padding: 0% 4%;
+  .description p {
+    color: $colorTextD !important;
+  }
 
-    .likeThumbnailPhone {
-      position: absolute;
-      right: 3%;
-      top: 0%;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-
-      p {
-        font-family: 'Poppins', sans-serif !important;
-        font-weight: bold !important;
-        color: #1C232B !important;
-      }
-
-      svg {
-        width: 12px;
-        color: #9844AD;
-      }
-    }
-
-    img {
-      height: 100px;
-      width: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .headerPhone {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      align-items: center;
-      gap: 5px;
-
-      p {
-        font-family: $secondaryFont;
-        font-weight: bold;
-        font-size: 12px;
-        text-align: right;
-        color: rgba(28, 35, 43, 0.87);
-
-        .author {
-          color: #e94f37;
-        }
-      }
-    }
-
-    h6 {
-      overflow: hidden;
-      font-size: 18px;
-      font-family: $secondaryFont;
-      font-weight: 700;
-      color: #1C232B;
-      margin-top: 30px;
-    }
-
-    .descriptionPhone {
-      margin-top: 20px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      -webkit-line-clamp: 5;
-      display: -webkit-box;
-      font-style: italic;
-      -webkit-box-orient: vertical;
-      white-space: initial;
-      text-align: justify;
-      width: 100%;
-      padding: 0 4%;
-      font-size: 14px;
-      color: rgba(28, 35, 43, 0.71);
-      font-family: $secondaryFont;
-    }
-
-    button {
-      margin-top: 30px;
-      background-color: #e94f37;
-      transition: 0.2s;
-      font-family: $secondaryFont;
-      font-weight: bold;
-      color: white;
-      font-size: 10px;
-      border-radius: 25px;
-      padding: 12px 60px;
+  .headerPhone {
+    div p {
+      color: $colorTextD;
     }
   }
 
-  .option {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.767);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-    svg {
-      height: 40px;
-      margin-right: 10px;
+  .titleh6 {
+    color: $colorTextD;
+  }
+
+  .descriptionPhone {
+    color: $colorTextD;
+  }
+
+  .discoverPhone {
+    &:hover {
+      background-color: $orangeHover;
+      transition: 0.3s;
     }
   }
 }
@@ -654,29 +400,3 @@ p{
     width: 500px;
   }
 }
-
-// @media screen and (max-width: 600px) {
-//   .container {
-//     .thumbnail{
-//       width: min-content!important;
-//       svg{
-//         margin-left: 2px!important;
-//       }
-//     }
-//     .sThumbnail {
-//       position: absolute !important;
-//       top: 3% !important;
-//       left: 51% !important;
-
-//       transform: translate(-50%, -50%);
-//     }
-//   }
-//   .darkContainer {
-//     .sThumbnail {
-//       position: absolute !important;
-//       top: 3% !important;
-//       left: 51% !important;
-//       transform: translate(-50%, -50%);
-//     }
-//   }
-//}

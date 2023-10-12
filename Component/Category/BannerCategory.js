@@ -8,7 +8,7 @@ export const BannerCategory = ({category, presentation}) => {
     const theme = useSelector(selectTheme);
 
     return (
-        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.darkContainer}>
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.darkContainer}>
             <div className={styles.content}>
                 {
                     category.toLowerCase() === 'sf' ?

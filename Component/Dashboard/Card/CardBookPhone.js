@@ -1,39 +1,40 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboardPhone.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
-import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/router";
+import { Capitalize } from "../../../utils/String";
+import { CursorArrowRaysIcon } from "@heroicons/react/24/outline";
+import { GetDefaultBookImgWhenError, GetImgPathOfAssets } from "../../../utils/ImageUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
-import {useRouter} from "next/router";
-import {Capitalize} from "../../../utils/String";
-import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
-import {CursorArrowRaysIcon} from "@heroicons/react/24/outline";
-import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
+export const CardBookPhone = ({ id, img, title, nbChapter, likes, category, date, nbView, top }) => {
 
-
-export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbView,top}) => {
     const router = useRouter();
+    const catClassName = 'style.' + category;
+    const theme = useSelector(selectTheme);
 
-    const catClassName = 'style.'+category;
     return (
-        <div className={styles.container + ' ' + anim.fadeIn} >
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark}>
 
             {
                 top && likes > 0 &&
                 <div className={styles.thumbnail}>
                     <p>Top livre</p>
-                    <HeartIcon/>
+                    <HeartIcon />
                 </div>
             }
 
             <div className={styles.containerBookImg}>
                 <img src={GetImgPathOfAssets() + 'diapo/book.png'}
-                     onError={(e) => e.target.src = '/assets/diapo/book.png'}
-                     alt={'Book Ogla Default'}
+                    onError={(e) => e.target.src = '/assets/diapo/book.png'}
+                    alt={'Book Ogla Default'}
                 />
 
             </div>
 
             <div className={styles.containerImg}>
-                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}  alt={'Book Image Ogla'}/>
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} alt={'Book Image Ogla'} />
             </div>
 
             <div className={styles.containerTitle}>
@@ -53,7 +54,7 @@ export const CardBookPhone = ({id, img, title,nbChapter,likes,category,date, nbV
                 router.push({
                     pathname: '/dashboard/books/' + id,
                 })
-            }}>Gérer <CursorArrowRaysIcon/></button>
+            }}>Gérer <CursorArrowRaysIcon /></button>
 
 
 

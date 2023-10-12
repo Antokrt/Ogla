@@ -53,6 +53,7 @@ import {
     throwAnErr
 } from "../../store/slices/commentSlice";
 import NewSidebarCommentary from "../../Component/Post/NewSidebarCommentary";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 export async function getServerSideProps({ req, params, query, ctx }) {
     const id = params.id;
@@ -115,6 +116,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     const infosComment = useSelector(selectInfosComment);
     const commentsReducer = useSelector(selectComments);
     const errComments = useSelector(selectErrComments);
+    const theme = useSelector(selectTheme);
 
 
     useMountComment(chapterData._id,chapterData.title,authorData,'chapter',chapterData.nbCommentary,bookData._id);
@@ -287,20 +289,6 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
             });
     }
 
-/*
-    const GetMoreChapters = (state, setState, filter, page, setPage, setCanSeeMore) => {
-        GetChapterListService(bookData._id, filter, page)
-            .then((res) => {
-                if (res.length !== 0) {
-                    setState(prevState => [...prevState, ...res]);
-                    setPage(page + 1);
-                } else {
-                    setCanSeeMore(false);
-                }
-            })
-    }
-*/
-
     const getMyCommentsReducer = async (page, filter) => {
         try {
             const res = await GetMyCommentsService(infosComment.type, infosComment.activeId, page, filter);
@@ -395,7 +383,7 @@ const Chapter = ({ chapterData, bookData, chapterList, authorData, err, index, h
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
 
             <Head>

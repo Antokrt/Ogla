@@ -1,61 +1,54 @@
-import {useRouter} from "next/router";
-import React, {Fragment, useCallback, useEffect, useRef, useState} from "react";
+import { useRouter } from "next/router";
+import React, { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import styles from "../../styles/Pages/BookPage.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 
 import Header from "../../Component/Header";
 import {
-    ArrowsUpDownIcon,
-    BanknotesIcon,
-    BookOpenIcon,
     ChatBubbleBottomCenterTextIcon,
     ChatBubbleLeftEllipsisIcon,
-    ChatBubbleLeftIcon,
-    ChatBubbleOvalLeftIcon,
     CursorArrowRaysIcon,
-    DocumentTextIcon,
     HeartIcon as HeartOutline,
     HomeIcon,
     ListBulletIcon
 } from "@heroicons/react/24/outline";
-import {HeartIcon} from "@heroicons/react/20/solid";
 import Book from "../../Component/layouts/Icons/Book";
 import Like from "../../Component/layouts/Icons/Like";
 import ToogleSidebar from "../../utils/ToogleSidebar";
 import SidebarCommentary from "../../Component/Post/SidebarCommentary";
 import SidebarChapter from "../../Component/Post/SidebarChapter";
 import FooterOnBook from "../../Component/Post/FooterOnBook";
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
 import ScreenSize from "../../utils/Size"
-import {LikeBookService} from "../../service/Like/LikeService";
-import {VerifLikeApi} from "../api/like";
-import {AddViewToBookApi, GetOneBookApi} from "../api/book";
-import {GetCommentService, GetMyCommentsService} from "../../service/Comment/CommentService";
-import {GetAnswerByCommentService} from "../../service/Answer/AnswerService";
+import { LikeBookService } from "../../service/Like/LikeService";
+import { VerifLikeApi } from "../api/like";
+import { AddViewToBookApi, GetOneBookApi } from "../api/book";
+import { GetCommentService, GetMyCommentsService } from "../../service/Comment/CommentService";
+import { GetAnswerByCommentService } from "../../service/Answer/AnswerService";
 import {
     DeleteAnswerReduce, GetCommentsUtils, LikeAnswerReduce, LikeCommentReduce, SendAnswerReduce
 } from "../../utils/CommentaryUtils";
-import {CountNbOfChaptersService, GetChapterListService} from "../../service/Chapter/ChapterService";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {FilterBtn, HeadPhoneBtn, TextSeeMore} from "../../Component/layouts/Btn/ActionBtn";
-import {LoginModal} from "../../Component/Modal/LoginModal";
-import {useDispatch, useSelector} from "react-redux";
-import {selectLoginModalStatus, setActiveModalState} from "../../store/slices/modalSlice";
+import { CountNbOfChaptersService, GetChapterListService } from "../../service/Chapter/ChapterService";
+import { FormatDateNb, FormatDateStr } from "../../utils/Date";
+import { FilterBtn, HeadPhoneBtn, TextSeeMore } from "../../Component/layouts/Btn/ActionBtn";
+import { LoginModal } from "../../Component/Modal/LoginModal";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoginModalStatus, setActiveModalState } from "../../store/slices/modalSlice";
 import CardCategory from "../../Component/Card/CardCategory";
-import {LoaderCommentary} from "../../Component/layouts/Loader";
-import {Snippet} from "../../Component/Snippet";
-import {SendNotifService} from "../../service/Notifications/NotificationsService";
-import {CardChapterPublic, CardChapterPublicPhone} from "../../Component/Card/CardChapterPublic";
+import { LoaderCommentary } from "../../Component/layouts/Loader";
+import { Snippet } from "../../Component/Snippet";
+import { SendNotifService } from "../../service/Notifications/NotificationsService";
+import { CardChapterPublic, CardChapterPublicPhone } from "../../Component/Card/CardChapterPublic";
 import ErrorDashboard from "../../Component/Dashboard/ErrorDashboard";
 import CategoryCard from "../../Component/Category/CategoryCard";
-import {Capitalize} from "../../utils/String";
-import {LikeBtnSidebarPhone} from "../../Component/layouts/Btn/Like";
+import { Capitalize } from "../../utils/String";
+import { LikeBtnSidebarPhone } from "../../Component/layouts/Btn/Like";
 import Footer from "../../Component/Footer";
-import {ErrMsg, ErrMsgOnChapter} from "../../Component/ErrMsg";
-import {GetDefaultBookImgWhenError, GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../../utils/ImageUtils";
+import { ErrMsg, ErrMsgOnChapter } from "../../Component/ErrMsg";
+import { GetDefaultBookImgWhenError, GetDefaultUserImgWhenError, GetImgPathOfAssets } from "../../utils/ImageUtils";
 import Head from "next/head";
-import {HeaderMain} from "../../Component/HeaderMain";
-import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
+import { HeaderMain } from "../../Component/HeaderMain";
+import { HeaderMainResponsive } from "../../Component/HeaderMainResponsive";
 import {
     activeLoading,
     addComment, addMyComments, cleanComments, cleanInfos,
@@ -69,8 +62,9 @@ import {
 } from "../../store/slices/commentSlice";
 import useMountComment from "../../utils/hook/MountComment";
 import NewSidebarCommentary from "../../Component/Post/NewSidebarCommentary";
+import { selectTheme } from "../../store/slices/themeSlice";
 
-export async function getServerSideProps({req, params, query}) {
+export async function getServerSideProps({ req, params, query }) {
     const id = params.id;
 
     const data = await GetOneBookApi(id, req);
@@ -94,11 +88,11 @@ export async function getServerSideProps({req, params, query}) {
     }
 }
 
-const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
+const Post = ({ bookData, chapterData, err, hasLikeData, authorData }) => {
 
     const [width, height] = ScreenSize();
     const router = useRouter();
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const [sidebarSelect, setSidebarSelect] = useState("/");
     const [likes, setLikes] = useState(bookData?.likes);
     const [hasLike, setHasLike] = useState(hasLikeData);
@@ -113,8 +107,9 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
     const errComments = useSelector(selectErrComments);
     const commentsReducer = useSelector(selectComments);
     const dispatch = useDispatch();
+    const theme = useSelector(selectTheme);
 
-    useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary,bookData?._id);
+    useMountComment(bookData._id, bookData.title, authorData, 'book', bookData?.nbCommentary, bookData?._id);
 
     useEffect(() => {
         const openSidebar = localStorage.getItem('openSidebar');
@@ -177,13 +172,13 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
         return (<div
             className={sidebarSelect !== "None" ? styles.slideInRight + " " + styles.sidebar : styles.slideOut + " " + styles.sidebar}>
             {errComments.err ? <div className={styles.errContainer}>
-                    <h4>Erreur</h4>
-                    <p>Impossible de récupérer les commentaires.</p>
-                </div>
+                <h4>Erreur</h4>
+                <p>Impossible de récupérer les commentaires.</p>
+            </div>
 
                 :
 
-                <NewSidebarCommentary authorImg={authorData.img}/>}
+                <NewSidebarCommentary authorImg={authorData.img} />}
 
         </div>)
     }
@@ -241,7 +236,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
             const res = await GetCommentService(infosComment.type, infosComment.activeId, infosComment.pages, 5, session, infosComment.filter);
 
             res.forEach(element => {
-                    dispatch(addComment(element));
+                dispatch(addComment(element));
             });
 
             if (res.length !== 0) {
@@ -272,186 +267,186 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
 
     if (err) {
         return (<div className={styles.containerErr}>
-            {width > 950 ? <HeaderMain/> : <div style={{width: '100%'}}>
-                <HeaderMainResponsive/>
+            {width > 950 ? <HeaderMain /> : <div style={{ width: '100%' }}>
+                <HeaderMainResponsive />
             </div>}
 
 
-            <ErrMsg click={() => router.back()} text={'Impossible de récupérer ce livre, veuillez réessayer.'}/>
+            <ErrMsg click={() => router.back()} text={'Impossible de récupérer ce livre, veuillez réessayer.'} />
 
-            <Footer/>
+            <Footer />
         </div>)
     } else {
         return (<div id={'portal'}>
 
-            {width > 600 ? <div className={styles.container}>
-                    <Head>
-                        <title>{'Ogla - ' + Capitalize(bookData.title)}</title>
-                        <meta name="description" content="Generated by create next app"/>
-                        <meta name="viewport"
-                              content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                        <link rel="icon" href="/favicon.ico"/>
-                    </Head>
-                    <HeaderMain/>
-                    {checkSide()}
+            {width > 600 ? <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
+                <Head>
+                    <title>{'Ogla - ' + Capitalize(bookData.title)}</title>
+                    <meta name="description" content="Generated by create next app" />
+                    <meta name="viewport"
+                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
+                <HeaderMain />
+                {checkSide()}
 
-                    <div className={styles.containerC}>
-                        <div className={styles.labelPresentation}>
-                            <div className={styles.imgContainer}>
-                                <div className={styles.img}>
-                                    <img src={bookData?.img}
-                                         alt={'Image Livre Ogla'}
-                                         onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
-                                </div>
-
-
-                                <div className={styles.btnRead}>
-                                    {chapterData && chapterData?.length !== 0 && <button
-                                        onClick={() => {
-                                            router.push({
-                                                pathname: "/chapitre/" + chapterData[0]._id, query: {
-                                                    name: chapterData[0].title, slug: chapterData[0].slug, i: 1
-                                                },
-                                            })
-                                        }}
-                                    >Lire le chapitre 1 <CursorArrowRaysIcon/>
-                                    </button>}
-                                </div>
+                <div className={styles.containerC}>
+                    <div className={styles.labelPresentation}>
+                        <div className={styles.imgContainer}>
+                            <div className={styles.img}>
+                                <img src={bookData?.img}
+                                    alt={'Image Livre Ogla'}
+                                    onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                             </div>
 
 
-                            <div className={styles.chapterContainer}>
-                                <div className={styles.infoContainer}>
-                                    <div className={styles.infosBook}>
-                                        <div className={styles.authorInfos}>
-                                            <p onClick={() => router.push({
-                                                pathname: '/auteur/' + authorData.pseudo
-                                            })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
-                                            <img onClick={() => router.push({
-                                                pathname: '/auteur/' + authorData.pseudo
-                                            })} src={authorData.img}
-                                                 alt={'Image Profil Ecrivain Ogla'}
-                                                 referrerPolicy={'no-referrer'}
-                                                 onError={(e) => {
-                                                     e.target.src = GetDefaultUserImgWhenError()
-                                                 }}/>
-                                        </div>
+                            <div className={styles.btnRead}>
+                                {chapterData && chapterData?.length !== 0 && <button
+                                    onClick={() => {
+                                        router.push({
+                                            pathname: "/chapitre/" + chapterData[0]._id, query: {
+                                                name: chapterData[0].title, slug: chapterData[0].slug, i: 1
+                                            },
+                                        })
+                                    }}
+                                >Lire le chapitre 1 <CursorArrowRaysIcon />
+                                </button>}
+                            </div>
+                        </div>
 
-                                        <CardCategory category={bookData?.category}/>
 
+                        <div className={styles.chapterContainer}>
+                            <div className={styles.infoContainer}>
+                                <div className={styles.infosBook}>
+                                    <div className={styles.authorInfos}>
+                                        <p onClick={() => router.push({
+                                            pathname: '/auteur/' + authorData.pseudo
+                                        })}>Par <span>{Capitalize(authorData.pseudo)}</span></p>
+                                        <img onClick={() => router.push({
+                                            pathname: '/auteur/' + authorData.pseudo
+                                        })} src={authorData.img}
+                                            alt={'Image Profil Ecrivain Ogla'}
+                                            referrerPolicy={'no-referrer'}
+                                            onError={(e) => {
+                                                e.target.src = GetDefaultUserImgWhenError()
+                                            }} />
                                     </div>
-                                    <h3>{bookData?.title}</h3>
 
-                                    <Snippet line={3} maxSize={500} content={bookData?.summary}/>
+                                    <CardCategory category={bookData?.category} />
 
                                 </div>
+                                <h3>{bookData?.title}</h3>
+
+                                <Snippet line={3} maxSize={500} content={bookData?.summary} />
 
                             </div>
-                        </div>
-
-
-                    </div>
-
-                    <div className={styles.containerChapterList}>
-                        {chapterList?.length > 0 && <div className={styles.btnFilter}>
-                            <FilterBtn filter={activeFilterList} onclick={() => {
-                                if (activeFilterList === 'order') {
-                                    setPageChapter(2);
-                                    setActiveFilterList('recent');
-                                    GetChapters(setChapterList, setCanSeeMoreChapter, 'recent');
-                                } else {
-                                    setPageChapter(2);
-                                    setActiveFilterList('order');
-                                    GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
-                                }
-                            }}/>
-                            <div><p>{bookData.nbChapters} chapitres</p>
-                            </div>
-                        </div>}
-
-                        <div className={styles.contentChapterList}>
-                            {chapterList?.length <= 0 && <div className={styles.empty}>
-                                <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'utils/smile8.png'}
-                                     onError={(e) => e.target.src = '/assets/jim/smile8.png'}
-                                />
-                                <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !
-                                </p>
-                            </div>}
-
-                            {chapterData && chapterList?.length > 0 && chapterList.map((item, index) => {
-                                let chapterNumber;
-                                if (activeFilterList === "recent") {
-                                    chapterNumber = nbChapters - index;
-                                } else {
-                                    chapterNumber = index + 1;
-                                }
-                                return (<div className={styles.list} key={item._id}>
-                                    <CardChapterPublic id={item._id} title={item.title}
-                                                       date_creation={item.date_creation} likes={item.likes}
-                                                       index={chapterNumber} bookTitle={bookData.title}/>
-                                </div>)
-                            })}
-                            {canSeeMoreChapter && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
-                                <div className={styles.seeMoreContainer}>
-                                    {!loadingScrollChapterList && <TextSeeMore
-                                        onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
-
-                                    }
-                                    {loadingScrollChapterList && <LoaderCommentary/>}
-                                </div>}
 
                         </div>
-
                     </div>
 
-
-                    <FooterOnBook
-                        likeBook={() => likeBook()}
-                        title={bookData?.title}
-                        like={likes}
-                        img={bookData?.img}
-                        nbCommentary={infosComment.nbComments}
-                        author={bookData?.author_pseudo}
-                        nbChapter={bookData?.nbChapters}
-                        hasLike={hasLike}
-                        openList={() => {
-                            ToogleSidebar("List", sidebarSelect, setSidebarSelect);
-                        }}
-                        openCommentary={() => {
-                            ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
-                            if (commentsReducer.length <= 0) getCommentReducer();
-                        }}
-                    />
 
                 </div>
+
+                <div className={styles.containerChapterList}>
+                    {chapterList?.length > 0 && <div className={styles.btnFilter}>
+                        <FilterBtn filter={activeFilterList} onclick={() => {
+                            if (activeFilterList === 'order') {
+                                setPageChapter(2);
+                                setActiveFilterList('recent');
+                                GetChapters(setChapterList, setCanSeeMoreChapter, 'recent');
+                            } else {
+                                setPageChapter(2);
+                                setActiveFilterList('order');
+                                GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
+                            }
+                        }} />
+                        <div><p>{bookData.nbChapters} chapitres</p>
+                        </div>
+                    </div>}
+
+                    <div className={styles.contentChapterList}>
+                        {chapterList?.length <= 0 && <div className={styles.empty}>
+                            <img alt={'Image Jim Ogla'} src={GetImgPathOfAssets() + 'utils/smile8.png'}
+                                onError={(e) => e.target.src = '/assets/jim/smile8.png'}
+                            />
+                            <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de chapitres !
+                            </p>
+                        </div>}
+
+                        {chapterData && chapterList?.length > 0 && chapterList.map((item, index) => {
+                            let chapterNumber;
+                            if (activeFilterList === "recent") {
+                                chapterNumber = nbChapters - index;
+                            } else {
+                                chapterNumber = index + 1;
+                            }
+                            return (<div className={styles.list} key={item._id}>
+                                <CardChapterPublic id={item._id} title={item.title}
+                                    date_creation={item.date_creation} likes={item.likes}
+                                    index={chapterNumber} bookTitle={bookData.title} />
+                            </div>)
+                        })}
+                        {canSeeMoreChapter && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
+                            <div className={styles.seeMoreContainer}>
+                                {!loadingScrollChapterList && <TextSeeMore
+                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)} />
+
+                                }
+                                {loadingScrollChapterList && <LoaderCommentary />}
+                            </div>}
+
+                    </div>
+
+                </div>
+
+
+                <FooterOnBook
+                    likeBook={() => likeBook()}
+                    title={bookData?.title}
+                    like={likes}
+                    img={bookData?.img}
+                    nbCommentary={infosComment.nbComments}
+                    author={bookData?.author_pseudo}
+                    nbChapter={bookData?.nbChapters}
+                    hasLike={hasLike}
+                    openList={() => {
+                        ToogleSidebar("List", sidebarSelect, setSidebarSelect);
+                    }}
+                    openCommentary={() => {
+                        ToogleSidebar("Commentary", sidebarSelect, setSidebarSelect);
+                        if (commentsReducer.length <= 0) getCommentReducer();
+                    }}
+                />
+
+            </div>
                 /// LINE RESPONSIVE \\
-                : <div className={styles.containerPhone}>
+                : <div className={theme ? styles.containerPhone : styles.containerPhone + ' ' + styles.dark}>
 
 
                     <div className={styles.headerBookPhone}>
                         <img
                             alt={'Fond Livre Ogla'}
                             className={styles.absoImg} src={bookData?.img}
-                            onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                            onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                         <img
                             alt={'Image Livre Ogla'}
                             className={styles.imgBookPhone} src={bookData?.img}
-                            onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                            onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
                     </div>
 
                     <div className={styles.contentContainerBookPhone}>
                         <div className={styles.bookMenuVerticalPhone}>
                             <div className={styles.itemMenuBookPhone} onClick={() => router.push('/')}>
-                                <HomeIcon/>
+                                <HomeIcon />
                             </div>
 
                             <div className={styles.itemMenuBookPhone}
-                                 onClick={() => setActiveLinkPhone('chapters')}>
-                                <ListBulletIcon/>
+                                onClick={() => setActiveLinkPhone('chapters')}>
+                                <ListBulletIcon />
                             </div>
 
                             <div className={styles.like}>
-                                <LikeBtnSidebarPhone onLike={() => likeBook()} isLike={hasLike}/>
+                                <LikeBtnSidebarPhone onLike={() => likeBook()} isLike={hasLike} />
                             </div>
 
 
@@ -461,11 +456,11 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                 if (commentsReducer.length <= 0) getCommentReducer();
 
                             }}>
-                                <ChatBubbleBottomCenterTextIcon/>
+                                <ChatBubbleBottomCenterTextIcon />
                             </div>
 
                             <div className={styles.itemMenuBookPhone}>
-                                <HeadPhoneBtn/>
+                                <HeadPhoneBtn />
                             </div>
                         </div>
 
@@ -476,17 +471,17 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                     <img
                                         alt={'Image Défaut Ogla'}
                                         onError={(e) => e.target.src = '/assets/diapo/book.png'}
-                                        className={styles.abso} src={GetImgPathOfAssets() + 'diapo/book.png'}/>
+                                        className={styles.abso} src={GetImgPathOfAssets() + 'diapo/book.png'} />
 
                                     <div className={styles.authorAndStatsPhone}>
                                         <div className={styles.authorInfosContainerPhone}
-                                             onClick={() => router.push({
-                                                 pathname: '/auteur/' + authorData.pseudo
-                                             })}>
+                                            onClick={() => router.push({
+                                                pathname: '/auteur/' + authorData.pseudo
+                                            })}>
                                             <img
                                                 alt={'Image Profil Ogla'}
                                                 src={authorData?.img} referrerPolicy={'no-referrer'}
-                                                onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                                                onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                                             <p><span>{authorData?.pseudo}</span></p>
                                         </div>
 
@@ -503,19 +498,19 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                             <div className={styles.menuBookPhone}>
                                 <div className={styles.link}>
                                     <p onClick={() => setActiveLinkPhone('description')}
-                                       className={activeLinkPhone === 'description' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Résumé</p>
+                                        className={activeLinkPhone === 'description' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Résumé</p>
                                     <p onClick={() => setActiveLinkPhone('chapters')}
-                                       className={activeLinkPhone === 'chapters' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Chapitre{bookData?.nbChapters !== 1 && <>s</>}
+                                        className={activeLinkPhone === 'chapters' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Chapitre{bookData?.nbChapters !== 1 && <>s</>}
                                         <span> ({bookData?.nbChapters})</span></p>
                                     <p onClick={() => {
                                         if (commentsReducer.length <= 0) getCommentReducer();
                                         setSidebarSelect('Commentary');
                                         setActiveLinkPhone('comments');
                                     }}
-                                       className={activeLinkPhone === 'comments' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Commentaires
+                                        className={activeLinkPhone === 'comments' ? styles.linkPhone + ' ' + styles.activeLinkPhone : styles.linkPhone}>Commentaires
                                         <span> ({infosComment.nbComments})</span></p>
                                 </div>
-                                <ChatBubbleLeftEllipsisIcon className={styles.svgDescription}/>
+                                <ChatBubbleLeftEllipsisIcon className={styles.svgDescription} />
                             </div>
 
                             {activeLinkPhone === 'description' &&
@@ -524,7 +519,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                         <img
                                             alt={'Image Jim Ogla'}
                                             onError={(e) => e.target.src = '/assets/jim/smile8.png'}
-                                            src={GetImgPathOfAssets() + 'utils/smile8.png'}/>
+                                            src={GetImgPathOfAssets() + 'utils/smile8.png'} />
                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                             résumé !</p>
                                     </div> : <div className={styles.summaryPhone}>
@@ -544,14 +539,14 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                 setActiveFilterList('order');
                                                 GetChapters(setChapterList, setCanSeeMoreChapter, 'order');
                                             }
-                                        }}/>
+                                        }} />
                                     </div>}
 
                                     {bookData?.nbChapters <= 0 ? <div className={styles.emptyContentPhone}>
                                         <img
                                             alt={'Image Jim Ogla'}
                                             onError={(e) => e.target.src = '/assets/jim/smile8.png'}
-                                            src={GetImgPathOfAssets() + 'jim/smile8.png'}/>
+                                            src={GetImgPathOfAssets() + 'jim/smile8.png'} />
                                         <p><span>{authorData.pseudo}</span> n&apos;a pas encore écrit de
                                             chapitres !</p>
                                     </div> : <div className={styles.chapterListPhone}>
@@ -564,18 +559,18 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                             }
                                             return (<Fragment key={item._id}>
                                                 <CardChapterPublicPhone id={item._id}
-                                                                        title={item.title}
-                                                                        date_creation={item.date_creation}
-                                                                        likes={item.likes}
-                                                                        index={chapterNumber}
-                                                                        bookTitle={bookData.title}/>
+                                                    title={item.title}
+                                                    date_creation={item.date_creation}
+                                                    likes={item.likes}
+                                                    index={chapterNumber}
+                                                    bookTitle={bookData.title} />
                                             </Fragment>)
                                         })}
                                         {canSeeMoreChapter && !loadingScrollChapterList && chapterList.length !== 0 && bookData?.nbChapters > chapterList.length &&
                                             <div className={styles.seeMoreContainer}>
                                                 <TextSeeMore
-                                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)}/>
-                                                {loadingScrollChapterList && <LoaderCommentary/>}
+                                                    onclick={() => GetMoreChapters(chapterList, setChapterList, activeFilterList, pageChapter, setPageChapter, setCanSeeMoreChapter)} />
+                                                {loadingScrollChapterList && <LoaderCommentary />}
                                             </div>}
                                     </div>}
                                 </div>}

@@ -134,6 +134,25 @@
   font-weight: bold;
 }
 
+.dark {
+  &:hover {
+    background-color: $darkMode6;
+  }
+  border-top: 1px solid $colorBorder2;
+  border-bottom: 1px solid $colorBorder2;
+
+  .content, .date p {
+    color: $colorTextD !important;
+  }
+
+  .options svg {
+    &:hover {
+      color: $purple;
+    }
+    color: $colorTextD;
+  }
+}
+
 @media screen and (max-width: 450px) {
 
   .itemNotif,

@@ -1,15 +1,15 @@
 import styles from "../styles/Component/Menu/VerticalAuthorMenuPhone.module.scss";
 import { BellAlertIcon, BookOpenIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
-import { PlusCircleIcon, BookmarkSquareIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { HeartIcon } from "@heroicons/react/20/solid";
 import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
 import { useState } from "react";
 import { useEffect } from "react";
 import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
 import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 export default function VerticalPhoneMenu() {
 
@@ -17,14 +17,13 @@ export default function VerticalPhoneMenu() {
 
     const router = useRouter();
     const isActiveMenuBooks = router.pathname.startsWith('/dashboard/books') || router.pathname.startsWith('/dashboard/chapitre/');
-
     const goToProfil = () => {
         return router.push('/profil');
     }
-
     const dispatch = useDispatch()
     const Notifs = useSelector(selectNotifs)
     const [isOpen, setIsOpen] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         var nb = 0;
@@ -38,9 +37,8 @@ export default function VerticalPhoneMenu() {
             setIsOpen(false);
     }, [Notifs])
 
-
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.containerMain}>
                 <div className={styles.item} onClick={() => router.push('/')}>
                     <HomeIcon/>

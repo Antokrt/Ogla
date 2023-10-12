@@ -18,9 +18,8 @@ export const HotPost = ({img, title, category, author, authorImg, nbChapter, des
     const router = useRouter();
     const theme = useSelector(selectTheme);
 
-
     return (
-        <div tabIndex={0} className={theme ? styles.container : styles.darkContainer} onClick={() => router.push({
+        <div tabIndex={0} className={(theme || router.pathname === '/') ? styles.container : styles.container + ' ' + styles.dark} onClick={() => router.push({
             pathname: '/livre/' + id,
             query: slug
         })}>
@@ -75,8 +74,10 @@ export const HotPost = ({img, title, category, author, authorImg, nbChapter, des
 
 export const HotPostPhone = ({img, title, category, author, nbChapter, description, likes, top, slug, id}) => {
     const router = useRouter();
+    const theme = useSelector(selectTheme);
+    
     return (
-        <div data-after={Capitalize(category)} className={styles.containerPhone}>
+        <div data-after={Capitalize(category)} className={(theme || router.pathname === '/') ? styles.containerPhone : styles.containerPhone + ' ' + styles.dark}>
             <div className={styles.headerPhone}>
                 <img alt={'Image Livre Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
                 <div className={styles.likeThumbnailPhone}>
@@ -87,7 +88,7 @@ export const HotPostPhone = ({img, title, category, author, nbChapter, descripti
                     <p>{FormatCount(nbChapter)} chapitres</p>
                 </div>
             </div>
-            <h6>{title}</h6>
+            <h6 className={styles.titleh6}>{title}</h6>
             <p className={styles.descriptionPhone}> {Capitalize(description)}           </p>
             <button onClick={() => router.push({
                 pathname: '/livre/' + id,

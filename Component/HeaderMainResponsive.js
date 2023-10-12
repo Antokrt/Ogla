@@ -1,7 +1,7 @@
 import styles from '../styles/Component/HeaderMainResponsive.module.scss';
 import anim from '../styles/utils/anim.module.scss';
-import {GetDefaultUserImgWhenError, GetLogoUtils} from "../utils/ImageUtils";
-import {useRouter} from "next/router";
+import { GetDefaultUserImgWhenError, GetLogoUtils } from "../utils/ImageUtils";
+import { useRouter } from "next/router";
 import {
     Bars3Icon, BellIcon,
     ChevronDownIcon,
@@ -9,24 +9,24 @@ import {
     MagnifyingGlassIcon, MoonIcon,
     MusicalNoteIcon, SunIcon
 } from "@heroicons/react/24/outline";
-import React, {useEffect, useState} from "react";
-import {signOut, useSession} from "next-auth/react";
-import {setActiveModalState} from "../store/slices/modalSlice";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import { setActiveModalState } from "../store/slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
 import ScreenSize from "../utils/Size";
-import {selectDarkenState, setDarkenState} from "../store/slices/darkenSlice";
-import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
-import {selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
-import {changeTheme, selectTheme} from "../store/slices/themeSlice";
-import {BodyOverflowUtils} from "../utils/BodyUtils";
-import {OpenAllService} from "../service/Notifications/NotificationsService";
-import {LogoutService} from "../service/User/Account.service";
-import {ArrowLeftOnRectangleIcon} from "@heroicons/react/24/solid";
+import { selectDarkenState, setDarkenState } from "../store/slices/darkenSlice";
+import { selectActiveMusicStatus, setActiveMusic } from "../store/slices/musicSlice";
+import { selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import { changeTheme, selectTheme } from "../store/slices/themeSlice";
+import { BodyOverflowUtils } from "../utils/BodyUtils";
+import { OpenAllService } from "../service/Notifications/NotificationsService";
+import { LogoutService } from "../service/User/Account.service";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 
 export const HeaderMainResponsive = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const [width] = ScreenSize();
     const [openMenu, setOpenMenu] = useState(null);
     const isDarken = useSelector(selectDarkenState);
@@ -67,7 +67,16 @@ export const HeaderMainResponsive = () => {
     }
 
     return (
-        <div className={openMenu !== null ? styles.container + ' ' + styles.disableOverflow : styles.container}>
+        <div className={theme ?
+            (openMenu !== null ?
+                styles.container + ' ' + styles.disableOverflow
+                :
+                styles.container)
+            :
+            (openMenu !== null ?
+                styles.container + ' ' + styles.disableOverflow + ' ' + styles.dark
+                :
+                styles.container + ' ' + styles.dark)}>
             <div
                 className={checkPathname(headersHasToBeFixed) ? styles.containerMain + ' ' + styles.fixed : styles.containerMain}>
                 <div className={styles.leftContainer}>
@@ -86,15 +95,15 @@ export const HeaderMainResponsive = () => {
                             dispatch(setDarkenState(true));
                             setOpenMenu('links')
                         }
-                    }}/>
+                    }} />
                     {
                         width < 650 &&
                         <img
                             onError={(e) => e.target.src = '/assets/logo/mountain.png'}
-                            tabIndex={0} style={{marginLeft: '10px'}}
+                            tabIndex={0} style={{ marginLeft: '10px' }}
                             onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
                             className={styles.logo}
-                            alt={'Logo Ogla'} src={GetLogoUtils()}/>
+                            alt={'Logo Ogla'} src={GetLogoUtils()} />
                     }
                 </div>
 
@@ -102,10 +111,10 @@ export const HeaderMainResponsive = () => {
                 {
                     width >= 650 &&
                     <img tabIndex={0}
-                         onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
-                         className={styles.logo} alt={'Logo Ogla'}
-                         src={GetLogoUtils()}
-                         onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                        onClick={() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
+                        className={styles.logo} alt={'Logo Ogla'}
+                        src={GetLogoUtils()}
+                        onError={(e) => e.target.src = '/assets/logo/mountain.png'}
                     />
 
                 }
@@ -126,11 +135,11 @@ export const HeaderMainResponsive = () => {
                             :
                             <div className={styles.imgContainer}>
                                 <div tabIndex={0}
-                                     onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
-                                     className={styles.containerImgProfil}>
+                                    onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
+                                    className={styles.containerImgProfil}>
                                     <img src={session?.user?.image} alt={'Ogla Image Profil'}
-                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                         referrerPolicy={'no-referrer'}/>
+                                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                        referrerPolicy={'no-referrer'} />
                                 </div>
                                 <ChevronDownIcon tabIndex={0} onClick={() => {
                                     if (!openMenu) {
@@ -150,7 +159,7 @@ export const HeaderMainResponsive = () => {
                                         setOpenMenu('profil')
                                     }
 
-                                }} className={openMenu === 'profil' ? styles.rotate : undefined}/>
+                                }} className={openMenu === 'profil' ? styles.rotate : undefined} />
                             </div>
                     }
                 </div>
@@ -163,7 +172,7 @@ export const HeaderMainResponsive = () => {
                         !session &&
                         <div className={styles.iconList}>
                             <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
-                                <MusicalNoteIcon tabIndex={0}/>
+                                <MusicalNoteIcon tabIndex={0} />
                                 {
                                     selectMusicState &&
                                     <div className={styles.animation}></div>
@@ -173,9 +182,9 @@ export const HeaderMainResponsive = () => {
 
                             {
                                 theme ?
-                                    <SunIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                    <SunIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
                                     :
-                                    <MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                    <MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
                             }
                         </div>
                     }
@@ -183,7 +192,7 @@ export const HeaderMainResponsive = () => {
 
                     <ul>
                         <li tabIndex={0} className={anim.slideInLeft1}><a href={'/rechercher'}
-                                                                          className={styles.search}>Rechercher <MagnifyingGlassIcon/></a>
+                            className={styles.search}>Rechercher <MagnifyingGlassIcon /></a>
                         </li>
                         <li tabIndex={0} className={anim.slideInLeft2}><a href={'/bibliotheque'}>Bibliothèque</a></li>
                         {
@@ -195,7 +204,7 @@ export const HeaderMainResponsive = () => {
                                                 <li className={anim.slideInLeft3}><a href={'/dashboard/nouveau-livre'}>Nouveau
                                                     livre </a></li>
                                                 <li className={anim.slideInLeft4}><a href={'/dashboard/books'}
-                                                                                     className={styles.purple}>Mes
+                                                    className={styles.purple}>Mes
                                                     livres </a></li>
                                             </>
                                             :
@@ -208,7 +217,7 @@ export const HeaderMainResponsive = () => {
                                     <li className={anim.slideInLeft3}><a href={'/auth?register'}>S&apos;inscrire</a>
                                     </li>
                                     <li className={anim.slideInLeft4}><a href={'/devenir-ecrivain'}
-                                                                         className={styles.purple}>Deviens écrivain</a>
+                                        className={styles.purple}>Deviens écrivain</a>
                                     </li>
                                 </>
                         }
@@ -224,7 +233,7 @@ export const HeaderMainResponsive = () => {
                         <img
                             onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
                             onClick={() => router.push('/profil').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))}
-                            src={session?.user?.image} referrerPolicy={'no-referrer'}/>
+                            src={session?.user?.image} referrerPolicy={'no-referrer'} />
                         <p>{session?.user?.pseudo}</p>
                     </div>
 
@@ -233,7 +242,7 @@ export const HeaderMainResponsive = () => {
                         {
                             !session ?
                                 <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
-                                    <MusicalNoteIcon tabIndex={0}/>
+                                    <MusicalNoteIcon tabIndex={0} />
                                     {
                                         selectMusicState &&
                                         <div className={styles.animation}></div>
@@ -243,7 +252,7 @@ export const HeaderMainResponsive = () => {
                                     {
                                         session && session?.user?.settings?.music &&
                                         <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
-                                            <MusicalNoteIcon tabIndex={0}/>
+                                            <MusicalNoteIcon tabIndex={0} />
                                             {
                                                 selectMusicState &&
                                                 <div className={styles.animation}></div>
@@ -257,9 +266,9 @@ export const HeaderMainResponsive = () => {
 
                         {
                             theme ?
-                                <SunIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                <SunIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
                                 :
-                                <MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme}/>
+                                <MoonIcon onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
                         }
 
 
@@ -292,7 +301,7 @@ export const HeaderMainResponsive = () => {
                                     .catch(() => signOut()
                                         .then(() => router.push('/').then(() => dispatch(setDarkenState(false))).catch(() => dispatch(setDarkenState(false)))))
                             }}
-                            title={'Déconnexion'}>Se déconnecter <ArrowLeftOnRectangleIcon/></button>
+                            title={'Déconnexion'}>Se déconnecter <ArrowLeftOnRectangleIcon /></button>
                     </div>
                 </div>
             }

@@ -6,6 +6,8 @@ import {ChevronDoubleUpIcon, HandThumbUpIcon as NotLikeIcon} from "@heroicons/re
 import {HandThumbUpIcon as LikeIcon} from "@heroicons/react/24/solid";
 import {useEffect, useState} from "react";
 import {FormatCount} from "../../../utils/NbUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
 export const LikeBtn = ({isLike, onLike}) => {
     return (
@@ -22,6 +24,7 @@ export const LikeBtn = ({isLike, onLike}) => {
 export const LikeBtnSidebar = ({isLike, onLike}) => {
 
     const [startAnim, setStartAnim] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         if (startAnim) {
@@ -36,7 +39,7 @@ export const LikeBtnSidebar = ({isLike, onLike}) => {
     }, [startAnim]);
 
     return (
-        <div className={styles.likeButtonSidebar} onClick={() => {
+        <div className={theme ? styles.likeButtonSidebar : styles.likeButtonSidebar + ' ' + styles.dark} onClick={() => {
             if(!isLike){
                 setStartAnim(!startAnim);
             }
@@ -51,6 +54,7 @@ export const LikeBtnSidebar = ({isLike, onLike}) => {
 export const LikeBtnSidebarPhone = ({isLike, onLike}) => {
 
     const [startAnim, setStartAnim] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         if (startAnim) {
@@ -65,7 +69,7 @@ export const LikeBtnSidebarPhone = ({isLike, onLike}) => {
     }, [startAnim]);
 
     return (
-        <div className={styles.likeButtonSidebarPhone} onClick={() => {
+        <div className={theme ? styles.likeButtonSidebarPhone : styles.likeButtonSidebarPhone + ' ' + styles.dark} onClick={() => {
 
             if(!isLike){
                 setStartAnim(!startAnim);
@@ -89,8 +93,11 @@ export const CountLike = ({like}) => {
 }
 
 export const TextLikeBtn = ({isLike, onLike, nb}) => {
+
+    const theme = useSelector(selectTheme);
+
     return (
-        <div className={styles.containerTextLikeBtn}>
+        <div className={theme ? styles.containerTextLikeBtn : styles.containerTextLikeBtn + ' ' + styles.dark}>
             {
                 isLike ?
                     <LikeIcon onClick={onLike}/>:

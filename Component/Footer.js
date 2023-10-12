@@ -38,7 +38,7 @@ export default function Footer() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>

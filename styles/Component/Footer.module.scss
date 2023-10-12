@@ -43,6 +43,13 @@
   }
 
   .linkFooter {
+
+    a, li, svg {
+      &:hover {
+        color: white !important;
+      }
+    }
+
     padding: 30px;
     background-color: #1C232B;
     height: auto;
@@ -147,13 +154,29 @@
         font-weight: bold;
         font-size: 13px;
         line-height: 20px;
-        color: $purple2;
+        color: $purple;
       }
     }
   }
 
   .activeNav {
-    color: white !important;
+    color: $colorTextD !important;
+  }
+}
+
+.dark {
+  .socialLinks {
+    background-color: $darkMode;
+  }
+
+  .linkFooter {
+    background-color: $darkMode;
+
+    a, li, svg {
+      &:hover {
+        color: $purpleHover !important;
+      }
+    }
   }
 }
 

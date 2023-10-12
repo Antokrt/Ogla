@@ -8,7 +8,9 @@
   /* Handle */
   &::-webkit-scrollbar-thumb {
     background: rgba(152, 68, 173, 0.15);
+    cursor: pointer;
   }
+
   user-select: none;
   display: flex;
   align-items: center;
@@ -16,6 +18,8 @@
   width: 100%;
   gap: 40px;
   white-space: pre;
+  padding: 10px 0px;
+  
   .list {
     display: inline-flex;
     gap: 20px;
@@ -61,6 +65,10 @@
       font-weight: bold;
       font-family: $branch;
     }
+
+    p {
+      letter-spacing: 1px;
+    }
   }
 
 }
@@ -75,31 +83,16 @@
 }
 
 /* Theme sombre */
-.darkContainer {
-  &::-webkit-scrollbar {
-    height: 3px;
-  }
-
-  /* Handle */
+.dark {
   &::-webkit-scrollbar-thumb {
-    background: rgba(164, 160, 165, 0.15);
+    background: rgba(164, 160, 165, 0.418);
   }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 10vh;
-  margin: 4vh 0;
-  background-color:  #0e0e10;
-
-  .list {
-    display: inline-flex;
-    gap: 20px;
-  }
+  background-color: $darkMode;
 
   .book {
     &:hover {
+
       a,
       p {
         color: white;
@@ -108,42 +101,27 @@
     }
 
     opacity: 0.9;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-width: 60px;
-
-    img {
-      margin-bottom: 10px;
-      object-fit: cover;
-      height: 60px;
-      width: 60px;
-    }
 
     a,
     p {
-      &:first-letter {
-        text-transform: uppercase;
-      }
-
-      transition: 0.1s;
-      text-align: center;
       text-decoration: none;
-      color:  hsla(0deg, 100%, 100%, 0.88);
+      color: hsla(0deg, 100%, 100%, 0.88);
       font-weight: bold;
       font-family: "Lobster",
-      sans-serif;
+        sans-serif;
     }
   }
 
+  .active p {
+    color : $orange !important;
+  }
 }
 
 @media screen and (orientation: landscape) and (max-width: 900px) {
   .container {
     margin-top: 60px;
   }
+
   .darkContainer {
     margin-top: 60px;
   }
@@ -154,13 +132,12 @@
     justify-content: center;
     align-items: center;
   }
+
   .darkContainer {
     justify-content: center;
     align-items: center;
   }
 }
-
-
 
 @media screen and (max-width: 700px) {
   .container {

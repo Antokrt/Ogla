@@ -7,11 +7,13 @@ import Footer from "../../Component/Footer";
 import {HeaderMain} from "../../Component/HeaderMain";
 import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import ScreenSize from "../../utils/Size";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 const Cgu = () => {
     const divRef = useRef(null);
     const [width, height] = ScreenSize();
-
+    const theme = useSelector(selectTheme);
 
     const scrollToTop = () => {
         if (typeof window !== 'undefined') {
@@ -21,7 +23,7 @@ const Cgu = () => {
 
 
     return (
-        <div className={styles.container} ref={divRef}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark} ref={divRef}>
             {
                 width > 950 ?
                     <HeaderMain/> :

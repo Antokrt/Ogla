@@ -140,6 +140,15 @@
   color: #54595F;
 }
 
+.dark {
+  background-color: $darkMode;
+
+  .navContainer ul li {
+
+    color: $colorTextD;
+  }
+}
+
 @media screen and (max-width: 900px) {
   .container {
     li {

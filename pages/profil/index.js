@@ -5,17 +5,17 @@ import scroll from "../../styles/utils/scrollbar.module.scss";
 import {
     BellAlertIcon, CheckBadgeIcon, Cog8ToothIcon, MusicalNoteIcon, UserIcon, WrenchIcon,
 } from "@heroicons/react/24/outline";
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import {
     ChartBarIcon, CheckCircleIcon, HeartIcon, XCircleIcon
 } from "@heroicons/react/20/solid";
-import {Capitalize} from "../../utils/String";
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import {GetPrivateProfilApi} from "../api/user";
-import {DeleteUserProfilPictureService, UpdateUserProfilPictureService} from "../../service/User/Profil.service";
+import { Capitalize } from "../../utils/String";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { GetPrivateProfilApi } from "../api/user";
+import { DeleteUserProfilPictureService, UpdateUserProfilPictureService } from "../../service/User/Profil.service";
 import axios from "axios";
-import {ReloadSession} from "../../utils/ReloadSession";
+import { ReloadSession } from "../../utils/ReloadSession";
 import {
     GetDefaultUserImg,
     GetDefaultUserImgWhenError,
@@ -23,39 +23,40 @@ import {
     GetLogoUtils,
     renderPrediction
 } from "../../utils/ImageUtils";
-import {DeleteAccountService, VerifyEmailService} from "../../service/User/Account.service";
-import {FormatDateNb, FormatDateStr} from "../../utils/Date";
-import {ChangePasswordService, SendResetPasswordEmailService} from "../../service/User/Password.service";
-import {DeleteAccountModal} from "../../Component/Modal/DeleteAccountModal";
-import {BookmarkIcon, EyeIcon, LockClosedIcon} from "@heroicons/react/24/solid";
-import {UpdateAuthorDescriptionService, UpdateUserDescriptionService} from "../../service/Author";
+import { DeleteAccountService, VerifyEmailService } from "../../service/User/Account.service";
+import { FormatDateNb, FormatDateStr } from "../../utils/Date";
+import { ChangePasswordService, SendResetPasswordEmailService } from "../../service/User/Password.service";
+import { DeleteAccountModal } from "../../Component/Modal/DeleteAccountModal";
+import { BookmarkIcon, EyeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import { UpdateAuthorDescriptionService, UpdateUserDescriptionService } from "../../service/Author";
 import ProfilAuthor from "../../Component/Profil/ProfilAuthor";
 import Footer from "../../Component/Footer";
-import {useDispatch, useSelector} from "react-redux";
-import {selectNotifs, setActiveModalNotif, setOpen} from "../../store/slices/notifSlice";
-import {LoaderImg} from "../../Component/layouts/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
+import { LoaderImg } from "../../Component/layouts/Loader";
 import {
     toastDisplayError,
     toastDisplayInfo,
     toastDisplayPromiseSendMail,
     toastDisplaySuccess
 } from "../../utils/Toastify";
-import {UpdateSettings, UpdateSettingsService} from "../../service/User/Settings.service";
-import {instance} from "../../service/config/Interceptor";
+import { UpdateSettings, UpdateSettingsService } from "../../service/User/Settings.service";
+import { instance } from "../../service/config/Interceptor";
 import ScreenSize from "../../utils/Size";
-import {openAll} from "../../service/Notifications/NotificationsService";
-import {useEffect} from "react";
-import {OpenAllService} from "../../service/Notifications/NotificationsService";
+import { openAll } from "../../service/Notifications/NotificationsService";
+import { useEffect } from "react";
+import { OpenAllService } from "../../service/Notifications/NotificationsService";
 import Tippy from "@tippyjs/react";
 import Head from "next/head";
-import {HeaderMain} from "../../Component/HeaderMain";
-import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
-import {ErrMsg} from "../../Component/ErrMsg";
+import { HeaderMain } from "../../Component/HeaderMain";
+import { HeaderMainResponsive } from "../../Component/HeaderMainResponsive";
+import { ErrMsg } from "../../Component/ErrMsg";
 import Link from "next/link";
-import {setActiveMusic, stopMusic} from "../../store/slices/musicSlice";
-import {GetApiPath, GetFetchPath} from "../api/utils/Instance";
+import { setActiveMusic, stopMusic } from "../../store/slices/musicSlice";
+import { GetApiPath, GetFetchPath } from "../api/utils/Instance";
+import { selectTheme } from "../../store/slices/themeSlice";
 
-export async function getServerSideProps({req}) {
+export async function getServerSideProps({ req }) {
     const data = await GetPrivateProfilApi(req);
     return {
         props: {
@@ -65,12 +66,12 @@ export async function getServerSideProps({req}) {
     }
 }
 
-const Profil = ({profilData, err}) => {
+const Profil = ({ profilData, err }) => {
     const router = useRouter();
     const [activeLink, setActiveLink] = useState("profil");
     const [profil, setProfil] = useState(profilData);
     const [newPresentation, setNewPresentation] = useState(profil?.author?.description);
-    const {data: session, update, status} = useSession();
+    const { data: session, update, status } = useSession();
     const [openModalDeleteAccount, setOpenModalDeleteAccount] = useState(false);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassowrd] = useState('');
@@ -86,9 +87,10 @@ const Profil = ({profilData, err}) => {
     const [musicState, setMusicState] = useState(profil?.settings?.music);
     const imgRef = useRef();
     const dispatch = useDispatch()
-    const [width, height] = ScreenSize();
+    const [width] = ScreenSize();
     const Notifs = useSelector(selectNotifs)
     const [isOpen, setIsOpen] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         var nb = 0;
@@ -254,7 +256,7 @@ const Profil = ({profilData, err}) => {
                     {
                         loadingImg && width > 800 &&
                         <div className={styles.loaderImg}>
-                            <LoaderImg/>
+                            <LoaderImg />
                         </div>
                     }
 
@@ -263,7 +265,7 @@ const Profil = ({profilData, err}) => {
                             <>
                                 <img
                                     onClick={() => imgClick()}
-                                    src={localImg} alt={'Nouvelle Image Ogla Profil'}/>
+                                    src={localImg} alt={'Nouvelle Image Ogla Profil'} />
                             </>
                             :
                             <Tippy trigger={'mouseenter'} content={'Modifier'}>
@@ -277,7 +279,7 @@ const Profil = ({profilData, err}) => {
                             </Tippy>
                     }
                     <input
-                        style={{display: 'none'}}
+                        style={{ display: 'none' }}
                         type={'file'}
                         ref={imgRef}
                         accept={"image/png , image/jpeg , image/jpg"}
@@ -306,7 +308,7 @@ const Profil = ({profilData, err}) => {
                                             <div className={styles.containerBtnImgPhone}>
                                                 {
                                                     loadingImg ?
-                                                        <LoaderImg/>
+                                                        <LoaderImg />
                                                         :
                                                         <>
                                                             <button onClick={() => updatePic()}
@@ -326,14 +328,14 @@ const Profil = ({profilData, err}) => {
                                             <>
                                                 <CheckCircleIcon
                                                     onClick={() => updatePic()}
-                                                    className={styles.check}/>
+                                                    className={styles.check} />
                                                 <XCircleIcon
                                                     onClick={() => {
                                                         setLocalImg(null);
                                                         setFile(null);
                                                     }
                                                     }
-                                                    className={styles.off}/>
+                                                    className={styles.off} />
                                             </>
                                     }
 
@@ -347,10 +349,10 @@ const Profil = ({profilData, err}) => {
 
                 <div className={styles.form}>
                     <label>Pseudo</label>
-                    <input disabled={true} type={"text"} value={profilData.pseudo}/>
+                    <input disabled={true} type={"text"} value={profilData.pseudo} />
                     <label className={styles.emailLabel}>Email <span>{profilData.verified &&
-                        <CheckBadgeIcon/>}</span></label>
-                    <input disabled={true} type={"text"} value={profilData.email}/>
+                        <CheckBadgeIcon />}</span></label>
+                    <input disabled={true} type={"text"} value={profilData.email} />
                     {
                         !profilData.verified &&
                         <button className={styles.verifyBtn} onClick={() => verifyEmail()}>Vérifier votre adresse
@@ -362,23 +364,23 @@ const Profil = ({profilData, err}) => {
                             <>
                                 <label>Modifier votre mot de passe</label>
                                 <input value={oldPassword}
-                                       onChange={(e) => setOldPassword(e.target.value)}
-                                       type={"password"} placeholder={'Ancien mot de passe'}/>
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                    type={"password"} placeholder={'Ancien mot de passe'} />
                                 <input value={newPassword}
-                                       onChange={(e) => setNewPassowrd(e.target.value)}
-                                       type={"password"} placeholder={'Nouveau mot de passe'}/>
+                                    onChange={(e) => setNewPassowrd(e.target.value)}
+                                    type={"password"} placeholder={'Nouveau mot de passe'} />
                                 {
                                     errMsgModifyPassword.show &&
                                     <p className={styles.errMsg}>{errMsgModifyPassword.msg}</p>
                                 }
 
                                 <button onClick={(e) => changePassword(e)}
-                                        className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
+                                    className={oldPassword !== "" && newPassword !== "" ? styles.active + ' ' + styles.modifyBtn : styles.disabled + ' ' + styles.modifyBtn}>Envoyer
                                 </button>
                             </>
                             :
                             <button className={styles.createPassword} onClick={() => sendEmailResetPassword()}>Créer un
-                                mot de passe <LockClosedIcon/></button>
+                                mot de passe <LockClosedIcon /></button>
 
                     }
 
@@ -396,7 +398,7 @@ const Profil = ({profilData, err}) => {
 
                     <div className={styles.containerImg}>
                         <img src={profilData?.img} referrerPolicy={'no-referrer'}
-                             onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
+                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'} />
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
 
@@ -416,7 +418,7 @@ const Profil = ({profilData, err}) => {
                                     updateDescription();
                                 }
                             }}
-                                    className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
+                                className={profil.author.description !== newPresentation ? styles.active : styles.disabled}>Modifier
                             </button>
                         </div>
 
@@ -426,12 +428,12 @@ const Profil = ({profilData, err}) => {
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "}/>
+                                    placeholder={"Donnez envie aux lecteurs de vous découvrir avec une présentation de vous, brève mais sympathique... "} />
                                 :
                                 <textarea
                                     onChange={(e) => setNewPresentation(e.target.value)}
                                     className={scroll.scrollbar}
-                                    value={newPresentation}/>
+                                    value={newPresentation} />
                         }
 
 
@@ -451,9 +453,9 @@ const Profil = ({profilData, err}) => {
 
                         <div className={styles.socialForm}>
                             <div className={styles.socialLinks}>
-                                <ProfilAuthor type={1} content={profilData?.author.social.instagram}/>
-                                <ProfilAuthor type={2} content={profilData?.author.social.twitter}/>
-                                <ProfilAuthor type={3} content={profilData?.author.social.facebook}/>
+                                <ProfilAuthor type={1} content={profilData?.author.social.instagram} />
+                                <ProfilAuthor type={2} content={profilData?.author.social.twitter} />
+                                <ProfilAuthor type={3} content={profilData?.author.social.facebook} />
                             </div>
                             {/*       <div className={styles.socialImg}>
                                 <img src={GetImgPathOfAssets() +"other/manReading2.png"} onError={(e) => e.target.src = '/assets/other/manReading2.png'} alt="Auteur lit un livre ogla"/>
@@ -471,11 +473,11 @@ const Profil = ({profilData, err}) => {
         return (
             <div className={styles.becameWriter + ' ' + anim.fadeIn}>
                 <img alt={'Image Castle Ogla'} src={GetImgPathOfAssets() + 'diapo/castle.png'}
-                     onError={(e) => e.target.src = 'assets/diapo/castle.png'}/>
+                    onError={(e) => e.target.src = 'assets/diapo/castle.png'} />
                 <h5>Deviens écrivain <strong>OGLA</strong> dès maintenant !</h5>
                 <p>Rejoignez notre communauté d&apos;écrivains aujourd&apos;hui et partagez votre histoire avec le monde
                     entier
-                    ! <br/>
+                    ! <br />
                     Avec <strong>OGLA</strong>, chaque personne peut devenir un écrivain et chaque histoire a la chance
                     d&apos;être entendue</p>
 
@@ -493,7 +495,7 @@ const Profil = ({profilData, err}) => {
                 }
                 <div className={styles.itemSetting}>
                     <div className={styles.fSetting}>
-                        <BellAlertIcon/>
+                        <BellAlertIcon />
                         <div>
                             <p className={styles.labelSetting}>Notifications </p>
                             {
@@ -508,8 +510,8 @@ const Profil = ({profilData, err}) => {
                     </div>
 
                     <div className={notifState ? styles.toggleBtn + ' ' + styles.activeToggle : styles.toggleBtn}
-                         onClick={() => setNotifState(!notifState)}>
-                        <input checked={notifState} readOnly={true} type="checkbox" id="toggle1"/>
+                        onClick={() => setNotifState(!notifState)}>
+                        <input checked={notifState} readOnly={true} type="checkbox" id="toggle1" />
                         <label htmlFor="toggle1"></label>
                     </div>
 
@@ -520,7 +522,7 @@ const Profil = ({profilData, err}) => {
                 }}>
                     <div className={styles.fSetting}>
 
-                        <MusicalNoteIcon/>
+                        <MusicalNoteIcon />
                         <div>
                             <p className={styles.labelSetting}>Musique </p>
                             <p className={styles.valueSetting}>Activer la musique</p>
@@ -528,10 +530,10 @@ const Profil = ({profilData, err}) => {
                     </div>
 
                     <div className={musicState ? styles.musicToggle + ' ' + styles.activeToggle : styles.musicToggle}
-                         onClick={() => {
-                             setMusicState(!musicState);
-                         }}>
-                        <input checked={musicState} readOnly={true} type="checkbox" id="toggle2"/>
+                        onClick={() => {
+                            setMusicState(!musicState);
+                        }}>
+                        <input checked={musicState} readOnly={true} type="checkbox" id="toggle2" />
                         <label htmlFor="toggle2"></label>
                     </div>
                 </div>
@@ -542,7 +544,7 @@ const Profil = ({profilData, err}) => {
                     </button>
                 </div>
                 <button className={styles.deleteAccount}
-                        onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
+                    onClick={() => setOpenModalDeleteAccount(true)}>Supprimer mon compte
                 </button>
             </div>
         )
@@ -572,22 +574,37 @@ const Profil = ({profilData, err}) => {
             <div className={styles.menuContainer}>
                 <div className={styles.containerMain}>
                     <div className={activeLink === 'profil' ? styles.item + ' ' + styles.activeItem : styles.item}
-                         onClick={() => setActiveLink('profil')}>
-                        <UserIcon/>
-                        <p> Profil </p>
+                        onClick={() => setActiveLink('profil')}>
+                        <Tippy trigger="mouseenter"
+                            content={"Profil"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
+                            <UserIcon />
+                        </Tippy>
                     </div>
                     <div className={activeLink === 'writer' ? styles.item + ' ' + styles.activeItem : styles.item}
-                         onClick={() => setActiveLink('writer')}>
-                        <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin">
-                            <path
-                                d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z"/>
-                        </svg>
-                        <p> Ecrivain </p>
+                        onClick={() => setActiveLink('writer')}>
+                        <Tippy trigger="mouseenter"
+                            content={"Ecrivain"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
+                            <svg fill="white" viewBox="-2.5 -3 24 24" preserveAspectRatio="xMinYMin">
+                                <path
+                                    d="M5.648 12.276l-1.65 1.1-.415 1.68 1.665-.42 1.104-1.656-.704-.704zM7.1 10.899l.627.627.091-.032c.937-.334 1.88-1.019 2.824-2.089 1.139-1.29 3.061-3.587 5.757-6.879a.211.211 0 0 0-.297-.297c-3.286 2.693-5.583 4.616-6.881 5.758-1.076.946-1.76 1.888-2.088 2.819l-.033.093zm-.615 5.486L.843 17.814l1.4-5.671 3.004-2.004C5.7 8.863 6.583 7.645 7.9 6.486c1.32-1.162 3.632-3.097 6.936-5.804a2.21 2.21 0 0 1 3.111 3.112c-2.71 3.309-4.645 5.62-5.804 6.934-1.156 1.31-2.373 2.193-3.652 2.65l-2.005 3.007z" />
+                            </svg>
+                        </Tippy>
                     </div>
                     <div className={activeLink === 'settings' ? styles.item + ' ' + styles.activeItem : styles.item}
-                         onClick={() => setActiveLink('settings')}>
-                        <Cog8ToothIcon/>
-                        <p> Réglages </p>
+                        onClick={() => setActiveLink('settings')}>
+                        <Tippy trigger="mouseenter"
+                            content={"Réglages"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
+                            <Cog8ToothIcon />
+                        </Tippy>
                     </div>
                     <div
                         className={activeLink === 'notifications' ? styles.item + ' ' + styles.activeItem : styles.item}
@@ -598,8 +615,13 @@ const Profil = ({profilData, err}) => {
                             dispatch(setActiveModalNotif(true));
                             dispatch(setOpen());
                         }}>
-                        <BellAlertIcon/>
-                        <p> Notifications </p>
+                        <Tippy trigger="mouseenter"
+                            content={"Notifications"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
+                            <BellAlertIcon />
+                        </Tippy>
                         {
                             isOpen &&
                             <div className={styles.haveNotif}></div>
@@ -612,7 +634,7 @@ const Profil = ({profilData, err}) => {
                                 session && session.user.image &&
                                 <>
                                     <img src={session.user.image} referrerPolicy={'no-referrer'}
-                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                                     <span className={styles.circle}></span>
                                 </>
                             }
@@ -627,36 +649,36 @@ const Profil = ({profilData, err}) => {
         <>
             <Head>
                 <title>Ogla - Profil</title>
-                <meta name="description" content="Generated by create next app"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-                <link rel="icon" href="/favicon.ico"/>
+                <meta name="description" content="Generated by create next app" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             {
                 err && session &&
                 <div>
                     {
                         width > 950 ?
-                            <HeaderMain/> :
-                            <HeaderMainResponsive/>
+                            <HeaderMain /> :
+                            <HeaderMainResponsive />
                     }
 
                     <div className={styles.err}>
-                        <ErrMsg text={'Impossible de récupérer votre profil'}/>
+                        <ErrMsg text={'Impossible de récupérer votre profil'} />
                     </div>
 
                     {
                         width < 800 &&
-                        <Footer/>
+                        <Footer />
                     }
                 </div>
             }
             {
                 !err && profilData && session &&
-                <div className={styles.container}>
+                <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
                     {
                         width > 950 ?
-                            <HeaderMain/> :
-                            <HeaderMainResponsive/>
+                            <HeaderMain /> :
+                            <HeaderMainResponsive />
                     }
                     <div className={styles.containerF}>
                         <div className={styles.containerM}>
@@ -671,13 +693,13 @@ const Profil = ({profilData, err}) => {
                                 width > 800 &&
                                 <div className={styles.menuLink}>
                                     <button onClick={() => setActiveLink('profil')}
-                                            className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                        className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
                                     </button>
                                     <button onClick={() => setActiveLink('writer')}
-                                            className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
+                                        className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
                                     </button>
                                     <button onClick={() => setActiveLink('settings')}
-                                            className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
+                                        className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
                                     </button>
                                     <button onClick={() => {
                                         if (Notifs.length > 0) {
@@ -686,7 +708,7 @@ const Profil = ({profilData, err}) => {
                                         dispatch(setActiveModalNotif(true));
                                         dispatch(setOpen());
                                     }}
-                                            className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
+                                        className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
                                         Notifications
                                         {isOpen && <span></span>}
                                     </button>
@@ -711,25 +733,39 @@ const Profil = ({profilData, err}) => {
                     }
                     {
                         openModalDeleteAccount && session &&
-                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
+                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)} />
                     }
+                    <>
+                        {
+                            width >= 800 ?
+                                <Footer />
+                                :
+                                <>
+                                    {
+                                        err || !session &&
+                                        <Footer />
+                                    }
+                                </>
+
+                        }
+                    </>
                 </div>
             }
             {
-                <>
-                    {
-                        width >= 800 ?
-                            <Footer/>
-                            :
-                            <>
-                                {
-                                    err || !session &&
-                                    <Footer/>
-                                }
-                            </>
+                // <>
+                //     {
+                //         width >= 800 ?
+                //             <Footer/>
+                //             :
+                //             <>
+                //                 {
+                //                     err || !session &&
+                //                     <Footer/>
+                //                 }
+                //             </>
 
-                    }
-                </>
+                //     }
+                // </>
             }
 
 

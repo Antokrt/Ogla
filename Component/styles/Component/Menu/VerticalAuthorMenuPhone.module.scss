@@ -83,6 +83,17 @@
   }
 }
 
+.dark {
+  .containerMain {
+    background-color: $darkMode;
+    border-top: 1px solid $colorBorder2;
+  }
+
+  .item svg, .item p {
+    color: $colorTextD;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .containerMain {
     gap: 40px !important;

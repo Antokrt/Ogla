@@ -61,15 +61,18 @@
     .headerRanking {
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       p {
         &:first-letter {
           text-transform: uppercase;
         }
-
+        
+        height: 100%;
         font-size: 14px;
         font-weight: bolder;
         font-family: $primaryFont;
+
       }
 
       h3 {
@@ -447,6 +450,14 @@
       color: $colorTextD !important;
     }
   }
+
+  .catListContainer {
+    background-color: $darkMode;
+  }
+
+  .thisMonthPhone {
+    color: $colorTextD;
+  }
 }
 
 
@@ -489,7 +500,7 @@
 
 @media screen and (max-width: 950px) {
   .catListContainer {
-    margin-top: 120px;
+    margin-top: 100px;
   }
 
   .bannerContainer{

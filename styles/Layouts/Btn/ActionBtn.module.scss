@@ -45,6 +45,7 @@
     background-color: $grey;
   }
 
+  width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,6 +88,9 @@
 }
 
 .seeMoreText {
+  &:hover {
+    color: $purpleHover;
+  }
   position: absolute;
   width: 100px;
   z-index: 2;
@@ -96,6 +100,23 @@
   font-family: $primaryFont;
   font-weight: bold;
   text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
+}
+
+.dark {
+  background-color: transparent;
+}
+
+.darkFilter {
+  color: $colorTextD;
+  &:hover {
+    background-color: $darkModeHoverBtn;
+  }
+
+  background-color: $darkMode5;
+
+  svg {
+    color: $colorTextD;
+  }
 }
 
 .darkSeeMoreText {
@@ -198,7 +219,7 @@
   cursor: pointer;
 
   svg {
-    color: #e94f37;
+    color: #e94f37 !important;
     width: 22px;
   }
 
