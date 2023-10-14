@@ -88,7 +88,7 @@
       height: 13px;
       width: 13px;
       border-radius: 50%;
-      border: 2px solid #311959;
+      border: 1px solid #311959;
       z-index: 2;
     }
 
@@ -106,7 +106,7 @@
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      border: double 4px white;
+      border: double 4px $colorTextD;
     }
   }
 
@@ -151,6 +151,9 @@
     background-color: transparent;
 
     svg {
+      &:hover {
+        color: $orange;
+      }
       color: white;
       width: 20px;
     }
@@ -245,9 +248,13 @@
       transition: 0.2s;
     }
 
+    &:hover {
+      color: $orange;
+    }
+
     cursor: pointer;
     color: white;
-    width: 18px;
+    width: 20px;
     outline: none;
     transition: 0.2s;
   }
@@ -359,25 +366,25 @@
   }
 
   .logOut svg {
-    color: #1c232b !important;
+    color: $purple !important;
   }
 
   .leftLinkContainer a {
     color: #1c232b;
   }
 
-  .rightLinkContainer svg {
-    color: #1c232b !important;
+  .rightLinkContainer .bellActive svg {
+    color: $orange !important;
+  }
+
+  .rightLinkContainer .sett,  .rightLinkContainer .svgTheme{
+    color: $purple !important;
   }
 
   .music {
     svg {
       color: $orange !important;
     }
-  }
-
-  .rightLinkContainer .svgTheme {
-    color: $orange !important;
   }
 
   .containerImgProfil {

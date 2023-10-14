@@ -17,7 +17,7 @@ import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
 import { selectTheme } from "../../store/slices/themeSlice";
 
 export default function VerticalTabMenu() {
@@ -109,7 +109,7 @@ export default function VerticalTabMenu() {
                             animation={'scale'}
                             placement={'right'}
                             delay={[300, 0]}>
-                            <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon />   </li>
+                            <li className={router.pathname.startsWith('/dashboard/support') ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon /> </li>
                         </Tippy>
                         <Tippy
                             trigger="mouseenter"
@@ -131,7 +131,7 @@ export default function VerticalTabMenu() {
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
                         <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}
-                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
+                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                         <Tippy
                             trigger="mouseenter"
                             content={"En ligne"}

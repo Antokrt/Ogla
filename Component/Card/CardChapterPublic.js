@@ -8,7 +8,6 @@ export const CardChapterPublic = ({ id, index, title, date_creation, likes, book
     
     const router = useRouter();
     const theme = useSelector(selectTheme);
-
     
     function likeOrLikes() {
         return likes > 1 ? (
@@ -47,9 +46,10 @@ export const CardChapterPublic = ({ id, index, title, date_creation, likes, book
 
 
 export const CardChapterDashboard = ({ id, index, title, likes, publish }) => {
-    const router = useRouter();
-
     
+    const router = useRouter();
+    const theme = useSelector(selectTheme);
+
     function likeOrLikes() {
         return likes > 1 ? (
             <p> {likes} likes</p>
@@ -68,7 +68,7 @@ export const CardChapterDashboard = ({ id, index, title, likes, publish }) => {
                     query: { i: index }
                 })
             }}
-            className={styles.containerDashboard + ' '}>
+            className={theme ? styles.containerDashboard + ' ' : styles.containerDashboard + ' ' + styles.dark}>
 
             <div className={styles.headerChapter}>
                 <h6>Chapitre {index} <span>{Capitalize(title)} {!publish && <>(brouillon)</>}  </span></h6>

@@ -538,6 +538,37 @@
   color: #fcfaf7 !important;
 }
 
+.dark {
+  background-color: $darkMode2;
+
+  .imgPseudo {
+    p, h3 {
+      color: $colorTextD !important;
+    }
+  }
+
+  .lab {
+    h6, p {
+      color: $colorTextD !important;
+    }
+  }
+
+  .sortContainer {
+    button {
+      &:hover {
+        background-color: $darkModeHoverBtn !important;
+      }
+      color: $colorTextD !important;
+    }
+
+    .activeBtn {
+      &:hover {
+        background-color: $purple !important;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 1500px) {
 
   .containerF,
@@ -564,7 +595,6 @@
     margin-top: 100px;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .imgContainer {
@@ -625,7 +655,6 @@
     flex-direction: column !important;
   }
 }
-
 
 @media screen and (max-width: 370px) {
   .lab {

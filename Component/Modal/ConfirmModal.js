@@ -1,13 +1,17 @@
 import styles from '../../styles/Component/Modal/ConfirmModal.module.scss';
 import anim from '../../styles/utils/anim.module.scss';
-import {CheckBadgeIcon, XCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {XMarkIcon} from "@heroicons/react/24/outline";
 import {LoaderCommentary} from "../layouts/Loader";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 
 export const ConfirmModal = ({close,title, btnConfirm, subTitle, img, confirm}) => {
 
+    const theme = useSelector(selectTheme);
+
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.containerContent + ' ' + anim.scaleInModal}>
                 <XMarkIcon onClick={close} className={styles.close}/>
                 <div className={styles.headerModal}>

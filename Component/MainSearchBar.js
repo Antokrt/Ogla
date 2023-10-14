@@ -24,7 +24,7 @@ export default function MainSearchBar({ data, submit, width, height, query, sear
     }
 
     return (
-        <div className={theme ? '' : styles.dark} style={{
+        <div className={(!theme && router.pathname !== '/') ? styles.dark : ''} style={{
             width: width + "%",
             height: height + "px"
         }}>

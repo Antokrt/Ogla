@@ -179,6 +179,7 @@
 
 .dark {
   background-color: $darkMode;
+  box-shadow: none;
 
   .logo h3, .navContainer ul li, .navContainer ul li svg, .pseudo, .name{
     color: $colorTextD !important;
@@ -190,6 +191,12 @@
           background-color: $darkMode2;
         }
       }
+  }
+
+  .profil {
+    span {
+      border: 1px solid $darkMode !important;
+    }
   }
 }
 

@@ -1,12 +1,15 @@
+import { useSelector } from 'react-redux';
 import styles from '../styles/Component/Snippet.module.scss';
 import {useState} from "react";
+import { selectTheme } from '../store/slices/themeSlice';
 
 export const Snippet = ({maxSize, line, content}) => {
 
     const [seeAll, setSeeAll] = useState(content.length < maxSize);
+    const theme = useSelector(selectTheme);
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
             {
                 seeAll ?
@@ -23,7 +26,6 @@ export const Snippet = ({maxSize, line, content}) => {
 
             }
 
-
             {
 
                 content.length > maxSize &&
@@ -38,6 +40,5 @@ export const Snippet = ({maxSize, line, content}) => {
             }
 
         </div>
-
     )
 }

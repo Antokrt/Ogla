@@ -83,6 +83,15 @@
   }
 }
 
+.dark {
+  background-color: $darkMode2;
+
+  .supportContainer {
+    h3, p {
+      color: $colorTextD;
+    }
+  }
+}
 
 @media screen and (max-width: 1000px) and (max-height: 500px) {
   .container {

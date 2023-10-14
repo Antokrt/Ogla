@@ -32,7 +32,7 @@
 .dark {
   background-color: $darkMode !important;
 
-  h6, span{
+  h6 {
     color: $colorTextD !important;
   }
 }
@@ -42,9 +42,6 @@
     background-color: #1C232B;
     h6{
       color: white;
-      .book{
-        color: white;
-      }
     }
   }
 }

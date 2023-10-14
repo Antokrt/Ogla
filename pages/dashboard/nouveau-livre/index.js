@@ -9,7 +9,6 @@ import {
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
-import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
@@ -20,11 +19,12 @@ import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import {PhotoIcon} from "@heroicons/react/20/solid";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../../store/slices/categorySlice";
 import Head from "next/head";
+import { selectTheme } from '../../../store/slices/themeSlice';
 
 
 const New = () => {
@@ -45,6 +45,7 @@ const New = () => {
     const [width, height] = ScreenSize();
     const categories = useSelector(selectCategories);
     const [loadingBtn,setLoadingBtn] = useState(false);
+    const theme = useSelector(selectTheme)
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -325,7 +326,7 @@ const New = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
             <Head>
                 <title>Ogla - Nouveau livre</title>

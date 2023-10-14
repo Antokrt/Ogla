@@ -38,8 +38,6 @@
   overflow-y: hidden;
 }
 
-
-
 .scrollbar {
   &::-webkit-scrollbar {
     width: 3px;
@@ -846,6 +844,83 @@
   overflow-x: hidden;
   height: auto;
   margin-bottom: 10vh;
+}
+
+.dark {
+  background-color: $darkMode2;
+
+  .header {
+    background-color: $darkMode;
+  }
+
+  .list {
+    svg, h6, p {
+      color: $colorTextD;
+    }
+
+    h6 {
+      &:hover {
+        color: $orange;
+        transition: 0.3s;
+      }
+      transition: 0.3s;
+    }
+  }
+
+  .iconDiv {
+    &:hover {
+      background-color: $darkModeHoverBtn;
+      transition: 0.3s;
+    }
+    transition: 0.3s;
+    background-color: $darkMode2;
+  }
+
+  .btnList {
+    button {
+      &:hover {
+        background-color: $darkModeHoverBtn;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      transition: 0.3s;
+      background-color: $darkMode2;
+    }
+  }
+
+  .titleL {
+    p {
+      color: $colorTextD !important;
+    }
+
+    input {
+      background-color: $darkMode2;
+      color: $colorTextD !important;
+    }
+  }
+
+  .titleR {
+    p {
+      color: $colorTextD !important;
+    }
+  }
+
+  .containerTextEditor {
+    border-bottom: 1px solid $colorBorder !important;
+    button {
+      color: $colorTextD;
+    }
+
+    div {
+      background-color: $colorTextD !important;
+    }
+  }
+
+  .darkedit {
+    p {
+      color: $colorTextD;
+    }
+  }
 }
 
 @media screen and (max-width: 1500px) {

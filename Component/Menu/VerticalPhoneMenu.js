@@ -1,5 +1,5 @@
 import styles from "../styles/Component/Menu/VerticalAuthorMenuPhone.module.scss";
-import { BellAlertIcon, BookOpenIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { BellAlertIcon, BookOpenIcon, HomeIcon, UserIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
@@ -8,8 +8,9 @@ import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/n
 import { useState } from "react";
 import { useEffect } from "react";
 import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
 import { selectTheme } from "../../store/slices/themeSlice";
+import ScreenSize from "../../utils/Size";
 
 export default function VerticalPhoneMenu() {
 
@@ -24,6 +25,7 @@ export default function VerticalPhoneMenu() {
     const Notifs = useSelector(selectNotifs)
     const [isOpen, setIsOpen] = useState(false);
     const theme = useSelector(selectTheme);
+    const [width] = ScreenSize();
 
     useEffect(() => {
         var nb = 0;
@@ -41,26 +43,23 @@ export default function VerticalPhoneMenu() {
         <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.containerMain}>
                 <div className={styles.item} onClick={() => router.push('/')}>
-                    <HomeIcon/>
-                    <p>Accueil</p>
+                    <HomeIcon />
                 </div>
                 <div onClick={() => {
-                    if(router.pathname !== '/dashboard/books'){
+                    if (router.pathname !== '/dashboard/books') {
                         router.push('/dashboard/books');
                     }
                 }} className={router.pathname === ('/dashboard/books') ? styles.item + ' ' + styles.activeItem : styles.item}>
-                    <BookOpenIcon/>
-                    <p>Mes livres</p>
+                    <BookOpenIcon />
                 </div>
 
 
                 <div onClick={() => {
-                    if(router.pathname !== '/dashboard/nouveau-livre'){
+                    if (router.pathname !== '/dashboard/nouveau-livre') {
                         router.push('/dashboard/nouveau-livre');
                     }
                 }} className={router.pathname === ('/dashboard/nouveau-livre') ? styles.item + ' ' + styles.activeItem : styles.item}>
-                    <PlusCircleIcon/>
-                    <p>Nouveau</p>
+                    <PlusCircleIcon />
                 </div>
                 <div className={isOpen ? styles.item + ' ' + styles.notifItem : styles.item} onClick={() => {
                     if (Notifs.length > 0) {
@@ -70,18 +69,27 @@ export default function VerticalPhoneMenu() {
                     dispatch(setOpen());
                 }}>
                     <BellAlertIcon />
-                    <p>Notifications</p>
                 </div>
-                <div className={styles.item}>
-                    {
-                        session && session.user.image &&
-                        <>
-                            <img alt={'Profil image Ogla'} src={session.user.image}  onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
-                            <span className={styles.circle}></span>
-                        </>
-                    }
+                {
+                    width < 310 &&
+                    <div className={styles.item} onClick={() => router.push('/profil')}>
+                        <UserIcon />
+                    </div>
 
-                </div>
+                }
+                {
+                    width >= 310 &&
+                    <div className={styles.item}>
+                        {
+                            session && session.user.image &&
+                            <>
+                                <img alt={'Profil image Ogla'} src={session.user.image} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
+                                <span className={styles.circle}></span>
+                            </>
+                        }
+
+                    </div>
+                }
             </div>
         </div>
     )

@@ -88,7 +88,7 @@
       height: 12px;
       width: 12px;
       border-radius: 50%;
-      border: 2px solid white;
+      border: 1px solid white;
       z-index: 2;
     }
 
@@ -182,7 +182,7 @@
   a {
 
     &:hover {
-      color: black;
+      color: $orange;
       transition: 0.2s;
     }
 
@@ -205,11 +205,6 @@
   align-items: center;
   gap: 20px;
   width: 200px;
-
-  // .notif,
-  // .sett {
-  //   // color: #54595F;
-  // }
 
   .music {
     &:active {
@@ -241,10 +236,14 @@
       transform: scale(0.8);
       transition: 0.2s;
     }
+    &:hover {
+      color: $orange;
+      transition: 0.2s;
+    }
 
     outline: none;
     cursor: pointer;
-    color: #e94f37;
+    // color: #e94f37;
     width: 20px;
     transition: 0.2s;
   }
@@ -372,6 +371,12 @@
   .containerImgProfil {
     &::after {
       border: 1px solid $darkMode;
+    }
+  }
+
+  .rightLinkContainer {
+    svg {
+      color: $orange;
     }
   }
 }

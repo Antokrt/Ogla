@@ -67,16 +67,17 @@ export const HeaderMainResponsive = () => {
     }
 
     return (
-        <div className={theme ?
+        <div className={(!theme && router.pathname !== '/') ?
+            (openMenu !== null ?
+                styles.container + ' ' + styles.disableOverflow + ' ' + styles.dark
+                :
+                styles.container + ' ' + styles.dark)
+            :
             (openMenu !== null ?
                 styles.container + ' ' + styles.disableOverflow
                 :
                 styles.container)
-            :
-            (openMenu !== null ?
-                styles.container + ' ' + styles.disableOverflow + ' ' + styles.dark
-                :
-                styles.container + ' ' + styles.dark)}>
+        }>
             <div
                 className={checkPathname(headersHasToBeFixed) ? styles.containerMain + ' ' + styles.fixed : styles.containerMain}>
                 <div className={styles.leftContainer}>
