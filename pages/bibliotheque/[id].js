@@ -64,17 +64,14 @@ export default function CatPage({ cat, err, bookListData,topBookData }) {
     const router = useRouter();
     const [filter, setFilter] = useState('popular');
     const [page, setPage] = useState(2);
-    const { data: session } = useSession();
     const [bookList, setBookList] = useState(bookListData);
     const [canSeeMore, setCanSeeMore] = useState(true);
     const [loadingScroll, setLoadingScroll] = useState(false);
-    const [width, height] = ScreenSize();
+    const [width] = ScreenSize();
     const theme = useSelector(selectTheme);
     const [activeCat,setActiveCat] = useState(cat);
     const topBook = !err ? bookListData[0] : null;
     const categories = useSelector(selectCategories);
-
-
 
     useEffect(() => {
         for(const category of categories){
@@ -83,7 +80,6 @@ export default function CatPage({ cat, err, bookListData,topBookData }) {
             }
         }
     },[categories])
-
 
     const getBooksWithNewFilter = (filter) => {
         setLoadingScroll(true);
@@ -98,7 +94,6 @@ export default function CatPage({ cat, err, bookListData,topBookData }) {
             })
             .catch((err) => console.log(err))
     }
-
 
     const loadMoreBooks = () => {
         setLoadingScroll(true);

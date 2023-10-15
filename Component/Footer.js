@@ -124,8 +124,7 @@ export default function Footer() {
                             <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales
                                 d&apos;utilisation </Link></li>
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
-                            <li>© OGLA Tous droits réservés 2023
-                            </li>
+                            <li className={styles.inactiv}>© OGLA Tous droits réservés 2023 </li>
                             *
                         </ul>
                     </div>
