@@ -243,6 +243,19 @@
         }
       }
 
+      .likeBtn{
+        transition: 0.2s!important;
+        &:hover{
+          svg{
+            transform: scale(1.2) !important;
+            transition: 0.2s!important;
+          }
+        }
+        svg{
+          transition: 0.2s!important;
+        }
+      }
+
       button {
         &:active {
           transform: scale(0.9);

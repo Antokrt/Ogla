@@ -215,7 +215,7 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                             <button onClick={() => {
                                                 likeAuthor();
                                             }}>J&apos;aime <HeartSolid/></button> :
-                                            <button onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
+                                            <button className={styles.likeBtn} onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
                                     }
                                 </div>
 
