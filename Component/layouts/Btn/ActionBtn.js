@@ -163,7 +163,7 @@ export const HeadPhoneBtnOnFooter = ({onclick}) => {
             return null;
         }
         else {
-            return <div className={theme ? styles.headphoneOnFooterBook : styles.darkHeadphoneOnFooterBook}
+            return <div className={styles.headphoneOnFooterBook}
                         onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
                 <MusicalNoteIcon/>
                 {
