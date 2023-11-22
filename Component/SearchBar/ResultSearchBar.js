@@ -1,14 +1,13 @@
 import styles from "../../styles/SearchBar/SearchBarResult.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
 import React, { useEffect, useRef } from "react";
-import { HeartIcon, TagIcon } from "@heroicons/react/24/solid";
+import {HeartIcon, TagIcon, UserIcon,BookOpenIcon} from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
 import { Capitalize, MinimizeStr, ReduceString } from "../../utils/String";
 import { FormatCount } from "../../utils/NbUtils";
 import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
-import { BookOpenIcon, CheckBadgeIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 const ResultSearchBar = ({ destroy, query, data }) => {
     const router = useRouter();
@@ -75,7 +74,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
                     {data.authors.length > 0 && (
                         <>
                             <div className={styles.titleHeader}>
-                                <h5>Auteurs <CheckBadgeIcon /> </h5>
+                                <h5>Auteurs <UserIcon /> </h5>
                             </div>
                             {data.authors.map((item, index) => (
                                 <div

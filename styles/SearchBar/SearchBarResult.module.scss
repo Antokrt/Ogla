@@ -33,19 +33,23 @@
   z-index: 200!important;
 
   .titleHeader {
+    display: flex;
     padding: 12px 10px;
-
     h5 {
+      background-color: #9844AD;
+      padding: 5px 12px;
+      border-radius: 25px;
       display: flex;
+      width: min-content;
       align-items: center;
       font-family: $primaryFont;
-      color: rgba(28, 35, 43, 0.74);
-      font-weight: 500;
-      font-size: 15px;
+      font-weight: bold;
+      font-size: 10px;
+      color: white;
     }
 
     svg {
-      height: 18px;
+      height: 13px;
       margin-left: 5px;
     }
   }
@@ -195,6 +199,10 @@
     h5 {
       color: hsla(0deg, 100%, 100%, 0.88);
     }
+  }
+
+  .category{
+    color: white!important;
   }
 
   .itemResult {
