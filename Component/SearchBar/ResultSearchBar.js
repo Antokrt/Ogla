@@ -44,7 +44,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
     };
 
     return (
-        <div className={light ? styles.resultContainer : styles.resultContainer + ' ' + styles.blackResultContainer}>
+        <div className={light || router.pathname === '/' ? styles.resultContainer : styles.resultContainer + ' ' + styles.blackResultContainer}>
             {data && (
                 <>
                     {data.books.length > 0 && (

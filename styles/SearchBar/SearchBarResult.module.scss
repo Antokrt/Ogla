@@ -28,10 +28,10 @@
   overflow-y: scroll;
   max-height: 30vh;
   height: auto;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 100% !important;
   z-index: 200!important;
-
+  border: solid 1px rgba(0, 0, 0, 0.01);
   .titleHeader {
     display: flex;
     padding: 12px 10px;
