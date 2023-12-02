@@ -46,7 +46,7 @@ const Support = () => {
 
                 }
                 <div className={styles.containerData}>
-                    <SmHeaderDashboard title={'Support'}/>
+                    <SmHeaderDashboard title={'support'}/>
                     <div className={styles.supportContainer}>
                         <img alt={'Montagne Livre Ogla'} onError={(e) => e.target.src = '/assets/diapo/mountain6.png'}
                              src={GetImgPathOfAssets() + 'diapo/mountain6.png'}/>

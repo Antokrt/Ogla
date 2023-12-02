@@ -6,6 +6,16 @@ const HeaderDashboard = ({title,nb}) => {
 
     const theme = useSelector(selectTheme);
 
+    if(title === 'support'){
+        return (
+            <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
+                <div className={styles.sBlock}>
+                    <h6>Support</h6>
+                </div>
+            </div>
+        )
+    }
+
     return(
         <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.sBlock}>

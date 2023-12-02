@@ -40,6 +40,7 @@ export async function getServerSideProps({params, req}) {
     const profil = await GetAuthorProfilAPI(pseudo, req);
 
 
+
     if (!profil.errProfil && !profil.errBook) {
         return {
             props: {
@@ -71,9 +72,9 @@ export async function getServerSideProps({params, req}) {
 
 const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfil, errBooks}) => {
     const [canSeeMorePopular, setCanSeeMorePopular] = useState(true);
-    const [likes, setLikes] = useState(profilAuthor?.author?.likes);
     const [canSeeMoreRecent, setCanSeeMoreRecent] = useState(true);
     const [profilAuthor, setProfilAuthor] = useState(profilData);
+    const [likes, setLikes] = useState(profilAuthor?.author?.likes);
     const [activeFilter, setActiveFilter] = useState('popular');
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [popular, setPopular] = useState(booksData);

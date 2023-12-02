@@ -36,13 +36,17 @@ export const HeaderMain = () => {
     const { data: session } = useSession();
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState();
+    const [canSearch,setCanSearch] = useState(true);
+    const [sizeOfLastSearchResponse,setSizeOfLastSearchResponse] = useState(0);
     const [query, setQuery] = useState('');
+    const [lastQueryNull,setLastQueryNull] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const Notifs = useSelector(selectNotifs);
     const cat = router.query.id;
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const theme = useSelector(selectTheme);
     const dispatch = useDispatch();
+
 
     const pagesToHideCat = [
         '/livre/',
@@ -70,14 +74,19 @@ export const HeaderMain = () => {
     }
 
     const search = () => {
-        if (query.length > 0) {
+        if (query.length > 0 && !query.startsWith(lastQueryNull)) {
             SearchBarService(query)
                 .then((res) => {
+                    let sizeOfResponse = res ? res.authors.length + res.books.length : null;
+                    if(!sizeOfResponse){
+                        setLastQueryNull(query);
+                    }
                     setData(res);
                 })
-                .catch((err) => console.log('err'));
+                .catch((err) => console.log(err));
         }
-    }
+    };
+
 
     const openNotif = () => {
         if (session) {

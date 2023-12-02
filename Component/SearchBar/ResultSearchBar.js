@@ -1,6 +1,6 @@
 import styles from "../../styles/SearchBar/SearchBarResult.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {HeartIcon, TagIcon, UserIcon,BookOpenIcon} from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
     const light = useSelector(selectTheme);
     const divRefs = useRef([]);
     const focusedIndexRef = useRef(0);
+    const [modalState,setModalState] = useState(null);
 
     useEffect(() => {
         divRefs.current = divRefs.current.slice(0, data.books.length + data.authors.length);
@@ -42,6 +43,8 @@ const ResultSearchBar = ({ destroy, query, data }) => {
             }
         }
     };
+
+
 
     return (
         <div className={light || router.pathname === '/' ? styles.resultContainer : styles.resultContainer + ' ' + styles.blackResultContainer}>
