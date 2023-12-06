@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/Dashboard/SmHeaderDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/Dashboard/SmHeaderDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/HeaderMain.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/HeaderMain.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Component/SearchBar/ResultSearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/auteur/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/auteur/[id].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/dashboard/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/dashboard/support/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/Dashboard/Support.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Pages/User/ByUser.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/utils/anim.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/utils/anim.module.scss" afterDir="false" />
-    </list>
+    <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -378,7 +368,7 @@
       <workItem from="1700755186477" duration="613000" />
       <workItem from="1700773823742" duration="1486000" />
       <workItem from="1701159673346" duration="667000" />
-      <workItem from="1701505779780" duration="3249000" />
+      <workItem from="1701505779780" duration="3289000" />
     </task>
     <servers />
   </component>
