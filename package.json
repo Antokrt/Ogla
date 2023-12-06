@@ -9,6 +9,7 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:ci": "jest --ci",
+    "active-maintenance": "node update-config.js true && git add . && git commit -m'active-maintenance && git push'",
     "remove-maintenance": "git add . && git commit -m 'remove maintenance' && git push"
   },
   "dependencies": {
