@@ -21,6 +21,6 @@ fs.readFile(filePath, 'utf8', (err, data) => {
             console.error('Erreur d\'écriture dans le fichier :', err);
             return;
         }
-        console.log(`Maintenance is successfully ${maintenanceValue ? 'on':'off'}`);
+        console.log(`Maintenance is successfully ${maintenanceValue ? 'OFF':'ON'}`);
     });
 });
