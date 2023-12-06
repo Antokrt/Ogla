@@ -12,7 +12,7 @@
     "update-config-true": "node scripts/update-config.js true",
     "update-config-false": "node scripts/update-config.js false",
     "git-active-maintenance": "git add . && git commit -m 'active-maintenance' && git push",
-    "git-remove-maintenance": "git commit -m 'remove-maintenance' && git push",
+    "git-remove-maintenance": "git add . && git commit -m 'remove-maintenance' && git push",
     "active-maintenance": "npm run update-config-true && npm run git-active-maintenance",
     "remove-maintenance": "npm run update-config-false && npm run git-remove-maintenance"
   },
