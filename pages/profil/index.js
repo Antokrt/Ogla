@@ -395,7 +395,7 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img} referrerPolicy={'no-referrer'}
+                        <img src={profil?.img} referrerPolicy={'no-referrer'}
                              onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
