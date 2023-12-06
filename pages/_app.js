@@ -24,6 +24,7 @@ import {GoogleAnalytics} from "../Component/GoogleAnalytics";
 import {CookieAccept} from "../Component/CookieAccept";
 import { persistor, store } from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import {LoaderCommentary} from "../Component/layouts/Loader";
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -76,7 +77,7 @@ function MyApp({Component, pageProps}) {
                         justifyContent: "center",
                         alignItems: "center",
                         fontSize: "35px",
-                    }}> OGLA </div>} persistor={persistor}>
+                    }}> <LoaderCommentary/> </div>} persistor={persistor}>
                 <Notif/>
                 <Modal/>
                 <Darken/>
