@@ -9,8 +9,13 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "active-maintenance": "node update-config.js true && git add . && git commit -m'active-maintenance && git push'",
-    "remove-maintenance": "git add . && git commit -m 'remove maintenance' && git push"
+    "update-config-true": "node update-config.js true",
+    "update-config-false": "node update-config.js false",
+    "git-active-maintenance": "git add . && git commit -m 'active-maintenance' && git push",
+    "git-remove-maintenance": "git commit -am 'remove maintenance' && git push",
+    "active-maintenance": "npm run update-config-true && npm run git-active-maintenance",
+    "remove-maintenance": "npm run update-config-false && npm run git-remove-maintenance"
+
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",

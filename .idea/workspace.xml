@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/update-config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +54,7 @@
       <recent name="C:\Dev\Ogla\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build">
+  <component name="RunManager" selected="npm.remove-maintenance">
     <configuration name="Home" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
       <node-options value="" />
@@ -68,10 +68,14 @@
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="Footer.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/Footer.js" working-dir="$PROJECT_DIR$/Component">
-      <method v="2" />
-    </configuration>
-    <configuration name="MainSearchBar.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/Component/MainSearchBar.js" working-dir="$PROJECT_DIR$/Component">
+    <configuration name="active-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="active-maintenance" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -79,6 +83,16 @@
       <command value="run" />
       <scripts>
         <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="remove-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="remove-maintenance" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -96,11 +110,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.remove-maintenance" />
+        <item itemvalue="npm.active-maintenance" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.test" />
         <item itemvalue="Jest.Home" />
-        <item itemvalue="Node.js.MainSearchBar.js" />
-        <item itemvalue="Node.js.Footer.js" />
       </list>
     </recent_temporary>
   </component>
