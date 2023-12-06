@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/update-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/update-config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,27 +48,14 @@
       <recent name="C:\Dev\Ogla\public\assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Dev\Ogla\Front\scripts" />
       <recent name="C:\Dev\Ogla\Front\pages\dashboard\nouveau" />
       <recent name="C:\Dev\Ogla\Front\styles\Pages\Dashboard" />
       <recent name="C:\Dev\Ogla\Front\styles\Component\Dashboard\Pages" />
       <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
-      <recent name="C:\Dev\Ogla\pages" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.remove-maintenance">
-    <configuration name="Home" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
-      <node-interpreter value="project" />
-      <node-options value="" />
-      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
-      <working-dir value="$PROJECT_DIR$" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-file value="$PROJECT_DIR$/__tests__/index.test.js" />
-      <test-names>
-        <test-name value="Home" />
-      </test-names>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="npm.git-remove-maintenance">
     <configuration name="active-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -83,6 +71,16 @@
       <command value="run" />
       <scripts>
         <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="git-remove-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="git-remove-maintenance" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -110,11 +108,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.git-remove-maintenance" />
         <item itemvalue="npm.remove-maintenance" />
         <item itemvalue="npm.active-maintenance" />
         <item itemvalue="npm.build" />
         <item itemvalue="npm.test" />
-        <item itemvalue="Jest.Home" />
       </list>
     </recent_temporary>
   </component>

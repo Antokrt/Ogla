@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const filePath = './next.config.js';
+const filePath = './scripts/next.config.js';
 const maintenanceValue = process.argv[2]; // Récupère la valeur passée en argument
 
 if (maintenanceValue !== 'true' && maintenanceValue !== 'false') {
