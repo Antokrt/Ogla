@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/profil/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/profil/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/update-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/update-config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +53,7 @@
       <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.remove-maintenance">
+  <component name="RunManager" selected="npm.active-maintenance">
     <configuration name="active-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -106,8 +106,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.remove-maintenance" />
         <item itemvalue="npm.active-maintenance" />
+        <item itemvalue="npm.remove-maintenance" />
         <item itemvalue="npm.git-active-maintenance" />
         <item itemvalue="npm.update-config-false" />
         <item itemvalue="npm.update-config-true" />

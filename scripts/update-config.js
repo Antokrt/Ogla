@@ -4,7 +4,7 @@ const filePath = './next.config.js';
 const maintenanceValue = process.argv[2]; // Récupère la valeur passée en argument
 
 if (maintenanceValue !== 'true' && maintenanceValue !== 'false') {
-    console.error('Veuillez passer "true" ou "false" en tant qu\'argument.');
+    console.error('true or false required...');
     process.exit(1);
 }
 
@@ -21,6 +21,6 @@ fs.readFile(filePath, 'utf8', (err, data) => {
             console.error('Erreur d\'écriture dans le fichier :', err);
             return;
         }
-        console.log(`La variable "maintenance" a été mise à jour avec succès avec la valeur ${maintenanceValue} !`);
+        console.log(`Maintenance is successfully ${maintenanceValue ? 'on':'off'}`);
     });
 });
