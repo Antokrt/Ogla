@@ -64,6 +64,7 @@ function MyApp({Component, pageProps}) {
     }
 
 
+
     return (
     <AnimatePresence mode={'wait'} initial={false}>
         <SessionProvider session={pageProps.session}>
