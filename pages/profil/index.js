@@ -59,7 +59,7 @@ export async function getServerSideProps({req}) {
     const data = await GetPrivateProfilApi(req);
     return {
         props: {
-            err: true,
+            err: data.err,
             profilData: data.profilJson
         }
     }
