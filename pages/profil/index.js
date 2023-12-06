@@ -711,7 +711,10 @@ const Profil = ({profilData, err}) => {
                             <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
                         }
                     </div>
-                    <Footer/>
+                    {
+                        width > 800 &&
+                        <Footer/>
+                    }
                 </>
             }
 
