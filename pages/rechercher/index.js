@@ -151,7 +151,6 @@ const SearchPage = ({queryData, data, err}) => {
                         searchNewBooks();
                     }}>
                         <div className={styles.inputContainer}>
-                            <BookOpenIcon/>
                             <input
                                 ref={inputRef}
                                 onChange={(e) => {
