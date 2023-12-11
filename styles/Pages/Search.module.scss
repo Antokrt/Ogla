@@ -36,13 +36,19 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.11);
     margin-bottom: 30px;
 
+    input{
+      &::placeholder{
+        font-family: $primaryFont;
+      }
+    }
+
     svg {
       color: #343d46;
       height: 23px;
     }
   }
 
-  button {
+  span {
 
     position: relative;
     z-index: 2;

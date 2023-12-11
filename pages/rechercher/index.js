@@ -159,11 +159,15 @@ const SearchPage = ({queryData, data, err}) => {
                                 }}
                                 type={"text"}
                                 value={query}
-                                placeholder={" "}
+                                placeholder={"Rechercher..."}
                                 className={styles.inputSearch}
                             />
 
-                                <MagnifyingGlassIcon/>
+
+                            <span>
+                                <MagnifyingGlassIcon onClick={() => searchNewBooks()}/>
+                            </span>
+
 
                         </div>
                     </form>
