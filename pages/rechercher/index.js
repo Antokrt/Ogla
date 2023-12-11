@@ -163,9 +163,7 @@ const SearchPage = ({queryData, data, err}) => {
                                 className={styles.inputSearch}
                             />
 
-                            <button type={'submit'}>
                                 <MagnifyingGlassIcon/>
-                            </button>
 
                         </div>
                     </form>
