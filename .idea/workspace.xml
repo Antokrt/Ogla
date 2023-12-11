@@ -55,7 +55,7 @@
       <recent name="C:\Dev\Ogla\Component\Post\Commentary" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.remove-maintenance">
+  <component name="RunManager" selected="npm.active-maintenance">
     <configuration name="active-maintenance" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -108,8 +108,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.remove-maintenance" />
         <item itemvalue="npm.active-maintenance" />
+        <item itemvalue="npm.remove-maintenance" />
         <item itemvalue="npm.git-active-maintenance" />
         <item itemvalue="npm.update-config-false" />
         <item itemvalue="npm.update-config-true" />
