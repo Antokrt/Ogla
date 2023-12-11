@@ -27,6 +27,7 @@ import {HeadPhoneBtn, HeadPhoneBtnOnHeaderMain} from "./layouts/Btn/ActionBtn";
 import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
 import {OpenAllService} from "../service/Notifications/NotificationsService";
 import {selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
+import {GetDefaultUserImgWhenError} from "../utils/ImageUtils";
 
 export const HeaderMain = () => {
 
@@ -147,7 +148,7 @@ export const HeaderMain = () => {
                         session ?
                             <>
                                 <div tabIndex={0} onClick={() => router.push('/profil')} className={styles.containerImgProfil}>
-                                    <img src={session?.user?.image} referrerPolicy={'no-referrer'}/>
+                                    <img onError={(e) => e.target.src = GetDefaultUserImgWhenError()} src={session?.user?.image} referrerPolicy={'no-referrer'}/>
                                 </div>
 
                                 <Tippy trigger={'mouseenter'} content={'Déconnexion'}>

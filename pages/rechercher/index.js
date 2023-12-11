@@ -26,6 +26,7 @@ export async function getServerSideProps({req, query}) {
     if (!query.search) {
         return {
             props: {
+                key:query.search,
                 err: false,
                 queryData: null,
                 data: null
@@ -36,6 +37,7 @@ export async function getServerSideProps({req, query}) {
     const data = await SearchBookAPI(query.search);
     return {
         props: {
+            key:query.search,
             err: data.err,
             queryData: query.search,
             data: data.searchData
@@ -184,7 +186,7 @@ const SearchPage = ({queryData, data, err}) => {
                                             setFilter('popular');
                                             searchNewBooks('popular');
                                         }}
-                                        className={filter === "popular" && styles.activeBtn}>Populaires
+                                        className={filter === "popular" ? styles.activeBtn : ''}>Populaires
                                     </button>
 
                                     <button
@@ -192,7 +194,7 @@ const SearchPage = ({queryData, data, err}) => {
                                             setFilter('recent');
                                             searchNewBooks('recent');
                                         }}
-                                        className={filter === "recent" && styles.activeBtn}>Récents
+                                        className={filter === "recent" ? styles.activeBtn : ''}>Récents
                                     </button>
                                 </div>
                             </div>

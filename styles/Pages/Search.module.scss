@@ -49,7 +49,6 @@
   }
 
   span {
-
     position: relative;
     z-index: 2;
     transition: 0.2s;
@@ -57,10 +56,10 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       background-color: #e94f37;
-      border-radius: 50%;
+      border-radius: 50% !important;
     svg{
       width: 14px;
       color: white!important;
@@ -266,7 +265,7 @@
   }
 
 .inputSearch{
-  width: 100%!important;
+  width: 220px!important;
 }
   .seeMoreContainer {
     margin-top: 50px;
@@ -297,6 +296,23 @@
   .searchContainer {
     form {
       padding: 0px 20px;
+    }
+
+    .inputContainer{
+      span{
+        svg{
+          height: 12px!important;
+        }
+        width: 30px!important;
+        height: 30px!important;
+      }
+    }
+
+    input{
+      &::placeholder{
+        font-size: 12px!important;
+      }
+      width: 130px!important;
     }
   }
 }
