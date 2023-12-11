@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const filePath = './next.config.js';
-const maintenanceValue = process.argv[2]; // Récupère la valeur passée en argument
+const maintenanceValue = process.argv[2];
 
 if (maintenanceValue !== 'true' && maintenanceValue !== 'false') {
     console.error('true or false required...');
@@ -10,7 +10,7 @@ if (maintenanceValue !== 'true' && maintenanceValue !== 'false') {
 
 fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
-        console.error('Erreur de lecture du fichier :', err);
+        console.error('Error when reading the file :', err);
         return;
     }
 
@@ -18,9 +18,9 @@ fs.readFile(filePath, 'utf8', (err, data) => {
 
     fs.writeFile(filePath, updatedData, 'utf8', (err) => {
         if (err) {
-            console.error('Erreur d\'écriture dans le fichier :', err);
+            console.error('Erreur when writing the file :', err);
             return;
         }
-        console.log(`Maintenance is successfully ${maintenanceValue ? 'OFF':'ON'}`);
+        console.log(`Maintenance is successfully ${maintenanceValue ? 'ON':'OFF'}`);
     });
 });
