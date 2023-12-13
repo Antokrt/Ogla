@@ -1,17 +1,25 @@
+import { useSelector } from 'react-redux';
 import styles from '../../styles/Component/Dashboard/SmHeader.module.scss';
+import { selectTheme } from '../../store/slices/themeSlice';
 
-import SMSeachBar from "../SMSeachBar";
-import {BellAlertIcon, MagnifyingGlassIcon} from "@heroicons/react/24/outline";
-import {useSession} from "next-auth/react";
+const HeaderDashboard = ({title,nb}) => {
 
-const HeaderDashboard = ({title}) => {
+    const theme = useSelector(selectTheme);
 
-    const {data:session } = useSession();
+    if(title === 'support'){
+        return (
+            <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
+                <div className={styles.sBlock}>
+                    <h6>Support</h6>
+                </div>
+            </div>
+        )
+    }
 
     return(
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.sBlock}>
-                <h6>{title}</h6>
+                <h6>Tous mes <span className={styles.book}>livres</span> {nb && <span className={styles.nb}>{nb}</span>}</h6>
             </div>
         </div>
     )

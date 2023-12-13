@@ -1,5 +1,4 @@
 import styles from '../../../styles/Pages/Dashboard/NewChapter.module.scss';
-import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
@@ -7,11 +6,7 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {Placeholder} from "@tiptap/extension-placeholder";
 import {
-    ArrowRightIcon,
-    ChevronDoubleLeftIcon,
-    ChevronDoubleRightIcon,
-    ChevronRightIcon, CursorArrowRaysIcon,
-    HomeIcon, PaperAirplaneIcon
+    ChevronRightIcon, CursorArrowRaysIcon, HomeIcon
 } from "@heroicons/react/24/outline";
 import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
@@ -27,14 +22,17 @@ import Head from "next/head";
 import {toastDisplayError} from "../../../utils/Toastify";
 import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 import {GetFetchPath} from "../../api/utils/Instance";
+import {LoaderImg} from "../../../Component/layouts/Loader";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
 export async function getServerSideProps({req, params}) {
+
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
     const book = await fetch(GetFetchPath() + 'author/book/' + id, config);
-    const bookErrData = !book.ok;
     const booksJson = await book.json();
-
+    const bookErrData = !book.ok;
 
     return {
         props: {
@@ -48,15 +46,18 @@ export async function getServerSideProps({req, params}) {
 
 const NouveauChapitre = ({bookData, err}) => {
 
+    const [publishLoading,setPublishLoading] = useState(false);
+    const [saveLoading,setSaveLoading] = useState(false);
+    const [canSend, setCanSend] = useState(false);
     const [loading, setLoading] = useState(true);
     const [book, setBook] = useState(bookData);
-    const [title, setTitle] = useState('')
     const [content, setContent] = useState();
-    const [text, setText] = useState('');
-    const [canSend, setCanSend] = useState(false)
-    const router = useRouter();
+    const [title, setTitle] = useState('');
+    const theme = useSelector(selectTheme);
     const orientation = useOrientation();
+    const [text, setText] = useState('');
     const [width, height] = ScreenSize();
+    const router = useRouter();
 
     const onPageChange = () => {
         const object = {
@@ -104,7 +105,6 @@ const NouveauChapitre = ({bookData, err}) => {
         }
     }
 
-
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -140,6 +140,12 @@ const NouveauChapitre = ({bookData, err}) => {
     })
 
     const sendData = (publish) => {
+        if(publish){
+            setPublishLoading(true);
+        }
+        else {
+            setSaveLoading(true);
+        }
         if (canSend) {
             const data = {
                 book_id: book._id,
@@ -154,12 +160,25 @@ const NouveauChapitre = ({bookData, err}) => {
                 .then((res) => {
                     localStorage.removeItem('book-' + bookData._id);
                     router.push('/dashboard/books/' + book._id);
+                    if(publish){
+                        setPublishLoading(false);
+                    }
+                    else {
+                        setSaveLoading(false);
+                    }
                 })
                 .catch((err) => {
                     if (err.response.data.message === 'Chapter-120') {
                         toastDisplayError('Titre incorrect.');
                     } else {
                         toastDisplayError('Impossible de modifier le chapitre.')
+                    }
+
+                    if(publish){
+                        setPublishLoading(false);
+                    }
+                    else {
+                        setSaveLoading(false);
                     }
                 });
         }
@@ -211,7 +230,7 @@ const NouveauChapitre = ({bookData, err}) => {
     }, [editor])
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
             <Head>
                 <title>Ogla - Nouveau chapitre</title>
@@ -288,14 +307,31 @@ const NouveauChapitre = ({bookData, err}) => {
                                     <button
                                         className={canSend ? styles.activeSaveBtn : ''}
                                         onClick={() => sendData(false)}
-                                    >Enregistrer en tant que brouillon <ArrowPathIcon/>
+                                    >
+                                        {
+                                            !saveLoading ?
+                                              <>
+                                                  Enregistrer en tant que brouillon <ArrowPathIcon/>
+                                              </>
+                                                :
+                                                <LoaderImg/>
+                                        }
                                     </button>
+
 
 
                                     <button
                                         className={canSend ? styles.activePublishBtn : ''}
                                         onClick={() => sendData(true)}
-                                    >Publier <CursorArrowRaysIcon/>
+                                    >
+                                        {
+                                            !publishLoading ?
+                                                <>
+                                                    Publier <CursorArrowRaysIcon/>
+                                                </>
+                                                :
+                                                <LoaderImg/>
+                                        }
                                     </button>
                                 </div>
 
@@ -324,7 +360,15 @@ const NouveauChapitre = ({bookData, err}) => {
                                     <button
                                         className={canSend ? styles.activeSaveBtn : ''}
                                         onClick={() => sendData(false)}
-                                    >Brouillon <ArrowPathIcon/>
+                                    >
+                                        {
+                                            !saveLoading ?
+<>
+    Brouillon <ArrowPathIcon/>
+</>
+:
+                                                <LoaderImg/>
+                                        }
                                     </button>
 
 
@@ -399,14 +443,30 @@ const NouveauChapitre = ({bookData, err}) => {
                                                 <button
                                                     className={canSend ? styles.activeSaveBtn : ''}
                                                     onClick={() => sendData(false)}
-                                                >Brouillon <ArrowPathIcon/>
+                                                >
+                                                    {
+                                                        !saveLoading ?
+                                                            <>
+                                                                Brouillon <ArrowPathIcon/>
+                                                            </>
+                                                            :
+                                                            <LoaderImg/>
+                                                    }
                                                 </button>
 
 
                                                 <button
                                                     className={canSend ? styles.activePublishBtn : ''}
                                                     onClick={() => sendData(true)}
-                                                >Publier <CursorArrowRaysIcon/>
+                                                >
+                                                    {
+                                                        !publishLoading ?
+<>
+    Publier <CursorArrowRaysIcon/>
+</>
+:
+<LoaderImg/>
+                                                    }
                                                 </button>
                                             </div>
                                         }
@@ -485,14 +545,29 @@ const NouveauChapitre = ({bookData, err}) => {
                                         <button
                                             className={canSend ? styles.activeSaveBtn : ''}
                                             onClick={() => sendData(false)}
-                                        >Brouillon <ArrowPathIcon/>
+                                        >
+                                            {
+                                                !saveLoading ?
+                                                    <>
+                                                        Brouillon <ArrowPathIcon/>
+                                                    </>
+                                                    :
+                                                    <LoaderImg/>
+                                            }
                                         </button>
 
 
                                         <button
                                             className={canSend ? styles.activePublishBtn : ''}
                                             onClick={() => sendData(true)}
-                                        >Publier <CursorArrowRaysIcon/>
+                                        >
+                                            {
+                                                !publishLoading ?
+                                                    <>
+                                                        Publier <CursorArrowRaysIcon/>
+                                                    </> :
+                                                    <LoaderImg/>
+                                            }
                                         </button>
 
                                     </div>

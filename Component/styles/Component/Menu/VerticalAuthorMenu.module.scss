@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 250px;
+  width: 100%;
   min-width: 80px;
   z-index: 1;
   padding-top: 2%;
@@ -175,6 +175,29 @@
     color: white !important;
   }
 
+}
+
+.dark {
+  background-color: $darkMode;
+  box-shadow: none;
+
+  .logo h3, .navContainer ul li, .navContainer ul li svg, .pseudo, .name{
+    color: $colorTextD !important;
+  }
+
+  .navContainer ul {
+      li {
+        &:hover {
+          background-color: $darkMode2;
+        }
+      }
+  }
+
+  .profil {
+    span {
+      border: 1px solid $darkMode !important;
+    }
+  }
 }
 
 @media screen and (max-width: 1200px) {

@@ -3,8 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0px 5px 0px rgb(64 60 67 / 16%);
-  padding: 20px 0px;
+  padding: 30px 0px;
 
   h6{
     &:first-letter{
@@ -14,6 +13,27 @@
     color: #1C232B;
     font-weight: bold;
     font-size: 15px;
+
+    .book{
+      color: #9844AD;
+    }
+
+    .nb{
+      margin-left: 5px;
+      background-color: #9844AD;
+      padding: 3px 10px;
+      font-size: 12px;
+      color: white;
+      border-radius: 25px;
+    }
+  }
+}
+
+.dark {
+  background-color: $darkMode !important;
+
+  h6 {
+    color: $colorTextD !important;
   }
 }
 

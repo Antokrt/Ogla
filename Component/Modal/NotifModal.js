@@ -1,21 +1,15 @@
 import styles from '../../styles/Component/Modal/NotifModal.module.scss';
-import { BellAlertIcon, XCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import anim from "../../styles/utils/anim.module.scss";
-import scroll from "../../styles/utils/scrollbar.module.scss";
-import { router, useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
 import { allDel, allReadReducer, selectNotifs } from '../../store/slices/notifSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Notif from './Notif';
-import {DeleteAllNotifsService, ReadAllService} from '../../service/Notifications/NotificationsService';
+import { DeleteAllNotifsService, ReadAllService } from '../../service/Notifications/NotificationsService';
 import { selectTheme } from '../../store/slices/themeSlice';
-import {CheckCircleIcon, TrashIcon} from "@heroicons/react/24/solid";
-import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import { CheckCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { GetImgPathOfAssets } from "../../utils/ImageUtils";
 
 export const NotifModal = ({ close }) => {
-    const router = useRouter();
-    const { data: session } = useSession();
     const allNotifs = useSelector(selectNotifs);
     const dispatch = useDispatch();
     const theme = useSelector(selectTheme);
@@ -31,7 +25,6 @@ export const NotifModal = ({ close }) => {
             }
         })
     }
-
 
     function DeleteAll() {
         if (allNotifs.length > 0)
@@ -49,7 +42,7 @@ export const NotifModal = ({ close }) => {
                 })
     }
 
-    return <div className={theme? styles.container : styles.darkContainer}>
+    return <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
         <div className={styles.containerContent + ' ' + anim.scaleInModal}>
             <div className={styles.header}>
                 <p></p>
@@ -69,20 +62,20 @@ export const NotifModal = ({ close }) => {
                     </div> :
                     <div className={styles.empty}>
 
-                            <img
-                                className={styles.old}
-                                alt={'Image Ogla'}
-                                onError={(e) => e.target.src = '/assets/diapo/old.png'}
+                        <img
+                            className={styles.old}
+                            alt={'Image Ogla'}
+                            onError={(e) => e.target.src = '/assets/diapo/old.png'}
                             src={GetImgPathOfAssets() + 'diapo/old.png'}
-                            />
+                        />
                         <p> Vous n'avez pas de notifications </p>
                     </div>
             }
             {
                 allNotifs.length > 0 &&
                 <div className={styles.footer}>
-                    <button className={styles.read} onClick={readAllNotifs}> Marquer comme lus <CheckCircleIcon/> </button>
-                    <button className={styles.delete} onClick={DeleteAll}> Tout supprimer <TrashIcon/> </button>
+                    <button className={styles.read} onClick={readAllNotifs}> Marquer comme lus <CheckCircleIcon /> </button>
+                    <button className={styles.delete} onClick={DeleteAll}> Tout supprimer <TrashIcon /> </button>
                 </div>
             }
         </div>

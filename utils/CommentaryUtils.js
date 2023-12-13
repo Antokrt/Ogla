@@ -1,4 +1,34 @@
 import {SendNotifService} from "../service/Notifications/NotificationsService";
+import {activeLoading, addComment, disableLoading, incrPages} from "../store/slices/commentSlice";
+import {GetCommentService} from "../service/Comment/CommentService";
+
+export const GetCommentsUtils =  (commentsReducer, nbComments, activeLoadingF, disableLoadingF, type, activeId, pages, session, activeFilter, lastCommentId, addCommentF,incrPagesF,activeErrF) => {
+
+    if (commentsReducer.length >= nbComments) {
+        return null;
+    }
+
+    activeLoading();
+
+    GetCommentService(type, activeId, pages, 5, session, activeFilter)
+        .then((res) => {
+            res.forEach(element => {
+                if (!lastCommentId.includes(element._id)) {
+                    addCommentF(element);
+                }
+            });
+            if (res.length !== 0) {
+                incrPagesF();
+                // setCanScroll(true);
+            } else {
+                // setCanScroll(false);
+            }
+
+
+        })
+        .then(() => disableLoadingF())
+        .catch(() => activeErrF());
+}
 
 export const LikeCommentReduce = (id, arr, authorId, userId, targetDocumentId, secondTargetDocumentId) => {
     const newArr = [...arr];
@@ -6,13 +36,9 @@ export const LikeCommentReduce = (id, arr, authorId, userId, targetDocumentId, s
         if (item._id === id) {
             if (item.hasLike) {
                 item.likes = item.likes - 1;
-            }
-            else {
+            } else {
                 item.likes += 1;
-                if (authorId != userId)
-                    SendNotifService(item.userId, 4, targetDocumentId, secondTargetDocumentId);
-                else
-                    SendNotifService(item.userId, 6, targetDocumentId, secondTargetDocumentId);
+                if (authorId != userId) SendNotifService(item.userId, 4, targetDocumentId, secondTargetDocumentId); else SendNotifService(item.userId, 6, targetDocumentId, secondTargetDocumentId);
             }
             item.hasLike = !item.hasLike;
         }
@@ -58,13 +84,9 @@ export const LikeAnswerReduce = (comments, replyId, authorId, userId, targetDocu
             if (reply._id === replyId) {
                 if (reply.hasLike) {
                     reply.likes = reply.likes - 1;
-                }
-                else {
+                } else {
                     reply.likes += 1;
-                    if (authorId != userId)
-                        SendNotifService(reply.userId, 5, targetDocumentId, secondTargetDocumentId);
-                    else
-                        SendNotifService(reply.userId, 7, targetDocumentId, secondTargetDocumentId);
+                    if (authorId != userId) SendNotifService(reply.userId, 5, targetDocumentId, secondTargetDocumentId); else SendNotifService(reply.userId, 7, targetDocumentId, secondTargetDocumentId);
                 }
                 reply.hasLike = !reply.hasLike;
             }

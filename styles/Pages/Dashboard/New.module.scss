@@ -16,7 +16,7 @@
 
 .verticalMenuContainer {
   height: 100%;
-  width: 15%;
+  width: 250px;
 }
 
 .containerData {
@@ -306,7 +306,7 @@
       width: 100%;
       button{
         &:active{
-          transform: scale(0.8);
+          transform: scale(0.9);
           transition: 0.2s;
         }
         &:hover{
@@ -332,7 +332,12 @@
       }
 
       .sendBtn {
-
+        span{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+        }
         &:hover {
           background-color: $purpleHover;
         }
@@ -406,7 +411,7 @@
   }
 
   h3 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: $primaryFont;
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 10px;
@@ -433,6 +438,73 @@
 
 .disabledBtn {
   background-color: rgba(28, 35, 43, 0.32) !important;
+}
+
+.dark {
+  background-color: $darkMode2;
+
+  .verticalMenuContainer {
+    background-color: $darkMode;
+  }
+
+  .stepperContainer {
+    background-color: $darkMode;
+    box-shadow: none;
+  }
+
+  .label h6, .label p{
+    color: $colorTextD !important;
+  }
+
+  .circle {
+    background-color: $darkMode2 !important;
+  }
+
+  .notCompletedCircle {
+    background-color: white !important;
+  }
+
+  .newContainer {
+    background-color: $darkMode;
+
+    h5 {
+      color: $colorTextD;
+    }
+
+    .inputContainer {
+      label {
+        color: $colorTextD;
+      }
+
+      input, textarea, select, svg {
+        background-color: $darkMode2 !important;
+        color: $colorTextD !important;
+      }
+    }
+  }
+
+  .btnContainer {
+    button {
+      &:hover {
+        background-color: $darkModeHoverBtn2 !important;
+        transition: 0.3s !important;
+      }
+      background-color: $darkMode2 !important;
+      transition: 0.3s !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .finalContainer {
+    h4 {
+      color: $colorTextD;
+    }
+
+    textarea {
+      background-color: $darkMode2;
+      color: grey;
+    }
+  }
 }
 
 @media screen and (max-width: 1100px) {

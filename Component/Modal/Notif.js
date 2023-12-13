@@ -5,7 +5,7 @@ import { FormatDateFrom } from "../../utils/Date";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { GetOneBook } from "../../service/Book/BookService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteOne, setActiveModalNotif, setRead } from "../../store/slices/notifSlice";
 import { GetChapterById } from "../../service/Chapter/ChapterService";
 import {
@@ -14,11 +14,13 @@ import {
 } from "../../service/Notifications/NotificationsService";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 const Notif = ({ element }) => {
 
     const router = useRouter();
     const dispatch = useDispatch();
+    const theme = useSelector(selectTheme)
 
     function NavigateNotif() {
         switch (element.code) {
@@ -126,7 +128,7 @@ const Notif = ({ element }) => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={!element.read ? styles.itemNotif + ' ' + anim.scaleInModal : styles.itemNotifOpen} onClick={NavigateNotif}>
                 <div className={styles.cntImg}>
                     <img className={anim.fadeIn} referrerPolicy={'no-referrer'} src={element.content.sender.img} onError={(e) => e.target.src = GetDefaultUserImgWhenError() } />

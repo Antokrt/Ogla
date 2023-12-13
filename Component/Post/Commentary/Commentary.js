@@ -2,8 +2,8 @@ import styles from "../../../styles/Component/Post/Commentary/Commentary.module.
 import anim from '../../../styles/utils/anim.module.scss';
 import scroll from "../../../styles/utils/scrollbar.module.scss";
 import ReactDOM from "react-dom"
-import {Fragment, useEffect, useRef, useState} from "react";
-import {HeartIcon} from "@heroicons/react/24/solid";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { HeartIcon } from "@heroicons/react/24/solid";
 import {
     ArrowDownIcon,
     ArrowUpIcon,
@@ -12,57 +12,78 @@ import {
     TrashIcon
 } from "@heroicons/react/24/outline";
 import SubCommentary from "./SubCommentary";
-import {useSession} from "next-auth/react";
-import {DeleteCommentaryService} from "../../../service/Comment/CommentService";
-import {LikeBookService, LikeService} from "../../../service/Like/LikeService";
-import {FormatDateFrom, FormatDateStr} from "../../../utils/Date";
-import {useDispatch, useSelector} from "react-redux";
-import {selectLoginModalStatus, setActiveModalState} from "../../../store/slices/modalSlice";
-import {LikeBtn, TextLikeBtn} from "../../layouts/Btn/Like";
-import {ConfirmModal} from "../../Modal/ConfirmModal";
-import {GetDefaultUserImgWhenError} from "../../../utils/ImageUtils";
-import {FormatCount} from "../../../utils/NbUtils";
+import { useSession } from "next-auth/react";
+import { DeleteCommentaryService, GetAuthorProfilOfCommentService } from "../../../service/Comment/CommentService";
+import { LikeBookService, LikeService } from "../../../service/Like/LikeService";
+import { FormatDateFrom, FormatDateStr } from "../../../utils/Date";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoginModalStatus, setActiveModalState } from "../../../store/slices/modalSlice";
+import { LikeBtn, TextLikeBtn } from "../../layouts/Btn/Like";
+import { ConfirmModal } from "../../Modal/ConfirmModal";
+import { GetDefaultUserImgWhenError } from "../../../utils/ImageUtils";
+import { FormatCount } from "../../../utils/NbUtils";
+import {
+    activeDeleteModal,
+    activeReportModal,
+    addAnswer,
+    deleteMyComment, getMoreAnswers,
+    likeAComment,
+    selectAnswers,
+    selectAnswersPage,
+    selectInfosComment,
+    throwAnErr
+} from "../../../store/slices/commentSlice";
+import { GetAnswerByCommentService, NewAnswerService } from "../../../service/Answer/AnswerService";
+import { LoaderCommentary } from "../../layouts/Loader";
+import { SendAnswerReduce } from "../../../utils/CommentaryUtils";
+import { SendNotifService } from "../../../service/Notifications/NotificationsService";
+import { ReduceString } from "../../../utils/String";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 const Commentary = ({
-                        pseudo,
-                        img,
-                        date,
-                        content,
-                        likes,
-                        answers,
-                        authorId,
-                        deleteComment,
-                        id,
+    pseudo,
+    img,
+    date,
+    content,
+    likes,
+    answers,
+    authorId,
+    deleteComment,
+    id,
     reportComment,
     reportAnswer,
-                        hasLikeData,
-                        likeComment,
-                        likeAanswer,
-                        sendNewAnswer,
-                        deleteAanswer,
-                        nbAnswers,
-                        seeMoreAnswers,
-                        authorHasLike,
-                        authorImg,
-                        authorPseudo,
-                        answerPage,
-                        newAnswerPage
-                    }) => {
+    hasLikeData,
+    likeComment,
+    likeAanswer,
+    sendNewAnswer,
+    deleteAanswer,
+    nbAnswers,
+    seeMoreAnswers,
+    authorHasLike,
+    authorImg,
+    authorPseudo,
+    answerPage,
+    newAnswerPage
+}) => {
 
     const [sizeCommentary, setSizeCommentary] = useState(content?.length);
     const [tooLong, setTooLong] = useState(content?.length > 200);
     const [openSubCategory, setOpenSubCategory] = useState(false);
     const [answersList, setAnswersList] = useState(answers);
     const [newAnswer, setNewAnswer] = useState('');
-    const [page, setPage] = useState(answerPage)
+    const [page, setPage] = useState(answerPage);
+    const [loading, setLoading] = useState(false);
     const [hasLike, setHasLike] = useState(hasLikeData);
     const [openModalChoice, setOpenModalChoice] = useState(false);
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const modalState = useSelector(selectLoginModalStatus);
+    const answersReducer = useSelector(state => selectAnswers(state, id));
+    const answersPage = useSelector(state => selectAnswersPage(state, id));
     const contentDotRef = useRef(null);
     const dotRef = useRef(null);
     const dispatch = useDispatch();
-
+    const infosComment = useSelector(selectInfosComment);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         setHasLike(hasLikeData);
@@ -77,7 +98,7 @@ const Commentary = ({
     }, [answerPage])
 
 
-    function clickOutside(ref,btnRef, onClickOutside) {
+    function clickOutside(ref, btnRef, onClickOutside) {
         useEffect(() => {
             /**
              * Invoke Function onClick outside of element
@@ -94,47 +115,104 @@ const Commentary = ({
                 // dispose
                 document.removeEventListener("mousedown", handleClickOutside);
             };
-        }, [ref, btnRef,onClickOutside]);
+        }, [ref, btnRef, onClickOutside]);
     }
 
     clickOutside(dotRef, contentDotRef, () => setOpenModalChoice(false));
 
+    const newLikeComment = () => {
+        LikeService('comment', id)
+            .then(() => dispatch(likeAComment(id)))
+            .then(() => {
+                if (hasLike === true)
+                    return;
+                if (infosComment.type === "book") {
+                    // infosComment.author._id => l'autheur du livre 
+                    if (infosComment.author._id === session.user.id)
+                        //authorId => l'autheur du commentaire auquel on répond
+                        SendNotifService(authorId, 6, infosComment.activeId, "null")
+                    else
+                        SendNotifService(authorId, 4, infosComment.activeId, "null")
+                }
+                else {
+                    if (infosComment.author._id === session.user.id)
+                        SendNotifService(authorId, 6, infosComment.activeId, infosComment.bookId)
+                    else
+                        SendNotifService(authorId, 4, infosComment.activeId, infosComment.bookId)
+                }
+            })
+            .catch((err) => dispatch(throwAnErr(true, '')));
+    }
+
+    const loadMoreAnswers = () => {
+        setLoading(true);
+        GetAnswerByCommentService(id, answersPage, 1, session)
+            .then((res) => {
+                dispatch(getMoreAnswers({ commentId: id, answers: res.data }));
+            })
+            .then(() => setLoading(false))
+            .catch(() => {
+                throwAnErr(true, 'Impossible de récupérer les réponses.');
+                setLoading(false);
+            })
+    }
+
+    const sendAnswer = (data) => {
+        NewAnswerService(data.id, data.content, session)
+            .then((res) => dispatch(addAnswer({ commentId: id, data: res.data })))
+            .then(() => {
+                if (infosComment.type === "book") {
+                    // infosComment.author._id => l'autheur du livre 
+                    if (infosComment.author._id === session.user.id)
+                        //authorId => l'autheur du commentaire auquel on répond
+                        SendNotifService(authorId, 21, infosComment.activeId, "null")
+                    else
+                        SendNotifService(authorId, 20, infosComment.activeId, "null")
+                }
+                else {
+                    if (infosComment.author._id === session.user.id)
+                        SendNotifService(authorId, 21, infosComment.activeId, infosComment.bookId)
+                    else
+                        SendNotifService(authorId, 20, infosComment.activeId, infosComment.bookId)
+                }
+            })
+            .catch((err) => throwAnErr(true));
+    }
 
     return (
-        <div className={styles.container + ' ' + anim.fadeIn}>
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
                     <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img}
-                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
+                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                 </div>
-
 
                 <div className={styles.contentCommentContainer}>
                     <div className={styles.dotContainer}>
-                            <EllipsisHorizontalIcon
-                                onClick={() => {
-                                    setOpenModalChoice(!openModalChoice)
-                                }}
-                                ref={dotRef}
-                                className={styles.dot}
-                            />
+                        <EllipsisHorizontalIcon
+                            onClick={() => {
+                                setOpenModalChoice(!openModalChoice)
+                            }}
+                            ref={dotRef}
+                            className={styles.dot}
+                        />
                         {
                             openModalChoice &&
                             <div className={styles.dotContent + ' ' + anim.fadeIn} ref={contentDotRef}>
                                 {
                                     session && authorId === session?.user?.id &&
-                                    <button onClick={() => deleteComment()}> Supprimer <TrashIcon/> </button>
+                                    <button onClick={() => dispatch(activeDeleteModal({ type: 'comment', id, content }))}> Supprimer <TrashIcon /> </button>
                                 }
 
                                 {
                                     !session ?
                                         <button onClick={() => {
                                             dispatch(setActiveModalState(true));
-                                        }}> Signaler <FlagIcon/></button>
+                                        }}> Signaler <FlagIcon /></button>
                                         :
-                                      authorId !== session?.user?.id &&
-                                    <button onClick={() => reportComment()}> Signaler <FlagIcon/></button>
+                                        authorId !== session?.user?.id &&
+                                        <button onClick={() => dispatch(activeReportModal({ type: 'comment', id, content }))}> Signaler <FlagIcon /></button>
                                 }
                             </div>
                         }
@@ -142,7 +220,6 @@ const Commentary = ({
 
                     <div className={styles.authorDate}>
                         <h8 is={'h8'}>{pseudo} <span>{FormatDateFrom(date)}</span></h8>
-
                     </div>
                     <p className={tooLong ? styles.cutCommentary + " " + styles.commentary : styles.commentary}>
                         {content}
@@ -168,11 +245,11 @@ const Commentary = ({
                     <div className={styles.likeCommentaryContainer}>
                         <div className={styles.likeCount}><TextLikeBtn nb={likes} isLike={hasLike} onLike={() => {
                             if (session) {
-                                likeComment(id);
+                                newLikeComment();
                             } else {
                                 dispatch(setActiveModalState(true))
                             }
-                        }}/></div>
+                        }} /></div>
 
 
                         <p className={styles.replyCount}> {FormatCount(nbAnswers)} réponses</p>
@@ -181,7 +258,7 @@ const Commentary = ({
                     <div className={styles.replyContainer}>
                         <div className={styles.show}>
                             <button className={styles.showReplyBtn}
-                                    onClick={() => setOpenSubCategory(!openSubCategory)}>
+                                onClick={() => setOpenSubCategory(!openSubCategory)}>
                                 {
                                     answers?.length <= 0 ?
                                         <> Répondre</> :
@@ -189,11 +266,11 @@ const Commentary = ({
                                 }
                                 {
                                     openSubCategory &&
-                                    <ArrowUpIcon/>
+                                    <ArrowUpIcon />
                                 }
                                 {
                                     !openSubCategory &&
-                                    <ArrowDownIcon/>
+                                    <ArrowDownIcon />
                                 }
                             </button>
 
@@ -204,9 +281,9 @@ const Commentary = ({
                                     <img
                                         title={authorPseudo}
                                         alt={'Image Ecrivain Ogla'} src={authorImg}
-                                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                         referrerPolicy={'no-referrer'}/>
-                                    <HeartIcon className={styles.like}/>
+                                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                        referrerPolicy={'no-referrer'} />
+                                    <HeartIcon className={styles.like} />
 
                                 </div>
                             }
@@ -227,7 +304,7 @@ const Commentary = ({
                                                         id, content: newAnswer
                                                     }
                                                     e.preventDefault();
-                                                    sendNewAnswer(data);
+                                                    sendAnswer(data);
                                                     setNewAnswer('');
                                                 }
                                             }}
@@ -236,21 +313,22 @@ const Commentary = ({
                                                     setNewAnswer(e.target.value);
                                                 }
                                             }} value={newAnswer} className={scroll.scrollbar}
-                                            placeholder={"Répondez à " + pseudo + "..."}/> :
+                                            placeholder={"Répondez à " + pseudo + "..."} /> :
 
                                         <textarea onClick={() => dispatch(setActiveModalState(true))} readOnly={true}
-                                                  className={scroll.scrollbar}
-                                                  placeholder={"Connectez vous pour répondre à " + pseudo + '...'}/>
+                                            className={scroll.scrollbar}
+                                            placeholder={"Connectez vous pour répondre à " + pseudo + '...'} />
                                 }
 
 
                                 <div className={styles.sendResponse}>
+
                                     <button onClick={() => {
                                         if (session && newAnswer !== "") {
                                             const data = {
                                                 id, content: newAnswer
                                             }
-                                            sendNewAnswer(data);
+                                            sendAnswer(data);
                                             setNewAnswer('');
                                         }
                                     }
@@ -259,21 +337,22 @@ const Commentary = ({
                                 </div>
                                 <div className={styles.listReply}>
                                     {
-                                        answersList?.map((item, index) => {
+                                        answersReducer?.map((item, index) => {
                                             return (
                                                 <Fragment key={item._id}>
                                                     <SubCommentary
                                                         hasLike={item.hasLike}
                                                         deleteAnswer={() => deleteAanswer(item._id, item.content)}
                                                         likeAnswer={() => likeAanswer(item._id)}
-                                                        reportAnswer={() => reportAnswer(item._id,item.content)}
+                                                        reportAnswer={() => reportAnswer(item._id, item.content)}
                                                         id={item._id}
                                                         authorId={item.userId}
                                                         img={item.img}
+                                                        commentId={id}
                                                         pseudo={item.pseudo}
                                                         date={item.date_creation}
                                                         likes={item.likes}
-                                                        content={item.content}/>
+                                                        content={item.content} />
                                                 </Fragment>
 
                                             )
@@ -282,12 +361,15 @@ const Commentary = ({
                                     }
 
                                     {
-                                        seeMoreAnswers &&
+                                        seeMoreAnswers && nbAnswers > answersReducer.length &&
                                         <div className={styles.getMoreBtn}>
-                                            <button onClick={() => newAnswerPage(id)}>Voir plus</button>
+                                            {
+                                                !loading ?
+                                                    <button onClick={() => loadMoreAnswers()}>Voir plus</button> :
+                                                    <LoaderCommentary />
+                                            }
                                         </div>
                                     }
-
 
                                 </div>
 

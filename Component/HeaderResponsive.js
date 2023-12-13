@@ -54,20 +54,6 @@ const HeaderResponsive = () => {
         setSearchValue('');
     }, [router])
 
-    // function SubmitForm(e) {
-    //     e.preventDefault();
-    //     e.target.reset();
-    //     if (search.length !== 0 && search !== "undefined") {
-    //         router.push({
-    //             pathname: "/rechercher",
-    //             query: { search: search }
-    //         })
-    //         submit();
-    //         e.target.reset();
-    //     }
-    //     return null;
-    // }
-
     function OpenMenu() {
         menuRef.current.className = styles.OpenContent
         setOpenMenu(true);

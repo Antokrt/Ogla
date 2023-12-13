@@ -23,6 +23,7 @@ import {ErrMsg} from "../ErrMsg";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
 import {NewReportService} from "../../service/Report/ReportService";
 import {toastDisplayError, toastDisplaySuccess} from "../../utils/Toastify";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 
 const SidebarCommentary = ({
@@ -84,6 +85,7 @@ const SidebarCommentary = ({
     const inputRef = useRef(null);
     const dispatch = useDispatch();
     const [width, height] = ScreenSize();
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         setCommentList(comments);
@@ -205,7 +207,6 @@ const SidebarCommentary = ({
             .catch(() => toastDisplayError('Impossible de signaler ce commentaire.'));
     };
 
-
     useEffect(() => {
         setCommentList(comments);
     }, [comments])
@@ -219,7 +220,6 @@ const SidebarCommentary = ({
             divRef.current.scrollTop = 0;
         }, 10)
     }
-
 
     useEffect(() => {
         if (!errCommentary) {
@@ -266,12 +266,11 @@ const SidebarCommentary = ({
                     <h4>Erreur</h4>
                     <p>Impossible de récupérer les commentaires.</p>
                 </div>
-
-
+                
             </div>
         )
     } else return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon/>{Capitalize(title)}</p>
                 <p onClick={() => router.push("/auteur/" + author)}><span>{author}</span></p>
@@ -420,7 +419,7 @@ const SidebarCommentary = ({
                                     }
                                 }}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                className={scroll.scrollbar} type="textarea" placeholder="Ecrire un commentaire..."/>
+                                className={scroll.scrollbar} type="textarea" placeholder="Écrire un commentaire..."/>
                             :
                             <textarea
                                 className={scroll.scrollbar}

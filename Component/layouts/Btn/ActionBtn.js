@@ -25,15 +25,18 @@ export const CheckBtn = () => {
 }
 
 export const FilterBtn = ({filter, onclick}) => {
+
+    const theme = useSelector(selectTheme);
+
     return (
         <>
             {
                 filter === 'recent' ?
-                    <button onClick={onclick} className={styles.filter}>
+                    <button onClick={onclick} className={theme ? styles.filter : styles.filter + ' ' + styles.darkFilter}>
                         Récents
                         <ArrowsUpDownIcon/>
                     </button> :
-                    <button onClick={onclick} className={styles.filter}>
+                    <button onClick={onclick} className={theme ? styles.filter : styles.filter + ' ' + styles.darkFilter}>
                         Plus anciens
                         <ArrowsUpDownIcon/>
                     </button>
@@ -44,15 +47,18 @@ export const FilterBtn = ({filter, onclick}) => {
 }
 
 export const FilterBtn3 = ({filter, onclick}) => {
+
+    const theme = useSelector(selectTheme);
+
     return (
         <>
             {
                 filter === 'recent' ?
-                    <button onClick={onclick} className={styles.filter}>
+                    <button onClick={onclick} className={theme ? styles.filter : styles.filter + ' ' + styles.darkFilter}>
                         Récents
                         <ArrowsUpDownIcon/>
                     </button> :
-                    <button onClick={onclick} className={styles.filter}>
+                    <button onClick={onclick} className={theme ? styles.filter : styles.filter + ' ' + styles.darkFilter}>
                         Populaires
                         <ArrowsUpDownIcon/>
                     </button>
@@ -73,7 +79,7 @@ export const SeeMoreBtn = ({onclick}) => {
 export const TextSeeMore = ({onclick}) => {
     const theme = useSelector(selectTheme)
     return (
-        <button className={theme ? styles.seeMoreText : styles.darkSeeMoreText} onClick={onclick}>Voir plus</button>
+        <button className={theme ? styles.seeMoreText : styles.seeMoreText + ' ' + styles.dark} onClick={onclick}>Voir plus</button>
     )
 }
 
@@ -157,7 +163,7 @@ export const HeadPhoneBtnOnFooter = ({onclick}) => {
             return null;
         }
         else {
-            return <div className={theme ? styles.headphoneOnFooterBook : styles.darkHeadphoneOnFooterBook}
+            return <div className={styles.headphoneOnFooterBook}
                         onClick={() => dispatch(setActiveMusic(!selectMusicState))}>
                 <MusicalNoteIcon/>
                 {

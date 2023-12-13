@@ -19,12 +19,13 @@ import {AnimatePresence} from "framer-motion";
 import {useRouter} from "next/router";
 import {Loader} from "../Component/Loader";
 import {Darken} from "../Component/Darken";
-
+import anim from '../styles/utils/anim.module.scss';
 import {GoogleAnalytics} from "../Component/GoogleAnalytics";
 import {CookieAccept} from "../Component/CookieAccept";
 import { persistor, store } from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import {LoaderCommentary} from "../Component/layouts/Loader";
+
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -70,14 +71,15 @@ function MyApp({Component, pageProps}) {
     <AnimatePresence mode={'wait'} initial={false}>
         <SessionProvider session={pageProps.session}>
             <Provider store={store}>
-            <PersistGate loading={<div style={{
+
+            <PersistGate loading={<div className={anim.fadeIn} style={{
                         width: "100%",
                         height: "100vh",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         fontSize: "35px",
-                    }}> <LoaderCommentary/> </div>} persistor={persistor}>
+                    }}> <LoaderCommentary/>  </div>} persistor={persistor}>
                 <Notif/>
                 <Modal/>
                 <Darken/>

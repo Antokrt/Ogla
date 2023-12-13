@@ -16,12 +16,11 @@ export const CookieAccept = () => {
     useEffect(() => {
         const newValue = cookieConsent ? 'granted' : 'denied'
 
-        if(typeof window !== 'undefined'){
+        if(typeof window.gtag !== 'undefined'){
             window.gtag("consent", 'update', {
                 'analytics_storage': newValue
             });
         }
-
 
         setLocalStorage("cookie_consent", cookieConsent)
 

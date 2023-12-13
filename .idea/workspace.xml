@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/styles/Component/Footer.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Component/Footer.module.scss" afterDir="false" />
     </list>
+=======
+    <list default="true" id="ee45e937-5c1d-49d4-a53e-c840094b3bff" name="Changes" comment="" />
+>>>>>>> dev
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +35,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.1&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.11.66&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Dev/Portfolio/portfolio-koreta&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Ogla/Paiement&quot;,
     &quot;nodejs.jest.jest_package&quot;: &quot;C:/Dev/Ogla/Front/node_modules/jest&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -372,10 +376,23 @@
       <workItem from="1693387482457" duration="5861000" />
       <workItem from="1693425017551" duration="3448000" />
       <workItem from="1694699033540" duration="550000" />
+<<<<<<< HEAD
       <workItem from="1701967470882" duration="42000" />
       <workItem from="1702218779472" duration="603000" />
       <workItem from="1702310316406" duration="5323000" />
       <workItem from="1702506537490" duration="2264000" />
+=======
+      <workItem from="1695073229730" duration="3265000" />
+      <workItem from="1695134180835" duration="499000" />
+      <workItem from="1697731304661" duration="1680000" />
+      <workItem from="1698216229865" duration="3386000" />
+      <workItem from="1700639622550" duration="1676000" />
+      <workItem from="1700675067014" duration="2772000" />
+      <workItem from="1700755186477" duration="613000" />
+      <workItem from="1700773823742" duration="1486000" />
+      <workItem from="1701159673346" duration="667000" />
+      <workItem from="1701505779780" duration="3289000" />
+>>>>>>> dev
     </task>
     <servers />
   </component>

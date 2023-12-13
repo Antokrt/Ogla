@@ -43,6 +43,13 @@
   }
 
   .linkFooter {
+
+    a, li, svg {
+      &:hover {
+        color: white !important;
+      }
+    }
+
     padding: 30px;
     background-color: #1C232B;
     height: auto;
@@ -153,7 +160,30 @@
   }
 
   .activeNav {
-    color: white !important;
+    color: $colorTextD !important;
+  }
+}
+
+.dark {
+  .socialLinks {
+    background-color: $darkMode;
+  }
+
+  .linkFooter {
+    background-color: $darkMode;
+
+    a, li, svg {
+      &:hover {
+        color: $purpleHover !important;
+      }
+    }
+  }
+}
+
+.container .linkFooter .plan ul .inactiv {
+  &:hover {
+    cursor: default;
+    color: #7a7a7a !important;
   }
 }
 

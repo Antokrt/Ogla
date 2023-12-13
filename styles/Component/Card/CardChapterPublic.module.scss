@@ -74,7 +74,6 @@
   }
 }
 
-
 .containerDashboard{
   &:hover{
     background-color: $grey;
@@ -147,18 +146,10 @@
   }
 }
 
-
-@media screen and (max-width: 1500px){
-  .container{
-    width: 100% !important;
-  }
-
-}
-
 .containerPhone{
 
   &:active{
-    transform: scale(0.8);
+    transform: scale(0.95);
     transition: 0.2s;
   }
 
@@ -218,6 +209,28 @@
 
   }
 }
+
+.dark {
+  &:hover {
+    background-color: $darkModeHoverBtn;
+  }
+
+  border-bottom: 1px solid $colorBorder;
+
+  .headerChapter {
+    h6 {
+      color: $colorTextD;
+    }
+  }
+}
+
+@media screen and (max-width: 1500px){
+  .container{
+    width: 100% !important;
+  }
+
+}
+
 
 
 @media screen and (max-width: 1500px){

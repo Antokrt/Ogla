@@ -1,7 +1,7 @@
 @import "styles/utils/var";
 
 .container {
-
+  user-select: none;
   position: relative;
   background-color: white;
   height: 100%;
@@ -27,7 +27,13 @@
       font-size: 10px;
       color: white;
       font-family: $primaryFont;
-
+      font-weight: bold;
+      span{
+        &:first-letter{
+          text-transform: uppercase;
+        }
+        font-weight: bold;
+      }
       svg {
         width: 15px;
         margin-right: 10px;
@@ -63,13 +69,33 @@
       justify-content: flex-start;
 
       p {
-        transition: 0.2s color;
+        &:active {
+          transform: scale(0.9);
+          transition: 0.2s;
+        }
+        transition: 0.2s;
         cursor: pointer;
         font-size: 10.5px;
         font-family: $primaryFont;
         margin-right: 10px;
         color: white;
       }
+    }
+  }
+
+  .getMore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 202200!important;
+    button{
+      margin-bottom: 50px;
+
+      font-size: 11px;
+      font-family: $primaryFont;
+      font-weight: bold;
+      color: $purple;
     }
   }
 
@@ -91,9 +117,8 @@
       text-align: center;
       margin-bottom: 20px;
       font-family: $primaryFont;
-      font-weight: 500;
-      -webkit-text-stroke-width: 0.2px;
-      color: rgb(62, 70, 79);
+      font-weight: bold;
+      color: $black;
       font-size: 14px;
       padding: 0px 10px;
     }
@@ -117,6 +142,8 @@
     height: 30px;
     margin-bottom: 30px;
   }
+
+
 
   .empty{
     display: flex;
@@ -144,7 +171,7 @@ font-size: 12px;
   }
 
   .commentaryContainer {
-    z-index: 2;
+    z-index: 222222;
     position: absolute;
     background-color: $grey;
     min-height: 90px;
@@ -203,7 +230,7 @@ font-size: 12px;
 
     .sendContainer {
       &:active{
-        transform: scale(0.8);
+        transform: scale(0.9);
         transition: 0.2s;
       }
       display: flex;
@@ -229,9 +256,6 @@ font-size: 12px;
   }
 }
 
-
-
-
 .filterActive{
   font-weight: bold!important;
 }
@@ -255,6 +279,59 @@ font-size: 12px;
   margin-top: -10px;
   padding-bottom: 10px;
   height: 100px;
+}
+
+.dark {
+  background-color: $darkMode2 !important;
+  .contentCommentaryContainer {
+    background-color: $darkMode2;
+  }
+
+  .formContainer {
+    textarea {
+      background-color: $darkMode5;
+      color: $colorTextD;
+    }
+  }
+
+  .sendContainer {
+    background-color: $darkMode4 !important;
+  }
+
+  .commentaryContainer {
+    background-color: $darkMode ;
+  }
+
+  .titleSection {
+    border-bottom: 1px solid $colorBorder;
+  }
+
+  .headerComment {
+    background-color: $darkMode;
+    p {
+      color: $colorTextD;
+    }
+  }
+
+  .titleSection {
+    background-color: $darkMode;
+
+    h5, div p {
+      color: $colorTextD;
+    }
+
+    .filterActive {
+      color: $purple;
+    }
+  }
+
+  .getMore {
+    button {
+      &:hover {
+        color: $purpleHover;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 600px){

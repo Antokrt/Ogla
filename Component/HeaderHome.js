@@ -1,31 +1,29 @@
 import styles from '../styles/Component/HeaderHome.module.scss';
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import MainSearchBar from "./MainSearchBar";
 import ResultSearchBar from "./SearchBar/ResultSearchBar";
-import {SearchBarService} from "../service/Search/SearchService";
-import {useRouter} from "next/router";
+import { SearchBarService } from "../service/Search/SearchService";
+import { useRouter } from "next/router";
 import ScreenSize from "../utils/Size";
-import {useDispatch, useSelector} from "react-redux";
-import {selectCategories} from "../store/slices/categorySlice";
-import {signOut, useSession} from "next-auth/react";
-import {selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
-import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
-import {changeTheme, selectTheme} from "../store/slices/themeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategories } from "../store/slices/categorySlice";
+import { signOut, useSession } from "next-auth/react";
+import { selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import { selectActiveMusicStatus, setActiveMusic } from "../store/slices/musicSlice";
+import { changeTheme, selectTheme } from "../store/slices/themeSlice";
 import Tippy from "@tippyjs/react";
-import {LogoutService} from "../service/User/Account.service";
-import {ArrowLeftOnRectangleIcon} from "@heroicons/react/24/solid";
-import {setActiveModalState} from "../store/slices/modalSlice";
+import { LogoutService } from "../service/User/Account.service";
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import { setActiveModalState } from "../store/slices/modalSlice";
 import Link from "next/link";
-import {BellIcon, Cog8ToothIcon, MoonIcon, MusicalNoteIcon, SunIcon} from "@heroicons/react/24/outline";
-import {OpenAllService} from "../service/Notifications/NotificationsService";
-import {GetDefaultUserImgWhenError, GetImgPathOfAssets} from "../utils/ImageUtils";
+import { BellIcon, Cog8ToothIcon, MoonIcon, MusicalNoteIcon, SunIcon } from "@heroicons/react/24/outline";
+import { OpenAllService } from "../service/Notifications/NotificationsService";
+import { GetDefaultUserImgWhenError, GetImgPathOfAssets } from "../utils/ImageUtils";
 
 export const HeaderHome = () => {
 
     const router = useRouter();
-    const [width] = ScreenSize()
-    const categories = useSelector(selectCategories);
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState();
     const [query, setQuery] = useState('');
@@ -44,6 +42,18 @@ export const HeaderHome = () => {
         setQuery('');
         setSearchValue('');
     }, [router]);
+
+    useEffect(() => {
+        let nb = 0;
+        Notifs.forEach((elem) => {
+            if (elem.open === false) {
+                setIsOpen(true);
+                nb++;
+            }
+        })
+        if (nb === 0)
+            setIsOpen(false);
+    }, [Notifs])
 
     const openNotif = () => {
         if (session) {
@@ -73,10 +83,10 @@ export const HeaderHome = () => {
             <div className={styles.fContainer}>
                 <div className={styles.logoContainer}>
                     <img
-                    alt={'Logo Ogla'}
+                        alt={'Logo Ogla'}
                         onClick={() => router.push('/')} tabIndex={0}
-                         onError={(e) => e.target.src = '/assets/logo/mountain.png'}
-                         src={GetImgPathOfAssets() + 'logo/mountain.png'}/>
+                        onError={(e) => e.target.src = '/assets/logo/mountain.png'}
+                        src={GetImgPathOfAssets() + 'logo/mountain.png'} />
                 </div>
 
                 <div className={styles.searchbarContainer}>
@@ -91,7 +101,7 @@ export const HeaderHome = () => {
                                 setSearchValue('');
                             }}
                             height={50}
-                            width={100}/>
+                            width={100} />
                         {
                             query !== '' && data &&
                             <div className={styles.containerResultSearchBar}>
@@ -114,24 +124,35 @@ export const HeaderHome = () => {
                     {
                         session ?
                             <>
-                                <div tabIndex={0} onClick={() => router.push('/profil')}
-                                     className={styles.containerImgProfil}>
-                                    <img
-                                        alt={'Ogla Profil'}
-                                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
-                                        src={session?.user?.image} referrerPolicy={'no-referrer'}/>
-                                </div>
+                                <Tippy
+                                    trigger={'mouseenter'}
+                                    content={'Profil'}
+                                    delay={[300, 0]}
+                                    animation={'scale'}
+                                >
+                                    <div tabIndex={0} onClick={() => router.push('/profil')}
+                                        className={styles.containerImgProfil}>
+                                        <img
+                                            alt={'Ogla Profil'}
+                                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()}
+                                            src={session?.user?.image} referrerPolicy={'no-referrer'} />
+                                    </div>
+                                </Tippy>
 
-                                <Tippy trigger={'mouseenter'} content={'Déconnexion'}>
+                                <Tippy trigger={'mouseenter'}
+                                    content={'Déconnexion'}
+                                    delay={[300, 0]}
+                                    animation={'scale'}
+                                >
                                     <button className={styles.logOut}
-                                            onClick={() => {
-                                                LogoutService()
-                                                    .then(() => signOut()
-                                                        .then(() => router.push('/')))
-                                                    .catch(() => signOut()
-                                                        .then(() => router.push('/')))
-                                            }}
-                                            title={'Déconnexion'}><ArrowLeftOnRectangleIcon/></button>
+                                        onClick={() => {
+                                            LogoutService()
+                                                .then(() => signOut()
+                                                    .then(() => router.push('/')))
+                                                .catch(() => signOut()
+                                                    .then(() => router.push('/')))
+                                        }}
+                                        title={'Déconnexion'}><ArrowLeftOnRectangleIcon /></button>
                                 </Tippy>
 
                             </>
@@ -139,14 +160,14 @@ export const HeaderHome = () => {
                             :
                             <>
                                 <button className={styles.register}
-                                        onClick={() => router.push({
-                                            pathname: "/auth",
-                                            query: "register"
-                                        })}>S&apos;inscrire
+                                    onClick={() => router.push({
+                                        pathname: "/auth",
+                                        query: "register"
+                                    })}>S&apos;inscrire
                                 </button>
                                 <button className={styles.login} onClick={() => {
                                     if (router.pathname === '/')
-                                        router.push({pathname: "/auth", query: "login"});
+                                        router.push({ pathname: "/auth", query: "login" });
                                     else
                                         dispatch(setActiveModalState(true));
                                 }}>Se connecter
@@ -177,48 +198,92 @@ export const HeaderHome = () => {
 
 
                     <div className={styles.rightLinkContainer}>
-                        <BellIcon tabIndex={0} className={styles.notif} onClick={() => openNotif()}/>
-
+                        <Tippy
+                            trigger="mouseenter"
+                            content={"Notifications"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
+                            <div className={styles.bellActive} onClick={openNotif}>
+                                <BellIcon onClick={() => dispatch(setActiveModalNotif(true))} />
+                                {isOpen && <span></span>}
+                            </div>
+                        </Tippy>
                         {
                             session &&
-                            <Cog8ToothIcon tabIndex={0} className={styles.sett} onClick={() => {
-                                localStorage.setItem('side', 'settings');
-                                router.push('/profil')
-                            }}/>
+                            <Tippy
+                                trigger="mouseenter"
+                                content={"Réglages"}
+                                placement={'bottom'}
+                                animation={'scale'}
+                                delay={[200, 0]}>
+                                <Cog8ToothIcon tabIndex={0} className={styles.sett} onClick={() => {
+                                    localStorage.setItem('side', 'settings');
+                                    router.push('/profil')
+                                }} />
+                            </Tippy>
                         }
 
                         {
                             !session ?
-                                <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
-                                    <MusicalNoteIcon tabIndex={0}/>
-                                    {
-                                        selectMusicState &&
-                                        <div className={styles.animation}></div>
-                                    }
-                                </div> :
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Musique"}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                    delay={[200, 0]}>
+                                    <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
+                                        <MusicalNoteIcon tabIndex={0} />
+                                        {
+                                            selectMusicState &&
+                                            <div className={styles.animation}></div>
+                                        }
+                                    </div>
+                                </Tippy>
+                                :
                                 <>
                                     {
                                         session && session?.user?.settings?.music &&
-                                        <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
-                                            <MusicalNoteIcon tabIndex={0}/>
-                                            {
-                                                selectMusicState &&
-                                                <div className={styles.animation}></div>
-                                            }
-                                        </div>
+                                        <Tippy
+                                            trigger="mouseenter"
+                                            content={"Musique"}
+                                            animation={'scale'}
+                                            placement={'bottom'}
+                                            delay={[200, 0]}>
+                                            <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
+                                                <MusicalNoteIcon tabIndex={0} />
+                                                {
+                                                    selectMusicState &&
+                                                    <div className={styles.animation}></div>
+                                                }
+                                            </div>
+                                        </Tippy>
                                     }
                                 </>
 
                         }
 
-
                         {
                             theme ?
-                                <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
-                                         className={styles.svgTheme}/>
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    placement={'bottom'}
+                                    animation={'scale'}
+                                    delay={[200, 0]}>
+                                    <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
+                                        className={styles.svgTheme} />
+                                </Tippy>
                                 :
-                                <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
-                                          className={styles.svgTheme}/>
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    placement={'bottom'}
+                                    animation={'scale'}
+                                    delay={[200, 0]}>
+                                    <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())}
+                                        className={styles.svgTheme} />
+                                </Tippy>
                         }
                     </div>
                 </div>

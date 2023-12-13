@@ -1,7 +1,7 @@
 import styles from "../../styles/SearchBar/SearchBarResult.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
-import React, { useEffect, useRef } from "react";
-import { HeartIcon, TagIcon } from "@heroicons/react/24/solid";
+import React, {useEffect, useRef, useState} from "react";
+import {HeartIcon, TagIcon, UserIcon,BookOpenIcon} from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectTheme } from "../../store/slices/themeSlice";
@@ -14,6 +14,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
     const light = useSelector(selectTheme);
     const divRefs = useRef([]);
     const focusedIndexRef = useRef(0);
+    const [modalState,setModalState] = useState(null);
 
     useEffect(() => {
         divRefs.current = divRefs.current.slice(0, data.books.length + data.authors.length);
@@ -43,14 +44,16 @@ const ResultSearchBar = ({ destroy, query, data }) => {
         }
     };
 
+
+
     return (
-        <div className={light ? styles.resultContainer : styles.blackResultContainer}>
+        <div className={light || router.pathname === '/' ? styles.resultContainer : styles.resultContainer + ' ' + styles.blackResultContainer}>
             {data && (
                 <>
                     {data.books.length > 0 && (
                         <>
                             <div className={styles.titleHeader}>
-                                <h5>Livres ({data.books.length})</h5>
+                                <h5> Livres <BookOpenIcon /> </h5>
                             </div>
                             {data.books.map((item, index) => (
                                 <div
@@ -74,7 +77,7 @@ const ResultSearchBar = ({ destroy, query, data }) => {
                     {data.authors.length > 0 && (
                         <>
                             <div className={styles.titleHeader}>
-                                <h5>Auteurs ({data.authors.length})</h5>
+                                <h5>Auteurs <UserIcon /> </h5>
                             </div>
                             {data.authors.map((item, index) => (
                                 <div

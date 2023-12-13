@@ -135,6 +135,9 @@
     font-weight: bold;
     font-family: $primaryFont;
 
+    div{
+      border-top: solid 2px white!important;
+    }
     svg {
       width: 15px !important;
       color: white;
@@ -476,12 +479,18 @@
   cursor: pointer !important;
   transition: 0.1s !important;
   background-color: #1C232B !important;
+  div{
+    border-top: solid 2px white!important;
+  }
 }
 
 .activePublishBtn {
   cursor: pointer !important;
   transition: 0.1s !important;
   background-color: #9844AD !important;
+  div{
+    border-top: solid 2px white!important;
+  }
 }
 
 .headerResp {
@@ -725,6 +734,10 @@
     font-weight: bold;
     font-family: $primaryFont;
     gap: 8px;
+
+    div{
+      border-top: solid 2px white!important;
+    }
 
     svg {
       margin-bottom: 1px;

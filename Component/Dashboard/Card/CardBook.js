@@ -1,32 +1,35 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboard.module.scss';
 import anim from '../../../styles/utils/anim.module.scss';
-import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/router";
+import { Capitalize } from "../../../utils/String";
+import { FormatDateNb, FormatDateStr } from "../../../utils/Date";
+import { GetDefaultBookImgWhenError, GetImgPathOfAssets } from "../../../utils/ImageUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
-import {useRouter} from "next/router";
-import {Capitalize} from "../../../utils/String";
-import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
-import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 
-
-export const CardBookDashboard = ({id, img, title, nbChapter, likes, category, date, nbView, top}) => {
+export const CardBookDashboard = ({ id, img, title, nbChapter, likes, category, date, nbView, top }) => {
+    
     const router = useRouter();
+    const theme = useSelector(selectTheme);
 
     return (
-        <div className={styles.container + ' ' + anim.fadeIn} onClick={() => {
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark} onClick={() => {
             router.push({
                 pathname: '/dashboard/books/' + id,
             })
         }}>
             <div
                 className={styles.containerImg}>
-                <img alt={'Book Image Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
+                <img alt={'Book Image Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} />
             </div>
 
             {
                 top && likes > 0 &&
                 <div className={styles.thumbnail}>
                     <p>Top livre</p>
-                    <HeartIcon/>
+                    <HeartIcon />
                 </div>
             }
 
@@ -43,8 +46,8 @@ export const CardBookDashboard = ({id, img, title, nbChapter, likes, category, d
                 <div className={styles.stats}>
                     <div className={styles.containerImgBook}>
                         <img src={GetImgPathOfAssets() + 'diapo/book.png'}
-                             onError={(e) => e.target.src = '/assets/diapo/book.png'}
-                        alt={'Book Picture Ogla'}
+                            onError={(e) => e.target.src = '/assets/diapo/book.png'}
+                            alt={'Book Picture Ogla'}
                         />
 
                     </div>

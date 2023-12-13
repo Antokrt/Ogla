@@ -1,32 +1,35 @@
 import styles from '../../../styles/Component/Dashboard/Card/CardBookDashboardTab.module.scss';
-import {BookmarkIcon, BookOpenIcon, ChevronDoubleUpIcon, FireIcon, HeartIcon} from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/solid";
 
-import {useRouter} from "next/router";
-import {Capitalize} from "../../../utils/String";
-import {FormatDateNb, FormatDateStr} from "../../../utils/Date";
-import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
+import { useRouter } from "next/router";
+import { Capitalize } from "../../../utils/String";
+import { FormatDateNb, FormatDateStr } from "../../../utils/Date";
+import { GetDefaultBookImgWhenError, GetImgPathOfAssets } from "../../../utils/ImageUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
+export const CardBookDashboardTab = ({ id, img, title, nbChapter, likes, category, date, nbView, top }) => {
 
-export const CardBookDashboardTab = ({id, img, title, nbChapter, likes, category, date, nbView, top}) => {
     const router = useRouter();
+    const theme = useSelector(selectTheme)
 
     const catClassName = 'style.' + category;
     return (
-        <div className={styles.container} onClick={() => {
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark} onClick={() => {
             router.push({
                 pathname: '/dashboard/books/' + id,
             })
         }}>
             <div
                 className={styles.containerImg}>
-                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}  alt={'Book Image Ogla'}/>
+                <img src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()} alt={'Book Image Ogla'} />
             </div>
 
             {
                 top && likes > 0 &&
                 <div className={styles.thumbnail}>
                     <p>Top livre</p>
-                    <HeartIcon/>
+                    <HeartIcon />
                 </div>
 
             }

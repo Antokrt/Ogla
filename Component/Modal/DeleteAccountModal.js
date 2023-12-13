@@ -7,6 +7,8 @@ import {DeleteAccountService} from "../../service/User/Account.service";
 import {ConfirmModal, ConfirmModalDeleteAccountCustomProvider} from "./ConfirmModal";
 import {LoaderCommentary} from "../layouts/Loader";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 export const DeleteAccountModal = ({close}) => {
     const {data: session} = useSession();
@@ -16,6 +18,8 @@ export const DeleteAccountModal = ({close}) => {
         msg: '',
         show: false
     })
+    const theme = useSelector(selectTheme);
+
     const deleteAccount = (password) => {
         setLoading(true);
         DeleteAccountService(session.user.email, password)
@@ -36,7 +40,7 @@ export const DeleteAccountModal = ({close}) => {
 
     if(session.user.provider !== 'google'){
         return (
-            <div className={styles.container}>
+            <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
                 <div className={styles.containerContent + ' ' + anim.scaleInModal}>
                     <XMarkIcon onClick={close} className={styles.close}/>
                     <div className={styles.headerModal}>
@@ -81,7 +85,6 @@ export const DeleteAccountModal = ({close}) => {
             </div>
         )
     }
-
 
     else {
         return (

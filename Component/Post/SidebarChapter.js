@@ -1,60 +1,38 @@
 import styles from "../../styles/Component/Post/SidebarChapter.module.scss";
 import anim from '../../styles/utils/anim.module.scss';
-import {useEffect, useRef, useState} from "react";
-import {ArrowDownIcon, BarsArrowDownIcon, ChevronDoubleUpIcon, QueueListIcon} from "@heroicons/react/24/outline";
-import {BookOpenIcon, HeartIcon} from "@heroicons/react/24/solid";
-import {useRouter} from "next/router";
-import {LoaderCommentary} from "../layouts/Loader";
-import {Capitalize} from "../../utils/String";
-import {FormatDateFrom, FormatDateStr} from "../../utils/Date";
-import {TextSeeMore, TextSeeMoreSidebarChapter} from "../layouts/Btn/ActionBtn";
-import ErrMsg from "../ErrMsg";
+import { useEffect, useRef, useState } from "react";
+import { BarsArrowDownIcon, QueueListIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/router";
+import { LoaderCommentary } from "../layouts/Loader";
+import { Capitalize } from "../../utils/String";
 import ScreenSize from "../../utils/Size";
-
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 const SidebarChapter = ({
-                            chapters,
-                            title,
-                            changeFilter,
-                            filter,
-                            canSeeMore,
-                            getMoreChapter,
-                            author,
-                            bookTitle,
+    chapters,
+    title,
+    changeFilter,
+    filter,
+    canSeeMore,
+    getMoreChapter,
+    author,
+    bookTitle,
     errChapters,
-                            nbChapters,
-                            bookId,
-                            bookSlug,
-                            loadingScroll,
-                            canScroll
-                        }) => {
+    nbChapters,
+    bookId,
+    bookSlug,
+    loadingScroll,
+    canScroll
+}) => {
 
-    const [chapterList, setChapterList] = useState(chapters);
     const [seeBtnAddMore, setSeeBtnAddMore] = useState(false);
-    const divRef = useRef(null);
+    const [chapterList, setChapterList] = useState(chapters);
+    const theme = useSelector(selectTheme);
     const [width, height] = ScreenSize();
-
+    const divRef = useRef(null);
     const router = useRouter();
-
-    /*    useEffect(() => {
-            const div = divRef.current;
-
-            const handleScroll = () => {
-                const threshold = 1;
-                const isBottom =
-                    div.scrollHeight - (div.scrollTop + div.clientHeight) <= threshold;
-                console.log({isBottom,canScroll,loadingScroll,canSeeMore})
-                if (isBottom && !loadingScroll && canSeeMore) {
-                    loadingScroll = true;
-                    getMoreChapter();
-                }
-            };
-            div.addEventListener("scroll", handleScroll);
-            return () => {
-                div.removeEventListener("scroll", handleScroll);
-            };
-        }, [canScroll]);*/
-
 
     useEffect(() => {
         setChapterList(chapters);
@@ -63,21 +41,20 @@ const SidebarChapter = ({
     const scrollToBottom = () => {
         return setTimeout(() => {
             divRef.current.scrollTop = divRef.current.scrollHeight;
-        },100)
+        }, 100)
     }
-
 
     const scrollToTop = () => {
         return setTimeout(() => {
             divRef.current.scrollTop = 0;
-        },10)
+        }, 10)
     }
 
-    if(errChapters){
+    if (errChapters) {
         return (
             <div className={styles.container}>
                 <div className={styles.headerComment}>
-                    <p><QueueListIcon/> <span onClick={() => router.push({
+                    <p><QueueListIcon /> <span onClick={() => router.push({
                         pathname: '/livre/' + bookId,
                         query: bookSlug
                     })}>{Capitalize(bookTitle)} </span>  &nbsp;({nbChapters} chapitres)</p>
@@ -102,10 +79,10 @@ const SidebarChapter = ({
         )
     }
 
-    else return (<div className={styles.container}>
+    else return (<div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
         <div className={styles.headerComment}>
-            <p><QueueListIcon/> <span onClick={() => router.push({
+            <p><QueueListIcon /> <span onClick={() => router.push({
                 pathname: '/livre/' + bookId,
                 query: bookSlug
             })}>{Capitalize(bookTitle)} </span>  &nbsp;({nbChapters} chapitres)</p>
@@ -120,7 +97,7 @@ const SidebarChapter = ({
                     setSeeBtnAddMore(false);
                     changeFilter();
                     scrollToTop();
-                }}/>
+                }} />
             </div>
         </div>
         {/*
@@ -154,7 +131,7 @@ const SidebarChapter = ({
         {
             !chapterList &&
             <div className={styles.err + ' ' + anim.fadeIn}>
-                <img src={'/assets/jim/angry4.png'}/>
+                <img src={'/assets/jim/angry4.png'} />
                 <h4>Oups !</h4>
                 <p>Impossible de récupérer les chapitres. </p>
 
@@ -196,7 +173,7 @@ const SidebarChapter = ({
                         </div>
 
                         <p className={styles.likes}>
-                            {item.likes} <HeartIcon/>
+                            {item.likes} <HeartIcon />
                         </p>
 
                     </div>
@@ -210,15 +187,15 @@ const SidebarChapter = ({
 
                 {
                     canSeeMore && !loadingScroll && chapterList && nbChapters > chapterList.length &&
-                   <button onClick={() => {
-                       getMoreChapter().then(() => {
-                           scrollToBottom();
-                       })
-                   }}>Voir plus</button>
+                    <button onClick={() => {
+                        getMoreChapter().then(() => {
+                            scrollToBottom();
+                        })
+                    }}>Voir plus</button>
                 }
                 {
                     loadingScroll && chapterList &&
-                    <LoaderCommentary/>
+                    <LoaderCommentary />
                 }
             </div>
         </div>

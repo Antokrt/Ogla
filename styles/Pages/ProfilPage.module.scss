@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-bottom: 10vh;
+  // padding-bottom: 10vh;
   height: auto;
 }
 
@@ -16,6 +16,8 @@
   align-items: center;
   padding-top: 2vh;
   flex: 1;
+  padding-bottom: 100px;
+  min-height: 100vh;
 }
 
 .containerM {
@@ -25,7 +27,6 @@
   height: 100%;
   flex: 1;
 }
-
 
 .errContainer{
   display: flex;
@@ -102,8 +103,8 @@ width: 200px;
 
     span {
       position: absolute;
-      width: 5px;
-      height: 4px;
+      width: 6px;
+      height: 6px;
       top: 50%;
       right: 8px;
       transform: translate(0, -50%);
@@ -994,7 +995,7 @@ width: 200px;
       }
 
       svg {
-        width: 20px;
+        width: 25px;
         color: white;
       }
 
@@ -1101,6 +1102,96 @@ width: 200px;
   }
 }
 
+.dark {
+  background-color: $darkMode2;
+  
+  .headerTitle {
+    p, h1{
+      color: $colorTextD;
+    }
+  }
+
+  .menuLink {
+    button {
+      &:hover {
+        background-color: $darkModeHoverBtn;
+      }
+      background-color: $darkMode;
+      color: $colorTextD;
+    }
+
+    .activeMenu {
+      background-color: $purple !important;
+      color: $colorTextD !important;
+    }
+  }
+  
+  .labelImg {
+    h5, p {
+      color: $colorTextD;
+    }
+  }
+
+  .form {
+    label {
+      color: $colorTextD !important;
+    }
+
+    input {
+      &:focus {
+        box-shadow: 0 0px 5px 1px rgba(255, 255, 255, 0.103);
+        transition: 0.1s;
+      }
+      background-color: $darkMode;
+      color: $colorTextD;
+    }
+
+  }
+
+  .disabled {
+    color: $colorTextD;
+  }
+
+  .lContainerWriter .containerImg, .headerWriterStats, .headerPresentation {
+    h5, p, h6 {
+      color: $colorTextD !important;
+    }
+  }
+
+  .containerPresentation textarea {
+    background-color: $darkMode;
+    color: $colorTextD !important;
+    border: 1px solid $colorBorder !important;
+  }
+
+  .headSocial {
+    p, h5 {
+      color: $colorTextD !important;
+    }
+  }
+
+  .containerMain {
+    background-color: $darkMode;
+    border-top: 1px solid $colorBorder2;
+  }
+
+  .itemSetting {
+    background-color: $darkMode;
+
+    .fSetting svg, .fSetting div .labelSetting, .fSetting div .valueSetting {
+      color: $colorTextD;
+    }
+  }
+
+  .deleteAccount {
+    color: red !important;
+  }
+
+  .settings h5 {
+    color: $colorTextD;
+  }
+}
+
 @media screen and (max-width: 1530px) {
   .socialImg {
     display: none;
@@ -1179,14 +1270,6 @@ width: 200px;
     .headerWriterStats {
       height: 100% !important;
     }
-
-    // gap: 30px !important;
-
-    // .itemWriter {
-    //   p {
-    //     padding: 5px 25px;
-    //   }
-    // }
   }
 }
 
@@ -1407,14 +1490,6 @@ width: 200px;
 @media (width <=360px) {
   .menuContainer {
     .item {
-      p {
-        display: none;
-      }
-
-      svg {
-        width: 25px !important;
-      }
-
       .haveNotif {
         width: 10px !important;
         height: 10px !important;

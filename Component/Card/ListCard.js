@@ -2,7 +2,7 @@ import styles from '../../styles/Component/Card/List.module.scss';
 import {CardBookPublic} from "./CardBook";
 import React, {useRef} from "react";
 import {HorizontalCard} from "./HorizontalCard";
-import { useEffect,Fragment } from 'react';
+import { Fragment } from 'react';
 
 export const ListCard = ({books,seeMore,topId}) => {
     return (

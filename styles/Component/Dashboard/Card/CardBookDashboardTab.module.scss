@@ -194,6 +194,17 @@
   color: #e04444;
 }
 
+.dark {
+  &:hover {
+    background-color: $darkModeHoverBtn2;
+  }
+  background-color: $darkMode;
+
+  .title h6, .label p, .stats p {
+    color: $colorTextD;
+  }
+}
+
 @media screen and (max-width: 800px) {
 
   .container {

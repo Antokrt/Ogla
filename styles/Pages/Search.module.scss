@@ -105,33 +105,6 @@
     top: -13px;
     font-size: 10px;
   }
-
-  // input{
-  //   outline: none;
-  //   border-radius: 5px;
-  //   padding: 15px 15px;
-  //   background-color: $grey;
-  //   color: rgba(28, 35, 43, 0.65);
-  //   font-family: "Montserrat",sans-serif;
-  // }
-  // button{
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   gap: 15px;
-  //   border-top-right-radius: 15px;
-  //   border-bottom-right-radius: 15px;
-  //   background-color: #9844AD;
-  //   color: white;
-  //   font-size: 12px;
-  //   font-weight: bold;
-  //   font-family: $secondaryFont;
-  //   padding: 5px 20px;
-  //   svg{
-  //     width: 15px;
-  //     color: white;
-  //   }
-  // }
 }
 
 .containerCardPreview {
@@ -215,6 +188,41 @@
 .containerList {
   width: 1300px;
   margin-top: 5vh;
+}
+
+.dark {
+  background-color: $darkMode2;
+
+  .inputContainer {
+    border-bottom:1px solid  $colorTextD;
+
+    svg {
+      color: $colorTextD;
+    }
+
+    input::placeholder {
+      color: $colorTextD
+    }
+
+    input {
+      color: $colorTextD;
+    }
+  }
+
+  .sortContainer {
+    color: $colorTextD;
+
+    h3 {
+      border-bottom: 1px solid $colorBorder;
+    }
+
+    div button {
+      &:hover {
+        background-color: $darkMode;
+      }
+      color: $colorTextD;
+    }
+  }
 }
 
 @media screen and (max-width: 1600px) {

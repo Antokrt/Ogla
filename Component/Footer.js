@@ -38,7 +38,7 @@ export default function Footer() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.socialLinks}>
                 <h5>Rejoins OGLA sur Discord</h5>
                 <div className={styles.social}>
@@ -79,7 +79,7 @@ export default function Footer() {
                                     content={'Musique'}
                                     delay={[200, 0]}
                                     animation={'scale'}
-                                    placement={'bottom'}
+                                    placement={'top'}
                                 >
                                     <div
                                         className={styles.headphone}
@@ -124,8 +124,7 @@ export default function Footer() {
                             <li><Link href={"/conditions-generales-d'utilisation"}>Conditions générales
                                 d&apos;utilisation </Link></li>
                             <li><a href={'mailto:support@ogla.fr?subject=Demande d\'assistance Ogla'}>Support </a></li>
-                            <li>© OGLA Tous droits réservés 2023
-                            </li>
+                            <li className={styles.inactiv}>© OGLA Tous droits réservés 2023 </li>
                             *
                         </ul>
                     </div>

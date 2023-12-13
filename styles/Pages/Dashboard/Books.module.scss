@@ -24,11 +24,13 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-
   overflow-y: scroll;
   scroll-behavior: smooth;
   gap: 2%;
+}
 
+.smHeader {
+  width: 100%;
 }
 
 .errContainer {
@@ -243,6 +245,20 @@
     img {
       width: 15vh;
     }
+  }
+}
+
+.dark {
+  .containerData {
+    background-color: $darkMode2;
+  }
+
+  .seeMoreText {
+    &:hover {
+      color: white;
+    }
+    background-color: $darkMode2;
+    color: $colorTextD;
   }
 }
 

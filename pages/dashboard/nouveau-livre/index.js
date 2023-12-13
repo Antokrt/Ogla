@@ -9,7 +9,6 @@ import {
     CheckBadgeIcon,
     CursorArrowRaysIcon
 } from "@heroicons/react/24/outline";
-import Category from "../../../json/category.json";
 import {Capitalize} from "../../../utils/String";
 import { NewBookService} from "../../../service/Dashboard/BooksAuthorService";
 import {useRouter} from "next/router";
@@ -20,11 +19,12 @@ import VerticalPhoneMenu from "../../../Component/Menu/VerticalPhoneMenu";
 import VerticalTabMenu from "../../../Component/Menu/VerticalTabMenu";
 import useOrientation from "../../../utils/Orientation";
 import ScreenSize from "../../../utils/Size";
-import {ArrowRightIcon, ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon} from "@heroicons/react/24/solid";
 import {PhotoIcon} from "@heroicons/react/20/solid";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../../../store/slices/categorySlice";
 import Head from "next/head";
+import { selectTheme } from '../../../store/slices/themeSlice';
 
 
 const New = () => {
@@ -44,6 +44,8 @@ const New = () => {
     const orientation = useOrientation();
     const [width, height] = ScreenSize();
     const categories = useSelector(selectCategories);
+    const [loadingBtn,setLoadingBtn] = useState(false);
+    const theme = useSelector(selectTheme)
 
     const handleFileSelect = (event) => {
         if (event?.target.files && event.target.files[0]) {
@@ -57,6 +59,7 @@ const New = () => {
         if(disableBtn){
             return null;
         }
+        setLoadingBtn(true);
         setDisableBtn(true);
         const form = {
             title: title,
@@ -66,7 +69,8 @@ const New = () => {
         }
         NewBookService(form, selectedFile)
             .then((res) => {
-                toastDisplaySuccess('Livre publié !')
+                setLoadingBtn(false);
+                toastDisplaySuccess('Livre publié !');
                 if (res.data._id) {
                     router.push('/dashboard/books/' + res.data._id);
                 }
@@ -76,6 +80,8 @@ const New = () => {
             })
             .catch((err) => {
                 setSeeErrMsg(true);
+                setLoadingBtn(false);
+                setDisableBtn(false);
                 if(err.response.data.message === 'Book-120'){
                     setErrMsg('Titre incorrect.');
                 }
@@ -126,7 +132,15 @@ const New = () => {
                     step >= 3 && !loadingImg &&
                     <>
                         <button onClick={() => previous()}><ChevronDoubleLeftIcon/> Précédent</button>
-                        <button className={styles.sendBtn} onClick={() => sendData()}>Enregistrer <CursorArrowRaysIcon/>
+                        <button className={styles.sendBtn} onClick={() => sendData()}>
+                            {
+                                !loadingBtn ?
+                                    <span>
+                                        Enregistrer <CursorArrowRaysIcon/>
+                                    </span> :
+                                    <span><LoaderImg/></span>
+                            }
+
                         </button>
                     </>
                 }
@@ -312,7 +326,7 @@ const New = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
             <Head>
                 <title>Ogla - Nouveau livre</title>

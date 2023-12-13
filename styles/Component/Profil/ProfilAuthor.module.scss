@@ -139,6 +139,35 @@
     }
 }
 
+.dark {
+    .Social {
+        label {
+            color: $colorTextD;
+        }
+    }
+
+    .empty {
+        h4 {
+            color: $colorTextD;
+        }
+    }
+
+    .changed input {
+        background-color: $darkMode;
+        color: $colorTextD;
+    }
+
+    .Tiktok {
+        label svg {
+            fill: $colorTextD;
+        }
+
+        .isNotEmpty a {
+            color: $colorTextD !important;
+        }
+    }
+}
+
 @media screen and (max-width: 340px) {
    .changed {
     input {

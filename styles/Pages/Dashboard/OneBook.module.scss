@@ -1,22 +1,17 @@
 @import "styles/utils/var";
 
-
 .container {
   display: flex;
   height: 100vh;
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-
-
 }
 
 .verticalMenuContainer {
-  height: 100%;
   width: 15%;
+  height: 100%;
 }
-
-
 
 .verticalMenuContainerPhone {
   position: fixed;
@@ -24,7 +19,6 @@
   width: 100%;
   bottom: 0;
 }
-
 
 .containerData {
   display: flex;
@@ -275,7 +269,6 @@
             color: white;
             -webkit-text-stroke-width: 0.5px;
             letter-spacing: 1px;
-            font-family: $primaryFont;
             padding: 8px 15px;
           }
         }
@@ -356,7 +349,6 @@
         width: 100%;
         font-size: 15px;
         font-family: $primaryFont;
-        opacity: 0.9;
         font-weight: bold;
         margin: 10px 0;
 
@@ -394,7 +386,7 @@
             gap: 5px;
             font-size: 12px;
             font-family: $primaryFont;
-            color: rgba(28, 35, 43, 0.82);
+            color: rgba(28, 35, 43, 0.72);
             font-weight: bold;
 
             svg {
@@ -406,7 +398,7 @@
             text-align: right;
             font-family: $primaryFont;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
             color: #343d46;
           }
         }
@@ -436,8 +428,6 @@
     }
   }
 }
-
-
 
 .statsContainer {
   position: relative;
@@ -748,6 +738,16 @@
     }
   }
 
+  .oneChapter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      margin-top: 10px;
+      width: 200px;
+    }
+  }
+
   .emptyContainer {
     display: flex;
     justify-content: center;
@@ -880,6 +880,15 @@
   background-color: $black;
 }
 
+.activeBtnModify{
+  &:hover {
+    background-color: $purpleHover;
+  }
+  transition: 0.1s;
+  cursor: pointer;
+  background-color: $purple;
+}
+
 .inactiveBtn {
   cursor: initial;
   background-color: rgba(28, 35, 43, 0.32);
@@ -912,6 +921,13 @@
   z-index: 2220 !important;
   padding-top: 12px;
 
+  .getMore{
+    font-size: 12px;
+    color: #9844AD;
+    font-weight: bold;
+    font-family: $primaryFont;
+  }
+
   svg {
     cursor: pointer;
     width: 1.5vw;
@@ -920,6 +936,7 @@
 
 .containerBtnPhone {
   margin-top: 1%;
+  margin-bottom: 1%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -928,7 +945,7 @@
 
   button {
     &:active {
-      transform: scale(0.8);
+      transform: scale(0.9);
       transition: 0.2s;
     }
 
@@ -958,12 +975,10 @@
   }
 }
 
-
 .activeBtnPhone {
   transition: 0.1s !important;
   color: $orange !important;
 }
-
 
 .imgOriginal {
   &:hover {
@@ -1001,6 +1016,61 @@
   }
 }
 
+.dark {
+    background-color: $darkMode2;
+
+    .containerTitle, .headerTextarea h5 {
+      color: $colorTextD !important;
+    }
+
+    .inactiveBtn {
+      background-color: $darkMode;
+    }
+
+    .description {
+      textarea {
+        background-color: $darkMode;
+        color: $colorTextD;
+      }
+    }
+
+    .inactiveBtnPhone  {
+      &:hover {
+        background-color: $darkModeHoverBtn !important;
+        transition: 0.3s;
+      }
+      transition: 0.3s;
+      background-color: $darkMode !important;
+      color: $colorTextD;
+    }
+
+    .activeBtnPhone {
+      &:hover {
+        background-color: $purpleHover !important;
+        transition: 0.3s;
+      }
+      transition: 0.3s;
+      background-color: $purple !important;
+      color: $colorTextD !important;
+    }
+
+    .itemStats {
+      background-color: $darkMode !important;
+
+      p {
+        color: $colorTextD !important;
+      }
+    }
+
+    .containerStats h5 {
+      color: $colorTextD !important;
+    }
+
+    .headerChapter h4 {
+      color: $colorTextD !important;
+    }
+}
+
 @media screen and (max-width: 1600px) {
   .description {
     width: 60% !important;
@@ -1010,7 +1080,6 @@
     width: 40% !important;
   }
 }
-
 
 @media screen and (max-width: 1500px) {
   .labelContainer {
@@ -1025,14 +1094,6 @@
       flex: 1;
     }
   }
-
-}
-
-@media screen and (max-width: 1400px) {
-  .verticalMenuContainer {
-    width: 20% !important;
-  }
-
 
 }
 
@@ -1123,8 +1184,6 @@
 
 
 }
-
-
 
 @media screen and (max-width: 900px) {
   .verticalMenuContainer {
@@ -1306,11 +1365,6 @@
     padding-bottom: 50px;
   }
 }
-
-
-
-
-
 
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .container {
