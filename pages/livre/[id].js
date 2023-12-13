@@ -671,7 +671,7 @@ const Post = ({bookData, chapterData, err, hasLikeData, authorData}) => {
                                                         alt={'Image Profil Ogla'}
                                                         src={authorData?.img} referrerPolicy={'no-referrer'}
                                                          onError={(e) => e.target.src = GetDefaultUserImgWhenError()}/>
-                                                    <p><span>{authorData?.pseudo}</span></p>
+                                                    <p><span>{Capitalize(authorData?.pseudo)}</span></p>
                                                 </div>
 
                                                 <div className={styles.likeBookPhone}>
