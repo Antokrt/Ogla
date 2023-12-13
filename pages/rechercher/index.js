@@ -26,9 +26,9 @@ export async function getServerSideProps({req, query}) {
     if (!query.search) {
         return {
             props: {
-                key:query.search,
+                key:'',
                 err: false,
-                queryData: null,
+                queryData: '',
                 data: null
             }
         }
@@ -37,7 +37,7 @@ export async function getServerSideProps({req, query}) {
     const data = await SearchBookAPI(query.search);
     return {
         props: {
-            key:query.search,
+            key:query.search || null,
             err: data.err,
             queryData: query.search,
             data: data.searchData
@@ -159,14 +159,14 @@ const SearchPage = ({queryData, data, err}) => {
                                     setQuery(e.target.value);
                                 }}
                                 type={"text"}
-                                value={query}
+                                value={query || ''}
                                 placeholder={"Rechercher..."}
                                 className={styles.inputSearch}
                             />
 
 
-                            <span>
-                                <MagnifyingGlassIcon onClick={() => searchNewBooks()}/>
+                            <span onClick={() => searchNewBooks()}>
+                                <MagnifyingGlassIcon />
                             </span>
 
 
