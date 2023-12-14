@@ -397,9 +397,14 @@
     }
   }
 
+
   @media screen and (max-width: 970px) {
     .ctn {
       width: 70% !important;
+    }
+
+    .imgAbs{
+      display: none;
     }
   }
 

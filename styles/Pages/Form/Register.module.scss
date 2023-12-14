@@ -396,11 +396,22 @@
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 970px) {
     .leftBlock {
-        width: 70%;
+        width: 70% !important;
+    }
+
+    .imgAbs{
+        display: none!important;
     }
 }
+
+@media screen and (max-height: 850px) {
+    .containerImg {
+        min-height: 740px;
+    }
+}
+
 
 @media screen and (max-width: 670px) {
     .leftBlock {
@@ -436,8 +447,3 @@
     }
 }
 
-@media screen and (max-height: 850px) {
-      .containerImg {
-        min-height: 740px;
-      }
-  }

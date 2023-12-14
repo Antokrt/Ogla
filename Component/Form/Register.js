@@ -306,7 +306,7 @@ const Register = ({login}) => {
                 </div>
             </div>
             {
-                width > 1000 &&
+                width > 970 &&
                 <div className={styles.containerImg}>
                     <img
                         alt={'Image Bannière Inscription Ogla'}
