@@ -24,7 +24,7 @@ const nextConfig = {
     ];
   },
   env: {
-    maintenance: false,
+    maintenance: true,
     NEXT_PUBLIC_URL:"http://localhost:3000/",
 /*
     NEXTAUTH_URL:"http://localhost:3000",
