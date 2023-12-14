@@ -398,11 +398,19 @@
 
 @media screen and (max-width: 970px) {
     .leftBlock {
-        width: 70% !important;
+        width: 100% !important;
+    }
+
+    .formContainer{
+        width: 100% !important;
     }
 
     .imgAbs{
         display: none!important;
+    }
+
+    .content{
+        max-width: 500px!important;
     }
 }
 
@@ -420,6 +428,9 @@
 }
 
 @media screen and (max-width: 520px) {
+
+
+
     .leftBlock {
         width: 100%;
     }
