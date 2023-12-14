@@ -3,10 +3,11 @@ import anim from '../../styles/utils/anim.module.scss';
 import { useSession, signIn, signOut } from "next-auth/react";
 import React, { useEffect, useRef, useState } from "react";
 import { SendResetPasswordEmailService } from "../../service/User/Password.service";
-import { toastDisplayPromiseSendMail } from "../../utils/Toastify";
+import {toastDisplayPromiseSendMail, toastDisplaySuccess} from "../../utils/Toastify";
 import { useRouter} from "next/router";
 import ScreenSize from "../../utils/Size";
 import {GetImgPathOfAssets, GetLogoUtils} from "../../utils/ImageUtils";
+import {LoaderCommentary} from "../layouts/Loader";
 
 const ForgotPassword = ({ login }) => {
 
@@ -16,6 +17,7 @@ const ForgotPassword = ({ login }) => {
     const [email, setEmail] = useState('');
     const [errMsg, setErrMsg] = useState(false);
     const router = useRouter();
+    const [loadingBtn,setLoadingBtn] = useState(false);
     const [width, height] = ScreenSize();
 
     const [submitErr, setSubmitErr] = useState({
@@ -24,12 +26,22 @@ const ForgotPassword = ({ login }) => {
     });
 
     const handleSubmit = (e) => {
+        setLoadingBtn(true);
         e.preventDefault();
         if (email !== '') {
-            toastDisplayPromiseSendMail(SendResetPasswordEmailService(email)
-                .then((res) => setHasSendEmail(true))
-                .catch((err) => setHasSendEmail(true))
-            )
+       SendResetPasswordEmailService(email)
+                .then((res) => {
+                    toastDisplaySuccess("Email envoyé !")
+                    setLoadingBtn(false);
+                    setHasSendEmail(true);
+                })
+                .catch((err) => {
+                    setSubmitErr({
+                        show:true,
+                        msg: "Envoi impossible."
+                    })
+                    setLoadingBtn(false);
+                })
         }
     }
 
@@ -78,8 +90,17 @@ const ForgotPassword = ({ login }) => {
                                 <div className={styles.conditions} onClick={login}>
                                     <p> Se connecter </p>
                                 </div>
-                                <div className={styles.stepBtnContainer}>
-                                    <button type={'submit'} className={styles.stepBtn}>Envoyer</button>
+                                <div onClick={(event) => handleSubmit(event)} className={styles.stepBtnContainer}>
+                                    <button  className={styles.stepBtn}>
+                                        {
+                                            loadingBtn ?
+                                            <LoaderCommentary/>
+                                                :
+                                                <>
+                                                Envoyer
+                                                </>
+                                        }
+                                        </button>
                                 </div>
                             </form>
                             :
