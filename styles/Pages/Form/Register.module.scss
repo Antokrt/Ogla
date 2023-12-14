@@ -30,6 +30,7 @@
     img {
         cursor: pointer;
         width: 100px;
+        object-fit: contain;
     }
 }
 
@@ -413,6 +414,10 @@
     }
     .content {
         width: 90%;
+    }
+
+    .formContainer{
+        margin-top: 20px;
     }
 }
 
