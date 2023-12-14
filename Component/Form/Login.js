@@ -91,7 +91,7 @@ const Login = ({ register, forgotPassword }) => {
                     <div className={styles.header}>
                         {
                             width > 230 &&
-                            <h1> Bon retour parmi nous !</h1>
+                            <h1> Bon retour parmi nous </h1>
                         }
                         {
                             width <= 230 &&

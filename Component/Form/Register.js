@@ -170,7 +170,7 @@ const Register = ({login}) => {
             <div className={styles.leftBlock}>
                 <div className={styles.content}>
                     <div className={styles.header}>
-                        <h1> Rejoins nous !</h1>
+                        <h1> Rejoins nous </h1>
                         <p> Ogla est une plateforme d&apos;écriture et de lecture de livres, d&apos;histoires ou de
                             romans ouverte à tout.
                             <br/> Rejoignez la communauté pour avoir accès à tout son potentiel !</p>

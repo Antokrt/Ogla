@@ -48,7 +48,7 @@ const ForgotPassword = ({ login }) => {
                         {
                             !hasSendEmail ?
                                 <>
-                                    <h1>Mot de passe oublié <span>?</span></h1>
+                                    <h1>Mot de passe oublié </h1>
                                     <p> Si tu as oublié ton mot de passe, entre ton email pour recevoir un lien de réinitialisation.
                                     </p>
                                 </> :
