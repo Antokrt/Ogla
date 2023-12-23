@@ -25,6 +25,7 @@ import {CookieAccept} from "../Component/CookieAccept";
 import { persistor, store } from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import {LoaderCommentary} from "../Component/layouts/Loader";
+import Head from "next/head";
 
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
@@ -58,6 +59,9 @@ function MyApp({Component, pageProps}) {
         const srcAnalytics = "https://www.googletagmanager.com/gtag/js?id="+process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
         return (
             <>
+                <Head>
+                    <title>Maintenance - Ogla</title>
+                </Head>
                 <CookieAccept/>
                 <GoogleAnalytics/>
                 <Maintenance/>
