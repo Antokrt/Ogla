@@ -42,7 +42,7 @@ export async function getServerSideProps() {
         }
     }
 
-    console.log(data)
+
 
     return {
         props: {
@@ -64,6 +64,7 @@ export default function Home({tops, firstTopBooks, secondTopBooks, cat1, cat2, e
 
     const router = useRouter();
 
+    useEffect(() => console.log(session?.user.accessToken))
 
     return (
         <div className={styles.container + ' ' + anim.fadeIn}>
