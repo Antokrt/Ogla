@@ -3,6 +3,7 @@ import {useState} from "react";
 import {loadStripe} from "@stripe/stripe-js";
 import {Elements, PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import success from "../email-verification/success";
+import {useSession} from "next-auth/react";
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -64,9 +65,17 @@ const Stripe = () => {
     const [clientSecret,setClientSecret] = useState(null);
     const pk = 'pk_test_51NNdxbJuETVotPlVeK3txdq5KhGFIgCEZLcjfmOkUNxcWmQ2hGcGHI8kZEgDshKHvwEUGwpj043jb9HlK3zfQMDf00tDdZLo0R';
     const stripePromise = loadStripe(pk);
+    const {data: session} = useSession();
 
     const getIntent = async () => {
-      const newIntent = await GetIntentService();
+        if(!session){
+           return;
+        }
+        const data = {
+            authorId:'649ee3b35bc74f49078c7113',
+            month_duration:3
+        }
+      const newIntent = await GetIntentService(data);
       setClientSecret(newIntent.client_secret);
       setIntent(newIntent);
     }
