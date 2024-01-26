@@ -3,7 +3,6 @@ import {
     ArrowLeftOnRectangleIcon,
     BellAlertIcon,
     BookOpenIcon,
-    BookmarkSquareIcon,
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
@@ -13,12 +12,13 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectNotifs, setActiveModalNotif, setOpen } from "../../store/slices/notifSlice";
 import { useEffect, useState } from "react";
-import { OpenAllService, openAll } from "../../service/Notifications/NotificationsService";
+import { OpenAllService } from "../../service/Notifications/NotificationsService";
 import 'tippy.js/dist/tippy.css'
 import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
-import {GetDefaultUserImgWhenError} from "../../utils/ImageUtils";
+import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 export default function VerticalTabMenu() {
 
@@ -28,9 +28,10 @@ export default function VerticalTabMenu() {
     const goToProfil = () => {
         return router.push('/profil');
     }
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const Notifs = useSelector(selectNotifs);
     const [isOpen, setIsOpen] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         var nb = 0;
@@ -45,7 +46,7 @@ export default function VerticalTabMenu() {
     }, [Notifs])
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.fContainer}>
                 <div className={styles.logo}>
                 </div>
@@ -108,7 +109,7 @@ export default function VerticalTabMenu() {
                             animation={'scale'}
                             placement={'right'}
                             delay={[300, 0]}>
-                            <li onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon />   </li>
+                            <li className={router.pathname.startsWith('/dashboard/support') ? styles.activeMenu : ''} onClick={() => router.push('/dashboard/support')}> <LifebuoyIcon /> </li>
                         </Tippy>
                         <Tippy
                             trigger="mouseenter"
@@ -130,7 +131,7 @@ export default function VerticalTabMenu() {
                 <div className={styles.profilContainer}>
                     <div className={styles.profil}>
                         <img onClick={() => goToProfil()} referrerPolicy={'no-referrer'} src={session?.user.image}
-                        onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
+                            onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                         <Tippy
                             trigger="mouseenter"
                             content={"En ligne"}

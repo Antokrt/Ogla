@@ -15,7 +15,6 @@
         position: absolute;
         left: -6%;
         bottom: -10%;
-
         opacity: 0.08;
         font-size: 15vh;
       }
@@ -138,10 +137,13 @@
   .content {
     h4 {
       &:after {
+        display: none;
         left: -10% !important;
         font-size: 22vw !important;
       }
-
+      white-space: initial!important;
+      line-height: 70px;
+      margin-bottom: 20px;
       font-size: 15vw !important;
     }
   }

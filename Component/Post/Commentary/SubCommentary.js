@@ -14,6 +14,7 @@ import { LikeService } from "../../../service/Like/LikeService";
 import { SendNotifService } from "../../../service/Notifications/NotificationsService";
 import { activeReportModal, deleteMyAnswer, likeOneAnswer, selectInfosComment, throwAnErr } from "../../../store/slices/commentSlice";
 import { DeleteAnswerService } from "../../../service/Answer/AnswerService";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 const SubCommentary = ({ img, commentId, pseudo, date, content, likes, deleteAnswer, reportAnswer, hasLike, likeAnswer, id, authorId, seeMoreAnswers }) => {
 
@@ -25,6 +26,7 @@ const SubCommentary = ({ img, commentId, pseudo, date, content, likes, deleteAns
     const dotRef = useRef(null);
     const contentDotRef = useRef(null);
     const infosComment = useSelector(selectInfosComment);
+    const theme = useSelector(selectTheme)
 
     const like = () => {
         LikeService('answer', id)
@@ -84,7 +86,7 @@ const SubCommentary = ({ img, commentId, pseudo, date, content, likes, deleteAns
     }
 
     return (
-        <div className={styles.container + ' ' + anim.fadeIn}>
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
                     <img src={img} referrerPolicy={'no-referrer'} onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={"Image Profil Ogla"} />

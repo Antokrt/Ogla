@@ -70,6 +70,17 @@
   }
 }
 
+.dark {
+  &:hover {
+    background-color: $darkModeHoverBtn !important;
+  }
+  
+  .headerChapter {
+    h6, h7 {
+      color: $colorTextD !important;
+    }
+  }
+}
 
 @media screen and (max-width: 1300px) {
   .chapter {
@@ -83,7 +94,6 @@
     border-bottom: solid 1px rgba(90, 102, 115, 0.03);
   }
 }
-
 
 @media screen and (max-height: 500px) and (orientation: landscape) {
   .chapter {

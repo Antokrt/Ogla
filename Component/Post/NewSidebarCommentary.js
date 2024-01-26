@@ -48,6 +48,7 @@ import {
 } from "../../store/slices/commentSlice";
 import { ScrollDownUtils, ScrollUpUtils } from "../../utils/Scroll";
 import { SendNotifService } from "../../service/Notifications/NotificationsService";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 const NewSidebarCommentary = ({
     authorImg,
@@ -89,6 +90,7 @@ const NewSidebarCommentary = ({
     const errComments = useSelector(selectErrComments);
     const commentsReducer = useSelector(selectComments);
     const canSeeMore = useState(commentsReducer.length < nbComments);
+    const theme = useSelector(selectTheme);
 
     const resetCommentReport = () => {
         setActiveCommentToReport({ id: null, content: null });
@@ -341,7 +343,7 @@ const NewSidebarCommentary = ({
             </div>
         )
     } else return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.headerComment}>
                 <p><QueueListIcon />{Capitalize(title)}</p>
                 <p onClick={() => router.push("/auteur/" + author.pseudo)}><span>{author.pseudo}</span></p>
@@ -523,8 +525,9 @@ const NewSidebarCommentary = ({
                     <div className={styles.loaderContainer}><LoaderCommentary /></div>
                 }
 
-
-                <div
+                {
+                    session ?
+                    <div
                     onClick={() => {
                         if (newComment !== "") {
                             sendNewComment();
@@ -532,7 +535,16 @@ const NewSidebarCommentary = ({
                     }}
                     className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
                     <PaperAirplaneIcon />
-                </div>
+                    </div>
+                    
+                    :
+
+                    <div
+                    onClick={() => dispatch(setActiveModalState(true))}
+                    className={newComment !== "" ? styles.active + " " + styles.sendContainer : styles.sendContainer}>
+                    <PaperAirplaneIcon />
+                    </div>
+                }
             </div>
 
 

@@ -225,3 +225,18 @@ padding-right: 20px;
   width: 12px;
   color: rgba(28, 35, 43, 0.44);
 }
+
+.dark {
+  .authorDate {
+    h8 {
+      color: $colorTextD !important;
+
+      span {
+        color: $colorTextD2 !important;
+      }
+    }
+  }
+  .commentary {
+      color: $colorTextD !important;
+  }
+}

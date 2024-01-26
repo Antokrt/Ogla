@@ -5,12 +5,15 @@ import React from "react";
 import ScreenSize from "../../utils/Size";
 import Footer from "../../Component/Footer";
 import {GetImgPathOfAssets} from "../../utils/ImageUtils";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../store/slices/themeSlice';
 
 const News = () => {
-    const [width, height] = ScreenSize();
+    const [width] = ScreenSize();
+    const theme = useSelector(selectTheme);
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             {
                 width > 950 ?
                     <HeaderMain/> :

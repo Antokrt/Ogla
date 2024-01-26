@@ -1,6 +1,6 @@
 @import "styles/utils/var";
 
-.container{
+.container {
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -13,41 +13,46 @@
   width: 100%;
 }
 
-
-.titleContainer{
+.titleContainer {
   display: flex;
   align-items: center;
   white-space: pre;
-  img{
-object-fit: cover;
+
+  img {
+    object-fit: cover;
     width: 50px;
     border-radius: 50%;
     height: 50px;
   }
 
-  .like{
+  .like {
     -webkit-text-stroke-width: 0.1px;
   }
-  div{
+
+  div {
     margin-left: 15px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-.titleBook{
-  &:first-letter{
-    text-transform: uppercase;
-  }
-  color: $white;
-  font-family: $primaryFont;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  font-size: 12px;
-}
-    p{
-font-size: 11px;
+
+    .titleBook {
+      &:first-letter {
+        text-transform: uppercase;
+      }
+
+      color: $white;
+      font-family: $primaryFont;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      font-size: 12px;
+    }
+
+    p {
+      font-size: 11px;
       font-family: $primaryFont;
       color: $white;
-      span{
+
+      span {
         cursor: pointer;
         color: rgba(234, 235, 238, 0.92);
       }
@@ -55,10 +60,12 @@ font-size: 11px;
   }
 }
 
-.likeContainer{
+.likeContainer {
   position: absolute;
-  top: 50%;  /* position the top  edge of the element at the middle of the parent */
-  left: 50%; /* position the left edge of the element at the middle of the parent */
+  top: 50%;
+  /* position the top  edge of the element at the middle of the parent */
+  left: 50%;
+  /* position the left edge of the element at the middle of the parent */
 
   transform: translate(-50%, -50%);
   display: flex;
@@ -67,7 +74,7 @@ font-size: 11px;
 
 }
 
-.likeContainerPhone{
+.likeContainerPhone {
 
   display: flex;
   justify-content: center;
@@ -75,12 +82,11 @@ font-size: 11px;
 
 }
 
-.likeContainerWithNav{
+.likeContainerWithNav {
   gap: 30px;
 
-
-  .navDiv{
-    &:active{
+  .navDiv {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
@@ -91,11 +97,13 @@ font-size: 11px;
     align-items: center;
     cursor: pointer;
     gap: 10px;
-    svg{
+
+    svg {
       color: white;
       width: 18px;
     }
-    p{
+
+    p {
       color: white;
       font-size: 11px;
       font-family: $primaryFont;
@@ -105,13 +113,14 @@ font-size: 11px;
   }
 }
 
-.commentAndListContainer{
-display: flex;
+.commentAndListContainer {
+  display: flex;
   cursor: pointer;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  div{
+
+  div {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -119,34 +128,37 @@ display: flex;
   }
 
 
-  .b{
-    &:active{
+  .b {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-  svg{
+
+  svg {
     width: 20px;
     color: $grey;
     margin-bottom: 5px;
 
   }
-  p{
+
+  p {
     color: $grey;
     font-size: 10px;
     font-family: $primaryFont;
   }
 }
 
-.hidden{
-  visibility: hidden!important;
+.hidden {
+  visibility: hidden !important;
 }
 
-.containerPhone{
+.containerPhone {
   display: flex;
   justify-content: center;
   position: absolute;
@@ -158,11 +170,12 @@ display: flex;
   gap: 10px;
 
 
-  .commentAndListContainerPhone{
-    &:active{
+  .commentAndListContainerPhone {
+    &:active {
       transform: scale(0.8);
       transition: all 0.1s ease-in-out;
     }
+
     transition: all 0.1s ease-in-out;
     display: flex;
     cursor: pointer;
@@ -172,17 +185,20 @@ display: flex;
     background-color: rgb(38, 43, 51);
     padding: 5px 20px;
     border-radius: 25px;
-    div{
+
+    div {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
     }
-    svg{
+
+    svg {
       width: 20px;
       color: $grey;
     }
-    p{
+
+    p {
       font-weight: bold;
       color: $grey;
       font-size: 9px;
@@ -192,49 +208,51 @@ display: flex;
 
 }
 
+.dark {
+  background-color: $darkMode;
+}
 
-
-
-@media screen and (max-width: 1000px){
-  .navDiv{
-    display: none!important;
+@media screen and (max-width: 1000px) {
+  .navDiv {
+    display: none !important;
   }
 }
 
-@media screen and (max-width: 800px){
-  .commentAndListContainer{
+@media screen and (max-width: 800px) {
+  .commentAndListContainer {
     gap: 20px;
-    div{
+
+    div {
       margin: 0;
     }
   }
 
-  .titleContainer{
-    h7{
-      font-size: 10px!important;
+  .titleContainer {
+    h7 {
+      font-size: 10px !important;
     }
   }
 }
 
 @media screen and (max-height: 600px) and (max-width: 1300px) {
-  .container{
+  .container {
     display: none;
   }
 }
 
 
-@media screen and (max-height: 700px){
-  .container{
-    height: 75px!important;
+@media screen and (max-height: 700px) {
+  .container {
+    height: 75px !important;
   }
 
-  .commentAndListContainer{
-    display: none!important;
+  .commentAndListContainer {
+    display: none !important;
   }
 }
 
-@media  screen and (max-width: 600px) {
-  .container{
+@media screen and (max-width: 600px) {
+  .container {
     display: none;
   }
 }

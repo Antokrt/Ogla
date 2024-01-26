@@ -11,6 +11,8 @@ import {ref} from "yup";
 import {DeleteSpace, MinimizeStr, ReduceString} from "../../utils/String";
 import {HeadPhoneBtnOnFooter} from "../layouts/Btn/ActionBtn";
 import {GetDefaultBookImgWhenError} from "../../utils/ImageUtils";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 
 const FooterOnChapter = ({
@@ -29,8 +31,9 @@ const FooterOnChapter = ({
                          }) => {
 
     const router = useRouter();
+    const theme = useSelector(selectTheme);
 
-    return (<div className={styles.container}>
+    return (<div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
         <div className={styles.titleContainer}>
             <img  alt={'Image Livre Ogla'} src={img} onError={(e) => e.target.src = GetDefaultBookImgWhenError()}/>
             <div>

@@ -25,7 +25,7 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
                 })
             }}
             tabIndex={0}
-            className={theme? styles.container + ' ' + anim.fadeIn : styles.darkContainer + ' ' + anim.fadeIn}>
+            className={theme? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark}>
 
             {
                 top &&
@@ -47,7 +47,7 @@ export const HorizontalCard = ({id, slug,title,img,like,author,category,snippet,
                     <span className={styles.nbChapters}>{FormatCount(nbChapters)} chapitre(s) </span>
 
                     <div>
-                        <span className={styles.author}>Par {author}  </span>
+                        <span className={styles.author}>Par {Capitalize(author)}  </span>
                         {
                             like > 0 &&
                             <span className={styles.likes}>{FormatCount(like)} <HeartIcon/> </span>

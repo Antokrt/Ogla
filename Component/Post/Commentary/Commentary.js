@@ -38,6 +38,7 @@ import { LoaderCommentary } from "../../layouts/Loader";
 import { SendAnswerReduce } from "../../../utils/CommentaryUtils";
 import { SendNotifService } from "../../../service/Notifications/NotificationsService";
 import { ReduceString } from "../../../utils/String";
+import { selectTheme } from "../../../store/slices/themeSlice";
 
 const Commentary = ({
     pseudo,
@@ -82,6 +83,7 @@ const Commentary = ({
     const dotRef = useRef(null);
     const dispatch = useDispatch();
     const infosComment = useSelector(selectInfosComment);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         setHasLike(hasLikeData);
@@ -178,14 +180,13 @@ const Commentary = ({
     }
 
     return (
-        <div className={styles.container + ' ' + anim.fadeIn}>
+        <div className={theme ? styles.container + ' ' + anim.fadeIn : styles.container + ' ' + anim.fadeIn + ' ' + styles.dark}>
             <div className={styles.containerComment}>
                 <div className={styles.imgContainer}>
 
                     <img referrerPolicy="no-referrer" alt={'Image Profil Ogla'} src={img}
                         onError={(e) => e.target.src = GetDefaultUserImgWhenError()} />
                 </div>
-
 
                 <div className={styles.contentCommentContainer}>
                     <div className={styles.dotContainer}>

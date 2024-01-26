@@ -65,7 +65,6 @@
     }
   }
 
-
   .banner{
     min-height: 100px;
     height: auto;
@@ -294,7 +293,6 @@
   }
 }
 
-
 .seeMore{
   display: flex;
   justify-content: center;
@@ -315,7 +313,6 @@
     text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.07);
   }
 }
-
 
 .filterActive{
   transition: 0.2s;
@@ -373,6 +370,29 @@
   }
 }
 
+.dark {
+  background-color: $darkMode2;
+
+  .headerComment, .titleSection {
+    background-color: $darkMode;
+  }
+
+  .titleSection {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: 1px solid $colorBorder;
+  }
+
+  .titleChapter {
+    p, span {
+      color: $colorTextD !important;
+    }
+  }
+
+  .item {
+    border-bottom: 2px solid $colorBorder !important;
+  }
+}
 
 @media screen and (max-width: 900px){
   .headerComment,.titleSection{
@@ -403,7 +423,6 @@
     }
   }
 }
-
 
 @media screen and (max-width: 450px){
   .titleChapter{

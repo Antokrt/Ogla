@@ -24,7 +24,8 @@ import {GoogleAnalytics} from "../Component/GoogleAnalytics";
 import {CookieAccept} from "../Component/CookieAccept";
 import { persistor, store } from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import {Loader1, LoaderCommentary} from "../Component/layouts/Loader";
+import {LoaderCommentary} from "../Component/layouts/Loader";
+
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
 
@@ -53,7 +54,7 @@ function MyApp({Component, pageProps}) {
     }, [])
 
 
-    if (process.env.maintenance || process.env.NODE_ENV !== "development") {
+    if (process.env.maintenance) {
         const srcAnalytics = "https://www.googletagmanager.com/gtag/js?id="+process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
         return (
             <>
@@ -63,6 +64,7 @@ function MyApp({Component, pageProps}) {
             </>
         )
     }
+
 
 
     return (

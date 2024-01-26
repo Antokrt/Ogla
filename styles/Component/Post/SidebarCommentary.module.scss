@@ -1,7 +1,5 @@
 @import "styles/utils/var";
 
-
-
 .container {
   user-select: none;
   position: relative;
@@ -72,7 +70,7 @@
 
       p {
         &:active {
-          transform: scale(0.8);
+          transform: scale(0.9);
           transition: 0.2s;
         }
         transition: 0.2s;
@@ -232,7 +230,7 @@ font-size: 12px;
 
     .sendContainer {
       &:active{
-        transform: scale(0.8);
+        transform: scale(0.9);
         transition: 0.2s;
       }
       display: flex;
@@ -258,9 +256,6 @@ font-size: 12px;
   }
 }
 
-
-
-
 .filterActive{
   font-weight: bold!important;
 }
@@ -284,6 +279,59 @@ font-size: 12px;
   margin-top: -10px;
   padding-bottom: 10px;
   height: 100px;
+}
+
+.dark {
+  background-color: $darkMode2 !important;
+  .contentCommentaryContainer {
+    background-color: $darkMode2;
+  }
+
+  .formContainer {
+    textarea {
+      background-color: $darkMode5;
+      color: $colorTextD;
+    }
+  }
+
+  .sendContainer {
+    background-color: $darkMode4 !important;
+  }
+
+  .commentaryContainer {
+    background-color: $darkMode ;
+  }
+
+  .titleSection {
+    border-bottom: 1px solid $colorBorder;
+  }
+
+  .headerComment {
+    background-color: $darkMode;
+    p {
+      color: $colorTextD;
+    }
+  }
+
+  .titleSection {
+    background-color: $darkMode;
+
+    h5, div p {
+      color: $colorTextD;
+    }
+
+    .filterActive {
+      color: $purple;
+    }
+  }
+
+  .getMore {
+    button {
+      &:hover {
+        color: $purpleHover;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 600px){

@@ -17,7 +17,7 @@ const CategoryHeader = () => {
     const cat = router.query.id;
 
     return (
-        <div className={theme ? styles.container : styles.darkContainer}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             {
                 categories.map((item, index) => {
                     return (

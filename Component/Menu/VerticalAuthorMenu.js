@@ -3,7 +3,6 @@ import {
     ArrowLeftOnRectangleIcon,
     BellAlertIcon,
     BookOpenIcon,
-    BookmarkSquareIcon,
     HomeIcon,
     LifebuoyIcon,
     PlusCircleIcon,
@@ -20,6 +19,7 @@ import Tippy from "@tippyjs/react";
 import 'tippy.js/animations/scale.css';
 import { LogoutService } from "../../service/User/Account.service";
 import { GetDefaultUserImgWhenError } from "../../utils/ImageUtils";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 export default function VerticalAuthorMenu() {
 
@@ -32,6 +32,7 @@ export default function VerticalAuthorMenu() {
     const dispatch = useDispatch()
     const Notifs = useSelector(selectNotifs)
     const [isOpen, setIsOpen] = useState(false);
+    const theme = useSelector(selectTheme);
 
     useEffect(() => {
         let nb = 0;
@@ -46,7 +47,7 @@ export default function VerticalAuthorMenu() {
     }, [Notifs])
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
             <div className={styles.fContainer}>
                 <div className={styles.logo}>
                     <h3 onClick={() => {

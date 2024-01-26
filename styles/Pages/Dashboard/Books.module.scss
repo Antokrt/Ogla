@@ -29,7 +29,7 @@
   gap: 2%;
 }
 
-.smHeader{
+.smHeader {
   width: 100%;
 }
 
@@ -245,6 +245,20 @@
     img {
       width: 15vh;
     }
+  }
+}
+
+.dark {
+  .containerData {
+    background-color: $darkMode2;
+  }
+
+  .seeMoreText {
+    &:hover {
+      color: white;
+    }
+    background-color: $darkMode2;
+    color: $colorTextD;
   }
 }
 

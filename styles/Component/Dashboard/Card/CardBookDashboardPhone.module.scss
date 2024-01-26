@@ -133,6 +133,10 @@ display: flex;
     transition: 0.2s;
   }
 
+  &:hover {
+    background-color: $orangeHover;
+  }
+
   svg{
     width: 14px;
     color: white;
@@ -149,12 +153,20 @@ display: flex;
   font-size: 10px;
   border-radius: 25px;
   padding: 10px 30px;
+  letter-spacing: 0.3px;
 
   svg{
     width: 15px;
   }
 }
 
+.dark {
+  background-color: $darkMode;
+
+  .containerTitle h6, .cat, .likes{
+    color: $colorTextD;
+  }
+}
 
 @media screen and (max-width: 380px){
   .container{
@@ -186,7 +198,6 @@ display: flex;
     }
   }
 }
-
 
 @media screen and (max-width: 340px){
   .containerLabel{

@@ -1,16 +1,18 @@
 @import "styles/utils/var";
 
-.containerCount{
+.containerCount {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2px;
-  p{
+
+  p {
     font-family: $primaryFont;
     font-size: 10px;
     color: #1C232B;
   }
-  svg{
+
+  svg {
     width: 12px;
     color: #9844AD;
   }
@@ -43,6 +45,7 @@
     width: 18px;
     color: rgba(28, 35, 43, 0.35);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
     path {
       transition: all 0.2s ease;
     }
@@ -54,6 +57,7 @@
       background: #feeef3;
       transform: scale(0.88);
     }
+
     svg {
       path {
         fill: $pink;
@@ -77,7 +81,7 @@
   height: 40px;
   width: 40px;
 
-  svg{
+  svg {
     width: 25px;
     border-radius: 50%;
   }
@@ -110,15 +114,16 @@
 }
 
 .likeButtonSidebarPhone {
-  &:active{
+  &:active {
     transform: scale(0.6);
     transition: all 0.1s ease-in-out;
 
-    svg{
+    svg {
       margin-top: 0px;
       margin-left: 0px;
     }
   }
+
   transition: all 0.1s ease-in-out;
   display: flex;
   justify-content: center;
@@ -129,7 +134,8 @@
   width: 50px;
   border-radius: 50%;
   background-color: #e94f37;
-  svg{
+
+  svg {
     width: 20px;
     border-radius: 50%;
   }
@@ -156,12 +162,11 @@
     transform: scale(1);
   }
 
-  .notLiked{
-fill: transparent!important;
-    stroke: white!important;
+  .notLiked {
+    fill: transparent !important;
+    stroke: white !important;
   }
 }
-
 
 .animation {
   position: absolute;
@@ -170,45 +175,36 @@ fill: transparent!important;
   background: white;
   border-radius: 50%;
   opacity: 0;
-  animation: pulse 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+  animation: pulse 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) forwards!important;
 }
 
+.dark {
+  p {
+    color: $colorTextD !important;
+  }
 
-
+  .liked {
+    fill: #ffffff !important;
+    stroke: #ffffff;
+  }
+}
 
 @keyframes pulse {
   0% {
     opacity: 0;
     transform: scale(0.5);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(1);
   }
+
   100% {
     opacity: 0;
     transform: scale(1.5);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .bg {
   position: absolute;
@@ -219,20 +215,9 @@ fill: transparent!important;
   z-index: -1;
 }
 
-
-
-
-
-
-
-
-
 .count-motion {
   transform: translatey(-160%);
 }
-
-
-
 
 .bubble-motion {
   animation: bubbleMotion 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -246,11 +231,11 @@ fill: transparent!important;
 
 }
 
-.active{
+.active {
   fill: $pink2 !important;
 }
 
-.disabled{
+.disabled {
   fill: #1C232B !important;
 }
 
@@ -262,17 +247,32 @@ fill: transparent!important;
   font-size: 11px;
   gap: 2px;
   font-family: $primaryFont;
-  svg{
-    &:active{
+
+  svg {
+    &:active {
       transform: scale(0.8);
       transition: 0.2s;
     }
+
     cursor: pointer;
     width: 14px;
     color: #9844AD;
   }
-  p{
+
+  p {
     color: #1C232B;
     font-weight: bold;
+  }
+}
+
+.dark {
+  .heart {
+    fill: $darkMode;
+  }
+
+  svg {
+    &:hover {
+      // width: 15px;
+    }
   }
 }

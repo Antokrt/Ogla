@@ -1,5 +1,4 @@
 import styles from '../../../styles/Pages/Dashboard/NewChapter.module.scss';
-import scrollbar from '../../../styles/utils/scrollbar.module.scss';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import VerticalAuthorMenu from "../../../Component/Menu/VerticalAuthorMenu";
@@ -7,11 +6,7 @@ import {getConfigOfProtectedRoute} from "../../api/utils/Config";
 import ErrorDashboard from "../../../Component/Dashboard/ErrorDashboard";
 import {Placeholder} from "@tiptap/extension-placeholder";
 import {
-    ArrowRightIcon,
-    ChevronDoubleLeftIcon,
-    ChevronDoubleRightIcon,
-    ChevronRightIcon, CursorArrowRaysIcon,
-    HomeIcon, PaperAirplaneIcon
+    ChevronRightIcon, CursorArrowRaysIcon, HomeIcon
 } from "@heroicons/react/24/outline";
 import {useEditor, EditorContent, extensions} from "@tiptap/react";
 import {StarterKit} from "@tiptap/starter-kit";
@@ -28,14 +23,16 @@ import {toastDisplayError} from "../../../utils/Toastify";
 import {GetDefaultBookImgWhenError, GetImgPathOfAssets} from "../../../utils/ImageUtils";
 import {GetFetchPath} from "../../api/utils/Instance";
 import {LoaderImg} from "../../../Component/layouts/Loader";
+import { useSelector } from 'react-redux';
+import { selectTheme } from '../../../store/slices/themeSlice';
 
 export async function getServerSideProps({req, params}) {
+
     const id = params.id;
     const config = await getConfigOfProtectedRoute(req);
     const book = await fetch(GetFetchPath() + 'author/book/' + id, config);
-    const bookErrData = !book.ok;
     const booksJson = await book.json();
-
+    const bookErrData = !book.ok;
 
     return {
         props: {
@@ -49,17 +46,18 @@ export async function getServerSideProps({req, params}) {
 
 const NouveauChapitre = ({bookData, err}) => {
 
+    const [publishLoading,setPublishLoading] = useState(false);
+    const [saveLoading,setSaveLoading] = useState(false);
+    const [canSend, setCanSend] = useState(false);
     const [loading, setLoading] = useState(true);
     const [book, setBook] = useState(bookData);
-    const [title, setTitle] = useState('')
     const [content, setContent] = useState();
-    const [text, setText] = useState('');
-    const [canSend, setCanSend] = useState(false)
-    const [saveLoading,setSaveLoading] = useState(false);
-    const [publishLoading,setPublishLoading] = useState(false);
-    const router = useRouter();
+    const [title, setTitle] = useState('');
+    const theme = useSelector(selectTheme);
     const orientation = useOrientation();
+    const [text, setText] = useState('');
     const [width, height] = ScreenSize();
+    const router = useRouter();
 
     const onPageChange = () => {
         const object = {
@@ -106,7 +104,6 @@ const NouveauChapitre = ({bookData, err}) => {
             return '<p></p>'
         }
     }
-
 
     const editor = useEditor({
         extensions: [
@@ -233,7 +230,7 @@ const NouveauChapitre = ({bookData, err}) => {
     }, [editor])
 
     return (
-        <div className={styles.container}>
+        <div className={theme ? styles.container : styles.container + ' ' + styles.dark}>
 
             <Head>
                 <title>Ogla - Nouveau chapitre</title>

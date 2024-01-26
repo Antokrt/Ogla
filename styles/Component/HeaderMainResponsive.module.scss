@@ -53,7 +53,7 @@
     outline: none;
 
     &:active {
-      transform: scale(0.8);
+      transform: scale(0.9);
       transition: 0.2s;
     }
 
@@ -137,13 +137,13 @@
 
   img {
     z-index: 2;
+    object-fit: cover;
     width: 50px;
     height: 50px;
     border-radius: 50%;
     border: double 4px rgba(90, 102, 115, 0.356);
   }
 }
-
 
 .modalLinks {
   display: flex;
@@ -219,6 +219,11 @@
       &:hover {
         color: $orange;
         transition: 0.2s;
+
+        svg {
+          color: $orange;
+          transition: 0.2s;
+        }
       }
 
       transition: 0.2s;
@@ -242,6 +247,7 @@
     svg {
       width: 14px;
       color: #54595F;
+      transition: 0.2s;
     }
   }
 }
@@ -277,6 +283,7 @@
       width: 80px;
       height: 80px;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     p {
@@ -354,11 +361,11 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 10px;
+        gap: 6px;
 
         span {
-          height: 8px;
-          width: 8px;
+          height: 6px;
+          width: 6px;
           border-radius: 50%;
           background-color: #9844AD;
         }
@@ -423,6 +430,52 @@
   }
 }
 
+.dark {
+  .containerMain, .modalLinks, .modalProfil {
+    background-color: $darkMode;
+  }
+
+  .containerMain {
+    border-bottom: 1px solid $colorBorder2;
+  }
+
+  .leftContainer {
+    color: $colorTextD;
+
+    svg {
+      &:hover {
+        background-color: $darkModeHoverBtn;
+      }
+    }
+  }
+
+  .modalLinks {
+    ul, ul svg {
+      color: $colorTextD;
+    }
+  }
+
+  .imgContainer {
+    svg {
+      color: $colorTextD;
+    }
+  }
+
+  .containerImgOnModalProfil, .containerLinksProfil, .logOut {
+    color: $colorTextD;
+  }
+
+  .logOut {
+    border-top: 1px solid $colorBorder2;
+  }
+
+  .containerImgProfil {
+    &::after {
+      border: 1px solid $darkMode;
+    }
+  }
+}
+
 @media screen and (max-width: 400px) {
   .rightContainer {
     button {
@@ -467,12 +520,10 @@
   }
 }
 
-
 .rotate {
   transition: 0.2s;
   transform: rotate(180deg);
 }
-
 
 @keyframes pulse {
   0% {

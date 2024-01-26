@@ -2,7 +2,7 @@
 
 .container{
   &:active {
-    transform: scale(0.8);
+    transform: scale(0.9);
     transition: 0.2s;
   }
   transition: 0.2s;
@@ -19,5 +19,16 @@
   svg{
     transform: rotateY(180deg);
     width: 15px;
+  }
+}
+
+.dark {
+  &:hover {
+    background-color: $darkModeHoverBtn;
+  }
+  background-color: $darkMode5;
+
+  svg {
+    color: $colorTextD;
   }
 }

@@ -96,7 +96,6 @@
   }
 }
 
-
 .label {
   .title {
     display: flex;
@@ -191,4 +190,15 @@
 .drama {
   background-color: rgba(224, 68, 68, 0.21);
   color: $orange;
+}
+
+.dark {
+  &:hover {
+    background-color: $darkModeHoverBtn2;
+  }
+  background-color: $darkMode;
+
+  .title h6, .label p, .stats p {
+    color: $colorTextD;
+  }
 }

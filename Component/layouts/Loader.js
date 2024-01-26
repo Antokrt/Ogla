@@ -3,8 +3,11 @@ import styles from '../../styles/Layouts/Loader.module.scss';
 import { selectTheme } from '../../store/slices/themeSlice';
 
 export const Loader1 = () => {
+
+    const theme = useSelector(selectTheme);
+
     return (
-        <div className={styles.loader1}>
+        <div className={theme ? styles.loader1 : styles.loader1 + ' ' + styles.dark1}>
             <div></div>
             <div></div>
             <div></div>

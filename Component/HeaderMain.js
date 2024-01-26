@@ -22,11 +22,12 @@ import { setActiveModalState } from "../store/slices/modalSlice";
 import Tippy from "@tippyjs/react";
 import { LogoutService } from "../service/User/Account.service";
 import Link from "next/link";
-import { changeTheme, selectTheme } from "../store/slices/themeSlice";
-import { HeadPhoneBtn, HeadPhoneBtnOnHeaderMain } from "./layouts/Btn/ActionBtn";
-import { selectActiveMusicStatus, setActiveMusic } from "../store/slices/musicSlice";
-import { OpenAllService } from "../service/Notifications/NotificationsService";
-import { selectNotifs, setActiveModalNotif, setOpen } from "../store/slices/notifSlice";
+import {changeTheme, selectTheme} from "../store/slices/themeSlice";
+import {HeadPhoneBtn, HeadPhoneBtnOnHeaderMain} from "./layouts/Btn/ActionBtn";
+import {selectActiveMusicStatus, setActiveMusic} from "../store/slices/musicSlice";
+import {OpenAllService} from "../service/Notifications/NotificationsService";
+import {selectNotifs, setActiveModalNotif, setOpen} from "../store/slices/notifSlice";
+import {GetDefaultUserImgWhenError} from "../utils/ImageUtils";
 
 export const HeaderMain = () => {
 
@@ -36,13 +37,17 @@ export const HeaderMain = () => {
     const { data: session } = useSession();
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState();
+    const [canSearch,setCanSearch] = useState(true);
+    const [sizeOfLastSearchResponse,setSizeOfLastSearchResponse] = useState(0);
     const [query, setQuery] = useState('');
+    const [lastQueryNull,setLastQueryNull] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const Notifs = useSelector(selectNotifs);
     const cat = router.query.id;
     const selectMusicState = useSelector(selectActiveMusicStatus);
     const theme = useSelector(selectTheme);
     const dispatch = useDispatch();
+
 
     const pagesToHideCat = [
         '/livre/',
@@ -70,14 +75,19 @@ export const HeaderMain = () => {
     }
 
     const search = () => {
-        if (query.length > 0) {
+        if (query.length > 0 && !query.startsWith(lastQueryNull)) {
             SearchBarService(query)
                 .then((res) => {
+                    let sizeOfResponse = res ? res.authors.length + res.books.length : null;
+                    if(!sizeOfResponse){
+                        setLastQueryNull(query);
+                    }
                     setData(res);
                 })
-                .catch((err) => console.log('err'));
+                .catch((err) => console.log(err));
         }
-    }
+    };
+
 
     const openNotif = () => {
         if (session) {
@@ -111,9 +121,19 @@ export const HeaderMain = () => {
         if (nb === 0)
             setIsOpen(false);
     }, [Notifs])
-    
+
     return (
-        <div className={checkPathname(headerHasToBeWhite) ? styles.container : styles.container + ' ' + styles.bgTransparent}>
+        <div className={checkPathname(headerHasToBeWhite) ? 
+                theme ? 
+                styles.container 
+                : 
+                styles.container + ' ' + styles.dark 
+            : 
+                theme ?
+                styles.container + ' ' + styles.bgTransparent
+                :
+                styles.container + ' ' + styles.dark 
+                }>
             <div className={styles.fContainer}>
                 <div className={styles.logoContainer + ' ' + anim.fadeIn}>
                     <img tabIndex={0} onClick={() => router.push('/')} src={process.env.NEXT_PUBLIC_ASSETS + 'logo/mountain.png'} />
@@ -151,12 +171,12 @@ export const HeaderMain = () => {
 
                 </div>
 
-                <div className={styles.logContainer}>
+                <div className={theme ? styles.logContainer : styles.logContainer + ' ' + styles.darkModeContainer}>
                     {
                         session ?
                             <>
                                 <div tabIndex={0} onClick={() => router.push('/profil')} className={styles.containerImgProfil}>
-                                    <img src={session?.user?.image} referrerPolicy={'no-referrer'} />
+                                    <img onError={(e) => e.target.src = GetDefaultUserImgWhenError()} src={session?.user?.image} referrerPolicy={'no-referrer'}/>
                                 </div>
 
                                 <Tippy trigger={'mouseenter'} content={'Déconnexion'}>
@@ -174,6 +194,7 @@ export const HeaderMain = () => {
                             </>
 
                             :
+                            
                             <>
                                 <button className={styles.register}
                                     onClick={() => router.push({ pathname: "/auth", query: "register" })}>S&apos;inscrire
@@ -193,7 +214,7 @@ export const HeaderMain = () => {
 
             {
                 checkPathname(pagesToHideCat) &&
-                <div className={styles.sContainer}>
+                <div className={theme ? styles.sContainer : styles.sContainer + ' ' + styles.darkModeContainer}>
                     <nav className={styles.leftLinkContainer}>
                         {
                             session && session?.user?.is_author ?
@@ -209,7 +230,7 @@ export const HeaderMain = () => {
                         }
 
                     </nav>
-                    <div className={styles.catContainer}>
+                    <div className={theme ? styles.catContainer : styles.catContainer + ' ' + styles.darkModeContainer}>
                         {
                             categories.map((item, index) => {
                                 return (
@@ -243,16 +264,31 @@ export const HeaderMain = () => {
 
                         {
                             session &&
+                            <Tippy
+                            trigger="mouseenter"
+                            content={"Réglages"}
+                            animation={'scale'}
+                            placement={'bottom'}
+                            delay={[200, 0]}>
                             <Cog8ToothIcon tabIndex={0} className={styles.sett} onClick={() => {
                                 localStorage.setItem('side', 'settings');
                                 router.push('/profil')
                             }} />
+                        </Tippy>
+
                         }
 
                         {
                             !session ?
                                 <div className={styles.music} onClick={() => dispatch(setActiveModalState(true))}>
-                                    <MusicalNoteIcon tabIndex={0} />
+                                    <Tippy
+                                        trigger="mouseenter"
+                                        content={"Musique"}
+                                        animation={'scale'}
+                                        placement={'bottom'}
+                                        delay={[200, 0]}>
+                                        <MusicalNoteIcon tabIndex={0} />
+                                    </Tippy>
                                     {
                                         selectMusicState &&
                                         <div className={styles.animation}></div>
@@ -262,7 +298,14 @@ export const HeaderMain = () => {
                                     {
                                         session && session?.user?.settings?.music &&
                                         <div className={styles.music} onClick={() => dispatch(setActiveMusic())}>
-                                            <MusicalNoteIcon tabIndex={0} />
+                                            <Tippy
+                                                trigger="mouseenter"
+                                                content={"Musique"}
+                                                animation={'scale'}
+                                                placement={'bottom'}
+                                                delay={[200, 0]}>
+                                                <MusicalNoteIcon tabIndex={0} />
+                                            </Tippy>
                                             {
                                                 selectMusicState &&
                                                 <div className={styles.animation}></div>
@@ -273,22 +316,30 @@ export const HeaderMain = () => {
 
                         }
 
-
-
-
                         {
                             theme ?
-                                <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                    delay={[200, 0]}>
+                                    <SunIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                </Tippy>
                                 :
-                                <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                <Tippy
+                                    trigger="mouseenter"
+                                    content={"Thème"}
+                                    animation={'scale'}
+                                    placement={'bottom'}
+                                    delay={[200, 0]}>
+                                    <MoonIcon tabIndex={0} onClick={() => dispatch(changeTheme())} className={styles.svgTheme} />
+                                </Tippy>
                         }
                     </div>
                 </div>
 
             }
-
-
-
         </div>
     )
 }

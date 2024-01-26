@@ -9,6 +9,8 @@
 
 }
 
+
+
 .containerF {
   display: flex;
   justify-content: space-between;
@@ -171,6 +173,21 @@
   z-index: 1;
 }
 
+.containerSub{
+  position: relative;
+  height: 0px;
+  width: 100%;
+}
+
+.containerSubModal{
+  position: absolute;
+  height: 500px;
+  top: -20px;
+  right: 0;
+  width: 500px;
+  z-index: 1;
+}
+
 .chapterContainer {
 
   height: auto;
@@ -210,7 +227,9 @@
       }
     }
 
-    .pseudo_date {
+
+
+    .containerHead {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -258,16 +277,25 @@
         }
       }
 
-      .containerBtn{
+      .containerAction{
         display: flex;
-        gap: 10px;
+        gap: 20px;
+
+        .like{
+          &:hover {
+            transition: 0.2s;
+            background-color: $orangeHover;
+          }
+          background-color: $orange!important;
+        }
       }
 
-      .likeAnim{
+
+      .likeBtn{
         transition: 0.2s!important;
         &:hover{
           svg{
-            transform: scale(1.1) !important;
+            transform: scale(1.2) !important;
             transition: 0.2s!important;
           }
         }
@@ -276,22 +304,15 @@
         }
       }
 
-
-      .likeBtn {
+      button {
         &:active {
-          transform: scale(0.8);
+          transform: scale(0.9);
           transition: 0.2s;
         }
 
-        &:hover {
-          transition: 0.2s;
-          background-color: $purpleHover;
-        }
+
 
         cursor: pointer;
-        font-family: $primaryFont;
-        padding: 8px 30px;
-        background-color: $purple;
         z-index: 1;
         margin-top: 10px;
         display: flex;
@@ -300,8 +321,11 @@
         gap: 10px;
         color: white;
         font-weight: bold;
+        font-family: $primaryFont;
         border-radius: 25px;
         font-size: 11px;
+        padding: 8px 50px;
+
         svg {
           width: 15px;
           color: white;
@@ -570,6 +594,37 @@
   color: #fcfaf7 !important;
 }
 
+.dark {
+  background-color: $darkMode2;
+
+  .imgPseudo {
+    p, h3 {
+      color: $colorTextD !important;
+    }
+  }
+
+  .lab {
+    h6, p {
+      color: $colorTextD !important;
+    }
+  }
+
+  .sortContainer {
+    button {
+      &:hover {
+        background-color: $darkModeHoverBtn !important;
+      }
+      color: $colorTextD !important;
+    }
+
+    .activeBtn {
+      &:hover {
+        background-color: $purple !important;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 1500px) {
 
   .containerF,
@@ -596,7 +651,6 @@
     margin-top: 100px;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .imgContainer {
@@ -657,7 +711,6 @@
     flex-direction: column !important;
   }
 }
-
 
 @media screen and (max-width: 370px) {
   .lab {

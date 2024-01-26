@@ -29,14 +29,19 @@
   }
 }
 
+.dark {
+  background-color: $darkMode !important;
+
+  h6 {
+    color: $colorTextD !important;
+  }
+}
+
 @media screen and (max-width: 1050px){
   .container{
     background-color: #1C232B;
     h6{
       color: white;
-      .book{
-        color: white;
-      }
     }
   }
 }

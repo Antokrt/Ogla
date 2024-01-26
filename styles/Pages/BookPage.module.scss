@@ -3,6 +3,7 @@
 .container {
   background-size: 100%;
   background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .containerErr {
@@ -13,7 +14,6 @@
   min-height: 100vh;
   width: 100vw;
 }
-
 
 .sidebar {
   position: fixed;
@@ -130,7 +130,7 @@
 
   button {
     &:active {
-      transform: scale(0.8);
+      transform: scale(0.9);
       transition: 0.2s;
     }
 
@@ -481,6 +481,7 @@
     }
 
     svg {
+      cursor: pointer;
       width: 20px;
     }
   }
@@ -776,10 +777,82 @@
     align-items: center;
     width: 100%;
     height: 30px;
+    margin-bottom: 5px;
   }
 
 }
 
+.dark {
+  background-color: $darkMode2;
+  .infoContainer {
+    color: $colorTextD;
+
+    h3 {
+      color: $colorTextD;
+    }
+
+    p {
+      color: $colorTextD;
+    }
+
+    span {
+      color: $colorTextD;
+    }
+  }
+
+  .btnFilter {
+    button {
+      color: $colorTextD;
+    }
+
+    p {
+      // color : $orange;
+    }
+  }
+
+  .contentContainerBookPhone {
+    background-color: $darkMode2;
+
+    .overlay {
+      background-color: $darkMode2;
+
+      h3 {
+        color: $colorTextD;
+      }
+
+      .authorInfosContainerPhone {
+        p {
+          color: $colorTextD;
+        }
+      }
+
+      .linkPhone {
+        color: $colorTextD;
+      }
+
+      .activeLinkPhone {
+        color: $purple;
+      }
+
+      .descriptionContainerPhone {
+        p {
+          color: $colorTextD;
+        }
+      }
+    }
+  }
+
+  .bookMenuVerticalPhone {
+    background-color: $darkMode;
+    border-top: solid 1px $colorBorder;
+
+    .itemMenuBookPhone {
+      svg {
+        color: $colorTextD;
+      }
+    }
+  }
+}
 
 @media screen and (max-width: 1500px) {}
 

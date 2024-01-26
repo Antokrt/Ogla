@@ -9,7 +9,7 @@ return (
     <div className={styles.container}>
         <div className={styles.parent}>
             <div className={styles.header}>
-                <h4>Catégories populaires :</h4>
+                <h4>Catégories populaires</h4>
                 <div>
                     <Link href={'/bibliotheque'}>Tout voir</Link>
                 </div>

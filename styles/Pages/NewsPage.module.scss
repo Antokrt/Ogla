@@ -107,6 +107,16 @@
   color:#9844AD ;
 }
 
+.dark {
+  background-color: $darkMode2;
+  color: $colorTextD;
+
+  .leftContainer {
+    h2 {
+      font-weight: 500;
+    }
+  }
+}
 
 @media screen and (max-width: 1050px){
   .bannerContainer{
@@ -114,7 +124,6 @@
     gap: 10px;
   }
 }
-
 
 @media screen and (max-width: 870px){
 .bannerContainer{

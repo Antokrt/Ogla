@@ -395,7 +395,7 @@ const Profil = ({profilData, err}) => {
                 <div className={styles.lContainerWriter}>
 
                     <div className={styles.containerImg}>
-                        <img src={profilData?.img} referrerPolicy={'no-referrer'}
+                        <img src={profil?.img} referrerPolicy={'no-referrer'}
                              onError={(e) => e.target.src = GetDefaultUserImgWhenError()} alt={'Image Profil Ogla'}/>
                         <h5>Ecrivain <span>OGLA</span></h5>
                     </div>
@@ -643,91 +643,77 @@ const Profil = ({profilData, err}) => {
                     <div className={styles.err}>
                         <ErrMsg text={'Impossible de récupérer votre profil'}/>
                     </div>
-
-                    {
-                        width < 800 &&
-                        <Footer/>
-                    }
+                    <Footer/>
                 </div>
             }
             {
                 !err && profilData && session &&
-                <div className={styles.container}>
-                    {
-                        width > 950 ?
-                            <HeaderMain/> :
-                            <HeaderMainResponsive/>
-                    }
-                    <div className={styles.containerF}>
-                        <div className={styles.containerM}>
-                            {
-                                width > 800 &&
-                                <div className={styles.headerTitle}>
-                                    <h1>Bonjour {session.user.pseudo} !</h1>
-                                    <p>Gérer vos informations personnelles et personnaliser votre profil ici </p>
-                                </div>
-                            }
-                            {
-                                width > 800 &&
-                                <div className={styles.menuLink}>
-                                    <button onClick={() => setActiveLink('profil')}
-                                            className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
-                                    </button>
-                                    <button onClick={() => setActiveLink('writer')}
-                                            className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
-                                    </button>
-                                    <button onClick={() => setActiveLink('settings')}
-                                            className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
-                                    </button>
-                                    <button onClick={() => {
-                                        if (Notifs.length > 0) {
-                                            OpenAllService(Notifs[0].date_creation, session.user.id)
-                                        }
-                                        dispatch(setActiveModalNotif(true));
-                                        dispatch(setOpen());
-                                    }}
-                                            className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
-                                        Notifications
-                                        {isOpen && <span></span>}
-                                    </button>
-                                </div>
-                            }
-                            {
-                                width <= 800 && activeLink === 'settings' &&
-                                <div className={styles.headerTitlePhone}>
-                                    <h2> Réglages </h2>
-                                </div>
-                            }
-                            <div className={styles.containerItem}>
+                <>
+                    <div className={styles.container}>
+                        {
+                            width > 950 ?
+                                <HeaderMain/> :
+                                <HeaderMainResponsive/>
+                        }
+                        <div className={styles.containerF}>
+                            <div className={styles.containerM}>
                                 {
-                                    checkSide()
+                                    width > 800 &&
+                                    <div className={styles.headerTitle}>
+                                        <h1>Bonjour {session.user.pseudo} !</h1>
+                                        <p>Gérer vos informations personnelles et personnaliser votre profil ici </p>
+                                    </div>
                                 }
+                                {
+                                    width > 800 &&
+                                    <div className={styles.menuLink}>
+                                        <button onClick={() => setActiveLink('profil')}
+                                                className={activeLink === 'profil' ? styles.activeMenu + ' ' + styles.borderL : styles.borderL}>Profil
+                                        </button>
+                                        <button onClick={() => setActiveLink('writer')}
+                                                className={activeLink === 'writer' ? styles.activeMenu : undefined}>Ecrivain
+                                        </button>
+                                        <button onClick={() => setActiveLink('settings')}
+                                                className={activeLink === 'settings' ? styles.activeMenu : undefined}>Réglages
+                                        </button>
+                                        <button onClick={() => {
+                                            if (Notifs.length > 0) {
+                                                OpenAllService(Notifs[0].date_creation, session.user.id)
+                                            }
+                                            dispatch(setActiveModalNotif(true));
+                                            dispatch(setOpen());
+                                        }}
+                                                className={activeLink === 'notifications' ? styles.activeMenu + ' ' + styles.borderR : styles.borderR}>
+                                            Notifications
+                                            {isOpen && <span></span>}
+                                        </button>
+                                    </div>
+                                }
+                                {
+                                    width <= 800 && activeLink === 'settings' &&
+                                    <div className={styles.headerTitlePhone}>
+                                        <h2> Réglages </h2>
+                                    </div>
+                                }
+                                <div className={styles.containerItem}>
+                                    {
+                                        checkSide()
+                                    }
+                                </div>
                             </div>
                         </div>
+                        {
+                            width <= 800 &&
+                            phoneMenu()
+                        }
+                        {
+                            openModalDeleteAccount && session &&
+                            <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
+                        }
                     </div>
                     {
-                        width <= 800 &&
-                        phoneMenu()
-                    }
-                    {
-                        openModalDeleteAccount && session &&
-                        <DeleteAccountModal close={() => setOpenModalDeleteAccount(false)}/>
-                    }
-                </div>
-            }
-            {
-                <>
-                    {
-                        width >= 800 ?
-                            <Footer/>
-                            :
-                            <>
-                                {
-                                    err || !session &&
-                                    <Footer/>
-                                }
-                            </>
-
+                        width > 800 &&
+                        <Footer/>
                     }
                 </>
             }

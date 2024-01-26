@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import styles from "../../styles/Component/Header.module.scss";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { selectTheme } from "../../store/slices/themeSlice";
 
 
 const CategorieHead = ({ cat }) => {
 
-    const router = useRouter()
+    const router = useRouter();
+    const theme = useSelector(selectTheme);
 
     const checksvg = () => {
         if (cat === "Action") {
@@ -72,7 +75,7 @@ const CategorieHead = ({ cat }) => {
     }
 
     return (
-        <div className={styles.CategorieHead} onClick={() => router.push('/bibliotheque/' + cat.toLowerCase())}>
+        <div className={theme ? styles.CategorieHead : styles.CategorieHead + ' ' + styles.dark} onClick={() => router.push('/bibliotheque/' + cat.toLowerCase())}>
             {
                 checksvg()
             }
