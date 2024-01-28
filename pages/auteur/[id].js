@@ -35,13 +35,13 @@ import {HeaderMainResponsive} from "../../Component/HeaderMainResponsive";
 import {selectTheme} from "../../store/slices/themeSlice";
 import {SubBtn} from "../../Component/Sub/SubBtn";
 import {SubModal} from "../../Component/Sub/SubModal";
+import {selectPaymentModalState, setActivePaymentModalState} from "../../store/slices/subscriptionPaymentSlice";
 
 
 export async function getServerSideProps({params, req}) {
 
     const pseudo = params.id;
     const profil = await GetAuthorProfilAPI(pseudo, req);
-
 
 
     if (!profil.errProfil && !profil.errBook) {
@@ -93,6 +93,8 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
     const [line, setLine] = useState(12);
     const [page, setPage] = useState(2);
     const dispatch = useDispatch();
+    const seeModal = useSelector(selectPaymentModalState);
+
     const [width] = ScreenSize();
 
     const fetchRecentBooks = () => {
@@ -112,8 +114,6 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                 setCanSeeMoreRecent(false);
             });
     }
-
-
     const fetchMorePopularBooks = () => {
         setLoading(true);
         GetBooksByAuthorService(profilAuthor.pseudo, 'popular', pagePopular)
@@ -219,12 +219,13 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                                 <button className={styles.like} onClick={() => {
                                                     likeAuthor();
                                                 }}>J&apos;aime <HeartSolid/></button> :
-                                                <button className={styles.like} onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/></button>
+                                                <button className={styles.like}
+                                                        onClick={() => likeAuthor()}>J&apos;aime <HeartOutline/>
+                                                </button>
                                         }
 
                                         <SubBtn isOpen={openSubModal} open={() => setOpenSubModal(!openSubModal)}/>
                                     </div>
-
 
 
                                 </div>
@@ -235,8 +236,10 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                     {
                                         openSubModal &&
                                         <div className={styles.containerSubModal}>
-                                            <SubModal becameAuthor={profilAuthor?.author.became_author} img={profilAuthor?.img} pseudo={profilAuthor?.pseudo} close={() => setOpenSubModal(false)}/>
-
+                                            <SubModal authorId={profilAuthor?._id}
+                                                      becameAuthor={profilAuthor?.author.became_author}
+                                                      img={profilAuthor?.img} pseudo={profilAuthor?.pseudo}
+                                                      close={(step) => step > 1 ? null : setOpenSubModal(false)}/>
                                         </div>
                                     }
                                 </div>

@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 import NextTopLoader from "nextjs-toploader";
 import {GetAllNotifs} from '../service/Notifications/NotificationsService';
 import {Notif} from "../Component/Notif";
-import {Modal} from "../Component/Modal";
+import {AuthModal} from "../Component/Modal";
 import {Socket} from "../socket/Socket";
 import {GetCategories} from "../categories/Categories";
 import {Maintenance} from "../Component/Maintenance";
@@ -25,6 +25,8 @@ import {CookieAccept} from "../Component/CookieAccept";
 import { persistor, store } from '../store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import {LoaderCommentary} from "../Component/layouts/Loader";
+import {PaymentModal} from "../Component/Sub/PaymentModal";
+import {selectPaymentModalState} from "../store/slices/subscriptionPaymentSlice";
 
 
 const DynamicHeader = dynamic(() => import('../Component/Lofi'), {ssr: false})
@@ -34,6 +36,7 @@ function MyApp({Component, pageProps}) {
 
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
 
     useEffect(() => {
         const start = () => {
@@ -80,8 +83,9 @@ function MyApp({Component, pageProps}) {
                         fontSize: "35px",
                     }}> <LoaderCommentary/>  </div>} persistor={persistor}>
                 <Notif/>
-                <Modal/>
+                <AuthModal/>
                 <Darken/>
+                <PaymentModal/>
                 {
                     loading &&
                     <Loader/>

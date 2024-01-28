@@ -5,7 +5,7 @@ import {Elements, PaymentElement, useElements, useStripe} from "@stripe/react-st
 import success from "../email-verification/success";
 import {useSession} from "next-auth/react";
 
-const CheckoutForm = () => {
+export const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
 

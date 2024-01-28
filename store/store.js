@@ -19,6 +19,7 @@ import {
     REGISTER
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {subscriptionPaymentSlice} from "./slices/subscriptionPaymentSlice";
 
 const persistConfig = {
     key: 'root',
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
     [themeSlice.name]: themeSlice.reducer,
     [categorySlice.name]: categorySlice.reducer,
     [darkenSlice.name]: darkenSlice.reducer,
+    [subscriptionPaymentSlice.name]:subscriptionPaymentSlice.reducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

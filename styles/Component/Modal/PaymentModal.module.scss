@@ -1,0 +1,256 @@
+@import "styles/utils/var";
+
+.container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 9999 !important;
+  background-color: rgba(28, 35, 43, 0.77);
+}
+
+.containerContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2% 2%;
+  height: 480px;
+  width: 500px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: $shadow;
+}
+
+.close {
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+
+  &:hover {
+    transition: 0.2s;
+    filter: brightness(98%);
+  }
+
+  position: absolute;
+  width: 20px;
+  right: 4%;
+  top: 4%;
+  cursor: pointer;
+}
+
+.headerModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 100px;
+    margin-bottom: 10px;
+    clip-path: circle();
+  }
+
+  h5 {
+    font-size: calc(15px + 0.2vw);
+    font-family: $primaryFont;
+    font-weight: bold;
+  }
+
+  p {
+    text-align: center;
+    color: #6b7077;
+    font-family: $primaryFont;
+    font-size: 13px;
+  }
+
+
+}
+
+.google {
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+
+  &:hover {
+    transition: 0.2s;
+    filter: brightness(98%);
+  }
+
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.or {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  div {
+    background-color: rgba(28, 35, 43, 0.13);
+    height: 1px;
+    margin-top: +0.4%;
+    width: 45%;
+  }
+
+  p {
+    font-size: 12px;
+    color: rgba(28, 35, 43, 0.8);
+    font-family: $primaryFont;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+
+  label {
+    text-align: left;
+    width: 90%;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: $primaryFont;
+  }
+
+
+  input {
+    &:focus {
+      box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+      transition: 0.2s;
+    }
+
+    transition: 0.2s;
+    outline: none !important;
+    font-family:$primaryFont;
+    border-radius: 5px;
+    font-size: 12px;
+    border: solid 1px $border;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    width: 90%;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+  }
+
+  .register {
+    font-family: $primaryFont;
+    opacity: 0.8;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 13px;
+  }
+
+}
+
+.loginBtn {
+  &:active {
+    transform: scale(0.8);
+    transition: 0.2s;
+  }
+
+  &:hover {
+    transition: 0.2s;
+    background-color: $purpleHover;
+  }
+
+  margin-top: 20px;
+  background-color: $purple;
+  color: white;
+  font-size: 12px;
+  padding: 12px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-family: $primaryFont;
+}
+
+.errMsg {
+  margin-top: 10px;
+  padding-left: 5px;
+  display: block;
+  text-align: center;
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+  color: red;
+}
+
+
+@media screen and (max-width: 500px) {
+  .container {
+    padding: 0% 2%;
+  }
+
+  .containerContent {
+    border-radius: 10px;
+    width: 400px;
+    height: auto;
+    padding: 5% 8%;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .container {
+    padding: 0% 2%;
+
+    label,
+    input {
+      font-size: 10px;
+    }
+
+    .register {
+      font-size: 11px;
+    }
+  }
+
+  .containerContent {
+    border-radius: 5px;
+
+    .loginBtn {
+      font-size: 10px;
+      padding: 10px 3px;
+    }
+
+    .headerModal {
+      p {
+        font-size: 11px;
+      }
+    }
+
+    .google {
+      margin: 5% 0%;
+
+      button {
+        font-size: 10px;
+
+        svg {
+          margin-right: 10px;
+          width: 20px;
+          padding: 12px 0px;
+        }
+      }
+    }
+
+    .btn {
+      gap: 10px;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
+}
