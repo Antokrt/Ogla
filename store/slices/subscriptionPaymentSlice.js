@@ -6,7 +6,8 @@ const initialState = {
     infos:{
         userId:null,
         authorId:null,
-        month_duration:null
+        authorImg:null,
+        authorPseudo:null
     }
 }
 
@@ -15,24 +16,22 @@ export const subscriptionPaymentSlice = createSlice({
     initialState,
     reducers: {
         setActivePaymentModalState: (state, action) => {
-            state.modal = action.payload
+            if(action.payload) state.modal = action.payload
         },
         setInfosNewSub: (state, action) => {
-            const { userId, authorId, month_duration } = action.payload;
-console.log('jeyhye')
-            if (!userId || !authorId || !month_duration) {
+            const { userId, authorId, authorImg,authorPseudo } = action.payload;
+            if (!userId || !authorId) {
                 return null;
             }
 
-            state.infos = { userId, authorId, month_duration };
-            state.modal = true;
+            state.infos = { userId, authorId, authorImg,authorPseudo };
         },
 
         closePayment: (state) => {
             state.modal = false;
             state.infos.userId = null;
             state.infos.authorId = null;
-            state.infos.month_duration = null;
+            state.infos.pseudo = null;
         }
     },
 

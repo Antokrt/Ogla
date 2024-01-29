@@ -9,19 +9,101 @@
   width: 100%;
   z-index: 9999 !important;
   background-color: rgba(28, 35, 43, 0.77);
+  overflow-y: scroll;
+  font-family: $primaryFont;
 }
 
 .containerContent {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   padding: 2% 2%;
-  height: 480px;
-  width: 500px;
-  border-radius: 15px;
+  height: 680px;
+  width: 600px;
+  border-radius: 5px;
   background-color: white;
   box-shadow: $shadow;
+
+  h3{
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+  }
+}
+
+.recapContainer{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  height: 200px;
+  width: 100%;
+}
+
+.authorContainer{
+  display: flex;
+  flex-direction: column;
+width: 50%;
+  gap: 10px;
+  div{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .recapTitle{
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+
+  p{
+    font-weight: bold;
+  }
+}
+
+.monthContainer{
+  display: flex;
+  justify-content: space-between;
+width: 50%;
+  height: 100%;
+}
+
+.label{
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.periodContainer , .priceContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.priceContainer{
+  align-items: end;
+}
+
+.periodContainer{
+  select{
+    padding:5px;
+    border: 1px solid rgba(0, 0, 0, 0.27);
+    border-radius: 5px;
+    font-size: 14px;
+    svg{}
+    option{
+    }
+  }
+}
+
+.price{
+font-weight: bold;
 }
 
 .close {
@@ -42,143 +124,7 @@
   cursor: pointer;
 }
 
-.headerModal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  img {
-    width: 100px;
-    margin-bottom: 10px;
-    clip-path: circle();
-  }
-
-  h5 {
-    font-size: calc(15px + 0.2vw);
-    font-family: $primaryFont;
-    font-weight: bold;
-  }
-
-  p {
-    text-align: center;
-    color: #6b7077;
-    font-family: $primaryFont;
-    font-size: 13px;
-  }
-
-
-}
-
-.google {
-  &:active {
-    transform: scale(0.8);
-    transition: 0.2s;
-  }
-
-  &:hover {
-    transition: 0.2s;
-    filter: brightness(98%);
-  }
-
-  margin-top: 2%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.or {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  div {
-    background-color: rgba(28, 35, 43, 0.13);
-    height: 1px;
-    margin-top: +0.4%;
-    width: 45%;
-  }
-
-  p {
-    font-size: 12px;
-    color: rgba(28, 35, 43, 0.8);
-    font-family: $primaryFont;
-  }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-
-  label {
-    text-align: left;
-    width: 90%;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    font-family: $primaryFont;
-  }
-
-
-  input {
-    &:focus {
-      box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-      transition: 0.2s;
-    }
-
-    transition: 0.2s;
-    outline: none !important;
-    font-family:$primaryFont;
-    border-radius: 5px;
-    font-size: 12px;
-    border: solid 1px $border;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-    width: 90%;
-  }
-
-  .btn {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-  }
-
-  .register {
-    font-family: $primaryFont;
-    opacity: 0.8;
-    font-weight: 400;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 13px;
-  }
-
-}
-
-.loginBtn {
-  &:active {
-    transform: scale(0.8);
-    transition: 0.2s;
-  }
-
-  &:hover {
-    transition: 0.2s;
-    background-color: $purpleHover;
-  }
-
-  margin-top: 20px;
-  background-color: $purple;
-  color: white;
-  font-size: 12px;
-  padding: 12px 5px;
-  border-radius: 5px;
-  font-weight: bold;
-  letter-spacing: 0.5px;
-  font-family: $primaryFont;
-}
 
 .errMsg {
   margin-top: 10px;

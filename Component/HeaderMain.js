@@ -257,7 +257,12 @@ export const HeaderMain = () => {
                             placement={'bottom'}
                             delay={[200, 0]}>
                             <div className={styles.bellActive} onClick={openNotif}>
-                                <BellIcon onClick={() => dispatch(setActiveModalNotif(true))} />
+                                {
+                                    session &&
+                                    <BellIcon onClick={() => {
+                                        dispatch(setActiveModalNotif(true)) }} />
+                                }
+
                                 {isOpen && <span></span>}
                             </div>
                         </Tippy>

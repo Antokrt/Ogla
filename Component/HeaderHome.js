@@ -198,17 +198,21 @@ export const HeaderHome = () => {
 
 
                     <div className={styles.rightLinkContainer}>
-                        <Tippy
-                            trigger="mouseenter"
-                            content={"Notifications"}
-                            animation={'scale'}
-                            placement={'bottom'}
-                            delay={[200, 0]}>
-                            <div className={styles.bellActive} onClick={openNotif}>
-                                <BellIcon onClick={() => dispatch(setActiveModalNotif(true))} />
-                                {isOpen && <span></span>}
-                            </div>
-                        </Tippy>
+                        {
+                            session &&
+                            <Tippy
+                                trigger="mouseenter"
+                                content={"Notifications"}
+                                animation={'scale'}
+                                placement={'bottom'}
+                                delay={[200, 0]}>
+                                <div className={styles.bellActive} onClick={openNotif}>
+                                    <BellIcon onClick={() => dispatch(setActiveModalNotif(true))} />
+                                    {isOpen && <span></span>}
+                                </div>
+                            </Tippy>
+                        }
+
                         {
                             session &&
                             <Tippy

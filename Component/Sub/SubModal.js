@@ -51,7 +51,12 @@ export const SubModal = ({close, img, pseudo, becameAuthor, authorId}) => {
             dispatch(setActiveModalState(true));
             return;
         }
-
+        dispatch(setInfosNewSub({
+            userId:session.user.id,
+            authorId:authorId,
+            authorImg:img,
+            authorPseudo:pseudo
+        }))
          dispatch(setActivePaymentModalState(true));
 
     }
