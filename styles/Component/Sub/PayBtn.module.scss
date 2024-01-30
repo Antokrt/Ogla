@@ -1,0 +1,17 @@
+@import "styles/utils/var";
+
+.containerBtn{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 20px;
+  button{
+    background-color: $purple;
+    font-size: 12px;
+    padding: 6px 10px;
+    font-family: $primaryFont;
+    color: white;
+    -webkit-text-stroke-width: 0.1px;
+    border-radius: 5px;
+  }
+}

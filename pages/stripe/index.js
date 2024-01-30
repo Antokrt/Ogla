@@ -3,7 +3,9 @@ import {useState} from "react";
 import {loadStripe} from "@stripe/stripe-js";
 import {Elements, PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import success from "../email-verification/success";
+import styles from '../../styles/Component/Sub/PayBtn.module.scss'
 import {useSession} from "next-auth/react";
+import {LoaderImg} from "../../Component/layouts/Loader";
 
 export const CheckoutForm = () => {
     const stripe = useStripe();
@@ -32,12 +34,10 @@ export const CheckoutForm = () => {
         });
 
         if (error) {
-            alert('Error of payment!')
         } else if (paymentIntent && paymentIntent.status === "succeeded") {
             alert('Payment success !')
         } else {
             console.log("Payment failed");
-            // handleOther();
         }
 
 
@@ -48,11 +48,10 @@ export const CheckoutForm = () => {
     return (
         <form id="payment-form" onSubmit={handleSubmit}>
             <PaymentElement id="payment-element" />
-            <button disabled={isProcessing || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isProcessing ? "Processing ... " : "Pay now"}
-        </span>
-            </button>
+            <div className={styles.containerBtn}>
+                <button disabled={isProcessing || !stripe || !elements} id="submit">{isProcessing ? <LoaderImg/> : "Valider l'achat"}</button>
+            </div>
+
             {/* Show any error or success messages */}
             {message && <div id="payment-message">{message}</div>}
         </form>

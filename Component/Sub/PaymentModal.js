@@ -15,6 +15,9 @@ import {LoaderImg} from "../layouts/Loader";
 import {useSession} from "next-auth/react";
 import {instance} from "../../service/config/Interceptor";
 import {GetIntentService} from "../../service/Payment/PaymentsService";
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
+import {CheckoutForm} from "../../pages/stripe";
 
 export const PaymentModal = () => {
 
@@ -23,7 +26,9 @@ export const PaymentModal = () => {
     const dispatch = useDispatch();
     const [month,setMonth] = useState(1);
     const [loading,setLoading] = useState(false);
-    const [intentSecret ,setIntentSecret] = useState(null);
+    const [clientSecret ,setClientSecret] = useState(null);
+    const pk = 'pk_test_51NNdxbJuETVotPlVeK3txdq5KhGFIgCEZLcjfmOkUNxcWmQ2hGcGHI8kZEgDshKHvwEUGwpj043jb9HlK3zfQMDf00tDdZLo0R';
+    const stripePromise = loadStripe(pk);
     const [error,setError] = useState(false);
     const {data: session} = useSession();
 
@@ -31,7 +36,6 @@ export const PaymentModal = () => {
         if(seeModal){
             setLoading(true);
             getIntent(1);
-
             setLoading(false);
         }
     },[seeModal])
@@ -40,13 +44,14 @@ export const PaymentModal = () => {
         dispatch(closePayment());
         dispatch(setActivePaymentModalState(false));
         setMonth(1);
-        setIntentSecret(null);
+        setClientSecret(null);
+        setError(false);
     }
 
     const getIntent = async (month) => {
         try {
             const intent = await GetIntentService({authorId:infos.authorId,month_duration:month});
-           setIntentSecret(intent.client_secret);
+           setClientSecret(intent.client_secret);
         }
         catch (e) {
             setError(true);
@@ -108,7 +113,10 @@ export const PaymentModal = () => {
                         </div>
                     </div>
                     {
-                        intentSecret ? <h1>client_secret :{intentSecret}</h1> : <LoaderImg/>
+                        clientSecret && !loading &&
+                            <Elements stripe={stripePromise} options={{clientSecret}}>
+                                <CheckoutForm/>
+                            </Elements>
                     }
                 </div>
 

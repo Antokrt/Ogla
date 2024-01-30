@@ -224,7 +224,12 @@ const AuthorProfil = ({profilData, booksData, topBookData, hasLikeData, errProfi
                                                 </button>
                                         }
 
-                                        <SubBtn isOpen={openSubModal} open={() => setOpenSubModal(!openSubModal)}/>
+                                        {
+                                            session?.user?.id !== profilAuthor._id &&
+                                            <SubBtn isOpen={openSubModal} open={() => setOpenSubModal(!openSubModal)}/>
+                                        }
+
+
                                     </div>
 
 
